@@ -3,6 +3,9 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.2'
 
+# Use sqlite3 as the database for Active Record
+gem 'sqlite3'
+
 # Enable HAML (required for MOJ toolkit)
 gem 'haml-rails'
 
@@ -20,3 +23,9 @@ gem 'jquery-rails'
 
 # production webserver
 gem 'unicorn'
+
+gem 'activerecord-tableless', '~> 1.3.3'
+
+group :development, :test do
+  gem 'rspec-rails', '~> 2.0'
+end
