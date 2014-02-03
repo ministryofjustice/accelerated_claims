@@ -26,6 +26,12 @@ gem 'unicorn'
 
 gem 'activerecord-tableless', '~> 1.3.3'
 
+# Gov.uk styles
+gem 'govuk_template', '0.3.8'
+gem 'govuk_frontend_toolkit', github: 'ministryofjustice/govuk_frontend_toolkit_gem', branch: 'asset-submodule'
+# MOJ styles
+gem 'moj_boilerplate', github: 'ministryofjustice/moj_boilerplate', tag: 'v0.6.2'
+
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
 end
