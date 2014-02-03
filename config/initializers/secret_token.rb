@@ -9,4 +9,9 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-AcceleratedClaims::Application.config.secret_key_base = '2aa28b3896def6947d887ad49293e6ef51980f6aae2a48ee95f67ff4d073549e4eb58b5ad83e019c49341196554bf4244ad0e56809615741e680bbf66a01340d'
+
+if ENV['SECRET_KEY_BASE'].nil? && (Rails.env.test? || Rails.env.development?)
+  ENV['SECRET_KEY_BASE'] = '2aa28b3896def6947d887ad49293e6ef51980f6aae2a48ee95f67ff4d073549e4eb58b5ad83e019c49341196554bf4244ad0e56809615741e680bbf66a01340d'
+end
+
+AcceleratedClaims::Application.config.secret_key_base = ENV['SECRET_KEY_BASE']
