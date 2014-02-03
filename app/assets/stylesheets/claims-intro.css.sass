@@ -1,0 +1,88 @@
+.container.steps
+  font-size: 19px
+
+  .action-buttons
+    margin:
+      top: 60px
+  h2
+    font:
+      size: 32px
+      weight: bold
+
+  ol.steps
+    list-style-type: none
+    padding: 0
+    margin-bottom: 0
+
+    > li
+      min-height: 50px
+      margin:
+        left: 90px
+        bottom: 20px
+      position: relative
+      clear: both
+      padding-top: 20px
+      font-size: 24px
+
+      .box
+        margin-top: 20px
+        padding: 20px
+        background: $grey-4
+        max-width: 650px
+
+        ul
+          li
+            font-size: 19px
+            list-style-type: disc
+            margin: 20px 0
+            padding-right: 40px
+
+      &:before
+        display: block
+        width: 85px
+        height: 90px
+        background: image-url('stepbullets.png') 0 0 no-repeat
+        content: " "
+        position: absolute
+        left: -90px
+        top: 0
+
+      &.house
+        &:before
+          background-position: 0 -90px
+      &.claim
+        &:before
+          background-position: 0 -180px
+      &.pay
+        &:before
+          background-position: 0 -270px
+      &.court
+        &:before
+          background-position: 0 -360px
+      &.piggy
+        &:before
+          background-position: 0 -450px
+      &.docs
+        &:before
+          background-position: 0 -540px
+
+
+    &.defence
+      li
+        background-position: 0 -90px
+
+        &:nth-child(2)
+          background-position: 0 0
+        &:nth-child(3)
+          background-position: 0 -450px
+        &:nth-child(4)
+          background-position: 0 -180px
+        &:nth-child(5)
+          background-position: 0 -360px
+
+main > .divider
+  width: 100%
+  height: 1px
+  overflow: hidden
+  margin-bottom: 60px
+  border-bottom: 1px solid #c2c2c2
