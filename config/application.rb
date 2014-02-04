@@ -25,5 +25,39 @@ module AcceleratedClaims
       'X-Content-Type-Options' => 'nosniff',
       'X-XSS-Protection' => '1; mode=block'
     }
+
+    # app title appears in the header bar
+    config.app_title = 'Civil Claims'
+    config.proposition_title = 'Property repossession'
+    # phase governs text indicators and highlight colours
+    # presumed values: alpha, beta, live
+    config.phase = 'beta'
+    # product type may also govern highlight colours
+    # known values: information, service
+    config.product_type = 'service'
+    # Feedback URL (URL for feedback link in phase banner)
+    # Use 'auto_add_path' for it to add a path link to the new_feedback route
+    config.feedback_url = ''
+    # Google Analytics ID (Tracking ID for the service)
+    config.ga_id = ''
+
+    # Enable the asset pipeline
+    config.assets.enabled = true
+    config.assets.precompile += %w(
+        moj-base.css
+        claims-global.css
+        claims-layout.css
+        claims-components.css
+        claims-mixins.css
+        claims-global.css
+        claims-layout.css
+        claims-forms.css
+        claims-intro.css
+        claims-usernav.css
+        claims-progressnav.css
+        claims-breadcrumb.css
+        claims-tables.css
+    )
+
   end
 end
