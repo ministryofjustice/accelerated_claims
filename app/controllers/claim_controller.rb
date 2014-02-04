@@ -2,7 +2,7 @@ class ClaimController < ApplicationController
   def new
   end
 
-  def claim_submission
+  def submission
     redirect_to thank_you_path
   end
 
