@@ -1,3 +1,3 @@
 class Claim
- include ActiveModel::Model
+  include ActiveModel::Model
 end
