@@ -1,17 +1,16 @@
-class Property < ActiveRecord::Base
-  has_no_table
+class Property
+  include ActiveModel::Model
+  # include ActiveModel::Validations
 
-  belongs_to :claim
-
-  column :street, :string
+  attr_accessor :street
   validates :street, presence: true, length: { maximum: 70 }
 
-  column :town, :string
+  attr_accessor :town
   validates :town, length: { maximum: 40 }
 
-  column :postcode, :string
+  attr_accessor :postcode
   validates :postcode, presence: true, length: { maximum: 8 }
 
-  column :house, :boolean
+  attr_accessor :house
   validates :house, presence: true
 end

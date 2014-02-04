@@ -1,13 +1,6 @@
 require 'spec_helper'
 
 describe Property do
-  describe "relationship" do
-    subject { Property.new }
-
-    it "should belong a claim" do
-      should respond_to :claim
-    end
-  end
 
   describe "validations" do
     let(:property) { Property.new }
