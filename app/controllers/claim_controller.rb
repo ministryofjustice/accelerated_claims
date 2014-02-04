@@ -2,6 +2,7 @@ class ClaimController < ApplicationController
   def new
     @claim = Claim.new
     @property = Property.new
+    @landlord = Landlord.new
   end
 
   def submission
