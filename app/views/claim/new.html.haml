@@ -1,1 +1,15 @@
-%p New claim
+%h1 New claim
+
+= form_for :claim, url: submission_path, :html => { :method => :put } do |claim_form|
+  = claim_form.fields_for @property do |address_form|
+    %span Street
+    = address_form.text_field :street
+    %span Town
+    = address_form.text_field :town
+    %span Postcode
+    = address_form.text_field :postcode
+    %span Property type
+    - ['A house', 'Part of a house'].each do |property_type|
+      %label
+        = address_form.radio_button(:house, property_type)
+        = property_type.humanize

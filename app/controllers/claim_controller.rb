@@ -1,5 +1,7 @@
 class ClaimController < ApplicationController
   def new
+    @claim = Claim.new
+    @property = Property.new
   end
 
   def submission
