@@ -1,6 +1,6 @@
-%h1 New claim
+%h1 Start an accelerated property possession case
 
-= form_for :claim, url: submission_path, :html => { :method => :put } do |claim_form|
+= form_for :claim, url: submission_path, :html => { :method => :post } do |claim_form|
   = claim_form.fields_for @property do |address_form|
     %span Street
     = address_form.text_field :street
@@ -23,3 +23,31 @@
     = landlord_form.text_field :town
     %span Postcode
     = landlord_form.text_field :postcode
+
+  = claim_form.fields_for :tenant_one do |tenant_form|
+    %span Title
+    = tenant_form.text_field :title
+    %span Full Name
+    = tenant_form.text_field :full_name
+    %span Street
+    = tenant_form.text_field :street
+    %span Town
+    = tenant_form.text_field :town
+    %span Postcode
+    = tenant_form.text_field :postcode
+
+  = claim_form.fields_for :tenant_two do |tenant_form|
+    %span Title
+    = tenant_form.text_field :title
+    %span Full Name
+    = tenant_form.text_field :full_name
+    %span Street
+    = tenant_form.text_field :street
+    %span Town
+    = tenant_form.text_field :town
+    %span Postcode
+    = tenant_form.text_field :postcode
+
+  %section
+    .action-buttons.cf
+      %button.button.primary.large.chevron.left{name: 'Complete form', value: ''} Complete form
