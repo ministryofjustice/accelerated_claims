@@ -6,6 +6,7 @@ class ClaimController < ApplicationController
     @tenant_one = Tenant.new
     @tenant_two = Tenant.new
     @demoted_tenancy = DemotedTenancy.new
+    @notice = Notice.new
   end
 
   def submission
