@@ -59,6 +59,14 @@
     %span County Court where order was made
     = demoted_tenancy_form.text_field :county_court
 
+  = claim_form.fields_for @notice do |notice_form|
+    %span Notice served by
+    = notice_form.text_field :served_by
+    %span Date notice served
+    = date_select(:date_served, :order => [:day, :month, :year])
+    %span Date notice expired
+    = date_select(:expiry_date, :order => [:day, :month, :year])
+
   %section
     .action-buttons.cf
       %button.button.primary.large.chevron.left{name: 'Complete form', value: ''} Complete form
