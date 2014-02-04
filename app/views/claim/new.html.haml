@@ -67,6 +67,13 @@
     %span Date notice expired
     = date_select(:expiry_date, :order => [:day, :month, :year])
 
+  = claim_form.fields_for @order do |order_form|
+    %span You are asking the court to order that the defendant(s)
+    = check_box_tag :possesion
+    %span deliver up possesion of the property
+    = check_box_tag :cost
+    %span to pay the cost of the claim
+
   %section
     .action-buttons.cf
       %button.button.primary.large.chevron.left{name: 'Complete form', value: ''} Complete form
