@@ -13,3 +13,13 @@
       %label
         = address_form.radio_button(:house, property_type)
         = property_type.humanize
+
+  = claim_form.fields_for @landlord do |landlord_form|
+    %span Company
+    = landlord_form.text_field :company
+    %span Street
+    = landlord_form.text_field :street
+    %span Town
+    = landlord_form.text_field :town
+    %span Postcode
+    = landlord_form.text_field :postcode

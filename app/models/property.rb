@@ -1,6 +1,5 @@
 class Property
   include ActiveModel::Model
-  # include ActiveModel::Validations
 
   attr_accessor :street
   validates :street, presence: true, length: { maximum: 70 }
