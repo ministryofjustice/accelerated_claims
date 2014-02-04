@@ -3,9 +3,12 @@ class ClaimController < ApplicationController
     @claim = Claim.new
     @property = Property.new
     @landlord = Landlord.new
+    @tenant_one = Tenant.new
+    @tenant_two = Tenant.new
   end
 
   def submission
+    puts params
     redirect_to thank_you_path
   end
 
