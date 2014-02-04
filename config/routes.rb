@@ -5,4 +5,5 @@ AcceleratedClaims::Application.routes.draw do
 
   # routes to temporary front-end layout
   get '/pdf' => 'temp#pdf'
+  get '/form' => 'temp#form'
 end
