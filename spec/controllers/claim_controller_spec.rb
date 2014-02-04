@@ -14,7 +14,7 @@ describe ClaimController do
 
     it "accepts claim submission" do
       claim_hash = {}
-      post :claim_submission, claim_hash
+      post :submission, claim_hash
       response.should redirect_to(thank_you_path)
     end
 
