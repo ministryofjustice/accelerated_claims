@@ -48,6 +48,17 @@
     %span Postcode
     = tenant_form.text_field :postcode
 
+  = claim_form.fields_for @demoted_tenancy do |demoted_tenancy_form|
+    %span Previous tenancy before demotion
+    - ['assured', 'secure'].each do |tenancy_type|
+      %label
+        = demoted_tenancy_form.radio_button(:assured, tenancy_type)
+        = tenancy_type.humanize
+    %span When demotion was made
+    = date_select(:demotion_order_date, :order => [:day, :month, :year])
+    %span County Court where order was made
+    = demoted_tenancy_form.text_field :county_court
+
   %section
     .action-buttons.cf
       %button.button.primary.large.chevron.left{name: 'Complete form', value: ''} Complete form
