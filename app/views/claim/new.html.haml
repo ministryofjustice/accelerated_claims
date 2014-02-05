@@ -67,6 +67,20 @@
     %span Date notice expired
     = date_select(:expiry_date, :order => [:day, :month, :year])
 
+  = claim_form.fields_for @deposit do |deposit_form|
+    %span Was a money deposit received on or after 6 April 2007?
+    - ['yes', 'no'].each do |received_choice|
+      %label
+        = deposit_form.radio_button(:received, received_choice)
+        = received_choice.humanize
+    %span If Yes, provide the Tenancy Deposit Scheme reference number
+    = deposit_form.text_field :ref_number
+    %span Did you receive deposit in the form of property on or after 6 April 2007?
+    - ['yes', 'no'].each do |property_choice|
+      %label
+        = deposit_form.radio_button(:as_property, property_choice)
+        = property_choice.humanize
+
   = claim_form.fields_for @defendant do |defendant_form|
     %span If the defendant(s) seek(s) postponment of possesion on the grounds of exceptional hardship, are you content that the request be considered without a hearing?
     - ['yes', 'no'].each do |hearing_type|
