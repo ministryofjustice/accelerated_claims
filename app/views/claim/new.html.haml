@@ -67,6 +67,13 @@
     %span Date notice expired
     = date_select(:expiry_date, :order => [:day, :month, :year])
 
+  = claim_form.fields_for @defendant do |defendant_form|
+    %span If the defendant(s) seek(s) postponment of possesion on the grounds of exceptional hardship, are you content that the request be considered without a hearing?
+    - ['yes', 'no'].each do |hearing_type|
+      %label
+        = defendant_form.radio_button(:hearing, hearing_type)
+        = hearing_type.humanize
+
   = claim_form.fields_for @order do |order_form|
     %span You are asking the court to order that the defendant(s)
     = check_box_tag :possesion
