@@ -67,6 +67,26 @@
     %span Date notice expired
     = date_select(:expiry_date, :order => [:day, :month, :year])
 
+  = claim_form.fields_for @license do |license_form|
+    %span Is the property part of a house in multiple occupation?
+    - ['yes', 'no'].each do |hmo_choice|
+      %label
+        = license_form.radio_button(:hmo, hmo_choice)
+        = hmo_choice.humanize
+    %span If Yes, name of authority who issued the license
+    = license_form.text_field :authority
+    %span Date notice expired
+    = date_select(:hmo_date, :order => [:day, :month, :year])
+    %span Is the property required to be licensed under Part 3 of the Housing Act 2004?
+    - ['yes', 'no'].each do |housing_act_choice|
+      %label
+        = license_form.radio_button(:housing_act, housing_act_choice)
+        = housing_act_choice.humanize
+    %span If Yes, name of authority who issued the license
+    = license_form.text_field :housing_act_authority
+    %span Date license was issued
+    = date_select(:hmo_date, :order => [:day, :month, :year])
+
   = claim_form.fields_for @deposit do |deposit_form|
     %span Was a money deposit received on or after 6 April 2007?
     - ['yes', 'no'].each do |received_choice|
