@@ -1,4 +1,6 @@
 class ClaimController < ApplicationController
+  after_filter :delete_all_pdfs, only: :submission
+
   def new
     @claim = Claim.new
     @property = Property.new
@@ -14,10 +16,20 @@ class ClaimController < ApplicationController
   end
 
   def submission
-    puts params
-    redirect_to thank_you_path
+    begin
+      template = File.join Rails.root, "templates", "form.pdf"
+      result = Tempfile.new('form', tmpdir: '/tmp/')
+      pdf = PdfForms.new(ENV["PDFTK"])
+      pdf.fill_form template, result, "ClaimantNameAddress1" => params["claim"]["landlord"]["company"]
+      send_file(result.path, filename: "accelerated-claim.pdf", disposition: "inline", type: "application/pdf")
+    ensure
+      result.close
+    end
   end
 
-  def thank_you
+  private
+
+  def delete_all_pdfs
+    FileUtils.rm Dir.glob('/tmp/*pdf')
   end
 end

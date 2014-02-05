@@ -11,12 +11,10 @@ describe ClaimController do
   end
 
   describe "claim submission" do
-
-    it "accepts claim submission" do
-      claim_hash = {}
+    it "should return a PDF" do
+      claim_hash = { "claim" => { "landlord" => { "company" => "Yey" } } }
       post :submission, claim_hash
-      response.should redirect_to(thank_you_path)
+      response.headers["Content-Type"].should eq "application/pdf"
     end
-
   end
 end
