@@ -1,4 +1,5 @@
 ENV["RAILS_ENV"] ||= 'test'
+ENV["PDFTK"] ||= '/usr/local/bin/pdftk'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 
