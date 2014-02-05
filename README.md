@@ -4,10 +4,13 @@ This is the source code of what is currently a minimum viable product for the Ci
 
 ## Local setup
 
+Install **pdftk** & then:
+
 ```
 git clone https://github.com/ministryofjustice/accelerated_claim.git
 cd accelerated_claim
 bundle install
+export PDFTK=$(which pdftk)
 rails s
 ```
 
