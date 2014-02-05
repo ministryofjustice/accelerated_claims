@@ -7,6 +7,7 @@ class ClaimController < ApplicationController
     @tenant_two = Tenant.new
     @demoted_tenancy = DemotedTenancy.new
     @notice = Notice.new
+    @license = License.new
     @deposit = Deposit.new
     @defendant = Defendant.new
     @order = Order.new
