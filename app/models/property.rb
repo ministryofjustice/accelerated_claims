@@ -1,5 +1,4 @@
-class Property
-  include ActiveModel::Model
+class Property < BaseClass
 
   attr_accessor :street
   validates :street, presence: true, length: { maximum: 70 }
@@ -12,4 +11,5 @@ class Property
 
   attr_accessor :house
   validates :house, presence: true
+
 end
