@@ -1,5 +1,4 @@
-class Notice
-  include ActiveModel::Model
+class Notice < BaseClass
 
   attr_accessor :served_by
   validates :served_by, presence: true, length: { maximum: 40 }

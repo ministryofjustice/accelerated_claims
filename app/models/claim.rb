@@ -1,3 +1,2 @@
-class Claim
-  include ActiveModel::Model
+class Claim < BaseClass
 end
