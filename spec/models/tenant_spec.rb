@@ -1,15 +1,17 @@
 require 'spec_helper'
 
 describe Tenant do
-  let(:tenant) { Tenant.new }
+  let(:tenant) do
+    Tenant.new(title: "Mr",
+               full_name: "John Major",
+               street: "Sesame Street",
+               town: "London",
+               postcode: "SW1")
+  end
 
   describe "when given all valid values" do
     it "should be valid" do
-      Tenant.new(title: "Mr",
-                 full_name: "John Major",
-                 street: "Sesame Street",
-                 town: "London",
-                 postcode: "SW1").should be_valid
+      tenant.should be_valid
     end
   end
 

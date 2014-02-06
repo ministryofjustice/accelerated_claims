@@ -3,14 +3,16 @@ require 'spec_helper'
 describe Property do
 
   describe "validations" do
-    let(:property) { Property.new }
+    let(:property) do
+      Property.new(street: "1 Aha Street",
+                   town: "London",
+                   postcode: "SW1",
+                   house: true)
+    end
 
     describe "when given all valid values" do
       it "should be valid" do
-        Property.new(street: "1 Aha Street",
-                     town: "London",
-                     postcode: "SW1",
-                     house: true).should be_valid
+        property.should be_valid
       end
     end
 
