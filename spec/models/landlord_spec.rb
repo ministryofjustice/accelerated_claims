@@ -1,14 +1,16 @@
 require 'spec_helper'
 
 describe Landlord do
-  let(:landlord) { Landlord.new }
+  let(:landlord) do
+    Landlord.new(company: "Landlord LTD",
+                 street: "Streety Street",
+                 town: "London",
+                 postcode: "SW1")
+  end
 
   describe "when given all valid values" do
     it "should be valid" do
-      Landlord.new(company: "Landlord LTD",
-                   street: "Streety Street",
-                   town: "London",
-                   postcode: "SW1").should be_valid
+      landlord.should be_valid
     end
   end
 

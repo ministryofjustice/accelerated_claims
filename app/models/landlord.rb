@@ -5,6 +5,8 @@ class Landlord
   validates :company, presence: true
 
   attr_accessor :street
+  validates :street, length: { maximum: 40 }
+
   attr_accessor :town
   attr_accessor :postcode
 
