@@ -27,9 +27,6 @@ input[type="text"].pound
 select, option
   color: $black
 
-fieldset
-  margin: 0
-
 label
   cursor: pointer
 
@@ -53,6 +50,11 @@ button, .button
       background-image: image-url('icon-pointer.png')
       background-repeat: no-repeat
       background-position: right center
+
+span.charcount
+  font-size: 14px
+  margin-top: 4px
+  float: right
 
 section.error-summary
   border: 3px solid $errorcolour
@@ -107,11 +109,8 @@ span.error
       margin-top: 40px
 
   > h4
-    margin: 0 0 40px 90px
+    margin: 0 0 40px 30px
     font-size: 24px
-    clear: both
-    &:first-child
-      margin-bottom: 0
 
   &.extra
     background: $white
@@ -132,8 +131,11 @@ span.error
 
     fieldset, fieldset.full
       margin: 0
-      padding: 40px
       border-top: 1px dotted #c2c2c2
+
+      &.rel
+        padding-top: 0
+        border: none
 
       &:first-child
         border-top: none
@@ -146,8 +148,8 @@ span.error
 
         .row
           max-width: 590px
-    > .row
-      padding: 40px
+    > .row, > fieldset
+      padding: 40px 0
 
 fieldset.plain
   padding-bottom: 20px
@@ -168,12 +170,11 @@ fieldset.plain
 
 
 .moj-panel
-  @include clearfix
   background: $grey-4
   border:
     top: 1px solid $grey-2
     bottom: 1px solid $grey-2
-  padding: 40px 0 35px
+  padding: 40px 20px 40px 60px
   margin-bottom: 50px
   font-size: 19px
 
@@ -207,31 +208,20 @@ fieldset.plain
 
   fieldset, .row
     @include clearfix
-    float: left
     clear: both
-    width: 570px
-    margin:
-      top: 25px
-      bottom: 5px
-    padding:
-      top: 5px
-      bottom: 5px
+    margin-top: 40px
 
     &:first-child, &.nomargin
       margin-top: 0
 
     &.rel
-      margin-top: 0
-
+      margin-top: 15px
+      &:first-child
+        margin-top: 0
 
     &.help-link
       margin-top: 15px
       padding-left: 220px
-
-    &.date-picker
-      .row
-        margin-top: 5px
-        margin-bottom: 0
 
   .has-extra
     margin-top: 5px
@@ -276,7 +266,6 @@ fieldset.plain
         &.date-picker
           .row
             margin-top: 5px
-            margin-bottom: 0
 
     &.show-extra
       background-color: $white
@@ -290,7 +279,8 @@ fieldset.plain
       
 
   .row
-    padding-left: 280px
+    width: 480px
+    padding-left: 220px
 
     &.error
       padding-left: 277px
@@ -300,17 +290,14 @@ fieldset.plain
     &.divider
       width: 670px
       height: 0
-      padding: 0
-      margin:
-        left: 90px
-        top: 25px
-        bottom: 25px
+      padding-left: 0
+      margin-left: 30px
       overflow: hidden
       border-bottom: 1px dotted #c2c2c2
 
     &.full
       width: 670px
-      padding-left: 90px
+      padding-left: 30px
       &.table
         width: 700px
         padding-left: 0
@@ -417,7 +404,7 @@ fieldset.plain
 
     textarea
       width: 300px
-      height: 100px
+      height: 70px
 
     input.has-button
       margin: 0
@@ -429,7 +416,7 @@ fieldset.plain
       margin-left: 10px
 
   fieldset
-    padding-left: 280px
+    padding-left: 220px
 
     &.error
       padding-left: 277px
@@ -446,7 +433,6 @@ fieldset.plain
       clear: right
       margin-top: 15px
       line-height: 1
-      padding: 0
 
       &:first-child
         margin-top: 0
@@ -464,7 +450,6 @@ fieldset.plain
 
       .row
         margin-top: 5px
-        margin-bottom: 0
 
         &.rel
           margin-top: 15px
@@ -664,8 +649,6 @@ summary
     text-align: center
     padding-top: 70px
     background: image-url('confirmation-tick.png') center top no-repeat
-    font-size: 32px
-    line-height: 38px
   h2
     text-align: center
     margin: 40px 0
@@ -683,10 +666,6 @@ summary
   p
     text-align: center
     margin: 0
-
-  a.button
-    margin: 40px auto
-
 
 .next
   font-size: 19px
