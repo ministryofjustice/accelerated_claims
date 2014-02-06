@@ -1,5 +1,4 @@
-class Deposit
-  include ActiveModel::Model
+class Deposit < BaseClass
 
   attr_accessor :received
   validates :received, inclusion: { in: [true, false] }

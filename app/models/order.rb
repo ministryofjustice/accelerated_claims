@@ -1,5 +1,4 @@
-class Order
-  include ActiveModel::Model
+class Order < BaseClass
 
   attr_accessor :possession
   validates :possession, presence: true

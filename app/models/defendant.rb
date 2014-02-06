@@ -1,6 +1,4 @@
-class Defendant
-  include ActiveModel::Model
-
+class Defendant < BaseClass
   attr_accessor :hearing
   validates :hearing, inclusion: { in: [true, false] }
 end
