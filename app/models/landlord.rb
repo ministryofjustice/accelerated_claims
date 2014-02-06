@@ -1,5 +1,4 @@
-class Landlord
-  include ActiveModel::Model
+class Landlord < BaseClass
 
   attr_accessor :company
   validates :company, presence: true

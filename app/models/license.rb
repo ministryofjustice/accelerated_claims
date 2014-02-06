@@ -1,5 +1,4 @@
-class License
-  include ActiveModel::Model
+class License < BaseClass
 
   attr_accessor :hmo
   validates :hmo, inclusion: { in: [true, false] }

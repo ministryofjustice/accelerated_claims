@@ -1,5 +1,4 @@
-class DemotedTenancy
-  include ActiveModel::Model
+class DemotedTenancy < BaseClass
 
   attr_accessor :assured
   validates :assured, presence: true
