@@ -183,13 +183,134 @@
     .moj-panel
       %fieldset.striped-choice.full
         %legend
-          Is the property part of a house in multiple occupation
+          Is the property part of a house in multiple occupation?
           %span.req> *
         .options
           .row
             %input#multiple-occupation-yes(type='radio' name='multiple-occupation' value='yes')
-            %label(for='multiple-occupation-yes') A house
+            %label(for='multiple-occupation-yes') Yes
           .row
             %input#multiple-occupation-no(type='radio' name='multiple-occupation' value='no')
-            %label(for='multiple-occupation-no') Part of a house
-            
+            %label(for='multiple-occupation-no') No
+
+      .sub-panel.rel.extra
+        .row.full
+          %label(for='multiple-occupation-licence-authority')
+            If&nbsp;
+            %strong> Yes
+            , name of authority who issued the licence
+          %input#multiple-occupation-licence-authority(type='text')
+        %fieldset.date-picker.rel.full
+          %legend Date licence was issued
+          .row
+            %select#multiple-occupation-licence-date.date-date
+              %option(value='') date
+              %option(value='1') 1
+            %select#multiple-occupation-licence-month.date-month
+              %option(value='') month
+              %option(value='January') January
+            %select#multiple-occupation-licence-year.date-year
+              %option(value='') year
+              %option(value='2014') 2014
+
+      %fieldset.striped-choice.full
+        %legend
+          Is the property required to be licenced under Part 3 of the Housing Act 2004?
+          %span.req> *
+        .options
+          .row
+            %input#housing-act-yes(type='radio' name='housing-act' value='yes')
+            %label(for='housing-act-yes') Yes
+          .row
+            %input#housing-act-no(type='radio' name='housing-act' value='no')
+            %label(for='housing-act-no') No
+
+      .sub-panel.rel.extra
+        .row.full
+          %label(for='housing-act-licence-authority')
+            If&nbsp;
+            %strong> Yes
+            , name of authority who issued the licence
+          %input#housing-act-licence-authority(type='text')
+        %fieldset.date-picker.rel.full
+          %legend Date licence was issued
+          .row
+            %select#housing-act-licence-date.date-date
+              %option(value='') date
+              %option(value='1') 1
+            %select#housing-act-licence-month.date-month
+              %option(value='') month
+              %option(value='January') January
+            %select#housing-act-licence-year.date-year
+              %option(value='') year
+              %option(value='2014') 2014
+
+  %section
+    %h3.section-header About the deposit
+    .moj-panel
+      %fieldset.striped-choice.full
+        %legend
+          Was a money deposit received on or after 6 April 2007?
+          %span.req> *
+        .options
+          .row
+            %input#money-deposit-received-yes(type='radio' name='money-deposit-received' value='yes')
+            %label(for='money-deposit-received-yes') Yes
+          .row
+            %input#money-deposit-received-no(type='radio' name='money-deposit-received' value='no')
+            %label(for='money-deposit-received-no') No
+
+      .sub-panel.rel.extra
+        .row.full
+          %label(for='deposit-reference-number')
+            If&nbsp;
+            %strong> Yes
+            , provide the Tenancy Deposit Scheme reference number
+          %input#deposit-reference-number(type='text')
+
+      %fieldset.striped-choice.full
+        %legend
+          Did you receive a deposit in the form of property on or after 6 April 2007?
+          %span.req> *
+        .options
+          .row
+            %input#property-deposit-received-yes(type='radio' name='property-deposit-received' value='yes')
+            %label(for='property-deposit-received-yes') Yes
+          .row
+            %input#property-deposit-received-no(type='radio' name='property-deposit-received' value='no')
+            %label(for='property-deposit-received-no') No
+
+  %section
+    %h3.section-header About the defendant(s)
+    .moj-panel
+      %fieldset.striped-choice.full
+        %legend
+          If the defendant(s) seek(s) postponement of possession on the grounds of exceptional hardship, are you content that the request be considered without a hearing?
+          %span.req> *
+        .options
+          .row
+            %input#consider-without-hearing-yes(type='radio' name='consider-without-hearing' value='yes')
+            %label(for='consider-without-hearing-yes') Yes
+          .row
+            %input#consider-without-hearing-no(type='radio' name='consider-without-hearing' value='no')
+            %label(for='consider-without-hearing-no') No
+
+  %section
+    %h3.section-header About the order
+    .moj-panel
+      %fieldset.striped-choice.full
+        %legend
+          You are asking the court to order that the defendant(s):
+          %span.req> *
+        .options
+          .row
+            %input#deliver-possession(type='checkbox')
+            %label(for='deliver-possession') deliver up possession of the property
+          .row
+            %input#pay-costs(type='checkbox')
+            %label(for='pay-costs') to pay the cost of the claim
+
+  %section
+    .action-buttons.cf
+      %a.button.primary.large.chevron.left(href='#') Complete form
+      
