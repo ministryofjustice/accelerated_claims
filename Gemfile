@@ -37,3 +37,4 @@ group :development, :test do
 end
 
 gem 'pdf-forms', '0.5.5'
+gem 'uk_postcode', '1.0.0'
