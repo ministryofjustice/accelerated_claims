@@ -21,7 +21,11 @@ class Property < BaseClass
 
   def as_json
     pcode = UKPostcode.new(postcode)
-    { "property" => "#{street}, #{town}", "property_postcode1" => "#{pcode.outcode}", "property_postcode2" => "#{pcode.incode}" }
+    {
+      "property" => "#{street}\n#{town}",
+      "property_postcode1" => "#{pcode.outcode}",
+      "property_postcode2" => "#{pcode.incode}"
+    }
   end
 
 end
