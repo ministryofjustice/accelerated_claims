@@ -4,20 +4,11 @@ class ClaimController < ApplicationController
   def new
     @page_title = 'Property repossession'
     @claim = Claim.new
-    @property = Property.new
-    @landlord = Landlord.new
-    @tenant_one = Tenant.new
-    @tenant_two = Tenant.new
-    @demoted_tenancy = DemotedTenancy.new
-    @notice = Notice.new
-    @license = License.new
-    @deposit = Deposit.new
-    @defendant = Defendant.new
-    @order = Order.new
   end
 
   def submission
     begin
+      @claim = Claim.new(params["claim"])
       template = File.join Rails.root, "templates", "form.pdf"
       result = Tempfile.new('form', tmpdir: '/tmp/')
       pdf = PdfForms.new(ENV["PDFTK"])
