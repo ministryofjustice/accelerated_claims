@@ -2,6 +2,7 @@ class ClaimController < ApplicationController
   after_filter :delete_all_pdfs, only: :submission
 
   def new
+    @page_title = 'Property repossession'
     @claim = Claim.new
     @property = Property.new
     @landlord = Landlord.new
