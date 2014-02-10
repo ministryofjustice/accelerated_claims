@@ -6,7 +6,7 @@ describe ClaimData do
 
     let(:desired_format) do
       {
-        "property"           => "Mucho Gracias Road, London",
+        "property"           => "Mucho Gracias Road\nLondon",
         "property_postcode1" => "SW1H",
         "property_postcode2" => "9AJ",
         "claimant" => "Landlordly LTD\nSecret Lair 2\nEvil",
