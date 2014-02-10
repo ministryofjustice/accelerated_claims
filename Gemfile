@@ -32,6 +32,7 @@ gem 'moj_boilerplate', github: 'ministryofjustice/moj_boilerplate', tag: 'v0.6.2
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
+  gem 'quiet_assets'
 end
 
 gem 'pdf-forms', '0.5.5'
