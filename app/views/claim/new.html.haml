@@ -1,119 +1,234 @@
-%h1 Start an accelerated property possession case
+= render partial: 'shared/header_message'
 
 = form_for :claim, url: submission_path, :html => { :method => :post } do |claim_form|
-  = claim_form.fields_for @property do |address_form|
-    %span Street
-    = address_form.text_field :street
-    %span Town
-    = address_form.text_field :town
-    %span Postcode
-    = address_form.text_field :postcode
-    %span Property type
-    - ['A house', 'Part of a house'].each do |property_type|
-      %label
-        = address_form.radio_button(:house, property_type)
-        = property_type.humanize
+  %section  
+    %span.right
+      %span.req> *
+      required
+    %h3.section-header Property
+    .moj-panel
+      = claim_form.fields_for @property do |address_form|
+        .row.street
+          = address_form.label :street, 'Street<span class="req">*</span>'.html_safe
+          = address_form.text_area :street
+        .row.rel.town
+          = address_form.label :town
+          = address_form.text_field :town
+        .row.rel.postcode
+          = address_form.label :postcode, 'Postcode<span class="req">*</span>'.html_safe
+          = address_form.text_field :postcode, :class => 'smalltext'
+        %fieldset.striped-choice
+          %legend
+            Type of property
+            %span.req> *
+          .options
+            - ['A house', 'Part of a house'].each do |property_type|
+              .row
+                = address_form.radio_button(:house, property_type)
+                = address_form.label :house, property_type, :value => property_type
 
-  = claim_form.fields_for @landlord do |landlord_form|
-    %span Company
-    = landlord_form.text_field :company
-    %span Street
-    = landlord_form.text_field :street
-    %span Town
-    = landlord_form.text_field :town
-    %span Postcode
-    = landlord_form.text_field :postcode
+  %section
+    %h3.section-header Landlord (claimant)
+    .moj-panel
+      = claim_form.fields_for @landlord do |landlord_form|
+        .row
+          = landlord_form.label :company, 'Company name<span class="req">*</span>'.html_safe
+          = landlord_form.text_field :company
+        .row.rel.street
+          = landlord_form.label :street, 'Street<span class="req">*</span>'.html_safe
+          = landlord_form.text_area :street
+        .row.rel.town
+          = landlord_form.label :town
+          = landlord_form.text_field :town
+        .row.rel.postcode
+          = landlord_form.label :postcode, 'Postcode<span class="req">*</span>'.html_safe
+          = landlord_form.text_field :postcode, :class => 'smalltext'
 
-  = claim_form.fields_for :tenant_one do |tenant_form|
-    %span Title
-    = tenant_form.text_field :title
-    %span Full Name
-    = tenant_form.text_field :full_name
-    %span Street
-    = tenant_form.text_field :street
-    %span Town
-    = tenant_form.text_field :town
-    %span Postcode
-    = tenant_form.text_field :postcode
+  %section
+    %h3.section-header Tenants (defendants)
+    .moj-panel
+      = claim_form.fields_for :tenant_one do |tenant_form|
+        .sub-panel.tenant
+          %h4 Defendant 1
+          .row
+            = tenant_form.label :title, 'Title<span class="req">*</span>'.html_safe
+            = tenant_form.text_field :title, :class => 'smalltext'
+          .row.rel
+            = tenant_form.label :full_name, 'Full name<span class="req">*</span>'.html_safe
+            = tenant_form.text_field :full_name
+          .row.full
+            If the defendant is living somewhere else, give the address below
+          .row.rel.street
+            = tenant_form.label :street
+            = tenant_form.text_area :street
+          .row.rel.town
+            = tenant_form.label :town
+            = tenant_form.text_field :town
+          .row.rel.postcode
+            = tenant_form.label :postcode
+            = tenant_form.text_field :postcode, :class => 'smalltext'
+        
+      .row.divider
 
-  = claim_form.fields_for :tenant_two do |tenant_form|
-    %span Title
-    = tenant_form.text_field :title
-    %span Full Name
-    = tenant_form.text_field :full_name
-    %span Street
-    = tenant_form.text_field :street
-    %span Town
-    = tenant_form.text_field :town
-    %span Postcode
-    = tenant_form.text_field :postcode
+      = claim_form.fields_for :tenant_two do |tenant_form|
+        .sub-panel.tenant
+          %h4 Defendant 2
+          .row
+            = tenant_form.label :title, 'Title<span class="req">*</span>'.html_safe
+            = tenant_form.text_field :title, :class => 'smalltext'
+          .row.rel
+            = tenant_form.label :full_name, 'Full name<span class="req">*</span>'.html_safe
+            = tenant_form.text_field :full_name
+          .row.full
+            If the defendant is living somewhere else, give the address below
+          .row.rel.street
+            = tenant_form.label :street
+            = tenant_form.text_area :street
+          .row.rel.town
+            = tenant_form.label :town
+            = tenant_form.text_field :town
+          .row.rel.postcode
+            = tenant_form.label :postcode
+            = tenant_form.text_field :postcode, :class => 'smalltext'
 
-  = claim_form.fields_for @demoted_tenancy do |demoted_tenancy_form|
-    %span Previous tenancy before demotion
-    - ['assured', 'secure'].each do |tenancy_type|
-      %label
-        = demoted_tenancy_form.radio_button(:assured, tenancy_type)
-        = tenancy_type.humanize
-    %span When demotion was made
-    = date_select(:demotion_order_date, :order => [:day, :month, :year])
-    %span County Court where order was made
-    = demoted_tenancy_form.text_field :county_court
+  %section
+    %h3.section-header About the demoted tenancy
+    .moj-panel
+      = claim_form.fields_for @demoted_tenancy do |demoted_tenancy_form|
+        %fieldset.striped-choice
+          %legend
+            Previous tenancy before demotion
+            %span.req> *
+          .options
+            - ['assured', 'secure'].each do |tenancy_type|
+              .row
+                = demoted_tenancy_form.radio_button(:assured, tenancy_type)
+                = demoted_tenancy_form.label :assured, tenancy_type.humanize, :value => tenancy_type
+        %fieldset.date-picker
+          %legend
+            Date demotion order was made
+            %span.req> *
+          .row
+            = date_select(:demoted_tenancy_form, :demotion_order_date, :order => [:day, :month, :year], :with_css_classes => true)
+        .row
+          = demoted_tenancy_form.label :county_court, 'County Court where order was made<span class="req">*</span>'.html_safe
+          = demoted_tenancy_form.text_field :county_court
 
-  = claim_form.fields_for @notice do |notice_form|
-    %span Notice served by
-    = notice_form.text_field :served_by
-    %span Date notice served
-    = date_select(:date_served, :order => [:day, :month, :year])
-    %span Date notice expired
-    = date_select(:expiry_date, :order => [:day, :month, :year])
+  %section
+    %h3.section-header About the notice
+    .moj-panel
+      = claim_form.fields_for @notice do |notice_form|
+        .row
+          = notice_form.label :served_by, 'Notice served by<span class="req">*</span>'.html_safe
+          = notice_form.text_field :served_by
+        %fieldset.date-picker
+          %legend
+            Date notice served
+            %span.req> *
+          .row
+            = date_select(:notice_form, :date_served, :order => [:day, :month, :year], :with_css_classes => true)
+        %fieldset.date-picker
+          %legend
+            Date notice expired
+            %span.req> *
+          .row
+            = date_select(:notice_form, :expiry_date, :order => [:day, :month, :year], :with_css_classes => true)
 
-  = claim_form.fields_for @license do |license_form|
-    %span Is the property part of a house in multiple occupation?
-    - ['yes', 'no'].each do |hmo_choice|
-      %label
-        = license_form.radio_button(:hmo, hmo_choice)
-        = hmo_choice.humanize
-    %span If Yes, name of authority who issued the license
-    = license_form.text_field :authority
-    %span Date notice expired
-    = date_select(:hmo_date, :order => [:day, :month, :year])
-    %span Is the property required to be licensed under Part 3 of the Housing Act 2004?
-    - ['yes', 'no'].each do |housing_act_choice|
-      %label
-        = license_form.radio_button(:housing_act, housing_act_choice)
-        = housing_act_choice.humanize
-    %span If Yes, name of authority who issued the license
-    = license_form.text_field :housing_act_authority
-    %span Date license was issued
-    = date_select(:hmo_date, :order => [:day, :month, :year])
+  %section
+    %h3.section-header About licences
+    .moj-panel
+      = claim_form.fields_for @license do |license_form|
+        %fieldset.striped-choice.full
+          %legend
+            Is the property part of a house in multiple occupation?
+            %span.req> *
+          .options
+            - ['yes', 'no'].each do |hmo_choice|
+              .row
+                = license_form.radio_button(:hmo, hmo_choice)
+                = license_form.label :hmo, hmo_choice.humanize, :value => hmo_choice
+        .sub-panel.extra.rel
+          .row.full
+            = license_form.label :authority, 'If <strong>Yes</strong>, name of authority who issued the license'.html_safe
+            = license_form.text_field :authority    
+          %fieldset.date-picker.rel.full
+            %legend Date licence was issued
+            .row
+              = date_select(:license_form, :hmo_date, :order => [:day, :month, :year], :with_css_classes => true)
+        %fieldset.striped-choice.full
+          %legend
+            Is the property required to be licensed under Part 3 of the Housing Act 2004?
+            %span.req> *
+          .options
+            - ['yes', 'no'].each do |housing_act_choice|
+              .row
+                = license_form.radio_button(:housing_act, housing_act_choice)
+                = license_form.label :housing_act, housing_act_choice.humanize, :value => housing_act_choice
+        .sub-panel.extra.rel
+          .row.full
+            = license_form.label :housing_act_authority, 'If <strong>Yes</strong>, name of authority who issued the license'.html_safe
+            = license_form.text_field :housing_act_authority
+          %fieldset.date-picker.rel.full
+            %legend Date license was issued
+            .row
+              = date_select(:license_form, :hmo_date, :order => [:day, :month, :year], :with_css_classes => true)
+  
+  %section
+    %h3.section-header About the deposit
+    .moj-panel
+      = claim_form.fields_for @deposit do |deposit_form|
+        %fieldset.striped-choice.full
+          %legend
+            Was a money deposit received on or after 6 April 2007?
+            %span.req> *
+          .options
+            - ['yes', 'no'].each do |received_choice|
+              .row
+                = deposit_form.radio_button(:received, received_choice)
+                = deposit_form.label :received, received_choice.humanize, :value => received_choice
+        .sub-panel.extra.rel
+          .row.full
+            = deposit_form.label :ref_number, 'If <strong>Yes</strong>, provide the Tenancy Deposit Scheme reference number'.html_safe
+            = deposit_form.text_field :ref_number
+        %fieldset.striped-choice.full
+          %legend
+            Did you receive deposit in the form of property on or after 6 April 2007?
+            %span.req> *
+          .options
+            - ['yes', 'no'].each do |property_choice|
+              .row
+                = deposit_form.radio_button(:as_property, property_choice)
+                = deposit_form.label :as_property, property_choice.humanize, :value => property_choice
 
-  = claim_form.fields_for @deposit do |deposit_form|
-    %span Was a money deposit received on or after 6 April 2007?
-    - ['yes', 'no'].each do |received_choice|
-      %label
-        = deposit_form.radio_button(:received, received_choice)
-        = received_choice.humanize
-    %span If Yes, provide the Tenancy Deposit Scheme reference number
-    = deposit_form.text_field :ref_number
-    %span Did you receive deposit in the form of property on or after 6 April 2007?
-    - ['yes', 'no'].each do |property_choice|
-      %label
-        = deposit_form.radio_button(:as_property, property_choice)
-        = property_choice.humanize
+  %section
+    %h3.section-header About the defendant(s)
+    .moj-panel
+      = claim_form.fields_for @defendant do |defendant_form|
+        %fieldset.striped-choice.full
+          %legend
+            If the defendant(s) seek(s) postponment of possesion on the grounds of exceptional hardship, are you content that the request be considered without a hearing?
+            %span.req> *
+          .options
+            - ['yes', 'no'].each do |hearing_type|
+              .row
+                = defendant_form.radio_button(:hearing, hearing_type)
+                = defendant_form.label :hearing, hearing_type.humanize, :value => hearing_type
 
-  = claim_form.fields_for @defendant do |defendant_form|
-    %span If the defendant(s) seek(s) postponment of possesion on the grounds of exceptional hardship, are you content that the request be considered without a hearing?
-    - ['yes', 'no'].each do |hearing_type|
-      %label
-        = defendant_form.radio_button(:hearing, hearing_type)
-        = hearing_type.humanize
-
-  = claim_form.fields_for @order do |order_form|
-    %span You are asking the court to order that the defendant(s)
-    = check_box_tag :possesion
-    %span deliver up possesion of the property
-    = check_box_tag :cost
-    %span to pay the cost of the claim
+  %section
+    %h3.section-header About the order
+    .moj-panel
+      = claim_form.fields_for @order do |order_form|
+        %fieldset.striped-choice.full
+          %legend
+            You are asking the court to order that the defendant(s)
+            %span.req> *
+          .options
+            .row
+              = order_form.check_box :possession
+              = order_form.label :possession, 'deliver up possession of the property'
+            .row
+              = order_form.check_box :cost
+              = order_form.label :cost, 'to pay the cost of the claim'
 
   %section
     .action-buttons.cf
