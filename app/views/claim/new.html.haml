@@ -7,7 +7,7 @@
       required
     %h3.section-header Property
     .moj-panel
-      = claim_form.fields_for @property do |address_form|
+      = claim_form.fields_for @claim.property do |address_form|
         .row.street
           = address_form.label :street, 'Street<span class="req">*</span>'.html_safe
           = address_form.text_area :street
@@ -30,7 +30,7 @@
   %section
     %h3.section-header Landlord (claimant)
     .moj-panel
-      = claim_form.fields_for @landlord do |landlord_form|
+      = claim_form.fields_for @claim.landlord do |landlord_form|
         .row
           = landlord_form.label :company, 'Company name<span class="req">*</span>'.html_safe
           = landlord_form.text_field :company
@@ -47,7 +47,7 @@
   %section
     %h3.section-header Tenants (defendants)
     .moj-panel
-      = claim_form.fields_for :tenant_one do |tenant_form|
+      = claim_form.fields_for @claim.tenant_one do |tenant_form|
         .sub-panel.tenant
           %h4 Defendant 1
           .row
@@ -69,8 +69,8 @@
             = tenant_form.text_field :postcode, :class => 'smalltext'
         
       .row.divider
-
-      = claim_form.fields_for :tenant_two do |tenant_form|
+      
+      = claim_form.fields_for @claim.tenant_two do |tenant_form|
         .sub-panel.tenant
           %h4 Defendant 2
           .row
@@ -94,7 +94,7 @@
   %section
     %h3.section-header About the demoted tenancy
     .moj-panel
-      = claim_form.fields_for @demoted_tenancy do |demoted_tenancy_form|
+      = claim_form.fields_for @claim.demoted_tenancy do |demoted_tenancy_form|
         %fieldset.striped-choice
           %legend
             Previous tenancy before demotion
@@ -117,7 +117,7 @@
   %section
     %h3.section-header About the notice
     .moj-panel
-      = claim_form.fields_for @notice do |notice_form|
+      = claim_form.fields_for @claim.notice do |notice_form|
         .row
           = notice_form.label :served_by, 'Notice served by<span class="req">*</span>'.html_safe
           = notice_form.text_field :served_by
@@ -137,7 +137,7 @@
   %section
     %h3.section-header About licences
     .moj-panel
-      = claim_form.fields_for @license do |license_form|
+      = claim_form.fields_for @claim.license do |license_form|
         %fieldset.striped-choice.full
           %legend
             Is the property part of a house in multiple occupation?
@@ -176,7 +176,7 @@
   %section
     %h3.section-header About the deposit
     .moj-panel
-      = claim_form.fields_for @deposit do |deposit_form|
+      = claim_form.fields_for @claim.deposit do |deposit_form|
         %fieldset.striped-choice.full
           %legend
             Was a money deposit received on or after 6 April 2007?
@@ -203,7 +203,7 @@
   %section
     %h3.section-header About the defendant(s)
     .moj-panel
-      = claim_form.fields_for @defendant do |defendant_form|
+      = claim_form.fields_for @claim.defendant do |defendant_form|
         %fieldset.striped-choice.full
           %legend
             If the defendant(s) seek(s) postponment of possesion on the grounds of exceptional hardship, are you content that the request be considered without a hearing?
@@ -217,7 +217,7 @@
   %section
     %h3.section-header About the order
     .moj-panel
-      = claim_form.fields_for @order do |order_form|
+      = claim_form.fields_for @claim.order do |order_form|
         %fieldset.striped-choice.full
           %legend
             You are asking the court to order that the defendant(s)
