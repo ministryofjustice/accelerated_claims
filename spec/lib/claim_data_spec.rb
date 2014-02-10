@@ -8,7 +8,10 @@ describe ClaimData do
       {
         "property"           => "Mucho Gracias Road, London",
         "property_postcode1" => "SW1H",
-        "property_postcode2" => "9AJ"
+        "property_postcode2" => "9AJ",
+        "claimant" => "Landlordly LTD\nSecret Lair 2\nEvil",
+        "claimant_postcode1" => "SW1W",
+        "claimant_postcode2" => "0LU"
       }
     end
 
