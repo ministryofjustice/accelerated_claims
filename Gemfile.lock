@@ -46,6 +46,11 @@ GEM
     arel (4.0.1)
     atomic (1.1.14)
     builder (3.1.4)
+    byebug (2.6.0)
+      columnize (~> 0.3)
+      debugger-linecache (~> 1.2)
+    columnize (0.3.6)
+    debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (2.0.2)
@@ -140,6 +145,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  byebug
   govuk_frontend_toolkit!
   govuk_template (= 0.3.8)
   haml-rails

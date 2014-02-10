@@ -12,7 +12,7 @@ describe ClaimController do
 
   describe "claim submission" do
     it "should return a PDF" do
-      claim_hash = { "claim" => { "landlord" => { "company" => "Yey" } } }
+      claim_hash = claim_post_data
       post :submission, claim_hash
       response.headers["Content-Type"].should eq "application/pdf"
     end

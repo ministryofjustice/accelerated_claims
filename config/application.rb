@@ -6,6 +6,7 @@ require "action_controller/railtie"
 require "sprockets/railtie"
 require "active_model"
 require "active_model/serializers/json"
+require "active_support/inflector"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
