@@ -13,13 +13,13 @@ def claim_post_data
         "postcode" => "SW1H 9AJ",
         "house"=>"A house"
       },
-      "demoted_tenancy"=>{}, 
-      "notice"=>{}, 
-      "license"=>{}, 
-      "deposit"=>{}, 
-      "defendant"=>{}, 
-      "order"=>{}, 
-      "tenant_one"=>{}, 
+      "demoted_tenancy"=>{},
+      "notice"=>{},
+      "license"=>{},
+      "deposit"=>{},
+      "defendant"=>{},
+      "order"=>{},
+      "tenant_one"=>{},
       "tenant_two"=>{}
     }
   }
