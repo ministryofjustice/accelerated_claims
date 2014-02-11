@@ -34,6 +34,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'quiet_assets'
   gem 'byebug'
+  gem 'dotenv-rails'  # set environment variables via the filesystem
 end
 
 gem 'pdf-forms', '0.5.5'
