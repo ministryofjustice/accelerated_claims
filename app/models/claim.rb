@@ -2,19 +2,16 @@ class Claim < BaseClass
   include ActiveSupport::Inflector
 
   def initialize(claim_params={})
-    submodels.reject {|v| v == 'Tenant'}.each do |model|
-      init_submodel(claim_params, model.underscore, model)
-    end
-    %w(one two).each { |num| init_submodel(claim_params, "tenant_#{num}", 'Tenant') }
+    initialize_all_submodels(claim_params)
   end
 
   def as_json()
     json = {}
-    self.instance_variables.each { |var| json[var.to_s.gsub(/@/, '')] = instance_variable_get(var).as_json }
+    self.instance_variables.each { |var| json.merge! instance_variable_get(var).as_json }
     json
   end
-  
-private
+
+  private
 
   def init_submodel(claim_params, instance_var, model)
     sub_params = claim_params.has_key?(instance_var) ? claim_params[instance_var] : {}
@@ -25,7 +22,19 @@ private
   end
 
   def submodels
-    %w(Property Landlord DemotedTenancy Notice License Deposit Defendant Order Tenant)
+    %w(Property Landlord DemotedTenancy Notice License Deposit Defendant Order)
   end
 
+  def tenant_submodels
+    %w(one two)
+  end
+
+  def initialize_all_submodels(params)
+    submodels.each { |model|
+      init_submodel(params, model.underscore, model)
+    }
+    tenant_submodels.each { |num|
+      init_submodel(params, "tenant_#{num}", 'Tenant')
+    }
+  end
 end

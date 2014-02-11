@@ -1,14 +1,36 @@
 require 'spec_helper'
 
 describe Property do
+  let(:property) do
+    Property.new(street: "1 Aha Street",
+                 town: "London",
+                 postcode: "SW1H 9AJ",
+                 house: true)
+  end
+
+  describe "#as_json" do
+    let(:json_output) do
+      {
+        "property" => "1 Aha Street\nLondon",
+        "property_postcode1" => "SW1H",
+        "property_postcode2" => "9AJ"
+      }
+    end
+
+    it "should produce formated output" do
+      property.as_json.should eq json_output
+    end
+  end
 
   describe "validations" do
     let(:property) do
       Property.new(street: "1 Aha Street",
                    town: "London",
-                   postcode: "SW1",
+                   postcode: "SW1H 9AJ",
                    house: true)
     end
+
+
 
     describe "when given all valid values" do
       it "should be valid" do
@@ -44,6 +66,13 @@ describe Property do
       it "when over 8 characters" do
         property.postcode = "x" * 9
         property.should_not be_valid
+      end
+
+      context "when not a full postcode" do
+        it "shouldn't be valid" do
+          property.postcode = "SW1"
+          property.should_not be_valid
+        end
       end
     end
 
