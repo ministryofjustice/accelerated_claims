@@ -15,11 +15,12 @@ describe Claim do
     end
   end
 
-  describe '#as_json' do 
+  describe '#as_json' do
     let(:data) { claim_post_data['claim'] }
+    let(:desired_format) { claim_formatted_data['claim'] }
 
     it 'should return the right JSON' do
-      expect(@claim.as_json).to eql data
+      expect(@claim.as_json).to eql desired_format
     end
   end
 end
