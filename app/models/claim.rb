@@ -8,7 +8,7 @@ class Claim < BaseClass
     @errors = ActiveModel::Errors.new(self)
   end
 
-  def as_json()
+  def as_json
     json = {}
     attributes_from_submodels.each { |var, model| json.merge! instance_variable_get("@#{var}").as_json }
     json
@@ -19,7 +19,7 @@ class Claim < BaseClass
     validity = true
     attributes_from_submodels.each do |instance_var, model|
       unless self.send(instance_var).valid?
-        self.send(instance_var).errors.full_messages.each { |m| @errors[:base] << m } 
+        self.send(instance_var).errors.full_messages.each { |m| @errors[:base] << m }
         validity = false
       end
     end
@@ -37,9 +37,9 @@ private
   end
 
   def attributes_from_submodels
-    attributes = {} 
+    attributes = {}
     singular_submodels.each { |model| attributes[model.underscore] = model }
-    doubled_submodels.each do |model| 
+    doubled_submodels.each do |model|
       %w(one two).each { |n| attributes["#{model.underscore}_#{n}"] = model }
     end
     attributes
@@ -57,5 +57,17 @@ private
     self.class.send( :define_method, instance_var.to_sym) {
       instance_variable_get "@#{instance_var}"
     }
+  end
+
+  def format_keys(submodel)
+    hash = {}
+    submodel.each_with_index do |attr, index|
+      instance_variable_get(attr).as_json.each do |key,val|
+        name = key.to_s.gsub('@', '').split(/_/)
+        new_key = ["#{name[0]}#{index+1}", name.drop(1)].flatten.join('_')
+        hash.merge! new_key => val
+      end
+    end
+    hash
   end
 end
