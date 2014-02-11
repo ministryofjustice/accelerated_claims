@@ -19,8 +19,22 @@ def claim_post_data
       "deposit"=>{},
       "defendant"=>{},
       "order"=>{},
-      "tenant_one"=>{},
-      "tenant_two"=>{}
+      "tenant_one"=>
+      {
+        "title" => "Mr",
+        "full_name" => "John Major",
+        "street" => "Sesame Street",
+        "town" => "London",
+        "postcode" => "SW1X 2PT"
+      },
+      "tenant_two"=>
+      {
+        "title" => "Ms",
+        "full_name" => "Jane Major",
+        "street" => "Sesame Street",
+        "town" => "London",
+        "postcode" => "SW1X 2PT"
+      }
     }
   }
 end
@@ -34,5 +48,11 @@ def claim_formatted_data
     "property" => "Mucho Gracias Road\nLondon",
     "property_postcode1" => "SW1H",
     "property_postcode2" => "9AJ",
+    "defendant1" => "Mr John Major\nSesame Street\nLondon",
+    "defendant1_postcode1" => "SW1X",
+    "defendant1_postcode2" => "2PT",
+    "defendant2" => "Ms Jane Major\nSesame Street\nLondon",
+    "defendant2_postcode1" => "SW1X",
+    "defendant2_postcode2" => "2PT"
   }
 end
