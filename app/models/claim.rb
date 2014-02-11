@@ -10,10 +10,10 @@ class Claim < BaseClass
 
   def as_json()
     json = {}
-    self.instance_variables.each { |var| json[var.to_s.gsub(/@/, '')] = instance_variable_get(var).as_json }
+    self.instance_variables.each { |var| json.merge! instance_variable_get(var).as_json }
     json
   end
-  
+
 private
 
   def init_submodel(claim_params, instance_var, model)
