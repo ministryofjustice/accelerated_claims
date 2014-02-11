@@ -12,7 +12,7 @@ class ClaimController < ApplicationController
       template = File.join Rails.root, "templates", "form.pdf"
       result = Tempfile.new('form', tmpdir: '/tmp/')
       pdf = PdfForms.new(ENV["PDFTK"])
-      pdf.fill_form template, result, ClaimData.new(params).formatted
+      pdf.fill_form template, result, @claim.as_json
       send_file(result.path, filename: "accelerated-claim.pdf", disposition: "inline", type: "application/pdf")
     ensure
       result.close

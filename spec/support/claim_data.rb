@@ -27,25 +27,12 @@ end
 
 
 def claim_formatted_data
-  { "claim" =>
-    { "landlord" =>
-      {"claimant" => "Landlordly LTD\nSecret Lair 2\nEvil",
-        "claimant_postcode1" => "SW1W",
-        "claimant_postcode2" => "0LU"
-      },
-      "property" =>
-      { "property" => "Mucho Gracias Road\nLondon",
-        "property_postcode1" => "SW1H",
-        "property_postcode2" => "9AJ",
-      },
-      "demoted_tenancy"=>{},
-      "notice"=>{},
-      "license"=>{},
-      "deposit"=>{},
-      "defendant"=>{},
-      "order"=>{},
-      "tenant_one"=>{},
-      "tenant_two"=>{}
-    }
+  {
+    "claimant" => "Landlordly LTD\nSecret Lair 2\nEvil",
+    "claimant_postcode1" => "SW1W",
+    "claimant_postcode2" => "0LU",
+    "property" => "Mucho Gracias Road\nLondon",
+    "property_postcode1" => "SW1H",
+    "property_postcode2" => "9AJ",
   }
 end
