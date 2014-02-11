@@ -1,8 +1,11 @@
 class Claim < BaseClass
   include ActiveSupport::Inflector
 
+  attr_accessor :errors
+
   def initialize(claim_params={})
     initialize_all_submodels(claim_params)
+    @errors = ActiveModel::Errors.new(self)
   end
 
   def as_json()
@@ -11,7 +14,19 @@ class Claim < BaseClass
     json
   end
 
-  private
+  def valid?
+    @errors.clear
+    validity = true
+    attributes_from_submodels.each do |instance_var, model|
+      unless self.send(instance_var).valid?
+        self.send(instance_var).errors.full_messages.each { |m| @errors[:base] << m } 
+        validity = false
+      end
+    end
+    validity
+  end
+
+private
 
   def submodels
     %w(Property Landlord DemotedTenancy Notice License Deposit Defendant Order Tenant)
