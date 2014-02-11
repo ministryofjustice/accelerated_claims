@@ -1,0 +1,8 @@
+- if @errors
+  %section.error-summary
+    %h2#error-heading You need to fix the errors on this page before continuing.
+    %p See highlighted errors below.
+
+    %ul
+      - @errors.full_messages.each do |msg|
+        %li= msg
