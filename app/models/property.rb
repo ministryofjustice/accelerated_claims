@@ -20,11 +20,11 @@ class Property < BaseClass
   validates :house, presence: true
 
   def as_json
-    pcode = UKPostcode.new(postcode)
+    postcode1, postcode2 = split_postcode
     {
       "address" => "#{street}\n#{town}",
-      "postcode1" => "#{pcode.outcode}",
-      "postcode2" => "#{pcode.incode}"
+      "postcode1" => "#{postcode1}",
+      "postcode2" => "#{postcode2}"
     }
   end
 

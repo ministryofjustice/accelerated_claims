@@ -13,18 +13,15 @@ class Notice < BaseClass
     day = '%d'
     month = '%m'
     year = '%Y'
-
-    d = Date.strptime date_served, "#{day} #{month} #{year}"
-    e = Date.strptime expiry_date, "#{day} #{month} #{year}"
-
+    
     {
      "served_by" => "#{served_by}",
-     "date_served_day" => "#{d.strftime(day)}",
-     "date_served_month" => "#{d.strftime(month)}",
-     "date_served_year" => "#{d.strftime(year)}",
-     "expiry_date_day" => "#{e.strftime(day)}",
-     "expiry_date_month" => "#{e.strftime(month)}",
-     "expiry_date_year" => "#{e.strftime(year)}"
+     "date_served_day" => "#{date_served.strftime(day)}",
+     "date_served_month" => "#{date_served.strftime(month)}",
+     "date_served_year" => "#{date_served.strftime(year)}",
+     "expiry_date_day" => "#{expiry_date.strftime(day)}",
+     "expiry_date_month" => "#{expiry_date.strftime(month)}",
+     "expiry_date_year" => "#{expiry_date.strftime(year)}"
     }
   end
 end
