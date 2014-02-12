@@ -21,6 +21,8 @@ class BaseClass
     return p1,p2
   end
 
+  # this is pretty grim.
+  # what it does: turns multipart dates in form submissions into a single Date object
   def initialize( attrs = {} )
     if !attrs.nil? then
       dattrs = {}
