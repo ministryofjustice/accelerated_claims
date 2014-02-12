@@ -16,17 +16,25 @@ def claim_post_data
       "notice" =>
       {
         "served_by" => "Somebody",
-        "date_served" => "02 02 2014",
-        "expiry_date" => "02 02 2014"
+        "date_served(3i)" => "02",
+        "date_served(2i)" => "02",
+        "date_served(1i)" => "2014",
+        "expiry_date(3i)" => "02",
+        "expiry_date(2i)" => "02",
+        "expiry_date(1i)" => "2014",
       },
       "license" =>
       {
         "hmo" => true,
         "authority" => "Great authority",
-        "hmo_date" => "02 02 2014",
+        "hmo_date(3i)" => "02",
+        "hmo_date(2i)" => "02",
+        "hmo_date(1i)" => "2014",
         "housing_act" => true,
         "housing_act_authority" => "Grand authority",
-        "housing_act_date" => "02 02 2014"
+        "housing_act_date(3i)" => "02",
+        "housing_act_date(2i)" => "02",
+        "housing_act_date(1i)" => "2014"
       },
       "deposit" =>
       {
