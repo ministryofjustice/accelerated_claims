@@ -49,21 +49,9 @@ module AcceleratedClaims
 
     # Enable the asset pipeline
     config.assets.enabled = true
-    config.assets.precompile += %w(
-        moj-base.css
-        claims-global.css
-        claims-layout.css
-        claims-components.css
-        claims-mixins.css
-        claims-global.css
-        claims-layout.css
-        claims-forms.css
-        claims-intro.css
-        claims-usernav.css
-        claims-progressnav.css
-        claims-breadcrumb.css
-        claims-tables.css
-    )
+
+    # this was less that useful
+    # config.assets.precompile
 
   end
 end
