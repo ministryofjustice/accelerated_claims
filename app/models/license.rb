@@ -33,20 +33,17 @@ class License < BaseClass
     month = '%m'
     year = '%Y'
 
-    hdate = Date.strptime hmo_date, "#{day} #{month} #{year}"
-    act = Date.strptime housing_act_date, "#{day} #{month} #{year}"
-
     {
       "authority" => authority,
       "hmo" => hmo,
-      "hmo_day" => "#{hdate.strftime(day)}",
-      "hmo_month" => "#{hdate.strftime(month)}",
-      "hmo_year" => "#{hdate.strftime(year)}",
+      "hmo_day" => "#{hmo_date.strftime(day)}",
+      "hmo_month" => "#{hmo_date.strftime(month)}",
+      "hmo_year" => "#{hmo_date.strftime(year)}",
       "housing_act" => housing_act,
       "housing_act_authority" => housing_act_authority,
-      "housing_act_date_day" => "#{act.strftime(day)}",
-      "housing_act_date_month" => "#{act.strftime(month)}",
-      "housing_act_date_year" => "#{act.strftime(year)}"
+      "housing_act_date_day" => "#{housing_act_date.strftime(day)}",
+      "housing_act_date_month" => "#{housing_act_date.strftime(month)}",
+      "housing_act_date_year" => "#{housing_act_date.strftime(year)}"
     }
   end
 end
