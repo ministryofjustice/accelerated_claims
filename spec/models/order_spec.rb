@@ -30,6 +30,10 @@ describe Order do
         "cost" => true
       }
     end
+
+    it "should produce formatted output" do
+      expect(order.as_json).to eq desired_format
+    end
   end
 
 end

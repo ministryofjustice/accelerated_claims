@@ -23,7 +23,7 @@ def claim_post_data
       {
         "served_by" => "Somebody",
         "date_served" => "02 02 2014",
-        "expiry_date" => "02 05 2014"
+        "expiry_date" => "02 02 2014"
       },
       "license" =>
       {
@@ -94,5 +94,18 @@ def claim_formatted_data
     "notice_served_by" => "Somebody",
     "order_cost" => true,
     "order_possession" => true,
+    "license_authority" => "Great authority",
+    "license_hmo" => true,
+    "license_hmo_day" => "02",
+    "license_hmo_month" => "02",
+    "license_hmo_year" => "2014",
+    "license_housing_act" => true,
+    "license_housing_act_authority" => "Grand authority",
+    "license_housing_act_date_day" => "02",
+    "license_housing_act_date_month" => "02",
+    "license_housing_act_date_year" => "2014",
+    "deposit_as_property" => true,
+    "deposit_received" => true,
+    "deposit_ref_number" => "X1234",
   }
 end
