@@ -28,14 +28,20 @@ class Claim < BaseClass
 
 private
 
-  def submodels
-    %w(Property Landlord DemotedTenancy Notice License Deposit Defendant Order Tenant)
+  def singular_submodels
+    %w(Property Landlord DemotedTenancy Notice License Deposit Defendant Order)
+  end
+
+  def doubled_submodels
+    %w(Tenant)
   end
 
   def attributes_from_submodels
     attributes = {} 
-    submodels.reject { |m| m == 'Tenant' }.each { |model| attributes[model.underscore] = model }
-    %w(one two).each { |n| attributes["tenant_#{n}"] = 'Tenant' }
+    singular_submodels.each { |model| attributes[model.underscore] = model }
+    doubled_submodels.each do |model| 
+      %w(one two).each { |n| attributes["#{model.underscore}_#{n}"] = model }
+    end
     attributes
   end
 
