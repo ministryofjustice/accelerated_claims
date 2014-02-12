@@ -30,9 +30,9 @@ describe Tenant do
   describe "#as_json" do
     let(:desired_format) do
       {
-        "defendant" => "Mr John Major\nSesame Street\nLondon",
-        "defendant_postcode1" => "SW1X",
-        "defendant_postcode2" => "2PT"
+        "address" => "Mr John Major\nSesame Street\nLondon",
+        "postcode1" => "SW1X",
+        "postcode2" => "2PT"
       }
     end
 

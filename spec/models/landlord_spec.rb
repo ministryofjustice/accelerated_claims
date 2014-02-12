@@ -29,9 +29,9 @@ describe Landlord do
   describe "#as_json" do
     let(:json_output) do
       {
-        "claimant" => "Landlord LTD\nStreety Street\nLondon",
-        "claimant_postcode1" => "SW1H",
-        "claimant_postcode2" => "9AJ"
+        "address" => "Landlord LTD\nStreety Street\nLondon",
+        "postcode1" => "SW1H",
+        "postcode2" => "9AJ"
       }
     end
 
