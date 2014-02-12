@@ -22,4 +22,12 @@ describe Defendant do
       defendant.should_not be_valid
     end
   end
+
+  describe "#as_json" do
+    let(:desired_format) { { "hearing" => true } }
+
+    it "should produce formatted output" do
+      expect(defendant.as_json).to eq desired_format
+    end
+  end
 end
