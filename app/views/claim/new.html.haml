@@ -3,7 +3,7 @@
 = render 'shared/error_messages'
 
 = form_for :claim, url: submission_path, :html => { :method => :post } do |claim_form|
-  %section  
+  %section
     %span.right
       %span.req> *
       required
@@ -69,9 +69,9 @@
           .row.rel.postcode
             = tenant_form.label :postcode
             = tenant_form.text_field :postcode, :class => 'smalltext'
-        
+
       .row.divider
-      
+
       = claim_form.fields_for @claim.tenant_two do |tenant_form|
         .sub-panel.tenant
           %h4 Defendant 2
@@ -92,29 +92,6 @@
           .row.rel.postcode
             = tenant_form.label :postcode
             = tenant_form.text_field :postcode, :class => 'smalltext'
-
-  %section
-    %h3.section-header About the demoted tenancy
-    .moj-panel
-      = claim_form.fields_for @claim.demoted_tenancy do |demoted_tenancy_form|
-        %fieldset.striped-choice
-          %legend
-            Previous tenancy before demotion
-            %span.req> *
-          .options
-            - ['assured', 'secure'].each do |tenancy_type|
-              .row
-                = demoted_tenancy_form.radio_button(:assured, tenancy_type)
-                = demoted_tenancy_form.label :assured, tenancy_type.humanize, :value => tenancy_type
-        %fieldset.date-picker
-          %legend
-            Date demotion order was made
-            %span.req> *
-          .row
-            = date_select(:demoted_tenancy_form, :demotion_order_date, :order => [:day, :month, :year], :with_css_classes => true)
-        .row
-          = demoted_tenancy_form.label :county_court, 'County Court where order was made<span class="req">*</span>'.html_safe
-          = demoted_tenancy_form.text_field :county_court
 
   %section
     %h3.section-header About the notice
@@ -152,7 +129,7 @@
         .sub-panel.extra.rel
           .row.full
             = license_form.label :authority, 'If <strong>Yes</strong>, name of authority who issued the license'.html_safe
-            = license_form.text_field :authority    
+            = license_form.text_field :authority
           %fieldset.date-picker.rel.full
             %legend Date licence was issued
             .row
@@ -174,7 +151,7 @@
             %legend Date license was issued
             .row
               = date_select(:license_form, :hmo_date, :order => [:day, :month, :year], :with_css_classes => true)
-  
+
   %section
     %h3.section-header About the deposit
     .moj-panel

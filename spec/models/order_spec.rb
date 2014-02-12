@@ -23,4 +23,17 @@ describe Order do
     end
   end
 
+  describe "#as_json" do
+    let(:desired_format) do
+      {
+        "possession" => true,
+        "cost" => true
+      }
+    end
+
+    it "should produce formatted output" do
+      expect(order.as_json).to eq desired_format
+    end
+  end
+
 end
