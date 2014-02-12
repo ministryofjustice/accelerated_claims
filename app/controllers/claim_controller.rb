@@ -7,15 +7,20 @@ class ClaimController < ApplicationController
   end
 
   def submission
-    begin
-      @claim = Claim.new(params["claim"])
-      template = File.join Rails.root, "templates", "form.pdf"
-      result = Tempfile.new('form', tmpdir: '/tmp/')
-      pdf = PdfForms.new(ENV["PDFTK"])
-      pdf.fill_form template, result, @claim.as_json
-      send_file(result.path, filename: "accelerated-claim.pdf", disposition: "inline", type: "application/pdf")
-    ensure
-      result.close
+    @claim = Claim.new(params["claim"])
+    unless @claim.valid?
+      @errors = @claim.errors
+      render 'new'
+    else
+      begin
+        template = File.join Rails.root, "templates", "form.pdf"
+        result = Tempfile.new('form', tmpdir: '/tmp/')
+        pdf = PdfForms.new(ENV["PDFTK"])
+        pdf.fill_form template, result, @claim.as_json
+        send_file(result.path, filename: "accelerated-claim.pdf", disposition: "inline", type: "application/pdf")
+      ensure
+        result.close
+      end
     end
   end
 
