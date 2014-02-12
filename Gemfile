@@ -39,3 +39,7 @@ end
 
 gem 'pdf-forms', '0.5.5'
 gem 'uk_postcode', '1.0.0'
+
+
+# validate that submitted dates are actually dates
+gem 'validates_timeliness', '~> 3.0'
