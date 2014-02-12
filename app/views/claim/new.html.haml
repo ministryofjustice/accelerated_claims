@@ -105,13 +105,13 @@
             Date notice served
             %span.req> *
           .row
-            = date_select(:notice_form, :date_served, :order => [:day, :month, :year], :with_css_classes => true)
+            = notice_form.date_select(:date_served, :order => [:day, :month, :year], :with_css_classes => true)
         %fieldset.date-picker
           %legend
             Date notice expired
             %span.req> *
           .row
-            = date_select(:notice_form, :expiry_date, :order => [:day, :month, :year], :with_css_classes => true)
+            = notice_form.date_select(:expiry_date, :order => [:day, :month, :year], :with_css_classes => true)
 
   %section
     %h3.section-header About licences
@@ -133,7 +133,7 @@
           %fieldset.date-picker.rel.full
             %legend Date licence was issued
             .row
-              = date_select(:license_form, :hmo_date, :order => [:day, :month, :year], :with_css_classes => true)
+              = license_form.date_select(:hmo_date, :order => [:day, :month, :year], :with_css_classes => true)
         %fieldset.striped-choice.full
           %legend
             Is the property required to be licensed under Part 3 of the Housing Act 2004?
@@ -150,8 +150,8 @@
           %fieldset.date-picker.rel.full
             %legend Date license was issued
             .row
-              = date_select(:license_form, :hmo_date, :order => [:day, :month, :year], :with_css_classes => true)
-
+              = license_form.date_select(:hmo_date, :order => [:day, :month, :year], :with_css_classes => true)
+  
   %section
     %h3.section-header About the deposit
     .moj-panel
