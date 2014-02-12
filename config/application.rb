@@ -53,5 +53,7 @@ module AcceleratedClaims
     # this was less that useful
     # config.assets.precompile
 
+    config.relative_url_root = ENV['RAILS_RELATIVE_URL_ROOT'] || ''
+
   end
 end
