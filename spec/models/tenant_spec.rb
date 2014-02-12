@@ -6,7 +6,7 @@ describe Tenant do
                full_name: "John Major",
                street: "Sesame Street",
                town: "London",
-               postcode: "SW1")
+               postcode: "SW1X 2PT")
   end
 
   describe "when given all valid values" do
@@ -27,5 +27,17 @@ describe Tenant do
     end
   end
 
+  describe "#as_json" do
+    let(:desired_format) do
+      {
+        "address" => "Mr John Major\nSesame Street\nLondon",
+        "postcode1" => "SW1X",
+        "postcode2" => "2PT"
+      }
+    end
 
+    it "should generate the correct JSON" do
+      tenant.as_json.should eq desired_format
+    end
+  end
 end
