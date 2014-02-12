@@ -13,12 +13,42 @@ def claim_post_data
         "postcode" => "SW1H 9AJ",
         "house"=>"A house"
       },
-      "demoted_tenancy"=>{},
-      "notice"=>{},
-      "license"=>{},
-      "deposit"=>{},
-      "defendant"=>{},
-      "order"=>{},
+      "demoted_tenancy" =>
+      {
+        "assured" => true,
+        "demotion_order_date" => "14 10 2014",
+        "county_court" => "Cool County Court"
+      },
+      "notice" =>
+      {
+        "served_by" => "Somebody",
+        "date_served" => "02 02 2014",
+        "expiry_date" => "02 05 2014"
+      },
+      "license" =>
+      {
+        "hmo" => true,
+        "authority" => "Great authority",
+        "hmo_date" => "02 02 2014",
+        "housing_act" => true,
+        "housing_act_authority" => "Grand authority",
+        "housing_act_date" => "02 02 2014"
+      },
+      "deposit" =>
+      {
+        "received" => true,
+        "ref_number" => "X1234",
+        "as_property" => true
+      },
+      "defendant" =>
+      {
+        "hearing" => true
+      },
+      "order" =>
+      {
+        "possession" => true,
+        "cost" => true
+      },
       "tenant_one"=>
       {
         "title" => "Mr",
@@ -42,17 +72,18 @@ end
 
 def claim_formatted_data
   {
-    "claimant" => "Landlordly LTD\nSecret Lair 2\nEvil",
-    "claimant_postcode1" => "SW1W",
-    "claimant_postcode2" => "0LU",
-    "property" => "Mucho Gracias Road\nLondon",
+    "landlord_address" => "Landlordly LTD\nSecret Lair 2\nEvil",
+    "landlord_postcode1" => "SW1W",
+    "landlord_postcode2" => "0LU",
+    "property_address" => "Mucho Gracias Road\nLondon",
     "property_postcode1" => "SW1H",
     "property_postcode2" => "9AJ",
-    "defendant1" => "Mr John Major\nSesame Street\nLondon",
-    "defendant1_postcode1" => "SW1X",
-    "defendant1_postcode2" => "2PT",
-    "defendant2" => "Ms Jane Major\nSesame Street\nLondon",
-    "defendant2_postcode1" => "SW1X",
-    "defendant2_postcode2" => "2PT"
+    "tenant_one_address" => "Mr John Major\nSesame Street\nLondon",
+    "tenant_one_postcode1" => "SW1X",
+    "tenant_one_postcode2" => "2PT",
+    "tenant_two_address" => "Ms Jane Major\nSesame Street\nLondon",
+    "tenant_two_postcode1" => "SW1X",
+    "tenant_two_postcode2" => "2PT",
+    "defendant_hearing" => true,
   }
 end
