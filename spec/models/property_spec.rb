@@ -11,9 +11,9 @@ describe Property do
   describe "#as_json" do
     let(:json_output) do
       {
-        "property" => "1 Aha Street\nLondon",
-        "property_postcode1" => "SW1H",
-        "property_postcode2" => "9AJ"
+        "address" => "1 Aha Street\nLondon",
+        "postcode1" => "SW1H",
+        "postcode2" => "9AJ"
       }
     end
 

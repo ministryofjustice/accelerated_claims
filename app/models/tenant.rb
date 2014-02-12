@@ -10,9 +10,9 @@ class Tenant < BaseClass
   def as_json
     pcode = UKPostcode.new(postcode)
     {
-      "defendant" => "#{title} #{full_name}\n#{street}\n#{town}",
-      "defendant_postcode1" => "#{pcode.outcode}",
-      "defendant_postcode2" => "#{pcode.incode}"
+      "address" => "#{title} #{full_name}\n#{street}\n#{town}",
+      "postcode1" => "#{pcode.outcode}",
+      "postcode2" => "#{pcode.incode}"
     }
   end
 end

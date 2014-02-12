@@ -9,9 +9,15 @@ class Claim < BaseClass
   end
 
   def as_json
-    json = {}
-    attributes_from_submodels.each { |var, model| json.merge! instance_variable_get("@#{var}").as_json }
-    json
+    json_in = {}
+    attributes_from_submodels.each { |var, model| json_in[var] = instance_variable_get("@#{var}").as_json }
+    json_out = {}
+    json_in.each do |attribute, submodel|
+      submodel.each do |key, value|
+        json_out["#{attribute}_#{key}"] = value
+      end
+    end
+    json_out
   end
 
   def valid?
@@ -26,7 +32,7 @@ class Claim < BaseClass
     validity
   end
 
-private
+  private
 
   def singular_submodels
     %w(Property Landlord DemotedTenancy Notice License Deposit Defendant Order)
@@ -57,17 +63,5 @@ private
     self.class.send( :define_method, instance_var.to_sym) {
       instance_variable_get "@#{instance_var}"
     }
-  end
-
-  def format_keys(submodel)
-    hash = {}
-    submodel.each_with_index do |attr, index|
-      instance_variable_get(attr).as_json.each do |key,val|
-        name = key.to_s.gsub('@', '').split(/_/)
-        new_key = ["#{name[0]}#{index+1}", name.drop(1)].flatten.join('_')
-        hash.merge! new_key => val
-      end
-    end
-    hash
   end
 end
