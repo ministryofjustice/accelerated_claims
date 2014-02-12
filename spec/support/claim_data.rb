@@ -92,5 +92,7 @@ def claim_formatted_data
     "notice_expiry_date_month" => "02",
     "notice_expiry_date_year" => "2014",
     "notice_served_by" => "Somebody",
+    "order_cost" => true,
+    "order_possession" => true,
   }
 end

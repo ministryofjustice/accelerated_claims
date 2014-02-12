@@ -23,4 +23,13 @@ describe Order do
     end
   end
 
+  describe "#as_json" do
+    let(:desired_format) do
+      {
+        "possession" => true,
+        "cost" => true
+      }
+    end
+  end
+
 end
