@@ -52,7 +52,7 @@ private
   end
 
   def init_submodel(claim_params, instance_var, model)
-    sub_params = claim_params.has_key?(instance_var) ? claim_params[instance_var] : {}
+    sub_params = claim_params.key?(instance_var) ? claim_params[instance_var] : {}
     instance_variable_set("@#{instance_var}", model.constantize.new(sub_params))
     self.class.send( :define_method, instance_var.to_sym) {
       instance_variable_get "@#{instance_var}"
