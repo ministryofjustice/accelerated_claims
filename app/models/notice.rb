@@ -12,10 +12,11 @@ class Notice < BaseClass
   def as_json
     day = '%d'
     month = '%m'
-    year = '%G'
+    year = '%Y'
 
-    d = Date.parse date_served
-    e = Date.parse expiry_date
+    d = Date.strptime date_served, "#{day} #{month} #{year}"
+    e = Date.strptime expiry_date, "#{day} #{month} #{year}"
+
     {
      "served_by" => "#{served_by}",
      "date_served_day" => "#{d.strftime(day)}",

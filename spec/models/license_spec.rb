@@ -4,10 +4,31 @@ describe License do
   let(:license) do
     License.new(hmo: true,
                 authority: "Westminster City",
-                hmo_date: "1,1,2013",
+                hmo_date: "1 1 2013",
                 housing_act: true,
                 housing_act_authority: "Westminster City",
-                housing_act_date: "1,1,2013")
+                housing_act_date: "1 1 2013")
+  end
+
+  describe "#as_json" do
+    let(:desired_format) do
+      {
+        "hmo" => true,
+        "authority" => "Westminster City",
+        "hmo_day" => "01",
+        "hmo_month" => "01",
+        "hmo_year" => "2013",
+        "housing_act" => true,
+        "housing_act_authority" => "Westminster City",
+        "housing_act_date_day" => "01",
+        "housing_act_date_month" => "01",
+        "housing_act_date_year" => "2013"
+      }
+    end
+
+    it "should produce formatted output" do
+      expect(license.as_json).to eq desired_format
+    end
   end
 
   describe "when given all valid values" do

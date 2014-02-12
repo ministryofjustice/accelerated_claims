@@ -3,8 +3,8 @@ require 'spec_helper'
 describe Notice do
   let(:notice) do
     Notice.new(served_by: "Jim Bob",
-               date_served: "1 1 2014",
-               expiry_date: "31 3 2014")
+               date_served: "01 01 2013",
+               expiry_date: "02 02 2014")
   end
 
   describe "#as_json" do
@@ -12,14 +12,16 @@ describe Notice do
       {
         "served_by" => "Jim Bob",
         "date_served_day" => "01",
-        "date_served_month" => "1",
-        "date_served_year" => "2014",
-        "expiry_date_day" => "31",
-        "expiry_date_month" => "03",
+        "date_served_month" => "01",
+        "date_served_year" => "2013",
+        "expiry_date_day" => "02",
+        "expiry_date_month" => "02",
         "expiry_date_year" => "2014"
       }
     end
+
     it "should produce formatted output" do
+      expect(notice.as_json).to eq desired_format
     end
   end
 
