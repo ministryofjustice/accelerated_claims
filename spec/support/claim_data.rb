@@ -13,12 +13,6 @@ def claim_post_data
         "postcode" => "SW1H 9AJ",
         "house"=>"A house"
       },
-      "demoted_tenancy" =>
-      {
-        "assured" => true,
-        "demotion_order_date" => "14 10 2014",
-        "county_court" => "Cool County Court"
-      },
       "notice" =>
       {
         "served_by" => "Somebody",
