@@ -30,11 +30,11 @@
                 = address_form.label :house, property_type, :value => property_type
 
   %section
-    %h3.section-header Landlord (claimant)
+    %h3.section-header Claimant
     .moj-panel
       = claim_form.fields_for @claim.landlord do |landlord_form|
         .row
-          = landlord_form.label :company, 'Company name<span class="req">*</span>'.html_safe
+          = landlord_form.label :company, 'Full name<span class="req">*</span>'.html_safe
           = landlord_form.text_field :company
         .row.rel.street
           = landlord_form.label :street, 'Street<span class="req">*</span>'.html_safe
@@ -47,7 +47,7 @@
           = landlord_form.text_field :postcode, :class => 'smalltext'
 
   %section
-    %h3.section-header Tenants (defendants)
+    %h3.section-header Defendants
     .moj-panel
       = claim_form.fields_for @claim.tenant_one do |tenant_form|
         .sub-panel.tenant
@@ -102,7 +102,7 @@
             Tenancy start date
             %span.req> *
           .row
-            = tenancy_form.date_select(:tenancy_start_date, :order => [:day, :month, :year], :with_css_classes => true)
+            = tenancy_form.date_select(:tenancy_start_date, @date_select_options)
         .row.full
           = 'If there has been <strong>multiple tenancy agreements</strong> please give details below.'.html_safe
         .sub-panel.extra.rel
@@ -110,7 +110,7 @@
             %legend
               Date of the most recent tenancy agreement
             .row
-              = tenancy_form.date_select(:latest_tenancy_agreement_date, :order => [:day, :month, :year], :with_css_classes => true)
+              = tenancy_form.date_select(:latest_tenancy_agreement_date, @date_select_options)
           %div{ style: "padding:0 30px 20px 30px" }
             Whenever a new tenancy agreement has replaced the first tenancy agreement or has replaced a replacement tenancy agreement:
           %fieldset.striped-choice.full
@@ -131,7 +131,7 @@
                   = tenancy_form.label :tenancy_agreement_reissued_for_same_landlord_and_tenant, choice.humanize, :value => choice
 
   %section
-    %h3.section-header About the notice
+    %h3.section-header Notice
     .moj-panel
       = claim_form.fields_for @claim.notice do |notice_form|
         .row
@@ -142,16 +142,16 @@
             Date notice served
             %span.req> *
           .row
-            = notice_form.date_select(:date_served, :order => [:day, :month, :year], :with_css_classes => true)
+            = notice_form.date_select(:date_served, @date_select_options)
         %fieldset.date-picker
           %legend
             Date notice expired
             %span.req> *
           .row
-            = notice_form.date_select(:expiry_date, :order => [:day, :month, :year], :with_css_classes => true)
+            = notice_form.date_select(:expiry_date, @date_select_options)
 
   %section
-    %h3.section-header About licences
+    %h3.section-header Licences
     .moj-panel
       = claim_form.fields_for @claim.license do |license_form|
         %fieldset.striped-choice.full
@@ -170,7 +170,7 @@
           %fieldset.date-picker.rel.full
             %legend Date licence was issued
             .row
-              = license_form.date_select(:hmo_date, :order => [:day, :month, :year], :with_css_classes => true)
+              = license_form.date_select(:hmo_date, @date_select_options)
         %fieldset.striped-choice.full
           %legend
             Is the property required to be licensed under Part 3 of the Housing Act 2004?
@@ -187,10 +187,10 @@
           %fieldset.date-picker.rel.full
             %legend Date license was issued
             .row
-              = license_form.date_select(:housing_act_date, :order => [:day, :month, :year], :with_css_classes => true)
+              = license_form.date_select(:housing_act_date, @date_select_options)
     
   %section
-    %h3.section-header About the deposit
+    %h3.section-header Deposit
     .moj-panel
       = claim_form.fields_for @claim.deposit do |deposit_form|
         %fieldset.striped-choice.full
@@ -217,12 +217,12 @@
                 = deposit_form.label :as_property, property_choice.humanize, :value => property_choice
 
   %section
-    %h3.section-header About the defendant(s)
+    %h3.section-header Postponement of possession
     .moj-panel
       = claim_form.fields_for @claim.defendant do |defendant_form|
         %fieldset.striped-choice.full
           %legend
-            If the defendant(s) seek(s) postponment of possesion on the grounds of exceptional hardship, are you content that the request be considered without a hearing?
+            If the defendant(s) seek(s) postponement of possession on the grounds of exceptional hardship, are you content that the request be considered without a hearing?
             %span.req> *
           .options
             - ['yes', 'no'].each do |hearing_type|
@@ -231,7 +231,7 @@
                 = defendant_form.label :hearing, hearing_type.humanize, :value => hearing_type
 
   %section
-    %h3.section-header About the order
+    %h3.section-header The order
     .moj-panel
       = claim_form.fields_for @claim.order do |order_form|
         %fieldset.striped-choice.full

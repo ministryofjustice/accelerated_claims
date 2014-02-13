@@ -12,18 +12,27 @@
 
     %ol.steps
       %li.claim
-        Check through the printed form and sign and date 
-        %strong page 4
+        Print copies of the completed form
+        .box
+          %ul.nodot
+            %li= "<strong>1</strong> for the court".html_safe
+            %li= "<strong>1</strong> for each defendant".html_safe
+            %li= "<strong>1</strong> for each claimant".html_safe
+      %li.claim
+        Sign and date the statement of truth on all copies
+        .box
+          %ul.nodot
+            %li= "Found on <strong>page 4</strong> of the claim form".html_safe
       %li.docs
         Attach copies of the following documents to the claim form:
         .box
-          %ul
+          %ul.nodot
             %li
-              The most recent tenancy agreement marked
+              The tenancy agreement marked
               %strong 'A'
             %li
-              The demotion order marked
-              %strong 'B'
+              If there has been multiple tenancy agreements, the most recent tenancy agreement marked
+              %strong 'A1'
             %li
               The notice served marked
               %strong 'C'
@@ -36,4 +45,29 @@
             %li
               If the property is required to be licenced under Part 3 of the Housing Act 2004, and the licence application is outstanding with the local authority, provide evidence of the application marked
               %strong 'E'
-      %li.court Post the signed claim form and attached documents to the court
+      %li.court
+        = "Include the correct court fee of <strong>&pound;175</strong>".html_safe
+        .box
+          %ul.nodot
+            %li
+              %strong You can pay by:
+            %li
+              Cash
+            %li
+              Cheque (payable to HM Courts and Tribunal Service)
+            %li
+              Postal order
+            %li
+              Debit or credit card
+      %li.court
+        = "Post <strong>or</strong> hand deliver all copies of the claim form, attached documents and court fee to the following court:".html_safe
+        .box
+          %ul.nodot
+            %li 
+              Aldershot and Farnham County Court
+              %br
+              84-86 Victoria Road
+              %br
+              Aldershot
+              %br
+              GU11 1SS
