@@ -117,7 +117,7 @@
             %legend
               Has it been for the same property?
             .options
-              - ['yes', 'no'].each do |choice|
+              - ['Yes', 'no'].each do |choice|
                 .row
                   = tenancy_form.radio_button(:agreement_reissued_for_same_property, choice)
                   = tenancy_form.label :agreement_reissued_for_same_property, choice.humanize, :value => choice
@@ -125,7 +125,7 @@
             %legend
               Has it been the same landlord and tenant?
             .options
-              - ['yes', 'no'].each do |choice|
+              - ['Yes', 'no'].each do |choice|
                 .row
                   = tenancy_form.radio_button(:agreement_reissued_for_same_landlord_and_tenant, choice)
                   = tenancy_form.label :agreement_reissued_for_same_landlord_and_tenant, choice.humanize, :value => choice
