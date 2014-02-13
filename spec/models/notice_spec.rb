@@ -3,8 +3,9 @@ require 'spec_helper'
 describe Notice do
   let(:notice) do
     Notice.new(served_by: "Jim Bob",
-               date_served: "01 01 2013",
-               expiry_date: "02 02 2014")
+               date_served: Date.parse("2013-01-01"),
+               expiry_date: Date.parse("2014-02-02")
+               )
   end
 
   describe "#as_json" do
