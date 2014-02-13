@@ -13,7 +13,8 @@ describe Property do
       {
         "address" => "1 Aha Street\nLondon",
         "postcode1" => "SW1H",
-        "postcode2" => "9AJ"
+        "postcode2" => "9AJ",
+        "house" => true
       }
     end
 
