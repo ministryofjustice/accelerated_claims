@@ -240,10 +240,10 @@
             %span.req> *
           .options
             .row
-              = order_form.check_box :possession
+              = order_form.check_box :possession, {}, "yes", "no"
               = order_form.label :possession, 'deliver up possession of the property'
             .row
-              = order_form.check_box :cost
+              = order_form.check_box :cost, {}, "yes", "no"
               = order_form.label :cost, 'to pay the cost of the claim'
 
   %section
