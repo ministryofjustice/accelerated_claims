@@ -49,7 +49,7 @@
   %section
     %h3.section-header Defendants
     .moj-panel
-      = claim_form.fields_for @claim.tenant_one do |tenant_form|
+      = claim_form.fields_for :tenant_one, @claim.tenant_one do |tenant_form|
         .sub-panel.tenant
           %h4 Defendant 1
           .row
@@ -72,7 +72,7 @@
 
       .row.divider
 
-      = claim_form.fields_for @claim.tenant_two do |tenant_form|
+      = claim_form.fields_for :tenant_two, @claim.tenant_two  do |tenant_form|
         .sub-panel.tenant
           %h4 Defendant 2
           .row
