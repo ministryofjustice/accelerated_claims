@@ -24,7 +24,7 @@
             Type of property
             %span.req> *
           .options
-            - ['A house', 'Part of a house'].each do |property_type|
+            - ['Yes', 'No'].each do |property_type|
               .row
                 = address_form.radio_button(:house, property_type)
                 = address_form.label :house, property_type, :value => property_type
