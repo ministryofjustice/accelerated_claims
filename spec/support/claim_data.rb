@@ -69,8 +69,12 @@ def claim_post_data
       },
       "tenancy" =>
       {
-        "start_date" => "01 01 2010",
-        "latest_agreement_date" => "01 01 2010",
+        "start_date(3i)" => "2010",
+        "start_date(2i)" => "01",
+        "start_date(1i)" => "01",
+        "latest_agreement_date(3i)" => "2010",
+        "latest_agreement_date(2i)" => "01",
+        "latest_agreement_date(1i)" => "01",
         "agreement_reissued_for_same_property" => false,
         "agreement_reissued_for_same_landlord_and_tenant" => false
       }
@@ -119,7 +123,11 @@ def claim_formatted_data
     "deposit_ref_number" => "X1234",
     "tenancy_agreement_reissued_for_same_landlord_and_tenant" => "No",
     "tenancy_agreement_reissued_for_same_property" => "No",
-    "tenancy_latest_agreement_date" => "01 01 2010",
-    "tenancy_start_date" => "01 01 2010"
+    "tenancy_latest_agreement_date_day" => "01",
+    "tenancy_latest_agreement_date_month" => "01",
+    "tenancy_latest_agreement_date_year" => "2010",
+    "tenancy_start_date_day" => "01",
+    "tenancy_start_date_month" => "01",
+    "tenancy_start_date_year" => "2010",
   }
 end
