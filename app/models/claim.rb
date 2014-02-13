@@ -14,6 +14,8 @@ class Claim < BaseClass
     json_out = {}
     json_in.each do |attribute, submodel|
       submodel.each do |key, value|
+        value = 'Yes' if(value.class.name == 'TrueClass')
+        value = 'No' if(value.class.name == 'FalseClass')
         json_out["#{attribute}_#{key}"] = value
       end
     end
