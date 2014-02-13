@@ -4,10 +4,11 @@ describe License do
   let(:license) do
     License.new(hmo: true,
                 authority: "Westminster City",
-                hmo_date: "1 1 2013",
+                hmo_date: Date.parse("2013-01-01"),
                 housing_act: true,
                 housing_act_authority: "Westminster City",
-                housing_act_date: "1 1 2013")
+                housing_act_date: Date.parse("2013-01-01")
+              )
   end
 
   describe "#as_json" do
