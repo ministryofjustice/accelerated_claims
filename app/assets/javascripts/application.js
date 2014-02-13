@@ -15,4 +15,5 @@
 
 //= require moj
 //= require forms
+//= require piwik
 //= require main
