@@ -188,7 +188,7 @@
             %legend Date license was issued
             .row
               = license_form.date_select(:housing_act_date, @date_select_options)
-    
+
   %section
     %h3.section-header Deposit
     .moj-panel
@@ -240,10 +240,10 @@
             %span.req> *
           .options
             .row
-              = order_form.check_box :possession, {}, "yes", "no"
+              = order_form.check_box :possession, {}, "Yes", "No"
               = order_form.label :possession, 'deliver up possession of the property'
             .row
-              = order_form.check_box :cost, {}, "yes", "no"
+              = order_form.check_box :cost, {}, "Yes", "No"
               = order_form.label :cost, 'to pay the cost of the claim'
 
   %section
