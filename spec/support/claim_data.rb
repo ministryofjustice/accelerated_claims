@@ -49,7 +49,7 @@ def claim_post_data
       "order" =>
       {
         "possession" => true,
-        "cost" => true
+        "cost" => false
       },
       "tenant_one"=>
       {
@@ -94,7 +94,7 @@ def claim_formatted_data
     "notice_expiry_date_month" => "02",
     "notice_expiry_date_year" => "2014",
     "notice_served_by" => "Somebody",
-    "order_cost" => 'Yes',
+    "order_cost" => 'No',
     "order_possession" => 'Yes',
     "license_authority" => "Great authority",
     "license_hmo" => 'Yes',
