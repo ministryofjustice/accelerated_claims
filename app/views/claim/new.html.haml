@@ -102,7 +102,7 @@
             Tenancy start date
             %span.req> *
           .row
-            = tenancy_form.date_select(:tenancy_start_date, @date_select_options)
+            = tenancy_form.date_select(:start_date, @date_select_options)
         .row.full
           = 'If there has been <strong>multiple tenancy agreements</strong> please give details below.'.html_safe
         .sub-panel.extra.rel
@@ -110,7 +110,7 @@
             %legend
               Date of the most recent tenancy agreement
             .row
-              = tenancy_form.date_select(:latest_tenancy_agreement_date, @date_select_options)
+              = tenancy_form.date_select(:latest_agreement_date, @date_select_options)
           %div{ style: "padding:0 30px 20px 30px" }
             Whenever a new tenancy agreement has replaced the first tenancy agreement or has replaced a replacement tenancy agreement:
           %fieldset.striped-choice.full
@@ -119,16 +119,16 @@
             .options
               - ['yes', 'no'].each do |choice|
                 .row
-                  = tenancy_form.radio_button(:tenancy_agreement_reissued_for_same_property, choice)
-                  = tenancy_form.label :tenancy_agreement_reissued_for_same_property, choice.humanize, :value => choice
+                  = tenancy_form.radio_button(:agreement_reissued_for_same_property, choice)
+                  = tenancy_form.label :agreement_reissued_for_same_property, choice.humanize, :value => choice
           %fieldset.striped-choice.full
             %legend
               Has it been the same landlord and tenant?
             .options
               - ['yes', 'no'].each do |choice|
                 .row
-                  = tenancy_form.radio_button(:tenancy_agreement_reissued_for_same_landlord_and_tenant, choice)
-                  = tenancy_form.label :tenancy_agreement_reissued_for_same_landlord_and_tenant, choice.humanize, :value => choice
+                  = tenancy_form.radio_button(:agreement_reissued_for_same_landlord_and_tenant, choice)
+                  = tenancy_form.label :agreement_reissued_for_same_landlord_and_tenant, choice.humanize, :value => choice
 
   %section
     %h3.section-header Notice

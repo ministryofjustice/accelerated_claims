@@ -66,6 +66,13 @@ def claim_post_data
         "street" => "Sesame Street",
         "town" => "London",
         "postcode" => "SW1X 2PT"
+      },
+      "tenancy" =>
+      {
+        "start_date" => "01 01 2010",
+        "latest_agreement_date" => "01 01 2010",
+        "agreement_reissued_for_same_property" => false,
+        "agreement_reissued_for_same_landlord_and_tenant" => false
       }
     }
   }
@@ -110,5 +117,9 @@ def claim_formatted_data
     "deposit_as_property" => 'Yes',
     "deposit_received" => 'Yes',
     "deposit_ref_number" => "X1234",
+    "tenancy_agreement_reissued_for_same_landlord_and_tenant" => "No",
+    "tenancy_agreement_reissued_for_same_property" => "No",
+    "tenancy_latest_agreement_date" => "01 01 2010",
+    "tenancy_start_date" => "01 01 2010"
   }
 end
