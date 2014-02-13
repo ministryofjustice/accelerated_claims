@@ -17,14 +17,15 @@ class Property < BaseClass
   end
 
   attr_accessor :house
-  validates :house, presence: true
+  validates :house, inclusion: { in: [true, false] }
 
   def as_json
     postcode1, postcode2 = split_postcode
     {
       "address" => "#{street}\n#{town}",
       "postcode1" => "#{postcode1}",
-      "postcode2" => "#{postcode2}"
+      "postcode2" => "#{postcode2}",
+      "house" => house
     }
   end
 

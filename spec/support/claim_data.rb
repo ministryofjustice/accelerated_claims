@@ -11,7 +11,7 @@ def claim_post_data
       { "street" => "Mucho Gracias Road",
         "town" => "London",
         "postcode" => "SW1H 9AJ",
-        "house"=>"A house"
+        "house"=>"Yes"
       },
       "notice" =>
       {
@@ -80,6 +80,7 @@ def claim_formatted_data
     "property_address" => "Mucho Gracias Road\nLondon",
     "property_postcode1" => "SW1H",
     "property_postcode2" => "9AJ",
+    "property_house" => "Yes",
     "tenant_one_address" => "Mr John Major\nSesame Street\nLondon",
     "tenant_one_postcode1" => "SW1X",
     "tenant_one_postcode2" => "2PT",
