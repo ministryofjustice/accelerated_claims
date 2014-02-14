@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Landlord do
-  let(:landlord) do
-    Landlord.new(company: "Landlord LTD",
+describe Claimant do
+  let(:claimant) do
+    Claimant.new(company: "Claimant LTD",
                  street: "Streety Street",
                  town: "London",
                  postcode: "SW1H9AJ")
@@ -10,33 +10,33 @@ describe Landlord do
 
   describe "when given all valid values" do
     it "should be valid" do
-      landlord.should be_valid
+      claimant.should be_valid
     end
   end
 
   describe "company name" do
     it "when blank" do
-      landlord.company = ""
-      landlord.should_not be_valid
+      claimant.company = ""
+      claimant.should_not be_valid
     end
 
     it "when over 40 characters" do
-      landlord.street = "x" * 41
-      landlord.should_not be_valid
+      claimant.street = "x" * 41
+      claimant.should_not be_valid
     end
   end
 
   describe "#as_json" do
     let(:json_output) do
       {
-        "address" => "Landlord LTD\nStreety Street\nLondon",
+        "address" => "Claimant LTD\nStreety Street\nLondon",
         "postcode1" => "SW1H",
         "postcode2" => "9AJ"
       }
     end
 
     it "should produce formated output" do
-      landlord.as_json.should eq json_output
+      claimant.as_json.should eq json_output
     end
   end
 

@@ -1,4 +1,4 @@
-class Landlord < BaseClass
+class Claimant < BaseClass
 
   attr_accessor :company
   validates :company, presence: true
