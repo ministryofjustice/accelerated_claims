@@ -198,7 +198,7 @@
             Was a money deposit received on or after 6 April 2007?
             %span.req> *
           .options
-            - ['yes', 'no'].each do |received_choice|
+            - ['Yes', 'No'].each do |received_choice|
               .row
                 = deposit_form.radio_button(:received, received_choice)
                 = deposit_form.label :received, received_choice.humanize, :value => received_choice
@@ -211,7 +211,7 @@
             Did you receive deposit in the form of property on or after 6 April 2007?
             %span.req> *
           .options
-            - ['yes', 'no'].each do |property_choice|
+            - ['Yes', 'No'].each do |property_choice|
               .row
                 = deposit_form.radio_button(:as_property, property_choice)
                 = deposit_form.label :as_property, property_choice.humanize, :value => property_choice
