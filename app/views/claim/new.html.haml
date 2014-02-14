@@ -159,7 +159,7 @@
             Is the property part of a house in multiple occupation?
             %span.req> *
           .options
-            - ['yes', 'no'].each do |hmo_choice|
+            - ['Yes', 'No'].each do |hmo_choice|
               .row
                 = license_form.radio_button(:hmo, hmo_choice)
                 = license_form.label :hmo, hmo_choice.humanize, :value => hmo_choice
@@ -198,7 +198,7 @@
             Was a money deposit received on or after 6 April 2007?
             %span.req> *
           .options
-            - ['yes', 'no'].each do |received_choice|
+            - ['Yes', 'No'].each do |received_choice|
               .row
                 = deposit_form.radio_button(:received, received_choice)
                 = deposit_form.label :received, received_choice.humanize, :value => received_choice
@@ -211,7 +211,7 @@
             Did you receive deposit in the form of property on or after 6 April 2007?
             %span.req> *
           .options
-            - ['yes', 'no'].each do |property_choice|
+            - ['Yes', 'No'].each do |property_choice|
               .row
                 = deposit_form.radio_button(:as_property, property_choice)
                 = deposit_form.label :as_property, property_choice.humanize, :value => property_choice
@@ -219,16 +219,16 @@
   %section
     %h3.section-header Postponement of possession
     .moj-panel
-      = claim_form.fields_for @claim.defendant do |defendant_form|
+      = claim_form.fields_for @claim.possession do |possession_form|
         %fieldset.striped-choice.full
           %legend
             If the defendant(s) seek(s) postponement of possession on the grounds of exceptional hardship, are you content that the request be considered without a hearing?
             %span.req> *
           .options
-            - ['yes', 'no'].each do |hearing_type|
+            - ['Yes', 'No'].each do |hearing_type|
               .row
-                = defendant_form.radio_button(:hearing, hearing_type)
-                = defendant_form.label :hearing, hearing_type.humanize, :value => hearing_type
+                = possession_form.radio_button(:hearing, hearing_type)
+                = possession_form.label :hearing, hearing_type.humanize, :value => hearing_type
 
   %section
     %h3.section-header The order

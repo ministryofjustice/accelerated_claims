@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Defendant do
-  let(:defendant) { Defendant.new(hearing: true) }
+describe Possession do
+  let(:defendant) { Possession.new(hearing: true) }
 
   describe "when a hearing is provided" do
     it "should be valid" do
