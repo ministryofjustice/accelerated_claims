@@ -219,7 +219,7 @@
   %section
     %h3.section-header Postponement of possession
     .moj-panel
-      = claim_form.fields_for @claim.defendant do |defendant_form|
+      = claim_form.fields_for @claim.possession do |possession_form|
         %fieldset.striped-choice.full
           %legend
             If the defendant(s) seek(s) postponement of possession on the grounds of exceptional hardship, are you content that the request be considered without a hearing?
@@ -227,8 +227,8 @@
           .options
             - ['Yes', 'No'].each do |hearing_type|
               .row
-                = defendant_form.radio_button(:hearing, hearing_type)
-                = defendant_form.label :hearing, hearing_type.humanize, :value => hearing_type
+                = possession_form.radio_button(:hearing, hearing_type)
+                = possession_form.label :hearing, hearing_type.humanize, :value => hearing_type
 
   %section
     %h3.section-header The order

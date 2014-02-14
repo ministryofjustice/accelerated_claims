@@ -37,7 +37,7 @@ class Claim < BaseClass
   private
 
   def singular_submodels
-    %w(Property Landlord Notice License Deposit Defendant Order Tenancy)
+    %w(Property Landlord Notice License Deposit Possession Order Tenancy)
   end
 
   def doubled_submodels
