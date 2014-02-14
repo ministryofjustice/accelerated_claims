@@ -32,39 +32,39 @@
   %section
     %h3.section-header Claimants
     .moj-panel
-      = claim_form.fields_for :landlord_one, @claim.landlord_one do |landlord_one_form|
+      = claim_form.fields_for :claimant_one, @claim.claimant_one do |claimant_one_form|
         .sub-panel.claimant
           %h4 Claimant 1
           .row
-            = landlord_one_form.label :company, 'Full name<span class="req">*</span>'.html_safe
-            = landlord_one_form.text_field :company
+            = claimant_one_form.label :company, 'Full name<span class="req">*</span>'.html_safe
+            = claimant_one_form.text_field :company
           .row.rel.street
-            = landlord_one_form.label :street, 'Street<span class="req">*</span>'.html_safe
-            = landlord_one_form.text_area :street
+            = claimant_one_form.label :street, 'Street<span class="req">*</span>'.html_safe
+            = claimant_one_form.text_area :street
           .row.rel.town
-            = landlord_one_form.label :town
-            = landlord_one_form.text_field :town
+            = claimant_one_form.label :town
+            = claimant_one_form.text_field :town
           .row.rel.postcode
-            = landlord_one_form.label :postcode, 'Postcode<span class="req">*</span>'.html_safe
-            = landlord_one_form.text_field :postcode, :class => 'smalltext'
+            = claimant_one_form.label :postcode, 'Postcode<span class="req">*</span>'.html_safe
+            = claimant_one_form.text_field :postcode, :class => 'smalltext'
 
       .row.divider
 
       .sub-panel.claimant
         %h4.section-header Claimant 2
-        = claim_form.fields_for :landlord_two, @claim.landlord_two do |landlord_two_form|
+        = claim_form.fields_for :claimant_two, @claim.claimant_two do |claimant_two_form|
           .row
-            = landlord_two_form.label :company, 'Full name<span class="req">*</span>'.html_safe
-            = landlord_two_form.text_field :company
+            = claimant_two_form.label :company, 'Full name<span class="req">*</span>'.html_safe
+            = claimant_two_form.text_field :company
           .row.rel.street
-            = landlord_two_form.label :street, 'Street<span class="req">*</span>'.html_safe
-            = landlord_two_form.text_area :street
+            = claimant_two_form.label :street, 'Street<span class="req">*</span>'.html_safe
+            = claimant_two_form.text_area :street
           .row.rel.town
-            = landlord_two_form.label :town
-            = landlord_two_form.text_field :town
+            = claimant_two_form.label :town
+            = claimant_two_form.text_field :town
           .row.rel.postcode
-            = landlord_two_form.label :postcode, 'Postcode<span class="req">*</span>'.html_safe
-            = landlord_two_form.text_field :postcode, :class => 'smalltext'
+            = claimant_two_form.label :postcode, 'Postcode<span class="req">*</span>'.html_safe
+            = claimant_two_form.text_field :postcode, :class => 'smalltext'
 
   %section
     %h3.section-header Defendants
