@@ -159,7 +159,7 @@
             Is the property part of a house in multiple occupation?
             %span.req> *
           .options
-            - ['yes', 'no'].each do |hmo_choice|
+            - ['Yes', 'No'].each do |hmo_choice|
               .row
                 = license_form.radio_button(:hmo, hmo_choice)
                 = license_form.label :hmo, hmo_choice.humanize, :value => hmo_choice
