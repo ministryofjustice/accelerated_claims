@@ -30,21 +30,41 @@
                 = address_form.label :house, property_type, :value => property_type
 
   %section
-    %h3.section-header Claimant
+    %h3.section-header Claimants
     .moj-panel
-      = claim_form.fields_for @claim.landlord do |landlord_form|
-        .row
-          = landlord_form.label :company, 'Full name<span class="req">*</span>'.html_safe
-          = landlord_form.text_field :company
-        .row.rel.street
-          = landlord_form.label :street, 'Street<span class="req">*</span>'.html_safe
-          = landlord_form.text_area :street
-        .row.rel.town
-          = landlord_form.label :town
-          = landlord_form.text_field :town
-        .row.rel.postcode
-          = landlord_form.label :postcode, 'Postcode<span class="req">*</span>'.html_safe
-          = landlord_form.text_field :postcode, :class => 'smalltext'
+      = claim_form.fields_for :landlord_one, @claim.landlord_one do |landlord_one_form|
+        .sub-panel.claimant
+          %h4 Claimant 1
+          .row
+            = landlord_one_form.label :company, 'Full name<span class="req">*</span>'.html_safe
+            = landlord_one_form.text_field :company
+          .row.rel.street
+            = landlord_one_form.label :street, 'Street<span class="req">*</span>'.html_safe
+            = landlord_one_form.text_area :street
+          .row.rel.town
+            = landlord_one_form.label :town
+            = landlord_one_form.text_field :town
+          .row.rel.postcode
+            = landlord_one_form.label :postcode, 'Postcode<span class="req">*</span>'.html_safe
+            = landlord_one_form.text_field :postcode, :class => 'smalltext'
+
+      .row.divider
+
+      .sub-panel.claimant
+        %h4.section-header Claimant 2
+        = claim_form.fields_for :landlord_two, @claim.landlord_two do |landlord_two_form|
+          .row
+            = landlord_two_form.label :company, 'Full name<span class="req">*</span>'.html_safe
+            = landlord_two_form.text_field :company
+          .row.rel.street
+            = landlord_two_form.label :street, 'Street<span class="req">*</span>'.html_safe
+            = landlord_two_form.text_area :street
+          .row.rel.town
+            = landlord_two_form.label :town
+            = landlord_two_form.text_field :town
+          .row.rel.postcode
+            = landlord_two_form.label :postcode, 'Postcode<span class="req">*</span>'.html_safe
+            = landlord_two_form.text_field :postcode, :class => 'smalltext'
 
   %section
     %h3.section-header Defendants
