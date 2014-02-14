@@ -1,13 +1,13 @@
 def claim_post_data
   { "claim" =>
-    { "landlord_one" =>
+    { "claimant_one" =>
       {
         "company" => "Landlordly LTD",
         "street" => "Secret Lair 2",
         "town" => "Evil",
         "postcode" => "SW1W 0LU"
       },
-      "landlord_two" =>
+      "claimant_two" =>
       {
         "company" => "Great Let LTD",
         "street" => "Devious Place 7",
@@ -92,12 +92,12 @@ end
 
 def claim_formatted_data
   {
-    "landlord_one_address" => "Landlordly LTD\nSecret Lair 2\nEvil",
-    "landlord_one_postcode1" => "SW1W",
-    "landlord_one_postcode2" => "0LU",
-    "landlord_two_address" => "Great Let LTD\nDevious Place 7\nEvil",
-    "landlord_two_postcode1" => "SW1W",
-    "landlord_two_postcode2" => "0LU",
+    "claimant_one_address" => "Landlordly LTD\nSecret Lair 2\nEvil",
+    "claimant_one_postcode1" => "SW1W",
+    "claimant_one_postcode2" => "0LU",
+    "claimant_two_address" => "Great Let LTD\nDevious Place 7\nEvil",
+    "claimant_two_postcode1" => "SW1W",
+    "claimant_two_postcode2" => "0LU",
     "property_address" => "Mucho Gracias Road\nLondon",
     "property_postcode1" => "SW1H",
     "property_postcode2" => "9AJ",
