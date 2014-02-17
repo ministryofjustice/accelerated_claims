@@ -69,49 +69,49 @@
   %section
     %h3.section-header Defendants
     .moj-panel
-      = claim_form.fields_for :tenant_one, @claim.tenant_one do |tenant_form|
-        .sub-panel.tenant
+      = claim_form.fields_for :defendant_one, @claim.defendant_one do |defendant_form|
+        .sub-panel.defendant
           %h4 Defendant 1
           .row
-            = tenant_form.label :title, 'Title<span class="req">*</span>'.html_safe
-            = tenant_form.text_field :title, :class => 'smalltext'
+            = defendant_form.label :title, 'Title<span class="req">*</span>'.html_safe
+            = defendant_form.text_field :title, :class => 'smalltext'
           .row.rel
-            = tenant_form.label :full_name, 'Full name<span class="req">*</span>'.html_safe
-            = tenant_form.text_field :full_name
+            = defendant_form.label :full_name, 'Full name<span class="req">*</span>'.html_safe
+            = defendant_form.text_field :full_name
           .row.full
             If the defendant is living somewhere else, give the address below
           .row.rel.street
-            = tenant_form.label :street
-            = tenant_form.text_area :street
+            = defendant_form.label :street
+            = defendant_form.text_area :street
           .row.rel.town
-            = tenant_form.label :town
-            = tenant_form.text_field :town
+            = defendant_form.label :town
+            = defendant_form.text_field :town
           .row.rel.postcode
-            = tenant_form.label :postcode
-            = tenant_form.text_field :postcode, :class => 'smalltext'
+            = defendant_form.label :postcode
+            = defendant_form.text_field :postcode, :class => 'smalltext'
 
       .row.divider
 
-      = claim_form.fields_for :tenant_two, @claim.tenant_two  do |tenant_form|
-        .sub-panel.tenant
+      = claim_form.fields_for :defendant_two, @claim.defendant_two  do |defendant_form|
+        .sub-panel.defendant
           %h4 Defendant 2
           .row
-            = tenant_form.label :title, 'Title<span class="req">*</span>'.html_safe
-            = tenant_form.text_field :title, :class => 'smalltext'
+            = defendant_form.label :title, 'Title<span class="req">*</span>'.html_safe
+            = defendant_form.text_field :title, :class => 'smalltext'
           .row.rel
-            = tenant_form.label :full_name, 'Full name<span class="req">*</span>'.html_safe
-            = tenant_form.text_field :full_name
+            = defendant_form.label :full_name, 'Full name<span class="req">*</span>'.html_safe
+            = defendant_form.text_field :full_name
           .row.full
             If the defendant is living somewhere else, give the address below
           .row.rel.street
-            = tenant_form.label :street
-            = tenant_form.text_area :street
+            = defendant_form.label :street
+            = defendant_form.text_area :street
           .row.rel.town
-            = tenant_form.label :town
-            = tenant_form.text_field :town
+            = defendant_form.label :town
+            = defendant_form.text_field :town
           .row.rel.postcode
-            = tenant_form.label :postcode
-            = tenant_form.text_field :postcode, :class => 'smalltext'
+            = defendant_form.label :postcode
+            = defendant_form.text_field :postcode, :class => 'smalltext'
 
   %section
     %h3.section-header Tenancy
