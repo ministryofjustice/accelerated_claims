@@ -3,10 +3,10 @@ require 'spec_helper'
 describe Defendant do
   let(:defendant) do
     Defendant.new(title: "Mr",
-               full_name: "John Major",
-               street: "Sesame Street",
-               town: "London",
-               postcode: "SW1X 2PT")
+                  full_name: "John Major",
+                  street: "Sesame Street",
+                  town: "London",
+                  postcode: "SW1X 2PT")
   end
 
   describe "when given all valid values" do
