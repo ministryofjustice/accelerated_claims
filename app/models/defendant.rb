@@ -1,4 +1,4 @@
-class Tenant < BaseClass
+class Defendant < BaseClass
 
   attr_accessor :title
   validates :title, presence: true, length: { maximum: 8 }

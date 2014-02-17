@@ -41,7 +41,7 @@ class Claim < BaseClass
   end
 
   def doubled_submodels
-    %w(Claimant Tenant)
+    %w(Claimant Defendant)
   end
 
   def attributes_from_submodels

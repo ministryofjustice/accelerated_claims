@@ -9,7 +9,8 @@ describe Claim do
     let(:data) { {} }
 
     it 'should have submodels' do
-      %w(property claimant_one claimant_two notice license deposit possession order tenant_one tenant_two).each do |attr|
+      %w(property claimant_one claimant_two notice license deposit
+         possession order defendant_one defendant_two).each do |attr|
         expect(@claim).to respond_to attr
       end
     end

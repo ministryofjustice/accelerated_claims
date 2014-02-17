@@ -58,7 +58,7 @@ def claim_post_data
         "possession" => true,
         "cost" => false
       },
-      "tenant_one"=>
+      "defendant_one"=>
       {
         "title" => "Mr",
         "full_name" => "John Major",
@@ -66,7 +66,7 @@ def claim_post_data
         "town" => "London",
         "postcode" => "SW1X 2PT"
       },
-      "tenant_two"=>
+      "defendant_two"=>
       {
         "title" => "Ms",
         "full_name" => "Jane Major",
@@ -102,12 +102,12 @@ def claim_formatted_data
     "property_postcode1" => "SW1H",
     "property_postcode2" => "9AJ",
     "property_house" => "Yes",
-    "tenant_one_address" => "Mr John Major\nSesame Street\nLondon",
-    "tenant_one_postcode1" => "SW1X",
-    "tenant_one_postcode2" => "2PT",
-    "tenant_two_address" => "Ms Jane Major\nSesame Street\nLondon",
-    "tenant_two_postcode1" => "SW1X",
-    "tenant_two_postcode2" => "2PT",
+    "defendant_one_address" => "Mr John Major\nSesame Street\nLondon",
+    "defendant_one_postcode1" => "SW1X",
+    "defendant_one_postcode2" => "2PT",
+    "defendant_two_address" => "Ms Jane Major\nSesame Street\nLondon",
+    "defendant_two_postcode1" => "SW1X",
+    "defendant_two_postcode2" => "2PT",
     "possession_hearing" => 'Yes',
     "notice_date_served_day" => "02",
     "notice_date_served_month" => "02",
