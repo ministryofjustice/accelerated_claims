@@ -32,8 +32,13 @@ group :development, :test do
   gem 'quiet_assets'
   gem 'byebug'
   gem 'dotenv-rails'  # set environment variables via the filesystem
-  gem 'capybara'
   gem 'launchy'
+end
+
+group :test do
+  gem 'webmock'
+  gem 'capybara'
+  gem 'guard-rspec'
 end
 
 gem 'pdf-forms', '0.5.5'
