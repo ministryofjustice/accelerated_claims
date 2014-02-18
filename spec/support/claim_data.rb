@@ -23,24 +23,24 @@ def claim_post_data
       "notice" =>
       {
         "served_by" => "Somebody",
-        "date_served(3i)" => "02",
-        "date_served(2i)" => "02",
+        "date_served(3i)" => "2",
+        "date_served(2i)" => "2",
         "date_served(1i)" => "2014",
-        "expiry_date(3i)" => "02",
-        "expiry_date(2i)" => "02",
+        "expiry_date(3i)" => "2",
+        "expiry_date(2i)" => "2",
         "expiry_date(1i)" => "2014",
       },
       "license" =>
       {
         "hmo" => true,
         "authority" => "Great authority",
-        "hmo_date(3i)" => "02",
-        "hmo_date(2i)" => "02",
+        "hmo_date(3i)" => "2",
+        "hmo_date(2i)" => "2",
         "hmo_date(1i)" => "2014",
         "housing_act" => false,
         "housing_act_authority" => "Grand authority",
-        "housing_act_date(3i)" => "02",
-        "housing_act_date(2i)" => "02",
+        "housing_act_date(3i)" => "2",
+        "housing_act_date(2i)" => "2",
         "housing_act_date(1i)" => "2014"
       },
       "deposit" =>
@@ -76,12 +76,12 @@ def claim_post_data
       },
       "tenancy" =>
       {
-        "start_date(3i)" => "2010",
-        "start_date(2i)" => "01",
-        "start_date(1i)" => "01",
-        "latest_agreement_date(3i)" => "2010",
-        "latest_agreement_date(2i)" => "01",
-        "latest_agreement_date(1i)" => "01",
+        "start_date(3i)" => "1",
+        "start_date(2i)" => "1",
+        "start_date(1i)" => "2010",
+        "latest_agreement_date(3i)" => "1",
+        "latest_agreement_date(2i)" => "1",
+        "latest_agreement_date(1i)" => "2010",
         "agreement_reissued_for_same_property" => false,
         "agreement_reissued_for_same_landlord_and_tenant" => false
       }
