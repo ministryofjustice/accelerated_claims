@@ -24,10 +24,11 @@
             Type of property
             %span.req> *
           .options
-            - ['Yes', 'No'].each do |property_type|
+            - {'A house' => 'Yes', 'Part of a house' => 'No'}.each do |key,val|
               .row
-                = address_form.radio_button(:house, property_type)
-                = address_form.label :house, property_type, :value => property_type
+                = address_form.radio_button(:house, val)
+                = address_form.label :house, key, :value => val
+
 
   %section
     %h3.section-header Claimants
