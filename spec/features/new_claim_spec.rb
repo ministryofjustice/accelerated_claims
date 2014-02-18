@@ -18,5 +18,8 @@ feature "New claim application" do
     expect(page).to have_text('Your accelerated possession form is ready to print')
     click_link 'Print completed form'
     expect(page.response_headers['Content-Type']).to eq "application/pdf"
+    generated_file = '/tmp/a.pdf'
+    File.open(generated_file, 'w') { |file| file.write(page.body.encode("ASCII-8BIT").force_encoding("UTF-8")) }
+    raise "PDF document not filled in correctly" if FileUtils.cmp('./spec/support/filled-in-form.pdf', generated_file)
   end
 end
