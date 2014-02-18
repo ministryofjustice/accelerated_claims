@@ -301,7 +301,7 @@ endobj
 /P 102 0 R
 /Rect [23.0439 557.09 233.413 619.452]
 /Subtype /Widget
-/T (landlord_one_address)
+/T (claimant_one_address)
 /Type /Annot
 >>
 endobj
@@ -317,7 +317,7 @@ endobj
 /P 102 0 R
 /Rect [67.4223 542.42 124.914 558.622]
 /Subtype /Widget
-/T (landlord_one_postcode1)
+/T (claimant_one_postcode1)
 /Type /Annot
 >>
 endobj
@@ -333,7 +333,7 @@ endobj
 /P 102 0 R
 /Rect [132.754 541.897 191.291 559.145]
 /Subtype /Widget
-/T (landlord_one_postcode2)
+/T (claimant_one_postcode2)
 /Type /Annot
 >>
 endobj
@@ -348,7 +348,7 @@ endobj
 /P 102 0 R
 /Rect [245.647 558.099 455.754 619.25]
 /Subtype /Widget
-/T (landlord_two_address)
+/T (claimant_two_address)
 /Type /Annot
 >>
 endobj
@@ -364,7 +364,7 @@ endobj
 /P 102 0 R
 /Rect [289.55 542.942 347.042 559.145]
 /Subtype /Widget
-/T (landlord_two_postcode1)
+/T (claimant_two_postcode1)
 /Type /Annot
 >>
 endobj
@@ -380,7 +380,7 @@ endobj
 /P 102 0 R
 /Rect [354.359 542.942 411.851 560.19]
 /Subtype /Widget
-/T (landlord_two_postcode2)
+/T (claimant_two_postcode2)
 /Type /Annot
 >>
 endobj
