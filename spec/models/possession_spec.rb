@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Possession do
-  let(:defendant) { Possession.new(hearing: true) }
+  let(:defendant) { Possession.new(hearing: 'Yes') }
 
   describe "when a hearing is provided" do
     it "should be valid" do
@@ -11,7 +11,7 @@ describe Possession do
 
   describe "when a hearing is not provided" do
     it "should be valid" do
-      defendant.hearing = false
+      defendant.hearing = 'No'
       defendant.should be_valid
     end
   end
@@ -24,7 +24,7 @@ describe Possession do
   end
 
   describe "#as_json" do
-    let(:desired_format) { { "hearing" => true } }
+    let(:desired_format) { { "hearing" => 'Yes' } }
 
     it "should produce formatted output" do
       expect(defendant.as_json).to eq desired_format

@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe License do
   let(:license) do
-    License.new(hmo: true,
+    License.new(hmo: 'Yes',
                 authority: "Westminster City",
                 hmo_date: Date.parse("2013-01-01"),
-                housing_act: true,
+                housing_act: 'Yes',
                 housing_act_authority: "Westminster City",
                 housing_act_date: Date.parse("2013-01-01")
               )
@@ -14,12 +14,12 @@ describe License do
   describe "#as_json" do
     let(:desired_format) do
       {
-        "hmo" => true,
+        "hmo" => 'Yes',
         "authority" => "Westminster City",
         "hmo_day" => "01",
         "hmo_month" => "01",
         "hmo_year" => "2013",
-        "housing_act" => true,
+        "housing_act" => 'Yes',
         "housing_act_authority" => "Westminster City",
         "housing_act_date_day" => "01",
         "housing_act_date_month" => "01",
