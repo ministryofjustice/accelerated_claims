@@ -9,17 +9,18 @@
       required
     %h3.section-header Property
     .moj-panel
-      = claim_form.fields_for @claim.property do |address_form|
-        .row.street{ class: ('error' if @claim.property.errors.messages.key? :street)}
-          = address_form.label :street, 'Street<span class="req">*</span>'.html_safe
+      - property = @claim.property
+      = claim_form.fields_for property do |address_form|
+        - row '.street', :street, property do
+          = address_form.label :street, %Q|Street<span class="req">*</span>|.html_safe
           = address_form.text_area :street
-        .row.rel.town{ class: ('error' if @claim.property.errors.messages.key? :town)}
+        - row '.town', :town, property do
           = address_form.label :town
           = address_form.text_field :town
-        .row.rel.postcode{ class: ('error' if @claim.property.errors.messages.key? :postcode)}
+        - row '.rel.postcode', :postcode, property do
           = address_form.label :postcode, 'Postcode<span class="req">*</span>'.html_safe
           = address_form.text_field :postcode, :class => 'smalltext'
-        %fieldset.striped-choice{ class: ("error" if @claim.property.errors.messages.key? :house) }
+        %fieldset.striped-choice{ class: ("error" if property.errors.messages.key? :house) }
           %legend
             Type of property
             %span.req> *
@@ -32,90 +33,29 @@
                 = address_form.radio_button(:house, val)
                 = address_form.label :house, key, :value => val
 
-
   %section
     %h3.section-header Claimants
     .moj-panel
-      = claim_form.fields_for :claimant_one, @claim.claimant_one do |claimant_one_form|
-        .sub-panel.claimant
-          %h4 Claimant 1
-          .row
-            = claimant_one_form.label :company, 'Full name<span class="req">*</span>'.html_safe
-            = claimant_one_form.text_field :company
-          .row.rel.street
-            = claimant_one_form.label :street, 'Street<span class="req">*</span>'.html_safe
-            = claimant_one_form.text_area :street
-          .row.rel.town
-            = claimant_one_form.label :town
-            = claimant_one_form.text_field :town
-          .row.rel.postcode
-            = claimant_one_form.label :postcode, 'Postcode<span class="req">*</span>'.html_safe
-            = claimant_one_form.text_field :postcode, :class => 'smalltext'
-
+      .sub-panel.claimant
+        %h4 Claimant 1
+        = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_one}
       .row.divider
-
       .sub-panel.claimant
         %h4.section-header Claimant 2
-        = claim_form.fields_for :claimant_two, @claim.claimant_two do |claimant_two_form|
-          .row
-            = claimant_two_form.label :company, 'Full name<span class="req">*</span>'.html_safe
-            = claimant_two_form.text_field :company
-          .row.rel.street
-            = claimant_two_form.label :street, 'Street<span class="req">*</span>'.html_safe
-            = claimant_two_form.text_area :street
-          .row.rel.town
-            = claimant_two_form.label :town
-            = claimant_two_form.text_field :town
-          .row.rel.postcode
-            = claimant_two_form.label :postcode, 'Postcode<span class="req">*</span>'.html_safe
-            = claimant_two_form.text_field :postcode, :class => 'smalltext'
+        = render partial: 'claimant', object: @claim.claimant_two, locals: { claim_form: claim_form, claimant_field: :claimant_two}
 
   %section
     %h3.section-header Defendants
     .moj-panel
-      = claim_form.fields_for :defendant_one, @claim.defendant_one do |defendant_form|
-        .sub-panel.defendant
-          %h4 Defendant 1
-          .row
-            = defendant_form.label :title, 'Title<span class="req">*</span>'.html_safe
-            = defendant_form.text_field :title, :class => 'smalltext'
-          .row.rel
-            = defendant_form.label :full_name, 'Full name<span class="req">*</span>'.html_safe
-            = defendant_form.text_field :full_name
-          .row.full
-            If the defendant is living somewhere else, give the address below
-          .row.rel.street
-            = defendant_form.label :street
-            = defendant_form.text_area :street
-          .row.rel.town
-            = defendant_form.label :town
-            = defendant_form.text_field :town
-          .row.rel.postcode
-            = defendant_form.label :postcode
-            = defendant_form.text_field :postcode, :class => 'smalltext'
+      .sub-panel.defendant
+        %h4 Defendant 1
+        = render partial: 'defendant', object: @claim.defendant_one, locals: { claim_form: claim_form, defendant_field: :defendant_one}
 
       .row.divider
 
-      = claim_form.fields_for :defendant_two, @claim.defendant_two  do |defendant_form|
-        .sub-panel.defendant
-          %h4 Defendant 2
-          .row
-            = defendant_form.label :title, 'Title<span class="req">*</span>'.html_safe
-            = defendant_form.text_field :title, :class => 'smalltext'
-          .row.rel
-            = defendant_form.label :full_name, 'Full name<span class="req">*</span>'.html_safe
-            = defendant_form.text_field :full_name
-          .row.full
-            If the defendant is living somewhere else, give the address below
-          .row.rel.street
-            = defendant_form.label :street
-            = defendant_form.text_area :street
-          .row.rel.town
-            = defendant_form.label :town
-            = defendant_form.text_field :town
-          .row.rel.postcode
-            = defendant_form.label :postcode
-            = defendant_form.text_field :postcode, :class => 'smalltext'
+      .sub-panel.defendant
+        %h4 Defendant 2
+        = render partial: 'defendant', object: @claim.defendant_two, locals: { claim_form: claim_form, defendant_field: :defendant_two}
 
   %section
     %h3.section-header Tenancy
