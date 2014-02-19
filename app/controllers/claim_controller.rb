@@ -3,14 +3,19 @@ class ClaimController < ApplicationController
 
   def new
     @page_title = 'Property repossession'
-    @date_select_options = { 
-      order: [:day, :month, :year], 
-      with_css_classes: true, 
-      prompt: { day: 'Day', month: 'Month', year: 'Year' }, 
-      start_year: Date.today.year, 
-      end_year: Date.today.year - 30 
+    @date_select_options = {
+      order: [:day, :month, :year],
+      with_css_classes: true,
+      prompt: { day: 'Day', month: 'Month', year: 'Year' },
+      start_year: Date.today.year,
+      end_year: Date.today.year - 30
     }
-    @claim = Claim.new
+    if(c = session[:claim])
+      @claim = Claim.new(c)
+      @errors = @claim.errors unless @claim.valid?
+    else
+      @claim = Claim.new
+    end
   end
 
   def confirmation
@@ -30,14 +35,13 @@ class ClaimController < ApplicationController
   end
 
   def submission
-    session[:claim] = params["claim"]
-    # unless @claim.valid?
-    #   @errors = @claim.errors
-    #   render 'new'
-    # else
-
-    # end
-    redirect_to :confirmation
+    session[:claim] = params['claim']
+    @claim = Claim.new(params['claim'])
+    unless @claim.valid?
+      redirect_to :new
+    else
+      redirect_to :confirmation
+    end
   end
 
   private

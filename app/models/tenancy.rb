@@ -6,10 +6,10 @@ class Tenancy < BaseClass
   attr_accessor :latest_agreement_date
 
   attr_accessor :agreement_reissued_for_same_property
-  validates :agreement_reissued_for_same_property, inclusion: { in: [true, false] }
+  validates :agreement_reissued_for_same_property, inclusion: { in: ['Yes', 'No'] }
 
   attr_accessor :agreement_reissued_for_same_landlord_and_tenant
-  validates :agreement_reissued_for_same_landlord_and_tenant, inclusion: { in: [true, false] }
+  validates :agreement_reissued_for_same_landlord_and_tenant, inclusion: { in: ['Yes', 'No'] }
 
   def as_json
     day = '%d'

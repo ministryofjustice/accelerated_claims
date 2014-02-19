@@ -10,19 +10,22 @@
     %h3.section-header Property
     .moj-panel
       = claim_form.fields_for @claim.property do |address_form|
-        .row.street
+        .row.street{ class: ('error' if @claim.property.errors.messages.key? :street)}
           = address_form.label :street, 'Street<span class="req">*</span>'.html_safe
           = address_form.text_area :street
-        .row.rel.town
+        .row.rel.town{ class: ('error' if @claim.property.errors.messages.key? :town)}
           = address_form.label :town
           = address_form.text_field :town
-        .row.rel.postcode
+        .row.rel.postcode{ class: ('error' if @claim.property.errors.messages.key? :postcode)}
           = address_form.label :postcode, 'Postcode<span class="req">*</span>'.html_safe
           = address_form.text_field :postcode, :class => 'smalltext'
-        %fieldset.striped-choice
+        %fieldset.striped-choice{ class: ("error" if @claim.property.errors.messages.key? :house) }
           %legend
             Type of property
             %span.req> *
+            - if(@claim.property.errors.messages.key? :house)
+              %span.error= @claim.property.errors.messages[:house][0]
+
           .options
             - {'A house' => 'Yes', 'Part of a house' => 'No'}.each do |key,val|
               .row
@@ -197,7 +200,7 @@
             Is the property required to be licensed under Part 3 of the Housing Act 2004?
             %span.req> *
           .options
-            - ['yes', 'no'].each do |housing_act_choice|
+            - ['Yes', 'No'].each do |housing_act_choice|
               .row
                 = license_form.radio_button(:housing_act, housing_act_choice)
                 = license_form.label :housing_act, housing_act_choice.humanize, :value => housing_act_choice

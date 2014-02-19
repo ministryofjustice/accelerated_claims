@@ -5,7 +5,7 @@ describe Property do
     Property.new(street: "1 Aha Street",
                  town: "London",
                  postcode: "SW1H 9AJ",
-                 house: true)
+                 house: "Yes")
   end
 
   describe "#as_json" do
@@ -14,7 +14,7 @@ describe Property do
         "address" => "1 Aha Street\nLondon",
         "postcode1" => "SW1H",
         "postcode2" => "9AJ",
-        "house" => true
+        "house" => "Yes"
       }
     end
 
@@ -28,7 +28,7 @@ describe Property do
       Property.new(street: "1 Aha Street",
                    town: "London",
                    postcode: "SW1H 9AJ",
-                   house: true)
+                   house: "Yes")
     end
 
 

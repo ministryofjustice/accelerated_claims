@@ -15,6 +15,7 @@ feature "New claim application" do
     fill_postponement
     fill_order
     click_button 'Complete form'
+
     expect(page).to have_text('Your accelerated possession form is ready to print')
     click_link 'Print completed form'
     expect(page.response_headers['Content-Type']).to eq "application/pdf"
