@@ -3,12 +3,12 @@ class ClaimController < ApplicationController
 
   def new
     @page_title = 'Property repossession'
-    @date_select_options = { 
-      order: [:day, :month, :year], 
-      with_css_classes: true, 
-      prompt: { day: 'Day', month: 'Month', year: 'Year' }, 
-      start_year: Date.today.year, 
-      end_year: Date.today.year - 30 
+    @date_select_options = {
+      order: [:day, :month, :year],
+      with_css_classes: true,
+      prompt: { day: 'Day', month: 'Month', year: 'Year' },
+      start_year: Date.today.year,
+      end_year: Date.today.year - 30
     }
     if(c = session[:claim])
       @claim = Claim.new(c)

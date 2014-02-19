@@ -1,7 +1,7 @@
 class License < BaseClass
 
   attr_accessor :hmo
-  validates :hmo, inclusion: { in: [true, false] }
+  validates :hmo, inclusion: { in: ['Yes', 'No'] }
 
   attr_accessor :authority
   validate :authority_for_hmo
@@ -9,7 +9,7 @@ class License < BaseClass
   attr_accessor :hmo_date
 
   attr_accessor :housing_act
-  validates :housing_act, inclusion: { in: [true, false] }
+  validates :housing_act, inclusion: { in: ['Yes', 'No'] }
 
   attr_accessor :housing_act_authority
   validate :authority_for_housing_act

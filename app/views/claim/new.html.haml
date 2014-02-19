@@ -25,7 +25,7 @@
             %span.req> *
             - if(@claim.property.errors.messages.key? :house)
               %span.error= @claim.property.errors.messages[:house][0]
-                
+
           .options
             - {'A house' => 'Yes', 'Part of a house' => 'No'}.each do |key,val|
               .row
@@ -200,7 +200,7 @@
             Is the property required to be licensed under Part 3 of the Housing Act 2004?
             %span.req> *
           .options
-            - ['yes', 'no'].each do |housing_act_choice|
+            - ['Yes', 'No'].each do |housing_act_choice|
               .row
                 = license_form.radio_button(:housing_act, housing_act_choice)
                 = license_form.label :housing_act, housing_act_choice.humanize, :value => housing_act_choice
