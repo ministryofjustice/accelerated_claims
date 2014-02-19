@@ -1,0 +1,13 @@
+= claim_form.fields_for claimant_field, claimant do |form|
+  - row '', :company, claimant do
+    = form.label :company, 'Full name<span class="req">*</span>'.html_safe
+    = form.text_field :company
+  - row '.rel.street', :street, claimant do
+    = form.label :street, 'Street<span class="req">*</span>'.html_safe
+    = form.text_area :street
+  - row '.rel.town', :town, claimant do
+    = form.label :town
+    = form.text_field :town
+  - row '.rel.postcode', :postcode, claimant do
+    = form.label :postcode, 'Postcode<span class="req">*</span>'.html_safe
+    = form.text_field :postcode, :class => 'smalltext'

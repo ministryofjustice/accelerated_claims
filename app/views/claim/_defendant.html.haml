@@ -1,0 +1,18 @@
+= claim_form.fields_for defendant_field, defendant do |form|
+  - row '', :title, defendant do
+    = form.label :title, 'Title<span class="req">*</span>'.html_safe
+    = form.text_field :title, :class => 'smalltext'
+  - row '.rel', :full_name, defendant do
+    = form.label :full_name, 'Full name<span class="req">*</span>'.html_safe
+    = form.text_field :full_name
+  .row.full
+    If the defendant is living somewhere else, give the address below
+  - row '.rel.street', :street, defendant do
+    = form.label :street
+    = form.text_area :street
+  - row '.rel.town', :town, defendant do
+    = form.label :town
+    = form.text_field :town
+  - row '.rel.postcode', :postcode, defendant do
+    = form.label :postcode
+    = form.text_field :postcode, :class => 'smalltext'
