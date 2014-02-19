@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Deposit do
-  let(:deposit) { Deposit.new(received: true, ref_number: 123, as_property: false) }
+  let(:deposit) { Deposit.new(received: 'Yes', ref_number: 123, as_property: 'No') }
 
   describe "when given all valid values" do
     it "should be valid" do
