@@ -9,29 +9,7 @@
       required
     %h3.section-header Property
     .moj-panel
-      - property = @claim.property
-      = claim_form.fields_for property do |address_form|
-        - row '.street', :street, property do
-          = address_form.label :street, %Q|Street<span class="req">*</span>|.html_safe
-          = address_form.text_area :street
-        - row '.town', :town, property do
-          = address_form.label :town
-          = address_form.text_field :town
-        - row '.rel.postcode', :postcode, property do
-          = address_form.label :postcode, 'Postcode<span class="req">*</span>'.html_safe
-          = address_form.text_field :postcode, :class => 'smalltext'
-        - fieldset '.striped-choice', :house, property do
-          %legend
-            Type of property
-            %span.req> *
-            - if(@claim.property.errors.messages.key? :house)
-              %span.error= @claim.property.errors.messages[:house][0]
-
-          .options
-            - {'A house' => 'Yes', 'Part of a house' => 'No'}.each do |key,val|
-              .row
-                = address_form.radio_button(:house, val)
-                = address_form.label :house, key, :value => val
+      = render partial: 'property', object: @claim.property, locals: { claim_form: claim_form }
 
   %section
     %h3.section-header Claimants
@@ -148,13 +126,13 @@
                 = license_form.radio_button(:housing_act, housing_act_choice)
                 = license_form.label :housing_act, housing_act_choice.humanize, :value => housing_act_choice
         .sub-panel.extra.rel
-          - row '.full', :housing_act_authority, property do
+          - row '.full', :housing_act_authority, license do
             = license_form.label :housing_act_authority, 'If <strong>Yes</strong>, name of authority who issued the license'.html_safe
             = license_form.text_field :housing_act_authority
           - fieldset '.date-picker.rel.full', :housing_act, license do
             %legend Date license was issued
             .row
-              = license_form.date_select(:housing_act, @date_select_options)
+              = license_form.date_select(:housing_act_date, @date_select_options)
 
   %section
     %h3.section-header Deposit
