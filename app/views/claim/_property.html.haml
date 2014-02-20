@@ -1,0 +1,17 @@
+= claim_form.fields_for property, builder: LabellingFormBuilder do |form|
+  = form.text_area_row :street, class: '.street'
+  = form.text_field_row :town, class: '.town'
+  = form.text_field_row :postcode, class: '.rel.postcode'
+
+  - fieldset '.striped-choice', :house, property do
+    %legend
+      Type of property
+      %span.req> *
+      - if(@claim.property.errors.messages.key? :house)
+        %span.error= @claim.property.errors.messages[:house][0]
+
+    .options
+      - {'A house' => 'Yes', 'Part of a house' => 'No'}.each do |key,val|
+        .row
+          = form.radio_button(:house, val)
+          = form.label :house, key, :value => val
