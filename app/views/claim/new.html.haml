@@ -20,7 +20,7 @@
         - row '.rel.postcode', :postcode, property do
           = address_form.label :postcode, 'Postcode<span class="req">*</span>'.html_safe
           = address_form.text_field :postcode, :class => 'smalltext'
-        %fieldset.striped-choice{ class: ("error" if property.errors.messages.key? :house) }
+        - fieldset '.striped-choice', :house, property do
           %legend
             Type of property
             %span.req> *
@@ -60,8 +60,9 @@
   %section
     %h3.section-header Tenancy
     .moj-panel
-      = claim_form.fields_for @claim.tenancy do |tenancy_form|
-        %fieldset.date-picker
+      - tenancy = @claim.tenancy
+      = claim_form.fields_for tenancy do |tenancy_form|
+        - fieldset '.date-picker', :start_date, tenancy do
           %legend
             Tenancy start date
             %span.req> *
@@ -70,14 +71,14 @@
         .row.full
           = 'If there has been <strong>multiple tenancy agreements</strong> please give details below.'.html_safe
         .sub-panel.extra.rel
-          %fieldset.date-picker.full
+          - fieldset '.date-picker.full', :latest_agreement_date, tenancy do
             %legend
               Date of the most recent tenancy agreement
             .row
               = tenancy_form.date_select(:latest_agreement_date, @date_select_options)
           %div{ style: "padding:0 30px 20px 30px" }
             Whenever a new tenancy agreement has replaced the first tenancy agreement or has replaced a replacement tenancy agreement:
-          %fieldset.striped-choice.full
+          - fieldset '.striped-choice.full', :agreement_reissued_for_same_property, tenancy do
             %legend
               Has it been for the same property?
             .options
@@ -85,7 +86,7 @@
                 .row
                   = tenancy_form.radio_button(:agreement_reissued_for_same_property, choice)
                   = tenancy_form.label :agreement_reissued_for_same_property, choice.humanize, :value => choice
-          %fieldset.striped-choice.full
+          - fieldset '.striped-choice.full', :agreement_reissued_for_same_landlord_and_tenant, tenancy do
             %legend
               Has it been the same landlord and tenant?
             .options
@@ -97,17 +98,18 @@
   %section
     %h3.section-header Notice
     .moj-panel
-      = claim_form.fields_for @claim.notice do |notice_form|
-        .row
+      - notice = @claim.notice
+      = claim_form.fields_for notice do |notice_form|
+        - row '', :served_by, notice do
           = notice_form.label :served_by, 'Notice served by<span class="req">*</span>'.html_safe
           = notice_form.text_field :served_by
-        %fieldset.date-picker
+        - fieldset '.date-picker', :date_served, notice do
           %legend
             Date notice served
             %span.req> *
           .row
             = notice_form.date_select(:date_served, @date_select_options)
-        %fieldset.date-picker
+        - fieldset '.date-picker', :expiry_date, notice do
           %legend
             Date notice expired
             %span.req> *
@@ -117,8 +119,9 @@
   %section
     %h3.section-header Licences
     .moj-panel
-      = claim_form.fields_for @claim.license do |license_form|
-        %fieldset.striped-choice.full
+      - license = @claim.license
+      = claim_form.fields_for license do |license_form|
+        - fieldset '.striped-choice.full', :hmo, license do
           %legend
             Is the property part of a house in multiple occupation?
             %span.req> *
@@ -128,14 +131,14 @@
                 = license_form.radio_button(:hmo, hmo_choice)
                 = license_form.label :hmo, hmo_choice.humanize, :value => hmo_choice
         .sub-panel.extra.rel
-          .row.full
+          - row '.full', :authority, license do
             = license_form.label :authority, 'If <strong>Yes</strong>, name of authority who issued the license'.html_safe
             = license_form.text_field :authority
-          %fieldset.date-picker.rel.full
+          - fieldset '.date-picker.rel.full', :hmo_date, license do
             %legend Date licence was issued
             .row
               = license_form.date_select(:hmo_date, @date_select_options)
-        %fieldset.striped-choice.full
+        - fieldset '.striped-choice.full', :housing_act, license do
           %legend
             Is the property required to be licensed under Part 3 of the Housing Act 2004?
             %span.req> *
@@ -145,19 +148,20 @@
                 = license_form.radio_button(:housing_act, housing_act_choice)
                 = license_form.label :housing_act, housing_act_choice.humanize, :value => housing_act_choice
         .sub-panel.extra.rel
-          .row.full
+          - row '.full', :housing_act_authority, property do
             = license_form.label :housing_act_authority, 'If <strong>Yes</strong>, name of authority who issued the license'.html_safe
             = license_form.text_field :housing_act_authority
-          %fieldset.date-picker.rel.full
+          - fieldset '.date-picker.rel.full', :housing_act, license do
             %legend Date license was issued
             .row
-              = license_form.date_select(:housing_act_date, @date_select_options)
+              = license_form.date_select(:housing_act, @date_select_options)
 
   %section
     %h3.section-header Deposit
     .moj-panel
-      = claim_form.fields_for @claim.deposit do |deposit_form|
-        %fieldset.striped-choice.full
+      - deposit = @claim.deposit
+      = claim_form.fields_for deposit do |deposit_form|
+        - fieldset '.striped-choice.full', :received, deposit do
           %legend
             Was a money deposit received on or after 6 April 2007?
             %span.req> *
@@ -167,10 +171,10 @@
                 = deposit_form.radio_button(:received, received_choice)
                 = deposit_form.label :received, received_choice.humanize, :value => received_choice
         .sub-panel.extra.rel
-          .row.full
+          - row '.full', :ref_number, deposit do
             = deposit_form.label :ref_number, 'If <strong>Yes</strong>, provide the Tenancy Deposit Scheme reference number'.html_safe
             = deposit_form.text_field :ref_number
-        %fieldset.striped-choice.full
+        - fieldset '.striped-choice.full', :as_property, deposit do
           %legend
             Did you receive deposit in the form of property on or after 6 April 2007?
             %span.req> *
@@ -183,8 +187,9 @@
   %section
     %h3.section-header Postponement of possession
     .moj-panel
-      = claim_form.fields_for @claim.possession do |possession_form|
-        %fieldset.striped-choice.full
+      - possession = @claim.possession
+      = claim_form.fields_for possession do |possession_form|
+        - fieldset '.striped-choice.full', :hearing, possession do
           %legend
             If the defendant(s) seek(s) postponement of possession on the grounds of exceptional hardship, are you content that the request be considered without a hearing?
             %span.req> *
@@ -197,16 +202,17 @@
   %section
     %h3.section-header The order
     .moj-panel
-      = claim_form.fields_for @claim.order do |order_form|
+      - order = @claim.order
+      = claim_form.fields_for order do |order_form|
         %fieldset.striped-choice.full
           %legend
             You are asking the court to order that the defendant(s)
             %span.req> *
           .options
-            .row
+            - row '', :possession, order do
               = order_form.check_box :possession, {}, "Yes", "No"
               = order_form.label :possession, 'deliver up possession of the property'
-            .row
+            - row '', :cost, order do
               = order_form.check_box :cost, {}, "Yes", "No"
               = order_form.label :cost, 'to pay the cost of the claim'
 

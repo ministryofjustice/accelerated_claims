@@ -9,4 +9,13 @@ module ApplicationHelper
     end
   end
 
+  def fieldset css_selector, field, model
+    fieldset = "fieldset#{css_selector}"
+    fieldset += '.error' if model.errors.messages.key?(field)
+
+    haml_tag fieldset do
+      yield
+    end
+  end
+
 end
