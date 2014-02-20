@@ -18,4 +18,7 @@ module ApplicationHelper
     end
   end
 
+  def presence_required? field, model
+    model.class.validators_on(field).any? {|v| v.is_a?(ActiveModel::Validations::PresenceValidator)}
+  end
 end
