@@ -26,25 +26,18 @@ module ApplicationHelper
     row_input css_selector, field, model, form, :text_field
   end
 
-  def row_input css_selector, field, model, form, input
+  def row_input css_selector, input_class, field, model, form, input, label=nil
     css = "row #{css_selector.gsub('.',' ')}"
     css += ' error' if model.errors.messages.key?(field)
 
     surround("<div class='#{css}'>".html_safe,"</div>".html_safe) do
-      labelled_input field, form, input, presence_required?(field, model)
+      labelled_input field, input_class, form, input, presence_required?(field, model), label
     end
   end
 
-  def labelled_text_area field, form, required=false
-    labelled_input field, form, :text_area, required
-  end
-
-  def labelled_text_field field, form, required=false
-    labelled_input field, form, :text_field, required
-  end
-
-  def labelled_input field, form, input, required
-    raw [ form.label(field, label_for(field, required)), form.send(input,field) ].join("\n")
+  def labelled_input field, input_class, form, input, required, label=nil
+    label ||= field
+    raw [ form.label(field, label_for(label, required)), form.send(input,field, class: input_class) ].join("\n")
   end
 
   def label_for field, required
