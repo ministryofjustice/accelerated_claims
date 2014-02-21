@@ -1,0 +1,23 @@
+%script#multiple-selector(type='text/x-handlebars-template')
+  .row
+    %label(for='multiplePanelSelector_{{id}}') {{caption}}
+    %select.multiplePanelSelector.small(id='multiplePanelSelector_{{id}}')
+      {{#each items}}
+      %option(value='{{val}}') {{val}} {{text}}
+      {{/each}}
+  .row.divider
+
+%script#postcode-button(type='text/x-handlebars-template')
+  %a.button.primary.js-find-address(href='#')> Find UK address
+
+%script#manual-postcode-link(type='text/x-handlebars-template')
+  .row.rel.js-manual-address-row
+    %a.js-manual-address(href='#') Enter address manually
+
+%script#address-dropdown(type='text/x-handlebars-template')
+  .row.rel
+    %select.addressDropdown
+      %option(value='') Select address...
+      {{#each addresses}}
+      %option(value='{{id}}') {{address}}
+      {{/each}}
