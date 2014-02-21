@@ -35,7 +35,7 @@
 
   %section
     %h3.section-header Claimants
-    .moj-panel
+    .moj-panel.has-multiple(data-multiple="claimant" data-caption="No. of claimants" data-single="person" data-plural="people")
       .sub-panel.claimant
         %h4 Claimant 1
         = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_one}
@@ -46,7 +46,7 @@
 
   %section
     %h3.section-header Defendants
-    .moj-panel
+    .moj-panel.has-multiple(data-multiple="defendant" data-caption="No. of defendants" data-single="person" data-plural="people")
       .sub-panel.defendant
         %h4 Defendant 1
         = render partial: 'defendant', object: @claim.defendant_one, locals: { claim_form: claim_form, defendant_field: :defendant_one}
@@ -68,13 +68,14 @@
           .row
             = tenancy_form.date_select(:start_date, @date_select_options)
         .row.full
-          = 'If there has been <strong>multiple tenancy agreements</strong> please give details below.'.html_safe
+          = 'If there have been <strong>multiple tenancy agreements</strong> please give details below.'.html_safe
         .sub-panel.extra.rel
           %fieldset.date-picker.full
             %legend
               Date of the most recent tenancy agreement
             .row
               = tenancy_form.date_select(:latest_agreement_date, @date_select_options)
+
           %div{ style: "padding:0 30px 20px 30px" }
             Whenever a new tenancy agreement has replaced the first tenancy agreement or has replaced a replacement tenancy agreement:
           %fieldset.striped-choice.full
@@ -172,7 +173,7 @@
             = deposit_form.text_field :ref_number
         %fieldset.striped-choice.full
           %legend
-            Did you receive deposit in the form of property on or after 6 April 2007?
+            Did you receive a deposit in the form of property on or after 6 April 2007?
             %span.req> *
           .options
             - ['Yes', 'No'].each do |property_choice|
@@ -213,3 +214,7 @@
   %section
     .action-buttons.cf
       %button.button.primary.large.chevron.left{name: 'Complete form', value: ''} Complete form
+
+
+/ handlebars templates
+= render :partial => 'shared/hbtemplates'
