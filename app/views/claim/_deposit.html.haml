@@ -1,22 +1,8 @@
-= claim_form.fields_for deposit, builder: LabellingFormBuilder do |deposit_form|
-  - deposit_form.fieldset :received, class: 'striped-choice full' do
-    %legend
-      Was a money deposit received on or after 6 April 2007?
-      %span.req> *
-    .options
-      - ['Yes', 'No'].each do |received_choice|
-        .row
-          = deposit_form.radio_button(:received, received_choice)
-          = deposit_form.label :received, received_choice.humanize, :value => received_choice
-  .sub-panel.extra.rel
-    = deposit_form.text_field_row  :ref_number, label: 'If <strong>Yes</strong>, provide the Tenancy Deposit Scheme reference number', class: 'full'
+= claim_form.fields_for deposit, builder: LabellingFormBuilder do |form|
 
-  - deposit_form.fieldset :as_property, class: 'striped-choice full' do
-    %legend
-      Did you receive deposit in the form of property on or after 6 April 2007?
-      %span.req> *
-    .options
-      - ['Yes', 'No'].each do |property_choice|
-        .row
-          = deposit_form.radio_button(:as_property, property_choice)
-          = deposit_form.label :as_property, property_choice.humanize, :value => property_choice
+  = form.radio_button_fieldset :received, 'Was a money deposit received on or after 6 April 2007?', class: 'striped-choice full'
+
+  .sub-panel.extra.rel
+    = form.text_field_row  :ref_number, label: 'If <strong>Yes</strong>, provide the Tenancy Deposit Scheme reference number', class: 'full'
+
+  = form.radio_button_fieldset :as_property, 'Did you receive deposit in the form of property on or after 6 April 2007?', class: 'striped-choice full'
