@@ -93,7 +93,7 @@ end
 
 def claim_formatted_data
   {
-    "court_fee" => "£175.00",
+    "court_fee" => "175.00",
     "claimant_one_address" => "Landlordly LTD\nSecret Lair 2\nEvil",
     "claimant_one_postcode1" => "SW1W",
     "claimant_one_postcode2" => "0LU",
