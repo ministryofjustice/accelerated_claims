@@ -1,0 +1,13 @@
+= claim_form.fields_for order, builder: LabellingFormBuilder do |order_form|
+  %fieldset.striped-choice.full
+    %legend
+      You are asking the court to order that the defendant(s)
+      %span.req> *
+    .options
+      - order_form.row :possession do
+        = order_form.check_box :possession, {}, "Yes", "No"
+        = order_form.label :possession, 'deliver up possession of the property'
+      - order_form.row :cost do
+        = order_form.check_box :cost, {}, "Yes", "No"
+        = order_form.label :cost, 'to pay the cost of the claim'
+
