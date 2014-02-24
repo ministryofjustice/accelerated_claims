@@ -11,10 +11,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   def radio_button_fieldset attribute, legend, options={}
     legend = label_for attribute, legend
 
-    if error_for? attribute
-      legend += @template.surround(" <span class='error'>".html_safe, "</span>".html_safe) { @object.errors.messages[attribute][0] }
-    end
-
     options[:class] = css_for(attribute, options)
 
     options[:choice] ||= {'Yes'=>'Yes', 'No'=>'No'}
@@ -59,7 +55,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def error_for? attribute
-    @object.errors.messages.key?(attribute)
+    @object.errors.messages.key?(attribute) && !@object.errors.messages[attribute].empty?
   end
 
   def haml_tag_text tag, attribute, options
@@ -75,14 +71,25 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 
+  def error_span attribute
+    @template.surround(" <span class='error'>".html_safe, "</span>".html_safe) { @object.errors.messages[attribute][0] }
+  end
+
   def labelled_input attribute, input_class, input, label=nil
-    [ self.label(attribute, label_for(attribute, label)), self.send(input, attribute, class: input_class) ].join("\n").html_safe
+    label = label(attribute, label_for(attribute, label))
+
+    value = send(input, attribute, class: input_class)
+
+    [ label, value ].join("\n").html_safe
   end
 
   def label_for attribute, label
     label ||= attribute.to_s.humanize
     required = presence_required?(attribute)
     label = %Q|#{label}<span class="req">*</span>| if required
+
+    label = %Q|#{label} #{error_span(attribute)}| if error_for? attribute
+
     label.html_safe
   end
 
