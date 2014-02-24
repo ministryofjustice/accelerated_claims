@@ -1,0 +1,34 @@
+= claim_form.fields_for tenancy, builder: LabellingFormBuilder do |tenancy_form|
+  - tenancy_form.fieldset :start_date, class: 'date-picker' do
+    %legend
+      Tenancy start date
+      %span.req> *
+    .row
+      = tenancy_form.date_select(:start_date, @date_select_options)
+  .row.full
+    = 'If there has been <strong>multiple tenancy agreements</strong> please give details below.'.html_safe
+  .sub-panel.extra.rel
+    - tenancy_form.fieldset :latest_agreement_date, class: 'date-picker full' do
+      %legend
+        Date of the most recent tenancy agreement
+      .row
+        = tenancy_form.date_select(:latest_agreement_date, @date_select_options)
+    %div{ style: "padding:0 30px 20px 30px" }
+      Whenever a new tenancy agreement has replaced the first tenancy agreement or has replaced a replacement tenancy agreement:
+    - tenancy_form.fieldset :agreement_reissued_for_same_property, class: 'striped-choice full' do
+      %legend
+        Has it been for the same property?
+      .options
+        - ['Yes', 'no'].each do |choice|
+          .row
+            = tenancy_form.radio_button(:agreement_reissued_for_same_property, choice)
+            = tenancy_form.label :agreement_reissued_for_same_property, choice.humanize, :value => choice
+    - tenancy_form.fieldset :agreement_reissued_for_same_landlord_and_tenant, class: 'striped-choice full' do
+      %legend
+        Has it been the same landlord and tenant?
+      .options
+        - ['Yes', 'no'].each do |choice|
+          .row
+            = tenancy_form.radio_button(:agreement_reissued_for_same_landlord_and_tenant, choice)
+            = tenancy_form.label :agreement_reissued_for_same_landlord_and_tenant, choice.humanize, :value => choice
+
