@@ -39,7 +39,7 @@
     %h3.section-header Tenancy
     .moj-panel
       - tenancy = @claim.tenancy
-      = claim_form.fields_for tenancy do |tenancy_form|
+      = claim_form.fields_for tenancy, builder: LabellingFormBuilder do |tenancy_form|
         - fieldset '.date-picker', :start_date, tenancy do
           %legend
             Tenancy start date
@@ -77,10 +77,8 @@
     %h3.section-header Notice
     .moj-panel
       - notice = @claim.notice
-      = claim_form.fields_for notice do |notice_form|
-        - row '', :served_by, notice do
-          = notice_form.label :served_by, 'Notice served by<span class="req">*</span>'.html_safe
-          = notice_form.text_field :served_by
+      = claim_form.fields_for notice, builder: LabellingFormBuilder do |notice_form|
+        = notice_form.text_field_row  :served_by, label: 'Notice served by', class: ''
         - fieldset '.date-picker', :date_served, notice do
           %legend
             Date notice served
@@ -98,7 +96,7 @@
     %h3.section-header Licences
     .moj-panel
       - license = @claim.license
-      = claim_form.fields_for license do |license_form|
+      = claim_form.fields_for license, builder: LabellingFormBuilder do |license_form|
         - fieldset '.striped-choice.full', :hmo, license do
           %legend
             Is the property part of a house in multiple occupation?
@@ -109,9 +107,7 @@
                 = license_form.radio_button(:hmo, hmo_choice)
                 = license_form.label :hmo, hmo_choice.humanize, :value => hmo_choice
         .sub-panel.extra.rel
-          - row '.full', :authority, license do
-            = license_form.label :authority, 'If <strong>Yes</strong>, name of authority who issued the license'.html_safe
-            = license_form.text_field :authority
+          = license_form.text_field_row  :authority, label: 'If <strong>Yes</strong>, name of authority who issued the license', class: '.full'
           - fieldset '.date-picker.rel.full', :hmo_date, license do
             %legend Date licence was issued
             .row
@@ -126,9 +122,8 @@
                 = license_form.radio_button(:housing_act, housing_act_choice)
                 = license_form.label :housing_act, housing_act_choice.humanize, :value => housing_act_choice
         .sub-panel.extra.rel
-          - row '.full', :housing_act_authority, license do
-            = license_form.label :housing_act_authority, 'If <strong>Yes</strong>, name of authority who issued the license'.html_safe
-            = license_form.text_field :housing_act_authority
+          = license_form.text_field_row  :housing_act_authority, label: 'If <strong>Yes</strong>, name of authority who issued the license', class: '.full'
+
           - fieldset '.date-picker.rel.full', :housing_act, license do
             %legend Date license was issued
             .row
@@ -138,7 +133,7 @@
     %h3.section-header Deposit
     .moj-panel
       - deposit = @claim.deposit
-      = claim_form.fields_for deposit do |deposit_form|
+      = claim_form.fields_for deposit, builder: LabellingFormBuilder do |deposit_form|
         - fieldset '.striped-choice.full', :received, deposit do
           %legend
             Was a money deposit received on or after 6 April 2007?
@@ -149,9 +144,8 @@
                 = deposit_form.radio_button(:received, received_choice)
                 = deposit_form.label :received, received_choice.humanize, :value => received_choice
         .sub-panel.extra.rel
-          - row '.full', :ref_number, deposit do
-            = deposit_form.label :ref_number, 'If <strong>Yes</strong>, provide the Tenancy Deposit Scheme reference number'.html_safe
-            = deposit_form.text_field :ref_number
+          = deposit_form.text_field_row  :ref_number, label: 'If <strong>Yes</strong>, provide the Tenancy Deposit Scheme reference number', class: '.full'
+
         - fieldset '.striped-choice.full', :as_property, deposit do
           %legend
             Did you receive deposit in the form of property on or after 6 April 2007?
@@ -166,7 +160,7 @@
     %h3.section-header Postponement of possession
     .moj-panel
       - possession = @claim.possession
-      = claim_form.fields_for possession do |possession_form|
+      = claim_form.fields_for possession, builder: LabellingFormBuilder do |possession_form|
         - fieldset '.striped-choice.full', :hearing, possession do
           %legend
             If the defendant(s) seek(s) postponement of possession on the grounds of exceptional hardship, are you content that the request be considered without a hearing?
@@ -181,7 +175,7 @@
     %h3.section-header The order
     .moj-panel
       - order = @claim.order
-      = claim_form.fields_for order do |order_form|
+      = claim_form.fields_for order, builder: LabellingFormBuilder do |order_form|
         %fieldset.striped-choice.full
           %legend
             You are asking the court to order that the defendant(s)
