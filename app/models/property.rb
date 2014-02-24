@@ -17,7 +17,7 @@ class Property < BaseClass
   end
 
   attr_accessor :house
-  validates :house, inclusion: { in: ['Yes', 'No'] }
+  validates :house, presence: true, inclusion: { in: ['Yes', 'No'] }
 
   def as_json
     postcode1, postcode2 = split_postcode

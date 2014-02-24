@@ -1,33 +1,20 @@
-= claim_form.fields_for license, builder: LabellingFormBuilder do |license_form|
-  - license_form.fieldset :hmo, class: 'striped-choice full' do
-    %legend
-      Is the property part of a house in multiple occupation?
-      %span.req> *
-    .options
-      - ['Yes', 'No'].each do |hmo_choice|
-        .row
-          = license_form.radio_button(:hmo, hmo_choice)
-          = license_form.label :hmo, hmo_choice.humanize, :value => hmo_choice
+= claim_form.fields_for license, builder: LabellingFormBuilder do |form|
+  = form.radio_button_fieldset :hmo, 'Is the property part of a house in multiple occupation?', class: 'striped-choice full'
+
   .sub-panel.extra.rel
-    = license_form.text_field_row  :authority, label: 'If <strong>Yes</strong>, name of authority who issued the license', class: 'full'
-    - license_form.fieldset :hmo_date, class: 'date-picker rel full' do
+    = form.text_field_row  :authority, label: 'If <strong>Yes</strong>, name of authority who issued the license', class: 'full'
+    - form.fieldset :hmo_date, class: 'date-picker rel full' do
       %legend Date licence was issued
       .row
-        = license_form.date_select(:hmo_date, @date_select_options)
-  - license_form.fieldset :housing_act, class: 'striped-choice full' do
-    %legend
-      Is the property required to be licensed under Part 3 of the Housing Act 2004?
-      %span.req> *
-    .options
-      - ['Yes', 'No'].each do |housing_act_choice|
-        .row
-          = license_form.radio_button(:housing_act, housing_act_choice)
-          = license_form.label :housing_act, housing_act_choice.humanize, :value => housing_act_choice
-  .sub-panel.extra.rel
-    = license_form.text_field_row  :housing_act_authority, label: 'If <strong>Yes</strong>, name of authority who issued the license', class: 'full'
+        = form.date_select(:hmo_date, @date_select_options)
 
-    - license_form.fieldset :housing_act, class: 'date-picker rel full' do
+  = form.radio_button_fieldset :housing_act, 'Is the property required to be licensed under Part 3 of the Housing Act 2004?', class: 'striped-choice full'
+
+  .sub-panel.extra.rel
+    = form.text_field_row  :housing_act_authority, label: 'If <strong>Yes</strong>, name of authority who issued the license', class: 'full'
+
+    - form.fieldset :housing_act, class: 'date-picker rel full' do
       %legend Date license was issued
       .row
-        = license_form.date_select(:housing_act_date, @date_select_options)
+        = form.date_select(:housing_act_date, @date_select_options)
 
