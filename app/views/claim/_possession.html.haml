@@ -1,11 +1,3 @@
-= claim_form.fields_for possession, builder: LabellingFormBuilder do |possession_form|
-  - possession_form.fieldset :hearing, class: 'striped-choice full' do
-    %legend
-      If the defendant(s) seek(s) postponement of possession on the grounds of exceptional hardship, are you content that the request be considered without a hearing?
-      %span.req> *
-    .options
-      - ['Yes', 'No'].each do |hearing_type|
-        .row
-          = possession_form.radio_button(:hearing, hearing_type)
-          = possession_form.label :hearing, hearing_type.humanize, :value => hearing_type
+= claim_form.fields_for possession, builder: LabellingFormBuilder do |form|
 
+  = form.radio_button_fieldset :hearing, 'If the defendant(s) seek(s) postponement of possession on the grounds of exceptional hardship, are you content that the request be considered without a hearing?', class: 'striped-choice full'

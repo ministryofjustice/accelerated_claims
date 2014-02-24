@@ -3,15 +3,5 @@
   = form.text_field_row :town, class: 'town'
   = form.text_field_row :postcode, class: 'rel postcode'
 
-  - form.fieldset :house, class: 'striped-choice' do
-    %legend
-      Type of property
-      %span.req> *
-      - if(@claim.property.errors.messages.key? :house)
-        %span.error= @claim.property.errors.messages[:house][0]
+  = form.radio_button_fieldset :house, 'Type of property', class: 'striped-choice', choice: {'A house' => 'Yes', 'Part of a house' => 'No'}
 
-    .options
-      - {'A house' => 'Yes', 'Part of a house' => 'No'}.each do |key,val|
-        .row
-          = form.radio_button(:house, val)
-          = form.label :house, key, :value => val
