@@ -1,4 +1,7 @@
+# -*- coding: utf-8 -*-
 class Claim < BaseClass
+  COURT_FEE = "£175.00"
+
   include ActiveSupport::Inflector
 
   attr_accessor :errors
@@ -19,7 +22,7 @@ class Claim < BaseClass
         json_out["#{attribute}_#{key}"] = value
       end
     end
-    json_out
+    add_court_fee json_out
   end
 
   def valid?
@@ -35,6 +38,10 @@ class Claim < BaseClass
   end
 
   private
+
+  def add_court_fee hash
+    hash.merge!({ "court_fee" => "#{COURT_FEE}" })
+  end
 
   def singular_submodels
     %w(Property Notice License Deposit Possession Order Tenancy)
