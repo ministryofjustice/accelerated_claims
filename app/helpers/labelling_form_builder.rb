@@ -9,19 +9,19 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def row css_selector, attribute
-    div = "div.row#{css_selector}"
-    div += '.error' if @object.errors.messages.key?(attribute)
+    div = "div row #{css_selector}"
+    div += ' error' if @object.errors.messages.key?(attribute)
 
-    @template.haml_tag div do
+    @template.haml_tag div.squeeze(' ').strip.gsub(' ','.') do
       yield attribute, presence_required?(attribute, @object)
     end
   end
 
   def fieldset css_selector, attribute
-    fieldset = "fieldset#{css_selector}"
-    fieldset += '.error' if @object.errors.messages.key?(attribute)
+    fieldset = "fieldset #{css_selector}"
+    fieldset += ' error' if @object.errors.messages.key?(attribute)
 
-    @template.haml_tag fieldset do
+    @template.haml_tag fieldset.squeeze(' ').strip.gsub(' ','.') do
       yield
     end
   end
