@@ -8,14 +8,21 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     row_input attribute, :text_area, options
   end
 
-  def radio_button_fieldset attribute, legend, options={}
-    legend = label_for attribute, legend
-
+  def date_select_field_set attribute, legend, options={}
     options[:class] = css_for(attribute, options)
 
+    @template.field_set_tag label_for(attribute, legend), options do
+      @template.surround("<div class='row'>".html_safe, "</div>".html_safe) do
+        date_select(attribute, options[:date_select_options])
+      end
+    end
+  end
+
+  def radio_button_fieldset attribute, legend, options={}
+    options[:class] = css_for(attribute, options)
     options[:choice] ||= {'Yes'=>'Yes', 'No'=>'No'}
 
-    @template.field_set_tag legend, options do
+    @template.field_set_tag label_for(attribute, legend), options do
       @template.surround("<div class='options'>".html_safe, "</div>".html_safe) do
         options[:choice].map do |label, choice|
           radio_button_row(attribute, label, choice)

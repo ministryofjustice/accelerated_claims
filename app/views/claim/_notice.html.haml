@@ -1,14 +1,5 @@
 = claim_form.fields_for notice, builder: LabellingFormBuilder do |form|
   = form.text_field_row  :served_by, label: 'Notice served by', class: ''
-  - form.fieldset :date_served, class: 'date-picker' do
-    %legend
-      Date notice served
-      %span.req> *
-    .row
-      = form.date_select(:date_served, @date_select_options)
-  - form.fieldset :expiry_date, class: 'date-picker' do
-    %legend
-      Date notice expired
-      %span.req> *
-    .row
-      = form.date_select(:expiry_date, @date_select_options)
+
+  = form.date_select_field_set :date_served, 'Date notice served', class: 'date-picker', date_select_options: @date_select_options
+  = form.date_select_field_set :expiry_date, 'Date notice expired', class: 'date-picker', date_select_options: @date_select_options
