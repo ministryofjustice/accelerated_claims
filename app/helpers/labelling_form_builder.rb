@@ -17,8 +17,9 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 
-  def fieldset css_selector, attribute
-    fieldset = "fieldset #{css_selector}"
+  def fieldset attribute, options
+    fieldset = "fieldset"
+    fieldset += " #{options[:class]}" if options[:class]
     fieldset += ' error' if @object.errors.messages.key?(attribute)
 
     @template.haml_tag fieldset.squeeze(' ').strip.gsub(' ','.') do
