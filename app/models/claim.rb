@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
 class Claim < BaseClass
-  COURT_FEE = "£175.00"
+
+  COURT_FEE = "175.00"
 
   include ActiveSupport::Inflector
 
