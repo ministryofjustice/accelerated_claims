@@ -38,8 +38,7 @@
   %section
     %h3.section-header Tenancy
     .moj-panel
-      - tenancy = @claim.tenancy
-      = claim_form.fields_for tenancy, builder: LabellingFormBuilder do |tenancy_form|
+      = claim_form.fields_for @claim.tenancy, builder: LabellingFormBuilder do |tenancy_form|
         - tenancy_form.fieldset '.date-picker', :start_date do
           %legend
             Tenancy start date
@@ -76,8 +75,7 @@
   %section
     %h3.section-header Notice
     .moj-panel
-      - notice = @claim.notice
-      = claim_form.fields_for notice, builder: LabellingFormBuilder do |notice_form|
+      = claim_form.fields_for @claim.notice, builder: LabellingFormBuilder do |notice_form|
         = notice_form.text_field_row  :served_by, label: 'Notice served by', class: ''
         - notice_form.fieldset '.date-picker', :date_served do
           %legend
@@ -95,8 +93,7 @@
   %section
     %h3.section-header Licences
     .moj-panel
-      - license = @claim.license
-      = claim_form.fields_for license, builder: LabellingFormBuilder do |license_form|
+      = claim_form.fields_for @claim.license, builder: LabellingFormBuilder do |license_form|
         - license_form.fieldset '.striped-choice.full', :hmo do
           %legend
             Is the property part of a house in multiple occupation?
@@ -132,8 +129,7 @@
   %section
     %h3.section-header Deposit
     .moj-panel
-      - deposit = @claim.deposit
-      = claim_form.fields_for deposit, builder: LabellingFormBuilder do |deposit_form|
+      = claim_form.fields_for @claim.deposit, builder: LabellingFormBuilder do |deposit_form|
         - deposit_form.fieldset '.striped-choice.full', :received do
           %legend
             Was a money deposit received on or after 6 April 2007?
@@ -159,8 +155,7 @@
   %section
     %h3.section-header Postponement of possession
     .moj-panel
-      - possession = @claim.possession
-      = claim_form.fields_for possession, builder: LabellingFormBuilder do |possession_form|
+      = claim_form.fields_for @claim.possession, builder: LabellingFormBuilder do |possession_form|
         - possession_form.fieldset '.striped-choice.full', :hearing do
           %legend
             If the defendant(s) seek(s) postponement of possession on the grounds of exceptional hardship, are you content that the request be considered without a hearing?
@@ -174,8 +169,7 @@
   %section
     %h3.section-header The order
     .moj-panel
-      - order = @claim.order
-      = claim_form.fields_for order, builder: LabellingFormBuilder do |order_form|
+      = claim_form.fields_for @claim.order, builder: LabellingFormBuilder do |order_form|
         %fieldset.striped-choice.full
           %legend
             You are asking the court to order that the defendant(s)
