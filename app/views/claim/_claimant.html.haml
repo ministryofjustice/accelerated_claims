@@ -1,6 +1,6 @@
 = claim_form.fields_for claimant_field, claimant, builder: LabellingFormBuilder do |form|
   = form.text_field_row :company,  label: 'Full name', class: ''
-  = form.text_area_row  :street,   class: '.rel.street'
-  = form.text_field_row :town,     class: '.rel.town'
-  = form.text_field_row :postcode, class: '.rel.postcode', input_class: 'smalltext'
+  = form.text_area_row  :street,   class: 'rel street'
+  = form.text_field_row :town,     class: 'rel town'
+  = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'
 

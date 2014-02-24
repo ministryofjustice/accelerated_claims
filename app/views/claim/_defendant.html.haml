@@ -1,8 +1,8 @@
 = claim_form.fields_for defendant_field, defendant, builder: LabellingFormBuilder do |form|
   = form.text_field_row :title, class: ''
-  = form.text_field_row :full_name, class: '.rel'
+  = form.text_field_row :full_name, class: 'rel'
   .row.full
     If the defendant is living somewhere else, give the address below
-  = form.text_area_row  :street,   class: '.rel.street'
-  = form.text_field_row :town,     class: '.rel.town'
-  = form.text_field_row :postcode, class: '.rel.postcode', input_class: 'smalltext'
+  = form.text_area_row  :street,   class: 'rel street'
+  = form.text_field_row :town,     class: 'rel town'
+  = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'
