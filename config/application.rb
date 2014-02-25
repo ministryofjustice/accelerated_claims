@@ -32,6 +32,11 @@ module AcceleratedClaims
       'X-XSS-Protection' => '1; mode=block'
     }
 
+    # disable default <div class="field_with_errors"> wrapping idiocy
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance| 
+      html_tag
+    }
+
     # app title appears in the header bar
     config.app_title = 'Civil Claims'
     config.proposition_title = 'Property repossession'
