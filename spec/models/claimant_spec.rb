@@ -15,15 +15,37 @@ describe Claimant do
     end
   end
 
-  describe "full_name name" do
-    it "when blank" do
-      claimant.full_name = ""
-      claimant.should_not be_valid
+  context 'when do_validation false' do
+    before do
+      claimant.do_validation = false
     end
+    describe "full_name name" do
+      it "when blank" do
+        claimant.full_name = ""
+        claimant.should be_valid
+      end
 
-    it "when over 40 characters" do
-      claimant.street = "x" * 41
-      claimant.should_not be_valid
+      it "when over 40 characters" do
+        claimant.street = "x" * 41
+        claimant.should be_valid
+      end
+    end
+  end
+
+  context 'when do_validation true' do
+    before do
+      claimant.do_validation = true
+    end
+    describe "full_name name" do
+      it "when blank" do
+        claimant.full_name = ""
+        claimant.should_not be_valid
+      end
+
+      it "when over 40 characters" do
+        claimant.street = "x" * 41
+        claimant.should_not be_valid
+      end
     end
   end
 
