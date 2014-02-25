@@ -94,6 +94,8 @@ span.error
     margin-top: 4px
 
 .sub-panel
+  @include clearfix
+  float: left
   padding-top: 40px
 
   &:first-child
@@ -102,23 +104,20 @@ span.error
     // .js-enabled &
     //   padding-top: 40px
 
-  &.js-benefits-detail
-    padding-top: 0
-
-    .row:first-child
-      margin-top: 40px
-
   > h4
-    margin: 0 0 40px 30px
+    margin: 0 0 40px 90px
     font-size: 24px
+    clear: both
+    &:first-child
+      margin-bottom: 0
 
   &.extra
     background: $white
     width: 670px
     margin:
-      left: 32px
+      left: 90px
       top: 40px
-    padding: 0
+    padding: 40px 0 0 0
 
     &.rel
       margin-top: 15px
@@ -131,7 +130,6 @@ span.error
 
     fieldset, fieldset.full
       margin: 0
-      border-top: 1px dotted #c2c2c2
 
       &.rel
         padding-top: 0
@@ -148,8 +146,11 @@ span.error
 
         .row
           max-width: 590px
-    > .row, > fieldset
-      padding: 40px 0
+    > .row, > .row.full, > fieldset, > fieldset.full
+      margin-top: 0
+      padding: 0 50px 40px 30px
+      &.error
+        padding-right: 47px
 
 fieldset.plain
   padding-bottom: 20px
@@ -170,11 +171,12 @@ fieldset.plain
 
 
 .moj-panel
+  @include clearfix
   background: $grey-4
   border:
     top: 1px solid $grey-2
     bottom: 1px solid $grey-2
-  padding: 40px 20px 40px 60px
+  padding: 40px 0 35px
   margin-bottom: 50px
   font-size: 19px
 
@@ -208,8 +210,16 @@ fieldset.plain
 
   fieldset, .row
     @include clearfix
+    float: left
     clear: both
-    margin-top: 40px
+    width: 570px
+    margin:
+      top: 25px
+      bottom: 5px
+      left: 0
+    padding:
+      top: 5px
+      bottom: 5px
 
     &:first-child, &.nomargin
       margin-top: 0
@@ -221,7 +231,7 @@ fieldset.plain
 
     &.help-link
       margin-top: 15px
-      padding-left: 220px
+      padding-left: 280px
 
   .has-extra
     margin-top: 5px
@@ -279,8 +289,7 @@ fieldset.plain
       
 
   .row
-    width: 480px
-    padding-left: 220px
+    padding-left: 280px
 
     &.error
       padding-left: 277px
@@ -290,14 +299,17 @@ fieldset.plain
     &.divider
       width: 670px
       height: 0
-      padding-left: 0
-      margin-left: 30px
+      padding: 0
+      margin:
+        left: 90px
+        top: 25px
+        bottom: 25px
       overflow: hidden
       border-bottom: 1px dotted #c2c2c2
 
     &.full
       width: 670px
-      padding-left: 30px
+      padding-left: 90px
       &.table
         width: 700px
         padding-left: 0
@@ -416,7 +428,7 @@ fieldset.plain
       margin-left: 10px
 
   fieldset
-    padding-left: 220px
+    padding-left: 280px
 
     &.error
       padding-left: 277px
@@ -461,7 +473,7 @@ fieldset.plain
         padding-top: 10px
 
     &.full
-      padding-left: 30px
+      padding-left: 90px
 
       legend
         width: auto
