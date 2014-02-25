@@ -29,8 +29,16 @@ class Claim < BaseClass
     @errors.clear
     validity = true
     attributes_from_submodels.each do |instance_var, model|
-      unless self.send(instance_var).valid?
-        self.send(instance_var).errors.full_messages.each { |m| @errors[:base] << m }
+      unless send(instance_var).valid?
+        errors = send(instance_var).errors
+        messages = errors.full_messages
+
+        errors.each_with_index do |error, index|
+          attribute = error.first
+          key = "claim_#{instance_var}_#{attribute}_error"
+          message = messages[index]
+          @errors[:base] << [key, message]
+        end
         validity = false
       end
     end
