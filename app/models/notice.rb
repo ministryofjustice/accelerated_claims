@@ -1,19 +1,19 @@
 class Notice < BaseClass
 
   attr_accessor :served_by
-  validates :served_by, presence: true, length: { maximum: 40 }
+  validates :served_by, presence: { message: 'must be entered' }, length: { maximum: 40 }
 
   attr_accessor :date_served
-  validates :date_served, presence: true
+  validates :date_served, presence: { message: 'must be entered' }
 
   attr_accessor :expiry_date
-  validates :expiry_date, presence: true
+  validates :expiry_date, presence: { message: 'must be entered' }
 
   def as_json
     day = '%d'
     month = '%m'
     year = '%Y'
-    
+
     {
      "served_by" => "#{served_by}",
      "date_served_day" => "#{date_served.strftime(day)}",

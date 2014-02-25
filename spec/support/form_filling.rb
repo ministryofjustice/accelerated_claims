@@ -13,7 +13,7 @@ end
 
 def fill_claimant_one
   data = claim_post_data["claim"]["claimant_one"]
-  fill_in 'claim_claimant_one_company', with: data["company"]
+  fill_in 'claim_claimant_one_full_name', with: data["full_name"]
   fill_in 'claim_claimant_one_street', with: data["street"]
   fill_in 'claim_claimant_one_town', with: data["town"]
   fill_in 'claim_claimant_one_postcode', with: data["postcode"]
@@ -21,7 +21,7 @@ end
 
 def fill_claimant_two
   data = claim_post_data["claim"]["claimant_two"]
-  fill_in 'claim_claimant_two_company', with: data["company"]
+  fill_in 'claim_claimant_two_full_name', with: data["full_name"]
   fill_in 'claim_claimant_two_street', with: data["street"]
   fill_in 'claim_claimant_two_town', with: data["town"]
   fill_in 'claim_claimant_two_postcode', with: data["postcode"]

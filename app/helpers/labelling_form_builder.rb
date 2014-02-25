@@ -11,7 +11,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   def date_select_field_set attribute, legend, options={}
     options[:class] = css_for(attribute, options)
 
-    @template.field_set_tag label_for(attribute, legend), options do
+    @template.field_set_tag label_for(attribute, legend), options.merge(id: id_for(attribute)) do
       @template.surround("<div class='row'>".html_safe, "</div>".html_safe) do
         date_select(attribute, options[:date_select_options])
       end
@@ -22,7 +22,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     options[:class] = css_for(attribute, options)
     options[:choice] ||= {'Yes'=>'Yes', 'No'=>'No'}
 
-    @template.field_set_tag label_for(attribute, legend), options do
+    @template.field_set_tag label_for(attribute, legend), options.merge(id: id_for(attribute)) do
       @template.surround("<div class='options'>".html_safe, "</div>".html_safe) do
         options[:choice].map do |label, choice|
           radio_button_row(attribute, label, choice)
@@ -45,6 +45,14 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
   private
 
+  def error_id_for attribute
+    "#{@object_name.tr('[]','_')}_#{attribute}_error".squeeze('_')
+  end
+
+  def id_for attribute
+    error_for?(attribute) ? error_id_for(attribute) : ''
+  end
+
   def radio_button_row attribute, label, choice
     @template.surround("<div class='row'>".html_safe, "</div>".html_safe) do
       [
@@ -58,7 +66,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     css = ''
     css += " #{options[:class]}" if options[:class]
     css += ' error' if error_for?(attribute)
-    css
+    css.strip
   end
 
   def error_for? attribute
@@ -73,13 +81,14 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   def row_input attribute, input, options
     css = "row #{css_for(attribute, options)}"
 
-    @template.surround("<div class='#{css}'>".html_safe,"</div>".html_safe) do
+    @template.surround("<div id='#{id_for(attribute)}' class='#{css}'>".html_safe,"</div>".html_safe) do
       labelled_input attribute, options[:input_class], input, options[:label]
     end
   end
 
   def error_span attribute
-    @template.surround(" <span class='error'>".html_safe, "</span>".html_safe) { @object.errors.messages[attribute][0] }
+    message = @object.errors.messages[attribute][0]
+    @template.surround(" <span class='error'>".html_safe, "</span>".html_safe) { message }
   end
 
   def labelled_input attribute, input_class, input, label=nil
