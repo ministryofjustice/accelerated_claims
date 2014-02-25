@@ -79,7 +79,8 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def error_span attribute
-    @template.surround(" <span class='error'>".html_safe, "</span>".html_safe) { @object.errors.messages[attribute][0] }
+    message = @object.errors.messages[attribute][0]
+    @template.surround(" <span class='error'>".html_safe, "</span>".html_safe) { message }
   end
 
   def labelled_input attribute, input_class, input, label=nil

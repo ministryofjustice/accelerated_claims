@@ -5,9 +5,11 @@ feature 'Filling in claim form' do
   scenario "submitting incomplete form" do
     visit '/'
     click_button 'Complete form'
-    expect(page).to have_content("Street can't be blank")
+    expect(page).to have_content("Street must be entered")
 
-    # expect(page).to have_content("Notice served by can't be blank")
+    expect(page).to have_content("Served by must be entered")
+
+    expect(page).to have_content("House must be selected")
   end
 
 end
