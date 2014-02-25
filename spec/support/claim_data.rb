@@ -3,14 +3,14 @@ def claim_post_data
   { "claim" =>
     { "claimant_one" =>
       {
-        "company" => "Landlordly LTD",
+        "full_name" => "Landlordly LTD",
         "street" => "Secret Lair 2",
         "town" => "Evil",
         "postcode" => "SW1W 0LU"
       },
       "claimant_two" =>
       {
-        "company" => "Great Let LTD",
+        "full_name" => "Great Let LTD",
         "street" => "Devious Place 7",
         "town" => "Evil",
         "postcode" => "SW1W 0LU"

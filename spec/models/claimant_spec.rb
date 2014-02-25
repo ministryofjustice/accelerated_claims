@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Claimant do
   let(:claimant) do
-    Claimant.new(company: "Claimant LTD",
+    Claimant.new(full_name: "Claimant LTD",
                  street: "Streety Street",
                  town: "London",
                  postcode: "SW1H9AJ")
@@ -14,9 +14,9 @@ describe Claimant do
     end
   end
 
-  describe "company name" do
+  describe "full_name name" do
     it "when blank" do
-      claimant.company = ""
+      claimant.full_name = ""
       claimant.should_not be_valid
     end
 
