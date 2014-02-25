@@ -4,12 +4,11 @@ class Claimant < BaseClass
   validates :company, presence: true
 
   attr_accessor :street
-  validates :street, presence: true
-  validates :street, length: { maximum: 40 }
+  validates :street, presence: true, length: { maximum: 40 }
 
   attr_accessor :town
   attr_accessor :postcode
-  validates :postcode, presence: true
+  validates :postcode, presence: true, length: { maximum: 8 }
 
   def as_json
     postcode1, postcode2 = split_postcode
