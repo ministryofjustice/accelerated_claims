@@ -7,12 +7,12 @@
     %span.right
       %span.req> *
       required
-    %h3.section-header Property
+    %h3.section-header Property to be possessed
     .moj-panel
       = render partial: 'property', object: @claim.property, locals: { claim_form: claim_form }
 
   %section
-    %h3.section-header Claimants
+    %h3.section-header Claimant (landlord)
     .moj-panel
       .sub-panel.claimant
         %h4 Claimant 1
@@ -23,7 +23,7 @@
         = render partial: 'claimant', object: @claim.claimant_two, locals: { claim_form: claim_form, claimant_field: :claimant_two}
 
   %section
-    %h3.section-header Defendants
+    %h3.section-header Defendants (tenants)
     .moj-panel
       .sub-panel.defendant
         %h4 Defendant 1
