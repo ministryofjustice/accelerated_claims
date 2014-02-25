@@ -1,12 +1,12 @@
 class License < BaseClass
 
-  attr_accessor :hmo
-  validates :hmo, presence: true, inclusion: { in: ['Yes', 'No'] }
+  attr_accessor :house_in_multiple_occupation
+  validates :house_in_multiple_occupation, presence: true, inclusion: { in: ['Yes', 'No'] }
 
-  attr_accessor :authority
-  validate :authority_for_hmo
+  attr_accessor :house_in_multiple_occupation_authority
+  validate :authority_for_house_in_multiple_occupation
 
-  attr_accessor :hmo_date
+  attr_accessor :house_in_multiple_occupation_date
 
   attr_accessor :housing_act
   validates :housing_act, presence: true, inclusion: { in: ['Yes', 'No'] }
@@ -16,14 +16,14 @@ class License < BaseClass
 
   attr_accessor :housing_act_date
 
-  def authority_for_hmo
-    if hmo.present?
-      errors.add(:authority, "can't be blank") if authority.blank?
+  def authority_for_house_in_multiple_occupation
+    if house_in_multiple_occupation.present? && house_in_multiple_occupation == 'Yes'
+      errors.add(:house_in_multiple_occupation_authority, "can't be blank") if house_in_multiple_occupation_authority.blank?
     end
   end
 
   def authority_for_housing_act
-    if housing_act.present?
+    if housing_act.present? && housing_act == 'Yes'
       errors.add(:housing_act_authority, "can't be blank") if housing_act_authority.blank?
     end
   end
@@ -34,11 +34,11 @@ class License < BaseClass
     year = '%Y'
 
     {
-      "authority" => authority,
-      "hmo" => hmo,
-      "hmo_day" => "#{hmo_date.strftime(day)}",
-      "hmo_month" => "#{hmo_date.strftime(month)}",
-      "hmo_year" => "#{hmo_date.strftime(year)}",
+      "authority" => house_in_multiple_occupation_authority,
+      "hmo" => house_in_multiple_occupation,
+      "hmo_day" => "#{house_in_multiple_occupation_date.strftime(day)}",
+      "hmo_month" => "#{house_in_multiple_occupation_date.strftime(month)}",
+      "hmo_year" => "#{house_in_multiple_occupation_date.strftime(year)}",
       "housing_act" => housing_act,
       "housing_act_authority" => housing_act_authority,
       "housing_act_date_day" => "#{housing_act_date.strftime(day)}",

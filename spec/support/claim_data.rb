@@ -33,12 +33,12 @@ def claim_post_data
       },
       "license" =>
       {
-        "hmo" => true,
-        "authority" => "Great authority",
-        "hmo_date(3i)" => "2",
-        "hmo_date(2i)" => "2",
-        "hmo_date(1i)" => "2014",
-        "housing_act" => false,
+        "house_in_multiple_occupation" => 'Yes',
+        "house_in_multiple_occupation_authority" => "Great authority",
+        "house_in_multiple_occupation_date(3i)" => "2",
+        "house_in_multiple_occupation_date(2i)" => "2",
+        "house_in_multiple_occupation_date(1i)" => "2014",
+        "housing_act" => 'No',
         "housing_act_authority" => "Grand authority",
         "housing_act_date(3i)" => "2",
         "housing_act_date(2i)" => "2",
@@ -46,13 +46,13 @@ def claim_post_data
       },
       "deposit" =>
       {
-        "received" => true,
+        "received" => 'Yes',
         "ref_number" => "X1234",
-        "as_property" => true
+        "as_property" => 'Yes'
       },
       "possession" =>
       {
-        "hearing" => true
+        "hearing" => 'Yes'
       },
       "order" =>
       {
@@ -83,8 +83,8 @@ def claim_post_data
         "latest_agreement_date(3i)" => "1",
         "latest_agreement_date(2i)" => "1",
         "latest_agreement_date(1i)" => "2010",
-        "agreement_reissued_for_same_property" => false,
-        "agreement_reissued_for_same_landlord_and_tenant" => false
+        "agreement_reissued_for_same_property" => 'No',
+        "agreement_reissued_for_same_landlord_and_tenant" => 'No'
       }
     }
   }
