@@ -13,7 +13,7 @@ class Property < BaseClass
   validate :full_postcode
 
   def full_postcode
-    errors.add(:full_postcode, "not full postcode") unless !postcode.nil? && UKPostcode.new(postcode).full?
+    errors.add(:postcode, "not full postcode") unless !postcode.nil? && UKPostcode.new(postcode).full?
   end
 
   attr_accessor :house

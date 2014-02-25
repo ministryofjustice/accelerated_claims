@@ -4,5 +4,6 @@
     %p See highlighted errors below.
 
     %ul
-      - @errors.full_messages.each do |msg|
-        %li= msg
+      - @errors.full_messages.each do |field, message|
+        %li
+          = link_to message, "##{field}"
