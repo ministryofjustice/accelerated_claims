@@ -4,7 +4,7 @@
     = 'If there has been <strong>multiple tenancy agreements</strong> please give details below.'.html_safe
   .sub-panel.extra.rel
     = form.date_select_field_set :latest_agreement_date, 'Date of the most recent tenancy agreement', class: 'date-picker full', date_select_options: @date_select_options
-    %div{ style: "padding:0 30px 20px 30px" }
+    .row
       Whenever a new tenancy agreement has replaced the first tenancy agreement or has replaced a replacement tenancy agreement:
 
     = form.radio_button_fieldset :agreement_reissued_for_same_property, 'Has it been for the same property?', class: 'striped-choice full'
