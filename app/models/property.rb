@@ -3,13 +3,13 @@ require 'uk_postcode'
 class Property < BaseClass
 
   attr_accessor :street
-  validates :street, presence: true, length: { maximum: 70 }
+  validates :street, presence: { message: 'must be entered' }, length: { maximum: 70 }
 
   attr_accessor :town
   validates :town, length: { maximum: 40 }
 
   attr_accessor :postcode
-  validates :postcode, presence: true, length: { maximum: 8 }
+  validates :postcode, presence: { message: 'must be entered' }, length: { maximum: 8 }
   validate :full_postcode
 
   def full_postcode
@@ -17,7 +17,7 @@ class Property < BaseClass
   end
 
   attr_accessor :house
-  validates :house, presence: true, inclusion: { in: ['Yes', 'No'] }
+  validates :house, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
 
   def as_json
     postcode1, postcode2 = split_postcode

@@ -1,7 +1,7 @@
 class License < BaseClass
 
   attr_accessor :house_in_multiple_occupation
-  validates :house_in_multiple_occupation, presence: true, inclusion: { in: ['Yes', 'No'] }
+  validates :house_in_multiple_occupation, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
 
   attr_accessor :house_in_multiple_occupation_authority
   validate :authority_for_house_in_multiple_occupation
@@ -9,7 +9,7 @@ class License < BaseClass
   attr_accessor :house_in_multiple_occupation_date
 
   attr_accessor :housing_act
-  validates :housing_act, presence: true, inclusion: { in: ['Yes', 'No'] }
+  validates :housing_act, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
 
   attr_accessor :housing_act_authority
   validate :authority_for_housing_act
