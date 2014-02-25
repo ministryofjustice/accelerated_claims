@@ -1,17 +1,24 @@
 class Claimant < BaseClass
 
-  attr_accessor :title
-  validates :title, presence: { message: 'must be entered' }, length: { maximum: 8 }
+  attr_writer :do_validation
 
+  attr_accessor :title
   attr_accessor :full_name
-  validates :full_name, presence: { message: 'must be entered' }
 
   attr_accessor :street
-  validates :street, presence: { message: 'must be entered' }, length: { maximum: 40 }
-
   attr_accessor :town
   attr_accessor :postcode
-  validates :postcode, presence: { message: 'must be entered' }, length: { maximum: 8 }
+
+  with_options if: :do_validation do |claimant|
+    claimant.validates :title, presence: { message: 'must be entered' }, length: { maximum: 8 }
+    claimant.validates :full_name, presence: { message: 'must be entered' }
+    claimant.validates :street, presence: { message: 'must be entered' }, length: { maximum: 40 }
+    claimant.validates :postcode, presence: { message: 'must be entered' }, length: { maximum: 8 }
+  end
+
+  def do_validation
+    @do_validation
+  end
 
   def as_json
     postcode1, postcode2 = split_postcode

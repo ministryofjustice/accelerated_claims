@@ -68,17 +68,31 @@ class Claim < BaseClass
     attributes
   end
 
-  def initialize_all_submodels(params)
-    attributes_from_submodels.each { |attribute, model|
-      init_submodel(params, attribute, model)
+  def initialize_all_submodels(claim_params)
+    attributes_from_submodels.each do |attribute_name, model|
+      init_submodel(claim_params, attribute_name, model)
+    end
+  end
+
+  def init_submodel(claim_params, attribute_name, model)
+    sub_params = params_for(attribute_name, claim_params)
+
+    instance_variable_set("@#{attribute_name}", model.constantize.new(sub_params))
+
+    self.class.send( :define_method, attribute_name.to_sym) {
+      instance_variable_get "@#{attribute_name}"
     }
   end
 
-  def init_submodel(claim_params, instance_var, model)
-    sub_params = claim_params.key?(instance_var) ? claim_params[instance_var] : {}
-    instance_variable_set("@#{instance_var}", model.constantize.new(sub_params))
-    self.class.send( :define_method, instance_var.to_sym) {
-      instance_variable_get "@#{instance_var}"
-    }
+  def params_for attribute_name, claim_params
+    params = claim_params.key?(attribute_name) ? claim_params[attribute_name] : {}
+
+    if attribute_name[/claimant_one/]
+      params.merge!(do_validation: true)
+    elsif attribute_name[/claimant_two/]
+      params.merge!(do_validation: false)
+    end
+
+    params
   end
 end
