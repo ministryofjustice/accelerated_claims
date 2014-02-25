@@ -22,6 +22,6 @@ feature "New claim application" do
     generated_file = '/tmp/a.pdf'
     File.open(generated_file, 'w') { |file| file.write(page.body.encode("ASCII-8BIT").force_encoding("UTF-8")) }
     outcome = %x(diff ./spec/support/filled-in-form.pdf #{generated_file})
-    raise "PDF document not filled in correctly" unless outcome == ""
+    raise "PDF document not filled in correctly: #{outcome}" unless outcome == ""
   end
 end

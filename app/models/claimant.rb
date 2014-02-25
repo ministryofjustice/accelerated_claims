@@ -1,5 +1,8 @@
 class Claimant < BaseClass
 
+  attr_accessor :title
+  validates :title, presence: { message: 'must be entered' }, length: { maximum: 8 }
+
   attr_accessor :full_name
   validates :full_name, presence: { message: 'must be entered' }
 
@@ -13,7 +16,7 @@ class Claimant < BaseClass
   def as_json
     postcode1, postcode2 = split_postcode
     {
-      "address" => "#{full_name}\n#{street}\n#{town}",
+      "address" => "#{title} #{full_name}\n#{street}\n#{town}",
       "postcode1" => "#{postcode1}",
       "postcode2" => "#{postcode2}"
     }

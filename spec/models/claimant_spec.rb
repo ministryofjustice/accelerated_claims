@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe Claimant do
   let(:claimant) do
-    Claimant.new(full_name: "Claimant LTD",
+    Claimant.new(title: 'Mr',
+                 full_name: "John Doe",
                  street: "Streety Street",
                  town: "London",
                  postcode: "SW1H9AJ")
@@ -29,7 +30,7 @@ describe Claimant do
   describe "#as_json" do
     let(:json_output) do
       {
-        "address" => "Claimant LTD\nStreety Street\nLondon",
+        "address" => "Mr John Doe\nStreety Street\nLondon",
         "postcode1" => "SW1H",
         "postcode2" => "9AJ"
       }
