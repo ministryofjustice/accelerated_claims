@@ -39,6 +39,7 @@ group :test do
   gem 'webmock'
   gem 'capybara'
   gem 'guard-rspec'
+  gem 'brakeman'
 end
 
 gem 'pdf-forms', '0.5.5'
