@@ -11,7 +11,7 @@ msg "installing gems"
 bundle install --deployment --without development --path vendor/bundler
 
 msg "setting up CI & running the specs"
-bundle exec rake ci:setup:rspec spec
+RAILS_ENV=test bundle exec rake ci:setup:rspec spec
 
 msg "running brakeman"
 bundle exec brakeman -z
