@@ -55,8 +55,8 @@ def fill_tenancy
   select(get_month(data["latest_agreement_date(2i)"]), :from => 'claim_tenancy_latest_agreement_date_2i')
   select(data["latest_agreement_date(1i)"], :from => 'claim_tenancy_latest_agreement_date_1i')
 
-  choose 'claim_tenancy_agreement_reissued_for_same_property_yes'
-  choose 'claim_tenancy_agreement_reissued_for_same_landlord_and_tenant_yes'
+  choose 'claim_tenancy_reissued_for_same_property_yes'
+  choose 'claim_tenancy_reissued_for_same_landlord_and_tenant_yes'
 end
 
 def fill_notice

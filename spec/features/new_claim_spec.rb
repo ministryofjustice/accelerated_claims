@@ -27,13 +27,12 @@ feature "New claim application" do
     end
   end
 
-  context 'with one claimant' do
+  context 'with one claimant and one defendant' do
     scenario "fill in claim details" do
       visit '/new'
       fill_property_details
       fill_claimant_one
       fill_defendant_one
-      fill_defendant_two
       fill_tenancy
       fill_notice
       fill_licences
