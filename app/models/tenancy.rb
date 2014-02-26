@@ -5,11 +5,11 @@ class Tenancy < BaseClass
 
   attr_accessor :latest_agreement_date
 
-  attr_accessor :agreement_reissued_for_same_property
-  validates :agreement_reissued_for_same_property, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
+  attr_accessor :reissued_for_same_property
+  validates :reissued_for_same_property, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
 
-  attr_accessor :agreement_reissued_for_same_landlord_and_tenant
-  validates :agreement_reissued_for_same_landlord_and_tenant, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
+  attr_accessor :reissued_for_same_landlord_and_tenant
+  validates :reissued_for_same_landlord_and_tenant, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
 
   def as_json
     day = '%d'
@@ -23,8 +23,8 @@ class Tenancy < BaseClass
       "latest_agreement_date_day" => "#{latest_agreement_date.strftime(day)}",
       "latest_agreement_date_month" => "#{latest_agreement_date.strftime(month)}",
       "latest_agreement_date_year" => "#{latest_agreement_date.strftime(year)}",
-      "agreement_reissued_for_same_property" => agreement_reissued_for_same_property,
-      "agreement_reissued_for_same_landlord_and_tenant" => agreement_reissued_for_same_landlord_and_tenant
+      "agreement_reissued_for_same_property" => reissued_for_same_property,
+      "agreement_reissued_for_same_landlord_and_tenant" => reissued_for_same_landlord_and_tenant
     }
   end
 end

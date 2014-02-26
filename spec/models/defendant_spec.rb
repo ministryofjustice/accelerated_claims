@@ -15,15 +15,37 @@ describe Defendant do
     end
   end
 
-  describe "title" do
-    it "when blank" do
-      defendant.title = ""
-      defendant.should_not be_valid
+  context 'when do_validation false' do
+    before do
+      defendant.do_validation = false
     end
+    describe "full_name name" do
+      it "when blank" do
+        defendant.full_name = ""
+        defendant.should be_valid
+      end
 
-    it "when over 8 characters long" do
-      defendant.title = "x" * 9
-      defendant.should_not be_valid
+      it "when over 40 characters" do
+        defendant.title = "x" * 9
+        defendant.should be_valid
+      end
+    end
+  end
+
+  context 'when do_validation true' do
+    before do
+      defendant.do_validation = true
+    end
+    describe "full_name name" do
+      it "when blank" do
+        defendant.full_name = ""
+        defendant.should_not be_valid
+      end
+
+      it "when over 40 characters" do
+        defendant.title = "x" * 9
+        defendant.should_not be_valid
+      end
     end
   end
 

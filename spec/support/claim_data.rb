@@ -85,8 +85,8 @@ def claim_post_data
         "latest_agreement_date(3i)" => "1",
         "latest_agreement_date(2i)" => "1",
         "latest_agreement_date(1i)" => "2010",
-        "agreement_reissued_for_same_property" => 'No',
-        "agreement_reissued_for_same_landlord_and_tenant" => 'No'
+        "reissued_for_same_property" => 'No',
+        "reissued_for_same_landlord_and_tenant" => 'No'
       }
     }
   }
