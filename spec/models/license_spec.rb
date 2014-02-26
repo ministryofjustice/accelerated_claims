@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe License do
   let(:license) do
-    License.new(house_in_multiple_occupation: 'Yes',
-                house_in_multiple_occupation_authority: "Westminster City",
-                house_in_multiple_occupation_date: Date.parse("2013-01-01"),
+    License.new(multiple_occupation: 'Yes',
+                multiple_occupation_authority: "Westminster City",
+                multiple_occupation_date: Date.parse("2013-01-01"),
                 housing_act: 'Yes',
                 housing_act_authority: "Westminster City",
                 housing_act_date: Date.parse("2013-01-01")
@@ -40,12 +40,12 @@ describe License do
 
   describe "house in multiple occupation value" do
     it "can't be blank" do
-      license.house_in_multiple_occupation = ""
+      license.multiple_occupation = ""
       license.should_not be_valid
     end
 
     describe "when HMO is present" do
-      before { license.house_in_multiple_occupation_authority = "" }
+      before { license.multiple_occupation_authority = "" }
 
       it "should require authority name" do
         license.should_not be_valid

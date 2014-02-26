@@ -13,6 +13,7 @@ end
 
 def fill_claimant_one
   data = claim_post_data["claim"]["claimant_one"]
+  fill_in 'claim_claimant_one_title', with: data["title"]
   fill_in 'claim_claimant_one_full_name', with: data["full_name"]
   fill_in 'claim_claimant_one_street', with: data["street"]
   fill_in 'claim_claimant_one_town', with: data["town"]
@@ -21,6 +22,7 @@ end
 
 def fill_claimant_two
   data = claim_post_data["claim"]["claimant_two"]
+  fill_in 'claim_claimant_two_title', with: data["title"]
   fill_in 'claim_claimant_two_full_name', with: data["full_name"]
   fill_in 'claim_claimant_two_street', with: data["street"]
   fill_in 'claim_claimant_two_town', with: data["town"]
@@ -53,8 +55,8 @@ def fill_tenancy
   select(get_month(data["latest_agreement_date(2i)"]), :from => 'claim_tenancy_latest_agreement_date_2i')
   select(data["latest_agreement_date(1i)"], :from => 'claim_tenancy_latest_agreement_date_1i')
 
-  choose 'claim_tenancy_agreement_reissued_for_same_property_yes'
-  choose 'claim_tenancy_agreement_reissued_for_same_landlord_and_tenant_yes'
+  choose 'claim_tenancy_reissued_for_same_property_yes'
+  choose 'claim_tenancy_reissued_for_same_landlord_and_tenant_yes'
 end
 
 def fill_notice
@@ -72,12 +74,12 @@ end
 
 def fill_licences
   data = claim_post_data["claim"]["license"]
-  choose 'claim_license_house_in_multiple_occupation_yes'
-  fill_in 'claim_license_house_in_multiple_occupation_authority', with: data["house_in_multiple_occupation_authority"]
+  choose 'claim_license_multiple_occupation_yes'
+  fill_in 'claim_license_multiple_occupation_authority', with: data["multiple_occupation_authority"]
 
-  select(data["house_in_multiple_occupation_date(3i)"], :from => 'claim_license_house_in_multiple_occupation_date_3i')
-  select(get_month(data["house_in_multiple_occupation_date(2i)"]), :from => 'claim_license_house_in_multiple_occupation_date_2i')
-  select(data["house_in_multiple_occupation_date(1i)"], :from => 'claim_license_house_in_multiple_occupation_date_1i')
+  select(data["multiple_occupation_date(3i)"], :from => 'claim_license_multiple_occupation_date_3i')
+  select(get_month(data["multiple_occupation_date(2i)"]), :from => 'claim_license_multiple_occupation_date_2i')
+  select(data["multiple_occupation_date(1i)"], :from => 'claim_license_multiple_occupation_date_1i')
 
   choose 'claim_license_housing_act_yes'
 

@@ -1,12 +1,12 @@
 class License < BaseClass
 
-  attr_accessor :house_in_multiple_occupation
-  validates :house_in_multiple_occupation, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
+  attr_accessor :multiple_occupation
+  validates :multiple_occupation, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
 
-  attr_accessor :house_in_multiple_occupation_authority
-  validate :authority_for_house_in_multiple_occupation
+  attr_accessor :multiple_occupation_authority
+  validate :authority_for_multiple_occupation
 
-  attr_accessor :house_in_multiple_occupation_date
+  attr_accessor :multiple_occupation_date
 
   attr_accessor :housing_act
   validates :housing_act, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
@@ -16,9 +16,9 @@ class License < BaseClass
 
   attr_accessor :housing_act_date
 
-  def authority_for_house_in_multiple_occupation
-    if house_in_multiple_occupation.present? && house_in_multiple_occupation == 'Yes'
-      errors.add(:house_in_multiple_occupation_authority, "can't be blank") if house_in_multiple_occupation_authority.blank?
+  def authority_for_multiple_occupation
+    if multiple_occupation.present? && multiple_occupation == 'Yes'
+      errors.add(:multiple_occupation_authority, "can't be blank") if multiple_occupation_authority.blank?
     end
   end
 
@@ -34,11 +34,11 @@ class License < BaseClass
     year = '%Y'
 
     {
-      "authority" => house_in_multiple_occupation_authority,
-      "hmo" => house_in_multiple_occupation,
-      "hmo_day" => "#{house_in_multiple_occupation_date.strftime(day)}",
-      "hmo_month" => "#{house_in_multiple_occupation_date.strftime(month)}",
-      "hmo_year" => "#{house_in_multiple_occupation_date.strftime(year)}",
+      "authority" => multiple_occupation_authority,
+      "hmo" => multiple_occupation,
+      "hmo_day" => "#{multiple_occupation_date.strftime(day)}",
+      "hmo_month" => "#{multiple_occupation_date.strftime(month)}",
+      "hmo_year" => "#{multiple_occupation_date.strftime(year)}",
       "housing_act" => housing_act,
       "housing_act_authority" => housing_act_authority,
       "housing_act_date_day" => "#{housing_act_date.strftime(day)}",
