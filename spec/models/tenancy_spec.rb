@@ -21,6 +21,29 @@ describe Tenancy do
     end
   end
 
+  describe 'when date is blank' do
+    before do
+      @tenancy = Tenancy.new(
+        reissued_for_same_property: 'No',
+        reissued_for_same_landlord_and_tenant: 'No',
+       "start_date(3i)"=>"",
+       "start_date(2i)"=>"",
+       "start_date(1i)"=>"",
+       "latest_agreement_date(3i)"=>"",
+       "latest_agreement_date(2i)"=>"",
+       "latest_agreement_date(1i)"=>""
+        )
+    end
+
+    it 'should not be valid' do
+      @tenancy.should_not be_valid
+    end
+
+    it 'should have nil start date' do
+      @tenancy.start_date.should be_nil
+    end
+  end
+
   describe "#as_json" do
     let(:desired_format) do
       {

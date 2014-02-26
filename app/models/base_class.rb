@@ -23,26 +23,35 @@ class BaseClass
 
   # this is pretty grim.
   # what it does: turns multipart dates in form submissions into a single Date object
-  def initialize( attrs = {} )
-    if !attrs.nil? then
-      dattrs = {}
-      attrs.each do |n, v|
-        if n.match( /^(.+)\(.+\)$/ ) then
-          an = Regexp.last_match[1]
-          dattrs[an] = [] if dattrs[an].nil?
-          dattrs[an] << { :n => n, :v => v }
+  def initialize fields={}
+    if !fields.nil? then
+      date_fields = {}
+
+      fields.each do |field, value|
+        if field.match( /^(.+)\(.+\)$/ )
+          part = Regexp.last_match[1]
+          date_fields[part] ||= []
+          date_fields[part] << { :part => field, :value => value }
         else
-          writer = :"#{n}="
-          send( writer, v) if respond_to?(writer)
+          writer = :"#{field}="
+          send( writer, value) if respond_to?(writer)
         end
       end
-      dattrs.each do |k, v|
-        vs = v.sort_by{|hv| hv[:n] }.collect{|hv| hv[:v] }
-        p1 = vs[0]
-        p2 = ( vs[1].size() > 0 ? ( vs[1].size() == 1 ? "0#{vs[1]}" : vs[1] ) : "01" )
-        p3 = ( vs[2].size() > 0 ? ( vs[2].size() == 1 ? "0#{vs[2]}" : vs[2] ) : "01" )
-        dv = [ p1, p2, p3 ].join( "-" )
-        begin send( "#{k}=", Date.parse( dv ) ); rescue; end
+
+      date_fields.each do |field, value|
+        values = value.sort_by {|a| a[:part] }.collect {|a| a[:value] }
+
+        if values.all?(&:present?)
+          p1 = values[0]
+          p2 = ( values[1].size() > 0 ? ( values[1].size() == 1 ? "0#{values[1]}" : values[1] ) : "01" )
+          p3 = ( values[2].size() > 0 ? ( values[2].size() == 1 ? "0#{values[2]}" : values[2] ) : "01" )
+          date = [ p1, p2, p3 ].join( "-" )
+          begin
+            date = Date.parse( date )
+            send( "#{field}=", date )
+          rescue
+          end
+        end
       end
     end
   end
