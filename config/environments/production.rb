@@ -79,5 +79,5 @@ AcceleratedClaims::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   # use redis for cache store
-  config.cache_store = :redis_store, 'redis://localhost:6379/1'
+  config.cache_store = :redis_store, (ENV['REDIS_STORE'] || 'redis://localhost:6379/1')
 end
