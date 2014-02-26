@@ -10,14 +10,7 @@ class FeedbacksController < ApplicationController
   end
 
   def create
-    @feedback = Feedback.new(feedback_params)
-    if @feedback.valid?
-      FeedbackNotification.new_message(@feedback).deliver
-      ZendeskHelper.send_to_zendesk(@feedback)
-      redirect_to feedback_path
-    else
-      render 'new'
-    end
+    redirect_to root_path, notice: 'Thanks for your feedback.'
   end
 
   private
