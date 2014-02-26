@@ -6,7 +6,7 @@
 @mixin highlight-row
   width: 640px
   padding: 15px
-  margin-left: 30px
+  margin-left: 90px
 
 input, input[type="text"], button, select, textarea
   font-family: "nta", arial, sans-serif
@@ -133,6 +133,7 @@ span.error
     margin:
       left: 90px
       top: 40px
+      bottom: 15px
     padding: 40px 0 0 0
 
     &.rel
@@ -364,6 +365,15 @@ fieldset.plain
         @include highlight-row
         background-color: $white
 
+      &.warning, &.information, &.highlight
+        p, ul, ol
+          width: auto
+          margin: 1em 0 0 0
+          &:first-child
+            margin-top: 0
+        li
+          margin: 5px 0
+
       details.full
         summary
           padding-left: 26px
@@ -377,7 +387,7 @@ fieldset.plain
         display: block
 
     p
-      margin: 0 0 5px
+      margin: 0 0 1em
       &.nomargin
         margin: 0
 
