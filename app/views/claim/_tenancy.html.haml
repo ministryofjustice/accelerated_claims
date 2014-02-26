@@ -1,13 +1,46 @@
 = claim_form.fields_for tenancy, builder: LabellingFormBuilder do |form|
-  = form.date_select_field_set :start_date, 'Tenancy start date', class: 'date-picker', date_select_options: @date_select_options
+  .row.full.information
+    %p If it is a demoted tenancy, skip this section.
+  = form.date_select_field_set :start_date, 'Date of the first tenancy agreement', class: 'date-picker full', date_select_options: @date_select_options
   .row.full
-    = 'If there has been <strong>multiple tenancy agreements</strong> please give details below.'.html_safe
+    = 'If you\'ve had <strong>more than one</strong> tenancy agreement, give details below.'.html_safe
   .sub-panel.extra.rel
     = form.date_select_field_set :latest_agreement_date, 'Date of the most recent tenancy agreement', class: 'date-picker full', date_select_options: @date_select_options
-    .row
-      Whenever a new tenancy agreement has replaced the first tenancy agreement or has replaced a replacement tenancy agreement:
 
-    = form.radio_button_fieldset :reissued_for_same_property, 'Has it been for the same property?', class: 'striped-choice full'
+    = form.radio_button_fieldset :reissued_for_same_property, 'Is the tenancy agreement for the same property?', class: 'striped-choice full'
 
-    = form.radio_button_fieldset :reissued_for_same_landlord_and_tenant, 'Has it been the same landlord and tenant?', class: 'striped-choice full'
+    = form.radio_button_fieldset :reissued_for_same_landlord_and_tenant, 'Is it for the same landlord and tenant?', class: 'striped-choice full'
 
+  .row.full.information
+    %p Attach copies of the following to the printed claim form:
+    %ul
+      %li
+        The first tenancy agreement, mark this as <strong>‘A’</strong>
+      %li
+        The most recent tenancy agreement (if applicable), mark this as <strong>‘A1’</strong>
+
+  .row.full
+    %p Both the [first] tenancy and the agreement for it were made on or after 28 February 1997.
+
+    %ol.alpha
+      %li No notice was served on the defendant stating that the tenancy would not be, or continue to be, an assured shorthold tenancy.
+      %li There is no provision in the tenancy agreement which states that it is not an assured shorthold tenancy.
+      %li The ‘agricultural worker condition’ defined in Schedule 3 to the Housing Act 1988 in not fulfilled with respect to the property.
+
+    %p
+      %strong (or)
+
+    %p Both the [first] tenancy and the agreement for it were made on or after 15 January 1989.
+
+    %ol.alpha
+      %li The [first] tenancy agreement was for a fixed term of not less than six months.
+      %li There was no power for the landlord to end the tenancy earlier than six months after it began.
+      %li Before the tenancy began a notice in writing, stating that the tenancy was to be an assured shorthold tenancy, was served on the defendant(s)
+
+  .row.full.information
+    %p Attach copies of the following to the printed claim form:
+    %ul
+      %li
+        The notice marked <strong>‘B’</strong>
+      %li
+        The proof of service marked <strong>‘B1’</strong>
