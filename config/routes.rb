@@ -1,4 +1,6 @@
 AcceleratedClaims::Application.routes.draw do
+  resource :feedback
+  
   scope AcceleratedClaims::Application.config.relative_url_root || '/' do
     root 'claim#new'
     get '/new', controller: :claim, action: :new
