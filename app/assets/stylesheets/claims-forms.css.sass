@@ -56,14 +56,14 @@ span.charcount
   margin-top: 4px
   float: right
 
-section.error-summary
-  border: 3px solid $errorcolour
-  background-color: $errorbgcolour
+section.flash
+  border: 3px solid $grey-1
+  background-color: $grey-4
   padding: 20px
   margin-bottom: 40px
   max-width: 798px
   h2
-    margin: 0 0 10px
+    margin: 0
     font-weight: bold
   h3
     margin: 0 0 10px
@@ -73,11 +73,22 @@ section.error-summary
     margin: 0
   li
     list-style-type: none
-    color: $errorcolour
-    a
+
+  &.error-summary
+    border-color: $errorcolour
+    background-color: $errorbgcolour
+    h2
+      margin: 0 0 10px
+    li
       color: $errorcolour
-      &:hover
-        text-decoration: none
+      a
+        color: $errorcolour
+        &:hover
+          text-decoration: none
+
+  &.success
+    border-color: $grass-green
+    background-color: $grass-green-25
 
 
 span.error
@@ -422,6 +433,8 @@ fieldset.plain
     textarea
       width: 300px
       height: 70px
+      &.feedback
+        height: 300px
 
     input.has-button
       margin: 0
@@ -518,7 +531,7 @@ fieldset.plain
         padding-top: 10px
         left: 190px
         right: 0
-        top: 0
+        top: 5px
         bottom: 0
         cursor: pointer
         width: auto

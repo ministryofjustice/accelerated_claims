@@ -1,0 +1,26 @@
+%header.content-header
+  %p Use this form to report a problem or suggest improvements to the service.
+  %p
+    %strong Please don't include any sensitive personal information (eg. bank details, address etc.)
+
+= form_for @feedback, :url => feedback_path, :html => {:novalidate => 'novalidate'} do |f|
+
+  %section
+    .moj-panel
+      .row
+        = f.label :text do
+          Your comments
+        = f.text_area :text, :cols => 50, :rows => 5, :class => 'feedback'
+
+      .row.full
+        Do you want a reply? If you'd like us to get back to you, please leave your details below. We'll only use this to reply to your message.
+
+      .row.rel
+        = f.label :email do
+          Your email address
+        = f.text_field :email
+  
+  %section
+    .action-buttons.cf
+      = f.submit 'Send', :class => 'button button-primary large chevron left', :id => 'submit-button'
+          
