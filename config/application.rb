@@ -48,7 +48,7 @@ module AcceleratedClaims
     config.product_type = 'service'
     # Feedback URL (URL for feedback link in phase banner)
     # Use 'auto_add_path' for it to add a path link to the new_feedback route
-    config.feedback_url = 'feedback/new'
+    config.feedback_url = '/feedback/new'
     # Google Analytics ID (Tracking ID for the service)
     config.ga_id = ''
 
