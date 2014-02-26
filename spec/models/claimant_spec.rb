@@ -15,9 +15,9 @@ describe Claimant do
     end
   end
 
-  context 'when do_validation false' do
+  context 'when validate_presence false' do
     before do
-      claimant.do_validation = false
+      claimant.validate_presence = false
     end
     describe "full_name name" do
       it "when blank" do
@@ -27,14 +27,14 @@ describe Claimant do
 
       it "when over 40 characters" do
         claimant.street = "x" * 41
-        claimant.should be_valid
+        claimant.should_not be_valid
       end
     end
   end
 
-  context 'when do_validation true' do
+  context 'when validate_presence true' do
     before do
-      claimant.do_validation = true
+      claimant.validate_presence = true
     end
     describe "full_name name" do
       it "when blank" do

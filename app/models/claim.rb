@@ -88,9 +88,9 @@ class Claim < BaseClass
     params = claim_params.key?(attribute_name) ? claim_params[attribute_name] : {}
 
     if attribute_name[/claimant_one|defendant_one/]
-      params.merge!(do_validation: true)
+      params.merge!(validate_presence: true)
     elsif attribute_name[/claimant_two|defendant_two/]
-      params.merge!(do_validation: false)
+      params.merge!(validate_presence: false)
     end
 
     params

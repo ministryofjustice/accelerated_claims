@@ -15,9 +15,9 @@ describe Defendant do
     end
   end
 
-  context 'when do_validation false' do
+  context 'when validate_presence false' do
     before do
-      defendant.do_validation = false
+      defendant.validate_presence = false
     end
     describe "full_name name" do
       it "when blank" do
@@ -27,14 +27,14 @@ describe Defendant do
 
       it "when over 40 characters" do
         defendant.title = "x" * 9
-        defendant.should be_valid
+        defendant.should_not be_valid
       end
     end
   end
 
-  context 'when do_validation true' do
+  context 'when validate_presence true' do
     before do
-      defendant.do_validation = true
+      defendant.validate_presence = true
     end
     describe "full_name name" do
       it "when blank" do

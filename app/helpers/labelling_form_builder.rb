@@ -112,8 +112,8 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   def presence_required? attribute
     validators = @object.class.validators_on(attribute)
     required = validators.any? {|v| v.is_a?(ActiveModel::Validations::PresenceValidator)}
-    if @object.respond_to?(:do_validation)
-      if @object.do_validation
+    if @object.respond_to?(:validate_presence)
+      if @object.validate_presence
         required
       else
         false
