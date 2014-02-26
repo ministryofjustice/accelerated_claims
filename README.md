@@ -13,6 +13,7 @@ git clone https://github.com/ministryofjustice/accelerated_claim.git
 cd accelerated_claim
 bundle install
 export PDFTK=$(which pdftk)
+export REDIS_STORE=redis://localhost:6379/1
 rails s
 ```
 

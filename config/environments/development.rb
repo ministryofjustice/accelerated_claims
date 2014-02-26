@@ -21,4 +21,7 @@ AcceleratedClaims::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  # in memory cache store
+  config.cache_store = :memory_store
 end
