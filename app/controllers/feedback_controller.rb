@@ -1,8 +1,6 @@
 require 'zendesk_helper'
 
-class FeedbacksController < ApplicationController
-  def index
-  end
+class FeedbackController < ApplicationController
 
   def new
     @page_title = 'Property repossession'
