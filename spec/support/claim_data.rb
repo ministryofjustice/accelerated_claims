@@ -35,11 +35,11 @@ def claim_post_data
       },
       "license" =>
       {
-        "house_in_multiple_occupation" => 'Yes',
-        "house_in_multiple_occupation_authority" => "Great authority",
-        "house_in_multiple_occupation_date(3i)" => "2",
-        "house_in_multiple_occupation_date(2i)" => "2",
-        "house_in_multiple_occupation_date(1i)" => "2014",
+        "multiple_occupation" => 'Yes',
+        "multiple_occupation_authority" => "Great authority",
+        "multiple_occupation_date(3i)" => "2",
+        "multiple_occupation_date(2i)" => "2",
+        "multiple_occupation_date(1i)" => "2014",
         "housing_act" => 'No',
         "housing_act_authority" => "Grand authority",
         "housing_act_date(3i)" => "2",
