@@ -1,6 +1,6 @@
 class Defendant < BaseClass
 
-  attr_writer :do_validation
+  attr_accessor :do_validation
 
   attr_accessor :title
   attr_accessor :full_name
@@ -12,10 +12,6 @@ class Defendant < BaseClass
   with_options if: :do_validation do |defendant|
     defendant.validates :title, presence: { message: 'must be entered' }, length: { maximum: 8 }
     defendant.validates :full_name, presence: { message: 'must be entered' }, length: { maximum: 40 }
-  end
-
-  def do_validation
-    @do_validation
   end
 
   def as_json
