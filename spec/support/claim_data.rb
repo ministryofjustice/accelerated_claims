@@ -3,16 +3,18 @@ def claim_post_data
   { "claim" =>
     { "claimant_one" =>
       {
-        "full_name" => "Landlordly LTD",
-        "street" => "Secret Lair 2",
-        "town" => "Evil",
+        "title" => "Mr",
+        "full_name" => "John Smith",
+        "street" => "2 Brown St",
+        "town" => "Cwmbran",
         "postcode" => "SW1W 0LU"
       },
       "claimant_two" =>
       {
-        "full_name" => "Great Let LTD",
-        "street" => "Devious Place 7",
-        "town" => "Evil",
+        "title" => "Ms",
+        "full_name" => "Jane Smith",
+        "street" => "7 Main St",
+        "town" => "Alfreton",
         "postcode" => "SW1W 0LU"
       },
       "property" =>
@@ -33,11 +35,11 @@ def claim_post_data
       },
       "license" =>
       {
-        "house_in_multiple_occupation" => 'Yes',
-        "house_in_multiple_occupation_authority" => "Great authority",
-        "house_in_multiple_occupation_date(3i)" => "2",
-        "house_in_multiple_occupation_date(2i)" => "2",
-        "house_in_multiple_occupation_date(1i)" => "2014",
+        "multiple_occupation" => 'Yes',
+        "multiple_occupation_authority" => "Great authority",
+        "multiple_occupation_date(3i)" => "2",
+        "multiple_occupation_date(2i)" => "2",
+        "multiple_occupation_date(1i)" => "2014",
         "housing_act" => 'No',
         "housing_act_authority" => "Grand authority",
         "housing_act_date(3i)" => "2",
@@ -83,8 +85,8 @@ def claim_post_data
         "latest_agreement_date(3i)" => "1",
         "latest_agreement_date(2i)" => "1",
         "latest_agreement_date(1i)" => "2010",
-        "agreement_reissued_for_same_property" => 'No',
-        "agreement_reissued_for_same_landlord_and_tenant" => 'No'
+        "reissued_for_same_property" => 'No',
+        "reissued_for_same_landlord_and_tenant" => 'No'
       }
     }
   }
@@ -94,10 +96,10 @@ end
 def claim_formatted_data
   {
     "court_fee" => "175.00",
-    "claimant_one_address" => "Landlordly LTD\nSecret Lair 2\nEvil",
+    "claimant_one_address" => "Mr John Smith\n2 Brown St\nCwmbran",
     "claimant_one_postcode1" => "SW1W",
     "claimant_one_postcode2" => "0LU",
-    "claimant_two_address" => "Great Let LTD\nDevious Place 7\nEvil",
+    "claimant_two_address" => "Ms Jane Smith\n7 Main St\nAlfreton",
     "claimant_two_postcode1" => "SW1W",
     "claimant_two_postcode2" => "0LU",
     "property_address" => "Mucho Gracias Road\nLondon",
