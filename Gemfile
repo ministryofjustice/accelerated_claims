@@ -27,6 +27,12 @@ gem 'govuk_frontend_toolkit', github: 'ministryofjustice/govuk_frontend_toolkit_
 # MOJ styles
 gem 'moj_boilerplate', github: 'ministryofjustice/moj_boilerplate', tag: 'v0.6.2'
 
+group :production do
+  gem "redis-store"
+  gem 'redis-rails'
+  gem "redis-rack-cache"
+end
+
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'quiet_assets'
