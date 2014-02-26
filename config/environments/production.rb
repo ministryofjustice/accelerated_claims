@@ -77,4 +77,7 @@ AcceleratedClaims::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  # use redis for cache store
+  config.cache_store = :redis_store, 'redis://localhost:6379/1'
 end
