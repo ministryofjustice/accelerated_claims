@@ -1,5 +1,5 @@
 = render partial: 'shared/header_message'
-
+= render partial: 'shared/flash'
 = render partial: 'shared/error_messages'
 
 = form_for :claim, url: submission_path, :html => { :method => :post } do |claim_form|
