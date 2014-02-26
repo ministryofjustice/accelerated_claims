@@ -74,12 +74,12 @@ end
 
 def fill_licences
   data = claim_post_data["claim"]["license"]
-  choose 'claim_license_house_in_multiple_occupation_yes'
-  fill_in 'claim_license_house_in_multiple_occupation_authority', with: data["house_in_multiple_occupation_authority"]
+  choose 'claim_license_multiple_occupation_yes'
+  fill_in 'claim_license_multiple_occupation_authority', with: data["multiple_occupation_authority"]
 
-  select(data["house_in_multiple_occupation_date(3i)"], :from => 'claim_license_house_in_multiple_occupation_date_3i')
-  select(get_month(data["house_in_multiple_occupation_date(2i)"]), :from => 'claim_license_house_in_multiple_occupation_date_2i')
-  select(data["house_in_multiple_occupation_date(1i)"], :from => 'claim_license_house_in_multiple_occupation_date_1i')
+  select(data["multiple_occupation_date(3i)"], :from => 'claim_license_multiple_occupation_date_3i')
+  select(get_month(data["multiple_occupation_date(2i)"]), :from => 'claim_license_multiple_occupation_date_2i')
+  select(data["multiple_occupation_date(1i)"], :from => 'claim_license_multiple_occupation_date_1i')
 
   choose 'claim_license_housing_act_yes'
 
