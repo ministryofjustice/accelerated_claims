@@ -31,7 +31,9 @@ module AcceleratedClaims
       'X-Content-Type-Options' => 'nosniff',
       'X-XSS-Protection' => '1; mode=block'
     }
-
+    
+    config.relative_url_root = ENV['RAILS_RELATIVE_URL_ROOT'] || ''
+    
     # disable default <div class="field_with_errors"> wrapping idiocy
     config.action_view.field_error_proc = Proc.new { |html_tag, instance| 
       html_tag
@@ -48,7 +50,7 @@ module AcceleratedClaims
     config.product_type = 'service'
     # Feedback URL (URL for feedback link in phase banner)
     # Use 'auto_add_path' for it to add a path link to the new_feedback route
-    config.feedback_url = '/feedback/new'
+    config.feedback_url = config.relative_url_root + '/feedback/new'
     # Google Analytics ID (Tracking ID for the service)
     config.ga_id = ''
 
@@ -58,7 +60,7 @@ module AcceleratedClaims
     # this was less that useful
     # config.assets.precompile
 
-    config.relative_url_root = ENV['RAILS_RELATIVE_URL_ROOT'] || ''
+    
 
   end
 end
