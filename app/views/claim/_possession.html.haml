@@ -1,3 +1,3 @@
 = claim_form.fields_for possession, builder: LabellingFormBuilder do |form|
 
-  = form.radio_button_fieldset :hearing, 'If the defendant(s) seek(s) postponement of possession on the grounds of exceptional hardship, are you content that the request be considered without a hearing?', class: 'striped-choice full'
+  = form.radio_button_fieldset :hearing, 'If the defendant(s) asks for the possession to be delayed because of hardship:', class: 'striped-choice full', choice: {'I am happy for this to be considered without a court hearing' => 'Yes', 'I would like to attend a court hearing, which I am aware may result in a slower process' => 'No'}
