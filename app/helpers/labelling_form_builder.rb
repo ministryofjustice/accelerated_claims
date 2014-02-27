@@ -9,9 +9,9 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def date_select_field_set attribute, legend, options={}
-    options[:class] = css_for(attribute, options)
+    set_class_and_id attribute, options
 
-    @template.field_set_tag label_for(attribute, legend), options.merge(id: id_for(attribute)) do
+    @template.field_set_tag label_for(attribute, legend), options do
       @template.surround("<div class='row'>".html_safe, "</div>".html_safe) do
         date_select(attribute, options[:date_select_options])
       end
@@ -19,10 +19,11 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def radio_button_fieldset attribute, legend, options={}
-    options[:class] = css_for(attribute, options)
+    set_class_and_id attribute, options
+
     options[:choice] ||= {'Yes'=>'Yes', 'No'=>'No'}
 
-    @template.field_set_tag label_for(attribute, legend), options.merge(id: id_for(attribute)) do
+    @template.field_set_tag label_for(attribute, legend), options do
       @template.surround("<div class='options'>".html_safe, "</div>".html_safe) do
         options[:choice].map do |label, choice|
           radio_button_row(attribute, label, choice)
@@ -45,6 +46,11 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
   private
 
+  def set_class_and_id attribute, options
+    options[:class] = css_for(attribute, options)
+    options[:id] = id_for(attribute) unless id_for(attribute).blank?
+  end
+
   def error_id_for attribute
     "#{@object_name.tr('[]','_')}_#{attribute}_error".squeeze('_')
   end
@@ -64,7 +70,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
   def css_for attribute, options
     css = ''
-    css += " #{options[:class]}" if options[:class]
+    css += " #{options[:class]}" if options[:class].present?
     css += ' error' if error_for?(attribute)
     css.strip
   end
@@ -79,9 +85,11 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def row_input attribute, input, options
-    css = "row #{css_for(attribute, options)}"
+    css = "row #{css_for(attribute, options)}".strip
 
-    @template.surround("<div id='#{id_for(attribute)}' class='#{css}'>".html_safe,"</div>".html_safe) do
+    id = id_for(attribute).blank? ? '' : "id='#{id_for(attribute)}' "
+
+    @template.surround("<div #{id}class='#{css}'>".html_safe, "</div>".html_safe) do
       labelled_input attribute, options[:input_class], input, options[:label]
     end
   end
