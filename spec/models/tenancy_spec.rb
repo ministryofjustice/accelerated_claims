@@ -21,7 +21,7 @@ describe Tenancy do
     end
   end
 
-  describe 'when date is blank' do
+  describe 'when dates are blank' do
     before do
       @tenancy = Tenancy.new(
         reissued_for_same_property: 'No',
@@ -41,6 +41,33 @@ describe Tenancy do
 
     it 'should have nil start date' do
       @tenancy.start_date.should be_nil
+    end
+  end
+
+  describe 'when latest_agreement_date is blank' do
+    before do
+      @tenancy = Tenancy.new(
+        reissued_for_same_property: '',
+        reissued_for_same_landlord_and_tenant: '',
+       "start_date(3i)"=>"2",
+       "start_date(2i)"=>"2",
+       "start_date(1i)"=>"2013",
+       "latest_agreement_date(3i)"=>"",
+       "latest_agreement_date(2i)"=>"",
+       "latest_agreement_date(1i)"=>""
+        )
+    end
+
+    it 'should be valid' do
+      @tenancy.should be_valid
+    end
+
+    it 'should have nil latest_agreement_date' do
+      @tenancy.latest_agreement_date.should be_nil
+    end
+
+    it 'should have populated start_date' do
+      @tenancy.start_date.should == Date.parse("2013-02-02")
     end
   end
 
