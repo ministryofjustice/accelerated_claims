@@ -1,15 +1,16 @@
 class Tenancy < BaseClass
 
   attr_accessor :start_date
+  attr_accessor :latest_agreement_date
+  attr_accessor :reissued_for_same_property
+  attr_accessor :reissued_for_same_landlord_and_tenant
+
   validates :start_date, presence: { message: 'must be entered' }
 
-  attr_accessor :latest_agreement_date
-
-  attr_accessor :reissued_for_same_property
-  validates :reissued_for_same_property, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
-
-  attr_accessor :reissued_for_same_landlord_and_tenant
-  validates :reissued_for_same_landlord_and_tenant, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
+  with_options if: :latest_agreement_date, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] } do |tenancy|
+    tenancy.validates :reissued_for_same_property
+    tenancy.validates :reissued_for_same_landlord_and_tenant
+  end
 
   def as_json
     day = '%d'
