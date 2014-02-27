@@ -29,21 +29,18 @@ class License < BaseClass
   end
 
   def as_json
-    day = '%d'
-    month = '%m'
-    year = '%Y'
-
     {
       "authority" => multiple_occupation_authority,
       "hmo" => multiple_occupation,
-      "hmo_day" => "#{multiple_occupation_date.strftime(day)}",
-      "hmo_month" => "#{multiple_occupation_date.strftime(month)}",
-      "hmo_year" => "#{multiple_occupation_date.strftime(year)}",
+      "hmo_day" => day(multiple_occupation_date),
+      "hmo_month" => month(multiple_occupation_date),
+      "hmo_year" => year(multiple_occupation_date),
       "housing_act" => housing_act,
       "housing_act_authority" => housing_act_authority,
-      "housing_act_date_day" => "#{housing_act_date.strftime(day)}",
-      "housing_act_date_month" => "#{housing_act_date.strftime(month)}",
-      "housing_act_date_year" => "#{housing_act_date.strftime(year)}"
+      "housing_act_date_day" => day(housing_act_date),
+      "housing_act_date_month" => month(housing_act_date),
+      "housing_act_date_year" => year(housing_act_date)
     }
   end
+
 end
