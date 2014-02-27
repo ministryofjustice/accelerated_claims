@@ -8,6 +8,19 @@ describe Tenancy do
                 reissued_for_same_landlord_and_tenant: 'No')
   end
 
+  let(:desired_format) do
+    {
+      "start_date_day" => "01",
+      "start_date_month" => "01",
+      "start_date_year" => "2010",
+      "latest_agreement_date_day" => "01",
+      "latest_agreement_date_month" => "01",
+      "latest_agreement_date_year" => "2010",
+      "agreement_reissued_for_same_property" => 'No',
+      "agreement_reissued_for_same_landlord_and_tenant" => 'No'
+    }
+  end
+
   describe "when given all valid values" do
     it "should be valid" do
       tenancy.should be_valid
@@ -72,21 +85,20 @@ describe Tenancy do
   end
 
   describe "#as_json" do
-    let(:desired_format) do
-      {
-        "start_date_day" => "01",
-        "start_date_month" => "01",
-        "start_date_year" => "2010",
-        "latest_agreement_date_day" => "01",
-        "latest_agreement_date_month" => "01",
-        "latest_agreement_date_year" => "2010",
-        "agreement_reissued_for_same_property" => 'No',
-        "agreement_reissued_for_same_landlord_and_tenant" => 'No'
-      }
-    end
-
     it "should generate the correct JSON" do
       tenancy.as_json.should eq desired_format
+    end
+  end
+
+  describe "the latest_agreement_date value" do
+    it "can be blank" do
+      tenancy.latest_agreement_date = nil
+      json_mod = {
+        'latest_agreement_date_day' => '', 
+        'latest_agreement_date_month' => '', 
+        'latest_agreement_date_year' => ''
+      }
+      expect(tenancy.as_json).to eql desired_format.merge(json_mod)
     end
   end
 end

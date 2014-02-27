@@ -21,9 +21,9 @@ class Tenancy < BaseClass
       "start_date_day" => "#{start_date.strftime(day)}",
       "start_date_month" => "#{start_date.strftime(month)}",
       "start_date_year" => "#{start_date.strftime(year)}",
-      "latest_agreement_date_day" => "#{latest_agreement_date.strftime(day)}",
-      "latest_agreement_date_month" => "#{latest_agreement_date.strftime(month)}",
-      "latest_agreement_date_year" => "#{latest_agreement_date.strftime(year)}",
+      "latest_agreement_date_day" => day(latest_agreement_date),
+      "latest_agreement_date_month" => month(latest_agreement_date),
+      "latest_agreement_date_year" => year(latest_agreement_date),
       "agreement_reissued_for_same_property" => reissued_for_same_property,
       "agreement_reissued_for_same_landlord_and_tenant" => reissued_for_same_landlord_and_tenant
     }
