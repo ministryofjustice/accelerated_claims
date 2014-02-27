@@ -1,6 +1,4 @@
 = claim_form.fields_for tenancy, builder: LabellingFormBuilder do |form|
-  .row.full.information
-    %p If it is a demoted tenancy, skip this section.
   = form.date_select_field_set :start_date, 'Date of the first tenancy agreement', class: 'date-picker full', date_select_options: @date_select_options
   .row.full
     = 'If you\'ve had <strong>more than one</strong> tenancy agreement, give details below.'.html_safe
