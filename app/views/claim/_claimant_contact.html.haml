@@ -8,11 +8,14 @@
     = form.text_field_row :town,     class: 'town'
     = form.text_field_row :postcode, class: 'postcode', input_class: 'smalltext'
   .row.full
-    = 'Contact details (optional)'.html_safe
+    = 'Contact details (optional)'
   .sub-panel.extra
     = form.text_field_row :email, class: 'email'
     = form.text_field_row :phone, class: 'phone'
     = form.text_field_row :fax, class: 'fax'
     = form.text_field_row :dx_number, class: 'dx_number'
     = form.text_field_row :reference_number, class: 'reference_number'
+  .sub-panel.extra
+    = 'If you are a <strong>solicitor</strong> acting on behalf'.html_safe
+    = form.text_field_row :legal_costs, class: 'legal_costs'
 
