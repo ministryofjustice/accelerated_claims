@@ -20,7 +20,8 @@ def claim_post_data
         "phone" => "020 000 000",
         "fax" => "020 000 000",
         "dx_number" => "DX 123",
-        "reference_number" => "my-ref-123"
+        "reference_number" => "my-ref-123",
+        "legal_costs" => '123.34'
       },
       "claimant_two" =>
       {
@@ -120,6 +121,7 @@ def claim_formatted_data
     "claimant_contact_fax" => "020 000 000",
     "claimant_contact_dx_number" => "DX 123",
     "claimant_contact_reference_number" => "my-ref-123",
+    "claimant_contact_legal_costs" => "123.34",
     "claimant_two_address" => "Ms Jane Smith\n7 Main St\nAlfreton",
     "claimant_two_postcode1" => "SW1W",
     "claimant_two_postcode2" => "0LU",
