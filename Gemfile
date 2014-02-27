@@ -32,9 +32,7 @@ gem 'zendesk_api'
 
 
 group :production do
-  gem "redis-store"
   gem 'redis-rails'
-  gem "redis-rack-cache"
 end
 
 group :development, :test do
