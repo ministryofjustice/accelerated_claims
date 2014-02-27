@@ -11,22 +11,22 @@ describe License do
               )
   end
 
-  describe "#as_json" do
-    let(:desired_format) do
-      {
-        "hmo" => 'Yes',
-        "authority" => "Westminster City",
-        "hmo_day" => "01",
-        "hmo_month" => "01",
-        "hmo_year" => "2013",
-        "housing_act" => 'Yes',
-        "housing_act_authority" => "Westminster City",
-        "housing_act_date_day" => "01",
-        "housing_act_date_month" => "01",
-        "housing_act_date_year" => "2013"
-      }
-    end
+  let(:desired_format) do
+    {
+      "hmo" => 'Yes',
+      "authority" => "Westminster City",
+      "hmo_day" => "01",
+      "hmo_month" => "01",
+      "hmo_year" => "2013",
+      "housing_act" => 'Yes',
+      "housing_act_authority" => "Westminster City",
+      "housing_act_date_day" => "01",
+      "housing_act_date_month" => "01",
+      "housing_act_date_year" => "2013"
+    }
+  end
 
+  describe "#as_json" do
     it "should produce formatted output" do
       expect(license.as_json).to eq desired_format
     end
@@ -65,6 +65,30 @@ describe License do
       it "should require housing act authority" do
         license.should_not be_valid
       end
+    end
+  end
+
+  describe "the housing act date value" do
+    it "can be blank" do
+      license.housing_act_date = nil
+      json_mod = { 
+        'housing_act_date_day' => '', 
+        'housing_act_date_month' => '', 
+        'housing_act_date_year' => '' 
+      }
+      expect(license.as_json).to eql desired_format.merge(json_mod)
+    end
+  end
+
+  describe "the multiple_occupation_date value" do
+    it "can be blank" do
+      license.multiple_occupation_date = nil
+      json_mod = {
+        'hmo_day' => '', 
+        'hmo_month' => '', 
+        'hmo_year' => ''
+      }
+      expect(license.as_json).to eql desired_format.merge(json_mod)
     end
   end
 end
