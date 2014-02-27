@@ -22,7 +22,7 @@ class BaseClass
   end
 
   def date_string(date_attribute, strftime_format)
-    date_attribute.nil? ? '' : date_attribute.strftime(strftime_format)
+    date_attribute.blank? ? '' : date_attribute.strftime(strftime_format)
   end
   
   def day(date_attribute)
