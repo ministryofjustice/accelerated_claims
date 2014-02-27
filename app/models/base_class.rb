@@ -21,6 +21,22 @@ class BaseClass
     return p1,p2
   end
 
+  def date_string(date_attribute, strftime_format)
+    date_attribute.blank? ? '' : date_attribute.strftime(strftime_format)
+  end
+  
+  def day(date_attribute)
+    date_string(date_attribute, '%d')
+  end
+
+  def month(date_attribute)
+    date_string(date_attribute, '%m')
+  end
+
+  def year(date_attribute)
+    date_string(date_attribute, '%Y')
+  end
+
   # this is pretty grim.
   # what it does: turns multipart dates in form submissions into a single Date object
   def initialize fields={}
