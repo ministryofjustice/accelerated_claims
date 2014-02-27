@@ -13,7 +13,7 @@ describe ClaimantContact do
     end
   end
 
-  describe 'invalid legal cost' do
+  describe 'with non-number legal costs' do
     it 'should be invalid' do
       data = claimant_contact('legal_costs' => 'xx.x')
       data.should_not be_valid
@@ -26,6 +26,13 @@ describe ClaimantContact do
       data = claimant_contact('legal_costs' => '123')
       data.should be_valid
       data.legal_costs.should == '123'
+    end
+  end
+
+  describe 'with blank legal costs' do
+    it 'should be valid' do
+      data = claimant_contact('legal_costs' => '')
+      data.should be_valid
     end
   end
 
