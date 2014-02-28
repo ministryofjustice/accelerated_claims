@@ -17,6 +17,7 @@
       .sub-panel.claimant
         %h4 Claimant 1
         = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_one}
+        = render partial: 'claimant_contact', object: @claim.claimant_contact, locals: { claim_form: claim_form, claimant_field: :claimant_contact}
       .row.divider
       .sub-panel.claimant
         %h4.section-header Claimant 2

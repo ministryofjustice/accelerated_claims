@@ -9,6 +9,20 @@ def claim_post_data
         "town" => "Cwmbran",
         "postcode" => "SW1W 0LU"
       },
+      "claimant_contact" =>
+      {
+        "title" => "Mr",
+        "full_name" => "Jim Brown",
+        "street" => "3 Smith St",
+        "town" => "Winsum",
+        "postcode" => "SW1W 0LU",
+        "email" => "jim@example.com",
+        "phone" => "020 000 000",
+        "fax" => "020 000 000",
+        "dx_number" => "DX 123",
+        "reference_number" => "my-ref-123",
+        "legal_costs" => '123.34'
+      },
       "claimant_two" =>
       {
         "title" => "Ms",
@@ -99,6 +113,15 @@ def claim_formatted_data
     "claimant_one_address" => "Mr John Smith\n2 Brown St\nCwmbran",
     "claimant_one_postcode1" => "SW1W",
     "claimant_one_postcode2" => "0LU",
+    "claimant_contact_address" => "Mr Jim Brown\n3 Smith St\nWinsum",
+    "claimant_contact_postcode1" => "SW1W",
+    "claimant_contact_postcode2" => "0LU",
+    "claimant_contact_email" => "jim@example.com",
+    "claimant_contact_phone" => "020 000 000",
+    "claimant_contact_fax" => "020 000 000",
+    "claimant_contact_dx_number" => "DX 123",
+    "claimant_contact_reference_number" => "my-ref-123",
+    "claimant_contact_legal_costs" => "123.34",
     "claimant_two_address" => "Ms Jane Smith\n7 Main St\nAlfreton",
     "claimant_two_postcode1" => "SW1W",
     "claimant_two_postcode2" => "0LU",
