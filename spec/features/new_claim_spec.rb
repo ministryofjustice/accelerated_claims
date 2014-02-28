@@ -7,6 +7,7 @@ feature "New claim application" do
       fill_property_details
       fill_claimant_one
       fill_claimant_solicitor_address
+      fill_claimant_contact_details
       fill_claimant_two
       fill_defendant_one
       fill_defendant_two
