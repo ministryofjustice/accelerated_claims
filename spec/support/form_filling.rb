@@ -109,3 +109,12 @@ def fill_solicitor_cost
   fill_in 'claim_claimant_contact_legal_costs',
   with: claim_post_data["claim"]["claimant_contact"]["legal_costs"]
 end
+
+def fill_claimant_solicitor_address
+  data = claim_post_data["claim"]["claimant_contact"]
+  fill_in 'claim_claimant_contact_title', with: data["title"]
+  fill_in 'claim_claimant_contact_full_name', with: data["full_name"]
+  fill_in 'claim_claimant_contact_street', with: data["street"]
+  fill_in 'claim_claimant_contact_town', with: data["town"]
+  fill_in 'claim_claimant_contact_postcode', with: data["postcode"]
+end
