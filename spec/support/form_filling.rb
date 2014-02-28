@@ -104,3 +104,24 @@ def fill_order
   check 'claim_order_possession'
   check 'claim_order_cost'
 end
+
+def fill_solicitor_cost
+  fill_in 'claim_claimant_contact_legal_costs',
+  with: claim_post_data["claim"]["claimant_contact"]["legal_costs"]
+end
+
+def fill_claimant_solicitor_address
+  data = claim_post_data["claim"]["claimant_contact"]
+
+  ["title", "full_name", "street", "town", "postcode"].each do |val|
+    fill_in "claim_claimant_contact_#{val}", with: data["#{val}"]
+  end
+end
+
+def fill_claimant_contact_details
+  data = claim_post_data["claim"]["claimant_contact"]
+
+  ["email", "phone", "fax", "dx_number", "reference_number"].each do |val|
+    fill_in "claim_claimant_contact_#{val}", with: data["#{val}"]
+  end
+end
