@@ -112,9 +112,16 @@ end
 
 def fill_claimant_solicitor_address
   data = claim_post_data["claim"]["claimant_contact"]
-  fill_in 'claim_claimant_contact_title', with: data["title"]
-  fill_in 'claim_claimant_contact_full_name', with: data["full_name"]
-  fill_in 'claim_claimant_contact_street', with: data["street"]
-  fill_in 'claim_claimant_contact_town', with: data["town"]
-  fill_in 'claim_claimant_contact_postcode', with: data["postcode"]
+
+  ["title", "full_name", "street", "town", "postcode"].each do |val|
+    fill_in "claim_claimant_contact_#{val}", with: data["#{val}"]
+  end
+end
+
+def fill_claimant_contact_details
+  data = claim_post_data["claim"]["claimant_contact"]
+
+  ["email", "phone", "fax", "dx_number", "reference_number"].each do |val|
+    fill_in "claim_claimant_contact_#{val}", with: data["#{val}"]
+  end
 end
