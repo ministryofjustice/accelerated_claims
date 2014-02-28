@@ -9,6 +9,7 @@ feature "New claim application" do
       fill_claimant_two
       fill_defendant_one
       fill_defendant_two
+      fill_solicitor_cost
       fill_tenancy
       fill_notice
       fill_licences
