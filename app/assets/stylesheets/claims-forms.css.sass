@@ -8,9 +8,10 @@
   padding: 15px
   margin-left: 90px
 
-input, input[type="text"], button, select, textarea
+input, input[type="text"], input[type="password"], button, select, textarea
   font-family: "nta", arial, sans-serif
   font-size: 19px
+  margin: 0
 
 input[type="text"], input[type="password"], textarea
   padding: 5px 4px 2px
@@ -134,7 +135,7 @@ span.error
       left: 90px
       top: 40px
       bottom: 15px
-    padding: 40px 0 0 0
+    padding: 35px 0 25px 0
 
     &.rel
       margin-top: 15px
@@ -163,11 +164,19 @@ span.error
 
         .row
           max-width: 590px
+
+    > .row.full, > fieldset.full
+      padding-left: 50px
+      padding-right: 50px
+
     > .row, > .row.full, > fieldset, > fieldset.full
-      margin-top: 0
-      padding: 0 50px 40px 30px
       &.error
         padding-left: 27px
+
+    > .row
+      padding-left: 40px
+      label
+        margin-left: 0
 
 fieldset.plain
   padding-bottom: 20px
@@ -193,7 +202,7 @@ fieldset.plain
   border:
     top: 1px solid $grey-2
     bottom: 1px solid $grey-2
-  padding: 40px 0 35px
+  padding: 40px 0 30px
   margin-bottom: 50px
   font-size: 19px
 
@@ -229,7 +238,6 @@ fieldset.plain
     @include clearfix
     float: left
     clear: both
-    width: 570px
     margin:
       top: 25px
       bottom: 5px
@@ -242,7 +250,7 @@ fieldset.plain
       margin-top: 0
 
     &.rel
-      margin-top: 15px
+      margin-top: 0
       &:first-child
         margin-top: 0
 
@@ -250,60 +258,6 @@ fieldset.plain
       margin-top: 15px
       padding-left: 280px
 
-  .has-extra
-    margin-top: 5px
-
-    .extra
-      display: none
-      .row
-        margin-top: 30px
-        width: 480px
-        &.rel
-          margin-top: 15px
-        &.divider
-          margin-left: 0
-      label
-        position: relative
-        padding-left: 0
-        display: block
-        margin-top: 20px
-      &.striped-choice
-        margin-top: 40px
-        h4
-          margin-bottom: 20px
-        label
-          display: inline-block
-          margin-top: 0
-          padding-left: 35px
-          position: absolute
-        .row
-          margin-top: 5px
-      textarea
-        display: block
-        width: 470px
-        height: 100px
-      fieldset
-        width: 470px
-        padding: 0
-        margin-top: 30px
-        legend
-          float: none
-          margin-left: 0
-          padding-top: 0
-        &.date-picker
-          .row
-            margin-top: 5px
-
-    &.show-extra
-      background-color: $white
-      padding: 10px
-      margin-left: -10px
-      margin-right: -10px
-
-      .extra
-        display: block
-
-      
 
   .row
     padding-left: 280px
@@ -333,7 +287,8 @@ fieldset.plain
       p
         width: 670px
       label, .key
-        width: 670px
+        width: auto
+        display: block
         float: none
         margin: 0
         &.rel
@@ -513,7 +468,6 @@ fieldset.plain
       .row
         clear: both
         margin-top: 5px
-        width: 670px
 
         &:first-child
           margin-top: 5px
