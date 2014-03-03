@@ -17,11 +17,32 @@ describe Claim do
   end
 
   describe '#as_json' do
-    let(:data) { claim_post_data['claim'] }
-    let(:desired_format) { claim_formatted_data }
+    context "when both claim fee & legal cost are known" do
+      let(:data) { claim_post_data['claim'] }
+      let(:desired_format) { claim_formatted_data }
 
-    it 'should return the right JSON' do
-      expect(@claim.as_json).to eql desired_format
+      it 'should return the right JSON' do
+        expect(@claim.as_json).to eql desired_format
+      end
+    end
+
+    context "when only claim fee is known" do
+      let(:data) do
+        hash = claim_post_data['claim']
+        hash["claimant_contact"].delete("legal_costs")
+        hash
+      end
+
+      let(:desired_format) do
+        hash = claim_formatted_data
+        hash["claimant_contact_legal_costs"] = ""
+        hash.delete("total_cost")
+        hash
+      end
+
+      it 'should return the right JSON' do
+        expect(@claim.as_json).to eql desired_format
+      end
     end
   end
 end

@@ -166,5 +166,6 @@ def claim_formatted_data
     "tenancy_start_date_day" => "01",
     "tenancy_start_date_month" => "01",
     "tenancy_start_date_year" => "2010",
+    "total_cost" => "298.34"
   }
 end
