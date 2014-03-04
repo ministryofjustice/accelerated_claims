@@ -63,6 +63,12 @@ def fill_tenancy
 
   choose 'claim_tenancy_reissued_for_same_property_yes'
   choose 'claim_tenancy_reissued_for_same_landlord_and_tenant_yes'
+
+  select(data["assured_shorthold_tenancy_notice_served_date(3i)"], :from => 'claim_tenancy_assured_shorthold_tenancy_notice_served_date_3i')
+  select(get_month(data["assured_shorthold_tenancy_notice_served_date(2i)"]), :from => 'claim_tenancy_assured_shorthold_tenancy_notice_served_date_2i')
+  select(data["assured_shorthold_tenancy_notice_served_date(1i)"], :from => 'claim_tenancy_assured_shorthold_tenancy_notice_served_date_1i')
+  fill_in 'claim_tenancy_assured_shorthold_tenancy_notice_served_by', with: data["assured_shorthold_tenancy_notice_served_by"]
+
 end
 
 def fill_notice
