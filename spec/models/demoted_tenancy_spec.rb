@@ -23,6 +23,13 @@ describe DemotedTenancy do
     end
   end
 
+  context 'when demoted_tenancy blank' do
+    it 'should be invalid' do
+      demoted_tenancy.demoted_tenancy = nil
+      demoted_tenancy.should be_invalid
+    end
+  end
+
   describe "#as_json" do
     it "should generate the correct JSON" do
       demoted_tenancy.as_json.should eq desired_format
