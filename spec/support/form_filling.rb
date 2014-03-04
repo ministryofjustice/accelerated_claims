@@ -45,6 +45,12 @@ def fill_defendant_two
   fill_in 'claim_defendant_two_postcode', with: data["postcode"]
 end
 
+def fill_demoted_tenancy
+  data = claim_post_data["claim"]["demoted_tenancy"]
+  choose 'claim_demoted_tenancy_demoted_tenancy_no'
+end
+
+
 def fill_tenancy
   data = claim_post_data["claim"]["tenancy"]
   select(data["start_date(3i)"], :from => 'claim_tenancy_start_date_3i')

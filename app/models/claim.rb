@@ -58,7 +58,7 @@ class Claim < BaseClass
   end
 
   def singular_submodels
-    %w(Property Notice License Deposit Possession Order Tenancy ClaimantContact)
+    %w(Property Notice License Deposit Possession Order DemotedTenancy Tenancy ClaimantContact)
   end
 
   def doubled_submodels

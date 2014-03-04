@@ -91,6 +91,14 @@ def claim_post_data
         "town" => "London",
         "postcode" => "SW1X 2PT"
       },
+      "demoted_tenancy" =>
+      {
+        'demoted_tenancy' => 'Yes',
+        "demotion_order_date(3i)" => "1",
+        "demotion_order_date(2i)" => "1",
+        "demotion_order_date(1i)" => "2010",
+        'demotion_order_court' => 'Brighton County Court'
+      },
       "tenancy" =>
       {
         "start_date(3i)" => "1",
@@ -158,6 +166,11 @@ def claim_formatted_data
     "deposit_as_property" => 'Yes',
     "deposit_received" => 'Yes',
     "deposit_ref_number" => "X1234",
+    'demoted_tenancy_demoted_tenancy' => 'Yes',
+    "demoted_tenancy_demotion_order_date_day" => "01",
+    "demoted_tenancy_demotion_order_date_month" => "01",
+    "demoted_tenancy_demotion_order_date_year" => "2010",
+    'demoted_tenancy_demotion_order_court' => 'Brighton County Court',
     "tenancy_agreement_reissued_for_same_landlord_and_tenant" => "No",
     "tenancy_agreement_reissued_for_same_property" => "No",
     "tenancy_latest_agreement_date_day" => "01",
