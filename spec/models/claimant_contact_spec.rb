@@ -13,6 +13,9 @@ describe ClaimantContact do
     end
   end
 
+  subject { claimant_contact }
+  include_examples 'address validation'
+
   describe 'with non-number legal costs' do
     it 'should be invalid' do
       data = claimant_contact('legal_costs' => 'xx.x')
