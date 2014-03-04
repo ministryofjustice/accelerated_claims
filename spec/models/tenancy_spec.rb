@@ -55,6 +55,15 @@ describe Tenancy do
     it 'should have nil start date' do
       @tenancy.start_date.should be_nil
     end
+
+    context 'and demoted_tenancy is true' do
+      before do
+        @tenancy.demoted_tenancy = true
+      end
+      it 'should be valid' do
+        @tenancy.should be_valid
+      end
+    end
   end
 
   describe 'when latest_agreement_date is blank' do
@@ -94,8 +103,8 @@ describe Tenancy do
     it "can be blank" do
       tenancy.latest_agreement_date = nil
       json_mod = {
-        'latest_agreement_date_day' => '', 
-        'latest_agreement_date_month' => '', 
+        'latest_agreement_date_day' => '',
+        'latest_agreement_date_month' => '',
         'latest_agreement_date_year' => ''
       }
       expect(tenancy.as_json).to eql desired_format.merge(json_mod)
