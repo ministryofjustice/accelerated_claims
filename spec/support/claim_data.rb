@@ -170,7 +170,7 @@ def claim_formatted_data
     "demoted_tenancy_demotion_order_date_day" => "01",
     "demoted_tenancy_demotion_order_date_month" => "01",
     "demoted_tenancy_demotion_order_date_year" => "2010",
-    'demoted_tenancy_demotion_order_court' => 'Brighton County Court',
+    'demoted_tenancy_demotion_order_court' => 'Brighton',
     "tenancy_agreement_reissued_for_same_landlord_and_tenant" => "No",
     "tenancy_agreement_reissued_for_same_property" => "No",
     "tenancy_latest_agreement_date_day" => "01",
