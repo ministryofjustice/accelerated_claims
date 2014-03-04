@@ -21,8 +21,14 @@ class DemotedTenancy < BaseClass
       "demotion_order_date_day" => day(demotion_order_date),
       "demotion_order_date_month" => month(demotion_order_date),
       "demotion_order_date_year" => year(demotion_order_date),
-      "demotion_order_court" => demotion_order_court
+      "demotion_order_court" => short_court_name
     }
+  end
+
+  private
+
+  def short_court_name
+    demotion_order_court.to_s.sub(/ County Court/,'')
   end
 end
 
