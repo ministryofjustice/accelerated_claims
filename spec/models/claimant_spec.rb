@@ -41,6 +41,7 @@ describe Claimant do
 
     include_examples 'name validation'
     include_examples 'address validation'
+    include_examples 'address presence validation'
   end
 
   describe "#as_json" do

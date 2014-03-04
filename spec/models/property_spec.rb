@@ -40,6 +40,7 @@ describe Property do
     end
 
     subject { property }
+    include_examples 'address presence validation'
     include_examples 'address validation'
 
     describe "house" do
