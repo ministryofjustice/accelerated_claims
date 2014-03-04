@@ -83,4 +83,5 @@ AcceleratedClaims::Application.configure do
 
   # inject analytics javascript?
   config.piwik_enabled = true
+  config.ga_enabled = true
 end
