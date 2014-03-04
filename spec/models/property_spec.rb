@@ -39,43 +39,9 @@ describe Property do
       end
     end
 
-    describe "street" do
-      it "when blank" do
-        property.street = ""
-        property.should_not be_valid
-      end
-
-      it "when over 70 characters" do
-        property.street = "x" * 71
-        property.should_not be_valid
-      end
-    end
-
-    describe "town" do
-      it "when over 40 characters" do
-        property.town = "x" * 41
-        property.should_not be_valid
-      end
-    end
-
-    describe "postcode" do
-      it "when blank" do
-        property.postcode = ""
-        property.should_not be_valid
-      end
-
-      it "when over 8 characters" do
-        property.postcode = "x" * 9
-        property.should_not be_valid
-      end
-
-      context "when not a full postcode" do
-        it "shouldn't be valid" do
-          property.postcode = "SW1"
-          property.should_not be_valid
-        end
-      end
-    end
+    subject { property }
+    include_examples 'address presence validation'
+    include_examples 'address validation'
 
     describe "house" do
       it "when blank" do

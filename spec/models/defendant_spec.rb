@@ -19,34 +19,28 @@ describe Defendant do
     before do
       defendant.validate_presence = false
     end
+
+    subject { defendant }
+
     describe "full_name name" do
-      it "when blank" do
+      it "when blank should be valid" do
         defendant.full_name = ""
         defendant.should be_valid
       end
-
-      it "when over 40 characters" do
-        defendant.title = "x" * 9
-        defendant.should_not be_valid
-      end
     end
+
+    include_examples 'address validation'
   end
 
   context 'when validate_presence true' do
     before do
       defendant.validate_presence = true
     end
-    describe "full_name name" do
-      it "when blank" do
-        defendant.full_name = ""
-        defendant.should_not be_valid
-      end
 
-      it "when over 40 characters" do
-        defendant.title = "x" * 9
-        defendant.should_not be_valid
-      end
-    end
+    subject { defendant }
+
+    include_examples 'name validation'
+    include_examples 'address validation'
   end
 
   describe "#as_json" do
