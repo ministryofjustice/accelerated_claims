@@ -24,6 +24,10 @@ describe Claim do
       it 'should return the right JSON' do
         expect(@claim.as_json).to eql desired_format
       end
+
+      it 'should set demoted tenancy boolean on tenancy' do
+        @claim.tenancy.demoted_tenancy.should be_true
+      end
     end
 
     context "when only claim fee is known" do
