@@ -1,6 +1,11 @@
 class ClaimController < ApplicationController
  # after_filter :delete_all_pdfs, only: :submission
 
+  def landing
+    @page_title = 'Property repossession'
+    render 'landing'
+  end
+
   def new
     @page_title = 'Property repossession'
     @date_select_options = {

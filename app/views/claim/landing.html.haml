@@ -1,0 +1,28 @@
+= render partial: 'shared/header_message'
+
+.container.start
+  %p Court forms to evict tenants from your property without a court hearing, using an 'accelerated' process, which can be slightly faster.
+ 
+  %p You can only use this process to gain possession of your property. If you wish to claim rent arrears as well as possession of your property, you can file a #{link_to 'standard possession claim', 'https://www.possessionclaim.gov.uk/pcol/', :class => 'external', :rel => 'external'} which will go to a court hearing.
+
+   
+  %p You must have:
+  
+  %ul
+    %li an assured shorthold tenancy or statutory periodic tenancy
+    %li a written tenancy agreement
+    %li a deposit held in a tenancy deposit protection scheme
+
+  %p Make sure you've given your tenants at least 2 months' written notice to leave the property.
+
+  %p The notice should say you are "giving notice by virtue of section 21 of the Housing Act 1988".
+   
+  %p You can't ask them to leave before the end of the fixed-term tenancy.
+   
+  %p
+    You'll have to pay a
+    %strong &pound;175
+    court fee to start the claim.
+
+  .action-buttons.cf
+    %a.button.primary.large.chevron.left{:href => new_path} Start now
