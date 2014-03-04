@@ -13,7 +13,7 @@ describe DemotedTenancy do
       "demotion_order_date_day" => "01",
       "demotion_order_date_month" => "01",
       "demotion_order_date_year" => "2010",
-      "demotion_order_court" => 'Brighton County Court'
+      "demotion_order_court" => 'Brighton'
     }
   end
 
