@@ -22,7 +22,8 @@ class Claim < BaseClass
         json_out["#{attribute}_#{key}"] = value
       end
     end
-    add_court_fee json_out
+    add_fee_and_costs json_out
+    json_out
   end
 
   def valid?
@@ -47,8 +48,13 @@ class Claim < BaseClass
 
   private
 
-  def add_court_fee hash
+  def add_fee_and_costs hash
     hash.merge!({ "court_fee" => "#{COURT_FEE}" })
+
+    unless hash["claimant_contact_legal_costs"].blank?
+      cost = ((hash["court_fee"].to_f * 100) + (hash["claimant_contact_legal_costs"].to_f * 100)) / 100
+      hash.merge!({ "total_cost" => "#{cost}" })
+    end
   end
 
   def singular_submodels
