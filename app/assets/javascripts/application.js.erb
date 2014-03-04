@@ -15,5 +15,12 @@
 
 //= require moj
 //= require forms
-//= require piwik
 //= require main
+
+<% if Rails.configuration.piwik_enabled 
+  require_asset "piwik_analytics_snippet"
+end %>
+
+<% if Rails.configuration.ga_enabled 
+  require_asset "google_analytics_snippet"
+end %>

@@ -80,4 +80,8 @@ AcceleratedClaims::Application.configure do
 
   # use redis for cache store
   config.cache_store = :redis_store, (ENV['REDIS_STORE'] || 'redis://localhost:6379/1')
+
+  # inject analytics javascript?
+  config.piwik_enabled = true
+  config.ga_enabled = true
 end
