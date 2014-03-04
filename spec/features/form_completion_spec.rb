@@ -3,7 +3,7 @@ require 'spec_helper'
 feature 'Filling in claim form' do
 
   scenario "submitting incomplete form" do
-    visit '/'
+    visit '/new'
     click_button 'Complete form'
     expect(page).to have_content("Street must be entered")
 
