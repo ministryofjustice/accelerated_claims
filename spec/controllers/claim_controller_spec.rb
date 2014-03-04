@@ -29,4 +29,11 @@ describe ClaimController do
       response.headers["Content-Type"].should eq "application/pdf"
     end
   end
+
+  describe '#landing' do
+    it 'should render the landing page' do
+      get :landing
+      expect(response).to render_template("landing")
+    end
+  end
 end
