@@ -1,17 +1,17 @@
 = claim_form.fields_for license, builder: LabellingFormBuilder do |form|
-  = form.radio_button_fieldset :multiple_occupation, 'Is the property part of a house in multiple occupation?', class: 'striped-choice full'
+  = form.radio_button_fieldset :multiple_occupation, 'Is the property part of a house in multiple occupation?', class: 'striped-choice full js-depend', :data => { :depend => 'multiple-occupation', :show => 'yes' }
 
   .row.full.information
     %p A #{link_to 'house in multiple occupation', 'https://www.gov.uk/private-renting/houses-in-multiple-occupation', class: 'external', rel: 'external'} has more than 1 family or household, with shared toilet, bathroom or kitchen facilities.
 
-  .sub-panel.extra.rel
+  .sub-panel.extra.rel.hide.js-multiple-occupation
     = form.text_field_row  :multiple_occupation_authority, label: 'If <strong>yes</strong>, which council issued the licence?', class: 'full'
 
     = form.date_select_field_set :multiple_occupation_date, 'Date licence was issued', class: 'date-picker rel full', date_select_options: @date_select_options
 
-  = form.radio_button_fieldset :housing_act, 'Does the property need a licence under Part 3 of the Housing Act 2004?', class: 'striped-choice full'
+  = form.radio_button_fieldset :housing_act, 'Does the property need a licence under Part 3 of the Housing Act 2004?', class: 'striped-choice full js-depend', :data => { :depend => 'housing-act', :show => 'yes' }
 
-  .sub-panel.extra.rel
+  .sub-panel.extra.rel.hide.js-housing-act
     = form.text_field_row  :housing_act_authority, label: 'If <strong>yes</strong>, which council issued the licence?', class: 'full'
 
     = form.date_select_field_set :housing_act_date, 'Date licence was issued', class: 'date-picker rel full', date_select_options: @date_select_options
