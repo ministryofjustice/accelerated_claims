@@ -6,6 +6,7 @@ AcceleratedClaims::Application.routes.draw do
     post '/submission',   controller: :claim, action: :submission
     get '/confirmation',  controller: :claim, action: :confirmation
     get '/download',      controller: :claim, action: :download
+    get '/landing',       controller: :claim, action: :landing
 
 
     resource :feedback,   only: [:new, :create], controller: 'feedback' 
