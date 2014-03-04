@@ -33,15 +33,8 @@ describe Claim do
         hash
       end
 
-      let(:desired_format) do
-        hash = claim_formatted_data
-        hash["claimant_contact_legal_costs"] = ""
-        hash.delete("total_cost")
-        hash
-      end
-
-      it 'should return the right JSON' do
-        expect(@claim.as_json).to eql desired_format
+      it 'should not return the total cost' do
+        @claim.as_json.should_not include "total_cost"
       end
     end
   end
