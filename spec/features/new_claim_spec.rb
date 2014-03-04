@@ -12,6 +12,7 @@ feature "New claim application" do
       fill_defendant_one
       fill_defendant_two
       fill_solicitor_cost
+      fill_demoted_tenancy
       fill_tenancy
       fill_notice
       fill_licences
@@ -36,6 +37,7 @@ feature "New claim application" do
       fill_property_details
       fill_claimant_one
       fill_defendant_one
+      fill_demoted_tenancy
       fill_tenancy
       fill_notice
       fill_licences
@@ -43,7 +45,6 @@ feature "New claim application" do
       fill_postponement
       fill_order
       click_button 'Complete form'
-
       expect(page).to have_text('Your accelerated possession form is ready to print')
     end
   end
