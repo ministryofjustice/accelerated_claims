@@ -1,14 +1,5 @@
 shared_examples 'address validation' do
 
-  context "street blank" do
-    it "is invalid" do
-      if !subject.is_a?(ClaimantContact) && (!subject.respond_to?(:validate_presence) || (subject.validate_presence && !subject.is_a?(Defendant)) )
-        subject.street = ""
-        subject.should_not be_valid
-      end
-    end
-  end
-
   context "town over 40 characters" do
     it "is invalid" do
       subject.town = "x" * 41
@@ -21,18 +12,6 @@ shared_examples 'address validation' do
       subject.street = "x" * 71
       subject.should_not be_valid
       subject.errors.full_messages.should == ["Street is too long (maximum is 70 characters)"]
-    end
-  end
-
-  context "postcode blank" do
-    it "is invalid" do
-      if !subject.is_a?(ClaimantContact) && (!subject.respond_to?(:validate_presence) || (subject.validate_presence && !subject.is_a?(Defendant)) )
-        subject.postcode = ""
-        if subject.is_a?(Defendant)
-          binding.pry
-        end
-        subject.should_not be_valid
-      end
     end
   end
 
