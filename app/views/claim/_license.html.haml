@@ -2,7 +2,7 @@
   = form.radio_button_fieldset :multiple_occupation, 'Is the property part of a house in multiple occupation?', class: 'striped-choice full'
 
   .row.full.information
-    %p A #{link_to 'house in multiple occupation', 'https://www.gov.uk/private-renting/houses-in-multiple-occupation', :class => 'external'} has more than 1 family or household, with shared toilet, bathroom or kitchen facilities.
+    %p A #{link_to 'house in multiple occupation', 'https://www.gov.uk/private-renting/houses-in-multiple-occupation', class: 'external', rel: 'external'} has more than 1 family or household, with shared toilet, bathroom or kitchen facilities.
 
   .sub-panel.extra.rel
     = form.text_field_row  :multiple_occupation_authority, label: 'If <strong>yes</strong>, which council issued the licence?', class: 'full'
