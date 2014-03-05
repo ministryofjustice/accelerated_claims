@@ -12,7 +12,7 @@ moj.Modules.eventTracking = (function() {
       dispatchTrackingEvent,
 
       // vars
-      tracked_elements
+      $tracked_elements
       ;
 
   init = function() {
@@ -21,12 +21,12 @@ moj.Modules.eventTracking = (function() {
   };
 
   cacheEls = function() {
-    tracked_elements = $( '[data-event-label]' );
+    $tracked_elements = $( '[data-event-label]' );
   };
 
   bindEvents = function() {
-    tracked_elements.on( 'click', function() {
-      var category = eventCategory( this ),
+    $tracked_elements.on( 'click', function() {
+      var category = eventCategory( $(this) ),
           label    = $( this ).data( 'event-label' );
 
       dispatchTrackingEvent( category, 'click', label );
@@ -42,9 +42,9 @@ moj.Modules.eventTracking = (function() {
     }
   }
 
-  eventCategory = function( el ) {
+  eventCategory = function( $el ) {
     var cat = 'undefined';
-    if( $( el ).hasClass( 'button' ) || $( el ).get(0).tagName == 'button' ) {
+    if( $el.hasClass( 'button' ) || $el.get(0).tagName == 'button' ) {
       cat = 'button';
     }
     return cat;
