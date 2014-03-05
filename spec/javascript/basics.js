@@ -1,5 +1,5 @@
-var sitename = 'Civil Claims',
-    url = 'http://localhost:3000/';
+var url = casper.cli.get('url'),
+    sitename = 'Civil Claims';
 
 
 casper.start(url, function() {
