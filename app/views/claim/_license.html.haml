@@ -1,14 +1,13 @@
 = claim_form.fields_for license, builder: LabellingFormBuilder do |form|
   = form.radio_button_fieldset :multiple_occupation, 'Is the property part of a house in multiple occupation?', class: 'striped-choice full'
 
+  .row.full.information
+    %p A #{link_to 'house in multiple occupation', 'https://www.gov.uk/private-renting/houses-in-multiple-occupation', class: 'external', rel: 'external'} has more than 1 family or household, with shared toilet, bathroom or kitchen facilities.
+
   .sub-panel.extra.rel
     = form.text_field_row  :multiple_occupation_authority, label: 'If <strong>yes</strong>, which council issued the licence?', class: 'full'
 
     = form.date_select_field_set :multiple_occupation_date, 'Date licence was issued', class: 'date-picker rel full', date_select_options: @date_select_options
-
-  .row.full.information
-    %p A #{link_to 'house in multiple occupation', 'https://www.gov.uk/private-renting/houses-in-multiple-occupation', :class => 'external'} has more than 1 family or household, with shared toilet, bathroom or kitchen facilities.
-    %p If you’re still waiting for the licence, attach evidence of the licence application to the printed claim form and mark this as <strong>‘D’</strong>.
 
   = form.radio_button_fieldset :housing_act, 'Does the property need a licence under Part 3 of the Housing Act 2004?', class: 'striped-choice full'
 
@@ -16,7 +15,3 @@
     = form.text_field_row  :housing_act_authority, label: 'If <strong>yes</strong>, which council issued the licence?', class: 'full'
 
     = form.date_select_field_set :housing_act_date, 'Date licence was issued', class: 'date-picker rel full', date_select_options: @date_select_options
-
-  .row.full.information
-    %p If you’re still waiting for the licence, attach evidence of the licence application to the printed claim form and mark this as <strong>‘E’</strong>.
-    
