@@ -1,33 +1,36 @@
 require 'spec_helper'
 
 describe Order do
-  let(:order) { Order.new(possession: true, cost: true) }
+  let(:order) { Order.new(possession: possession, cost: cost) }
 
-  describe "when given all valid values" do
-    it "should be valid" do
-      order.should be_valid
-    end
+  let(:possession) { 'Yes' }
+  let(:cost) { 'No' }
+  subject { order }
+
+  context "when possession Yes" do
+    it { should be_valid }
   end
 
-  describe "possession" do
-    it "should not be blank" do
-      order.possession = ""
-      order.should_not be_valid
-    end
+  context "when possession No" do
+    let(:possession) { 'No' }
+    it { should_not be_valid }
   end
 
-  describe "cost" do
-    it "should not be blank" do
-      order.cost = ""
-      order.should_not be_valid
-    end
+  context "when possession blank" do
+    let(:possession) { '' }
+    it { should_not be_valid }
+  end
+
+  context "when cost blank" do
+    let(:cost) { '' }
+    it { should_not be_valid }
   end
 
   describe "#as_json" do
     let(:desired_format) do
       {
-        "possession" => true,
-        "cost" => true
+        "possession" => 'Yes',
+        "cost" => 'No'
       }
     end
 
