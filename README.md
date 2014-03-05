@@ -31,10 +31,10 @@ brew install phantomjs
 brew install casperjs --devel
 ```
 
-The tests themselves live at `/spec/javascript/` and to run them from the command line once Phantom and Casper are installed, run this command from the root of the project:
+The tests themselves live at `/spec/javascript/` and to run them from the command line once Phantom and Casper are installed, run this command from the root of the project, passing in the base URL of the app:
 
 ```
-casperjs test ./spec/javascript/
+casperjs test ./spec/javascript/ --url='http://localhost:3000/'
 ```
 
 If you want to test against the Gecko (Firefox) engine rather than the Webkit (Chrome) engine that PhantomJS uses, you can use SlimerJS as the headless browser.
@@ -48,5 +48,7 @@ brew install slimerjs
 Then run casper using the `--engine` switch like so:
 
 ```
-casperjs test ./spec/javascript/ --engine=slimerjs
+casperjs test ./spec/javascript/ --url='http://localhost:3000/ --engine=slimerjs
 ```
+
+TODO: rake task to run the Casper tests.

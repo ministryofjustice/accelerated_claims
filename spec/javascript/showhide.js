@@ -1,6 +1,6 @@
-var url = 'http://localhost:3000/new';
+var url = casper.cli.get('url');
 
-casper.start(url, function() {
+casper.start(url + '/new', function() {
 
   casper.test.comment('Testing show/hide functionality');
 
@@ -27,5 +27,5 @@ casper.start(url, function() {
 });
 
 casper.run(function() {
-    this.test.done();
+  this.test.done();
 });
