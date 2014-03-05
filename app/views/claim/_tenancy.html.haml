@@ -29,3 +29,7 @@
       %li The [first] tenancy agreement was for a fixed term of not less than six months.
       %li There was no power for the landlord to end the tenancy earlier than six months after it began.
       %li Before the tenancy began a notice in writing, stating that the tenancy was to be an assured shorthold tenancy, was served on the defendant(s)
+
+  = form.text_field_row :assured_shorthold_tenancy_notice_served_by, label: 'Notice served by', class: ''
+  = form.date_select_field_set :assured_shorthold_tenancy_notice_served_date, 'Date notice served', class: 'date-picker full', date_select_options: @date_select_options
+

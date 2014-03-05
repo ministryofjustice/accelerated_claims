@@ -108,7 +108,11 @@ def claim_post_data
         "latest_agreement_date(2i)" => "1",
         "latest_agreement_date(1i)" => "2010",
         "reissued_for_same_property" => 'No',
-        "reissued_for_same_landlord_and_tenant" => 'No'
+        "reissued_for_same_landlord_and_tenant" => 'No',
+        "assured_shorthold_tenancy_notice_served_by" => 'Mr Brown',
+        "assured_shorthold_tenancy_notice_served_date(3i)" => "1",
+        "assured_shorthold_tenancy_notice_served_date(2i)" => "12",
+        "assured_shorthold_tenancy_notice_served_date(1i)" => "2013"
       }
     }
   }
@@ -179,6 +183,10 @@ def claim_formatted_data
     "tenancy_start_date_day" => "01",
     "tenancy_start_date_month" => "01",
     "tenancy_start_date_year" => "2010",
+    "tenancy_assured_shorthold_tenancy_notice_served_by" => 'Mr Brown',
+    "tenancy_assured_shorthold_tenancy_notice_served_date_day" => "01",
+    "tenancy_assured_shorthold_tenancy_notice_served_date_month" => "12",
+    "tenancy_assured_shorthold_tenancy_notice_served_date_year" => "2013",
     "total_cost" => "298.34"
   }
 end
