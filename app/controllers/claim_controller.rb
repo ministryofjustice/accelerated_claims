@@ -42,6 +42,7 @@ class ClaimController < ApplicationController
   def submission
     session[:claim] = params['claim']
     @claim = Claim.new(params['claim'])
+
     unless @claim.valid?
       redirect_to :new
     else
