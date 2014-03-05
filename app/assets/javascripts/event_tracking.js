@@ -21,7 +21,7 @@ moj.Modules.eventTracking = (function() {
   };
 
   cacheEls = function() {
-    tracked_elements = $( '[data-event-name]' );
+    tracked_elements = $( '[data-event-label]' );
   };
 
   bindEvents = function() {
@@ -37,7 +37,7 @@ moj.Modules.eventTracking = (function() {
     if( typeof ga == 'function' ) { // google analytics
       ga( 'send', 'event', category, event, label );
     }
-    if( typeof _paq == 'function' ) { // piwik
+    if( typeof _paq == 'object' ) { // piwik
       _paq.push( ['trackPageView', category+'/'+label] )
     }
   }
