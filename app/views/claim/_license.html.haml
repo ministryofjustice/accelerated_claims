@@ -9,7 +9,7 @@
 
     = form.date_select_field_set :multiple_occupation_date, 'Date licence was issued', class: 'date-picker rel full', date_select_options: @date_select_options
 
-    = form.radio_button_fieldset :housing_act, 'Does the property need a licence under Part 3 of the Housing Act 2004?', class: 'striped-choice full'
+  = form.radio_button_fieldset :housing_act, 'Does the property need a licence under Part 3 of the Housing Act 2004?', class: 'striped-choice full'
 
   .sub-panel.extra.rel
     = form.text_field_row  :housing_act_authority, label: 'If <strong>yes</strong>, which council issued the licence?', class: 'full'
