@@ -44,15 +44,24 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 
+  def error_for? attribute
+    @object.errors.messages.key?(attribute) && !@object.errors.messages[attribute].empty?
+  end
+
+  def error_span attribute
+    message = @object.errors.messages[attribute][0]
+    @template.surround(" <span class='error'>".html_safe, "</span>".html_safe) { message }
+  end
+
+  def error_id_for attribute
+    "#{@object_name.tr('[]','_')}_#{attribute}_error".squeeze('_')
+  end
+
   private
 
   def set_class_and_id attribute, options
     options[:class] = css_for(attribute, options)
     options[:id] = id_for(attribute) unless id_for(attribute).blank?
-  end
-
-  def error_id_for attribute
-    "#{@object_name.tr('[]','_')}_#{attribute}_error".squeeze('_')
   end
 
   def id_for attribute
@@ -75,10 +84,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     css.strip
   end
 
-  def error_for? attribute
-    @object.errors.messages.key?(attribute) && !@object.errors.messages[attribute].empty?
-  end
-
   def haml_tag_text tag, attribute, options
     tag += " #{css_for(attribute, options)}"
     haml_tag_text = tag.squeeze(' ').strip.gsub(' ','.')
@@ -92,11 +97,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     @template.surround("<div #{id}class='#{css}'>".html_safe, "</div>".html_safe) do
       labelled_input attribute, options[:input_class], input, options[:label]
     end
-  end
-
-  def error_span attribute
-    message = @object.errors.messages[attribute][0]
-    @template.surround(" <span class='error'>".html_safe, "</span>".html_safe) { message }
   end
 
   def labelled_input attribute, input_class, input, label=nil
