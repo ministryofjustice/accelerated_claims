@@ -1,18 +1,18 @@
 = claim_form.fields_for deposit, builder: LabellingFormBuilder do |form|
 
-  = form.radio_button_fieldset :received, 'Was a money deposit received on or after 6 April 2007?', class: 'striped-choice full'
+  = form.radio_button_fieldset :received, 'Was a money deposit received on or after 6 April 2007?', class: 'striped-choice full js-depend', :data => { :depend => 'money-deposit', :show => 'yes' }
 
-  .row.full.information
+  .row.full.information.hide.js-money-deposit
     %p If <strong>yes</strong>, at the date of service of the Section 21 Notice:
     %ol.roman
       %li The deposit was held under a Tenancy Desposit Scheme (TDS) authorised under Part 6 of the Housing Act 2004.
       %li The initial requirements of the TDS has been complied with in relation to the deposit.
       %li The claimant had given the defendant and anyone who paid the deposit on behalf of the defendant the prescribed information in relation to the deposit and the operation of the TDS.
 
-  .sub-panel.extra
+  .sub-panel.extra.hide.js-money-deposit
     = form.text_field_row  :ref_number, label: 'Tenancy deposit scheme reference number', class: 'full'
 
-  = form.radio_button_fieldset :as_property, 'Did you receive deposit in the form of property on or after 6 April 2007?', class: 'striped-choice full'
+  = form.radio_button_fieldset :as_property, 'Did you receive deposit in the form of property on or after 6 April 2007?', class: 'striped-choice full js-depend', :data => { :depend => 'property-deposit', :show => 'yes' }
 
-  .row.full.information
+  .row.full.information.hide.js-property-deposit
     %p If <strong>yes</strong>, at the date of service of the section 21 Notice that the property had been returned to the person from whom it was received.
