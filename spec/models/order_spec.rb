@@ -14,6 +14,10 @@ describe Order do
   context "when possession No" do
     let(:possession) { 'No' }
     it { should_not be_valid }
+    it 'should have error message' do
+      order.valid?
+      order.errors.full_messages.should == ['Possession must be checked']
+    end
   end
 
   context "when possession blank" do
