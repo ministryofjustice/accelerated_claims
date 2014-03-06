@@ -1,23 +1,25 @@
 = claim_form.fields_for claimant_field, claimant_contact, builder: LabellingFormBuilder do |form|
   .sub-panel.extra
     .row
-      = 'Correspondence address of claimant or solicitor <strong>if different from above</strong>'.html_safe
+      = 'If this form is being completed by a <strong>solicitor</strong>'.html_safe
+    = form.text_field_row :legal_costs, label: 'Total legal costs', class: 'legal_costs', input_class: 'pound'
+  .sub-panel.extra
+    .row
+      = 'If you would like to provide a separate <strong>correspondence address</strong>'.html_safe
     = form.text_field_row :title,    class: ''
     = form.text_field_row :full_name, class: 'rel '
     = form.text_area_row  :street,   class: 'rel street'
     = form.text_field_row :town,     class: 'rel town'
     = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'
+  .sub-panel.extra
     .row
-      = 'Contact details'
+      = 'If you would like to give <strong>other methods of contacting you</strong>'.html_safe
     = form.text_field_row :email, class: 'email'
     = form.text_field_row :phone, class: 'rel phone'
     = form.text_field_row :fax, class: 'rel fax'
     = form.text_field_row :dx_number, label: 'DX number', class: 'rel dx_number'
-    .row
-      = 'Your own reference number for this claim'
-    = form.text_field_row :reference_number, class: 'rel reference_number'
   .sub-panel.extra
     .row
-      = 'If you are a <strong>solicitor</strong> acting on behalf of the landlord'.html_safe
-    = form.text_field_row :legal_costs, class: 'legal_costs', input_class: 'pound'
+      = 'If you would like to have your own <strong>reference number</strong> for this claim'.html_safe
+    = form.text_field_row :reference_number, class: 'rel reference_number'
 
