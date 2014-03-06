@@ -20,16 +20,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   salt.install_master = true
 
- #   salt.master_config = "../civil-claims-deploy/salt/minions/master/templates/master"
     salt.minion_config = "../civil-claims-deploy/salt/minions/vagrant/templates/minion"
 
- #   salt.minion_key
- #   salt.minion_pub
- #   salt.master_key
- #   salt.master_pub
-    salt.minion_pub = "../config/default.pem"
+    salt.minion_key = '../civil-claims-deploy/salt/minions/vagrant/templates/key'
+    salt.minion_pub = '../civil-claims-deploy/salt/minions/vagrant/templates/key.pub'
     salt.seed_master = {minion: salt.minion_pub}
-    #salt.accept_keys = true
+
     salt.run_highstate = true
 
     salt.verbose = true
