@@ -13,22 +13,33 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder "../civil-claims-deploy/salt", "/srv/salt/"
   config.vm.synced_folder "../config/projects/civil-claims/pillar", "/srv/pillar/"
 
-  command = "mkdir -p /etc/salt && cp /srv/salt/minions/vagrant/templates/minion /etc/salt/minion"
-  config.vm.provision :shell, :inline => command
+  # command = "mkdir -p /etc/salt && cp /srv/salt/minions/vagrant/templates/minion /etc/salt/minion"
+  # config.vm.provision :shell, :inline => command
 
   config.vm.provision :salt do |salt|
 
-  salt.install_master = true
+    minion_config_dir   = '../civil-claims-deploy/salt/minions/vagrant/templates/'
+    salt.minion_config  = minion_config_dir + "minion"
+    salt.minion_key     = minion_config_dir + 'key'
+    salt.minion_pub     = minion_config_dir + 'key.pub'
 
-    salt.minion_config = "../civil-claims-deploy/salt/minions/vagrant/templates/minion"
+    salt.install_master = true
+    salt.seed_master = {vagrant: salt.minion_pub}
 
-    salt.minion_key = '../civil-claims-deploy/salt/minions/vagrant/templates/key'
-    salt.minion_pub = '../civil-claims-deploy/salt/minions/vagrant/templates/key.pub'
-    salt.seed_master = {minion: salt.minion_pub}
+    # Pass extra flags to bootstrap script
+    salt.bootstrap_options = "-D"
 
     salt.run_highstate = true
 
     salt.verbose = true
+
+    # fails. to make it work:
+
+    # vagrant ssh
+    # sudo salt-key -D
+    # sudo salt-key -A
+    # sudo service salt-minion start
+    # sudo salt '*' state.highstate -l all
 
   end
 end
