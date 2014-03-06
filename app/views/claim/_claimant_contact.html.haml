@@ -1,7 +1,7 @@
 = claim_form.fields_for claimant_field, claimant_contact, builder: LabellingFormBuilder do |form|
   .sub-panel.extra
     .row
-      = 'If this form is being completed by a <strong>solicitor</strong>'.html_safe
+      = 'If this form is being completed by a <strong>legal representative</strong>'.html_safe
     = form.text_field_row :legal_costs, label: 'Total legal costs', class: 'legal_costs', input_class: 'pound'
   .sub-panel.extra
     .row
