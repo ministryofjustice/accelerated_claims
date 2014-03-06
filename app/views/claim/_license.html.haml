@@ -9,9 +9,16 @@
 
     = form.date_select_field_set :multiple_occupation_date, 'Date licence was issued', class: 'date-picker rel full', date_select_options: @date_select_options
 
+    .row.full.information
+    %p If the licence application is outstanding with the local housing authority, attach evidence of the application marked <strong>‘D’</strong> to the claim form.
+
+
   = form.radio_button_fieldset :housing_act, 'Does the property need a licence under Part 3 of the Housing Act 2004?', class: 'striped-choice full js-depend', :data => { :depend => 'housing-act', :show => 'yes' }
 
   .sub-panel.extra.rel.hide.js-housing-act
     = form.text_field_row  :housing_act_authority, label: 'If <strong>yes</strong>, which council issued the licence?', class: 'full'
 
     = form.date_select_field_set :housing_act_date, 'Date licence was issued', class: 'date-picker rel full', date_select_options: @date_select_options
+
+    .row.full.information
+    %p If the licence application is outstanding with the local housing authority, attach evidence of the application marked <strong>‘E’</strong> to the claim form.
