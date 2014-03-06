@@ -29,6 +29,7 @@ gem 'moj_boilerplate', github: 'ministryofjustice/moj_boilerplate', tag: 'v0.6.2
 
 # required for feedback form
 gem 'zendesk_api'
+gem 'mail'
 
 
 group :production do
