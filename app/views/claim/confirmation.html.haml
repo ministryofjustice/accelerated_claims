@@ -61,5 +61,6 @@
               Debit or credit card
       %li.court
         = "Post <strong>all</strong> copies of the form and documents to court".html_safe
-      %li.court
-        Find a court using the #{link_to 'court and tribunal finder', 'https://courttribunalfinder.service.gov.uk/', :class => 'external', :rel => 'external'}
+        .box
+          %ul.nodot
+            %li Find a court using the #{link_to 'court and tribunal finder', 'https://courttribunalfinder.service.gov.uk/', :class => 'external', :rel => 'external'}
