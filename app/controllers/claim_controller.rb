@@ -2,12 +2,12 @@ class ClaimController < ApplicationController
  # after_filter :delete_all_pdfs, only: :submission
 
   def landing
-    @page_title = 'Property repossession'
+    @page_title = 'Property possession'
     render 'landing'
   end
 
   def new
-    @page_title = 'Property repossession'
+    @page_title = 'Property possession'
     @date_select_options = {
       order: [:day, :month, :year],
       with_css_classes: true,
@@ -24,6 +24,7 @@ class ClaimController < ApplicationController
   end
 
   def confirmation
+    @page_title = 'Property possession'
   end
 
   def download
