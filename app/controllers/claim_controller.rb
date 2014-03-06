@@ -24,6 +24,7 @@ class ClaimController < ApplicationController
   end
 
   def confirmation
+    @page_title = 'Property repossession'
   end
 
   def download

@@ -41,7 +41,7 @@ module AcceleratedClaims
 
     # app title appears in the header bar
     config.app_title = 'Civil Claims'
-    config.proposition_title = 'Property repossession'
+    config.proposition_title = 'Property possession'
     # phase governs text indicators and highlight colours
     # presumed values: alpha, beta, live
     config.phase = 'beta'
