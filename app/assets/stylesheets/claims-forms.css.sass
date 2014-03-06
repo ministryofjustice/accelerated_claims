@@ -205,6 +205,7 @@ fieldset.plain
   padding: 40px 0 30px
   margin-bottom: 50px
   font-size: 19px
+  overflow-x: hidden
 
   &.important
     background-color: $yellow-25
@@ -245,6 +246,7 @@ fieldset.plain
     padding:
       top: 5px
       bottom: 5px
+    width: 100%
 
     &:first-child, &.nomargin
       margin-top: 0
@@ -440,8 +442,6 @@ fieldset.plain
       float: left
 
     &.striped-choice
-      .options
-        max-width: 670px
 
       .row
         margin-top: 5px
@@ -477,12 +477,16 @@ fieldset.plain
           padding-left: 25px
 
     .row
-      width: 480px
+      width: 100%
       padding-left: 0
       min-width: 0
       position: relative
       &.checked
         background-color: $light-blue-25
+      &.error
+        padding-left: 0
+        span.error
+          padding-left: 35px
 
       input[type="checkbox"], input[type="radio"]
         display: inline-block
@@ -501,7 +505,7 @@ fieldset.plain
         width: auto
 
     .options
-      max-width: 480px
+      width: 100%
       position: relative
 
 
