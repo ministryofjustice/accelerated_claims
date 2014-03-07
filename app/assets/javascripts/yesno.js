@@ -44,7 +44,7 @@ moj.Modules.yesno = (function() {
 
     source = $( '#hb-yesno' ).html();
     template = Handlebars.compile( source );
-    context = { question: $el.data( 'yesnoquestion' ), id: $el.data( 'yesnoid' ) };
+    context = { question: $el.data( 'yesnoquestion' ), id: $el.data( 'yesnoid' ), req: $el.data( 'yesnoreq' ), };
 
     $el.before( template( context ) );
   };
