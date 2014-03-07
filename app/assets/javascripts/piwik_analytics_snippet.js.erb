@@ -3,9 +3,9 @@ _paq.push(["trackPageView"]);
 _paq.push(["enableLinkTracking"]);
 
 (function() {
-  var u="//<%= ENV['piwik_url'] %>/";
+  var u="//<%= ENV['PIWIK_URL'] %>/";
   _paq.push(["setTrackerUrl", u+"piwik.php"]);
-  _paq.push(["setSiteId", "<%= ENV['piwik_site_id'] %>"]);
+  _paq.push(["setSiteId", "<%= ENV['PIWIK_SITE_ID'] %>"]);
   var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
   g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
 })();
