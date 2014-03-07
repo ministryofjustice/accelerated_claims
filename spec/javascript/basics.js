@@ -13,7 +13,7 @@ casper.start(url, function() {
   this.test.assertHttpStatus(200, sitename + ' is up');
 
   this.test.assertTitle(
-    'Property repossession - Civil Claims',
+    'Property possession - Civil Claims',
     sitename + ' has the correct title'
   );
   
