@@ -50,7 +50,8 @@ moj.Modules.yesno = (function() {
   };
 
   yesnoClick = function( $el ) {
-    if( $el.val() === 'yes' ) {
+    var reverse = $el.closest( '.options' ).data( 'reverse' );
+    if( ( $el.val() === 'yes' && !reverse ) || ( $el.val() === 'no' && reverse ) ) {
       $el.closest( 'fieldset' ).next().show();
     } else {
       $el.closest( 'fieldset' ).next().hide().find( 'input[type=text], textarea' ).val( '' );
