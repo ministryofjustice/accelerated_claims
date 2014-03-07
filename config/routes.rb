@@ -9,6 +9,8 @@ AcceleratedClaims::Application.routes.draw do
     get  '/confirmation',  controller: :claim, action: :confirmation
     get  '/download',      controller: :claim, action: :download
 
+    get  '/cookies',       controller: :static, action: :cookies
+
     # zendesk
     resource :feedback,   only: [:new, :create], controller: 'feedback' 
   end
