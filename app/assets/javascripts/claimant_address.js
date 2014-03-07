@@ -40,7 +40,7 @@ moj.Modules.claimantAddress = (function() {
     template = Handlebars.compile( source );
     context = { question: 'Is the address the same as claimant 1?', id: 'claimant2address', req: 'true', reverse: 'true' };
 
-    $el.find( '.sub-panel.address' ).before( template( context ) ).hide();
+    $el.find( '.sub-panel.address' ).addClass( 'extra rel' ).before( template( context ) ).hide();
   };
 
   // public
