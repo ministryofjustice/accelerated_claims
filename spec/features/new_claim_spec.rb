@@ -26,8 +26,8 @@ feature "New claim application" do
       expect(page.response_headers['Content-Type']).to eq "application/pdf"
       generated_file = '/tmp/a.pdf'
       File.open(generated_file, 'w') { |file| file.write(page.body.encode("ASCII-8BIT").force_encoding("UTF-8")) }
-      outcome = %x(diff ./spec/support/filled-in-form.pdf #{generated_file})
-      raise "PDF document not filled in correctly: #{outcome}" unless outcome == ""
+      pre_generated_pdf = File.join Rails.root, "./spec/support/filled-in-form.pdf"
+      diff_pdfs(pre_generated_pdf, generated_file).should be_blank
     end
   end
 

@@ -34,6 +34,7 @@ def fill_defendant_one
   fill_in 'claim_defendant_one_title', with: data["title"]
   fill_in 'claim_defendant_one_full_name', with: data["full_name"]
   fill_in 'claim_defendant_one_street', with: data["street"]
+  fill_in 'claim_defendant_one_town', with: data["town"]
   fill_in 'claim_defendant_one_postcode', with: data["postcode"]
 end
 
@@ -42,6 +43,7 @@ def fill_defendant_two
   fill_in 'claim_defendant_two_title', with: data["title"]
   fill_in 'claim_defendant_two_full_name', with: data["full_name"]
   fill_in 'claim_defendant_two_street', with: data["street"]
+  fill_in 'claim_defendant_two_town', with: data["town"]
   fill_in 'claim_defendant_two_postcode', with: data["postcode"]
 end
 
