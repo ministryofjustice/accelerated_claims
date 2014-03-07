@@ -1,0 +1,13 @@
+%script#hb-yesno(type='text/x-handlebars-template')
+  %fieldset.striped-choice.full
+    %legend
+      {{question}}{{#if req}}
+      %span.req> *
+      {{/if}}
+    .options
+      .row
+        %input.yesno(type='radio' name='{{id}}' value='yes' id='{{id}}-yes')
+        %label(for='{{id}}-yes') Yes
+      .row
+        %input.yesno(type='radio' name='{{id}}' value='no' id='{{id}}-no')
+        %label(for='{{id}}-no') No
