@@ -3,16 +3,15 @@
   = form.radio_button_fieldset :received, 'Was a money deposit received on or after 6 April 2007?', class: 'striped-choice full js-depend', :data => { :depend => 'money-deposit', :show => 'yes' }
 
   .row.full.information.hide.js-money-deposit
-    %p If <strong>yes</strong>, at the date of service of the Section 21 Notice:
-    %ol.roman
-      %li The deposit was held under a Tenancy Desposit Scheme (TDS) authorised under Part 6 of the Housing Act 2004.
-      %li The initial requirements of the TDS has been complied with in relation to the deposit.
-      %li The claimant had given the defendant and anyone who paid the deposit on behalf of the defendant the prescribed information in relation to the deposit and the operation of the TDS.
+    %p If you answered<strong>yes</strong>:
+    %ul
+      %li the deposit must be in a #{link_to 'government-backed deposit protection scheme', 'https://www.gov.uk/tenancy-deposit-protection/overview', class: 'external', rel: 'external'} and all requirements of the scheme fulfilled. You’ll need to attach a copy of the tenancy deposit scheme certificate to this claim
+      %li the tenant (defendant) must have been given all information about the deposit scheme that #{link_to 'landlords are required to provide', 'https://www.gov.uk/tenancy-deposit-protection/information-landlords-must-give-tenants', class: 'external', rel: 'external'}
 
   .sub-panel.extra.hide.js-money-deposit
-    = form.text_field_row  :ref_number, label: 'Tenancy deposit scheme reference number', class: 'full'
+    = form.text_field_row  :ref_number, label: 'Enter the tenancy deposit scheme reference number', class: 'full'
 
-  = form.radio_button_fieldset :as_property, 'Did you receive deposit in the form of property on or after 6 April 2007?', class: 'striped-choice full js-depend', :data => { :depend => 'property-deposit', :show => 'yes' }
+  = form.radio_button_fieldset :as_property, 'Did you receive a deposit in the form of property on or after 6 April 2007? (This is a deposit that has been taken instead of cash, eg an item of value like jewellery)', class: 'striped-choice full js-depend', :data => { :depend => 'property-deposit', :show => 'yes' }
 
   .row.full.information.hide.js-property-deposit
-    %p If <strong>yes</strong>, at the date of service of the section 21 Notice that the property had been returned to the person from whom it was received.
+    %p If you answered<strong>yes</strong>, this deposit must have been returned before notice was given to the tenant (defendant).
