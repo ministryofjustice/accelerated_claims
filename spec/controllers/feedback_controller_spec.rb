@@ -1,24 +1,36 @@
 require 'spec_helper'
 
 describe FeedbackController do
-  render_views
 
   describe "#new" do
     it "should render the new feedback form" do
       get :new
-      expect(response).to render_template("new")
+      response.should render_template("new")
     end
   end
 
   describe '#create' do
-    it 'should redirect to the homepage' do
-      post :create
-      assert_redirected_to root_path
+    before do
+      ZendeskHelper.stub(:send_to_zendesk).once
+    end
+
+    def do_post
+      post :create, feedback: { email: 'test@lol.biz.info', text: 'feedback', referrer: 'ref' }
+    end
+
+    it 'redirects to the homepage' do
+      do_post
+      response.should redirect_to root_path
+    end
+
+    it 'sends feedback to zendesk' do
+      ZendeskHelper.should_receive(:send_to_zendesk).once
+      do_post
     end
 
     it 'should set the flash message' do
-      post :create
-      assert_equal 'Thanks for your feedback.', flash[:notice]
+      do_post
+      flash[:notice].should == 'Thanks for your feedback.'
     end
   end
 

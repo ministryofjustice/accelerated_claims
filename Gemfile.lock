@@ -275,6 +275,7 @@ DEPENDENCIES
   haml-rails
   jquery-rails
   launchy
+  mail
   moj_boilerplate!
   pdf-forms (= 0.5.5)
   quiet_assets
