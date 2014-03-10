@@ -1,7 +1,7 @@
 /*jslint browser: true, evil: false, plusplus: true, white: true, indent: 2 */
 /*global moj, $, Handlebars */
 
-moj.Modules.yesno = (function() {
+moj.Modules.yesNo = (function() {
   "use strict";
 
   var //functions
