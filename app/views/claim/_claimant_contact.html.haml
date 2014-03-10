@@ -1,11 +1,11 @@
 = claim_form.fields_for claimant_field, claimant_contact, builder: LabellingFormBuilder do |form|
   .sub-panel.extra.rel.js-yesno.yesno-solicitor(data-yesnoquestion='Is this form being completed by a solicitor?' data-yesnoid='yesno-solicitor' data-yesnoreq='true')
     .row
-      = 'If this form is being completed by a <strong>solicitor</strong>'.html_safe
+      = 'Are there any legal costs? (eg if this form is being completed by a <strong>legal representative</strong>)'.html_safe
     = form.text_field_row :legal_costs, label: 'Total legal costs', class: 'legal_costs', input_class: 'pound'
   .sub-panel.extra.rel.js-yesno.yesno-correspondance(data-yesnoquestion='Would you like to give a separate correspondence address?' data-yesnoid='yesno-correspondance' data-yesnoreq='true')
     .row
-      = 'If you would like to provide a separate <strong>correspondence address</strong>'.html_safe
+      = 'Is there a separate <strong>correspondence address</strong>?'.html_safe
     = form.text_field_row :title,    class: '', input_class: 'smalltext'
     = form.text_field_row :full_name, class: 'rel '
     = form.text_area_row  :street,   class: 'rel street'
@@ -13,13 +13,13 @@
     = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'
   .sub-panel.extra.rel.js-yesno.yesno-contactmethods(data-yesnoquestion='Would you like to give other methods of contacting you?' data-yesnoid='yesno-contactmethods' data-yesnoreq='true')
     .row
-      = 'If you would like to give <strong>other methods of contacting you</strong>'.html_safe
+      = 'Are there <strong>other ways to contact you</strong>?'.html_safe
     = form.text_field_row :email, class: 'email'
     = form.text_field_row :phone, class: 'rel phone'
     = form.text_field_row :fax, class: 'rel fax'
     = form.text_field_row :dx_number, label: 'DX number', class: 'rel dx_number'
   .sub-panel.extra.rel.js-yesno.yesno-reference(data-yesnoquestion='Would you like to have your own reference number for this claim?' data-yesnoid='yesno-reference' data-yesnoreq='true')
     .row
-      = 'If you would like to have your own <strong>reference number</strong> for this claim'.html_safe
+      = 'Would you like to add your own <strong>reference number</strong>?'.html_safe
     = form.text_field_row :reference_number, class: 'rel reference_number'
 
