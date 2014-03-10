@@ -1,6 +1,6 @@
 = claim_form.fields_for notice, builder: LabellingFormBuilder do |form|
   .row.full
-    A Notice in writing saying that possession of the premises was required was served upon the defendant.
+    Enter details of when notice was given to the tenant. See more about #{link_to 'giving notice', 'https://www.gov.uk/gaining-possession-of-a-privately-rented-property-let-on-an-assured-shorthold-tenancy#seeking-possession-under-section-21', class: 'external', rel: 'external'}.
 
   = form.text_field_row  :served_by, label: 'Notice served by', class: ''
 
