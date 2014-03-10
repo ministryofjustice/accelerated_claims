@@ -1,13 +1,22 @@
 %script#hb-yesno(type='text/x-handlebars-template')
-  %fieldset.striped-choice.full
-    %legend
-      {{question}}{{#if req}}
-      %span.req> *
-      {{/if}}
-    .options
-      .row
-        %input.yesno(type='radio' name='{{id}}' value='yes' id='{{id}}-yes')
-        %label(for='{{id}}-yes') Yes
-      .row
-        %input.yesno(type='radio' name='{{id}}' value='no' id='{{id}}-no')
-        %label(for='{{id}}-no') No
+  :erb
+    {{#if full}}
+      <fieldset class="striped-choice full">
+    {{else}}
+      <fieldset class="striped-choice">
+    {{/if}}
+
+  %legend
+    {{question}}{{#if req}}
+    %span.req> *
+    {{/if}}
+  
+  .options(data-reverse='{{#if reverse}}true{{else}}false{{/if}}')
+    .row
+      %input.yesno(type='radio' name='{{id}}' value='yes' id='{{id}}-yes')
+      %label(for='{{id}}-yes') Yes
+    .row
+      %input.yesno(type='radio' name='{{id}}' value='no' id='{{id}}-no')
+      %label(for='{{id}}-no') No
+  :erb
+    </fieldset>

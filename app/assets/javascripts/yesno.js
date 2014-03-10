@@ -44,13 +44,14 @@ moj.Modules.yesno = (function() {
 
     source = $( '#hb-yesno' ).html();
     template = Handlebars.compile( source );
-    context = { question: $el.data( 'yesnoquestion' ), id: $el.data( 'yesnoid' ), req: $el.data( 'yesnoreq' ), };
+    context = { question: $el.data( 'yesnoquestion' ), id: $el.data( 'yesnoid' ), req: $el.data( 'yesnoreq' ), full: 'true' };
 
     $el.before( template( context ) );
   };
 
   yesnoClick = function( $el ) {
-    if( $el.val() === 'yes' ) {
+    var reverse = $el.closest( '.options' ).data( 'reverse' );
+    if( ( $el.val() === 'yes' && !reverse ) || ( $el.val() === 'no' && reverse ) ) {
       $el.closest( 'fieldset' ).next().show();
     } else {
       $el.closest( 'fieldset' ).next().hide().find( 'input[type=text], textarea' ).val( '' );
