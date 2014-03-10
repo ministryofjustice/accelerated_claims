@@ -1,7 +1,7 @@
 /*jslint browser: true, evil: false, plusplus: true, white: true, indent: 2 */
 /*global moj, $ */
 
-moj.Modules.showhide = (function() {
+moj.Modules.showHide = (function() {
   "use strict";
 
   var //functions
