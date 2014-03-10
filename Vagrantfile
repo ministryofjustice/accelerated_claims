@@ -9,12 +9,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 80, host: 8080
   config.vm.network :private_network, ip: "192.168.33.10"
 
+  config.vm.provider "virtualbox" do |vb|
+    vb.customize ["modifyvm", :id, "--memory", "1024"]
+  end
+
   config.vm.synced_folder "../civil-claims-deploy/providers", "/srv/providers/"
   config.vm.synced_folder "../civil-claims-deploy/salt", "/srv/salt/"
   config.vm.synced_folder "../config/projects/civil-claims/pillar", "/srv/pillar/"
-
-  command = "mkdir -p /etc/salt && cp /srv/salt/minions/vagrant/templates/minion /etc/salt/minion"
-  config.vm.provision :shell, :inline => command
 
   config.vm.provision :salt do |salt|
 
@@ -23,7 +24,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     salt.minion_key     = minion_config_dir + 'key'
     salt.minion_pub     = minion_config_dir + 'key.pub'
 
-    salt.install_master = true
+    salt.install_master = false
     salt.seed_master = {vagrant: salt.minion_pub}
 
     # Pass extra flags to bootstrap script
@@ -34,10 +35,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
   
   hacks = [
+    'mkdir -p /etc/salt',
+    'cp /srv/salt/minions/vagrant/templates/minion /etc/salt/minion',
     'salt-key -A --yes || true',
     'service salt-minion restart',
     'sleep 5', # This might not be needed, but why rush these things?
-    "salt-call state.highstate --retcode-passthrough",
+    "salt-call state.highstate --local --retcode-passthrough",
   ]
   hacks.each do |cmd|
     config.vm.provision :shell, inline: cmd
