@@ -14,6 +14,10 @@ cd accelerated_claim
 bundle install
 export PDFTK=$(which pdftk)
 export REDIS_STORE=redis://localhost:6379/1
+
+export ZENDESK_USERNAME=[username]
+export ZENDESK_TOKEN=[token]
+export ANONYMOUS_PLACEHOLDER_EMAIL=[noreply-email]
 rails s
 ```
 
