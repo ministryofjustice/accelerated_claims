@@ -5,8 +5,8 @@ ZENDESK_CLIENT = ZendeskAPI::Client.new do |config|
   config.token = ENV['ZENDESK_TOKEN']
   config.retry = true
 
-  require 'logger'
-  config.logger = Logger.new("log/zendesk.log")
-  config.logger.level = Logger::DEBUG
+  # require 'logger'
+  # config.logger = Logger.new("log/zendesk.log")
+  # config.logger.level = Logger::DEBUG
 end
 
