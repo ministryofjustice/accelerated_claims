@@ -11,20 +11,20 @@ moj.Modules.claimantAddress = (function() {
       setupAddressBlock,
 
       //elements
-      addressBlocks
+      $addressBlocks
       ;
 
   init = function() {
     cacheEls();
     bindEvents();
 
-    $( addressBlocks ).each( function() {
+    $addressBlocks.each( function() {
       setupAddressBlock( $( this ) );
     } );
   };
 
   cacheEls = function() {
-    addressBlocks = $( '.same-address' );
+    $addressBlocks = $( '.same-address' );
   };
 
   bindEvents = function() {
