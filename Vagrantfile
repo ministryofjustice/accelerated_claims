@@ -13,8 +13,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder "../civil-claims-deploy/salt", "/srv/salt/"
   config.vm.synced_folder "../config/projects/civil-claims/pillar", "/srv/pillar/"
 
-  # command = "mkdir -p /etc/salt && cp /srv/salt/minions/vagrant/templates/minion /etc/salt/minion"
-  # config.vm.provision :shell, :inline => command
+  command = "mkdir -p /etc/salt && cp /srv/salt/minions/vagrant/templates/minion /etc/salt/minion"
+  config.vm.provision :shell, :inline => command
 
   config.vm.provision :salt do |salt|
 
@@ -29,17 +29,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Pass extra flags to bootstrap script
     salt.bootstrap_options = "-D"
 
-    salt.run_highstate = true
-
     salt.verbose = true
 
-    # fails. to make it work:
-
-    # vagrant ssh
-    # sudo salt-key -D
-    # sudo salt-key -A
-    # sudo service salt-minion start
-    # sudo salt '*' state.highstate -l all
-
   end
+  
+  hacks = [
+    'salt-key -A --yes || true',
+    'service salt-minion restart',
+    'sleep 5', # This might not be needed, but why rush these things?
+    "salt-call state.highstate --retcode-passthrough",
+  ]
+  hacks.each do |cmd|
+    config.vm.provision :shell, inline: cmd
+  end
+  
+  
 end
