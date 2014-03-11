@@ -26,7 +26,7 @@ rails s
 There's an experimental VM provisioner to create a local development environment. It's hoped this will be useful as a place to test 
 deployment and infrastructure configuration, and to test against the application in a production-like environment.
 
-To get started, you'll need to have access to the config repo.
+To get started, you'll need to have [vagrant](http://www.vagrantup.com/) and [virtualbox](https://www.virtualbox.org/) (along with the 'VirtualBox Extension Pack' from the virtualbox download page) installed and access to the config repo.
 
 ```
 git clone git@github.com:ministryofjustice/accelerated_claims.git
