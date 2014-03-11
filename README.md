@@ -21,6 +21,35 @@ export ANONYMOUS_PLACEHOLDER_EMAIL=[noreply-email]
 rails s
 ```
 
+## Using the Vagrant development environment
+
+There's an experimental VM provisioner to create a local development environment. It's hoped this will be useful as a place to test 
+deployment and infrastructure configuration, and to test against the application in a production-like environment.
+
+To get started, you'll need to have [vagrant](http://www.vagrantup.com/) and [virtualbox](https://www.virtualbox.org/) (along with the 'VirtualBox Extension Pack' from the virtualbox download page) installed and access to the config repo.
+
+```
+git clone git@github.com:ministryofjustice/accelerated_claims.git
+git clone git@github.com:ministryofjustice/civil-claims-deploy.git
+git clone <config git repo>
+cd accelerated_claims
+vagrant up --provision
+```
+This will take a few minutes, so now's a good time to make a cup of tea. 
+
+Once it finishes, you will be able to see the app landing page on [http://localhost:8080/accelerated](http://localhost:8080/accelerated)
+
+Reprovision using the `vagrant provision` command, or completely rebuild with:
+```
+vagrant destroy -f
+cd ..
+cd config; git pull; cd ..
+cd civil-claims-deploy; git pull; cd ..
+cd accelerated_claims
+vagrant up --provision
+```
+
+
 ## Production deployment
 
 Please remember to set the environment **SECRET_KEY_BASE** variable.
