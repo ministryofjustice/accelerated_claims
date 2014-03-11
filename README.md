@@ -41,7 +41,7 @@ Once it finishes, you will be able to see the app landing page on [http://localh
 
 Reprovision using the `vagrant provision` command, or completely rebuild with:
 ```
-vagrant destroy -y
+vagrant destroy -f
 cd ..
 cd config; git pull; cd ..
 cd civil-claims-deploy; git pull; cd ..
