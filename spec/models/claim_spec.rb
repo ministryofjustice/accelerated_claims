@@ -10,7 +10,7 @@ describe Claim do
 
     it 'should have submodels' do
       %w(property claimant_one claimant_two notice license deposit
-         possession order defendant_one defendant_two).each do |attr|
+         fee possession order defendant_one defendant_two).each do |attr|
         expect(@claim).to respond_to attr
       end
     end

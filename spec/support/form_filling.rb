@@ -139,3 +139,7 @@ def fill_claimant_contact_details
     fill_in "claim_claimant_contact_#{val}", with: data["#{val}"]
   end
 end
+
+def fill_court_fee
+  fill_in 'claim_fee_court_fee', with: claim_post_data["claim"]["fee"]["court_fee"]
+end
