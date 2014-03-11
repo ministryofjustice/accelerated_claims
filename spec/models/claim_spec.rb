@@ -37,8 +37,12 @@ describe Claim do
         hash
       end
 
-      it 'should not return the total cost' do
-        @claim.as_json.should_not include "total_cost"
+      it 'should return the total cost' do
+        @claim.as_json.should include "total_cost"
+      end
+
+      it 'should match total fee' do
+        @claim.as_json["total_cost"].should eq @claim.as_json["fee_court_fee"]
       end
     end
   end

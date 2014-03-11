@@ -47,7 +47,9 @@ class Claim < BaseClass
   private
 
   def add_fee_and_costs hash
-    unless hash["claimant_contact_legal_costs"].blank?
+    if hash["claimant_contact_legal_costs"].blank?
+      hash.merge!({ "total_cost" => "#{hash["fee_court_fee"]}" })
+    else
       cost = ((hash["fee_court_fee"].to_f * 100) + (hash["claimant_contact_legal_costs"].to_f * 100)) / 100
       hash.merge!({ "total_cost" => "#{cost}" })
     end
