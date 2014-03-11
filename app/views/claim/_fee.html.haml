@@ -1,0 +1,5 @@
+= claim_form.fields_for fee, builder: LabellingFormBuilder do |form|
+  = form.text_field_row  :court_fee, class: 'fee'
+
+  .row.full.information
+    %p To find out what the court fee is for this type of claim see the #{link_to 'fees list', 'http://www.kentfms.co.uk/upload/EX50.pdf', class: 'external', rel: 'external'}

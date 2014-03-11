@@ -113,7 +113,11 @@ def claim_post_data
         "assured_shorthold_tenancy_notice_served_date(3i)" => "1",
         "assured_shorthold_tenancy_notice_served_date(2i)" => "12",
         "assured_shorthold_tenancy_notice_served_date(1i)" => "2013"
-      }
+      },
+      "fee" =>
+      {
+        "court_fee" => "175.00"
+      },
     }
   }
 end
@@ -121,7 +125,7 @@ end
 
 def claim_formatted_data
   {
-    "court_fee" => "175.00",
+    "fee_court_fee" => "175.00",
     "claimant_one_address" => "Mr John Smith\n2 Brown St\nCwmbran",
     "claimant_one_postcode1" => "SW1W",
     "claimant_one_postcode2" => "0LU",
