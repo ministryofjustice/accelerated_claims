@@ -40,7 +40,14 @@ This will take a few minutes, so now's a good time to make a cup of tea.
 Once it finishes, you will be able to see the app landing page on [http://localhost:8080/accelerated](http://localhost:8080/accelerated)
 
 Reprovision using the `vagrant provision` command, or completely rebuild with:
-`vagrant destroy -y && vagrant up --provision`
+```
+vagrant destroy -y
+cd ..
+cd config; git pull; cd ..
+cd civil-claims-deploy; git pull; cd ..
+cd accelerated_claims
+vagrant up --provision
+```
 
 
 ## Production deployment
