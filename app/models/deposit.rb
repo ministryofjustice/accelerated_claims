@@ -12,12 +12,7 @@ class Deposit < BaseClass
 
   def as_json
     json = super
-    json.delete('information_given_date')
-    json.merge({
-      "information_given_date_day" => day(information_given_date),
-      "information_given_date_month" => month(information_given_date),
-      "information_given_date_year" => year(information_given_date)
-    }
-    )
+    json = split_date :information_given_date, json
+    json
   end
 end

@@ -10,18 +10,9 @@ class Notice < BaseClass
   validates :expiry_date, presence: { message: 'must be entered' }
 
   def as_json
-    day = '%d'
-    month = '%m'
-    year = '%Y'
-
-    {
-     "served_by" => "#{served_by}",
-     "date_served_day" => "#{date_served.strftime(day)}",
-     "date_served_month" => "#{date_served.strftime(month)}",
-     "date_served_year" => "#{date_served.strftime(year)}",
-     "expiry_date_day" => "#{expiry_date.strftime(day)}",
-     "expiry_date_month" => "#{expiry_date.strftime(month)}",
-     "expiry_date_year" => "#{expiry_date.strftime(year)}"
-    }
+    json = super
+    json = split_date :date_served, json
+    json = split_date :expiry_date, json
+    json
   end
 end
