@@ -3,7 +3,7 @@
   = form.radio_button_fieldset :received, 'Was a money deposit received on or after 6 April 2007?', class: 'striped-choice full js-depend', :data => { :depend => 'money-deposit', :show => 'yes' }
 
   .row.full.information.hide.js-money-deposit
-    %p If you answered<strong>yes</strong>:
+    %p If you answered<strong> yes</strong>:
     %ul
       %li the deposit must be in a #{link_to 'government-backed deposit protection scheme', 'https://www.gov.uk/tenancy-deposit-protection/overview', class: 'external', rel: 'external'} and all requirements of the scheme fulfilled.
       %li the tenant (defendant) must have been given all information about the deposit scheme that #{link_to 'landlords are required to provide', 'https://www.gov.uk/tenancy-deposit-protection/information-landlords-must-give-tenants', class: 'external', rel: 'external'}
@@ -14,4 +14,4 @@
   = form.radio_button_fieldset :as_property, 'Did you receive a deposit in the form of property on or after 6 April 2007? (This is a deposit that has been taken instead of cash, eg an item of value like jewellery)', class: 'striped-choice full js-depend', :data => { :depend => 'property-deposit', :show => 'yes' }
 
   .row.full.information.hide.js-property-deposit
-    %p If you answered<strong>yes</strong>, this deposit must have been returned before notice was given to the tenant (defendant).
+    %p If you answered<strong> yes</strong>, this deposit must have been returned before notice was given to the tenant (defendant).
