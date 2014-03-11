@@ -17,3 +17,6 @@
 
 # damnit
 .DS_Store
+
+# local dev artifacts
+.vagrant
