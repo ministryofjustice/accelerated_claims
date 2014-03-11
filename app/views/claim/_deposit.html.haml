@@ -9,6 +9,7 @@
       %li the tenant (defendant) must have been given all information about the deposit scheme that #{link_to 'landlords are required to provide', 'https://www.gov.uk/tenancy-deposit-protection/information-landlords-must-give-tenants', class: 'external', rel: 'external'}
 
   .sub-panel.extra.hide.js-money-deposit
+    = form.date_select_field_set :information_given_date, 'Enter the date when this information was given to the defendent (tenant)', class: 'date-picker full', date_select_options: @date_select_options
     = form.text_field_row  :ref_number, label: 'Enter the tenancy deposit scheme reference number', class: 'full'
 
   = form.radio_button_fieldset :as_property, 'Did you receive a deposit in the form of property on or after 6 April 2007? (This is a deposit that has been taken instead of cash, eg an item of value like jewellery)', class: 'striped-choice full js-depend', :data => { :depend => 'property-deposit', :show => 'yes' }
