@@ -1,17 +1,17 @@
 /*jslint browser: true, evil: false, plusplus: true, white: true, indent: 2 */
 /*global moj, $ */
 
-moj.Modules.externalLinks = (function() {
+moj.Modules.externallinks = (function() {
   "use strict";
 
   var //functions
       init,
       cacheEls,
       bindEvents,
-      clickExtLink,
+      clickPdfLink,
 
       //elements
-      extLinks
+      $pdfLink
       ;
 
   init = function() {
@@ -20,17 +20,17 @@ moj.Modules.externalLinks = (function() {
   };
 
   cacheEls = function() {
-    extLinks = $( 'a[rel=external]' );
+    $pdfLink = $( 'a.pdf-download' );
   };
 
   bindEvents = function() {
-    $( extLinks ).on( 'click', function( e ) {
+    $pdfLink.on( 'click', function( e ) {
       e.preventDefault();
-      clickExtLink( $( e.target ) );
+      clickPdfLink( $( e.target ) );
     } );
   };
 
-  clickExtLink = function( $el ) {
+  clickPdfLink = function( $el ) {
     window.open( $el.attr( 'href' ), '_blank' );
   };
 
