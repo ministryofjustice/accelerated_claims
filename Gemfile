@@ -23,9 +23,9 @@ gem 'unicorn'
 
 # Gov.uk styles
 gem 'govuk_template', '0.3.8'
-gem 'govuk_frontend_toolkit', github: 'ministryofjustice/govuk_frontend_toolkit_gem', branch: 'asset-submodule'
+gem 'govuk_frontend_toolkit', git: 'https://github.com/ministryofjustice/govuk_frontend_toolkit_gem.git', branch: 'asset-submodule'
 # MOJ styles
-gem 'moj_boilerplate', github: 'ministryofjustice/moj_boilerplate', tag: 'v0.6.2'
+gem 'moj_boilerplate', git: 'https://github.com/ministryofjustice/moj_boilerplate.git', tag: 'v0.6.2'
 
 # required for feedback form
 gem 'zendesk_api'
