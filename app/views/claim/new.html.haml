@@ -2,7 +2,7 @@
 = render partial: 'shared/flash'
 = render partial: 'shared/error_messages'
 
-= form_for :claim, url: submission_path, :html => { :method => :post } do |claim_form|
+= form_for :claim, url: submission_path, :html => { :method => :post, :id => 'claimForm' } do |claim_form|
   %section
     %span.right
       %span.req> *
@@ -14,11 +14,11 @@
   %section
     %h3.section-header Claimant (landlord)
     .moj-panel
-      .sub-panel.claimant
+      .sub-panel.claimant#claimant_one
         %h4 Claimant 1
         = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_one}
       .row.divider
-      .sub-panel.claimant.same-address
+      .sub-panel.claimant.same-address#claimant_two
         %h4.section-header Claimant 2
         = render partial: 'claimant', object: @claim.claimant_two, locals: { claim_form: claim_form, claimant_field: :claimant_two}
       .row.divider
@@ -74,7 +74,7 @@
 
   %section
     .action-buttons.cf
-      %button.button.primary.large.chevron.left{name: 'Complete form', value: ''} Complete form
+      %button.button.primary.large.chevron.left#submit{name: 'Complete form', value: ''} Complete form
 
 
 / handlebars templates

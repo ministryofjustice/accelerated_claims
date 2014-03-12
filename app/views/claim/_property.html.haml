@@ -1,7 +1,8 @@
 = claim_form.fields_for property, builder: LabellingFormBuilder do |form|
-  = form.text_area_row  :street, class: 'street'
-  = form.text_field_row :town, class: 'rel town'
-  = form.text_field_row :postcode, class: 'rel postcode'
+  .sub-panel.address#property
+    = form.text_area_row  :street, class: 'street'
+    = form.text_field_row :town, class: 'rel town'
+    = form.text_field_row :postcode, class: 'rel postcode'
 
   = form.radio_button_fieldset :house, 'Type of property', class: 'striped-choice', choice: {'House' => 'Yes', 'Part of a house' => 'No'}
 
