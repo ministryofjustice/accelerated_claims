@@ -18,5 +18,8 @@
 # damnit
 .DS_Store
 
-# local dev artifacts
+# dev artifacts
 .vagrant
+/public/assets
+/run_ac_front.sh
+/vendor/bundler
