@@ -9,6 +9,9 @@ casper.start(url + '/new', function() {
 
   casper.test.comment('Testing defendant 2 address show/hide');
   this.test.assertNotVisible('#defendant_two .address');
+  this.evaluate(function(){
+    $('#multiplePanelSelector_defendants').val('2').trigger('change');
+  });
   this.click('#defendant2address-no');
   this.test.assertVisible('#defendant_two .address');
 
