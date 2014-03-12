@@ -63,14 +63,11 @@
       = render partial: 'deposit', object: @claim.deposit, locals: { claim_form: claim_form }
 
   %section
-    %h3.section-header Postponement of possession
-    .moj-panel
-      = render partial: 'possession', object: @claim.possession, locals: { claim_form: claim_form }
-
-  %section
-    %h3.section-header The order
+    %h3.section-header At court
     .moj-panel
       = render partial: 'order', object: @claim.order, locals: { claim_form: claim_form }
+      = render partial: 'possession', object: @claim.possession, locals: { claim_form: claim_form }
+      = render partial: 'fee', object: @claim.fee, locals: { claim_form: claim_form }
 
   %section
     .action-buttons.cf

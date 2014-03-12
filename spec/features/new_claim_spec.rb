@@ -19,6 +19,7 @@ feature "New claim application" do
       fill_deposit
       fill_postponement
       fill_order
+      fill_court_fee
       click_button 'Complete form'
 
       expect(page).to have_text('Your accelerated possession form is ready to print')
@@ -44,6 +45,7 @@ feature "New claim application" do
       fill_deposit
       fill_postponement
       fill_order
+      fill_court_fee
       click_button 'Complete form'
       expect(page).to have_text('Your accelerated possession form is ready to print')
     end

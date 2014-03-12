@@ -44,16 +44,25 @@ describe Defendant do
   end
 
   describe "#as_json" do
-    let(:desired_format) do
-      {
-        "address" => "Mr John Major\nSesame Street\nLondon",
-        "postcode1" => "SW1X",
-        "postcode2" => "2PT"
-      }
+    context "when the model is not blank" do
+      let(:desired_format) do
+        {
+          "address" => "Mr John Major\nSesame Street\nLondon",
+          "postcode1" => "SW1X",
+          "postcode2" => "2PT"
+        }
+      end
+      it "should generate the correct JSON" do
+        defendant.as_json.should eq desired_format
+      end
     end
 
-    it "should generate the correct JSON" do
-      defendant.as_json.should eq desired_format
+    context "when the model is blank" do
+      let(:defendant) { Defendant.new() }
+
+      it "should generate a blank JSON" do
+        defendant.as_json.should eq Hash.new
+      end
     end
   end
 end
