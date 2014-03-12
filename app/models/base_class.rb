@@ -24,7 +24,7 @@ class BaseClass
   def date_string(date_attribute, strftime_format)
     date_attribute.blank? ? '' : date_attribute.strftime(strftime_format)
   end
-  
+
   def day(date_attribute)
     date_string(date_attribute, '%d')
   end
@@ -35,6 +35,18 @@ class BaseClass
 
   def year(date_attribute)
     date_string(date_attribute, '%Y')
+  end
+
+  def split_date field, json
+    json.delete(field.to_s)
+    date = send(field.to_sym)
+
+    json.merge!({
+      "#{field}_day" => day(date),
+      "#{field}_month" => month(date),
+      "#{field}_year" => year(date)
+    })
+    json
   end
 
   # this is pretty grim.

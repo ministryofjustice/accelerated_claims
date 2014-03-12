@@ -17,23 +17,13 @@ class Tenancy < BaseClass
   end
 
   def as_json
-    day = '%d'
-    month = '%m'
-    year = '%Y'
-
-    {
-      "start_date_day" => "#{start_date.strftime(day)}",
-      "start_date_month" => "#{start_date.strftime(month)}",
-      "start_date_year" => "#{start_date.strftime(year)}",
-      "latest_agreement_date_day" => day(latest_agreement_date),
-      "latest_agreement_date_month" => month(latest_agreement_date),
-      "latest_agreement_date_year" => year(latest_agreement_date),
-      "agreement_reissued_for_same_property" => reissued_for_same_property,
-      "agreement_reissued_for_same_landlord_and_tenant" => reissued_for_same_landlord_and_tenant,
-      'assured_shorthold_tenancy_notice_served_by' => assured_shorthold_tenancy_notice_served_by,
-      'assured_shorthold_tenancy_notice_served_date_day' => day(assured_shorthold_tenancy_notice_served_date),
-      'assured_shorthold_tenancy_notice_served_date_month' => month(assured_shorthold_tenancy_notice_served_date),
-      'assured_shorthold_tenancy_notice_served_date_year' => year(assured_shorthold_tenancy_notice_served_date)
-    }
+    json = super
+    json.delete('demoted_tenancy')
+    json = split_date :start_date, json
+    json = split_date :latest_agreement_date, json
+    json = split_date :assured_shorthold_tenancy_notice_served_date, json
+    json['agreement_reissued_for_same_property'] = json.delete('reissued_for_same_property')
+    json['agreement_reissued_for_same_landlord_and_tenant'] = json.delete('reissued_for_same_landlord_and_tenant')
+    json
   end
 end
