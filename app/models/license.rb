@@ -1,46 +1,58 @@
 class License < BaseClass
 
   attr_accessor :multiple_occupation
+  attr_accessor :license_issued_under
+  attr_accessor :license_issued_by
+  attr_accessor :license_issued_date
+
   validates :multiple_occupation, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
 
-  attr_accessor :multiple_occupation_authority
-  validate :authority_for_multiple_occupation
-
-  attr_accessor :multiple_occupation_date
-
-  attr_accessor :housing_act
-  validates :housing_act, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
-
-  attr_accessor :housing_act_authority
-  validate :authority_for_housing_act
-
-  attr_accessor :housing_act_date
-
-  def authority_for_multiple_occupation
-    if multiple_occupation.present? && multiple_occupation == 'Yes'
-      errors.add(:multiple_occupation_authority, "can't be blank") if multiple_occupation_authority.blank?
-    end
+  with_options if: :in_multiple_occupation? do |license|
+    license.validates :license_issued_under, presence: { message: 'must be selected' }, inclusion: { in: ['Part2', 'Part3'] }
+    license.validates :license_issued_by, presence: { message: "can't be blank" }
+    license.validates :license_issued_date, presence: { message: "can't be blank" }
   end
 
-  def authority_for_housing_act
-    if housing_act.present? && housing_act == 'Yes'
-      errors.add(:housing_act_authority, "can't be blank") if housing_act_authority.blank?
-    end
+  def in_multiple_occupation?
+    multiple_occupation.to_s[/Yes/] ? true : false
   end
 
   def as_json
-    {
-      "authority" => multiple_occupation_authority,
-      "hmo" => multiple_occupation,
-      "hmo_day" => day(multiple_occupation_date),
-      "hmo_month" => month(multiple_occupation_date),
-      "hmo_year" => year(multiple_occupation_date),
-      "housing_act" => housing_act,
-      "housing_act_authority" => housing_act_authority,
-      "housing_act_date_day" => day(housing_act_date),
-      "housing_act_date_month" => month(housing_act_date),
-      "housing_act_date_year" => year(housing_act_date)
+    default_values = {
+        "hmo" => 'No',
+        "authority" => '',
+        "hmo_day" => '',
+        "hmo_month" => '',
+        "hmo_year" => '',
+        "housing_act" => 'No',
+        "housing_act_authority" => '',
+        "housing_act_date_day" => '',
+        "housing_act_date_month" => '',
+        "housing_act_date_year" => ''
     }
+
+    if in_multiple_occupation?
+      case license_issued_under
+      when 'Part2'
+        default_values.merge({
+          "hmo" => 'Yes',
+          "authority" => license_issued_by,
+          "hmo_day" => day(license_issued_date),
+          "hmo_month" => month(license_issued_date),
+          "hmo_year" => year(license_issued_date)
+        })
+      when 'Part3'
+        default_values.merge({
+          "housing_act" => 'Yes',
+          "housing_act_authority" => license_issued_by,
+          "housing_act_date_day" => day(license_issued_date),
+          "housing_act_date_month" => month(license_issued_date),
+          "housing_act_date_year" => year(license_issued_date)
+        })
+      end
+    else
+      default_values
+    end
   end
 
 end
