@@ -12,7 +12,7 @@ moj.Modules.multiplePersons = (function() {
       showMultiples,
 
       //elements
-      multiples
+      $multiples
       ;
 
   init = function() {
@@ -23,7 +23,7 @@ moj.Modules.multiplePersons = (function() {
   };
 
   cacheEls = function() {
-    multiples = $( '.has-multiple' );
+    $multiples = $( '.has-multiple' );
   };
 
   bindEvents = function() {
@@ -44,13 +44,13 @@ moj.Modules.multiplePersons = (function() {
         template,
         context;
 
-    if( multiples.length > 0 ) {
+    if( $multiples.length > 0 ) {
       source = $( '#multiple-selector' ).html();
       template = Handlebars.compile( source );
 
-      for( x = 0; x < multiples.length; x++ ) {
+      for( x = 0; x < $multiples.length; x++ ) {
         childItemsArray = [];
-        $panel = $( multiples[ x ] );
+        $panel = $multiples.eq( x );
         childItemClass = $panel.data( 'multiple' );
         $childItems = $panel.find( '.' + childItemClass );
         $childItems.addClass( 'rel' );
