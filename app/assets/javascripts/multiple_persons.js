@@ -92,6 +92,12 @@ moj.Modules.multiplePersons = (function() {
         $childItems.eq( x ).prev( '.divider' ).show();
       }
     }
+
+    if( show > 1 ) {
+      $childItems.find( 'h4' ).show();
+    } else {
+      $childItems.find( 'h4' ).hide(); 
+    }
   };
 
   // public
