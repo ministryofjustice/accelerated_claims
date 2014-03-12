@@ -9,7 +9,6 @@ moj.Modules.jsAlt = (function() {
   var //functions
       init,
       cacheEls,
-      bindEvents,
       replaceText,
 
       //elements
@@ -18,7 +17,6 @@ moj.Modules.jsAlt = (function() {
 
   init = function() {
     cacheEls();
-    bindEvents();
 
     $jsAlts.each( function() {
       replaceText( $( this ) );
@@ -27,10 +25,6 @@ moj.Modules.jsAlt = (function() {
 
   cacheEls = function() {
     $jsAlts = $( '.nonjs' );
-  };
-
-  bindEvents = function() {
-
   };
 
   replaceText = function( $el ) {
