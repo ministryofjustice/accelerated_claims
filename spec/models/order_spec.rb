@@ -30,6 +30,11 @@ describe Order do
     it { should_not be_valid }
   end
 
+  context "when cost No" do
+    let(:cost) { 'No' }
+    it { should be_valid }
+  end
+
   describe "#as_json" do
     let(:desired_format) do
       {
