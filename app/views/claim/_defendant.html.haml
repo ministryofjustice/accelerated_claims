@@ -1,5 +1,5 @@
 = claim_form.fields_for defendant_field, defendant, builder: LabellingFormBuilder do |form|
-  = form.text_field_row :title, class: '', input_class: 'smalltext'
+  = form.text_field_row :title, class: 'title', input_class: 'smalltext'
   = form.text_field_row :full_name, class: 'rel'
   .sub-panel.extra.address
     .row.caption
