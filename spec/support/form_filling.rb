@@ -89,13 +89,13 @@ end
 def fill_licences
   data = claim_post_data["claim"]["license"]
   choose 'claim_license_multiple_occupation_yes'
-  choose 'claim_license_license_issued_under_part2'
+  choose 'claim_license_issued_under_act_part_part2'
 
-  fill_in 'claim_license_license_issued_by', with: data["license_issued_by"]
+  fill_in 'claim_license_issued_by', with: data["issued_by"]
 
-  select(data["license_issued_date(3i)"], :from => 'claim_license_license_issued_date_3i')
-  select(get_month(data["license_issued_date(2i)"]), :from => 'claim_license_license_issued_date_2i')
-  select(data["license_issued_date(1i)"], :from => 'claim_license_license_issued_date_1i')
+  select(data["issued_date(3i)"], :from => 'claim_license_issued_date_3i')
+  select(get_month(data["issued_date(2i)"]), :from => 'claim_license_issued_date_2i')
+  select(data["issued_date(1i)"], :from => 'claim_license_issued_date_1i')
 end
 
 def fill_deposit

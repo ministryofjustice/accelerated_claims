@@ -31,6 +31,7 @@ class ClaimController < ApplicationController
     @claim = Claim.new(session[:claim])
 
     if @claim.valid?
+      # binding.pry
       pdf = PDFDocument.new(@claim.as_json).fill
       send_file(pdf, filename: "accelerated-claim.pdf", disposition: "inline", type: "application/pdf")
     else

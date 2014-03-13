@@ -1,16 +1,16 @@
 class License < BaseClass
 
   attr_accessor :multiple_occupation
-  attr_accessor :license_issued_under
-  attr_accessor :license_issued_by
-  attr_accessor :license_issued_date
+  attr_accessor :issued_under_act_part
+  attr_accessor :issued_by
+  attr_accessor :issued_date
 
   validates :multiple_occupation, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
 
   with_options if: :in_multiple_occupation? do |license|
-    license.validates :license_issued_under, presence: { message: 'must be selected' }, inclusion: { in: ['Part2', 'Part3'] }
-    license.validates :license_issued_by, presence: { message: "can't be blank" }
-    license.validates :license_issued_date, presence: { message: "can't be blank" }
+    license.validates :issued_under_act_part, presence: { message: 'must be selected' }, inclusion: { in: ['Part2', 'Part3'] }
+    license.validates :issued_by, presence: { message: "can't be blank" }
+    license.validates :issued_date, presence: { message: "can't be blank" }
   end
 
   def in_multiple_occupation?
@@ -32,22 +32,22 @@ class License < BaseClass
     }
 
     if in_multiple_occupation?
-      case license_issued_under
+      case issued_under_act_part
       when 'Part2'
         default_values.merge({
           "hmo" => 'Yes',
-          "authority" => license_issued_by,
-          "hmo_day" => day(license_issued_date),
-          "hmo_month" => month(license_issued_date),
-          "hmo_year" => year(license_issued_date)
+          "authority" => issued_by,
+          "hmo_day" => day(issued_date),
+          "hmo_month" => month(issued_date),
+          "hmo_year" => year(issued_date)
         })
       when 'Part3'
         default_values.merge({
           "housing_act" => 'Yes',
-          "housing_act_authority" => license_issued_by,
-          "housing_act_date_day" => day(license_issued_date),
-          "housing_act_date_month" => month(license_issued_date),
-          "housing_act_date_year" => year(license_issued_date)
+          "housing_act_authority" => issued_by,
+          "housing_act_date_day" => day(issued_date),
+          "housing_act_date_month" => month(issued_date),
+          "housing_act_date_year" => year(issued_date)
         })
       end
     else

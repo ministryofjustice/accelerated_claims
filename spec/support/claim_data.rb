@@ -50,10 +50,10 @@ def claim_post_data
       "license" =>
       {
         'multiple_occupation' => 'Yes',
-        'license_issued_under' => 'Part2',
-        'license_issued_by' => 'Great authority'
+        'issued_under_act_part' => 'Part2',
+        'issued_by' => 'Great authority'
       }.merge(
-        form_date('license_issued_date', Date.parse('2014-02-02'))
+        form_date('issued_date', Date.parse('2014-02-02'))
       ),
       "deposit" =>
       {
