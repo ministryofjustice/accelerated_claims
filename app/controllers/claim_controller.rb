@@ -29,8 +29,13 @@ class ClaimController < ApplicationController
 
   def download
     @claim = Claim.new(session[:claim])
-    pdf = PDFDocument.new(@claim.as_json).fill
-    send_file(pdf, filename: "accelerated-claim.pdf", disposition: "inline", type: "application/pdf")
+
+    if @claim.valid?
+      pdf = PDFDocument.new(@claim.as_json).fill
+      send_file(pdf, filename: "accelerated-claim.pdf", disposition: "inline", type: "application/pdf")
+    else
+      redirect_to :new
+    end
   end
 
   def submission
