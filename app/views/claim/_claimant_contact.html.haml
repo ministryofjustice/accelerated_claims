@@ -6,7 +6,7 @@
   .sub-panel.extra.rel.js-yesno.yesno-correspondance(data-yesnoid='yesno-correspondance' data-yesnoreq='true')
     .row
       = 'Is there a separate <strong>correspondence address</strong>?'.html_safe
-    = form.text_field_row :title,    class: '', input_class: 'smalltext'
+    = form.text_field_row :title,    class: 'title', input_class: 'smalltext'
     = form.text_field_row :full_name, class: 'rel '
     = form.text_area_row  :street,   class: 'rel street'
     = form.text_field_row :town,     class: 'rel town'
