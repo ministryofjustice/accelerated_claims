@@ -1,4 +1,16 @@
 - content_for :page_title do
   = "#{@page_title} - "
 
+- content_for :stylesheets do
+  = stylesheet_link_tag "application", media: "all"
+
+- content_for :javascripts do
+  = javascript_include_tag "application"
+
+- content_for :head do
+  = csrf_meta_tag
+
+- content_for :cookie_message do
+  %p GOV.UK uses cookies to make the site simpler. #{link_to 'Find out more about cookies', 'https://www.gov.uk/help/cookies'}
+
 = render template: "layouts/moj_template"

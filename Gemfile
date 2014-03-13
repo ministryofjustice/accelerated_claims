@@ -22,10 +22,9 @@ gem 'jquery-rails'
 gem 'unicorn'
 
 # Gov.uk styles
-gem 'govuk_template', '0.3.8'
-gem 'govuk_frontend_toolkit', git: 'https://github.com/ministryofjustice/govuk_frontend_toolkit_gem.git', branch: 'asset-submodule'
+gem 'govuk_frontend_toolkit', '0.43.2'
 # MOJ styles
-gem 'moj_boilerplate', git: 'https://github.com/ministryofjustice/moj_boilerplate.git', tag: 'v0.6.2'
+gem 'moj_template', '0.10.0'
 
 # required for feedback form
 gem 'zendesk_api'
