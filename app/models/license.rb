@@ -19,35 +19,36 @@ class License < BaseClass
 
   def as_json
     default_values = {
-        "hmo" => 'No',
-        "authority" => '',
-        "hmo_day" => '',
-        "hmo_month" => '',
-        "hmo_year" => '',
-        "housing_act" => 'No',
-        "housing_act_authority" => '',
-        "housing_act_date_day" => '',
-        "housing_act_date_month" => '',
-        "housing_act_date_year" => ''
+        "multiple_occupation" => 'No',
+        "part2_authority" => '',
+        "part2_day" => '',
+        "part2_month" => '',
+        "part2_year" => '',
+        "part3" => 'No',
+        "part3_authority" => '',
+        "part3_day" => '',
+        "part3_month" => '',
+        "part3_year" => ''
     }
 
     if in_multiple_occupation?
       case issued_under_act_part
       when 'Part2'
         default_values.merge({
-          "hmo" => 'Yes',
-          "authority" => issued_by,
-          "hmo_day" => day(issued_date),
-          "hmo_month" => month(issued_date),
-          "hmo_year" => year(issued_date)
+          "multiple_occupation" => 'Yes',
+          "part2_authority" => issued_by,
+          "part2_day" => day(issued_date),
+          "part2_month" => month(issued_date),
+          "part2_year" => year(issued_date)
         })
       when 'Part3'
         default_values.merge({
-          "housing_act" => 'Yes',
-          "housing_act_authority" => issued_by,
-          "housing_act_date_day" => day(issued_date),
-          "housing_act_date_month" => month(issued_date),
-          "housing_act_date_year" => year(issued_date)
+          "multiple_occupation" => 'Yes',
+          "part3" => 'Yes',
+          "part3_authority" => issued_by,
+          "part3_day" => day(issued_date),
+          "part3_month" => month(issued_date),
+          "part3_year" => year(issued_date)
         })
       end
     else
@@ -56,3 +57,4 @@ class License < BaseClass
   end
 
 end
+
