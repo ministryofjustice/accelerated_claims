@@ -1,23 +1,17 @@
 = claim_form.fields_for license, builder: LabellingFormBuilder do |form|
-  = form.radio_button_fieldset :multiple_occupation, 'Is the property part of a house in multiple occupation?', class: 'striped-choice full js-depend', :data => { :depend => 'multiple-occupation', :show => 'yes' }
+  = form.radio_button_fieldset :multiple_occupation, 'Is the property part of a house in multiple occupation?', class: 'striped-choice full js-depend', data: { depend: 'multiple-occupation', show: 'yes' }
 
   .row.full.information
     %p A #{link_to 'house in multiple occupation', 'https://www.gov.uk/private-renting/houses-in-multiple-occupation', class: 'external', rel: 'external', id: 'multiple-occupation-link'} has more than 1 family or household, with shared toilet, bathroom or kitchen facilities.
 
   .sub-panel.extra.rel.hide.js-multiple-occupation
-    = form.text_field_row  :multiple_occupation_authority, label: 'If <strong>yes</strong>, which council issued the licence?', class: 'full'
+    - choice = { 'License issued under part 2 of the Housing Act 2004' => 'Part2', 'License issued under part 3 of the Housing Act 2004' => 'Part3'}
+    = form.radio_button_fieldset :issued_under_act_part, 'If <strong>yes</strong>, which licence do you have?'.html_safe, class: 'full', choice: choice
 
-    = form.date_select_field_set :multiple_occupation_date, 'Date licence was issued', class: 'date-picker rel full', date_select_options: @date_select_options
+    = form.text_field_row  :issued_by, label: 'Which local authority issued the licence?', class: 'full'
 
-    .row.full.information
-      %p If you’ve submitted an application for a licence but it hasn’t been issued, you will need to provide evidence of the application with this claim.
-
-  = form.radio_button_fieldset :housing_act, 'Does the property need a licence under Part 3 of the Housing Act 2004?', class: 'striped-choice full js-depend', :data => { :depend => 'housing-act', :show => 'yes' }
-
-  .sub-panel.extra.rel.hide.js-housing-act
-    = form.text_field_row  :housing_act_authority, label: 'If <strong>yes</strong>, which council issued the licence?', class: 'full'
-
-    = form.date_select_field_set :housing_act_date, 'Date licence was issued', class: 'date-picker rel full', date_select_options: @date_select_options
+    = form.date_select_field_set :issued_date, 'When was it issued?', class: 'date-picker full', date_select_options: @date_select_options
 
     .row.full.information
-      %p If you’ve submitted an application for a licence but it hasn’t been issued, you will need to provide evidence of the application with this claim.
+      %p If you have applied for a licence but not yet received it, then you will need to provide evidence of your license application.
+

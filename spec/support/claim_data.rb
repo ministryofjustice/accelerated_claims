@@ -49,17 +49,12 @@ def claim_post_data
       },
       "license" =>
       {
-        "multiple_occupation" => 'Yes',
-        "multiple_occupation_authority" => "Great authority",
-        "multiple_occupation_date(3i)" => "2",
-        "multiple_occupation_date(2i)" => "2",
-        "multiple_occupation_date(1i)" => "2014",
-        "housing_act" => 'No',
-        "housing_act_authority" => "Grand authority",
-        "housing_act_date(3i)" => "2",
-        "housing_act_date(2i)" => "2",
-        "housing_act_date(1i)" => "2014"
-      },
+        'multiple_occupation' => 'Yes',
+        'issued_under_act_part' => 'Part2',
+        'issued_by' => 'Great authority'
+      }.merge(
+        form_date('issued_date', Date.parse('2014-02-02'))
+      ),
       "deposit" =>
       {
         "received" => 'Yes',
@@ -72,8 +67,8 @@ def claim_post_data
       },
       "order" =>
       {
-        "possession" => true,
-        "cost" => false
+        "possession" => 'Yes',
+        "cost" => 'No'
       },
       "defendant_one"=>
       {
@@ -161,16 +156,16 @@ def claim_formatted_data
     "notice_served_by" => "Somebody",
     "order_cost" => 'No',
     "order_possession" => 'Yes',
-    "license_authority" => "Great authority",
-    "license_hmo" => 'Yes',
-    "license_hmo_day" => "02",
-    "license_hmo_month" => "02",
-    "license_hmo_year" => "2014",
-    "license_housing_act" => 'No',
-    "license_housing_act_authority" => "Grand authority",
-    "license_housing_act_date_day" => "02",
-    "license_housing_act_date_month" => "02",
-    "license_housing_act_date_year" => "2014",
+    "license_multiple_occupation" => 'Yes',
+    "license_part2_authority" => "Great authority",
+    "license_part2_day" => "02",
+    "license_part2_month" => "02",
+    "license_part2_year" => "2014",
+    "license_part3" => 'No',
+    "license_part3_authority" => "",
+    "license_part3_day" => "",
+    "license_part3_month" => "",
+    "license_part3_year" => "",
     "deposit_as_property" => 'Yes',
     "deposit_received" => 'Yes',
     "deposit_ref_number" => "X1234",
