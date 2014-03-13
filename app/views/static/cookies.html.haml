@@ -1,0 +1,143 @@
+%header.page-header.group
+
+  %h1 Cookies
+
+.container
+
+  %p This site puts small files (known as ‘cookies’) onto your computer to collect information about how you browse the site.
+
+  %p Cookies are used to:
+
+  %ul
+    %li measure how you use the website so it can be updated and improved based on your needs
+    %li remember the notifications you’ve seen so that we don’t show them to you again
+
+  %p
+    %em GOV.UK cookies aren’t used to identify you personally.
+
+  %p You’ll normally see a message on the site before we store a cookie on your computer.
+
+  %p Find out more about #{link_to 'How to manage cookies', 'http://www.aboutcookies.org/', :class => 'external', :rel => 'external'}.
+
+  %h2 How cookies are used
+
+  %h3 Measuring website usage 
+
+  We use two applications to collect information about how you use the ‘Accelerated property possession’ service: Piwik and Google Analytics
+
+  %h4 Piwik
+
+  %p We use a software application called #{link_to 'Piwik', 'http://piwik.org/', :class => 'external', :rel => 'external'} to collect information about how you use GOV.UK. We do this to help make sure the site is meeting the needs of its users and to help us make improvements.
+
+  %p Piwik runs as an application alongside the accelerated civil claims. Therefore, the information it collects remains on the same system and isn't send to an external service.
+
+  %p Piwik stores information about:
+
+  %p The pages you visit in this service - how long you spend on each page, how you got to the site, what you click on while you’re visiting the site
+
+  %p Piwik does not collect nor stores your personal information (eg your name or address).
+
+  %p Piwik sets the following cookies: 
+
+  %table.border
+    %thead
+      %tr
+        %th Name
+        %th Purpose
+        %th Expires
+    %tbody
+      %tr 
+        %td 
+          %code _pk_ref
+        %td Information about the page you're coming from
+        %td 6 months
+      %tr
+        %td
+          %code _pk_cvar
+        %td Stores custom information, other than simple page visits, that the application tracks
+        %td At the end of the session
+      %tr
+        %td
+          %code _pk_id
+        %td An identifier for the visitor, along with the number of page views
+        %td 2 years
+      %tr
+        %td
+          %code _pk_ses
+        %td Identifies the user session
+        %td 30 minutes
+
+  %h4 Google Analytics
+
+  %p Google Analytics also stores information about the pages you visit on GOV.UK, how long you spend on each GOV.UK page, how you got to the site, what you click on while you’re visiting the site. Like with Piwik, we don’t store your personal information.
+
+  %p We don’t allow Google to use or share our analytics data.
+
+  %p Google Analytics sets the following cookies:
+
+  %table.border
+    %thead
+      %tr
+        %th Name
+        %th Purpose
+        %th Expires
+    %tbody
+      %tr 
+        %td 
+          %code _utma
+        %td Determines the number of unique visitors to the site
+        %td 2 years
+      %tr
+        %td
+          %code _utmb
+        %td This works with _utmc to calculate the average length of time you spend on our site
+        %td 30 minutes
+      %tr
+        %td
+          %code _utmc
+        %td This works with _utmb to calculate when you close your browser
+        %td when you close your browser
+      %tr
+        %td
+          %code _utmz
+        %td This provides information about how you reached the site (eg from another website or a search engine)
+        %td 6 months
+
+
+  %p You can #{link_to 'opt out of Google Analytics cookies','https://tools.google.com/dlpage/gaoptout', :class => 'external', :rel => 'external'}.
+
+
+  %h2 Our introductory message
+
+  %p You may see a pop-up welcome message when you first visit GOV.UK. We’ll store a cookie so that your computer knows you’ve seen it and knows not to show it again.
+
+  %table.border
+    %thead
+      %tr
+        %th Name
+        %th Purpose
+        %th Expires
+      %tr
+        %td
+          %code seen_cookie_message
+        %td Saves a message to let us know that you have seen our cookie message
+        %td 1 month
+
+  %h2 Your progress when using the service
+
+  %p When you use the ‘Accelerated property possession’ service, we’ll set a cookie to remember your progress through the forms. These cookies don’t store your personal data and are deleted once you’ve completed the transaction.
+
+  %table.border
+    %thead
+      %tr
+        %th Name
+        %th Purpose
+        %th Expires
+      %tr
+        %td
+          %code _accelerated_claims_session
+        %td An identifier for your session
+        %td At the end of the session
+
+  
+
