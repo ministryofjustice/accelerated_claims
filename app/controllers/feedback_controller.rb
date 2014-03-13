@@ -12,9 +12,9 @@ class FeedbackController < ApplicationController
 
     if @feedback.valid?
       ZendeskHelper.send_to_zendesk(@feedback)
-      redirect_to root_path, notice: 'Thanks for your feedback.'
+      redirect_to root_path, notice: 'Thanks for your feedback.', protocol: (Rails.env.production? ? 'https' : 'http')
     else
-      render 'new'
+      render :new
     end
   end
 
