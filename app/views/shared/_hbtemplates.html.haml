@@ -29,3 +29,14 @@
       %option(value='{{val}}') {{val}} {{text}}
       {{/each}}
   .row.divider
+
+%script#title-dropdown(type='text/x-handlebars-template')
+  %select.title-dropdown.small(id='{{id}}' name='{{name}}')
+    %option(value='') &nbsp;
+    {{#each titles}}
+    %option(value='{{this}}') {{this}}
+    {{/each}}
+    %option(value='other') Other...
+
+%script#title-input(type='text/x-handlebars-template')
+  %input.smalltext(type='text' id='{{id}}' name='{{name}}')
