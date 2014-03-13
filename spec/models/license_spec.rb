@@ -24,16 +24,16 @@ describe License do
     context 'and licensed under part 2 of act' do
       it { should be_valid }
       its(:as_json) { should == {
-          "hmo" => 'Yes',
-          "authority" => issued_by,
-          "hmo_day" => '12',
-          "hmo_month" => '01',
-          "hmo_year" => '2013',
-          "housing_act" => 'No',
-          "housing_act_authority" => '',
-          "housing_act_date_day" => '',
-          "housing_act_date_month" => '',
-          "housing_act_date_year" => ''
+          "multiple_occupation" => 'Yes',
+          "part2_authority" => issued_by,
+          "part2_day" => '12',
+          "part2_month" => '01',
+          "part2_year" => '2013',
+          "part3" => 'No',
+          "part3_authority" => '',
+          "part3_day" => '',
+          "part3_month" => '',
+          "part3_year" => ''
         }
       }
     end
@@ -42,16 +42,16 @@ describe License do
       let(:issued_under_act_part) { 'Part3' }
       it { should be_valid }
       its(:as_json) { should == {
-          "hmo" => 'No',
-          "authority" => '',
-          "hmo_day" => '',
-          "hmo_month" => '',
-          "hmo_year" => '',
-          "housing_act" => 'Yes',
-          "housing_act_authority" => issued_by,
-          "housing_act_date_day" => '12',
-          "housing_act_date_month" => '01',
-          "housing_act_date_year" => '2013'
+          "multiple_occupation" => 'Yes',
+          "part2_authority" => '',
+          "part2_day" => '',
+          "part2_month" => '',
+          "part2_year" => '',
+          "part3" => 'Yes',
+          "part3_authority" => issued_by,
+          "part3_day" => '12',
+          "part3_month" => '01',
+          "part3_year" => '2013'
         }
       }
     end
@@ -86,16 +86,16 @@ describe License do
     it { should be_valid }
 
     its(:as_json) { should == {
-        "hmo" => 'No',
-        "authority" => '',
-        "hmo_day" => '',
-        "hmo_month" => '',
-        "hmo_year" => '',
-        "housing_act" => 'No',
-        "housing_act_authority" => '',
-        "housing_act_date_day" => '',
-        "housing_act_date_month" => '',
-        "housing_act_date_year" => ''
+        "multiple_occupation" => 'No',
+        "part2_authority" => '',
+        "part2_day" => '',
+        "part2_month" => '',
+        "part2_year" => '',
+        "part3" => 'No',
+        "part3_authority" => '',
+        "part3_day" => '',
+        "part3_month" => '',
+        "part3_year" => ''
       }
     }
   end
