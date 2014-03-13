@@ -37,16 +37,21 @@ moj.Modules.yesNo = (function() {
   questionSetup = function ( $el ) {
     var source,
         template,
-        context;
+        context,
+        questionHtml,
+        $row;
 
-    $el.find( '.row' ).eq( 0 ).remove();
+    $row = $el.find( '.row' ).eq( 0 );
+    questionHtml = $row.html();
+    $row.remove();
     $el.hide();
 
     source = $( '#hb-yesno' ).html();
     template = Handlebars.compile( source );
-    context = { question: $el.data( 'yesnoquestion' ), id: $el.data( 'yesnoid' ), req: $el.data( 'yesnoreq' ), full: 'true' };
+    context = { id: $el.data( 'yesnoid' ), req: $el.data( 'yesnoreq' ), full: 'true' };
 
     $el.before( template( context ) );
+    $el.prev( 'fieldset' ).find( 'legend' ).prepend( questionHtml );
   };
 
   yesnoClick = function( $el ) {
