@@ -34,7 +34,7 @@ class ClaimController < ApplicationController
       pdf = PDFDocument.new(@claim.as_json).fill
       send_file(pdf, filename: "accelerated-claim.pdf", disposition: "inline", type: "application/pdf")
     else
-      redirect_to :new
+      redirect_to_with_protocol :new
     end
   end
 
@@ -43,9 +43,9 @@ class ClaimController < ApplicationController
     @claim = Claim.new(params['claim'])
 
     unless @claim.valid?
-      redirect_to :new
+      redirect_to_with_protocol :new
     else
-      redirect_to :confirmation
+      redirect_to_with_protocol :confirmation
     end
   end
 
