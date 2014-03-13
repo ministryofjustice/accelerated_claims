@@ -11,10 +11,15 @@ class Claim < BaseClass
 
   def as_json
     json_in = {}
-    attributes_from_submodels.each { |var, model| json_in[var] = instance_variable_get("@#{var}").as_json }
+    attributes_from_submodels.each do |attribute, model|
+      submodel_data = instance_variable_get("@#{attribute}").as_json
+
+      json_in[attribute] = submodel_data
+    end
+
     json_out = {}
-    json_in.each do |attribute, submodel|
-      submodel.each do |key, value|
+    json_in.each do |attribute, submodel_data|
+      submodel_data.each do |key, value|
         value = 'Yes' if(value.class.name == 'TrueClass')
         value = 'No' if(value.class.name == 'FalseClass')
         json_out["#{attribute}_#{key}"] = value

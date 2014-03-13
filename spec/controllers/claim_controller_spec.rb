@@ -20,13 +20,27 @@ describe ClaimController do
   describe '#submission' do
     it 'should redirect to the confirmation page' do
       post :submission, claim: claim_post_data['claim']
+      response.should redirect_to('/confirmation')
     end
   end
 
   describe '#download' do
-    it "should return a PDF" do
-      get :download, nil, claim: claim_post_data['claim']
-      response.headers["Content-Type"].should eq "application/pdf"
+    context 'with valid claim data' do
+      it "should return a PDF" do
+        post :submission, claim: claim_post_data['claim']
+        get :download
+        response.headers["Content-Type"].should eq "application/pdf"
+      end
+    end
+
+    context 'with invalid claim data' do
+      it 'should redirect to the claim form' do
+        data = claim_post_data['claim']
+        data['claimant_one'].delete('full_name')
+        post :submission, claim: data
+        get :download
+        response.should redirect_to('/new')
+      end
     end
   end
 

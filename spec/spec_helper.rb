@@ -17,3 +17,12 @@ RSpec.configure do |config|
 
   config.order = 'random'
 end
+
+def form_date field, date
+  {
+    "#{field}(3i)" => date.try(:day),
+    "#{field}(2i)" => date.try(:month),
+    "#{field}(1i)" => date.try(:year)
+  }
+end
+
