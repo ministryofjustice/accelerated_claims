@@ -59,6 +59,8 @@ moj.Modules.titleFields = (function() {
 
       $this.after( template( context ) );
       $this.remove();
+
+      moj.Modules.jsState.registerField( $( '#' + id ) );
     } );
   };
 

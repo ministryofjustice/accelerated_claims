@@ -7,7 +7,6 @@ moj.Modules.defendantAddress = (function() {
   var //functions
       init,
       cacheEls,
-      bindEvents,
       setupAddressBlock,
 
       //elements
@@ -16,7 +15,6 @@ moj.Modules.defendantAddress = (function() {
 
   init = function() {
     cacheEls();
-    bindEvents();
 
     $addressBlocks.each( function( n ) {
       setupAddressBlock( $( this ), n );
@@ -25,10 +23,6 @@ moj.Modules.defendantAddress = (function() {
 
   cacheEls = function() {
     $addressBlocks = $( '.defendant .address' );
-  };
-
-  bindEvents = function() {
-
   };
 
   setupAddressBlock = function( $el, n ) {
@@ -41,6 +35,8 @@ moj.Modules.defendantAddress = (function() {
     context = { question: 'Are they living in the property?', id: 'defendant' + ( n + 1 ) + 'address', reverse: 'true' };
 
     $el.before( template( context ) ).addClass( 'rel' ).hide().find( '.caption' ).remove();
+
+    moj.Modules.jsState.registerField( $( 'input[name=defendant' + ( n + 1 ) + 'address]' ) );
   };
 
   // public

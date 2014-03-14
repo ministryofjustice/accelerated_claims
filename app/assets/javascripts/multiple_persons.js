@@ -71,6 +71,8 @@ moj.Modules.multiplePersons = (function() {
         };
 
         $panel.prepend( template( context ) );
+
+        moj.Modules.jsState.registerField( $('#multiplePanelSelector_' + $panel.attr( 'id' )) );
       }
     }
   };
