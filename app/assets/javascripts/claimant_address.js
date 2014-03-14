@@ -7,7 +7,6 @@ moj.Modules.claimantAddress = (function() {
   var //functions
       init,
       cacheEls,
-      bindEvents,
       setupAddressBlock,
 
       //elements
@@ -16,7 +15,6 @@ moj.Modules.claimantAddress = (function() {
 
   init = function() {
     cacheEls();
-    bindEvents();
 
     $addressBlocks.each( function() {
       setupAddressBlock( $( this ) );
@@ -25,10 +23,6 @@ moj.Modules.claimantAddress = (function() {
 
   cacheEls = function() {
     $addressBlocks = $( '.same-address' );
-  };
-
-  bindEvents = function() {
-
   };
 
   setupAddressBlock = function( $el ) {
@@ -41,6 +35,8 @@ moj.Modules.claimantAddress = (function() {
     context = { question: 'Is the address the same as claimant 1?', id: 'claimant2address', reverse: 'true' };
 
     $el.find( '.sub-panel.address' ).addClass( 'extra rel' ).before( template( context ) ).hide();
+
+    moj.Modules.jsState.registerField( $( 'input[name=claimant2address]' ) );
   };
 
   // public

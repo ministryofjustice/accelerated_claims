@@ -52,6 +52,8 @@ moj.Modules.yesNo = (function() {
 
     $el.before( template( context ) );
     $el.prev( 'fieldset' ).find( 'legend' ).prepend( questionHtml );
+
+    moj.Modules.jsState.registerField( $( 'input[name='+$el.data( 'yesnoid' )+']' ) );
   };
 
   yesnoClick = function( $el ) {
