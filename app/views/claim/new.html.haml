@@ -3,6 +3,9 @@
 = render partial: 'shared/error_messages'
 
 = form_for :claim, url: submission_path, :html => { :method => :post, :id => 'claimForm' } do |claim_form|
+  
+  %input#js-state(type='hidden')
+
   %section
     %span.right
       %span.req> *
