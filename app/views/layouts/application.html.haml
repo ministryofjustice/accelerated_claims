@@ -1,5 +1,5 @@
 - content_for :page_title do
-  = "#{@page_title} - "
+  = "#{@page_title} - #{Rails.configuration.app_title}"
 
 - content_for :stylesheets do
   = stylesheet_link_tag "application", media: "all"
