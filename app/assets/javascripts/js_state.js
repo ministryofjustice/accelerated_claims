@@ -7,44 +7,25 @@ moj.Modules.jsState = (function() {
   var //functions
       init,
       cacheEls,
-      bindEvents,
-      testPopulate,
       registerField,
-      storeState
+      storeState,
+      getValue,
+      getType,
+      getRadioVal,
 
       //elements
       $stateField,
 
       //data
-      watchEls = [],
-      testData = [
-        {
-          id: 'claim_claimant_two_address',
-          type: 'radio',
-          value:  'yes'
-        }
-      ]
+      watchEls = []
       ;
 
   init = function() {
     cacheEls();
-    bindEvents();
-
-    testPopulate();
   };
 
   cacheEls = function() {
     $stateField = $( '#js-state' );
-  };
-
-  bindEvents = function() {
-
-  };
-
-  testPopulate = function() {
-    var v = JSON.stringify( testData );
-    moj.log( v );
-    $stateField.val( v );
   };
 
   registerField = function( $el ) {
@@ -55,7 +36,58 @@ moj.Modules.jsState = (function() {
   };
 
   storeState = function() {
-    // YOU ARE HERE
+    var x,
+        obj,
+        arr = [],
+        stateStr;
+
+    for( x = 0; x < watchEls.length; x++ ) {
+      obj = {
+        name:   $( watchEls[ x ] ).attr( 'name' ),
+        type:   getType( $( watchEls[ x ] ) ),
+        value:  getValue( $( watchEls[ x ] ) )
+      };
+      arr[ arr.length ] = obj;
+    }
+
+    stateStr = JSON.stringify( arr );
+    moj.log( stateStr );
+
+    $stateField.val( stateStr );
+
+    var $f = $( 'form' ).eq( 0 ),
+        a = $f.attr( 'action' );
+
+    $f.attr( 'action', a + '?one=two' );
+  };
+
+  getValue = function( $el ) {
+    if( $el.is( 'input' ) && $el.attr( 'type' ) === 'radio' ) {
+      return getRadioVal( $el );
+    } else {
+      return $el.val();
+    }
+  };
+
+  getType = function( $el ) {
+    if( $el.is( 'input' ) ) {
+      return $el.attr( 'type' );
+    } else if( $el.is( 'select' ) ) {
+      return 'select';
+    }
+  };
+
+  getRadioVal = function ( $el ) {
+    var radioVal = 'unchecked',
+        x;
+
+    for( x = 0; x < $el.length; x++ ) {
+      if( $( $el[x] ).is( ':checked' ) ) {
+        radioVal = $( $el[x] ).val();
+      }
+    }
+
+    return radioVal;
   };
 
   // public
