@@ -1,17 +1,13 @@
 = claim_form.fields_for license, builder: LabellingFormBuilder do |form|
-  = form.radio_button_fieldset :multiple_occupation, 'Is the property part of a house in multiple occupation?', class: 'striped-choice full js-depend', data: { depend: 'multiple-occupation', show: 'yes' }
-
-  .row.full.information
-    %p A #{link_to 'house in multiple occupation', 'https://www.gov.uk/private-renting/houses-in-multiple-occupation', class: 'external', rel: 'external', id: 'multiple-occupation-link'} has more than 1 family or household, with shared toilet, bathroom or kitchen facilities.
+  = form.radio_button_fieldset :multiple_occupation, 'Do you have a house in multiple occupation licence?', class: 'striped-choice full js-depend', data: { depend: 'multiple-occupation', show: 'yes' }
 
   .sub-panel.extra.rel.hide.js-multiple-occupation
-    - choice = { 'License issued under part 2 of the Housing Act 2004' => 'Part2', 'License issued under part 3 of the Housing Act 2004' => 'Part3'}
+    - choice = { 'licence issued under part 2 of the Housing Act 2004. For properties that are <strong>3 or more storeys high</strong> and occupied by <strong>5 or more people</strong>' => 'Part2', 'licence issued under part 3 of the Housing act 2004. For properties that are <strong>within a geographical area</strong> defined by a local council.' => 'Part3'}
     = form.radio_button_fieldset :issued_under_act_part, 'If <strong>yes</strong>, which licence do you have?'.html_safe, class: 'full', choice: choice
 
     = form.text_field_row  :issued_by, label: 'Which local authority issued the licence?', class: 'full'
 
     = form.date_select_field_set :issued_date, 'When was it issued?', class: 'date-picker full', date_select_options: @date_select_options
 
-    .row.full.information
-      %p If you have applied for a licence but not yet received it, then you will need to provide evidence of your license application.
-
+  .row.full.information
+    %p If you have applied for a licence but not yet received it, then you will need to provide evidence of your licence application.
