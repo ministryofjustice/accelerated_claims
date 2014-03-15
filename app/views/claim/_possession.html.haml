@@ -1,10 +1,8 @@
 = claim_form.fields_for possession, builder: LabellingFormBuilder do |form|
 
-  = form.radio_button_fieldset :hearing, 'If the defendant asks for more time due to hardship you can choose whether to say:', class: 'striped-choice full', choice: {'yes, you are happy for the request to be considered by the judge ' => 'Yes', 'no, you would like the judge to consider the request at a court hearing (this may delay things for up to 6 weeks, or longer)' => 'No'}
+  = form.radio_button_fieldset :hearing, 'If the defendant asks for more time due to hardship you can choose whether to say:', class: 'striped-choice full', choice: {'yes, you are happy for the request to be considered by the judge ' => 'Yes', 'no, you would like the judge to consider the request at a court hearing' => 'No'}
 
   .row.full.information
-    %p In most cases the judge will order possession of the property to be given up within 14 days. 
-
     %p In cases where the defendant  is experiencing extreme hardship, they can ask for more time before they have to leave the property (up to 42 days).
     
     %p See more about the #{link_to 'time it can take to gain possession', 'https://www.gov.uk/gaining-possession-of-a-privately-rented-property-let-on-an-assured-shorthold-tenancy#seeking-possession-under-section-21', class: 'external', rel: 'external'} of the property.
