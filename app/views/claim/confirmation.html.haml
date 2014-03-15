@@ -1,10 +1,6 @@
 %section.confirmation-intro
   %h1
-    Your accelerated possession form
-    %br/
-    is ready to print
-  %p
-    = link_to "Print completed form", download_path, class: "button large chevron pdf-download", data: { "event-label" => "N5B form.pdf" }
+    You now need to send the completed form and documents to the court to make your claim.
 
 .container.steps
   %section
@@ -12,53 +8,53 @@
 
     %ol.steps
       %li.claim
-        Print copies of the completed form
+        Step 1: print copies of the completed form
         .box
           %ul.nodot
             %li= "<strong>1</strong> for the court".html_safe
             %li= "<strong>1</strong> for each defendant".html_safe
             %li= "<strong>1</strong> for each claimant".html_safe
+          %p
+           = link_to "Print completed form", download_path, class: "button large chevron pdf-download", data: { "event-label" => "N5B form.pdf" }
+    
       %li.sign
-        Sign and date the statement of truth on all copies
+        Step 2: sign and date the statement of truth on all copies
         .box
           %ul.nodot
-            %li= "Found on <strong>page 4</strong> of the claim form".html_safe
+            %li= "This needs to be signed by the claimant".html_safe
+            %li= "The statement of truth is on <strong>page 4</strong> of the form".html_safe
       %li.docs
-        Attach copies of the following documents to the claim form:
+        Step 3: attach copies of the following documents:
         .box
           %ul.nodot
             %li
-              The tenancy agreement marked
+              The tenancy agreement - marked
               %strong 'A'
             %li
-              If there has been multiple tenancy agreements, the most recent tenancy agreement marked
-              %strong 'A1'
-            %li
-              The notice served marked
+              The notice served - marked
               %strong 'C'
             %li
-              Proof the notice was served marked
+              Proof the notice was served - marked
               %strong 'C1'
             %li
-              If the property is part of a house in multiple occupation, and the licence application is outstanding with the local authority, provide evidence of the application marked
-              %strong 'D'
-            %li
-              If the property is required to be licenced under Part 3 of the Housing Act 2004, and the licence application is outstanding with the local authority, provide evidence of the application marked
-              %strong 'E'
+              the tenancy deposit scheme certificate - marked
+              %strong 'F'
       %li.pound
-        = "Include the correct court fee".html_safe
+        = "Step 4: pay the court fee".html_safe
         .box
           %ul.nodot
             %li
               %strong You can pay by:
             %li
-              Debit or credit card
+              cheque or postal order (made payable to ‘HM Courts & Tribunals Service’)
             %li
-              Cheque or postal order (made payable to 'HM Courts & Tribunals Service')
+              debit or credit card (you’ll need to #{link_to 'contact the court', 'https://courttribunalfinder.service.gov.uk/', :class => 'external', :rel => 'external'} to pay this way)
             %li
-              Cash
+              cash (do not send cash through the post. #{link_to 'contact the court', 'https://courttribunalfinder.service.gov.uk/', :class => 'external', :rel => 'external'} to pay in person) 
       %li.court
-        = "Post <strong>all</strong> copies of the form and documents to court".html_safe
+        = "Step 5: post <strong>all</strong> copies of the form and documents to court".html_safe
         .box
           %ul.nodot
-            %li Find a court using the #{link_to 'court and tribunal finder', 'https://courttribunalfinder.service.gov.uk/', :class => 'external', :rel => 'external'}
+            %li you can choose which court to send this claim to.
+            %li use the #{link_to 'court finder', 'https://courttribunalfinder.service.gov.uk/', :class => 'external', :rel => 'external'} to find your nearest court.
+            %li you need to write the court’s name and address at the top of <strong>page 1</strong> and the bottom of <strong>page 4</strong> of the form.
