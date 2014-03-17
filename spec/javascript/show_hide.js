@@ -9,11 +9,6 @@ casper.start(url + '/new', function() {
   this.click('#claim_license_multiple_occupation_yes');
   this.test.assertVisible('.js-multiple-occupation');
 
-  casper.test.comment('.js-housing-act');
-  this.test.assertNotVisible('.js-housing-act');
-  this.click('#claim_license_housing_act_yes');
-  this.test.assertVisible('.js-housing-act');
-
   casper.test.comment('.js-money-deposit');
   this.test.assertNotVisible('.js-money-deposit');
   this.click('#claim_deposit_received_yes');
