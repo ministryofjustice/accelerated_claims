@@ -10,9 +10,6 @@ function msg {
 msg "installing gems"
 bundle install --deployment --without development --path vendor/bundler
 
-msg "running casperjs tests"
-casperjs test ./spec/javascript/ --url='http://localhost:3000/'
-
 msg "setting up CI & running the specs"
 RAILS_ENV=test bundle exec rake ci:setup:rspec spec
 
