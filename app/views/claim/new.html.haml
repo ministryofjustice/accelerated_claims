@@ -4,7 +4,7 @@
 
 = form_for :claim, url: submission_path, :html => { :method => :post, :id => 'claimForm' } do |claim_form|
   
-  %input#js-state(type='hidden')
+  %input#js-state(type='hidden' name='js-state')
 
   / = claim_form.hidden_field 
 
