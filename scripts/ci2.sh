@@ -9,7 +9,7 @@ function at_exit {
 }
 trap at_exit 0
 
-daemonize -c . -l application.lock -v -p application.pid `which bundle` exec rails s -p 5555
+/usr/sbin/daemonize -c . -l application.lock -v -p application.pid `which bundle` exec rails s -p 5555
 sleep 10
 
 casperjs test ./spec/javascript/ --url='http://localhost:5555/' --no-colors --xunit=log.xml
