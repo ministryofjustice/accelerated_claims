@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Script to run casperjs tests on CI server
+
 if hash npm 2>/dev/null; then
   version=`npm -v`
   echo "node installed: $version"
