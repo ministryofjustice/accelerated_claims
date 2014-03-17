@@ -2,7 +2,7 @@
 = render partial: 'shared/flash'
 
 .container.start
-  %p Use this form to evict tenants from your property without a court hearing. Find out more about making an #{link_to 'accelerated property possession claim', 'https://www.gov.uk/gaining-possession-of-a-privately-rented-property-let-on-an-assured-shorthold-tenancy', :class => 'external', :rel => 'external'}. You can’t ask tenants to leave before the end of the fixed-term tenancy. 
+  %p Use this form to evict tenants from your property without a court hearing. Find out more about making an #{link_to 'accelerated property possession claim', 'https://www.gov.uk/gaining-possession-of-a-privately-rented-property-let-on-an-assured-shorthold-tenancy', :class => 'external', :rel => 'external', :id => 'find-out-more'}. You can’t ask tenants to leave before the end of the fixed-term tenancy. 
 
   %p You can complete the form online. You’ll then need to print it out and send it to the court along with key documents, eg a copy of the notice to leave the property.
 
@@ -14,15 +14,15 @@
     %li an assured shorthold tenancy or statutory periodic tenancy
     %li a written tenancy agreement
     %li a deposit held in a government-backed tenancy deposit protection scheme
-    %li given your tenant(s) at least 2 months’ written #{link_to 'notice', 'https://www.gov.uk/gaining-possession-of-a-privately-rented-property-let-on-an-assured-shorthold-tenancy#seeking-possession-under-section-21', :class => 'external', :rel => 'external'} to leave the property
+    %li given your tenant(s) at least 2 months’ written #{link_to 'notice', 'https://www.gov.uk/gaining-possession-of-a-privately-rented-property-let-on-an-assured-shorthold-tenancy#seeking-possession-under-section-21', :class => 'external', :rel => 'external', :id => 'notice-to-leave'} to leave the property
 
   %p You’ll have to pay a court fee to start the claim.
 
-  %p If you want to claim outstanding rent, you’ll need to file a standard possession claim which will go to a court hearing.
+  %p If you want to claim outstanding rent, you’ll need to file a #{link_to 'standard possession claim', 'https://www.possessionclaim.gov.uk/pcol/', :class => 'external', :rel => 'external', :id => 'pcol'} which will go to a court hearing.
 
   %p <strong>Do you qualify for legal aid?</strong>
 
-  %p You may qualify for legal aid. Visit #{link_to 'www.gov.uk/legal-aid', 'https://www.gov.uk/legal-aid', :class => 'external', :rel => 'external'} for more information or a citizens advice bureau at #{link_to 'www.adviceguide.org.uk', 'www.adviceguide.org.uk', :class => 'external', :rel => 'external'}
+  %p You may qualify for legal aid. Visit #{link_to 'www.gov.uk/legal-aid', 'https://www.gov.uk/legal-aid', :class => 'external', :rel => 'external', :id => 'legal-aid'} for more information or a citizens advice bureau at #{link_to 'www.adviceguide.org.uk', 'http://www.adviceguide.org.uk', :class => 'external', :rel => 'external', :id => 'advice-guide'}
 
   .action-buttons.cf
     = link_to 'Start now', new_path, class: 'button primary large chevron left'
