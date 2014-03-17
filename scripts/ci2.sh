@@ -1,8 +1,7 @@
 #!/bin/bash
 
-$some_port = 5555
 echo 'running rails server'
-bundle exec rails s -p $some_port &
+bundle exec rails s -p 5555 &
 rails_pid=$!
 
 # Make sure the rails server is stopped when this script finishes
