@@ -22,7 +22,7 @@ feature "New claim application" do
       fill_court_fee
       click_button 'Complete form'
 
-      expect(page).to have_text('Your accelerated possession form is ready to print')
+      expect(page).to have_text('You now need to send the completed form and documents to the court to make your claim')
       click_link 'Print completed form'
       expect(page.response_headers['Content-Type']).to eq "application/pdf"
       generated_file = '/tmp/a.pdf'
@@ -47,7 +47,7 @@ feature "New claim application" do
       fill_order
       fill_court_fee
       click_button 'Complete form'
-      expect(page).to have_text('Your accelerated possession form is ready to print')
+      expect(page).to have_text('You now need to send the completed form and documents to the court to make your claim')
     end
   end
 end
