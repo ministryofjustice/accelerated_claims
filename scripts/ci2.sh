@@ -1,6 +1,6 @@
 # This runs CasperJS tests, but doesn't work at present.
 
-function at_exit() {
+function at_exit {
   echo `ps -Af | grep rails | grep -v grep`
   echo 'killing process...'
   kill `cat application.pid`
