@@ -1,5 +1,5 @@
 = claim_form.fields_for demoted_tenancy, builder: LabellingFormBuilder do |form|
   = form.radio_button_fieldset :demoted_tenancy, 'What kind of tenancy agreement do you have?', class: 'striped-choice', choice: {'assured shorthold tenancy' => 'No', 'demoted assured shorthold tenancy' => 'Yes'}
 
- .row.full.information
+  .row.full.information
     %p Demoted assured shorthold tenancies are made by court order. They may be given to occupants who may have behaved anti-socially or used the property for illegal activity
