@@ -16,6 +16,8 @@ else
   echo 'node not installed'
 fi
 
+echo 'wc -l spec/javascript/external_links.js'
+echo `wc -l spec/javascript/external_links.js`
 echo 'running rails server'
 bundle exec rails s -p 5555 &
 rails_pid=$!
