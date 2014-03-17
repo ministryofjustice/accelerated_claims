@@ -4,6 +4,8 @@ class Claim < BaseClass
 
   attr_accessor :errors
 
+  attr_accessor :form_state
+
   def initialize(claim_params={})
     initialize_all_submodels(claim_params)
     @errors = ActiveModel::Errors.new(self)
@@ -82,6 +84,7 @@ class Claim < BaseClass
       init_submodel(claim_params, attribute_name, model)
     end
     tenancy.demoted_tenancy = demoted_tenancy.is_demoted_tenancy?
+    self.form_state = claim_params['form_state'] if claim_params['form_state'].present?
   end
 
   def init_submodel(claim_params, attribute_name, model)
