@@ -1,16 +1,14 @@
 #!/bin/bash
 
-function at_exit {
-  echo `ps -Af | grep rails | grep -v grep`
-  echo 'killing process...'
-  kill `cat application.pid`
-  sleep 1
-  echo `ps -Af | grep rails | grep -v grep`
-}
-trap at_exit 0
+$some_port = 5555
+echo 'running rails server'
+bundle exec rails s -p $some_port &
+rails_pid=$!
 
-/usr/sbin/daemonize -c . -l application.lock -v -p application.pid `which bundle` exec rails s -p 5555
+# Make sure the rails server is stopped when this script finishes
+trap "kill $rails_pid" EXIT
+
 sleep 10
-
+echo 'running casper tests'
 casperjs test ./spec/javascript/ --url='http://localhost:5555/' --no-colors --xunit=log.xml
 
