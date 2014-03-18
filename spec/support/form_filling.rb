@@ -11,6 +11,16 @@ def fill_property_details
   choose 'claim_property_house_yes'
 end
 
+def fill_property_details_js
+  data = claim_post_data["claim"]["property"]
+  within '#property' do
+    fill_in 'Street*', with: data["street"]
+    fill_in 'Town', with: data["town"]
+    fill_in 'Postcode*', with: data["postcode"]
+  end
+  find('label', text: 'House').click
+end
+
 def fill_claimant_one
   data = claim_post_data["claim"]["claimant_one"]
   fill_in 'claim_claimant_one_title', with: data["title"]
@@ -18,6 +28,18 @@ def fill_claimant_one
   fill_in 'claim_claimant_one_street', with: data["street"]
   fill_in 'claim_claimant_one_town', with: data["town"]
   fill_in 'claim_claimant_one_postcode', with: data["postcode"]
+end
+
+def fill_claimant_one_js
+  data = claim_post_data["claim"]["claimant_one"]
+
+  within '#claimant_one' do
+    select data["title"], from: 'Title*'
+    fill_in 'Full name*', with: data["full_name"]
+    fill_in 'Street*', with: data["street"]
+    fill_in 'Town', with: data["town"]
+    fill_in 'Postcode*', with: data["postcode"]
+  end
 end
 
 def fill_claimant_two
@@ -132,6 +154,30 @@ def fill_claimant_solicitor_address
   end
 end
 
+def fill_in_address data
+  fill_in 'Street', with: data['street']
+  fill_in 'Town', with: data['town']
+  fill_in 'Postcode', with: data['postcode']
+end
+
+def click_yes id
+  within "##{id}-options" do
+    find('label', text: 'Yes').click
+  end
+end
+
+def fill_claimant_solicitor_address_js
+  data = claim_post_data["claim"]["claimant_contact"]
+
+  click_yes 'yesno-correspondance'
+
+  within '.yesno-correspondance' do
+    select data["title"], from: 'Title'
+    fill_in 'Full name', with: data['full_name']
+    fill_in_address data
+  end
+end
+
 def fill_claimant_contact_details
   data = claim_post_data["claim"]["claimant_contact"]
 
@@ -139,6 +185,22 @@ def fill_claimant_contact_details
     fill_in "claim_claimant_contact_#{val}", with: data["#{val}"]
   end
 end
+
+def fill_claimant_contact_details_js
+  data = claim_post_data["claim"]["claimant_contact"]
+
+  click_yes 'yesno-contactmethods'
+
+  ["email", "phone", "fax", "dx_number"].each do |val|
+    fill_in "claim_claimant_contact_#{val}", with: data["#{val}"]
+  end
+end
+
+def fill_claimant_contact_reference_js
+  data = claim_post_data["claim"]["claimant_contact"]['reference']
+
+end
+
 
 def fill_court_fee
   fill_in 'claim_fee_court_fee', with: claim_post_data["claim"]["fee"]["court_fee"]

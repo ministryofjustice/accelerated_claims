@@ -24,7 +24,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     options[:choice] ||= {'Yes'=>'Yes', 'No'=>'no'}
 
     @template.field_set_tag label_for(attribute, '<span class="legendText">'+legend+'</span>'.html_safe), options do
-      @template.surround("<div class='options'>".html_safe, "</div>".html_safe) do
+      @template.surround("<div class='options' id='#{attribute}_options'>".html_safe, "</div>".html_safe) do
         options[:choice].map do |label, choice|
           radio_button_row(attribute, label, choice)
         end.join("\n")

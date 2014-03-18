@@ -13,8 +13,8 @@
     {{#if req}}
     %span.req> *
     {{/if}}
-  
-  .options(data-reverse='{{#if reverse}}true{{else}}false{{/if}}')
+
+  .options(data-reverse='{{#if reverse}}true{{else}}false{{/if}}' id='{{id}}-options')
     .row
       %input.yesno(type='radio' name='{{id}}' value='yes' id='{{id}}-yes')
       %label(for='{{id}}-yes') Yes
