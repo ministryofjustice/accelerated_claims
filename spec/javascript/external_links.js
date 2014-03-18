@@ -1,6 +1,8 @@
 var url = casper.cli.get('url');
 
 casper.start(url, function() {
+  this.page.clearCookies();
+  
   this.test.comment('Testing external links on landing page');
   this.click('a#find-out-more');
 });
