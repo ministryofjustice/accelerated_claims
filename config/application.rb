@@ -12,6 +12,8 @@ require "active_support/inflector"
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)
 
+I18n.enforce_available_locales = false
+
 module AcceleratedClaims
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -31,11 +33,11 @@ module AcceleratedClaims
       'X-Content-Type-Options' => 'nosniff',
       'X-XSS-Protection' => '1; mode=block'
     }
-    
+
     config.relative_url_root = ENV['RAILS_RELATIVE_URL_ROOT'] || ''
-    
+
     # disable default <div class="field_with_errors"> wrapping idiocy
-    config.action_view.field_error_proc = Proc.new { |html_tag, instance| 
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance|
       html_tag
     }
 
@@ -60,7 +62,7 @@ module AcceleratedClaims
     # this was less that useful
     # config.assets.precompile
 
-    
+
 
   end
 end
