@@ -6,6 +6,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara/rails'
 require 'capybara/rspec'
+require 'capybara/poltergeist'
 
 require 'capybara/poltergeist'
 
@@ -22,6 +23,15 @@ RSpec.configure do |config|
   config.order = 'random'
 end
 
+Capybara.javascript_driver = :poltergeist
+
+if ENV.has_key? 'remote_host'
+  Capybara.app_host = ENV['remote_host']
+  Capybara.default_driver = Capybara.javascript_driver
+  WebMock.disable!
+  RSpec.configure { |c| c.filter_run_excluding :js => false }
+end
+
 def form_date field, date
   {
     "#{field}(3i)" => date.try(:day),
@@ -29,4 +39,3 @@ def form_date field, date
     "#{field}(1i)" => date.try(:year)
   }
 end
-
