@@ -5,6 +5,16 @@ describe Claim do
     @claim = Claim.new(data)
   end
 
+  subject { @claim }
+
+  describe 'form_state' do
+    let(:data) do
+      claim_post_data['claim'].merge( 'form_state' => 'some state' )
+    end
+
+    its(:form_state) { should == 'some state' }
+  end
+
   describe '#initialize' do
     let(:data) { {} }
 
