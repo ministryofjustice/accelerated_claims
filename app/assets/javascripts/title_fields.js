@@ -71,18 +71,25 @@ moj.Modules.titleFields = (function() {
         source,
         template;
 
+    moj.Modules.jsState.deRegisterField( $( '#' + id ) );
+
     source = $( '#title-input' ).html();
     template = Handlebars.compile( source );
     context = { id: id, name: name };
 
     $el.after( template( context ) );
     $el.remove();
+
+    moj.Modules.jsState.registerField( $( '#' + id ) );
+    moj.Modules.jsState.storeState();
   };
 
   // public
 
   return {
-    init: init
+    init: init,
+    switchToText: switchToText,
+    titles: titles
   };
 
 }());
