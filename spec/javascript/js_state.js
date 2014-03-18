@@ -1,7 +1,12 @@
 var url = casper.cli.get('url');
 
-casper.start(url + '/new', function() {
+casper.start(url, function() {
+  this.page.clearCookies();
 
+  this.click( '.action-buttons .button' );
+});
+
+casper.wait(500, function() {
   this.test.comment('Testing JS elements state persistence');
 
   this.test.comment('Setting all JS-created elements');
@@ -33,9 +38,9 @@ casper.start(url + '/new', function() {
   this.test.comment('Submitting form');
   this.click( '#fakeSubmit' );
 
-  this.test.comment('Waiting 3s for page to reload. There may be a better way of doing this...');
+  this.test.comment('Waiting 5s for page to reload. There may be a better way of doing this...');
   
-  this.wait(3000, function() {
+  this.wait(5000, function() {
     this.test.comment('Checking the error summary is visible, just to make sure the page has reloaded with errors');
     this.test.assertVisible( 'section.error-summary' );
 
