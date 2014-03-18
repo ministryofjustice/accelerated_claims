@@ -94,8 +94,8 @@ moj.Modules.jsState = (function() {
         x;
 
     for( x = 0; x < $el.length; x++ ) {
-      if( $( $el[x] ).is( ':checked' ) ) {
-        radioVal = $( $el[x] ).val();
+      if( $( $el[ x ] ).is( ':checked' ) ) {
+        radioVal = $( $el[ x ] ).val();
       }
     }
 
