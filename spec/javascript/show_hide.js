@@ -1,7 +1,12 @@
 var url = casper.cli.get('url');
 
-casper.start(url + '/new', function() {
+casper.start(url, function() {
+  this.page.clearCookies();
 
+  this.click( '.action-buttons .button' );
+});
+
+casper.wait(500, function() {
   casper.test.comment('Testing show/hide functionality');
 
   casper.test.comment('.js-multiple-occupation');
