@@ -8,10 +8,15 @@ moj.Modules.jsState = (function() {
       init,
       cacheEls,
       registerField,
+      deRegisterField,
       storeState,
       getValue,
       getType,
       getRadioVal,
+      checkState,
+      setRadio,
+      setSelect,
+      setText,
 
       //elements
       $stateField,
@@ -22,6 +27,8 @@ moj.Modules.jsState = (function() {
 
   init = function() {
     cacheEls();
+
+    checkState();
   };
 
   cacheEls = function() {
@@ -33,6 +40,16 @@ moj.Modules.jsState = (function() {
     $el.on( 'change', function() {
       storeState();
     } );
+  };
+
+  deRegisterField = function( $el ) {
+    var x;
+
+    for( x = 0; x < watchEls.length; x++ ) {
+      if( $( watchEls[ x ] ).attr( 'name' ) === $el.attr( 'name' ) ) {
+        watchEls = moj.Modules.tools.removeFromArray( watchEls, watchEls[ x ] );
+      }
+    }
   };
 
   storeState = function() {
@@ -54,25 +71,21 @@ moj.Modules.jsState = (function() {
     moj.log( stateStr );
 
     $stateField.val( stateStr );
-
-    var $f = $( 'form' ).eq( 0 ),
-        a = $f.attr( 'action' );
-
-    $f.attr( 'action', a + '?one=two' );
   };
 
   getValue = function( $el ) {
     if( $el.is( 'input' ) && $el.attr( 'type' ) === 'radio' ) {
       return getRadioVal( $el );
-    } else {
-      return $el.val();
     }
+    
+    return $el.val();
   };
 
   getType = function( $el ) {
     if( $el.is( 'input' ) ) {
       return $el.attr( 'type' );
-    } else if( $el.is( 'select' ) ) {
+    }
+    if( $el.is( 'select' ) ) {
       return 'select';
     }
   };
@@ -90,11 +103,53 @@ moj.Modules.jsState = (function() {
     return radioVal;
   };
 
+  checkState = function() {
+    if( $stateField.length > 0 && $stateField.val() !== '' ) {
+      var stateArr = $.parseJSON( $stateField.val() ),
+          x;
+
+      moj.log( 'onload:' );
+      moj.log( stateArr );
+      
+      for( x = 0; x < stateArr.length; x++ ) {
+        if( stateArr[ x ].type === 'text' ) {
+          setText( stateArr[ x ] );
+        } else if( stateArr[ x ].type === 'radio' ) {
+          setRadio( stateArr[ x ] );
+        } else if( stateArr[ x ].type === 'select' ) {
+          setSelect( stateArr[ x ] );
+        }
+      }
+    }
+  };
+
+  setRadio = function( obj ) {
+    moj.dir(obj);
+  };
+
+  setSelect = function( obj ) {
+    moj.dir(obj);
+
+    $( 'select[name="' + obj.name + '"]' ).val( obj.value ).trigger( 'change' );
+  };
+
+  setText = function( obj ) {
+    moj.dir(obj);
+    
+    if( obj.name.substr( obj.name.length - 7, obj.name.length ) === '[title]' ) {
+      moj.Modules.titleFields.switchToText( $( 'select[name="' + obj.name + '"]' ) );
+    }
+
+    $( 'input[name="' + obj.name + '"]' ).val( obj.value );
+  };
+
   // public
 
   return {
     init: init,
-    registerField: registerField
+    registerField: registerField,
+    deRegisterField: deRegisterField,
+    storeState: storeState
   };
 
 }());
