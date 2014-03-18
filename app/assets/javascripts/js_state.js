@@ -107,9 +107,6 @@ moj.Modules.jsState = (function() {
     if( $stateField.length > 0 && $stateField.val() !== '' ) {
       var stateArr = $.parseJSON( $stateField.val() ),
           x;
-
-      moj.log( 'onload:' );
-      moj.log( stateArr );
       
       for( x = 0; x < stateArr.length; x++ ) {
         if( stateArr[ x ].type === 'text' ) {
@@ -124,18 +121,16 @@ moj.Modules.jsState = (function() {
   };
 
   setRadio = function( obj ) {
-    moj.dir(obj);
+    if( obj.value !== 'unchecked' ) {
+      $( 'input#' + obj.name + '-' + obj.value ).trigger( 'click' );
+    }
   };
 
   setSelect = function( obj ) {
-    moj.dir(obj);
-
     $( 'select[name="' + obj.name + '"]' ).val( obj.value ).trigger( 'change' );
   };
 
   setText = function( obj ) {
-    moj.dir(obj);
-    
     if( obj.name.substr( obj.name.length - 7, obj.name.length ) === '[title]' ) {
       moj.Modules.titleFields.switchToText( $( 'select[name="' + obj.name + '"]' ) );
     }
