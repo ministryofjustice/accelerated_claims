@@ -29,7 +29,7 @@ describe License do
           "part2_day" => '12',
           "part2_month" => '01',
           "part2_year" => '2013',
-          "part3" => 'No',
+          "part3" => 'no',
           "part3_authority" => '',
           "part3_day" => '',
           "part3_month" => '',
@@ -78,7 +78,7 @@ describe License do
   end
 
   context 'not in multiple occupation' do
-    let(:multiple_occupation) { 'No' }
+    let(:multiple_occupation) { 'no' }
     let(:issued_date) { '' }
     let(:issued_by) { '' }
     let(:issued_under_act_part) { '' }
@@ -86,12 +86,12 @@ describe License do
     it { should be_valid }
 
     its(:as_json) { should == {
-        "multiple_occupation" => 'No',
+        "multiple_occupation" => 'no',
         "part2_authority" => '',
         "part2_day" => '',
         "part2_month" => '',
         "part2_year" => '',
-        "part3" => 'No',
+        "part3" => 'no',
         "part3_authority" => '',
         "part3_day" => '',
         "part3_month" => '',

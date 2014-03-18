@@ -161,7 +161,7 @@ def claim_formatted_data
     "license_part2_day" => "02",
     "license_part2_month" => "02",
     "license_part2_year" => "2014",
-    "license_part3" => 'No',
+    "license_part3" => 'no',
     "license_part3_authority" => "",
     "license_part3_day" => "",
     "license_part3_month" => "",

@@ -10,7 +10,6 @@ feature "New claim application" do
       fill_claimant_contact_details
       fill_claimant_two
       fill_defendant_one
-      fill_defendant_two
       fill_solicitor_cost
       fill_demoted_tenancy
       fill_tenancy
