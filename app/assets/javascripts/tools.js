@@ -11,7 +11,7 @@ moj.Modules.tools = (function() {
   removeFromArray = function( arr, item ) {
     var i;
 
-    for( i = arr.length; i--; ) {
+    for( i = arr.length; i >= 0; i-- ) {
       if( arr[ i ] === item ) {
         arr.splice( i, 1 );
       }
