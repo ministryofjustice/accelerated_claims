@@ -13,7 +13,7 @@
     = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'
   .sub-panel.extra.rel.js-yesno.yesno-contactmethods(data-yesnoid='yesno-contactmethods' data-yesnoreq='true')
     .row
-      = 'Are there <strong>other ways to contact you</strong>?'.html_safe
+      = 'Are there <strong>additional contact details</strong>? (for the person we should contact about the case)'.html_safe
     = form.text_field_row :email, class: 'email'
     = form.text_field_row :phone, class: 'rel phone'
     = form.text_field_row :fax, class: 'rel fax'
