@@ -1,9 +1,7 @@
 var url = casper.cli.get('url'),
     sitename = 'Civil Claims';
 
-
 casper.start(url, function() {
-
   casper.test.comment('Testing site basics');
 
   this.test.assert(
