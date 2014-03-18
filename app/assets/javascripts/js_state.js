@@ -68,7 +68,6 @@ moj.Modules.jsState = (function() {
     }
 
     stateStr = JSON.stringify( arr );
-    moj.log( stateStr );
 
     $stateField.val( stateStr );
   };
