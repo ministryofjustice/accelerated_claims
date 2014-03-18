@@ -2,15 +2,17 @@
   .row.full.information
     %p If it is a demoted tenancy, skip this section.
 
-  = form.date_select_field_set :start_date, 'Date of the first tenancy agreement', class: 'date-picker full', date_select_options: @date_select_options
+  = form.date_select_field_set :start_date, 'Start date of the tenancy agreement with the defendant', class: 'date-picker full', date_select_options: @date_select_options
   .row.full
-    = 'If you\'ve had <strong>more than one</strong> tenancy agreement, give details below.'.html_safe
+    = 'If you\'ve had <strong>more than one</strong> tenancy agreement, enter the details'.html_safe
   .sub-panel.extra.rel
-    = form.date_select_field_set :latest_agreement_date, 'Date of the most recent tenancy agreement', class: 'date-picker full', date_select_options: @date_select_options
+    = form.date_select_field_set :latest_agreement_date, 'Date of the most recent tenancy agreement with the defendant', class: 'date-picker full', date_select_options: @date_select_options
+
+    %p If you have replaced the original tenancy agreement with a new tenancy agreement, or replaced a replacement tenancy agreement: 
 
     = form.radio_button_fieldset :reissued_for_same_property, 'Is the tenancy agreement for the same property?', class: 'striped-choice full'
 
-    = form.radio_button_fieldset :reissued_for_same_landlord_and_tenant, 'Is it for the same landlord and tenant?', class: 'striped-choice full'
+    = form.radio_button_fieldset :reissued_for_same_landlord_and_tenant, 'Is the tenancy agreement between the same landlord and tenant?', class: 'striped-choice full'
 
   .row.full
     %p Both the [first] tenancy and the agreement for it were made on or after 28 February 1997.
