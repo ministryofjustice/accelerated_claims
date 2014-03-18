@@ -5,7 +5,7 @@ class License < BaseClass
   attr_accessor :issued_by
   attr_accessor :issued_date
 
-  validates :multiple_occupation, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
+  validates :multiple_occupation, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'no'] }
 
   with_options if: :in_multiple_occupation? do |license|
     license.validates :issued_under_act_part, presence: { message: 'must be selected' }, inclusion: { in: ['Part2', 'Part3'] }
@@ -19,12 +19,12 @@ class License < BaseClass
 
   def as_json
     default_values = {
-        "multiple_occupation" => 'No',
+        "multiple_occupation" => 'no',
         "part2_authority" => '',
         "part2_day" => '',
         "part2_month" => '',
         "part2_year" => '',
-        "part3" => 'No',
+        "part3" => 'no',
         "part3_authority" => '',
         "part3_day" => '',
         "part3_month" => '',
@@ -57,4 +57,3 @@ class License < BaseClass
   end
 
 end
-
