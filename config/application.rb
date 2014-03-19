@@ -56,9 +56,9 @@ module AcceleratedClaims
 
     # Enable the asset pipeline
     config.assets.enabled = true
-
-    # this was less that useful
-    # config.assets.precompile
+    config.assets.precompile += %w(
+      ie7.css
+    )
 
     
 
