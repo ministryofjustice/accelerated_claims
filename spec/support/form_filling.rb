@@ -73,6 +73,11 @@ def fill_tenancy
 
 end
 
+def fill_tenancy_reissued_no
+  choose 'claim_tenancy_reissued_for_same_property_no'
+  choose 'claim_tenancy_reissued_for_same_landlord_and_tenant_no'
+end
+
 def fill_notice
   data = claim_post_data["claim"]["notice"]
   fill_in 'claim_notice_served_by', with: data["served_by"]
@@ -103,6 +108,10 @@ def fill_no_licence
   choose 'claim_license_multiple_occupation_no'
 end
 
+def fill_no_deposit
+  choose 'claim_deposit_received_no'
+  choose 'claim_deposit_as_property_no'
+end
 
 def fill_deposit
   choose 'claim_deposit_received_yes'
@@ -114,9 +123,17 @@ def fill_postponement
   choose 'claim_possession_hearing_yes'
 end
 
-def fill_order
+def fill_no_postponement
+  choose 'claim_possession_hearing_no'
+end
+
+def check_order_possession_and_cost
   check 'claim_order_possession'
   check 'claim_order_cost'
+end
+
+def check_order_possession_only
+  check 'claim_order_possession'
 end
 
 def fill_solicitor_cost

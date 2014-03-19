@@ -5,7 +5,7 @@ class DemotedTenancy < BaseClass
   attr_accessor :demotion_order_court
 
   validates :demoted_tenancy, presence: { message: 'must be selected' }
-  validates :demoted_tenancy, inclusion: { in: ['Yes', 'No'] }
+  validates :demoted_tenancy, inclusion: { in: ['Yes', 'no'] }
 
   with_options if: :is_demoted_tenancy? do |tenancy|
     tenancy.validates :demotion_order_date, presence: { message: 'must be selected' }

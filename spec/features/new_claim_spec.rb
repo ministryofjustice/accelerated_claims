@@ -17,7 +17,7 @@ feature "New claim application" do
       fill_licences
       fill_deposit
       fill_postponement
-      fill_order
+      check_order_possession_and_cost
       fill_court_fee
       click_button 'Complete form'
 
@@ -39,11 +39,12 @@ feature "New claim application" do
       fill_defendant_one
       fill_demoted_tenancy
       fill_tenancy
+      fill_tenancy_reissued_no
       fill_notice
       fill_no_licence
-      fill_deposit
-      fill_postponement
-      fill_order
+      fill_no_deposit
+      fill_no_postponement
+      check_order_possession_only
       fill_court_fee
       click_button 'Complete form'
       expect(page).to have_text('You now need to send the completed form and documents to the court to make your claim')

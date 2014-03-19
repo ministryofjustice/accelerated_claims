@@ -8,7 +8,7 @@ class Property < BaseClass
   validates :postcode, presence: { message: 'must be entered' }
 
   attr_accessor :house
-  validates :house, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
+  validates :house, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'no'] }
 
   def as_json
     postcode1, postcode2 = split_postcode
