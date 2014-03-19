@@ -40,6 +40,28 @@ describe Claim do
       end
     end
 
+    context "when it isn't a demoted tenancy" do
+      let(:data) do
+        claim = claim_post_data['claim']
+        claim["demoted_tenancy"]["demoted_tenancy"] = 'No'
+        claim
+      end
+
+      let(:desired_format) do
+        format = claim_formatted_data
+        format["demoted_tenancy_demoted_tenancy"] = 'No'
+        format["tenancy_agreement_reissued_for_same_property"] = 'NA'
+        format["tenancy_agreement_reissued_for_same_landlord_and_tenant"] = 'NA'
+        format
+      end
+
+      context "and it's the only tenancy" do
+        it 'should return the right JSON' do
+          expect(@claim.as_json).to eql desired_format
+        end
+      end
+    end
+
     context "when only claim fee is known" do
       let(:data) do
         hash = claim_post_data['claim']
