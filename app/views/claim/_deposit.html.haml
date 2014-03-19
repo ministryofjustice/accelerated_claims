@@ -5,8 +5,8 @@
   .row.full.information.hide.js-money-deposit
     %p.nonjs If you answered <strong>yes</strong>:
     %ul
-      %li <span class="nonjs" data-jsalt="The">the</span> deposit must be in a #{link_to 'government-backed deposit protection scheme', 'https://www.gov.uk/tenancy-deposit-protection/overview', class: 'external', rel: 'external'} and all requirements of the scheme fulfilled.
-      %li <span class="nonjs" data-jsalt="The">the</span> defendant must have been given all information about the deposit scheme that #{link_to 'landlords are required to provide', 'https://www.gov.uk/tenancy-deposit-protection/information-landlords-must-give-tenants', class: 'external', rel: 'external'}
+      %li <span class="nonjs" data-jsalt="The">the</span> deposit must be in a #{link_to 'government-backed deposit protection scheme', 'https://www.gov.uk/tenancy-deposit-protection/overview', class: 'external', rel: 'external', target: '_blank'} and all requirements of the scheme fulfilled.
+      %li <span class="nonjs" data-jsalt="The">the</span> defendant must have been given all information about the deposit scheme that #{link_to 'landlords are required to provide', 'https://www.gov.uk/tenancy-deposit-protection/information-landlords-must-give-tenants', class: 'external', rel: 'external', target: '_blank'}
 
   .sub-panel.extra.hide.js-money-deposit
     = form.date_select_field_set :information_given_date, 'Enter the date when this information was given to the defendant', class: 'date-picker full', date_select_options: @date_select_options
