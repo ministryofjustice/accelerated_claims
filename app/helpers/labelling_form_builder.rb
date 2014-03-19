@@ -21,7 +21,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   def radio_button_fieldset attribute, legend, options={}
     set_class_and_id attribute, options
 
-    options[:choice] ||= {'Yes'=>'Yes', 'No'=>'No'}
+    options[:choice] ||= {'Yes'=>'Yes', 'No'=>'no'}
 
     @template.field_set_tag label_for(attribute, '<span class="legendText">'+legend+'</span>'.html_safe), options do
       @template.surround("<div class='options'>".html_safe, "</div>".html_safe) do
