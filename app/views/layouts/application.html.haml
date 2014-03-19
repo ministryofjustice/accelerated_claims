@@ -6,9 +6,6 @@
   :erb
     <!--[if IE 7]> <%= stylesheet_link_tag "ie7", media: "all" %> <![endif]-->
 
-- content_for :javascripts do
-  :erb
-    <!--[if gte IE 8]><!--> <%= javascript_include_tag "application" %> <!--<![endif]-->
 
 - content_for :head do
   = csrf_meta_tag
