@@ -23,7 +23,7 @@ class Claim < BaseClass
     json_in.each do |attribute, submodel_data|
       submodel_data.each do |key, value|
         value = 'Yes' if(value.class.name == 'TrueClass')
-        value = 'no' if(value.class.name == 'FalseClass')
+        value = 'No' if(value.class.name == 'FalseClass')
         json_out["#{attribute}_#{key}"] = value
       end
     end
@@ -64,7 +64,7 @@ class Claim < BaseClass
   end
 
   def tenancy_agreement_status hash
-    if hash["demoted_tenancy_demoted_tenancy"] == 'no'
+    if hash["demoted_tenancy_demoted_tenancy"] == 'No'
       set_replacement_tenancy_agreement_status hash if latest_tenancy_agreement? hash
     end
   end

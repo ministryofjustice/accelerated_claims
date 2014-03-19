@@ -4,8 +4,8 @@ describe Tenancy do
   let(:tenancy) do
     Tenancy.new(start_date: Date.parse("2010-01-01"),
                 latest_agreement_date: Date.parse("2010-01-01"),
-                reissued_for_same_property: 'no',
-                reissued_for_same_landlord_and_tenant: 'no',
+                reissued_for_same_property: 'No',
+                reissued_for_same_landlord_and_tenant: 'No',
                 assured_shorthold_tenancy_notice_served_by: 'Mr Brown',
                 assured_shorthold_tenancy_notice_served_date: Date.parse("2013-01-01"))
   end
@@ -18,8 +18,8 @@ describe Tenancy do
       "latest_agreement_date_day" => "01",
       "latest_agreement_date_month" => "01",
       "latest_agreement_date_year" => "2010",
-      "agreement_reissued_for_same_property" => 'no',
-      "agreement_reissued_for_same_landlord_and_tenant" => 'no',
+      "agreement_reissued_for_same_property" => 'No',
+      "agreement_reissued_for_same_landlord_and_tenant" => 'No',
       "assured_shorthold_tenancy_notice_served_by" => 'Mr Brown',
       "assured_shorthold_tenancy_notice_served_date_day" => "01",
       "assured_shorthold_tenancy_notice_served_date_month" => "01",
@@ -43,8 +43,8 @@ describe Tenancy do
   describe 'when dates are blank' do
     before do
       @tenancy = Tenancy.new(
-        reissued_for_same_property: 'no',
-        reissued_for_same_landlord_and_tenant: 'no',
+        reissued_for_same_property: 'No',
+        reissued_for_same_landlord_and_tenant: 'No',
        "start_date(3i)"=>"",
        "start_date(2i)"=>"",
        "start_date(1i)"=>"",
@@ -55,7 +55,7 @@ describe Tenancy do
     end
 
     it 'should not be valid' do
-      @tenancy.should_not be_valid
+      @tenancy.should be_valid
     end
 
     it 'should have nil start date' do

@@ -68,7 +68,7 @@ def claim_post_data
       "order" =>
       {
         "possession" => 'Yes',
-        "cost" => 'no'
+        "cost" => 'No'
       },
       "defendant_one"=>
       {
@@ -102,8 +102,8 @@ def claim_post_data
         "latest_agreement_date(3i)" => "1",
         "latest_agreement_date(2i)" => "1",
         "latest_agreement_date(1i)" => "2010",
-        "reissued_for_same_property" => 'no',
-        "reissued_for_same_landlord_and_tenant" => 'no',
+        "reissued_for_same_property" => 'No',
+        "reissued_for_same_landlord_and_tenant" => 'No',
         "assured_shorthold_tenancy_notice_served_by" => 'Mr Brown',
         "assured_shorthold_tenancy_notice_served_date(3i)" => "1",
         "assured_shorthold_tenancy_notice_served_date(2i)" => "12",
@@ -154,14 +154,14 @@ def claim_formatted_data
     "notice_expiry_date_month" => "02",
     "notice_expiry_date_year" => "2014",
     "notice_served_by" => "Somebody",
-    "order_cost" => 'no',
+    "order_cost" => 'No',
     "order_possession" => 'Yes',
     "license_multiple_occupation" => 'Yes',
     "license_part2_authority" => "Great authority",
     "license_part2_day" => "02",
     "license_part2_month" => "02",
     "license_part2_year" => "2014",
-    "license_part3" => 'no',
+    "license_part3" => 'No',
     "license_part3_authority" => "",
     "license_part3_day" => "",
     "license_part3_month" => "",
@@ -177,8 +177,8 @@ def claim_formatted_data
     "demoted_tenancy_demotion_order_date_month" => "01",
     "demoted_tenancy_demotion_order_date_year" => "2010",
     'demoted_tenancy_demotion_order_court' => 'Brighton',
-    "tenancy_agreement_reissued_for_same_landlord_and_tenant" => "no",
-    "tenancy_agreement_reissued_for_same_property" => "no",
+    "tenancy_agreement_reissued_for_same_landlord_and_tenant" => "No",
+    "tenancy_agreement_reissued_for_same_property" => "No",
     "tenancy_latest_agreement_date_day" => "01",
     "tenancy_latest_agreement_date_month" => "01",
     "tenancy_latest_agreement_date_year" => "2010",
