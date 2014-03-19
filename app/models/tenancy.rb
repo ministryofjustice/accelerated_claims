@@ -11,7 +11,7 @@ class Tenancy < BaseClass
 
   validates :start_date, presence: { message: 'must be entered' }, unless: :demoted_tenancy
 
-  with_options if: :latest_agreement_date, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] } do |tenancy|
+  with_options if: :latest_agreement_date, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'no'] } do |tenancy|
     tenancy.validates :reissued_for_same_property
     tenancy.validates :reissued_for_same_landlord_and_tenant
   end

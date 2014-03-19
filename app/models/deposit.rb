@@ -1,14 +1,14 @@
 class Deposit < BaseClass
 
   attr_accessor :received
-  validates :received, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
+  validates :received, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'no'] }
 
   attr_accessor :information_given_date
 
   attr_accessor :ref_number
 
   attr_accessor :as_property
-  validates :as_property, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
+  validates :as_property, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'no'] }
 
   def as_json
     json = super
