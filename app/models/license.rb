@@ -19,16 +19,16 @@ class License < BaseClass
 
   def as_json
     default_values = {
-        "multiple_occupation" => 'No',
-        "part2_authority" => '',
-        "part2_day" => '',
-        "part2_month" => '',
-        "part2_year" => '',
-        "part3" => 'No',
-        "part3_authority" => '',
-        "part3_day" => '',
-        "part3_month" => '',
-        "part3_year" => ''
+      "multiple_occupation" => 'No',
+      "part2_authority" => '',
+      "part2_day" => '',
+      "part2_month" => '',
+      "part2_year" => '',
+      "part3" => 'No',
+      "part3_authority" => '',
+      "part3_day" => '',
+      "part3_month" => '',
+      "part3_year" => ''
     }
 
     if in_multiple_occupation?
@@ -43,7 +43,7 @@ class License < BaseClass
         })
       when 'Part3'
         default_values.merge({
-          "multiple_occupation" => 'Yes',
+          "multiple_occupation" => 'No',
           "part3" => 'Yes',
           "part3_authority" => issued_by,
           "part3_day" => day(issued_date),
