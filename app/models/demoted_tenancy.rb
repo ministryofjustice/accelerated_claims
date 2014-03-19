@@ -5,7 +5,7 @@ class DemotedTenancy < BaseClass
   attr_accessor :demotion_order_court
 
   validates :demoted_tenancy, presence: { message: 'must be selected' }
-  validates :demoted_tenancy, inclusion: { in: ['Yes', 'no'] }
+  validates :demoted_tenancy, inclusion: { in: ['Yes', 'No'] }
 
   with_options if: :is_demoted_tenancy? do |tenancy|
     tenancy.validates :demotion_order_date, presence: { message: 'must be selected' }
@@ -32,4 +32,3 @@ class DemotedTenancy < BaseClass
     demotion_order_court.to_s.sub(/ County Court/,'')
   end
 end
-

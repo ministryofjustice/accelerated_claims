@@ -43,13 +43,13 @@ describe Claim do
     context "when it isn't a demoted tenancy" do
       let(:data) do
         claim = claim_post_data['claim']
-        claim["demoted_tenancy"]["demoted_tenancy"] = 'no'
+        claim["demoted_tenancy"]["demoted_tenancy"] = 'No'
         claim
       end
 
       let(:desired_format) do
         format = claim_formatted_data
-        format["demoted_tenancy_demoted_tenancy"] = 'no'
+        format["demoted_tenancy_demoted_tenancy"] = 'No'
         format["tenancy_agreement_reissued_for_same_property"] = 'NA'
         format["tenancy_agreement_reissued_for_same_landlord_and_tenant"] = 'NA'
         format

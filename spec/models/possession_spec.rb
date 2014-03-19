@@ -11,7 +11,7 @@ describe Possession do
 
   describe "when a hearing is not provided" do
     it "should be valid" do
-      defendant.hearing = 'no'
+      defendant.hearing = 'No'
       defendant.should be_valid
     end
   end
