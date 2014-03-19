@@ -5,13 +5,13 @@
       %span.req> *
     .options
       - form.row :possession do
-        = form.check_box :possession, {}, "Yes", "No"
+        = form.check_box :possession, {}, "Yes", "no"
         = form.label :possession, 'deliver up possession of the property'
         - if form.error_for? :possession
           = form.error_span :possession
       - form.row :cost do
-        = form.check_box :cost, {}, "Yes", "No"
+        = form.check_box :cost, {}, "Yes", "no"
         = form.label :cost, 'pay the costs of this claim'
-        
+
   .row.divider
 
