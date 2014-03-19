@@ -28,6 +28,7 @@ class Claim < BaseClass
       end
     end
     add_fee_and_costs json_out
+    tenancy_agreement_status json_out
     json_out
   end
 
@@ -60,6 +61,28 @@ class Claim < BaseClass
       cost = ((hash["fee_court_fee"].to_f * 100) + (hash["claimant_contact_legal_costs"].to_f * 100)) / 100
       hash.merge!({ "total_cost" => "#{cost}" })
     end
+  end
+
+  def tenancy_agreement_status hash
+    if demoted_tenancy? hash
+      set_replacement_tenancy_agreement_status hash if latest_tenancy_agreement? hash
+    end
+  end
+
+  def demoted_tenancy? hash
+    hash["demoted_tenancy_demoted_tenancy"] == 'No'
+  end
+
+  def latest_tenancy_agreement? hash
+    [hash["tenancy_latest_agreement_date_day"],
+     hash["tenancy_latest_agreement_date_month"],
+     hash["tenancy_latest_agreement_date_year"]].all?
+  end
+
+  def set_replacement_tenancy_agreement_status hash
+    hash["tenancy_agreement_reissued_for_same_landlord_and_tenant"] = "NA"
+    hash["tenancy_agreement_reissued_for_same_property"] = "NA"
+    hash
   end
 
   def singular_submodels
