@@ -40,7 +40,7 @@ feature "New claim application" do
       fill_demoted_tenancy
       fill_tenancy
       fill_notice
-      fill_licences
+      fill_no_licence
       fill_deposit
       fill_postponement
       fill_order

@@ -98,6 +98,12 @@ def fill_licences
   select(data["issued_date(1i)"], :from => 'claim_license_issued_date_1i')
 end
 
+def fill_no_licence
+  data = claim_post_data["claim"]["license"]
+  choose 'claim_license_multiple_occupation_no'
+end
+
+
 def fill_deposit
   choose 'claim_deposit_received_yes'
   fill_in 'claim_deposit_ref_number', with: claim_post_data["claim"]["deposit"]["ref_number"]
