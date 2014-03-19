@@ -55,7 +55,7 @@ describe Tenancy do
     end
 
     it 'should not be valid' do
-      @tenancy.should_not be_valid
+      @tenancy.should be_valid
     end
 
     it 'should have nil start date' do
