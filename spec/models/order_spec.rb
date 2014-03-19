@@ -4,7 +4,7 @@ describe Order do
   let(:order) { Order.new(possession: possession, cost: cost) }
 
   let(:possession) { 'Yes' }
-  let(:cost) { 'no' }
+  let(:cost) { 'No' }
   subject { order }
 
   context "when possession Yes" do
@@ -12,7 +12,7 @@ describe Order do
   end
 
   context "when possession no" do
-    let(:possession) { 'no' }
+    let(:possession) { 'No' }
     it { should_not be_valid }
     it 'should have error message' do
       order.valid?
@@ -31,7 +31,7 @@ describe Order do
   end
 
   context "when cost no" do
-    let(:cost) { 'no' }
+    let(:cost) { 'No' }
     it { should be_valid }
   end
 
@@ -39,7 +39,7 @@ describe Order do
     let(:desired_format) do
       {
         "possession" => 'Yes',
-        "cost" => 'no'
+        "cost" => 'No'
       }
     end
 
