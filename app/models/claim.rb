@@ -15,7 +15,6 @@ class Claim < BaseClass
     json_in = {}
     attributes_from_submodels.each do |attribute, model|
       submodel_data = instance_variable_get("@#{attribute}").as_json
-
       json_in[attribute] = submodel_data
     end
 
@@ -27,6 +26,8 @@ class Claim < BaseClass
         json_out["#{attribute}_#{key}"] = value
       end
     end
+
+    populate_defendants_address_if_blank json_out
     add_fee_and_costs json_out
     tenancy_agreement_status json_out
     json_out
@@ -53,6 +54,19 @@ class Claim < BaseClass
   end
 
   private
+
+  def populate_defendants_address_if_blank hash
+    if defendant_one.present? && defendant_one.address_blank?
+      hash['defendant_one_address'] << hash['property_address']
+      hash['defendant_one_postcode1'] = hash['property_postcode1']
+      hash['defendant_one_postcode2'] = hash['property_postcode2']
+    end
+    if defendant_two.present? && defendant_two.address_blank?
+      hash['defendant_two_address'] << hash['property_address']
+      hash['defendant_two_postcode1'] = hash['property_postcode1']
+      hash['defendant_two_postcode2'] = hash['property_postcode2']
+    end
+  end
 
   def add_fee_and_costs hash
     if hash["claimant_contact_legal_costs"].blank?

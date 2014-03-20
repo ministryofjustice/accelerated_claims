@@ -26,4 +26,7 @@ module Address
     end
   end
 
+  def address_blank?
+    (street.blank? && town.blank? && postcode.blank?)
+  end
 end
