@@ -58,6 +58,7 @@ module AcceleratedClaims
     config.assets.enabled = true
     config.assets.precompile += %w(
       ie7.css
+      ie8.css
     )
 
     
