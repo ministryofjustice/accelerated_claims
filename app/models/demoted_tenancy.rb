@@ -16,6 +16,10 @@ class DemotedTenancy < BaseClass
     demoted_tenancy == 'Yes'
   end
 
+  def date_and_court_set?
+    (!demotion_order_date.blank? && !demotion_order_court.blank?)
+  end
+
   def as_json
     {
       "demoted_tenancy" => demoted_tenancy,
