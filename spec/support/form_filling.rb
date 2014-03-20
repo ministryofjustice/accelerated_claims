@@ -50,8 +50,20 @@ end
 def fill_demoted_tenancy
   data = claim_post_data["claim"]["demoted_tenancy"]
   choose 'claim_demoted_tenancy_demoted_tenancy_no'
+
+  select_date 'demotion_order_date', 'demoted_tenancy_demotion_order_date', data
+  fill_in 'claim_demoted_tenancy_demotion_order_court', with: data['demotion_order_court']
 end
 
+def select_date date_field, data_field, data
+  day = data["#{date_field}(3i)"]
+  month = get_month(data["#{date_field}(2i)"])
+  year = data["#{date_field}(1i)"]
+
+  select(  day, :from => "claim_#{data_field}_3i")
+  select(month, :from => "claim_#{data_field}_2i")
+  select( year, :from => "claim_#{data_field}_1i")
+end
 
 def fill_tenancy
   data = claim_post_data["claim"]["tenancy"]
