@@ -8,7 +8,8 @@
   .sub-panel.extra.rel
     = form.date_select_field_set :latest_agreement_date, 'Date of the most recent tenancy agreement with the defendant', class: 'date-picker full', date_select_options: @date_select_options
 
-    %p If you have replaced the original tenancy agreement with a new tenancy agreement, or replaced a replacement tenancy agreement: 
+    .row.full
+      %p If you have replaced the original tenancy agreement with a new tenancy agreement, or replaced a replacement tenancy agreement: 
 
     = form.radio_button_fieldset :reissued_for_same_property, 'Is the tenancy agreement for the same property?', class: 'striped-choice full'
 
