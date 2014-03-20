@@ -1,6 +1,16 @@
 require "spec_helper"
 
 feature "New claim application" do
+
+  def values_from_pdf file
+    fields = `pdftk #{file} dump_data_fields`
+    fields.strip.split('---').each_with_object({}) do |fieldset, hash|
+      field = fieldset[/FieldName: ([^\s]+)/,1]
+      value = fieldset[/FieldValue: ([^\s]+)/,1]
+      hash[field] = value if field.present?
+    end
+  end
+
   context "with two claimants" do
     scenario "fill in claim details" do
       visit '/new'
@@ -27,7 +37,18 @@ feature "New claim application" do
       generated_file = '/tmp/a.pdf'
       File.open(generated_file, 'w') { |file| file.write(page.body.encode("ASCII-8BIT").force_encoding("UTF-8")) }
       pre_generated_pdf = File.join Rails.root, "./spec/support/filled-in-form.pdf"
-      diff_pdfs(pre_generated_pdf, generated_file).should be_blank
+
+      generated_values = values_from_pdf generated_file
+      expected_values =  values_from_pdf pre_generated_pdf
+
+      expected_values.each do |field, value|
+        generated_values[field].should == value
+      end
+
+      generated_values["demoted_tenancy_demotion_order_date_day"].should == claim_post_data['claim']['demoted_tenancy']['demotion_order_date(3i)'].rjust(2, '0')
+      generated_values["demoted_tenancy_demotion_order_date_month"].should == claim_post_data['claim']['demoted_tenancy']['demotion_order_date(2i)'].rjust(2, '0')
+      generated_values["demoted_tenancy_demotion_order_date_year"].should == claim_post_data['claim']['demoted_tenancy']['demotion_order_date(1i)']
+      generated_values['demoted_tenancy_demotion_order_court'].should == claim_post_data['claim']['demoted_tenancy']['demotion_order_court'].sub(' County Court','')
     end
   end
 
