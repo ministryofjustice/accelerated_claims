@@ -16,6 +16,15 @@ class Tenancy < BaseClass
 
   validates :start_date, presence: { message: 'must be entered' }, unless: :demoted_tenancy
 
+  def only_start_date_present?
+    start_date.present? && \
+    (latest_agreement_date.blank? &&
+     reissued_for_same_property.blank? &&
+     reissued_for_same_landlord_and_tenant.blank? &&
+     assured_shorthold_tenancy_notice_served_by.blank? &&
+     assured_shorthold_tenancy_notice_served_date.blank?)
+  end
+
   def as_json
     json = super
     json.delete('demoted_tenancy')

@@ -33,6 +33,28 @@ describe Tenancy do
     end
   end
 
+  describe "#only_start_date_present?" do
+    context "when only start date is set everything else isn't" do
+      let(:tenancy) { Tenancy.new(start_date: Date.parse("2010-01-01")) }
+
+      it "should return true" do
+        expect(tenancy.only_start_date_present?).to be_true
+      end
+    end
+
+    context "when only start date and another attribute is set" do
+      let(:tenancy) do
+        Tenancy.new(start_date: Date.parse("2010-01-01"),
+                    latest_agreement_date: Date.parse("2011-01-01"))
+      end
+
+      it "should return false" do
+        expect(tenancy.only_start_date_present?).to be_false
+      end
+    end
+
+  end
+
   describe "agreement_reissued_for_same_property" do
     it "when blank" do
       tenancy.reissued_for_same_property = ""
