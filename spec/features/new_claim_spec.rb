@@ -6,12 +6,23 @@ feature "New claim application" do
     fields = `pdftk #{file} dump_data_fields`
     fields.strip.split('---').each_with_object({}) do |fieldset, hash|
       field = fieldset[/FieldName: ([^\s]+)/,1]
-      value = fieldset[/FieldValue: ([^\s]+)/,1]
+      value = fieldset[/FieldValue: (.+)/,1]
+      value.gsub!('&#13;',"\n") if value.present?
       hash[field] = value if field.present?
     end
   end
 
   context "with two claimants" do
+    def expected_values
+      values = claim_formatted_data
+      values['order_cost'] = 'Yes'
+      values['demoted_tenancy_demoted_tenancy'] = 'No'
+      values['tenancy_agreement_reissued_for_same_landlord_and_tenant'] = 'NA'
+      values['tenancy_agreement_reissued_for_same_property'] = 'NA'
+      values.delete_if{|k,v| k[/defendant_two/]}
+      values
+    end
+
     scenario "fill in claim details" do
       visit '/new'
       fill_property_details
@@ -36,13 +47,11 @@ feature "New claim application" do
       expect(page.response_headers['Content-Type']).to eq "application/pdf"
       generated_file = '/tmp/a.pdf'
       File.open(generated_file, 'w') { |file| file.write(page.body.encode("ASCII-8BIT").force_encoding("UTF-8")) }
-      pre_generated_pdf = File.join Rails.root, "./spec/support/filled-in-form.pdf"
 
       generated_values = values_from_pdf generated_file
-      expected_values =  values_from_pdf pre_generated_pdf
 
       expected_values.each do |field, value|
-        generated_values[field].should == value
+        "#{field}: #{generated_values[field]}".should == "#{field}: #{value}"
       end
 
       generated_values["demoted_tenancy_demotion_order_date_day"].should == claim_post_data['claim']['demoted_tenancy']['demotion_order_date(3i)'].rjust(2, '0')
