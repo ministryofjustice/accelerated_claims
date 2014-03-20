@@ -8,6 +8,59 @@ describe ClaimController do
       get :new
       expect(response).to render_template("new")
     end
+
+    context 'referrer is' do
+      before do
+        @controller.request.stub(:referrer).and_return("http://example.com#{referrer_path}")
+      end
+
+      context '/new' do
+        let(:referrer_path) { '/new' }
+
+        it 'should not clear session' do
+          controller.should_not_receive(:reset_session)
+          get :new
+        end
+      end
+
+      context '/confirmation' do
+        let(:referrer_path) { '/confirmation' }
+
+        it 'should not clear session' do
+          controller.should_not_receive(:reset_session)
+          get :new
+        end
+      end
+
+      context '' do
+        let(:referrer_path) { '' }
+
+        it 'should not clear session' do
+          controller.should_not_receive(:reset_session)
+          get :new
+        end
+      end
+
+      context '/accelerated' do
+        let(:referrer_path) { '/accelerated' }
+
+        it 'should clear session' do
+          @controller.stub(:url_root).and_return '/accelerated'
+          controller.should_receive(:reset_session)
+          get :new
+        end
+      end
+
+      context '/' do
+        let(:referrer_path) { '/' }
+
+        it 'should clear session' do
+          controller.should_receive(:reset_session)
+          get :new
+        end
+      end
+
+    end
   end
 
   describe '#confirmation' do
