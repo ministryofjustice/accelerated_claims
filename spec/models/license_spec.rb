@@ -42,7 +42,7 @@ describe License do
       let(:issued_under_act_part) { 'Part3' }
       it { should be_valid }
       its(:as_json) { should == {
-          "multiple_occupation" => 'Yes',
+          "multiple_occupation" => 'No',
           "part2_authority" => '',
           "part2_day" => '',
           "part2_month" => '',
