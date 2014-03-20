@@ -77,5 +77,24 @@ describe Claim do
         @claim.as_json["total_cost"].should eq @claim.as_json["fee_court_fee"]
       end
     end
+
+    context "when a defendant's address is blank" do
+      let(:data) do
+        hash = claim_post_data['claim']
+        hash['defendant_one'] = hash['defendant_one'].except('street', 'town', 'postcode')
+        hash['defendant_two'] = hash['defendant_two'].except('street', 'town', 'postcode')
+        hash
+      end
+      it "dependant one should render with the property's address" do
+        expect(@claim.as_json['defendant_one_address']).to include @claim.as_json['property_address']
+        expect(@claim.as_json['defendant_one_postcode1']).to eql @claim.as_json['property_postcode1']
+        expect(@claim.as_json['defendant_one_postcode2']).to eql @claim.as_json['property_postcode2']
+      end
+      it "defendant two should render with the property's address" do
+        expect(@claim.as_json['defendant_two_address']).to include @claim.as_json['property_address']
+        expect(@claim.as_json['defendant_one_postcode1']).to eql @claim.as_json['property_postcode1']
+        expect(@claim.as_json['defendant_one_postcode2']).to eql @claim.as_json['property_postcode2']
+      end
+    end
   end
 end
