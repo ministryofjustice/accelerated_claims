@@ -16,7 +16,7 @@ class Defendant < BaseClass
   validates :full_name, length: { maximum: 40 }
 
   def as_json
-    if defendant_present?
+    if present?
       postcode1, postcode2 = split_postcode
       {
         "address" => "#{title} #{full_name}\n#{street}\n#{town}",
@@ -28,8 +28,7 @@ class Defendant < BaseClass
     end
   end
 
-  private
-  def defendant_present?
+  def present?
     !(title.blank? && full_name.blank?)
   end
 end
