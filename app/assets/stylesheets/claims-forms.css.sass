@@ -25,6 +25,11 @@ input[type="text"].pound
   background-repeat: no-repeat
   padding-left: 40px
 
+fieldset, legend
+  @include clearfix
+  margin: 0
+  padding: 0
+
 select, option, legend
   color: $black
 
@@ -110,80 +115,9 @@ span.error
     letter-spacing: 0
     margin-top: 4px
 
-.sub-panel
-  @include clearfix
-  float: left
-  padding-top: 40px
 
-  &.rel
-    padding-top: 0
 
-  &:first-child
-    padding-top: 0
 
-    // .js-enabled &
-    //   padding-top: 40px
-
-  > h4
-    margin: 0 0 40px 90px
-    font-size: 24px
-    clear: both
-    &:first-child
-      margin-bottom: 0
-
-  &.extra
-    background: $white
-    width: 670px
-    margin:
-      left: 90px
-      top: 40px
-      bottom: 15px
-    padding: 35px 0 25px 0
-
-    &.rel
-      margin-top: 0
-
-    .sub-panel
-      padding: 0
-
-      > .row
-        padding: 0 40px 40px
-
-    fieldset, fieldset.full
-      margin: 0
-
-      &.rel
-        padding-top: 0
-        border: none
-
-      &:first-child
-        border-top: none
-
-      legend
-        padding-top: 0
-
-      .options
-        max-width: 590px
-
-        .row
-          max-width: 590px
-
-    > .row.full, > fieldset.full
-      padding-left: 50px
-      padding-right: 50px
-
-    > .row, > .row.full, > fieldset, > fieldset.full
-      &.error
-        padding-left: 27px
-
-    > .row
-      padding-left: 40px
-      &.full.information
-        width: auto
-        margin-left: 50px
-        margin-right: 50px
-      label
-        margin-left: 0
 
 fieldset.plain
   padding-bottom: 20px
@@ -201,6 +135,9 @@ fieldset.plain
     margin-bottom: 20px
   input[type='submit']
     margin-top: 30px
+
+
+
 
 
 .moj-panel
@@ -242,8 +179,10 @@ fieldset.plain
     &:first-child, &.nomargin
       margin-top: 0
 
+
+
+
   fieldset, .row
-    @include clearfix
     float: left
     clear: both
     margin:
@@ -253,7 +192,11 @@ fieldset.plain
     padding:
       top: 5px
       bottom: 5px
-    width: 100%
+
+    width: 480px
+    padding-left: 280px
+    padding-right: 90px
+
 
     &:first-child, &.nomargin
       margin-top: 0
@@ -268,124 +211,21 @@ fieldset.plain
       padding-left: 280px
 
 
-  .row
-    padding-left: 280px
 
+  .row
+    @include clearfix
     &.error
       padding-left: 277px
       border-left: 3px solid $errorcolour
       background-color: $errorbgcolour
-
-    &.divider
-      width: 670px
-      height: 0
-      padding: 0
-      margin:
-        left: 90px
-        top: 25px
-        bottom: 25px
-      overflow: hidden
-      border-bottom: 1px dotted #c2c2c2
-
-    &.full
-      width: 670px
-      padding-left: 90px
-      &.table
-        width: 700px
-        padding-left: 0
-      p
-        width: 670px
-      label, .key
-        width: auto
-        display: block
-        float: none
-        margin: 0
-        &.rel
-          margin-top: 15px
-      textarea
-        width: 660px
-        height: 200px
-        &.small
-          height: 100px
-      input[type="checkbox"]
-        float: left
-        margin-top: 3px
-      input + label
-        width: auto
-        max-width: 630px
-        margin-left: 10px
-      .row
-        padding-left: 190px
-
-      &.warning
-        @include highlight-row
-        background-color: $mellow-red-25
-
-      &.information
-        @include highlight-row
-        background-color: $grey-3
-
-      &.highlight
-        @include highlight-row
-        background-color: $white
-
-      &.warning, &.information, &.highlight
-        p, ul, ol
-          width: auto
-          margin: 1em 0 0 0
-          &:first-child
-            margin-top: 0
-        li
-          margin: 5px 0
-
-      details.full
-        summary
-          padding-left: 26px
-          background-position: 2px 6px
-        label, input, textarea, .help-link
-          display: block
-          margin-top: 10px
-
-    &.map
-      img
-        display: block
-
-    p
-      margin: 0 0 1em
-      &.nomargin
-        margin: 0
-
-    label, .row label, .key
+    
+    label
       width: 180px
       float: left
       display: inline-block
       margin-left: -190px
       margin-right: 10px
       line-height: 25px
-
-    .key
-      .review &
-        color: $grey-1
-      &.total
-        color: $black
-        font-weight: bold
-
-    .value
-      &.total
-        font-weight: bold
-        span
-          display: inline-block
-          &.pound
-            width: 30px
-            margin-left: 12px
-          &.total
-            width: 265px
-
-    .highlight
-      background-color: $white
-      padding: 15px
-      max-height: 180px
-      overflow-y: auto
 
     input[type="text"]
       width: 300px
@@ -410,22 +250,102 @@ fieldset.plain
       &.feedback
         height: 300px
 
-    input.has-button
-      margin: 0
-      + .button
-        margin: 0 0 0 10px
+    &.full
+      width: 670px
+      padding-left: 90px
 
-    .inline-help
-      display: inline-block
-      margin-left: 10px
+      &.warning
+        @include highlight-row
+        background-color: $mellow-red-25
+
+      &.information
+        @include highlight-row
+        background-color: $grey-3
+
+      &.highlight
+        @include highlight-row
+        background-color: $white
+
+      &.warning, &.information, &.highlight
+        p, ul, ol
+          width: auto
+          margin: 1em 0 0 0
+          &:first-child
+            margin-top: 0
+        li
+          margin: 5px 0
+
+      p
+        width: 670px
+      label
+        width: auto
+        display: block
+        float: none
+        margin: 0
+      textarea
+        width: 660px
+        height: 200px
+        &.small
+          height: 100px
+      input[type="checkbox"]
+        float: left
+        margin-top: 3px
+      input + label
+        width: auto
+        max-width: 630px
+        margin-left: 10px
+
+
+    &.divider
+      width: 670px
+      height: 0
+      padding: 0
+      margin:
+        left: 90px
+        top: 25px
+        bottom: 25px
+      overflow: hidden
+      border-bottom: 1px dotted #c2c2c2
+
+
 
   fieldset
-    padding-left: 280px
 
     &.error
       padding-left: 277px
       border-left: 3px solid $errorcolour
       background-color: $errorbgcolour
+
+    &.date-picker
+
+      .row
+        padding:
+          top: 0
+          left: 0
+          right: 0
+        clear: none
+
+    &.full
+      padding-left: 90px
+      width: 670px
+
+      legend
+        margin:
+          left: 0
+          bottom: 10px
+        width: 670px
+        display: block
+      
+      .options
+        .row
+          width: 670px
+          clear: both
+        label
+          width: 610px
+
+      .row.error
+        span.error
+          padding-left: 52px
 
     legend
       width: 180px
@@ -433,225 +353,116 @@ fieldset.plain
       float: left
       line-height: 25px
 
-    .row
-      clear: right
-      margin-top: 15px
-      line-height: 1
+    .options
+      @include clearfix
+      float: left
+      width: 480px
+      position: relative
 
-      &:first-child
-        margin-top: 0
+      .row
+        clear: right
+        position: relative
+        margin-top: 15px
+        width: 480px
+        padding:
+          left: 0
+          right: 0
+
+        &:first-child
+          margin-top: 0
+
+        input[type="checkbox"], input[type="radio"]
+          display: inline-block
+          margin:
+            left: 10px
+            top: 5px
+          width: 40px
+          float: left
+
+        label
+          display: inline-block
+          margin-left: 0
+          cursor: pointer
 
     > .row
       &:first-of-type
         margin-top: 0
 
-    > div
-      float: left
 
-    &.striped-choice
 
-      .row
-        margin-top: 5px
 
-        &.rel
-          margin-top: 15px
 
-        &:first-child
-          margin-top: 0
-    
-      legend
-        padding-top: 10px
+.sub-panel
+  @include clearfix
+  float: left
+  padding-top: 40px
 
-    &.full
-      padding-left: 90px
-      padding-right: 90px
-      max-width: 670px
-      &.error
-        padding-left: 87px
+  &.rel
+    padding-top: 0
 
-      legend
-        width: auto
-        margin-left: 0
+  &:first-child
+    padding-top: 0
 
-      .row
-        clear: both
-        margin-top: 5px
 
-        &:first-child
-          margin-top: 5px
+  > h4
+    margin: 0 0 40px 90px
+    font-size: 24px
+    clear: both
+    &:first-child
+      margin-bottom: 0
 
-      details
-        summary
-          padding-left: 25px
+  &.extra
+    background: $white
+    width: 670px
+    margin:
+      left: 90px
+      top: 40px
+      bottom: 15px
+    padding: 35px 0 25px 0
 
-    .row
-      width: 100%
-      padding-left: 0
-      min-width: 0
-      position: relative
-      &.checked
-        background-color: $light-blue-25
-      &.error
-        padding-left: 0
-        span.error
-          padding-left: 35px
+    &.rel
+      margin-top: 0
 
-      input[type="checkbox"], input[type="radio"]
-        display: inline-block
-        height: 40px
-        margin-left: 10px
-
+    > .row
+      width: 400px
+      padding:
+        left: 230px
+        right: 40px
       label
-        position: absolute
-        padding-left: 35px
-        padding-top: 10px
-        left: 190px
-        right: 0
-        top: 5px
-        bottom: 0
-        cursor: pointer
-        width: auto
+        margin-left: -190px
+        width: 180px
 
-    .options
-      width: 100%
-      position: relative
+      &.full
+        width: 510px
+        padding:
+          left: 40px
+          right: 40px
 
-
-details
-  &[open], &.open
-    summary
-      color: $link-active-colour
-  p
-    margin-top: 0
-  .row:first-of-type
-    margin-top: 10px
+        label
+          margin-left: 0
+          width: 590px
+          display: block
 
 
-.no-details
-  details
-    summary
-      background: image-url('summary-arrow-closed.gif') 168px 6px no-repeat
-    &.full
-      summary
-        background-position: 2px 6px
-    &.open
-      summary
-        background-image: image-url('summary-arrow-open.gif')
-    
+    > fieldset
 
-summary
-  padding-left: 190px
-  color: $link-colour
-  text-decoration: underline
-  cursor: pointer
+      &.full
+        width: 510px
+        padding:
+          left: 40px
+          right: 40px
 
-  &:focus
-    outline: none
-  &:hover
-    color: $link-active-colour
+        legend
+          margin:
+            left: 0
+            bottom: 10px
+          width: 590px
+        .row
+          width: 590px
+          label
+            width: 500px
 
 
-
-.unpaid-rent-table, .tablescroll
-  width: 670px
-  table-layout: fixed
-  border-collapse: separate
-  .full.table &
-    width: 700px
-  td, th
-    text-align: right
-    background-color: $white
-    padding: 10px 15px
-    &.date
-      width: 145px
-      text-align: left
-    &.remove
-      width: 30px
-      text-align: center
-      padding: 0
-      overflow: hidden
-      background-color: $grey-3
-      a
-        padding: 1px 4px
-        margin-left: 2px
-        text-decoration: none
-        display: block
-        font-size: 30px
-        line-height: 34px
-        width: 18px
-        height: 30px
-        overflow: hidden
-        color: $grey-1
-        text-align: center
-        &:hover
-          color: $grey-3
-          background-color: $grey-1
-    &.amount, &.paid, &.unpaid
-      width: 135px
-  thead
-    th
-      border-bottom: 1px solid #b7b7b7
-  tfoot
-    td
-      text-align: left
-      font-weight: bold
-      border-top: 1px solid #b7b7b7
-  tbody
-    max-height: 200px
-    overflow-y: auto
-    td
-      border-top: 1px dotted #c2c2c2
-    tr:first-child
-      td
-        border: none
-  .unpaid
-    background-color: $turquoise-25
-    text-align: right
-  thead, tfoot
-    .blank
-      background-color: transparent
-      padding: 0
-
-.files
-  ul
-    list-style: none
-    margin: 10px 0 0
-    padding: 0
-    li
-      line-height: 40px
-      margin-top: 5px
-      padding-left: 40px
-      background: $turquoise-25 image-url('attachment.png') 10px 6px no-repeat
-      clear: both
-      position: relative
-
-      &:first-child
-        margin-top: 0
-
-      a
-        float: right
-        margin-right: 10px
-
-        &.x
-          float: none
-          position: absolute
-          right: 5px
-          top: 5px
-          width: 30px
-          height: 30px
-          overflow: hidden
-          line-height: 36px
-          text-align: center
-          color: $turquoise
-          text-decoration: none
-          font-weight: normal
-          font-size: 32px
-          padding: 0
-          margin: 0
-
-          &:hover
-            background-color: $turquoise
-            color: $turquoise-25
 
 .confirmation-intro
   h1

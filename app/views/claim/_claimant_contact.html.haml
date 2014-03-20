@@ -1,10 +1,10 @@
 = claim_form.fields_for claimant_field, claimant_contact, builder: LabellingFormBuilder do |form|
   .sub-panel.extra.rel.js-yesno.yesno-solicitor(data-yesnoid='yesno-solicitor' data-yesnoreq='true')
-    .row
-      Are there any legal costs? (eg if this form is being completed by a <strong>legal representative</strong>)
-    = form.text_field_row :legal_costs, label: 'Legal representatives costs', class: 'legal_costs', input_class: 'pound'
+    .row.full
+      = 'Are there any legal costs? (eg if this form is being completed by a <strong>legal representative</strong>)'.html_safe
+    = form.text_field_row :legal_costs, label: 'Legal representative\'s costs', class: 'legal_costs', input_class: 'pound'
   .sub-panel.extra.rel.js-yesno.yesno-correspondance(data-yesnoid='yesno-correspondance' data-yesnoreq='true')
-    .row
+    .row.full
       = 'Is there a separate <strong>correspondence address</strong>?'.html_safe
     = form.text_field_row :title,    class: 'title', input_class: 'smalltext'
     = form.text_field_row :full_name, class: 'rel '
@@ -12,14 +12,14 @@
     = form.text_field_row :town,     class: 'rel town'
     = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'
   .sub-panel.extra.rel.js-yesno.yesno-contactmethods(data-yesnoid='yesno-contactmethods' data-yesnoreq='true')
-    .row
+    .row.full
       = 'Are there <strong>additional contact details</strong>? (for the person we should contact about the case)'.html_safe
     = form.text_field_row :email, class: 'email'
     = form.text_field_row :phone, class: 'rel phone'
     = form.text_field_row :fax, class: 'rel fax'
     = form.text_field_row :dx_number, label: 'DX number', class: 'rel dx_number'
   .sub-panel.extra.rel.js-yesno.yesno-reference(data-yesnoid='yesno-reference' data-yesnoreq='true')
-    .row
+    .row.full
       = 'Would you like to add your own <strong>reference number</strong>?'.html_safe
     = form.text_field_row :reference_number, class: 'rel reference_number'
 
