@@ -17,6 +17,21 @@ describe DemotedTenancy do
     }
   end
 
+  describe "#demoted_tenancy?" do
+    context "when demoted tenancy is set" do
+      it "should return true" do
+        expect(demoted_tenancy.demoted_tenancy?).to be_true
+      end
+    end
+
+    context "when demoted tenancy is not set" do
+      before { demoted_tenancy.demoted_tenancy = 'No' }
+      it "should return false" do
+        expect(demoted_tenancy.demoted_tenancy?).to be_false
+      end
+    end
+  end
+
   describe "when given all valid values" do
     it "should be valid" do
       demoted_tenancy.should be_valid

@@ -7,12 +7,12 @@ class DemotedTenancy < BaseClass
   validates :demoted_tenancy, presence: { message: 'must be selected' }
   validates :demoted_tenancy, inclusion: { in: ['Yes', 'No'] }
 
-  with_options if: :is_demoted_tenancy? do |tenancy|
+  with_options if: :demoted_tenancy? do |tenancy|
     tenancy.validates :demotion_order_date, presence: { message: 'must be selected' }
     tenancy.validates :demotion_order_court, presence: { message: 'must be present' }
   end
 
-  def is_demoted_tenancy?
+  def demoted_tenancy?
     demoted_tenancy == 'Yes'
   end
 

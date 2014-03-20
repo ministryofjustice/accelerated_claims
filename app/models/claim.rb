@@ -116,7 +116,7 @@ class Claim < BaseClass
     attributes_from_submodels.each do |attribute_name, model|
       init_submodel(claim_params, attribute_name, model)
     end
-    tenancy.demoted_tenancy = demoted_tenancy.is_demoted_tenancy?
+    tenancy.demoted_tenancy = demoted_tenancy.demoted_tenancy?
     self.form_state = claim_params['form_state'] if claim_params['form_state'].present?
   end
 
