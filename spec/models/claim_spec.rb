@@ -29,7 +29,12 @@ describe Claim do
   describe '#as_json' do
     context "when both claim fee & legal cost are known" do
       let(:data) { claim_post_data['claim'] }
-      let(:desired_format) { claim_formatted_data }
+      let(:desired_format) do
+        format = claim_formatted_data
+        format["tenancy_agreement_reissued_for_same_landlord_and_tenant"] = ""
+        format["tenancy_agreement_reissued_for_same_property"] = ""
+        format
+      end
 
       it 'should return the right JSON' do
         expect(@claim.as_json).to eql desired_format
@@ -40,24 +45,188 @@ describe Claim do
       end
     end
 
-    context "when it isn't a demoted tenancy" do
-      let(:data) do
-        claim = claim_post_data['claim']
-        claim["demoted_tenancy"]["demoted_tenancy"] = 'No'
-        claim
+    describe "when it is a demoted tenancy" do
+      describe "when demotion order & county court are filled in" do
+        let(:data) do
+          claim = claim_post_data['claim']
+          claim["demoted_tenancy"]["demoted_tenancy"] = 'Yes'
+          claim
+        end
+        let(:desired_format) do
+          format = claim_formatted_data
+          format["tenancy_agreement_reissued_for_same_property"] = ''
+          format["tenancy_agreement_reissued_for_same_landlord_and_tenant"] = ''
+          format
+        end
+        let(:fields) do
+          ["tenancy_agreement_reissued_for_same_property",
+           "tenancy_agreement_reissued_for_same_landlord_and_tenant"]
+        end
+
+        it "should have no values for tenancy agreement reissued fields" do
+          fields.each do |field|
+            expect(@claim.as_json[field]).to eql ""
+          end
+        end
+      end
+    end
+
+    describe "when it isn't a demoted tenancy" do
+      context "and there is only one tenancy agreement" do
+        let(:data) do
+          claim = claim_post_data['claim']
+          claim["demoted_tenancy"]["demoted_tenancy"] = 'No'
+          claim["demoted_tenancy"]["demotion_order_date(3i)"] = ''
+          claim["demoted_tenancy"]["demotion_order_date(2i)"] = ''
+          claim["demoted_tenancy"]["demotion_order_date(1i)"] = ''
+          claim["demoted_tenancy"]["demotion_order_court"] = ''
+          claim.delete("tenancy")
+          claim.merge!({ "tenancy" => { "start_date" => Date.parse("2010-01-01"),
+                                        "assured_shorthold_tenancy_notice_served_by" => "" }})
+          claim
+        end
+
+        let(:desired_format) do
+          format = claim_formatted_data
+          format["demoted_tenancy_demoted_tenancy"] = 'No'
+          format["demoted_tenancy_demotion_order_court"] = ""
+          format["demoted_tenancy_demotion_order_date_day"] = ""
+          format["demoted_tenancy_demotion_order_date_month"] = ""
+          format["demoted_tenancy_demotion_order_date_year"] = ""
+          format["tenancy_agreement_reissued_for_same_property"] = 'NA'
+          format["tenancy_agreement_reissued_for_same_landlord_and_tenant"] = 'NA'
+          format["tenancy_assured_shorthold_tenancy_notice_served_by"] = ""
+          format["tenancy_assured_shorthold_tenancy_notice_served_date_day"] = ""
+          format["tenancy_assured_shorthold_tenancy_notice_served_date_month"] = ""
+          format["tenancy_assured_shorthold_tenancy_notice_served_date_year"] = ""
+          format["tenancy_latest_agreement_date_day"] = ""
+          format["tenancy_latest_agreement_date_month"] = ""
+          format["tenancy_latest_agreement_date_year"] = ""
+          format
+        end
+
+        context "and it's the only tenancy" do
+          it 'should return the right JSON' do
+            expect(@claim.as_json).to eql desired_format
+          end
+        end
       end
 
-      let(:desired_format) do
-        format = claim_formatted_data
-        format["demoted_tenancy_demoted_tenancy"] = 'No'
-        format["tenancy_agreement_reissued_for_same_property"] = 'NA'
-        format["tenancy_agreement_reissued_for_same_landlord_and_tenant"] = 'NA'
-        format
-      end
+      context "and there is more than one tenancy agreement" do
+        let(:data) do
+          claim = claim_post_data['claim']
+          claim["demoted_tenancy"]["demoted_tenancy"] = 'No'
+          claim["demoted_tenancy"]["demotion_order_date(3i)"] = ''
+          claim["demoted_tenancy"]["demotion_order_date(2i)"] = ''
+          claim["demoted_tenancy"]["demotion_order_date(1i)"] = ''
+          claim["demoted_tenancy"]["demotion_order_court"] = ''
+          claim["tenancy"]["latest_agreement_date"] = Date.parse("2010-01-01")
+          claim
+        end
 
-      context "and it's the only tenancy" do
-        it 'should return the right JSON' do
-          expect(@claim.as_json).to eql desired_format
+        let(:desired_format) do
+          format = claim_formatted_data
+          format["demoted_tenancy_demoted_tenancy"] = 'No'
+          format["demoted_tenancy_demotion_order_court"] = ""
+          format["demoted_tenancy_demotion_order_date_day"] = ""
+          format["demoted_tenancy_demotion_order_date_month"] = ""
+          format["demoted_tenancy_demotion_order_date_year"] = ""
+          format["tenancy_agreement_reissued_for_same_property"] = 'No'
+          format["tenancy_agreement_reissued_for_same_landlord_and_tenant"] = 'No'
+          format
+        end
+
+        context "and it's the only tenancy" do
+          it 'should return the right JSON' do
+            expect(@claim.as_json).to eql desired_format
+          end
+        end
+
+        context "and it wasn't reissued for the same property" do
+          let(:desired_format) do
+            format = claim_formatted_data
+            format["demoted_tenancy_demoted_tenancy"] = 'No'
+            format["demoted_tenancy_demotion_order_court"] = ""
+            format["demoted_tenancy_demotion_order_date_day"] = ""
+            format["demoted_tenancy_demotion_order_date_month"] = ""
+            format["demoted_tenancy_demotion_order_date_year"] = ""
+            format["tenancy_agreement_reissued_for_same_property"] = 'No'
+            format["tenancy_agreement_reissued_for_same_landlord_and_tenant"] = 'No'
+            format
+          end
+
+          context "and it's the only tenancy" do
+            it 'should return the right JSON' do
+              expect(@claim.as_json).to eql desired_format
+            end
+          end
+        end
+
+        context "and it is reissued for the same property" do
+          let(:data) do
+            claim = claim_post_data['claim']
+            claim["demoted_tenancy"]["demoted_tenancy"] = 'No'
+            claim["demoted_tenancy"]["demotion_order_date(3i)"] = ''
+            claim["demoted_tenancy"]["demotion_order_date(2i)"] = ''
+            claim["demoted_tenancy"]["demotion_order_date(1i)"] = ''
+            claim["demoted_tenancy"]["demotion_order_court"] = ''
+            claim["tenancy"]["latest_agreement_date"] = Date.parse("2010-01-01")
+            claim["tenancy"]["latest_agreement_date"] = Date.parse("2010-01-01")
+            claim["tenancy"]["reissued_for_same_property"] = 'Yes'
+            claim
+          end
+
+          let(:desired_format) do
+            format = claim_formatted_data
+            format["demoted_tenancy_demoted_tenancy"] = 'No'
+            format["demoted_tenancy_demotion_order_court"] = ""
+            format["demoted_tenancy_demotion_order_date_day"] = ""
+            format["demoted_tenancy_demotion_order_date_month"] = ""
+            format["demoted_tenancy_demotion_order_date_year"] = ""
+            format["tenancy_agreement_reissued_for_same_property"] = 'Yes'
+            format["tenancy_agreement_reissued_for_same_landlord_and_tenant"] = 'No'
+            format
+          end
+
+          context "and it's the only tenancy" do
+            it 'should return the right JSON' do
+              expect(@claim.as_json).to eql desired_format
+            end
+          end
+
+          context "and it's reissued for the same landlord and tenant" do
+            let(:data) do
+              claim = claim_post_data['claim']
+              claim["demoted_tenancy"]["demoted_tenancy"] = 'No'
+              claim["demoted_tenancy"]["demotion_order_date(3i)"] = ''
+              claim["demoted_tenancy"]["demotion_order_date(2i)"] = ''
+              claim["demoted_tenancy"]["demotion_order_date(1i)"] = ''
+              claim["demoted_tenancy"]["demotion_order_court"] = ''
+              claim["tenancy"]["latest_agreement_date"] = Date.parse("2010-01-01")
+              claim["tenancy"]["latest_agreement_date"] = Date.parse("2010-01-01")
+              claim["tenancy"]["reissued_for_same_property"] = 'Yes'
+              claim["tenancy"]["reissued_for_same_landlord_and_tenant"] = 'Yes'
+              claim
+            end
+
+            let(:desired_format) do
+              format = claim_formatted_data
+              format["demoted_tenancy_demoted_tenancy"] = 'No'
+              format["demoted_tenancy_demotion_order_court"] = ""
+              format["demoted_tenancy_demotion_order_date_day"] = ""
+              format["demoted_tenancy_demotion_order_date_month"] = ""
+              format["demoted_tenancy_demotion_order_date_year"] = ""
+              format["tenancy_agreement_reissued_for_same_property"] = 'Yes'
+              format["tenancy_agreement_reissued_for_same_landlord_and_tenant"] = 'Yes'
+              format
+            end
+
+            context "and it's the only tenancy" do
+              it 'should return the right JSON' do
+                expect(@claim.as_json).to eql desired_format
+              end
+            end
+          end
         end
       end
     end
