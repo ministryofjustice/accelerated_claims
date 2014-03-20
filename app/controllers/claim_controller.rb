@@ -7,6 +7,8 @@ class ClaimController < ApplicationController
   end
 
   def new
+    reset_session if referrer_is_landing_page?
+
     @page_title = 'Property possession'
     @date_select_options = {
       order: [:day, :month, :year],
@@ -15,8 +17,8 @@ class ClaimController < ApplicationController
       start_year: Date.today.year,
       end_year: Date.today.year - 30
     }
-    if(c = session[:claim])
-      @claim = Claim.new(c)
+    if(data = session[:claim])
+      @claim = Claim.new(data)
       @errors = @claim.errors unless @claim.valid?
     else
       @claim = Claim.new
@@ -53,5 +55,18 @@ class ClaimController < ApplicationController
 
   def delete_all_pdfs
     FileUtils.rm Dir.glob('/tmp/*pdf')
+  end
+
+  def referrer_is_landing_page?
+    referrer = request.referrer
+    if referrer.present?
+      URI.parse(referrer).path == url_root
+    else
+      false
+    end
+  end
+
+  def url_root
+    config.relative_url_root.present? ? config.relative_url_root : '/'
   end
 end
