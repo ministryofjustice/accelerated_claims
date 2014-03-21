@@ -78,15 +78,21 @@ class Claim < BaseClass
   end
 
   def tenancy_agreement_status hash
-    if hash["demoted_tenancy_demoted_tenancy"] == 'No'
-      set_replacement_tenancy_agreement_status hash if latest_tenancy_agreement? hash
+    if @demoted_tenancy.demoted_tenancy?
+      blank_out_replacement_tenancy_agreement_status hash
+    else
+      set_replacement_tenancy_agreement_status hash if @tenancy.only_start_date_present?
     end
   end
 
-  def latest_tenancy_agreement? hash
-    [hash["tenancy_latest_agreement_date_day"],
-     hash["tenancy_latest_agreement_date_month"],
-     hash["tenancy_latest_agreement_date_year"]].all?
+  def blank_out_replacement_tenancy_agreement_status hash
+    hash["tenancy_agreement_reissued_for_same_landlord_and_tenant"] = ""
+    hash["tenancy_agreement_reissued_for_same_property"] = ""
+    hash
+  end
+
+  def latest_tenancy_agreement?
+    !@tenancy.latest_agreement_date.blank?
   end
 
   def set_replacement_tenancy_agreement_status hash
@@ -116,7 +122,7 @@ class Claim < BaseClass
     attributes_from_submodels.each do |attribute_name, model|
       init_submodel(claim_params, attribute_name, model)
     end
-    tenancy.demoted_tenancy = demoted_tenancy.is_demoted_tenancy?
+    tenancy.demoted_tenancy = demoted_tenancy.demoted_tenancy?
     self.form_state = claim_params['form_state'] if claim_params['form_state'].present?
   end
 
