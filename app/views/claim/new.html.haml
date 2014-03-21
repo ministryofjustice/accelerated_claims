@@ -8,7 +8,8 @@
 
   %section
     %span.right
-      *required
+      %span.req> *
+      required
     %h3.section-header Property to be taken back (possessed)
     .moj-panel
       = render partial: 'property', object: @claim.property, locals: { claim_form: claim_form }

@@ -129,7 +129,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   def label_for attribute, label
     label ||= attribute.to_s.humanize
     required = presence_required?(attribute)
-    label = %Q|#{label}*| if required
+    label = %Q|#{label}<span class="req">*</span>| if required
 
     label = %Q|#{label} #{error_span(attribute)}| if error_for? attribute
 

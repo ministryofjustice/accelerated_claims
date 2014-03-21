@@ -1,7 +1,8 @@
 = claim_form.fields_for order, builder: LabellingFormBuilder do |form|
   %fieldset.striped-choice.full{ id: (form.error_for?(:possession) ? form.error_id_for(:possession) : '') }
-    %legend
-      Check the options below to confirm that you want the court to order that the defendant:*
+    %h3
+      Check the options below to confirm that you want the court to order that the defendant:
+      %span.req> *
     .options
       - form.row :possession do
         = form.check_box :possession, {}, "Yes", "No"
