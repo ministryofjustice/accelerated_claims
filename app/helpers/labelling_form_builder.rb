@@ -124,6 +124,8 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
       if v.is_a?(ActiveModel::Validations::PresenceValidator)
         if conditional = v.options[:if]
           @object.send(conditional)
+        elsif conditional = v.options[:unless]
+          !@object.send(conditional)
         else
           true
         end
