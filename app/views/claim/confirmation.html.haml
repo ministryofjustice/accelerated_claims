@@ -21,7 +21,8 @@
         Step 2: sign the statement of truth on all copies
         .box
           %ul.nodot
-            %li= "And fill in all appropriate fields. This needs to be signed by the claimant in black ink".html_safe
+            %li
+              And fill in all appropriate fields. This needs to be signed by the claimant in black ink
             %li= "The statement of truth is on <strong>page 4</strong> of the form".html_safe
       %li.docs
         Step 3: attach copies of the following documents:
@@ -67,7 +68,7 @@
               %strong 'E'
               
       %li.pound
-        = "Step 4: pay the court fee".html_safe
+        Step 4: pay the court fee
         .box
           %ul.nodot
             %li
@@ -84,4 +85,4 @@
           %ul.nodot
             %li you can choose which court to send this claim to.
             %li use the #{link_to 'court finder', 'https://courttribunalfinder.service.gov.uk/', :class => 'external', :rel => 'external'} to find your nearest court.
-            %li you need to write the court’s name and address <strong>in black ink</strong> at the top of <strong>page 1</strong> and the bottom of <strong>page 4</strong> of the form.
+            %li= "you need to write the court’s name and address <strong>in black ink</strong> at the top of <strong>page 1</strong> and the bottom of <strong>page 4</strong> of the form.".html_safe
