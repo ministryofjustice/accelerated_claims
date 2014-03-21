@@ -1,4 +1,7 @@
 class LabellingFormBuilder < ActionView::Helpers::FormBuilder
+  include ActionView::Helpers::CaptureHelper
+  include ActionView::Helpers::TagHelper
+  include ActionView::Context
 
   def text_field_row(attribute, options={})
     row_input attribute, :text_field, options
@@ -11,7 +14,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   def date_select_field_set attribute, legend, options={}
     set_class_and_id attribute, options
 
-    @template.field_set_tag label_for(attribute, '<span class="legendText">'+legend+'</span>'.html_safe), options do
+    fieldset_tag label_for(attribute, legend), options do
       @template.surround("<div class='row'>".html_safe, "</div>".html_safe) do
         date_select(attribute, options[:date_select_options])
       end
@@ -23,7 +26,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
     options[:choice] ||= {'Yes'=>'Yes', 'No'=>'No'}
 
-    @template.field_set_tag label_for(attribute, '<span class="legendText">'+legend+'</span>'.html_safe), options do
+    fieldset_tag label_for(attribute, legend), options do
       @template.surround("<div class='options'>".html_safe, "</div>".html_safe) do
         options[:choice].map do |label, choice|
           radio_button_row(attribute, label, choice)
@@ -58,6 +61,22 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   private
+
+  def fieldset_tag(legend = nil, options = {}, &block)
+    if options.has_key?(:id)
+      id = options.delete(:id)
+    else
+      id = '_' + SecureRandom.hex(20)
+    end
+
+    legend_options = {:id => id}
+    options[:"aria-describedby"] = id
+
+    output = tag(:fieldset, options, true)
+    output.safe_concat(content_tag(:h3, legend, legend_options)) unless legend.blank?
+    output.concat(capture(&block)) if block_given?
+    output.safe_concat("</fieldset>")
+  end
 
   def set_class_and_id attribute, options
     options[:class] = css_for(attribute, options)
