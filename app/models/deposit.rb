@@ -1,14 +1,14 @@
 class Deposit < BaseClass
 
   attr_accessor :received
-  validates :received, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
-
   attr_accessor :information_given_date
-
   attr_accessor :ref_number
-
   attr_accessor :as_property
-  validates :as_property, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
+
+  validate do |deposit|
+    deposit.errors.add(:received, "Deposit received must be answered") unless %w(Yes No).include?(deposit.received)
+    deposit.errors.add(:as_property, "Deposit received in the form of property must be answered") unless %w(Yes No).include?(deposit.as_property)
+  end
 
   def as_json
     json = super
