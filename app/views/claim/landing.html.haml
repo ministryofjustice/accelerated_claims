@@ -2,25 +2,30 @@
 = render partial: 'shared/flash'
 
 .container.start
-  %p Use this form to evict tenants from your property without a court hearing. Find out more about making an #{link_to 'accelerated property possession claim', 'https://www.gov.uk/gaining-possession-of-a-privately-rented-property-let-on-an-assured-shorthold-tenancy', :class => 'external', :rel => 'external', :id => 'find-out-more'}. You can’t ask tenants to leave before the end of the fixed-term tenancy. 
+  %p There are a number of different ways to evict tenants from your property, use this form to make an #{link_to 'accelerated property possession claim', 'https://www.gov.uk/gaining-possession-of-a-privately-rented-property-let-on-an-assured-shorthold-tenancy', :class => 'external', :rel => 'external', :id => 'find-out-more'}.
 
-  %p You can complete the form online. You’ll then need to print it out and send it to the court along with key documents, eg a copy of the notice to leave the property.
+  %p In most cases the court will make its decision without a court hearing and can order that the property is given back within 14 days. You can’t force tenants to leave before the end of the fixed-term tenancy.
 
-  %p <strong>What you need to make an accelerated property possession claim</strong>
-
-  %p You must have
+  %p= "<strong>You can only make an accelerated property possession claim if:</strong>".html_safe
 
   %ul
-    %li an assured shorthold tenancy or statutory periodic tenancy
-    %li a written tenancy agreement
-    %li a deposit held in a government-backed tenancy deposit protection scheme
-    %li given your tenant(s) at least 2 months’ written #{link_to 'notice', 'https://www.gov.uk/gaining-possession-of-a-privately-rented-property-let-on-an-assured-shorthold-tenancy#seeking-possession-under-section-21', :class => 'external', :rel => 'external', :id => 'notice-to-leave'} to leave the property
+    %li the property is let on an assured shorthold tenancy
+    %li the fixed term of the tenancy has ended and is now a periodic tenancy
+    %li you have a written tenancy agreement
+    %li you have given your tenant(s) at least 2 months’ written #{link_to 'notice', 'https://www.gov.uk/gaining-possession-of-a-privately-rented-property-let-on-an-assured-shorthold-tenancy#seeking-possession-under-section-21', :class => 'external', :rel => 'external', :id => 'notice-to-leave'} to leave the property
+    %li you put the deposit in a government-backed tenancy deposit protection scheme (only if the property was let on or after 6th April 2007)
 
-  %p You’ll have to pay a court fee to start the claim.
+  %p You can’t use this form if you want to claim outstanding rent. Instead you’ll need to file a #{link_to 'standard possession claim', 'https://www.possessionclaim.gov.uk/pcol/', :class => 'external', :rel => 'external', :id => 'pcol'} which will go to a court hearing.
 
-  %p If you want to claim outstanding rent, you’ll need to file a #{link_to 'standard possession claim', 'https://www.possessionclaim.gov.uk/pcol/', :class => 'external', :rel => 'external', :id => 'pcol'} which will go to a court hearing.
+  %p= "<strong>What happens next</strong>".html_safe
 
-  %p <strong>Do you qualify for legal aid?</strong>
+  %ul
+    %li complete the form online 
+    %li print the form out 
+    %li send it to the court along with copies of key documents, eg the tenancy agreement 
+    %li pay a court fee to start the claim.
+
+  %p= "<strong>Do you qualify for legal aid?</strong>".html_safe
 
   %p You may qualify for legal aid. Visit #{link_to 'www.gov.uk/legal-aid', 'https://www.gov.uk/legal-aid', :class => 'external', :rel => 'external', :id => 'legal-aid'} for more information or a citizens advice bureau at #{link_to 'www.adviceguide.org.uk', 'http://www.adviceguide.org.uk', :class => 'external', :rel => 'external', :id => 'advice-guide'}
 
