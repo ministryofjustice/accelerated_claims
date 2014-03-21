@@ -17,8 +17,8 @@ feature "New claim application" do
       values = claim_formatted_data
       values['order_cost'] = 'Yes'
       values['demoted_tenancy_demoted_tenancy'] = 'No'
-      values['tenancy_agreement_reissued_for_same_landlord_and_tenant'] = 'NA'
-      values['tenancy_agreement_reissued_for_same_property'] = 'NA'
+      values['tenancy_agreement_reissued_for_same_landlord_and_tenant'] = 'Yes'
+      values['tenancy_agreement_reissued_for_same_property'] = 'Yes'
       values.delete_if{|k,v| k[/defendant_two/]}
       values
     end
