@@ -17,6 +17,55 @@ describe DemotedTenancy do
     }
   end
 
+  describe "#demoted_tenancy?" do
+    context "when demoted tenancy is set" do
+      it "should return true" do
+        expect(demoted_tenancy.demoted_tenancy?).to be_true
+      end
+    end
+
+    context "when demoted tenancy is not set" do
+      before { demoted_tenancy.demoted_tenancy = 'No' }
+      it "should return false" do
+        expect(demoted_tenancy.demoted_tenancy?).to be_false
+      end
+    end
+  end
+
+  describe "#date_and_court_set?" do
+    context "when demotion order date is set" do
+      context "and demotion order court is set" do
+        it "should return true" do
+          expect(demoted_tenancy.date_and_court_set?).to be_true
+        end
+      end
+
+      context "and demotion order court is not set" do
+        before { demoted_tenancy.demotion_order_date = "" }
+
+        it "should return false" do
+          expect(demoted_tenancy.date_and_court_set?).to be_false
+        end
+      end
+    end
+
+    context "when demotion order court is not set" do
+      before { demoted_tenancy.demotion_order_court = "" }
+
+      it "should return false" do
+        expect(demoted_tenancy.date_and_court_set?).to be_false
+      end
+
+      context "and demotion order court is not set" do
+        before { demoted_tenancy.demotion_order_date = "" }
+
+        it "should return false" do
+          expect(demoted_tenancy.date_and_court_set?).to be_false
+        end
+      end
+    end
+  end
+
   describe "when given all valid values" do
     it "should be valid" do
       demoted_tenancy.should be_valid
