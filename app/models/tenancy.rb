@@ -14,6 +14,8 @@ class Tenancy < BaseClass
     tenancy.validates :reissued_for_same_landlord_and_tenant
   end
 
+  validates :start_date, presence: { message: 'must be entered' }, unless: :demoted_tenancy
+
   def as_json
     json = super
     json.delete('demoted_tenancy')

@@ -43,6 +43,7 @@ describe Tenancy do
   describe 'when dates are blank' do
     before do
       @tenancy = Tenancy.new(
+        demoted_tenancy: true,
         reissued_for_same_property: 'No',
         reissued_for_same_landlord_and_tenant: 'No',
        "start_date(3i)"=>"",
@@ -54,7 +55,7 @@ describe Tenancy do
         )
     end
 
-    it 'should not be valid' do
+    it 'should be valid' do
       @tenancy.should be_valid
     end
 
@@ -62,12 +63,12 @@ describe Tenancy do
       @tenancy.start_date.should be_nil
     end
 
-    context 'and demoted_tenancy is true' do
+    context 'and demoted_tenancy is false' do
       before do
-        @tenancy.demoted_tenancy = true
+        @tenancy.demoted_tenancy = false
       end
-      it 'should be valid' do
-        @tenancy.should be_valid
+      it 'should not be valid' do
+        @tenancy.should_not be_valid
       end
     end
   end
