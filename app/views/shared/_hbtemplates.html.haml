@@ -10,7 +10,9 @@
     {{#if question}}
     {{question}}
     {{/if}}
-    {{#if req}}*{{/if}}
+    {{#if req}}
+    %span.req> *
+    {{/if}}
   
   .options(data-reverse='{{#if reverse}}true{{else}}false{{/if}}')
     .row
