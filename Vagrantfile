@@ -13,9 +13,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize ["modifyvm", :id, "--memory", "1024"]
   end
 
+  # https://www.vagrantup.com/blog/feature-preview-vagrant-1-5-rsync.html
+  config.vm.synced_folder ".", "/srv/accelerated_claims/accelerated_claims", type: "rsync"
+
+  # mount salt required folders
   config.vm.synced_folder "../civil-claims-deploy/providers", "/srv/providers/"
   config.vm.synced_folder "../civil-claims-deploy/salt", "/srv/salt/"
   config.vm.synced_folder "../config/projects/civil-claims/pillar", "/srv/pillar/"
+
 
   config.vm.provision :salt do |salt|
 
