@@ -16,6 +16,8 @@ class Tenancy < BaseClass
 
   validates :start_date, presence: { message: 'must be entered' }, unless: :demoted_tenancy
 
+  validates_with DateValidator, :fields => [:start_date, :latest_agreement_date]
+
   def only_start_date_present?
     start_date.present? && \
     (latest_agreement_date.blank? &&

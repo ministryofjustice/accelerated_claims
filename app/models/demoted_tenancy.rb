@@ -12,6 +12,8 @@ class DemotedTenancy < BaseClass
     tenancy.validates :demotion_order_court, presence: { message: 'must be present' }
   end
 
+  validates_with DateValidator, :fields => [:demotion_order_date]
+
   def demoted_tenancy?
     demoted_tenancy == 'Yes'
   end

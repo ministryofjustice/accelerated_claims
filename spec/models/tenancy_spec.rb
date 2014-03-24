@@ -1,13 +1,20 @@
 require 'spec_helper'
 
 describe Tenancy do
+
+  let(:start_date) { Date.parse("2010-01-01") }
+
   let(:tenancy) do
-    Tenancy.new(start_date: Date.parse("2010-01-01"),
-                latest_agreement_date: Date.parse("2010-01-01"),
-                reissued_for_same_property: 'No',
-                reissued_for_same_landlord_and_tenant: 'No',
-                assured_shorthold_tenancy_notice_served_by: 'Mr Brown',
-                assured_shorthold_tenancy_notice_served_date: Date.parse("2013-01-01"))
+    data = {
+        reissued_for_same_property: 'No',
+        reissued_for_same_landlord_and_tenant: 'No',
+        assured_shorthold_tenancy_notice_served_by: 'Mr Brown',
+        assured_shorthold_tenancy_notice_served_date: Date.parse("2013-01-01")
+    }
+    data.merge! form_date(:start_date, start_date)
+    data.merge! form_date(:latest_agreement_date, Date.parse("2010-01-01"))
+
+    Tenancy.new(data)
   end
 
   let(:desired_format) do
@@ -125,6 +132,19 @@ describe Tenancy do
   describe "#as_json" do
     it "should generate the correct JSON" do
       tenancy.as_json.should eq desired_format
+    end
+  end
+
+  describe 'start date is an invalid date' do
+    let(:start_date) { date = OpenStruct.new; date.year=2010; date.month=2; date.day=31; date }
+
+    it 'should be invalid' do
+      tenancy.should_not be_valid
+    end
+
+    it 'should have invalid date error' do
+      tenancy.valid?
+      tenancy.errors.full_messages.should == ["Start date is invalid date"]
     end
   end
 
