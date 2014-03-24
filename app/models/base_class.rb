@@ -1,6 +1,9 @@
 class BaseClass
   include ActiveModel::Model
   include ActiveModel::Serializers::JSON
+  include ActiveModel::Validations::Callbacks
+
+  after_validation :remove_not_included_in_list_error
 
   def attributes
     instance_values
@@ -80,6 +83,16 @@ class BaseClass
           rescue
           end
         end
+      end
+    end
+  end
+
+  private
+
+  def remove_not_included_in_list_error
+    unless errors.empty?
+      errors.each do |attribute|
+        errors[attribute].delete_if{|m| m == "is not included in the list"}
       end
     end
   end
