@@ -100,4 +100,18 @@ describe License do
     }
   end
 
+  context 'multiple occupation blank' do
+    let(:multiple_occupation) { '' }
+    let(:issued_date) { '' }
+    let(:issued_by) { '' }
+    let(:issued_under_act_part) { '' }
+
+    it { should_not be_valid }
+
+    it 'should not have "not included in the list" error message' do
+      license.valid?
+      license.errors.full_messages.should == ["Multiple occupation must be selected"]
+    end
+  end
+
 end
