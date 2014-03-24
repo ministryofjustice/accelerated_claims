@@ -25,17 +25,18 @@ module AcceleratedClaims
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+    config.i18n.enforce_available_locales = false
 
     ActionDispatch::Response.default_headers = {
       'X-Frame-Options' => 'DENY',
       'X-Content-Type-Options' => 'nosniff',
       'X-XSS-Protection' => '1; mode=block'
     }
-    
+
     config.relative_url_root = ENV['RAILS_RELATIVE_URL_ROOT'] || ''
-    
+
     # disable default <div class="field_with_errors"> wrapping idiocy
-    config.action_view.field_error_proc = Proc.new { |html_tag, instance| 
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance|
       html_tag
     }
 
@@ -61,7 +62,7 @@ module AcceleratedClaims
       ie8.css
     )
 
-    
+
 
   end
 end
