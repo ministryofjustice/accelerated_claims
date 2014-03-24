@@ -11,7 +11,9 @@ class License < BaseClass
     license.validates :issued_under_act_part, presence: { message: 'must be selected' }, inclusion: { in: ['Part2', 'Part3'] }
     license.validates :issued_by, presence: { message: "can't be blank" }
     license.validates :issued_date, presence: { message: "can't be blank" }
+    validates_with DateValidator, :fields => [:issued_date]
   end
+
 
   def in_multiple_occupation?
     multiple_occupation.to_s[/Yes/] ? true : false

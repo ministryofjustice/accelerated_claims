@@ -76,12 +76,17 @@ class BaseClass
           p1 = values[0]
           p2 = ( values[1].size() > 0 ? ( values[1].size() == 1 ? "0#{values[1]}" : values[1] ) : "01" )
           p3 = ( values[2].size() > 0 ? ( values[2].size() == 1 ? "0#{values[2]}" : values[2] ) : "01" )
-          date = [ p1, p2, p3 ].join( "-" )
-          begin
-            date = Date.parse( date )
-            send( "#{field}=", date )
+          date_string = [ p1, p2, p3 ].join( "-" )
+          date = begin
+            Date.parse( date_string )
           rescue
+            obj = OpenStruct.new
+            obj.year=p1.to_i
+            obj.month=p2.to_i
+            obj.day=p3.to_i
+            obj
           end
+          send( "#{field}=", date )
         end
       end
     end
@@ -93,6 +98,18 @@ class BaseClass
     unless errors.empty?
       errors.each do |attribute|
         errors[attribute].delete_if{|m| m == "is not included in the list"}
+      end
+    end
+  end
+end
+
+class DateValidator < ActiveModel::Validator
+  def validate(record)
+    options[:fields].each do |field|
+      if date = record.send(field)
+        unless date.is_a?(Date)
+          record.errors.add(field, 'is invalid date')
+        end
       end
     end
   end
