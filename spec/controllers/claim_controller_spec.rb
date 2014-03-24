@@ -64,10 +64,30 @@ describe ClaimController do
   end
 
   describe '#confirmation' do
-    it 'should render the confirmation page' do
-      get :confirmation
-      expect(response).to render_template("confirmation")
+    context 'with valid claim data' do
+      it 'should render the confirmation page' do
+        @controller.session['claim'] = claim_post_data['claim']
+        get :confirmation
+        expect(response).to render_template("confirmation")
+      end
     end
+      
+    context 'with no claim data' do
+      it 'should redirect to the claim form' do
+        get :confirmation # no session
+        response.should redirect_to('/new')
+      end
+    end 
+
+    context 'with invalid claim data' do
+      it 'should redirect to the claim form' do
+        data = claim_post_data['claim']
+        data['claimant_one'].delete('full_name')
+        @controller.session['claim'] = data
+        get :confirmation
+        response.should redirect_to('/new')
+      end
+    end   
   end
 
   describe '#submission' do
