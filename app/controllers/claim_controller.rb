@@ -26,6 +26,11 @@ class ClaimController < ApplicationController
   end
 
   def confirmation
+    claim = session[:claim]
+    unless (!claim.nil? && Claim.new(claim).valid?)
+      redirect_to_with_protocol(:new)
+    end
+
     @page_title = 'Property possession'
   end
 
