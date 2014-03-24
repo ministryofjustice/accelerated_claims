@@ -29,6 +29,7 @@ deployment and infrastructure configuration, and to test against the application
 To get started, you'll need to have [vagrant](http://www.vagrantup.com/) and [virtualbox](https://www.virtualbox.org/) (along with the 'VirtualBox Extension Pack' from the virtualbox download page) installed and access to the config repo.
 
 ```
+echo "192.168.33.10   civilclaims.local" | sudo tee -a  /etc/hosts
 git clone git@github.com:ministryofjustice/accelerated_claims.git
 git clone git@github.com:ministryofjustice/civil-claims-deploy.git
 git clone <config git repo>
@@ -37,7 +38,7 @@ vagrant up --provision
 ```
 This will take a few minutes, so now's a good time to make a cup of tea. 
 
-Once it finishes, you will be able to see the app landing page on [http://localhost:8080/accelerated](http://localhost:8080/accelerated)
+Once it finishes, you will be able to see the app landing page on [http://civilclaims.local/accelerated](http://civilclaims.local/accelerated)
 
 Reprovision using the `vagrant provision` command, or completely rebuild with:
 ```
