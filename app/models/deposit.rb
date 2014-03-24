@@ -10,6 +10,12 @@ class Deposit < BaseClass
   attr_accessor :as_property
   validates :as_property, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
 
+  with_options if: -> deposit { deposit.received == 'No'} do |deposit|
+    err = 'can\'t be provided if there is no deposit given'
+    deposit.validates :information_given_date, absence: { message: err }
+    deposit.validates :ref_number, absence: { message: err }
+  end
+
   def as_json
     json = super
     json = split_date :information_given_date, json
