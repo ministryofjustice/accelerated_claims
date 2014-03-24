@@ -20,6 +20,7 @@
 
 # dev artifacts
 .vagrant
+vagrant
 /public/assets
 /run_ac_front.sh
 /vendor/bundler
