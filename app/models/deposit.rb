@@ -10,6 +10,8 @@ class Deposit < BaseClass
   attr_accessor :as_property
   validates :as_property, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
 
+  validates_with DateValidator, :fields => [:information_given_date]
+
   with_options if: -> deposit { deposit.received == 'No'} do |deposit|
     err = 'can\'t be provided if there is no deposit given'
     deposit.validates :information_given_date, absence: { message: err }
