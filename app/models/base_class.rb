@@ -69,30 +69,28 @@ class BaseClass
         end
       end
 
-      date_fields.each do |field, value|
-        values = value.sort_by {|a| a[:part] }.collect {|a| a[:value] }
-
-        if values.all?(&:present?)
-          p1 = values[0]
-          p2 = ( values[1].size() > 0 ? ( values[1].size() == 1 ? "0#{values[1]}" : values[1] ) : "01" )
-          p3 = ( values[2].size() > 0 ? ( values[2].size() == 1 ? "0#{values[2]}" : values[2] ) : "01" )
-          date_string = [ p1, p2, p3 ].join( "-" )
-          date = begin
-            Date.parse( date_string )
-          rescue
-            obj = OpenStruct.new
-            obj.year=p1.to_i
-            obj.month=p2.to_i
-            obj.day=p3.to_i
-            obj
-          end
-          send( "#{field}=", date )
-        end
-      end
+      date_fields.each { |field, value| set_date field, value }
     end
   end
 
   private
+
+  def set_date field, value
+    values = value.sort_by {|a| a[:part] }.collect {|a| a[:value] }
+
+    if values.all?(&:present?)
+      p1 = values[0]
+      p2 = ( values[1].size() > 0 ? ( values[1].size() == 1 ? "0#{values[1]}" : values[1] ) : "01" )
+      p3 = ( values[2].size() > 0 ? ( values[2].size() == 1 ? "0#{values[2]}" : values[2] ) : "01" )
+      date_string = [ p1, p2, p3 ].join( "-" )
+      date = begin
+               Date.parse( date_string )
+             rescue
+               InvalidDate.new
+             end
+      send( "#{field}=", date )
+    end
+  end
 
   def remove_not_included_in_list_error
     unless errors.empty?
@@ -106,11 +104,12 @@ end
 class DateValidator < ActiveModel::Validator
   def validate(record)
     options[:fields].each do |field|
-      if date = record.send(field)
-        unless date.is_a?(Date)
-          record.errors.add(field, 'is invalid date')
-        end
+      if record.send(field).is_a?(InvalidDate)
+        record.errors.add(field, 'is invalid date')
       end
     end
   end
+end
+
+class InvalidDate
 end
