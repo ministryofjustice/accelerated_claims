@@ -1,5 +1,5 @@
 ENV["RAILS_ENV"] ||= 'test'
-ENV["PDFTK"] ||= '/usr/local/bin/pdftk'
+ENV["PDFTK"] ||= `which pdftk`.strip
 ENV["ANONYMOUS_PLACEHOLDER_EMAIL"] ||= 'anon@example.com'
 
 require File.expand_path("../../config/environment", __FILE__)
