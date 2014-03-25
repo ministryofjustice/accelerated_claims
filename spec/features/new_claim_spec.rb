@@ -13,21 +13,62 @@ feature "New claim application" do
   end
 
   context "with two claimants" do
-    def expected_values
-      values = claim_formatted_data
-      values['order_cost'] = 'Yes'
-      values['demoted_tenancy_demoted_tenancy'] = 'No'
-      values['demoted_tenancy_demotion_order_date_day'] = ''
-      values['demoted_tenancy_demotion_order_date_month'] = ''
-      values['demoted_tenancy_demotion_order_date_year'] = ''
-      values['demoted_tenancy_demotion_order_court'] = ''
-      values['tenancy_agreement_reissued_for_same_landlord_and_tenant'] = 'Yes'
-      values['tenancy_agreement_reissued_for_same_property'] = 'Yes'
-      values.delete_if { |k,v| k[/defendant_two/] }
-      values
+    scenario "fill in claim details, without demoted tenancy" do
+      def expected_values
+        values = claim_formatted_data
+        values['order_cost'] = 'Yes'
+        values['demoted_tenancy_demoted_tenancy'] = 'No'
+        values['demoted_tenancy_demotion_order_date_day'] = ''
+        values['demoted_tenancy_demotion_order_date_month'] = ''
+        values['demoted_tenancy_demotion_order_date_year'] = ''
+        values['demoted_tenancy_demotion_order_court'] = ''
+        values['tenancy_agreement_reissued_for_same_landlord_and_tenant'] = 'Yes'
+        values['tenancy_agreement_reissued_for_same_property'] = 'Yes'
+        values.delete_if { |k,v| k[/defendant_two/] }
+        values
+      end
+
+      visit '/new'
+      fill_property_details
+      fill_claimant_one
+      fill_claimant_solicitor_address
+      fill_claimant_contact_details
+      fill_claimant_two
+      fill_defendant_one
+      fill_solicitor_cost
+      fill_non_demoted_tenancy
+      fill_tenancy
+      fill_notice
+      fill_licences
+      fill_deposit
+      fill_postponement
+      check_order_possession_and_cost
+      fill_court_fee
+      click_button 'Complete form'
+
+      expect(page).to have_text('You now need to send the completed form and documents to the court to make your claim')
+      click_link 'Print completed form'
+      expect(page.response_headers['Content-Type']).to eq "application/pdf"
+      generated_file = '/tmp/a.pdf'
+      File.open(generated_file, 'w') { |file| file.write(page.body.encode("ASCII-8BIT").force_encoding("UTF-8")) }
+
+      generated_values = values_from_pdf generated_file
+
+      expected_values.each do |field, value|
+        "#{field}: #{generated_values[field]}".should == "#{field}: #{value}"
+      end
     end
 
-    scenario "fill in claim details, without demoted tenancy" do
+    scenario "fill in claim details, with demoted tenancy" do
+      def expected_values
+        values = claim_formatted_data
+        values['order_cost'] = 'Yes'
+        values['tenancy_agreement_reissued_for_same_landlord_and_tenant'] = ''
+        values['tenancy_agreement_reissued_for_same_property'] = ''
+        values.delete_if { |k,v| k[/defendant_two/] }
+        values
+      end
+
       visit '/new'
       fill_property_details
       fill_claimant_one
@@ -57,6 +98,8 @@ feature "New claim application" do
       expected_values.each do |field, value|
         "#{field}: #{generated_values[field]}".should == "#{field}: #{value}"
       end
+
+      demoted_tenancy_check(generated_values)
     end
   end
 
@@ -66,7 +109,7 @@ feature "New claim application" do
       fill_property_details
       fill_claimant_one
       fill_defendant_one
-      fill_demoted_tenancy
+      fill_non_demoted_tenancy
       fill_tenancy
       fill_tenancy_reissued_no
       fill_notice
