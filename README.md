@@ -27,8 +27,10 @@ There's an experimental VM provisioner to create a local development environment
 deployment and infrastructure configuration, and to test against the application in a production-like environment.
 
 To get started, you'll need to have [vagrant](http://www.vagrantup.com/) and [virtualbox](https://www.virtualbox.org/) (along with the 'VirtualBox Extension Pack' from the virtualbox download page) installed and access to the config repo.
+The configuration uses a new feature of Vagrant 1.5, so to make it work you need to ensure that you have the correct version of Vagrant installed. Run `vagrant -v` in your console, and if the result shows `Vagrant 1.4.3` or any other number below 1.5.0 then please follow the installation steps above to get the latest version. 
 
 ```
+echo "192.168.33.10   civilclaims.local" | sudo tee -a  /etc/hosts
 git clone git@github.com:ministryofjustice/accelerated_claims.git
 git clone git@github.com:ministryofjustice/civil-claims-deploy.git
 git clone <config git repo>
@@ -37,7 +39,7 @@ vagrant up --provision
 ```
 This will take a few minutes, so now's a good time to make a cup of tea. 
 
-Once it finishes, you will be able to see the app landing page on [http://localhost:8080/accelerated](http://localhost:8080/accelerated)
+Once it finishes, you will be able to see the app landing page on [http://civilclaims.local/accelerated](http://civilclaims.local/accelerated)
 
 Reprovision using the `vagrant provision` command, or completely rebuild with:
 ```
@@ -48,6 +50,23 @@ cd civil-claims-deploy; git pull; cd ..
 cd accelerated_claims
 vagrant up --provision
 ```
+
+### Syncing code between your local dev environment and vagrant.
+
+A new feature in Vagrant 1.5 is `vagrant rsync` which does away with some of the problems associated with mounted folders.
+The ./accelerated_claims folder is copied into /srv/accelerated_claims (inside the VM) when the machine is provisioned. You can resync any local changes using `vagrant rsync` or use the `vagrant rsync-auto` command to watch for changes in your local directory and auto-sync them to the virtual machine.
+
+When the code changes, you will still need to manually restart supervisor jobs inside the VM. 
+
+```
+vagrant ssh -c "sudo supervisorctl reload all"
+```
+
+Should do the trick.
+
+TODO: 
+Configure Guard to restart supervisord when code changes. Suggest [https://github.com/guard/guard-shell](https://github.com/guard/guard-shell) might be a good way of doing this.
+
 
 
 ## Production deployment
