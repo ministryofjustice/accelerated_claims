@@ -50,9 +50,6 @@ end
 def fill_demoted_tenancy
   data = claim_post_data["claim"]["demoted_tenancy"]
   choose 'claim_demoted_tenancy_demoted_tenancy_no'
-
-  select_date 'demotion_order_date', 'demoted_tenancy_demotion_order_date', data
-  fill_in 'claim_demoted_tenancy_demotion_order_court', with: data['demotion_order_court']
 end
 
 def select_date date_field, data_field, data
