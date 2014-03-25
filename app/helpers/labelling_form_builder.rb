@@ -16,6 +16,9 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
     fieldset_tag label_for(attribute, legend), options do
       @template.surround("<div class='row'>".html_safe, "</div>".html_safe) do
+        if @object.send(attribute).is_a?(InvalidDate)
+          @object.send("#{attribute}=", nil) # nil date to avoid exception on date_select call
+        end
         date_select(attribute, options[:date_select_options])
       end
     end
