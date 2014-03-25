@@ -9,6 +9,8 @@ class Notice < BaseClass
   attr_accessor :expiry_date
   validates :expiry_date, presence: { message: 'must be entered' }
 
+  validates_with DateValidator, :fields => [:date_served, :expiry_date]
+
   def as_json
     json = super
     json = split_date :date_served, json
