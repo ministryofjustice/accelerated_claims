@@ -26,8 +26,44 @@ describe DemotedTenancy do
 
     context "when demoted tenancy is not set" do
       before { demoted_tenancy.demoted_tenancy = 'No' }
+
       it "should return false" do
         expect(demoted_tenancy.demoted_tenancy?).to be_false
+      end
+    end
+  end
+
+  describe "when demoted tenancy is not set" do
+    let(:demoted_tenancy) { DemotedTenancy.new(demoted_tenancy: 'No') }
+    let(:error) { ["can't be provided if it's not for a demoted tenancy"] }
+
+    describe "but demotion order date is set" do
+      before do
+        demoted_tenancy.demotion_order_date = Date.parse("2010-01-01")
+        demoted_tenancy.valid?
+      end
+
+      it "should not allow population of demotion order date" do
+        expect(demoted_tenancy).to_not be_valid
+      end
+
+      it "should have an error message" do
+        expect(demoted_tenancy.errors[:demotion_order_date]).to eq error
+      end
+    end
+
+    describe "but demotion order court is set" do
+      before do
+        demoted_tenancy.demotion_order_court = 'Brighton Court Court'
+        demoted_tenancy.valid?
+      end
+
+      it "should not allow population of demotion order court" do
+        expect(demoted_tenancy).to_not be_valid
+      end
+
+      it "should have an error message" do
+        expect(demoted_tenancy.errors[:demotion_order_court]).to eq error
       end
     end
   end
