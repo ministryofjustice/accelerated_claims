@@ -12,6 +12,12 @@ class DemotedTenancy < BaseClass
     tenancy.validates :demotion_order_court, presence: { message: 'must be present' }
   end
 
+  with_options if: -> demoted_tenancy { demoted_tenancy.demoted_tenancy == 'No' } do |tenancy|
+    err = "can't be provided if it's not for a demoted tenancy"
+    tenancy.validates :demotion_order_date, absence: { message: err }
+    tenancy.validates :demotion_order_court, absence: { message: err }
+  end
+
   validates_with DateValidator, :fields => [:demotion_order_date]
 
   def demoted_tenancy?
