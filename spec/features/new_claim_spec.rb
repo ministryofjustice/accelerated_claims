@@ -17,13 +17,17 @@ feature "New claim application" do
       values = claim_formatted_data
       values['order_cost'] = 'Yes'
       values['demoted_tenancy_demoted_tenancy'] = 'No'
+      values['demoted_tenancy_demotion_order_date_day'] = ''
+      values['demoted_tenancy_demotion_order_date_month'] = ''
+      values['demoted_tenancy_demotion_order_date_year'] = ''
+      values['demoted_tenancy_demotion_order_court'] = ''
       values['tenancy_agreement_reissued_for_same_landlord_and_tenant'] = 'Yes'
       values['tenancy_agreement_reissued_for_same_property'] = 'Yes'
-      values.delete_if{|k,v| k[/defendant_two/]}
+      values.delete_if { |k,v| k[/defendant_two/] }
       values
     end
 
-    scenario "fill in claim details" do
+    scenario "fill in claim details, without demoted tenancy" do
       visit '/new'
       fill_property_details
       fill_claimant_one
@@ -53,11 +57,6 @@ feature "New claim application" do
       expected_values.each do |field, value|
         "#{field}: #{generated_values[field]}".should == "#{field}: #{value}"
       end
-
-      generated_values["demoted_tenancy_demotion_order_date_day"].should == claim_post_data['claim']['demoted_tenancy']['demotion_order_date(3i)'].rjust(2, '0')
-      generated_values["demoted_tenancy_demotion_order_date_month"].should == claim_post_data['claim']['demoted_tenancy']['demotion_order_date(2i)'].rjust(2, '0')
-      generated_values["demoted_tenancy_demotion_order_date_year"].should == claim_post_data['claim']['demoted_tenancy']['demotion_order_date(1i)']
-      generated_values['demoted_tenancy_demotion_order_court'].should == claim_post_data['claim']['demoted_tenancy']['demotion_order_court'].sub(' County Court','')
     end
   end
 
