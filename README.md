@@ -59,9 +59,7 @@ The ./accelerated_claims folder is copied into /srv/accelerated_claims (inside t
 When the code changes, you will still need to manually restart supervisor jobs inside the VM. 
 
 ```
-vagrant ssh
-sudo su
-supervisorctl restart all
+vagrant ssh -c "sudo supervisorctl reload all"
 ```
 
 Should do the trick.
