@@ -25,3 +25,12 @@ def form_date field, date
   }
 end
 
+def values_from_pdf file
+  fields = `pdftk #{file} dump_data_fields`
+  fields.strip.split('---').each_with_object({}) do |fieldset, hash|
+    field = fieldset[/FieldName: ([^\s]+)/,1]
+    value = fieldset[/FieldValue: (.+)/,1]
+    value.gsub!('&#13;',"\n") if value.present?
+    hash[field] = value if field.present?
+  end
+end
