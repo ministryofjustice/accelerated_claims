@@ -10,8 +10,6 @@ require 'capybara/poltergeist'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
-<<<<<<< HEAD
-=======
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app,
     :phantomjs_options => ['--ignore-ssl-errors=yes'],
@@ -29,7 +27,6 @@ if remote = ENV.has_key?('remote_host')
   WebMock.disable! if defined? WebMock
 end
 
->>>>>>> poltergeist for remote feature tests
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
@@ -39,7 +36,6 @@ RSpec.configure do |config|
   config.order = 'random'
 end
 
-
 def form_date field, date
   {
     "#{field}(3i)" => date.try(:day),
@@ -47,7 +43,6 @@ def form_date field, date
     "#{field}(1i)" => date.try(:year)
   }
 end
-<<<<<<< HEAD
 
 def values_from_pdf file
   fields = `pdftk #{file} dump_data_fields`
@@ -58,10 +53,6 @@ def values_from_pdf file
     hash[field] = value if field.present?
   end
 end
-<<<<<<< HEAD
-=======
->>>>>>> poltergeist for remote feature tests
-=======
 
 def load_fixture_data(dataset_number)
   path = File.expand_path(File.join(__FILE__, '..', 'fixtures'))
@@ -74,4 +65,3 @@ def load_fixture_data(dataset_number)
   end
   data
 end
->>>>>>> data improved & pdf download nearly working
