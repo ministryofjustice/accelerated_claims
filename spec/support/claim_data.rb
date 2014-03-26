@@ -13,6 +13,7 @@ def claim_post_data
       {
         "title" => "Mr",
         "full_name" => "Jim Brown",
+        "company_name" => "Winning",
         "street" => "3 Smith St",
         "town" => "Winsum",
         "postcode" => "SW1W 0LU",
@@ -124,7 +125,7 @@ def claim_formatted_data
     "claimant_one_address" => "Mr John Smith\n2 Brown St\nCwmbran",
     "claimant_one_postcode1" => "SW1W",
     "claimant_one_postcode2" => "0LU",
-    "claimant_contact_address" => "Mr Jim Brown\n3 Smith St\nWinsum",
+    "claimant_contact_address" => "Mr Jim Brown\nWinning\n3 Smith St\nWinsum",
     "claimant_contact_postcode1" => "SW1W",
     "claimant_contact_postcode2" => "0LU",
     "claimant_contact_email" => "jim@example.com",

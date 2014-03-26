@@ -55,6 +55,12 @@ describe ClaimantContact do
 
   describe "#as_json" do
     context "when company name isn't supplied" do
+      let(:claimant_contact) do
+        params = claim_post_data['claim']['claimant_contact']
+        params.delete("company_name")
+        ClaimantContact.new(params)
+      end
+
       let(:json_output) do
         {
           "address" => "Mr Jim Brown\n3 Smith St\nWinsum",
