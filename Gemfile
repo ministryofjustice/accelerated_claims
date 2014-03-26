@@ -49,6 +49,7 @@ group :test do
   gem 'guard-rspec'
   gem 'brakeman'
   gem 'ci_reporter'
+  gem "poltergeist"
 end
 
 gem 'pdf-forms', '0.5.5'
