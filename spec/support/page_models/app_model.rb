@@ -1,7 +1,7 @@
 class AppModel
   include Capybara::DSL
 
-  attr_reader :home, :claim_form, :confirmation, :download
+  attr_reader :home, :claim_form, :confirmation_page, :download
 
   def initialize(data)
  #   @home = HomePage.new(data)

@@ -44,12 +44,15 @@ group :development, :test do
 end
 
 group :test do
-  gem 'webmock'
+  #gem 'webmock'
   gem 'capybara'
   gem 'guard-rspec'
   gem 'brakeman'
   gem 'ci_reporter'
   gem "poltergeist"
+  gem 'selenium-webdriver'
+  gem 'curb'
+  gem "show_me_the_cookies"
 end
 
 gem 'pdf-forms', '0.5.5'

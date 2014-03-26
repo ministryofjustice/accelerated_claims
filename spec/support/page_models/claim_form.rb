@@ -31,21 +31,25 @@ class ClaimForm
 
 
   def fill_in_text_field(prefix, key)
-    fill_in("claim_#{prefix}_#{key}", with: @data["claim_#{prefix}_#{key}"]) if @data.key? "claim_#{prefix}_#{key}"
+    fill_in("claim_#{prefix}_#{key}", with: get_data(prefix, key) )
   end
 
-  def sub_data prefix
-    @data['claim'][prefix]
+  def get_data prefix, key
+    @data['claim'][prefix][key]
   end
 
   def select_date prefix, key
-    day = sub_data(prefix)["#{key}(3i)"]
-    month = Date::MONTHNAMES[sub_data(prefix)["#{key}(2i)"].to_i]
-    year = sub_data(prefix)["#{key}(1i)"]
+    data = get_data(prefix, key)
+    if data
+      d = Date.parse(data)
+      day = d.day
+      month = Date::MONTHNAMES[d.month]
+      year = d.year
 
-    select(  day, :from => "claim_#{prefix}_#{key}_3i")
-    select(month, :from => "claim_#{prefix}_#{key}_2i")
-    select( year, :from => "claim_#{prefix}_#{key}_1i")
+      select(  day, :from => "claim_#{prefix}_#{key}_3i")
+      select(month, :from => "claim_#{prefix}_#{key}_2i")
+      select( year, :from => "claim_#{prefix}_#{key}_1i")
+    end
   end
 
   def complete_details_of_person(prefix)

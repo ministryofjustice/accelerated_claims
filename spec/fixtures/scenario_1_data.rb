@@ -82,8 +82,8 @@
     license: {
       multiple_occupation: "No",
       issued_under_act_part: nil,
-      issued_by: nil,
-      issued_date: nil
+      issued_by: "Alf",
+      issued_date: "2014-01-14"
     },
     deposit: {
       received: "Yes",
@@ -97,6 +97,9 @@
     },
     possession: {
       hearing: "No"
+    },
+    fee: {
+      court_fee: "190"
     }
   }
 }

@@ -19,7 +19,9 @@ Capybara.register_driver :poltergeist do |app|
   )
 end
 
-Capybara.javascript_driver = :poltergeist
+# Capybara.javascript_driver = :poltergeist
+Capybara.run_server = true
+Capybara.server_port = 9887
 
 if remote = ENV.has_key?('remote_host')
   Capybara.app_host = ENV['remote_host']
@@ -34,7 +36,6 @@ RSpec.configure do |config|
   config.filter_run :focus
   config.filter_run_excluding :remote unless remote
   #config.filter_run_excluding :js => false if remote
-
   config.order = 'random'
 end
 
@@ -57,5 +58,20 @@ def values_from_pdf file
     hash[field] = value if field.present?
   end
 end
+<<<<<<< HEAD
 =======
 >>>>>>> poltergeist for remote feature tests
+=======
+
+def load_fixture_data(dataset_number)
+  path = File.expand_path(File.join(__FILE__, '..', 'fixtures'))
+  filename = "scenario_#{dataset_number}_data.rb"
+  contents = IO.read(File.join(path, filename)) 
+  data = eval(contents).stringify_keys
+  data['claim'].keys.each do |k| 
+    data['claim'][k].keys.each { |sk| data['claim'][k][sk.to_s] = data['claim'][k].delete(sk) }
+    data['claim'][k.to_s] = data['claim'].delete(k); 
+  end
+  data
+end
+>>>>>>> data improved & pdf download nearly working
