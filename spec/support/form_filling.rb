@@ -161,7 +161,7 @@ end
 def fill_claimant_solicitor_address
   data = claim_post_data["claim"]["claimant_contact"]
 
-  ["title", "full_name", "street", "town", "postcode"].each do |val|
+  ["title", "full_name", "company_name", "street", "town", "postcode"].each do |val|
     fill_in "claim_claimant_contact_#{val}", with: data["#{val}"]
   end
 end
