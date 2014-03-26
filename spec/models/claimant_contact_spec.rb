@@ -54,22 +54,44 @@ describe ClaimantContact do
   end
 
   describe "#as_json" do
-    let(:json_output) do
-      {
-        "address" => "Mr Jim Brown\n3 Smith St\nWinsum",
-        "dx_number" => "DX 123",
-        "email" => "jim@example.com",
-        "fax" => "020 000 000",
-        "phone" => "020 000 000",
-        "postcode1" => "SW1W",
-        "postcode2" => "0LU",
-        "reference_number" => "my-ref-123",
-        "legal_costs" => '123.34'
-      }
+    context "when company name isn't supplied" do
+      let(:json_output) do
+        {
+          "address" => "Mr Jim Brown\n3 Smith St\nWinsum",
+          "dx_number" => "DX 123",
+          "email" => "jim@example.com",
+          "fax" => "020 000 000",
+          "phone" => "020 000 000",
+          "postcode1" => "SW1W",
+          "postcode2" => "0LU",
+          "reference_number" => "my-ref-123",
+          "legal_costs" => '123.34'
+        }
+      end
+
+      subject { claimant_contact.as_json }
+
+      it { should eq json_output }
     end
 
-    it "should produce formated output" do
-      claimant_contact.as_json.should eq json_output
+    context "when company name is supplied" do
+      let(:json_output) do
+        {
+          "address" => "Mr Jim Brown\nCool company\n3 Smith St\nWinsum",
+          "dx_number" => "DX 123",
+          "email" => "jim@example.com",
+          "fax" => "020 000 000",
+          "phone" => "020 000 000",
+          "postcode1" => "SW1W",
+          "postcode2" => "0LU",
+          "reference_number" => "my-ref-123",
+          "legal_costs" => '123.34'
+        }
+      end
+
+      subject { claimant_contact('company_name' => 'Cool company').as_json }
+
+      it { should eq json_output }
     end
   end
 
