@@ -22,7 +22,7 @@ class ClaimantContact < BaseClass
   def as_json
     postcode1, postcode2 = split_postcode
     {
-      "address" => "#{title} #{full_name}\n#{street}\n#{town}",
+      "address" => "#{address_format}",
       "postcode1" => "#{postcode1}",
       "postcode2" => "#{postcode2}",
       "email" => "#{email}",
@@ -32,5 +32,12 @@ class ClaimantContact < BaseClass
       "reference_number" => "#{reference_number}",
       "legal_costs" => "#{legal_costs}"
     }
+  end
+
+  private
+  def address_format
+    short_format = "#{title} #{full_name}\n#{street}\n#{town}"
+    long_format = "#{title} #{full_name}\n#{company_name}\n#{street}\n#{town}"
+    company_name.blank? ? short_format : long_format
   end
 end
