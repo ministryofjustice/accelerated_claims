@@ -34,10 +34,14 @@ class ClaimForm
     fill_in("claim_#{prefix}_#{key}", with: @data["claim_#{prefix}_#{key}"]) if @data.key? "claim_#{prefix}_#{key}"
   end
 
+  def sub_data prefix
+    @data['claim'][prefix]
+  end
+
   def select_date prefix, key
-    day = @data["claim_#{prefix}_#{key}(3i)"]
-    month = Date::MONTHNAMES[@data["claim_#{prefix}_#{key}(2i)"].to_i]
-    year = @data["claim_#{prefix}_#{key}(1i)"]
+    day = sub_data(prefix)["#{key}(3i)"]
+    month = Date::MONTHNAMES[sub_data(prefix)["#{key}(2i)"].to_i]
+    year = sub_data(prefix)["#{key}(1i)"]
 
     select(  day, :from => "claim_#{prefix}_#{key}_3i")
     select(month, :from => "claim_#{prefix}_#{key}_2i")
@@ -53,9 +57,9 @@ class ClaimForm
   end
 
   def fill_property_details
-    fill_in_text_field(data, 'property', 'street')
-    fill_in_text_field(data, 'property', 'town')
-    fill_in_text_field(data, 'property', 'postcode')
+    fill_in_text_field('property', 'street')
+    fill_in_text_field('property', 'town')
+    fill_in_text_field('property', 'postcode')
     choose 'claim_property_house_yes' # todo: decide based on fixture data
   end
 
@@ -88,8 +92,8 @@ class ClaimForm
     prefix = 'tenancy'
     select_date prefix, 'start_date'
     select_date prefix, 'latest_agreement_date'
-    choose 'claim_tenancy_reissued_for_same_property_yes' # todo 
-    choose 'claim_tenancy_reissued_for_same_landlord_and_tenant_yes' # todo 
+    choose 'claim_tenancy_reissued_for_same_property_yes' # todo
+    choose 'claim_tenancy_reissued_for_same_landlord_and_tenant_yes' # todo
     select_date prefix, 'assured_shorthold_tenancy_notice_served_date'
     fill_in_text_field(prefix, 'assured_shorthold_tenancy_notice_served_by')
   end
@@ -159,5 +163,5 @@ class ClaimForm
     prefix = 'fee'
     fill_in_text_field(prefix, 'court_fee')
   end
-        
+
 end
