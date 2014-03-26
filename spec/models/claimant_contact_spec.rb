@@ -13,6 +13,20 @@ describe ClaimantContact do
     end
   end
 
+  describe "company name" do
+    context "when over 60 characters" do
+      subject { claimant_contact('company_name' => ("x" * 61)) }
+
+      it { should_not be_valid }
+    end
+
+    context "when under 60 characters" do
+      subject { claimant_contact('company_name' => ("x" * 60)) }
+
+      it { should be_valid }
+    end
+  end
+
   subject { claimant_contact }
   include_examples 'address validation'
 
