@@ -9,7 +9,6 @@ class ConfirmationPage
   end
 
   def is_displayed?
-    save_and_open_page
     page.has_text?('You now need to send the completed form and documents to the court to make your claim')
   end
 
@@ -31,6 +30,8 @@ class ConfirmationPage
       http = Curl.get(url) do |http|
         http.headers['Cookie'] = "#{cookie_id}=#{session_id}"
         http.ssl_verify_peer = false
+        http.ssl_verify_host = false
+        http.follow_location = true
       end
 
       response_headers = parse_headers(http.header_str)

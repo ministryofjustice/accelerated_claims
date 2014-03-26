@@ -18,10 +18,9 @@ Capybara.register_driver :poltergeist do |app|
 end
 
 # Capybara.javascript_driver = :poltergeist
-Capybara.run_server = true
-Capybara.server_port = 9887
 
 if remote = ENV.has_key?('remote_host')
+  Capybara.run_server = false
   Capybara.app_host = ENV['remote_host']
   Capybara.default_driver = Capybara.javascript_driver
   WebMock.disable! if defined? WebMock
