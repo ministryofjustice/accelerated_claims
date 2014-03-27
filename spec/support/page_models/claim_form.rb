@@ -122,11 +122,18 @@ class ClaimForm
 
   def fill_licences
     prefix = 'license'
-    choose 'claim_license_multiple_occupation_yes' # todo
-    choose 'claim_license_issued_under_act_part_part2' # todo
 
-    fill_in_text_field(prefix, 'issued_by')
-    select_date(prefix, 'issued_date')
+    case get_data(prefix, 'multiple_occupation')
+      when 'No'
+        choose 'claim_license_multiple_occupation_no'
+      when 'Yes'
+        choose 'claim_license_multiple_occupation_yes' # todo
+        choose 'claim_license_issued_under_act_part_part2'
+        fill_in_text_field(prefix, 'issued_by')
+        select_date(prefix, 'issued_date')
+      else
+        raise 'unexpected multiple_occupation selection'
+    end
   end
 
   def fill_no_licence
