@@ -31,7 +31,7 @@ class ClaimForm
 
   def validation_error_text
     errors = ["Validation Errors:"]
-    page.all('.error-summary li').each { |li| errors << li.text }
+    page.all('.error-summary li').each { |li| errors << "#{li.text}: #{li.find('a')['href']}" }
     errors.join("\n\t")
   end
 
