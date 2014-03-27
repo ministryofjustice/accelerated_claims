@@ -17,7 +17,14 @@ Capybara.register_driver :poltergeist do |app|
   )
 end
 
-# Capybara.javascript_driver = :poltergeist
+Capybara.javascript_driver = :poltergeist
+
+# remote_hosts = {
+#   'local' => 'http://civilclaims.local',
+#   'demo'  => 'http://civilclaims.dsd.io',
+#   'staging' => 'http://civilclaimsstaging.dsd.io',
+#   'production' => 'http://civilclaims.service.dsd.io'
+# }
 
 if remote = ENV.has_key?('remote_host')
   Capybara.run_server = false
