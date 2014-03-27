@@ -5,7 +5,7 @@ class ConfirmationPage
 
   def initialize(data)
     #@data = data['claim']
-    # '/confirmation'
+    @url = '/confirmation'
   end
 
   def is_displayed?
@@ -26,7 +26,7 @@ class ConfirmationPage
 
 private
   def capybara_download_pdf
-    expect(Capybara.current_path).to eql "/confirmation"
+    expect(Capybara.current_path).to eql @url
     click_link 'Print completed form'
     assert_pdf_content_type(page.response_headers)
     
