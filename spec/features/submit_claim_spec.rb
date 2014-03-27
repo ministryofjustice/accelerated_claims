@@ -4,13 +4,15 @@ feature "submit claim" do
 
   def run_scenario index
     data = load_fixture_data(index)
-    @app = AppModel.new(data)
-    @app.claim_form.complete_form
-    @app.claim_form.submit
+    expected_data = load_expected_data(index)
 
-    @app.confirmation_page.is_displayed?.should be_true, @app.claim_form.validation_error_text
-
-    filename = @app.confirmation_page.download_pdf
+    app = AppModel.new(data)
+    app.claim_form.complete_form
+    app.claim_form.submit
+    app.confirmation_page.is_displayed?.should be_true, app.claim_form.validation_error_text
+    app.pdf.load app.confirmation_page.download_pdf
+    
+    app.pdf.assert_pdf_is_correct(expected_data)
   end
 
   Dir.glob('spec/fixtures/scenario_*') do |item|

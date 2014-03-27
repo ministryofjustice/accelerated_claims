@@ -12,16 +12,21 @@ class ConfirmationPage
     page.has_text?('You now need to send the completed form and documents to the court to make your claim')
   end
 
+  def assert_rendered_pdf(expected_data)
+    filename = download_pdf
+
+      data_from_rendered_pdf = values_from_pdf(filename)
+      
+      expected_data = load_result_data(1)
+      expect(data_from_rendered_pdf).to eql expected_data
+  end
+
   def download_pdf
-    pdf_filename = case Capybara.app_host.blank?
-    when true
+    if Capybara.app_host.blank?
       capybara_download_pdf
     else
       curl_download_pdf
     end
-
-
-
   end
 
 private

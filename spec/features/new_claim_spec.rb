@@ -1,7 +1,16 @@
 require "spec_helper"
 
 feature "New claim application" do
-
+  def values_from_pdf file
+    fields = `pdftk #{file} dump_data_fields`
+    fields.strip.split('---').each_with_object({}) do |fieldset, hash|
+      field = fieldset[/FieldName: ([^\s]+)/,1]
+      value = fieldset[/FieldValue: (.+)/,1]
+      value.gsub!('&#13;',"\n") if value.present?
+      hash[field] = value if field.present?
+    end
+  end
+  
   context "with two claimants" do
     scenario "fill in claim details, without demoted tenancy" do
       def expected_values

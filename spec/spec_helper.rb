@@ -17,7 +17,7 @@ Capybara.register_driver :poltergeist do |app|
   )
 end
 
-Capybara.javascript_driver = :poltergeist
+# Capybara.javascript_driver = :poltergeist
 
 # remote_hosts = {
 #   'local' => 'http://civilclaims.local',
@@ -50,24 +50,30 @@ def form_date field, date
   }
 end
 
-def values_from_pdf file
-  fields = `pdftk #{file} dump_data_fields`
-  fields.strip.split('---').each_with_object({}) do |fieldset, hash|
-    field = fieldset[/FieldName: ([^\s]+)/,1]
-    value = fieldset[/FieldValue: (.+)/,1]
-    value.gsub!('&#13;',"\n") if value.present?
-    hash[field] = value if field.present?
+def load_stringified_hash_from_file(filename)
+  path = File.expand_path(File.join(__FILE__, '..', 'fixtures'))
+  contents = IO.read(File.join(path, filename)) 
+  data = recursively_stringify_keys(eval contents)
+  data
+end
+
+def recursively_stringify_keys(hash)
+  op = {}
+  hash.each do |k, v|
+    if v.class == Hash
+      hash[k] = recursively_stringify_keys(v)
+    end
+    op[k.to_s] = hash.delete(k)
   end
+  op
 end
 
 def load_fixture_data(dataset_number)
-  path = File.expand_path(File.join(__FILE__, '..', 'fixtures'))
   filename = "scenario_#{dataset_number}_data.rb"
-  contents = IO.read(File.join(path, filename)) 
-  data = eval(contents).stringify_keys
-  data['claim'].keys.each do |k| 
-    data['claim'][k].keys.each { |sk| data['claim'][k][sk.to_s] = data['claim'][k].delete(sk) }
-    data['claim'][k.to_s] = data['claim'].delete(k); 
-  end
-  data
+  load_stringified_hash_from_file(filename)
+end
+
+def load_expected_data(dataset_number)
+  filename = "scenario_#{dataset_number}_results.rb"
+  load_stringified_hash_from_file(filename)
 end
