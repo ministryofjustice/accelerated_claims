@@ -29,6 +29,12 @@ class ClaimForm
     click_button 'Complete form'
   end
 
+  def validation_error_text
+    errors = ["Validation Errors:"]
+    page.all('.error-summary li').each { |li| errors << li.text }
+    errors.join("\n\t")
+  end
+
 
   def fill_in_text_field(prefix, key)
     fill_in("claim_#{prefix}_#{key}", with: get_data(prefix, key) )

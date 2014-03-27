@@ -24,7 +24,7 @@ feature "New claim application" do
       @app.claim_form.complete_form
       @app.claim_form.submit
 
-      @app.confirmation_page.is_displayed?.should be_true
+      @app.confirmation_page.is_displayed?.should be_true, @app.claim_form.validation_error_text
 
       filename = @app.confirmation_page.download_pdf
     end

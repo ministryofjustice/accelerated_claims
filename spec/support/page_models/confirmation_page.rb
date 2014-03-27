@@ -13,14 +13,14 @@ class ConfirmationPage
   end
 
   def download_pdf
-
-
     pdf_filename = case Capybara.app_host.blank?
     when true
       capybara_download_pdf
     else
       curl_download_pdf
     end
+
+
 
   end
 
