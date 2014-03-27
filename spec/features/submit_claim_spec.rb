@@ -1,33 +1,29 @@
 require "spec_helper"
 
-feature "New claim application" do
+feature "submit claim" do
 
-  context "with two claimants" do
-    def expected_values
-      values = claim_formatted_data
-      values['order_cost'] = 'Yes'
-      values['demoted_tenancy_demoted_tenancy'] = 'No'
-      values['tenancy_agreement_reissued_for_same_landlord_and_tenant'] = 'Yes'
-      values['tenancy_agreement_reissued_for_same_property'] = 'Yes'
-      values.delete_if{|k,v| k[/defendant_two/]}
-      values
-    end
+  def run_scenario index
+    data = load_fixture_data(index)
+    @app = AppModel.new(data)
+    @app.claim_form.complete_form
+    @app.claim_form.submit
 
+    @app.confirmation_page.is_displayed?.should be_true, @app.claim_form.validation_error_text
 
+    filename = @app.confirmation_page.download_pdf
+  end
 
-    # given a set of valid data for two claimants
-    # when I click 'print completed form'
-    # it should return a PDF with the correct fields filled in
-    scenario "fill in claim details" do
-      data = load_fixture_data(1)
-      @app = AppModel.new(data)
-      @app.claim_form.complete_form
-      @app.claim_form.submit
+  Dir.glob('spec/fixtures/scenario_*') do |item|
+    index = item[/_(\d+)/,1].to_i
+    data = load_fixture_data(index)
+    title = data['title']
+    description = data['description']
 
-      @app.confirmation_page.is_displayed?.should be_true, @app.claim_form.validation_error_text
-
-      filename = @app.confirmation_page.download_pdf
-    end
+    eval(%Q|
+      scenario "#{title}: #{description.first} (#{description.last})" do
+        run_scenario #{index}
+      end
+    |)
   end
 
 end

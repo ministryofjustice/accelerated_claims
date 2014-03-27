@@ -41,7 +41,12 @@ class ClaimForm
   end
 
   def get_data prefix, key
-    @data['claim'][prefix][key]
+    begin
+      @data['claim'][prefix][key]
+    rescue Exception => e
+      binding.pry
+      raise ['no data', prefix, key].join(': ')
+    end
   end
 
   def choose_radio(prefix, key)
