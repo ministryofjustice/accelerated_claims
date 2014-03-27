@@ -61,7 +61,7 @@
   ClaimantSigneeFullName: nil,
   ClaimantSolicitorFirm: nil,
   ClaimantSigneePositionAtSolicitorFirm: nil,
-  claimant_contact_address: nil,
+  claimant_contact_address: "Winning",
   claimant_contact_postcode1: nil,
   claimant_contact_postcode2: nil,
   claimant_contact_reference_number: "T003900DF07",

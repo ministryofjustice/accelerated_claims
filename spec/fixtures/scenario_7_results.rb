@@ -71,7 +71,7 @@
   ClaimantSigneeFullName: nil,
   ClaimantSolicitorFirm: nil,
   ClaimantSigneePositionAtSolicitorFirm: nil,
-  claimant_contact_address: nil,
+  claimant_contact_address: "Winning",
   claimant_contact_reference_number: nil,
   claimant_contact_fax: nil,
   claimant_contact_dx_number: nil,

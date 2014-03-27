@@ -61,7 +61,7 @@
   ClaimantSigneeFullName: nil,
   ClaimantSolicitorFirm: nil,
   ClaimantSigneePositionAtSolicitorFirm: nil,
-  claimant_contact_address: "Wolverhampton Homes\n29 Market Street\nWolverhampton",
+  claimant_contact_address: "Wolverhampton Homes\nWinning\n29 Market Street\nWolverhampton",
   claimant_contact_postcode1: "WV1",
   claimant_contact_postcode2: "3AG",
   claimant_contact_reference_number: "T054PB7",

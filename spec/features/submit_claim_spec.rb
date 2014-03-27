@@ -12,6 +12,8 @@ feature "submit claim" do
     app.confirmation_page.is_displayed?.should be_true, app.claim_form.validation_error_text
     app.pdf.load app.confirmation_page.download_pdf
     
+    #filename = "/Users/gladhillt/Sites/accelerated_claims/spec/fixtures/scenario_#{index}_results.rb"
+    #app.pdf.write_hash_to_file(filename)
     app.pdf.assert_pdf_is_correct(expected_data)
   end
 

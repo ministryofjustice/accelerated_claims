@@ -71,7 +71,7 @@
   ClaimantSigneeFullName: nil,
   ClaimantSolicitorFirm: nil,
   ClaimantSigneePositionAtSolicitorFirm: nil,
-  claimant_contact_address: "Mr Dilan Lloyd\nBeor Wilson Lloyd, Calvert Terrace\nSwansea",
+  claimant_contact_address: "Mr Dilan Lloyd\nWinning\nBeor Wilson Lloyd, Calvert Terrace\nSwansea",
   claimant_contact_reference_number: nil,
   claimant_contact_fax: nil,
   claimant_contact_dx_number: nil,
