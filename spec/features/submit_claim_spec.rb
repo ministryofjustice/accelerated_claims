@@ -15,7 +15,7 @@ feature "submit claim" do
     app.pdf.assert_pdf_is_correct(expected_data)
   end
 
-  Dir.glob('spec/fixtures/scenario_*') do |item|
+  Dir.glob('spec/fixtures/scenario_*_data.rb') do |item|
     index = item[/scenario_(\d+)_data/,1].to_i
     data = load_fixture_data(index)
     title = data['title']
