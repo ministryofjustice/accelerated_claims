@@ -44,6 +44,15 @@ class ClaimForm
     @data['claim'][prefix][key]
   end
 
+  def choose_radio(prefix, key)
+    choice = get_data(prefix,key)
+    choose("claim_#{prefix}_#{key}_#{choice}".downcase) unless choice.nil?
+  end
+
+  def check_box(prefix, key)
+    check("claim_#{prefix}_#{key}") if(get_data(prefix, key).downcase == 'yes')
+  end
+
   def select_date prefix, key
     data = get_data(prefix, key)
     if data
@@ -67,10 +76,21 @@ class ClaimForm
   end
 
   def fill_property_details
-    fill_in_text_field('property', 'street')
-    fill_in_text_field('property', 'town')
-    fill_in_text_field('property', 'postcode')
-    choose 'claim_property_house_yes' # todo: decide based on fixture data
+    prefix = 'property'
+    fill_in_text_field(prefix, 'street')
+    fill_in_text_field(prefix, 'town')
+    fill_in_text_field(prefix, 'postcode')
+    fix_wonky_house_data
+    choose_radio(prefix, 'house')
+  end
+
+  def fix_wonky_house_data
+    house = get_data('property','house')
+    if(house.nil?)
+      @data['claim']['property']['house'] = nil
+    else
+      @data['claim']['property']['house'] = (house.downcase == 'house') ? 'Yes' : 'No'
+    end
   end
 
   def fill_claimant_one
@@ -91,7 +111,7 @@ class ClaimForm
 
   def fill_demoted_tenancy
     prefix = 'demoted_tenancy'
-    choose 'claim_demoted_tenancy_demoted_tenancy_no' # todo: choose from fixture data
+    choose_radio(prefix, 'demoted_tenancy')
 
     select_date(prefix, 'demotion_order_date')
     fill_in_text_field(prefix, 'demotion_order_court')
@@ -102,15 +122,10 @@ class ClaimForm
     prefix = 'tenancy'
     select_date prefix, 'start_date'
     select_date prefix, 'latest_agreement_date'
-    choose 'claim_tenancy_reissued_for_same_property_yes' # todo
-    choose 'claim_tenancy_reissued_for_same_landlord_and_tenant_yes' # todo
+    choose_radio prefix,'reissued_for_same_property'
+    choose_radio prefix, 'reissued_for_same_landlord_and_tenant'
     select_date prefix, 'assured_shorthold_tenancy_notice_served_date'
-    fill_in_text_field(prefix, 'assured_shorthold_tenancy_notice_served_by')
-  end
-
-  def fill_tenancy_reissued_no(data)
-    choose 'claim_tenancy_reissued_for_same_property_no' # todo
-    choose 'claim_tenancy_reissued_for_same_landlord_and_tenant_no' # todo
+    fill_in_text_field prefix, 'assured_shorthold_tenancy_notice_served_by'
   end
 
   def fill_notice
@@ -123,46 +138,28 @@ class ClaimForm
   def fill_licences
     prefix = 'license'
 
-    case get_data(prefix, 'multiple_occupation')
-      when 'No'
-        choose 'claim_license_multiple_occupation_no'
-      when 'Yes'
-        choose 'claim_license_multiple_occupation_yes' # todo
-        choose 'claim_license_issued_under_act_part_part2'
-        fill_in_text_field(prefix, 'issued_by')
-        select_date(prefix, 'issued_date')
-      else
-        raise 'unexpected multiple_occupation selection'
-    end
-  end
-
-  def fill_no_licence
-    choose 'claim_license_multiple_occupation_no' # todo
-  end
-
-  def fill_no_deposit
-    choose 'claim_deposit_received_no' # todo
-    choose 'claim_deposit_as_property_no' # todo
+    choose_radio(prefix, 'multiple_occupation')
+    choose_radio(prefix, 'issued_under_act_part_part2')
+    fill_in_text_field(prefix, 'issued_by')
+    select_date(prefix, 'issued_date')
   end
 
   def fill_deposit
     prefix = 'deposit'
-    choose 'claim_deposit_received_yes' # todo
+    choose_radio(prefix,'received')
     fill_in_text_field(prefix, 'ref_number')
-    choose 'claim_deposit_as_property_yes' # todo
+    choose_radio(prefix, 'as_property')
   end
 
-  def fill_postponement
-    choose 'claim_possession_hearing_yes' # todo
-  end
-
-  def fill_no_postponement
-    choose 'claim_possession_hearing_no' # todo
+  def fill_possession
+    prefix = 'possession'
+    choose_radio(prefix, 'hearing')
   end
 
   def check_order_possession_and_cost
-    check 'claim_order_possession' # todo
-    check 'claim_order_cost' # todo
+    prefix = 'order'
+    check_box(prefix, 'possession')
+    check_box(prefix, 'cost')
   end
 
   def fill_solicitor
