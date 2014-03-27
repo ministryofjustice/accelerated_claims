@@ -1,7 +1,9 @@
-# JOURNEY 7
-# Young unmarried couple joint own property. Two tenants who were a couple but broke up and 1 has moved out. Both stopped paying rent
-# 2 claimants, 2 defendants, 1 not living in the property, unknown forwarding address
 {
+  title: "JOURNEY 7",
+  description: [
+    "Young unmarried couple joint own property. Two tenants who were a couple but broke up and 1 has moved out. Both stopped paying rent",
+    "2 claimants, 2 defendants, 1 not living in the property, unknown forwarding address"
+  ],
   claim: {
     property: {
       street: "45 St Martins Precinct Church St",

@@ -1,7 +1,9 @@
-# JOURNEY 9
-# Two mates living apart joint own a property, tenant is now living at a mates house and the property is abandoned
-# 2 claimants, 1 defendant, not living in the property, known forwarding address
 {
+  title: "JOURNEY 9",
+  description: [
+    "Two mates living apart joint own a property, tenant is now living at a mates house and the property is abandoned",
+    "2 claimants, 1 defendant, not living in the property, known forwarding address"
+  ],
   claim: {
     property: {
       street: "107 Addiscombe Rd",

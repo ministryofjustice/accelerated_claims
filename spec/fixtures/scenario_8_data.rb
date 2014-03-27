@@ -1,7 +1,9 @@
-# JOURNEY 8
-# Elder welsh lady, using a solictor to evict 2 young men on benefits
-# Solicitor for 1 claimant, 2 defendants living in the property
 {
+  title: "JOURNEY 8",
+  description: [
+    "Elder welsh lady, using a solictor to evict 2 young men on benefits",
+    "Solicitor for 1 claimant, 2 defendants living in the property"
+  ],
   claim: {
     property: {
       street: "Unit 11, Swansea Fforest Fach Park",

@@ -48,12 +48,17 @@ descriptions = [
 ]
 
 scenarios.each_with_index do |data, index|
-  File.open("spec/fixtures/scenario_#{index + 1}_data.rb",'w') do |f|
-    description = descriptions[index].map{|x| '# ' + x}.join("\n")
+  file = File.expand_path("../scenario_#{index + 1}_data.rb", __FILE__)
+
+  File.open(file,'w') do |f|
+    title = descriptions[index][0]
+    description = descriptions[index][1..2]
+
+    data = { title: title, description: description }.merge data
     data = JSON.pretty_generate(data)
     data.gsub!(/"([^"]+)":/, '\1:')
     data.gsub!('null','nil')
 
-    f.write [description, data].join("\n")
+    f.write data
   end
 end

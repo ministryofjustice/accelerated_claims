@@ -1,7 +1,9 @@
-# JOURNEY 4
-# Young professional submitting the claim on his own, multiple tenancy agreements, bought a new house with a tenant in there
-# 1 claimant, 1 defendant living in the property, multiple tenancy agreements, litigant in person
 {
+  title: "JOURNEY 4",
+  description: [
+    "Young professional submitting the claim on his own, multiple tenancy agreements, bought a new house with a tenant in there",
+    "1 claimant, 1 defendant living in the property, multiple tenancy agreements, litigant in person"
+  ],
   claim: {
     property: {
       street: "64 Baxtergate",

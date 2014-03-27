@@ -1,7 +1,9 @@
-# JOURNEY 6
-# Housing association evicting a tenant
-# 1 organisation claimant, 1 defendant
 {
+  title: "JOURNEY 6",
+  description: [
+    "Housing association evicting a tenant",
+    "1 organisation claimant, 1 defendant"
+  ],
   claim: {
     property: {
       street: "78 Town Close Road",

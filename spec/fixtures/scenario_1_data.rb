@@ -1,7 +1,9 @@
-# JOURNEY 1
-# Husband and wife, renting a property through a rental agency
-# 2 claimants living together, 2 defendants living in the property, rental agency
 {
+  title: "JOURNEY 1",
+  description: [
+    "Husband and wife, renting a property through a rental agency",
+    "2 claimants living together, 2 defendants living in the property, rental agency"
+  ],
   claim: {
     property: {
       street: "87 Albion St",
@@ -97,9 +99,6 @@
     },
     possession: {
       hearing: "No"
-    },
-    fee: {
-      court_fee: "190"
     }
   }
 }

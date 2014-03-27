@@ -1,7 +1,9 @@
-# JOURNEY 5
-# Local authority evicting a demoted tenant
-# 1 claimant, 1 defendant, organisation litigant in person
 {
+  title: "JOURNEY 5",
+  description: [
+    "Local authority evicting a demoted tenant",
+    "1 claimant, 1 defendant, organisation litigant in person"
+  ],
   claim: {
     property: {
       street: "10a Pelham St",

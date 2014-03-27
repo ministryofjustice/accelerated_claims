@@ -1,7 +1,9 @@
-# JOURNEY 2
-# Middle aged professional with large portfolio including a student house needs to kick out a difficult tenant
-# 1 claimant, 1 defendant living in the property, part of a house, litigant in person
 {
+  title: "JOURNEY 2",
+  description: [
+    "Middle aged professional with large portfolio including a student house needs to kick out a difficult tenant",
+    "1 claimant, 1 defendant living in the property, part of a house, litigant in person"
+  ],
   claim: {
     property: {
       street: "94 East St",
