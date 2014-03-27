@@ -17,7 +17,7 @@ Capybara.register_driver :poltergeist do |app|
   )
 end
 
-# Capybara.javascript_driver = :poltergeist
+Capybara.javascript_driver = :poltergeist
 
 # remote_hosts = {
 #   'local' => 'http://civilclaims.local',
@@ -39,8 +39,10 @@ RSpec.configure do |config|
   config.filter_run :focus
   config.filter_run_excluding :remote unless remote
   #config.filter_run_excluding :js => false if remote
+
   config.order = 'random'
 end
+
 
 def form_date field, date
   {
