@@ -8,7 +8,7 @@ class Claimant < BaseClass
   attr_accessor :full_name
 
   with_options if: :validate_presence do |claimant|
-    claimant.validates :title,     presence: { message: 'must be entered' }
+    # claimant.validates :title,     presence: { message: 'must be entered' } # Organisations don't have titles
     claimant.validates :full_name, presence: { message: 'must be entered' }
     claimant.validates :street,    presence: { message: 'must be entered' }
     claimant.validates :postcode,  presence: { message: 'must be entered' }

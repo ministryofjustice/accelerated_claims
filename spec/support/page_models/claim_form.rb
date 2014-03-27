@@ -85,17 +85,13 @@ class ClaimForm
     fill_in_text_field(prefix, 'street')
     fill_in_text_field(prefix, 'town')
     fill_in_text_field(prefix, 'postcode')
-    fix_wonky_house_data
+
+    adjust_data 'property', 'house', yes_value='house'
     choose_radio(prefix, 'house')
   end
 
-  def fix_wonky_house_data
-    house = get_data('property','house')
-    if(house.nil?)
-      @data['claim']['property']['house'] = nil
-    else
-      @data['claim']['property']['house'] = (house.downcase == 'house') ? 'Yes' : 'No'
-    end
+  def adjust_data prefix, key, yes_value
+    @data['claim'][prefix][key] = (get_data(prefix,key) == yes_value) ? 'Yes' : 'No'
   end
 
   def fill_claimant_one
@@ -144,7 +140,17 @@ class ClaimForm
     prefix = 'license'
 
     choose_radio(prefix, 'multiple_occupation')
-    choose_radio(prefix, 'issued_under_act_part_part2')
+
+    case part = get_data(prefix, 'issued_under_act_part')
+      when /Part2/
+        choose 'claim_license_issued_under_act_part_part2'
+      when /Part3/
+        choose 'claim_license_issued_under_act_part_part3'
+      when nil
+      else
+        raise part
+    end
+
     fill_in_text_field(prefix, 'issued_by')
     select_date(prefix, 'issued_date')
   end

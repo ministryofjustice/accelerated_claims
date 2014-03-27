@@ -37,7 +37,7 @@
       postcode: nil
     },
     claimant_contact: {
-      legal_costs: "£600",
+      legal_costs: "600",
       title: "Mr",
       full_name: "Brent Hunt",
       street: "SGH Martineau LLP, 1 Colmore Circus Queensway",

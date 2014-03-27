@@ -83,7 +83,7 @@
     },
     license: {
       multiple_occupation: "Yes",
-      issued_under_act_part: "Yes",
+      issued_under_act_part: "Part2",
       issued_by: "Bristol City Council",
       issued_date: "2010-06-15"
     },
