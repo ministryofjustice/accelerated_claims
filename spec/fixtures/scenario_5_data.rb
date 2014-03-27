@@ -99,6 +99,9 @@
     },
     possession: {
       hearing: "Yes"
+    },
+    fee: {
+      court_fee: "175"
     }
   }
 }

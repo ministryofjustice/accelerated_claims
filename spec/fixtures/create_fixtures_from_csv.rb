@@ -33,6 +33,8 @@ scenarios = []
       end
     end
   end
+
+  hash['fee'] = { 'court_fee' => '175' }
 end
 
 descriptions = [
