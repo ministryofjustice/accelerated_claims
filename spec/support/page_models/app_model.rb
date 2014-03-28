@@ -1,12 +1,17 @@
 class AppModel
   include Capybara::DSL
 
-  attr_reader :home, :claim_form, :confirmation_page, :pdf
+  attr_reader :homepage, :claim_form, :confirmation_page, :pdf
 
   def initialize(data)
- #   @home = HomePage.new(data)
+    reset_session!
+    @homepage = HomePage.new
     @claim_form = ClaimForm.new(data)
     @confirmation_page = ConfirmationPage.new(data)
     @pdf = PdfModel.new
+  end
+
+  def exec(&block)
+    instance_eval(&block)
   end
 end
