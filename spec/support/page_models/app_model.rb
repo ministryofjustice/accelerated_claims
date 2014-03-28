@@ -1,5 +1,6 @@
 class AppModel
   include Capybara::DSL
+  include RSpec::Matchers
 
   attr_reader :homepage, :claim_form, :confirmation_page, :pdf
 

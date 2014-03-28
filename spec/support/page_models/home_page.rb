@@ -1,8 +1,8 @@
 class HomePage
   include Capybara::DSL
-  
-  def to_s
-    '/'
+
+  def visit
+    Capybara.visit '/'
   end
 
   def start_claim
