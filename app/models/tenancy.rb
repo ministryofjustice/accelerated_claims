@@ -1,6 +1,8 @@
 class Tenancy < BaseClass
 
-  attr_accessor :demoted_tenancy
+  attr_accessor :tenancy_type
+  validates :tenancy_type, presence: { message: 'must be selected' }
+  validates :tenancy_type, inclusion: { in: ['demoted', 'assured'] }
 
   attr_accessor :start_date
   attr_accessor :latest_agreement_date
@@ -14,7 +16,7 @@ class Tenancy < BaseClass
     tenancy.validates :reissued_for_same_landlord_and_tenant
   end
 
-  validates :start_date, presence: { message: 'must be entered' }, unless: :demoted_tenancy
+  validates :start_date, presence: { message: 'must be entered' }, if: Proc.new { |t| t.tenancy_type == 'assured' }
 
   validates_with DateValidator, :fields => [:start_date, :latest_agreement_date]
 
@@ -29,7 +31,6 @@ class Tenancy < BaseClass
 
   def as_json
     json = super
-    json.delete('demoted_tenancy')
     json = split_date :start_date, json
     json = split_date :latest_agreement_date, json
     json = split_date :assured_shorthold_tenancy_notice_served_date, json
