@@ -29,6 +29,11 @@ class Tenancy < BaseClass
      assured_shorthold_tenancy_notice_served_date.blank?)
   end
 
+  def demoted_tenancy?
+    tenancy_type == 'demoted'
+  end
+
+
   def as_json
     json = super
     json = split_date :start_date, json

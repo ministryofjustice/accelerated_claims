@@ -39,6 +39,29 @@ describe Tenancy do
     end
   end
 
+  describe "#demoted_tenancy?" do
+    let(:tenancy) do
+      Tenancy.new(tenancy_type: 'demoted', start_date: Date.parse("2010-01-01"))
+    end
+
+    subject { tenancy }
+
+    context "when demoted tenancy is set" do
+      it "should return true" do
+        expect(tenancy.demoted_tenancy?).to be_true
+      end
+    end
+
+    context "when demoted tenancy is not set" do
+      before { tenancy.tenancy_type = 'assured' }
+
+      it "should return false" do
+        expect(tenancy.demoted_tenancy?).to be_false
+      end
+    end
+  end
+
+
   let(:start_date) { Date.parse("2010-01-01") }
 
   let(:tenancy) do
