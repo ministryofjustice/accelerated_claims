@@ -25,7 +25,7 @@ remote_hosts = {
   'dev' => 'civilclaims.local',
   'demo'  => 'civilclaims.dsd.io',
   'staging' => 'civilclaimsstaging.dsd.io',
-  'production' => 'civilclaims.service.dsd.io'
+  'production' => 'alpha:Cl1v3@civilclaims.service.dsd.io'
 }
 
 if remote = ENV.has_key?('env')
