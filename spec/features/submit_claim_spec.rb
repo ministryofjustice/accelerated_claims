@@ -6,15 +6,18 @@ feature "submit claim" do
     data = load_fixture_data(index)
     expected_data = load_expected_data(index)
 
-    app = AppModel.new(data)
-    app.claim_form.complete_form
-    app.claim_form.submit
-    app.confirmation_page.is_displayed?.should be_true, app.claim_form.validation_error_text
-    app.pdf.load app.confirmation_page.download_pdf
-    
+    AppModel.new(data).exec do
+      homepage.visit
+      homepage.start_claim
+      claim_form.complete_form
+      claim_form.submit
+      confirmation_page.is_displayed?.should be_true, claim_form.validation_error_text
+      pdf.load confirmation_page.download_pdf
+      pdf.assert_pdf_is_correct(expected_data)
+    end
+
     #filename = "/Users/gladhillt/Sites/accelerated_claims/spec/fixtures/scenario_#{index}_results.rb"
     #app.pdf.write_hash_to_file(filename)
-    app.pdf.assert_pdf_is_correct(expected_data)
   end
 
   Dir.glob('spec/fixtures/scenario_*_data.rb') do |item|
