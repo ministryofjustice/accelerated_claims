@@ -7,12 +7,12 @@ feature "submit claim" do
     expected_data = load_expected_data(index)
 
     AppModel.new(data).exec do
-      visit homepage
+      homepage.visit
       homepage.start_claim
       claim_form.complete_form
       claim_form.submit
-      confirmation_page.is_displayed?.should be_true, app.claim_form.validation_error_text
-      pdf.load app.confirmation_page.download_pdf
+      confirmation_page.is_displayed?.should be_true, claim_form.validation_error_text
+      pdf.load confirmation_page.download_pdf
       pdf.assert_pdf_is_correct(expected_data)
     end
 
