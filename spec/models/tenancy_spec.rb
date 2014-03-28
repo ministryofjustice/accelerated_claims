@@ -1,13 +1,51 @@
 describe Tenancy do
 
+  describe "tenancy_type" do
+    context "when 'assured' value is given" do
+
+      subject { Tenancy.new(tenancy_type: 'assured', start_date: Date.parse("2010-01-01")) }
+
+      it { should be_valid }
+
+      context "but no start date is provided" do
+        subject { Tenancy.new(tenancy_type: 'assured') }
+
+        it { should_not be_valid }
+      end
+    end
+
+    context "when 'demoted' values is given" do
+      subject { Tenancy.new(tenancy_type: 'demoted') }
+
+      it { should be_valid }
+    end
+
+    context "when it isn't 'demoted' or 'assured' value" do
+      ['Blah', ''].each do |answer|
+        subject { Tenancy.new(tenancy_type: answer) }
+        it { should_not be_valid }
+      end
+
+      describe "when no value is provided" do
+        let(:tenancy) { Tenancy.new(tenancy_type: "") }
+        before { tenancy.valid? }
+
+        it "should provide an error message" do
+          tenancy.errors.full_messages.should include "Tenancy type must be selected"
+        end
+      end
+    end
+  end
+
   let(:start_date) { Date.parse("2010-01-01") }
 
   let(:tenancy) do
     data = {
-        reissued_for_same_property: 'No',
-        reissued_for_same_landlord_and_tenant: 'No',
-        assured_shorthold_tenancy_notice_served_by: 'Mr Brown',
-        assured_shorthold_tenancy_notice_served_date: Date.parse("2013-01-01")
+      tenancy_type: 'assured',
+      reissued_for_same_property: 'No',
+      reissued_for_same_landlord_and_tenant: 'No',
+      assured_shorthold_tenancy_notice_served_by: 'Mr Brown',
+      assured_shorthold_tenancy_notice_served_date: Date.parse("2013-01-01")
     }
     data.merge! form_date(:start_date, start_date)
     data.merge! form_date(:latest_agreement_date, Date.parse("2010-01-01"))
@@ -17,6 +55,7 @@ describe Tenancy do
 
   let(:desired_format) do
     {
+      "tenancy_type" => "assured",
       "start_date_day" => "01",
       "start_date_month" => "01",
       "start_date_year" => "2010",
@@ -69,17 +108,15 @@ describe Tenancy do
 
   describe 'when dates are blank' do
     before do
-      @tenancy = Tenancy.new(
-        demoted_tenancy: true,
-        reissued_for_same_property: 'No',
-        reissued_for_same_landlord_and_tenant: 'No',
-       "start_date(3i)"=>"",
-       "start_date(2i)"=>"",
-       "start_date(1i)"=>"",
-       "latest_agreement_date(3i)"=>"",
-       "latest_agreement_date(2i)"=>"",
-       "latest_agreement_date(1i)"=>""
-        )
+      @tenancy = Tenancy.new(tenancy_type: 'demoted',
+                             reissued_for_same_property: 'No',
+                             reissued_for_same_landlord_and_tenant: 'No',
+                             "start_date(3i)"=>"",
+                             "start_date(2i)"=>"",
+                             "start_date(1i)"=>"",
+                             "latest_agreement_date(3i)"=>"",
+                             "latest_agreement_date(2i)"=>"",
+                             "latest_agreement_date(1i)"=>"")
     end
 
     it 'should be valid' do
@@ -92,7 +129,8 @@ describe Tenancy do
 
     context 'and demoted_tenancy is false' do
       before do
-        @tenancy.demoted_tenancy = false
+        # @tenancy.demoted_tenancy = false
+        @tenancy.tenancy_type = 'assured'
       end
       it 'should not be valid' do
         @tenancy.should_not be_valid
@@ -102,16 +140,15 @@ describe Tenancy do
 
   describe 'when latest_agreement_date is blank' do
     before do
-      @tenancy = Tenancy.new(
-        reissued_for_same_property: '',
-        reissued_for_same_landlord_and_tenant: '',
-       "start_date(3i)"=>"2",
-       "start_date(2i)"=>"2",
-       "start_date(1i)"=>"2013",
-       "latest_agreement_date(3i)"=>"",
-       "latest_agreement_date(2i)"=>"",
-       "latest_agreement_date(1i)"=>""
-        )
+      @tenancy = Tenancy.new(tenancy_type: 'assured',
+                             reissued_for_same_property: '',
+                             reissued_for_same_landlord_and_tenant: '',
+                             "start_date(3i)"=>"2",
+                             "start_date(2i)"=>"2",
+                             "start_date(1i)"=>"2013",
+                             "latest_agreement_date(3i)"=>"",
+                             "latest_agreement_date(2i)"=>"",
+                             "latest_agreement_date(1i)"=>"")
     end
 
     it 'should be valid' do
