@@ -67,7 +67,30 @@ Should do the trick.
 TODO: 
 Configure Guard to restart supervisord when code changes. Suggest [https://github.com/guard/guard-shell](https://github.com/guard/guard-shell) might be a good way of doing this.
 
+## Running the tests
 
+Ensure you have installed all the gems from the 'test' group. (`bundle install --no-deployment --without=none` if you need to).
+
+### Running the tests locally
+
+Several options: 
+```
+rake # runs all the tests
+rspec spec/{folder}/{file} # runs the specified file
+guard # watches for changes, runs the minimum set of tests on change
+```
+
+### Running the Feature tests against a remote environment
+
+`rake spec:features env=demo`
+
+Remote options are: 
+* dev 
+* demo
+* staging
+* production
+
+By default, the tests will run headlessly. If you want to watch your tests run on your desktop, append `browser=true` to the command, like `rake spec:features env=production browser=true`
 
 ## Production deployment
 
