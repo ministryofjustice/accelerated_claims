@@ -17,18 +17,25 @@ Capybara.register_driver :poltergeist do |app|
   )
 end
 
-Capybara.javascript_driver = :poltergeist
 
-# remote_hosts = {
-#   'local' => 'http://civilclaims.local',
-#   'demo'  => 'http://civilclaims.dsd.io',
-#   'staging' => 'http://civilclaimsstaging.dsd.io',
-#   'production' => 'http://civilclaims.service.dsd.io'
-# }
+Capybara.javascript_driver = :poltergeist unless ENV.key? 'browser'
 
-if remote = ENV.has_key?('remote_host')
+
+remote_hosts = {
+  'dev' => 'civilclaims.local',
+  'demo'  => 'civilclaims.dsd.io',
+  'staging' => 'civilclaimsstaging.dsd.io',
+  'production' => 'civilclaims.service.dsd.io'
+}
+
+if remote = ENV.has_key?('env')
+  unless remote_hosts.keys.include? ENV['env']
+    puts ["Execution failed.","Remote host options are :"].concat(remote_hosts.keys).join("\n")
+    exit(1)
+  end
   Capybara.run_server = false
-  Capybara.app_host = ENV['remote_host']
+  Capybara.app_host = "https://#{remote_hosts[ENV['env']]}/accelerated"
+  puts "Running tests remotely against " + Capybara.app_host
   Capybara.default_driver = Capybara.javascript_driver
   WebMock.disable! if defined? WebMock
 end
@@ -58,6 +65,7 @@ def load_stringified_hash_from_file(filename)
   data = recursively_stringify_keys(eval contents)
   data
 end
+
 
 def recursively_stringify_keys(hash)
   op = {}
