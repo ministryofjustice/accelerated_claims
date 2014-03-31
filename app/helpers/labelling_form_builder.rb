@@ -117,14 +117,18 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     id = id_for(attribute).blank? ? '' : "id='#{id_for(attribute)}' "
 
     @template.surround("<div #{id}class='#{css}'>".html_safe, "</div>".html_safe) do
-      labelled_input attribute, options[:input_class], input, options[:label]
+      input_options = options.merge(class: options[:input_class])
+      input_options.delete(:label)
+      input_options.delete(:input_class)
+
+      labelled_input attribute, input, input_options, options[:label]
     end
   end
 
-  def labelled_input attribute, input_class, input, label=nil
+  def labelled_input attribute, input, input_options, label=nil
     label = label(attribute, label_for(attribute, label))
 
-    value = send(input, attribute, class: input_class)
+    value = send(input, attribute, input_options)
 
     [ label, value ].join("\n").html_safe
   end
@@ -148,6 +152,8 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
           @object.send(conditional)
         elsif conditional = v.options[:unless]
           !@object.send(conditional)
+        elsif attribute == :court_fee
+          false
         else
           true
         end

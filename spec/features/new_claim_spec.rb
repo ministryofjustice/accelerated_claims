@@ -10,7 +10,7 @@ feature "New claim application" do
       hash[field] = value if field.present?
     end
   end
-  
+
   context "with two claimants" do
     scenario "fill in claim details, without demoted tenancy" do
       def expected_values
