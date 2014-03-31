@@ -1,21 +1,26 @@
 require 'spec_helper'
 
 describe Fee do
-  let(:fee) { Fee.new(court_fee: "175.00") }
+  let(:fee) { Fee.new(court_fee: court_fee) }
 
-  describe "when the court fee value is blank" do
-    it "shouldn't be valid" do
-      fee.court_fee = ""
-      fee.should_not be_valid
-    end
+  subject { fee }
+
+  context "with blank court fee" do
+    let(:court_fee) { "" }
+
+    it { should be_valid }
+    its(:court_fee) { should == "175.00" }
+
+    its(:as_json) { should == { "court_fee" => "175.00" } }
   end
 
-  describe "#as_json" do
-    let(:desired_format) { { "court_fee" => "175.00" } }
+  context "with a random court fee" do
+    let(:court_fee) { 250 }
 
-    it "should generate the correct JSON" do
-      expect(fee.as_json).to eq desired_format
-    end
+    it { should be_valid }
+    its(:court_fee) { should == "175.00" }
+
+    its(:as_json) { should == { "court_fee" => "175.00" } }
   end
 
 end
