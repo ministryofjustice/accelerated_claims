@@ -1,5 +1,6 @@
 = claim_form.fields_for fee, builder: LabellingFormBuilder do |form|
   = form.text_field_row :court_fee, class: 'fee', input_class: 'pound', readonly: true
 
-  .row.full.information
-    %p See the latest #{link_to 'court fees', 'http://hmctsformfinder.justice.gov.uk/courtfinder/forms/ex050-eng.pdf', class: 'external', rel: 'external', target: '_blank'}
+  - if false # hide link to PDF while fee is hardcoded
+    .row.full.information
+      %p See the latest #{link_to 'court fees', 'http://hmctsformfinder.justice.gov.uk/courtfinder/forms/ex050-eng.pdf', class: 'external', rel: 'external', target: '_blank'}
