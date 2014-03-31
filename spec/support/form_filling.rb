@@ -175,5 +175,6 @@ def fill_claimant_contact_details
 end
 
 def fill_court_fee
-  fill_in 'claim_fee_court_fee', with: claim_post_data["claim"]["fee"]["court_fee"]
+  # it is a hardcoded value for now
+  # fill_in 'claim_fee_court_fee', with: claim_post_data["claim"]["fee"]["court_fee"]
 end

@@ -19,7 +19,7 @@
   property_postcode1: "SA5",
   property_postcode2: "4BB",
   order_cost: "Yes",
-  fee_court_fee: "175",
+  fee_court_fee: "175.00",
   claimant_contact_legal_costs: "450",
   total_cost: "625.0",
   IssueDateDay: nil,

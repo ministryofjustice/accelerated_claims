@@ -15,9 +15,6 @@ feature "submit claim" do
       pdf.load confirmation_page.download_pdf
       pdf.assert_pdf_is_correct(expected_data)
     end
-
-    #filename = "/Users/gladhillt/Sites/accelerated_claims/spec/fixtures/scenario_#{index}_results.rb"
-    #app.pdf.write_hash_to_file(filename)
   end
 
   Dir.glob('spec/fixtures/scenario_*_data.rb') do |item|
