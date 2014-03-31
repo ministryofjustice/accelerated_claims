@@ -186,7 +186,8 @@ class ClaimForm
 
   def fill_court_fee
     prefix = 'fee'
-    fill_in_text_field(prefix, 'court_fee')
+    # it is hardcoded value for now
+    # fill_in_text_field(prefix, 'court_fee')
   end
 
 end
