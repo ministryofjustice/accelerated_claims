@@ -15,7 +15,12 @@ describe Tenancy do
     end
 
     context "when 'demoted' values is given" do
-      subject { Tenancy.new(tenancy_type: 'demoted') }
+      subject do
+        Tenancy.new(tenancy_type: 'demoted',
+                    demotion_order_date: Date.parse("2010-01-01"),
+                    demotion_order_court: "Brighton County Court",
+                    previous_tenancy_type: "assured")
+      end
 
       it { should be_valid }
     end
@@ -50,7 +55,7 @@ describe Tenancy do
       end
     end
 
-    context "when demoted tenancy is not set" do
+    context "it isn't a demoted tenancy" do
       before { tenancy.tenancy_type = 'assured' }
 
       it "should return false" do
@@ -59,6 +64,54 @@ describe Tenancy do
     end
   end
 
+  describe "demoted tenancy validations" do
+    let(:tenancy) do
+      Tenancy.new(tenancy_type: 'demoted',
+                  start_date: Date.parse("2010-01-01"))
+
+    end
+
+    subject { tenancy }
+
+    context "when it's a demoted tenancy" do
+      it "should require demotion order date" do
+        err = "Demotion order date must be selected"
+        tenancy.valid?
+        tenancy.errors.full_messages.should include err
+      end
+
+      it "should require county court" do
+        err = "Demotion order court must be provided"
+        tenancy.valid?
+        tenancy.errors.full_messages.should include err
+      end
+
+      it "should require previous tenancy agreement type" do
+        err = "Previous tenancy type must be selected"
+        tenancy.valid?
+        tenancy.errors.full_messages.should include err
+      end
+
+      describe "previous tenancy agreement validation" do
+        context "where demotion order date and demotion order court are valid" do
+          let(:tenancy) do
+            Tenancy.new(tenancy_type: 'demoted',
+                        demotion_order_date: Date.parse("2010-01-01"),
+                        demotion_order_court: "Brighton County Court")
+          end
+
+          it "should only accept 'assured' & 'secure'" do
+            ['assured', 'secure'].each do |answer|
+              tenancy.previous_tenancy_type = answer
+              tenancy.valid?
+              tenancy.should be_valid
+            end
+          end
+        end
+
+      end
+    end
+  end
 
   let(:start_date) { Date.parse("2010-01-01") }
 
@@ -129,32 +182,29 @@ describe Tenancy do
     end
   end
 
-  describe 'when dates are blank' do
+  describe 'when dates for assured tenancy are blank' do
     before do
       @tenancy = Tenancy.new(tenancy_type: 'demoted',
                              reissued_for_same_property: 'No',
                              reissued_for_same_landlord_and_tenant: 'No',
-                             "start_date(3i)"=>"",
-                             "start_date(2i)"=>"",
-                             "start_date(1i)"=>"",
-                             "latest_agreement_date(3i)"=>"",
-                             "latest_agreement_date(2i)"=>"",
-                             "latest_agreement_date(1i)"=>"")
+                             start_date: "",
+                             latest_agreement_date: "",
+                             demotion_order_date: Date.parse("2010-01-01"),
+                             demotion_order_court: "Brighton County Court",
+                             previous_tenancy_type: "assured")
     end
 
     it 'should be valid' do
       @tenancy.should be_valid
     end
 
-    it 'should have nil start date' do
-      @tenancy.start_date.should be_nil
+    it 'should have a blank start date' do
+      @tenancy.start_date.should be_blank
     end
 
-    context 'and demoted_tenancy is false' do
-      before do
-        # @tenancy.demoted_tenancy = false
-        @tenancy.tenancy_type = 'assured'
-      end
+    context "and it's not a demoted tenancy" do
+      before { @tenancy.tenancy_type = 'assured' }
+
       it 'should not be valid' do
         @tenancy.should_not be_valid
       end
@@ -217,4 +267,6 @@ describe Tenancy do
       expect(tenancy.as_json).to eql desired_format.merge(json_mod)
     end
   end
+
+
 end
