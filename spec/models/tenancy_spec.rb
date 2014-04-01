@@ -94,7 +94,10 @@ describe Tenancy do
 
   describe "assured tenancy validations" do
     context "when the tenancy is assured" do
-      let(:tenancy) { Tenancy.new(tenancy_type: 'assured') }
+      let(:tenancy) do
+        Tenancy.new(tenancy_type: 'assured',
+                    start_date: Date.parse("2010-01-01"))
+      end
       before { tenancy.valid? }
 
       it "should require assured tenancy type" do
@@ -111,7 +114,8 @@ describe Tenancy do
           ['one', 'more'].each do |answer|
             subject do
               Tenancy.new(tenancy_type: 'assured',
-                          assured_shorthold_tenancy_type: answer)
+                          assured_shorthold_tenancy_type: answer,
+                          start_date: Date.parse("2010-01-01"))
             end
             it { should be_valid }
           end
@@ -119,13 +123,28 @@ describe Tenancy do
 
         context "when given invalid values" do
           ['1', ''].each do |answer|
-            subject {
+            subject do
               Tenancy.new(tenancy_type: 'assured',
-                          assured_shorthold_tenancy_type: answer)
-            }
+                          assured_shorthold_tenancy_type: answer,
+                          start_date: Date.parse("2010-01-01"))
+            end
+
             it { should_not be_valid }
           end
         end
+      end
+
+      describe "#one_tenancy_agreement?" do
+        let(:tenancy) do
+          Tenancy.new(tenancy_type: 'assured',
+                      assured_shorthold_tenancy_type: 'one',
+                      start_date: Date.parse("2010-01-01"))
+        end
+
+        subject { tenancy.one_tenancy_agreement? }
+
+        it { should be true }
+
       end
 
       context "when tenancy has only one tenancy agreement" do
