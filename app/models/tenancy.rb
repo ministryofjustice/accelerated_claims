@@ -45,7 +45,10 @@ class Tenancy < BaseClass
   with_options if: :assured_tenancy? do |tenancy|
     tenancy.validates :assured_shorthold_tenancy_type, presence: { message: 'must be selected' }
     tenancy.validates :assured_shorthold_tenancy_type, inclusion: { in: ['one', 'more'] }
-    tenancy.validates :start_date, presence: { message: 'must be selected' }
+
+    with_options if: :one_tenancy_agreement? do |tenancy|
+      tenancy.validates :start_date, presence: { message: 'must be selected' }
+    end
   end
 
   def one_tenancy_agreement?
