@@ -169,6 +169,21 @@ describe Tenancy do
           end
         end
       end
+
+      context "when tenancy has multiple tenancy agreements" do
+        describe "start_date validation" do
+          context "when start_date is missing" do
+            let(:tenancy) do
+              Tenancy.new(tenancy_type: 'assured',
+                          assured_shorthold_tenancy_type: 'more')
+            end
+
+            subject { tenancy }
+
+            it { should be_valid }
+          end
+        end
+      end
     end
   end
 
