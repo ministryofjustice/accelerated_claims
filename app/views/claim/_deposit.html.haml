@@ -3,7 +3,7 @@
   = form.radio_button_fieldset :received, 'Did you receive a money deposit on or after 6 April 2007?', class: 'striped-choice full js-depend', :data => { :depend => 'money-deposit', :show => 'yes' }
 
   .row.full.information.hide.js-money-deposit
-    %p.nonjs If you answered <strong>yes</strong>:
+    %p.nonjs If you answered <strong>yes</strong>, at the time of giving notice:
     %ul
       %li <span class="nonjs" data-jsalt="The">the</span> deposit must be in a #{link_to 'government-backed deposit protection scheme', 'https://www.gov.uk/tenancy-deposit-protection/overview', class: 'external', rel: 'external', target: '_blank'} and all requirements of the scheme fulfilled.
       %li <span class="nonjs" data-jsalt="The">the</span> defendant must have been given all information about the deposit scheme that #{link_to 'landlords are required to provide', 'https://www.gov.uk/tenancy-deposit-protection/information-landlords-must-give-tenants', class: 'external', rel: 'external', target: '_blank'}
@@ -12,7 +12,4 @@
     = form.date_select_field_set :information_given_date, 'Enter the date when this information was given to the defendant', class: 'date-picker full', date_select_options: @date_select_options
     = form.text_field_row  :ref_number, label: 'Enter the tenancy deposit scheme reference number', class: 'full'
 
-  = form.radio_button_fieldset :as_property, 'Did you receive a deposit in the form of property on or after 6 April 2007? (This is a deposit that has been taken instead of cash, eg an item of value like jewellery)', class: 'striped-choice full js-depend', :data => { :depend => 'property-deposit', :show => 'yes' }
-
-  .row.full.information.hide.js-property-deposit
-    %p <span class="nonjs" data-jsalt="This">If you answered <strong>yes</strong>, this</span> deposit must have been returned before notice was given to the defendant.
+  = form.radio_button_fieldset :as_property, 'Did you receive a deposit in the form of property on or after 6 April 2007? (This is a deposit that has been taken instead of cash, eg an item of value like jewellery)', class: 'striped-choice full js-depend', :data => { :depend => 'property-deposit', :show => 'yes, and the deposit was returned at the time notice was given' }
