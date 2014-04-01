@@ -5,7 +5,6 @@ class AppModel
   attr_reader :homepage, :claim_form, :confirmation_page, :pdf
 
   def initialize(data)
-    reset_session! unless ENV.key?('browser')
     @homepage = HomePage.new
     @claim_form = ClaimForm.new(data)
     @confirmation_page = ConfirmationPage.new(data)
