@@ -90,7 +90,15 @@ Remote options are:
 * staging
 * production
 
-By default, the tests will run headlessly. If you want to watch your tests run on your desktop, append `browser=[chrome|firefox|safari]` to the command, like `rake spec:features env=production browser=chrome`
+By default, the tests will run headlessly.
+
+If you want to watch your tests run on your desktop, append `browser=[chrome|firefox]` to the command, like `rake spec:features env=production browser=chrome`
+
+To run tests with browser=chrome, [download chromedriver](http://chromedriver.storage.googleapis.com/index.html) we've
+tested locally with version 2.9. Uncompress download and put chromedriver executable in your path,
+e.g.
+cp chromedriver /usr/local/bin
+chmod a+x chromedriver
 
 ## Production deployment
 
