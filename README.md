@@ -23,11 +23,11 @@ rails s
 
 ## Using the Vagrant development environment
 
-There's an experimental VM provisioner to create a local development environment. It's hoped this will be useful as a place to test 
+There's an experimental VM provisioner to create a local development environment. It's hoped this will be useful as a place to test
 deployment and infrastructure configuration, and to test against the application in a production-like environment.
 
 To get started, you'll need to have [vagrant](http://www.vagrantup.com/) and [virtualbox](https://www.virtualbox.org/) (along with the 'VirtualBox Extension Pack' from the virtualbox download page) installed and access to the config repo.
-The configuration uses a new feature of Vagrant 1.5, so to make it work you need to ensure that you have the correct version of Vagrant installed. Run `vagrant -v` in your console, and if the result shows `Vagrant 1.4.3` or any other number below 1.5.0 then please follow the installation steps above to get the latest version. 
+The configuration uses a new feature of Vagrant 1.5, so to make it work you need to ensure that you have the correct version of Vagrant installed. Run `vagrant -v` in your console, and if the result shows `Vagrant 1.4.3` or any other number below 1.5.0 then please follow the installation steps above to get the latest version.
 
 ```
 echo "192.168.33.10   civilclaims.local" | sudo tee -a  /etc/hosts
@@ -37,7 +37,7 @@ git clone <config git repo>
 cd accelerated_claims
 vagrant up --provision
 ```
-This will take a few minutes, so now's a good time to make a cup of tea. 
+This will take a few minutes, so now's a good time to make a cup of tea.
 
 Once it finishes, you will be able to see the app landing page on [http://civilclaims.local/accelerated](http://civilclaims.local/accelerated)
 
@@ -56,7 +56,7 @@ vagrant up --provision
 A new feature in Vagrant 1.5 is `vagrant rsync` which does away with some of the problems associated with mounted folders.
 The ./accelerated_claims folder is copied into /srv/accelerated_claims (inside the VM) when the machine is provisioned. You can resync any local changes using `vagrant rsync` or use the `vagrant rsync-auto` command to watch for changes in your local directory and auto-sync them to the virtual machine.
 
-When the code changes, you will still need to manually restart supervisor jobs inside the VM. 
+When the code changes, you will still need to manually restart supervisor jobs inside the VM.
 
 ```
 vagrant ssh -c "sudo supervisorctl reload all"
@@ -64,7 +64,7 @@ vagrant ssh -c "sudo supervisorctl reload all"
 
 Should do the trick.
 
-TODO: 
+TODO:
 Configure Guard to restart supervisord when code changes. Suggest [https://github.com/guard/guard-shell](https://github.com/guard/guard-shell) might be a good way of doing this.
 
 ## Running the tests
@@ -73,7 +73,7 @@ Ensure you have installed all the gems from the 'test' group. (`bundle install -
 
 ### Running the tests locally
 
-Several options: 
+Several options:
 ```
 rake # runs all the tests
 rspec spec/{folder}/{file} # runs the specified file
@@ -84,13 +84,13 @@ guard # watches for changes, runs the minimum set of tests on change
 
 `rake spec:features env=demo`
 
-Remote options are: 
-* dev 
+Remote options are:
+* dev
 * demo
 * staging
 * production
 
-By default, the tests will run headlessly. If you want to watch your tests run on your desktop, append `browser=true` to the command, like `rake spec:features env=production browser=true`
+By default, the tests will run headlessly. If you want to watch your tests run on your desktop, append `browser=[chrome|firefox|safari]` to the command, like `rake spec:features env=production browser=chrome`
 
 ## Production deployment
 
