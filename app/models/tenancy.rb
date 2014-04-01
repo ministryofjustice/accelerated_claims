@@ -11,6 +11,10 @@ class Tenancy < BaseClass
   attr_accessor :assured_shorthold_tenancy_notice_served_by
   attr_accessor :assured_shorthold_tenancy_notice_served_date
 
+  attr_accessor :demotion_order_date
+  attr_accessor :demotion_order_court
+  attr_accessor :previous_tenancy_type
+
   with_options if: :latest_agreement_date, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] } do |tenancy|
     tenancy.validates :reissued_for_same_property
     tenancy.validates :reissued_for_same_landlord_and_tenant
@@ -31,6 +35,12 @@ class Tenancy < BaseClass
 
   def demoted_tenancy?
     tenancy_type == 'demoted'
+  end
+
+  with_options if: :demoted_tenancy? do |tenancy|
+    tenancy.validates :demotion_order_date, presence: { message: 'must be selected' }
+    tenancy.validates :demotion_order_court, presence: { message: 'must be provided' }
+    tenancy.validates :previous_tenancy_type, presence: { message: 'must be selected' }
   end
 
 
