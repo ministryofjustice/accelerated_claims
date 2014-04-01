@@ -17,9 +17,21 @@ Capybara.register_driver :poltergeist do |app|
   )
 end
 
+Capybara.register_driver :selenium do |app|
+  browser = ENV['browser']
+  if browser && [:chrome, :safari, :firefox].include?(browser.to_sym)
+    browser = browser.to_sym
+  else
+    browser = :chrome
+  end
+  Capybara::Selenium::Driver.new(app, browser: browser)
+end
 
-Capybara.javascript_driver = :poltergeist unless ENV.key? 'browser'
-
+if ENV['browser']
+  Capybara.javascript_driver = :selenium
+else
+  Capybara.javascript_driver = :poltergeist
+end
 
 remote_hosts = {
   'dev' => 'civilclaims.local',
@@ -61,7 +73,7 @@ end
 
 def load_stringified_hash_from_file(filename)
   path = File.expand_path(File.join(__FILE__, '..', 'fixtures'))
-  contents = IO.read(File.join(path, filename)) 
+  contents = IO.read(File.join(path, filename))
   data = recursively_stringify_keys(eval contents)
   data
 end
