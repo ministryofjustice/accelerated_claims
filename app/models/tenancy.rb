@@ -4,6 +4,7 @@ class Tenancy < BaseClass
   validates :tenancy_type, presence: { message: 'must be selected' }
   validates :tenancy_type, inclusion: { in: ['demoted', 'assured'] }
 
+  attr_accessor :assured_shorthold_tenancy_type
   attr_accessor :start_date
   attr_accessor :latest_agreement_date
   attr_accessor :reissued_for_same_property
@@ -20,8 +21,6 @@ class Tenancy < BaseClass
     tenancy.validates :reissued_for_same_landlord_and_tenant
   end
 
-  validates :start_date, presence: { message: 'must be entered' }, if: Proc.new { |t| t.tenancy_type == 'assured' }
-
   validates_with DateValidator, :fields => [:start_date, :latest_agreement_date]
 
   def only_start_date_present?
@@ -33,8 +32,8 @@ class Tenancy < BaseClass
      assured_shorthold_tenancy_notice_served_date.blank?)
   end
 
-  def demoted_tenancy?
-    tenancy_type == 'demoted'
+  %w(demoted assured).each do |meth|
+    define_method("#{meth}_tenancy?".to_sym) { tenancy_type == meth }
   end
 
   with_options if: :demoted_tenancy? do |tenancy|
@@ -43,6 +42,10 @@ class Tenancy < BaseClass
     tenancy.validates :previous_tenancy_type, presence: { message: 'must be selected' }
   end
 
+  with_options if: :assured_tenancy? do |tenancy|
+    tenancy.validates :assured_shorthold_tenancy_type, presence: { message: 'must be selected' }
+    tenancy.validates :assured_shorthold_tenancy_type, inclusion: { in: ['one', 'more'] }
+  end
 
   def as_json
     json = super
