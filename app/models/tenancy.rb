@@ -48,6 +48,10 @@ class Tenancy < BaseClass
     tenancy.validates :start_date, presence: { message: 'must be selected' }
   end
 
+  def one_tenancy_agreement?
+    assured_shorthold_tenancy_type == 'one'
+  end
+
   def as_json
     json = super
     json = split_date :start_date, json
