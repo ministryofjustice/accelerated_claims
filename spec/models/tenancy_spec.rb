@@ -66,6 +66,73 @@ describe Tenancy do
     end
   end
 
+  describe "#assured_tenancy?" do
+    let(:tenancy) do
+      Tenancy.new(tenancy_type: 'assured')
+    end
+
+    subject { tenancy }
+
+    context "when assured tenancy is set" do
+      it "should return true" do
+        expect(tenancy.assured_tenancy?).to be_true
+      end
+    end
+
+    context "it isn't a assured tenancy" do
+      before { tenancy.tenancy_type = 'demoted' }
+
+      it "should return false" do
+        expect(tenancy.assured_tenancy?).to be_false
+      end
+    end
+  end
+
+  describe "assured tenancy validations" do
+    context "when the tenancy is assured" do
+      let(:tenancy) { Tenancy.new(tenancy_type: 'assured') }
+      before { tenancy.valid? }
+
+      it "should require assured tenancy type" do
+        tenancy.errors.full_messages.should include "Assured shorthold tenancy type must be selected"
+      end
+
+      it "should display error messages for missing attributes" do
+        errs = ["Assured shorthold tenancy type must be selected"]
+        tenancy.errors.full_messages.should eq errs
+      end
+
+      describe "assured_shorthold_tenancy_type" do
+        context "when given valid values" do
+          ['one', 'more'].each do |answer|
+            subject do
+              Tenancy.new(tenancy_type: 'assured',
+                          assured_shorthold_tenancy_type: answer)
+            end
+            it { should be_valid }
+          end
+        end
+
+        context "when given invalid values" do
+          ['1', ''].each do |answer|
+            subject {
+              Tenancy.new(tenancy_type: 'assured',
+                          assured_shorthold_tenancy_type: answer)
+            }
+            it { should_not be_valid }
+          end
+        end
+      end
+
+      context "when tenancy has only one tenancy agreement" do
+        let(:tenancy) {
+          Tenancy.new(tenancy_type: 'assured',
+                      assured_shorthold_tenancy_type: '')
+        }
+      end
+    end
+  end
+
   describe "demoted tenancy validations" do
     let(:tenancy) do
       Tenancy.new(tenancy_type: 'demoted',
@@ -110,7 +177,6 @@ describe Tenancy do
             end
           end
         end
-
       end
     end
   end
