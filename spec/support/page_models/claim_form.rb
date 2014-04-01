@@ -3,7 +3,6 @@ class ClaimForm
 
   def initialize(data)
     @data = data
-    visit '/new'
   end
 
   def complete_form
