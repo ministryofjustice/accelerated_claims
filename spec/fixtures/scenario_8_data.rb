@@ -9,7 +9,7 @@
       street: "Unit 11, Swansea Fforest Fach Park",
       town: "Swansea",
       postcode: "SA5 4BB",
-      house: "House"
+      house: "Yes"
     },
     javascript: {
       number_of_claimants: "1",

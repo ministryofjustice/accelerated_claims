@@ -9,7 +9,7 @@
       street: "94 East St",
       town: "Bristol",
       postcode: "BS3 4EY",
-      house: "Part of a house"
+      house: "No"
     },
     javascript: {
       number_of_claimants: "1",

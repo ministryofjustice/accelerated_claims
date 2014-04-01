@@ -9,7 +9,7 @@
       street: "45 St Martins Precinct Church St",
       town: "Reading ",
       postcode: "RG4 8BA",
-      house: "House"
+      house: "Yes"
     },
     javascript: {
       number_of_claimants: "2",
