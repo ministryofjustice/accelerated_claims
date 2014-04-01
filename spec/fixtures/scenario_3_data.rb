@@ -9,7 +9,7 @@
       street: "280 Coventry Rd",
       town: "Birmingham ",
       postcode: "B10 0XA",
-      house: "House"
+      house: "Yes"
     },
     javascript: {
       number_of_claimants: "1",

@@ -9,7 +9,7 @@
       street: "78 Town Close Road",
       town: "Norwich",
       postcode: "NR1 3HP",
-      house: "House"
+      house: "Yes"
     },
     javascript: {
       number_of_claimants: "1",

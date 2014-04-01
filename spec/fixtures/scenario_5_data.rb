@@ -9,7 +9,7 @@
       street: "10a Pelham St",
       town: "Wolverhampton",
       postcode: "WV3 0BJ",
-      house: "House"
+      house: "Yes"
     },
     javascript: {
       number_of_claimants: "1",

@@ -9,7 +9,7 @@
       street: "87 Albion St",
       town: "Leeds ",
       postcode: "LS1 6AG",
-      house: "House"
+      house: "Yes"
     },
     javascript: {
       number_of_claimants: "2",

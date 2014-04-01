@@ -11,7 +11,6 @@ class ClaimForm
     fill_claimant_two
     fill_defendant_one
     fill_defendant_two
-    fill_claimant_solicitor_address
     fill_claimant_contact_details
     fill_solicitor
     fill_demoted_tenancy
@@ -22,6 +21,15 @@ class ClaimForm
     fill_postponement
     check_order_possession_and_cost
     fill_court_fee
+  end
+
+  def fill_claimant_contact_details
+    prefix = 'claimant_contact'
+
+    ["email", "phone", "fax", "dx_number", "reference_number"].each do |field|
+      value = get_data(prefix, field)
+      fill_in "claim_claimant_contact_#{field}", with: value
+    end
   end
 
   def submit
@@ -50,7 +58,8 @@ class ClaimForm
 
   def choose_radio(prefix, key)
     choice = get_data(prefix,key)
-    choose("claim_#{prefix}_#{key}_#{choice}".downcase) unless choice.nil?
+    selection = "claim_#{prefix}_#{key}_#{choice}".downcase
+    choose(selection) unless choice.nil?
   end
 
   def check_box(prefix, key)
@@ -85,12 +94,7 @@ class ClaimForm
     fill_in_text_field(prefix, 'town')
     fill_in_text_field(prefix, 'postcode')
 
-    adjust_data 'property', 'house', yes_value='house'
     choose_radio(prefix, 'house')
-  end
-
-  def adjust_data prefix, key, yes_value
-    @data['claim'][prefix][key] = (get_data(prefix,key) == yes_value) ? 'Yes' : 'No'
   end
 
   def fill_claimant_one
@@ -161,9 +165,8 @@ class ClaimForm
     choose_radio(prefix, 'as_property')
   end
 
-  def fill_possession
-    prefix = 'possession'
-    choose_radio(prefix, 'hearing')
+  def fill_postponement
+    choose_radio('possession','hearing')
   end
 
   def check_order_possession_and_cost
