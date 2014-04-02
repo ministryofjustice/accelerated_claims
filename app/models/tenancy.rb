@@ -11,6 +11,7 @@ class Tenancy < BaseClass
   attr_accessor :reissued_for_same_landlord_and_tenant
   attr_accessor :assured_shorthold_tenancy_notice_served_by
   attr_accessor :assured_shorthold_tenancy_notice_served_date
+  attr_accessor :original_assured_shorthold_tenancy_agreement_date
 
   attr_accessor :demotion_order_date
   attr_accessor :demotion_order_court
@@ -20,8 +21,6 @@ class Tenancy < BaseClass
     tenancy.validates :reissued_for_same_property
     tenancy.validates :reissued_for_same_landlord_and_tenant
   end
-
-  validates_with DateValidator, :fields => [:start_date, :latest_agreement_date]
 
   def only_start_date_present?
     start_date.present? && \
@@ -44,16 +43,21 @@ class Tenancy < BaseClass
 
   with_options if: :assured_tenancy? do |tenancy|
     tenancy.validates :assured_shorthold_tenancy_type, presence: { message: 'must be selected' }
-    tenancy.validates :assured_shorthold_tenancy_type, inclusion: { in: ['one', 'more'] }
+    tenancy.validates :assured_shorthold_tenancy_type, inclusion: { in: ['one', 'multiple'] }
 
     with_options if: :one_tenancy_agreement? do |tenancy|
       tenancy.validates :start_date, presence: { message: 'must be selected' }
+      validates_with DateValidator, :fields => [:start_date, :latest_agreement_date]
+    end
+
+    with_options if: :multiple_tenancy_agreements? do |tenancy|
+      tenancy.validates :original_assured_shorthold_tenancy_agreement_date, presence: { message: 'must be selected' }
+      tenancy.validates :reissued_for_same_property, presence: { message: 'must be selected' }
     end
   end
 
-  def one_tenancy_agreement?
-    assured_shorthold_tenancy_type == 'one'
-  end
+  def one_tenancy_agreement?; assured_shorthold_tenancy_type == "one"; end
+  def multiple_tenancy_agreements?; assured_shorthold_tenancy_type == "multiple"; end
 
   def as_json
     json = super
