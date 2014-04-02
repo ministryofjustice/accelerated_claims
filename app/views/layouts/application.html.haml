@@ -10,6 +10,7 @@
 
 - content_for :head do
   = csrf_meta_tag
+  = render partial: 'shared/analytics'
 
 - content_for :cookie_message do
   %p GOV.UK uses cookies to make the site simpler. #{link_to 'Find out more about cookies', controller: :static, action: :cookies}
