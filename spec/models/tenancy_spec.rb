@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Tenancy do
-
   describe "tenancy_type" do
     context "when 'assured' value is given" do
 
@@ -111,7 +110,7 @@ describe Tenancy do
 
       describe "assured_shorthold_tenancy_type" do
         context "when given valid values" do
-          ['one', 'more'].each do |answer|
+          ['one', 'multiple'].each do |answer|
             subject do
               Tenancy.new(tenancy_type: 'assured',
                           assured_shorthold_tenancy_type: answer,
@@ -147,12 +146,30 @@ describe Tenancy do
 
       end
 
+      describe "#multiple_tenancy_agreements?" do
+        let(:tenancy) do
+          Tenancy.new(tenancy_type: 'assured',
+                      assured_shorthold_tenancy_type: 'multiple',
+                      start_date: Date.parse("2010-01-01"))
+        end
+
+        subject { tenancy.multiple_tenancy_agreements? }
+
+        it { should be true }
+
+      end
+
+
       context "when tenancy has only one tenancy agreement" do
         describe "start_date validation" do
           let(:tenancy) do
-            Tenancy.new(tenancy_type: 'assured',
-                        assured_shorthold_tenancy_type: 'one',
-                        start_date: Date.parse("2010-01-01"))
+            data = {
+              tenancy_type: 'assured',
+              assured_shorthold_tenancy_type: 'one'
+            }
+            data.merge! form_date(:start_date, Date.parse("2010-01-01"))
+
+            Tenancy.new(data)
           end
 
           subject { tenancy }
@@ -167,21 +184,76 @@ describe Tenancy do
 
             it { should_not be_valid }
           end
+
+          context "when start_date is incorrect" do
+            let(:tenancy) do
+              Tenancy.new(tenancy_type: 'assured',
+                          assured_shorthold_tenancy_type: 'one',
+                          "start_date(3i)"=>"30",
+                          "start_date(2i)"=>"2",
+                          "start_date(1i)"=>"2013")
+            end
+
+            it "should not be valid" do
+              tenancy.should_not be_valid
+            end
+          end
         end
       end
 
       context "when tenancy has multiple tenancy agreements" do
+        let(:tenancy) do
+          Tenancy.new(tenancy_type: 'assured',
+                      assured_shorthold_tenancy_type: 'multiple',
+                      "start_date(3i)"=>"30",
+                      "start_date(2i)"=>"1",
+                      "start_date(1i)"=>"2013")
+        end
+
         describe "start_date validation" do
           context "when start_date is missing" do
-            let(:tenancy) do
-              Tenancy.new(tenancy_type: 'assured',
-                          assured_shorthold_tenancy_type: 'more')
-            end
+
 
             subject { tenancy }
 
             it { should be_valid }
           end
+
+          context "when start_date is present" do
+            it "should not be valid"
+          end
+        end
+
+        describe "original_assured_shorthold_tenancy_agreement_date" do
+          before { tenancy.valid? }
+
+          it { tenancy.should_not be_valid }
+
+          it "should only have 1 error" do
+            tenancy.errors.count.should eq 1
+          end
+
+          it "should have an error message about it" do
+            err = ["Original assured shorthold tenancy agreement date must be selected"]
+            tenancy.errors.full_messages.should eq err
+          end
+        end
+
+        describe "reissued_for_same_property" do
+          before do
+            tenancy.original_assured_shorthold_tenancy_agreement_date = Date.parse("2010-01-01")
+            tenancy.valid?
+          end
+
+          it { tenancy.should_not be_valid }
+
+          it { tenancy.errors.count.should eq 1 }
+
+          it "should have an error message about it" do
+            err = ["Reissued for same property must be selected"]
+            tenancy.errors.full_messages.should eq err
+          end
+
         end
       end
     end
