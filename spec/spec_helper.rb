@@ -60,6 +60,7 @@ RSpec.configure do |config|
   #config.filter_run_excluding :js => false if remote
 
   config.order = 'random'
+  config.include ShowMeTheCookies, type: :feature
 end
 
 
