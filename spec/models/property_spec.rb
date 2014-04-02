@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Property do
   let(:property) do
     Property.new(street: "1 Aha Street",

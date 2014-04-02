@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Possession do
   let(:defendant) { Possession.new(hearing: 'Yes') }
 

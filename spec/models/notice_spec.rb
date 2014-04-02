@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Notice do
   let(:notice) do
     Notice.new(served_by: "Jim Bob",

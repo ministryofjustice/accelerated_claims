@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe ClaimantContact do
 
   def claimant_contact options={}

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 feature 'analytics configuration', :remote => true do
   scenario 'piwik cookies are set' do
     visit '/'

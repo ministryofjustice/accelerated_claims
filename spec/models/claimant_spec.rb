@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Claimant do
   let(:claimant) do
     Claimant.new(title: 'Mr',
