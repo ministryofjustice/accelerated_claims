@@ -1,5 +1,3 @@
-require "spec_helper"
-
 feature "New claim application" do
   def values_from_pdf file
     fields = `pdftk #{file} dump_data_fields`

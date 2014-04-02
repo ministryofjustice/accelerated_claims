@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe PDFDocument do
   before(:each) { @doc = PDFDocument.new(json) }
 

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Tenancy do
 
   let(:start_date) { Date.parse("2010-01-01") }

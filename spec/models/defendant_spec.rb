@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Defendant do
   let(:defendant) do
     Defendant.new(title: "Mr",

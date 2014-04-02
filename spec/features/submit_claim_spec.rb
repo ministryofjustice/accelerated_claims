@@ -1,5 +1,3 @@
-require "spec_helper"
-
 feature "submit claim" do
 
   def run_scenario index

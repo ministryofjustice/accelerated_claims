@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 feature 'Providing feedback' do
 
   context 'with email' do

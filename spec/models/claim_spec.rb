@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Claim do
   before :each do
     @claim = Claim.new(data)

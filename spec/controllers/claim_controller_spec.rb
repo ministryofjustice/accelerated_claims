@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe ClaimController do
   render_views
 
