@@ -34,7 +34,7 @@ describe Feedback do
 
   context 'with test text' do
     let(:email) { 'test@example.com' }
-    let(:text) { 'test text' }
+    let(:text) { Feedback::TEST_TEXT }
 
     it { should be_valid }
 
