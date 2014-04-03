@@ -36,6 +36,24 @@ describe Tenancy do
           "demotion_order_court" => ""
         }
       end
+
+      describe "demoted_tenancy in JSON" do
+        context "when it's demoted" do
+          let(:tenancy) { Tenancy.new(tenancy_type: "demoted") }
+
+          subject { tenancy.as_json["demoted_tenancy"] }
+
+          it { should eq "Yes" }
+        end
+
+        context "when it's assured" do
+          let(:tenancy) { Tenancy.new(tenancy_type: "assured") }
+
+          subject { tenancy.as_json["demoted_tenancy"] }
+
+          it { should eq "No" }
+        end
+      end
     end
   end
 
@@ -277,7 +295,7 @@ describe Tenancy do
 
   let(:desired_format) do
     {
-      "tenancy_type" => "assured",
+      "demoted_tenancy" => "No",
       "start_date_day" => "01",
       "start_date_month" => "01",
       "start_date_year" => "2010",
