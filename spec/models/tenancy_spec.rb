@@ -1,6 +1,43 @@
 require 'spec_helper'
 
 describe Tenancy do
+  describe "#as_json" do
+    describe "the base structure" do
+      let(:desired_format) do
+        {
+          # tenancy_type derived
+          "demoted_tenancy"=>"",
+          "start_date_day"=>"",
+          "start_date_month"=>"",
+          "start_date_year"=>"",
+          "latest_agreement_date_day"=>"",
+          "latest_agreement_date_month"=>"",
+          "latest_agreement_date_year"=>"",
+          "assured_shorthold_tenancy_notice_served_date_day"=>"",
+          "assured_shorthold_tenancy_notice_served_date_month"=>"",
+          "assured_shorthold_tenancy_notice_served_date_year"=>"",
+          # TODO: rename this field in PDF
+          # "agreement_reissued_for_same_property"=> nil,
+          reissued_for_same_property => "",
+          # TODO: rename this field in PDF
+          # "agreement_reissued_for_same_landlord_and_tenant"=> nil,
+          "reissued_for_same_landlord_and_tenant" => "",
+          "assured_shorthold_tenancy_notice_served_by" => "",
+          "assured_shorthold_tenancy_notice_served_date_day" => "",
+          "assured_shorthold_tenancy_notice_served_date_month" => "",
+          "assured_shorthold_tenancy_notice_served_date_year" => "",
+          "original_assured_shorthold_tenancy_agreement_date_day" => "",
+          "original_assured_shorthold_tenancy_agreement_date_month" => "",
+          "original_assured_shorthold_tenancy_agreement_date_year" => "",
+          "demotion_order_date_day" => "",
+          "demotion_order_date_month" => "",
+          "demotion_order_date_year" => "",
+          "demotion_order_court" => ""
+        }
+      end
+    end
+  end
+
   describe "tenancy_type" do
     context "when 'assured' value is given" do
 
