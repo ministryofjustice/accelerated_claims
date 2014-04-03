@@ -19,7 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # mount salt required folders
   config.vm.synced_folder "../civil-claims-deploy/providers", "/srv/providers/"
   config.vm.synced_folder "../civil-claims-deploy/salt", "/srv/salt/"
-  config.vm.synced_folder "../config/projects/civil-claims/pillar", "/srv/pillar/"
+  config.vm.synced_folder "../civil-claims-deploy/pillar", "/srv/pillar/"
 
 
   config.vm.provision :salt do |salt|
