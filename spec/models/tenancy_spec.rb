@@ -109,15 +109,26 @@ describe Tenancy do
       end
 
       describe "assured_shorthold_tenancy_type" do
-        context "when given valid values" do
-          ['one', 'multiple'].each do |answer|
-            subject do
-              Tenancy.new(tenancy_type: 'assured',
-                          assured_shorthold_tenancy_type: answer,
-                          start_date: Date.parse("2010-01-01"))
-            end
-            it { should be_valid }
+        context "when there is only one tenancy" do
+          subject do
+            Tenancy.new(tenancy_type: 'assured',
+                        assured_shorthold_tenancy_type: 'one',
+                        start_date: Date.parse("2010-01-01"))
           end
+
+          it { should be_valid }
+        end
+
+        context "when there are multiple tenancies" do
+          subject do
+            Tenancy.new(tenancy_type: 'assured',
+                        assured_shorthold_tenancy_type: 'multiple',
+                        start_date: Date.parse("2010-01-01"),
+                        original_assured_shorthold_tenancy_agreement_date: Date.parse("2009-01-01"),
+                        reissued_for_same_property: 'no')
+          end
+
+          it { should be_valid }
         end
 
         context "when given invalid values" do
