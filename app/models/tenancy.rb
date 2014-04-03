@@ -53,6 +53,7 @@ class Tenancy < BaseClass
     with_options if: :multiple_tenancy_agreements? do |tenancy|
       tenancy.validates :original_assured_shorthold_tenancy_agreement_date, presence: { message: 'must be selected' }
       tenancy.validates :reissued_for_same_property, presence: { message: 'must be selected' }
+      tenancy.validates :reissued_for_same_property, inclusion: { in: ['yes', 'no'] }
     end
   end
 
