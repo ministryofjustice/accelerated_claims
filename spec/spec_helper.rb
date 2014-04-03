@@ -10,6 +10,10 @@ require 'capybara/poltergeist'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
+def remote_test?
+  ENV['env'].present?
+end
+
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app,
     :phantomjs_options => ['--ignore-ssl-errors=yes'],
@@ -100,6 +104,3 @@ def load_expected_data(dataset_number)
   load_stringified_hash_from_file(filename)
 end
 
-def remote_test?
-  ENV['env'].present?
-end
