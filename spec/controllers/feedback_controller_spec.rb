@@ -14,8 +14,8 @@ describe FeedbackController do
       ZendeskHelper.stub(:send_to_zendesk).once
     end
 
-    def do_post
-      post :create, feedback: { email: 'test@lol.biz.info', text: 'feedback', referrer: 'ref' }
+    def do_post text='feedback'
+      post :create, feedback: { email: 'test@lol.biz.info', text: text, referrer: 'ref' }
     end
 
     it 'redirects to the homepage' do
@@ -26,6 +26,13 @@ describe FeedbackController do
     it 'sends feedback to zendesk' do
       ZendeskHelper.should_receive(:send_to_zendesk).once
       do_post
+    end
+
+    context 'with test text' do
+      it 'does not send feedback' do
+        ZendeskHelper.should_not_receive(:send_to_zendesk)
+        do_post 'test text'
+      end
     end
 
     it 'should set the flash message' do
