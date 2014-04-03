@@ -99,3 +99,7 @@ def load_expected_data(dataset_number)
   filename = "scenario_#{dataset_number}_results.rb"
   load_stringified_hash_from_file(filename)
 end
+
+def remote_test?
+  ENV['env'].present?
+end

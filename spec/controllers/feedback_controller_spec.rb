@@ -31,7 +31,7 @@ describe FeedbackController do
     context 'with test text' do
       it 'does not send feedback' do
         ZendeskHelper.should_not_receive(:send_to_zendesk)
-        do_post 'test text'
+        do_post Feedback::TEST_TEXT
       end
     end
 
