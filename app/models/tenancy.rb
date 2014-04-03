@@ -50,7 +50,7 @@ class Tenancy < BaseClass
       validates_with DateValidator, :fields => [:start_date, :latest_agreement_date]
     end
 
-    with_options if: :multiple_tenancy_agreements? do |tenancy|
+    with_options if: :multiple_tenancy_agreement? do |tenancy|
       tenancy.validates :original_assured_shorthold_tenancy_agreement_date, presence: { message: 'must be selected' }
       tenancy.validates :reissued_for_same_property, presence: { message: 'must be selected' }
       tenancy.validates :reissued_for_same_property, inclusion: { in: ['yes', 'no'] }
@@ -59,8 +59,13 @@ class Tenancy < BaseClass
     end
   end
 
-  def one_tenancy_agreement?; assured_shorthold_tenancy_type == "one"; end
-  def multiple_tenancy_agreements?; assured_shorthold_tenancy_type == "multiple"; end
+  def one_tenancy_agreement?
+    assured_shorthold_tenancy_type == "one"
+  end
+
+  def multiple_tenancy_agreement?
+    assured_shorthold_tenancy_type == "multiple"
+  end
 
   def as_json
     json = super
@@ -70,5 +75,12 @@ class Tenancy < BaseClass
     json['agreement_reissued_for_same_property'] = json.delete('reissued_for_same_property')
     json['agreement_reissued_for_same_landlord_and_tenant'] = json.delete('reissued_for_same_landlord_and_tenant')
     json
+  end
+
+  def demoted_tenancy= obj
+  end
+
+  def demoted_tenancy
+    true
   end
 end
