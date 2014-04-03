@@ -40,7 +40,7 @@ remote_hosts = {
   'production' => 'alpha:Cl1v3@civilclaims.service.dsd.io'
 }
 
-if remote = ENV.has_key?('env')
+if remote_test?
   unless remote_hosts.keys.include? ENV['env']
     puts ["Execution failed.","Remote host options are :"].concat(remote_hosts.keys).join("\n")
     exit(1)
@@ -56,8 +56,8 @@ RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
-  config.filter_run_excluding :remote unless remote
-  #config.filter_run_excluding :js => false if remote
+  config.filter_run_excluding :remote unless remote_test?
+  #config.filter_run_excluding :js => false if remote_test?
 
   config.order = 'random'
 end
