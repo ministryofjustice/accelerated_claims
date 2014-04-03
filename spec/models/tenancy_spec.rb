@@ -63,11 +63,11 @@ describe Tenancy do
 
   def assured_tenancy overrides={}
     start_date_fields = form_date(:start_date, value(:start_date, Date.parse("2010-01-01"), overrides))
+    latest_agreement_date_fields = form_date(:latest_agreement_date, value(:latest_agreement_date, Date.parse("2013-01-01"), overrides))
 
     Tenancy.new({
       tenancy_type: 'assured',
       assured_shorthold_tenancy_type: value(:assured_shorthold_tenancy_type, 'one', overrides),
-      start_date: value(:start_date, Date.parse("2010-01-01"), overrides),
       original_assured_shorthold_tenancy_agreement_date: value(:original_assured_shorthold_tenancy_agreement_date, nil, overrides),
       reissued_for_same_property: value(:reissued_for_same_property, nil, overrides),
       reissued_for_same_landlord_and_tenant: value(:reissued_for_same_landlord_and_tenant, nil, overrides)
@@ -78,20 +78,40 @@ describe Tenancy do
   def demoted_tenancy overrides={}
     Tenancy.new(
       tenancy_type: 'demoted',
-      demotion_order_date: Date.parse("2010-01-01"),
-      demotion_order_court: "Brighton County Court",
-      previous_tenancy_type: "assured"
+      demotion_order_date: value(:demotion_order_date, Date.parse("2010-01-01"), overrides),
+      demotion_order_court: value(:demotion_order_court, "Brighton County Court", overrides),
+      previous_tenancy_type: value(:previous_tenancy_type, "assured", overrides)
     )
   end
 
   context "when 'demoted'" do
-    subject do
-      demoted_tenancy
-    end
+    subject { demoted_tenancy }
 
     it { should be_valid }
     its(:demoted_tenancy?) { should be_true }
     its(:assured_tenancy?) { should be_false }
+
+    context 'and required fields are blank' do
+      subject { demoted_tenancy(demotion_order_date: nil, demotion_order_court: nil, previous_tenancy_type: nil) }
+      it { should_not be_valid }
+
+      it "should have error messages for each missing field" do
+        subject.valid?
+        ["Demotion order date must be selected",
+        "Previous tenancy type must be selected",
+        "Demotion order court must be provided"].each do |msg|
+          subject.errors.full_messages.should include msg
+        end
+      end
+    end
+
+    it "should only accept 'assured' & 'secure' for previous_tenancy_type" do
+      ['assured', 'secure'].each do |answer|
+        subject.previous_tenancy_type = answer
+        subject.valid?
+        subject.should be_valid
+      end
+    end
   end
 
   context "when not 'demoted' or 'assured'" do
@@ -133,11 +153,14 @@ describe Tenancy do
       end
     end
 
-    context 'and single tenancy' do
+    context 'and single tenancy agreement' do
       subject{ assured_tenancy(assured_shorthold_tenancy_type: 'one') }
       it { should be_valid }
       its(:one_tenancy_agreement?) { should be_true }
-      its(:multiple_tenancy_agreement?) { should be_false }
+      its(:multiple_tenancy_agreements?) { should be_false }
+      its(:start_date) { should == Date.parse("2010-01-01") }
+      its(:latest_agreement_date) { should be_nil }
+      its(:only_start_date_present?) { should be_true }
 
       context 'and start date is blank' do
         subject { assured_tenancy(start_date: nil) }
@@ -154,6 +177,11 @@ describe Tenancy do
         end
 
         it { should_not be_valid }
+
+        it 'should have invalid date error' do
+          subject.valid?
+          subject.errors.full_messages.should == ["Start date is invalid date"]
+        end
       end
     end
 
@@ -173,17 +201,20 @@ describe Tenancy do
       end
     end
 
-    context 'and multiple tenancy' do
+    context 'and multiple tenancy agreements' do
+      let(:start_date) { nil }
       subject do
         assured_tenancy(
           assured_shorthold_tenancy_type: 'multiple',
           original_assured_shorthold_tenancy_agreement_date: Date.parse("2009-01-01"),
+          start_date: start_date,
           reissued_for_same_property: 'no',
           reissued_for_same_landlord_and_tenant: 'yes')
       end
       it { should be_valid }
       its(:one_tenancy_agreement?) { should be_false }
-      its(:multiple_tenancy_agreement?) { should be_true }
+      its(:multiple_tenancy_agreements?) { should be_true }
+      its(:only_start_date_present?) { should be_false }
 
       describe "reissued_for_same_property" do
         let(:field) { :reissued_for_same_property }
@@ -195,85 +226,34 @@ describe Tenancy do
         include_examples 'validates yes/no'
       end
 
-      context 'and start date is blank' do
-        subject { assured_tenancy(start_date: nil,assured_shorthold_tenancy_type: 'multiple') }
+      context 'and start date is present' do
+        let(:start_date) { Date.parse("2009-01-01") }
         it { should_not be_valid }
-      end
-
-      context "when start_date is incorrect" do
-        subject do
-          Tenancy.new(tenancy_type: 'assured',
-                      assured_shorthold_tenancy_type: 'multiple',
-                      "start_date(3i)"=>"30",
-                      "start_date(2i)"=>"2",
-                      "start_date(1i)"=>"2013")
+        it 'should have error message' do
+          subject.valid?
+          subject.errors.full_messages.should == ["Start date must be blank if single tenancy agreement"]
         end
-
-        it { should_not be_valid }
       end
 
       context "when required fields blank" do
         subject { assured_tenancy(assured_shorthold_tenancy_type: 'multiple') }
-        before { subject.valid? }
 
         it { subject.should_not be_valid }
 
         it "should have error messages for each missing field" do
+          subject.valid?
           ["Original assured shorthold tenancy agreement date must be selected",
           "Reissued for same property must be selected",
           "Reissued for same landlord and tenant must be selected"].each do |msg|
             subject.errors.full_messages.should include msg
           end
         end
-      end
-    end
-  end
 
-  describe "demoted tenancy validations" do
-    let(:tenancy) do
-      Tenancy.new(tenancy_type: 'demoted',
-                  start_date: Date.parse("2010-01-01"))
-
-    end
-
-    subject { tenancy }
-
-    context "when it's a demoted tenancy" do
-      it "should require demotion order date" do
-        err = "Demotion order date must be selected"
-        tenancy.valid?
-        tenancy.errors.full_messages.should include err
-      end
-
-      it "should require county court" do
-        err = "Demotion order court must be provided"
-        tenancy.valid?
-        tenancy.errors.full_messages.should include err
-      end
-
-      it "should require previous tenancy agreement type" do
-        err = "Previous tenancy type must be selected"
-        tenancy.valid?
-        tenancy.errors.full_messages.should include err
-      end
-
-      describe "previous tenancy agreement validation" do
-        context "where demotion order date and demotion order court are valid" do
-          let(:tenancy) do
-            Tenancy.new(tenancy_type: 'demoted',
-                        demotion_order_date: Date.parse("2010-01-01"),
-                        demotion_order_court: "Brighton County Court")
-          end
-
-          it "should only accept 'assured' & 'secure'" do
-            ['assured', 'secure'].each do |answer|
-              tenancy.previous_tenancy_type = answer
-              tenancy.valid?
-              tenancy.should be_valid
-            end
-          end
+        context 'but start date present' do
+          its(:only_start_date_present?) { should be_true }
         end
       end
+
     end
   end
 
@@ -311,115 +291,9 @@ describe Tenancy do
     }
   end
 
-  describe "when given all valid values" do
-    it "should be valid" do
-      pending
-      tenancy.should be_valid
-    end
-  end
-
-  describe "#only_start_date_present?" do
-    context "when only start date is set everything else isn't" do
-      let(:tenancy) { Tenancy.new(start_date: Date.parse("2010-01-01")) }
-
-      it "should return true" do
-        expect(tenancy.only_start_date_present?).to be_true
-      end
-    end
-
-    context "when only start date and another attribute is set" do
-      let(:tenancy) do
-        Tenancy.new(start_date: Date.parse("2010-01-01"),
-                    latest_agreement_date: Date.parse("2011-01-01"))
-      end
-
-      it "should return false" do
-        expect(tenancy.only_start_date_present?).to be_false
-      end
-    end
-
-  end
-
-  describe "agreement_reissued_for_same_property" do
-    it "when blank" do
-      tenancy.reissued_for_same_property = ""
-      tenancy.should_not be_valid
-    end
-  end
-
-  describe 'when dates for assured tenancy are blank' do
-    before do
-      @tenancy = Tenancy.new(tenancy_type: 'demoted',
-                             reissued_for_same_property: 'No',
-                             reissued_for_same_landlord_and_tenant: 'No',
-                             start_date: "",
-                             latest_agreement_date: "",
-                             demotion_order_date: Date.parse("2010-01-01"),
-                             demotion_order_court: "Brighton County Court",
-                             previous_tenancy_type: "assured")
-    end
-
-    it 'should be valid' do
-      @tenancy.should be_valid
-    end
-
-    it 'should have a blank start date' do
-      @tenancy.start_date.should be_blank
-    end
-
-    context "and it's not a demoted tenancy" do
-      before { @tenancy.tenancy_type = 'assured' }
-
-      it 'should not be valid' do
-        @tenancy.should_not be_valid
-      end
-    end
-  end
-
-  describe 'when latest_agreement_date is blank' do
-    before do
-      @tenancy = Tenancy.new(tenancy_type: 'assured',
-                             assured_shorthold_tenancy_type: 'one',
-                             reissued_for_same_property: '',
-                             reissued_for_same_landlord_and_tenant: '',
-                             "start_date(3i)"=>"2",
-                             "start_date(2i)"=>"2",
-                             "start_date(1i)"=>"2013",
-                             "latest_agreement_date(3i)"=>"",
-                             "latest_agreement_date(2i)"=>"",
-                             "latest_agreement_date(1i)"=>"")
-    end
-
-    it 'should be valid' do
-      @tenancy.should be_valid
-    end
-
-    it 'should have nil latest_agreement_date' do
-      @tenancy.latest_agreement_date.should be_nil
-    end
-
-    it 'should have populated start_date' do
-      @tenancy.start_date.should == Date.parse("2013-02-02")
-    end
-  end
-
   describe "#as_json" do
     it "should generate the correct JSON" do
       tenancy.as_json.should eq desired_format
-    end
-  end
-
-  describe 'start date is an invalid date' do
-    let(:start_date) { date = OpenStruct.new; date.year=2010; date.month=2; date.day=31; date }
-
-    it 'should be invalid' do
-      tenancy.should_not be_valid
-    end
-
-    it 'should have invalid date error' do
-      pending
-      tenancy.valid?
-      tenancy.errors.full_messages.should == ["Start date is invalid date"]
     end
   end
 
@@ -434,6 +308,5 @@ describe Tenancy do
       expect(tenancy.as_json).to eql desired_format.merge(json_mod)
     end
   end
-
 
 end
