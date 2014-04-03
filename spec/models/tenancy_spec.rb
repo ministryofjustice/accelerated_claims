@@ -125,7 +125,8 @@ describe Tenancy do
                         assured_shorthold_tenancy_type: 'multiple',
                         start_date: Date.parse("2010-01-01"),
                         original_assured_shorthold_tenancy_agreement_date: Date.parse("2009-01-01"),
-                        reissued_for_same_property: 'no')
+                        reissued_for_same_property: 'no',
+                        reissued_for_same_landlord_and_tenant: 'yes')
           end
 
           it { should be_valid }
@@ -218,6 +219,7 @@ describe Tenancy do
                       assured_shorthold_tenancy_type: 'multiple',
                       original_assured_shorthold_tenancy_agreement_date: Date.parse("2012-01-30"),
                       reissued_for_same_property: 'yes',
+                      reissued_for_same_landlord_and_tenant: 'yes',
                       "start_date(3i)"=>"30",
                       "start_date(2i)"=>"1",
                       "start_date(1i)"=>"2013")
@@ -285,7 +287,36 @@ describe Tenancy do
               tenancy.should_not be_valid
             end
           end
+        end
 
+        describe "reissued_for_same_landlord_and_tenant" do
+          before do
+            tenancy.original_assured_shorthold_tenancy_agreement_date = Date.parse("2010-01-01")
+            tenancy.reissued_for_same_landlord_and_tenant = ''
+            tenancy.valid?
+          end
+
+          it { tenancy.should_not be_valid }
+
+          it "should only have 1 error" do
+            tenancy.errors.count.should eq 1
+          end
+
+          it "should only accept 'yes' & 'no'" do
+            %w(yes no).each do |answer|
+              tenancy.reissued_for_same_landlord_and_tenant = answer
+              tenancy.valid?
+              tenancy.should be_valid
+            end
+          end
+
+          it "should not accept answers other than 'yes' & 'no'" do
+            %w(maybe idontknow).each do |answer|
+              tenancy.reissued_for_same_landlord_and_tenant = answer
+              tenancy.valid?
+              tenancy.should_not be_valid
+            end
+          end
         end
       end
     end
