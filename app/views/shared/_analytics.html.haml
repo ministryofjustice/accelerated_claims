@@ -1,4 +1,6 @@
-- if ENV.key? 'PIWIK_URL'
+
+/ analytics
+- if ENV.key? 'PIWIK_SITE_ID'
   %script
     :erb
       var _paq = _paq || [];
@@ -6,13 +8,12 @@
       _paq.push(["enableLinkTracking"]);
 
       (function() {
-        var u="//<%= ENV['PIWIK_URL'] %>/";
+        var u="/analytics/";
         _paq.push(["setTrackerUrl", u+"piwik.php"]);
         _paq.push(["setSiteId", "<%= ENV['PIWIK_SITE_ID'] %>"]);
         var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
         g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
       })();
-
 - if ENV.key? 'GA_ID'
   %script
     :erb
@@ -23,3 +24,4 @@
 
       ga('create', '<%= ENV['GA_ID'] %>', '<%= ENV['GA_DOMAIN'] || 'auto' %>');
       ga('send', 'pageview');
+/ /analytics
