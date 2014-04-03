@@ -50,7 +50,8 @@ class Tenancy < BaseClass
       validates_with DateValidator, :fields => [:start_date, :latest_agreement_date]
     end
 
-    with_options if: :multiple_tenancy_agreement? do |tenancy|
+    with_options if: :multiple_tenancy_agreements? do |tenancy|
+      tenancy.validates :start_date, absence: { message: "must be blank if single tenancy agreement" }
       tenancy.validates :original_assured_shorthold_tenancy_agreement_date, presence: { message: 'must be selected' }
       tenancy.validates :reissued_for_same_property, presence: { message: 'must be selected' }
       tenancy.validates :reissued_for_same_property, inclusion: { in: ['yes', 'no'] }
@@ -63,7 +64,7 @@ class Tenancy < BaseClass
     assured_shorthold_tenancy_type == "one"
   end
 
-  def multiple_tenancy_agreement?
+  def multiple_tenancy_agreements?
     assured_shorthold_tenancy_type == "multiple"
   end
 
@@ -74,6 +75,8 @@ class Tenancy < BaseClass
     json = split_date :assured_shorthold_tenancy_notice_served_date, json
     json['agreement_reissued_for_same_property'] = json.delete('reissued_for_same_property')
     json['agreement_reissued_for_same_landlord_and_tenant'] = json.delete('reissued_for_same_landlord_and_tenant')
+    json["demoted_tenancy"] = format_tenancy_type
+    json.delete 'tenancy_type'
     json
   end
 
@@ -82,5 +85,10 @@ class Tenancy < BaseClass
 
   def demoted_tenancy
     true
+  end
+
+  private
+  def format_tenancy_type
+    tenancy_type == "demoted" ? "Yes" : "No"
   end
 end
