@@ -14,7 +14,7 @@ describe FeedbackController do
       ZendeskHelper.stub(:send_to_zendesk).once
     end
 
-    def do_post text='feedback'
+    def do_post(text='feedback')
       post :create, feedback: { email: 'test@lol.biz.info', text: text, referrer: 'ref' }
     end
 
