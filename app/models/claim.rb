@@ -102,7 +102,7 @@ class Claim < BaseClass
   end
 
   def singular_submodels
-    %w(Fee Property Notice License Deposit Possession Order DemotedTenancy Tenancy ClaimantContact)
+    %w(Fee Property Notice License Deposit Possession Order Tenancy ClaimantContact)
   end
 
   def doubled_submodels
@@ -122,7 +122,6 @@ class Claim < BaseClass
     attributes_from_submodels.each do |attribute_name, model|
       init_submodel(claim_params, attribute_name, model)
     end
-    tenancy.demoted_tenancy = demoted_tenancy.demoted_tenancy?
     self.form_state = claim_params['form_state'] if claim_params['form_state'].present?
   end
 
