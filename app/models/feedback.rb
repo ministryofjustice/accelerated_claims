@@ -11,6 +11,8 @@ class Feedback
   validates_presence_of :text
   validates :email, email: true, if: ->(f) { f.email.present? }
 
+  TEST_TEXT = 'test text'
+
   def name_for_feedback
     if email.present?
       'Unknown'
@@ -25,5 +27,9 @@ class Feedback
     else
       ENV['ANONYMOUS_PLACEHOLDER_EMAIL']
     end
+  end
+
+  def test?
+    text == TEST_TEXT
   end
 end

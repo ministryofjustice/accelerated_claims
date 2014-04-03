@@ -10,6 +10,10 @@ require 'capybara/poltergeist'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
+def remote_test?
+  ENV['env'].present?
+end
+
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app,
     :phantomjs_options => ['--ignore-ssl-errors=yes'],
@@ -40,7 +44,7 @@ remote_hosts = {
   'production' => 'alpha:Cl1v3@civilclaims.service.dsd.io'
 }
 
-if remote = ENV.has_key?('env')
+if remote_test?
   unless remote_hosts.keys.include? ENV['env']
     puts ["Execution failed.","Remote host options are :"].concat(remote_hosts.keys).join("\n")
     exit(1)
@@ -56,8 +60,8 @@ RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
-  config.filter_run_excluding :remote unless remote
-  #config.filter_run_excluding :js => false if remote
+  config.filter_run_excluding :remote unless remote_test?
+  #config.filter_run_excluding :js => false if remote_test?
 
   config.order = 'random'
 end
@@ -99,3 +103,4 @@ def load_expected_data(dataset_number)
   filename = "scenario_#{dataset_number}_results.rb"
   load_stringified_hash_from_file(filename)
 end
+
