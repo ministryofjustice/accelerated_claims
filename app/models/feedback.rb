@@ -26,4 +26,8 @@ class Feedback
       ENV['ANONYMOUS_PLACEHOLDER_EMAIL']
     end
   end
+
+  def test?
+    text == 'test text'
+  end
 end
