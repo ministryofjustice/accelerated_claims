@@ -54,6 +54,8 @@ class Tenancy < BaseClass
       tenancy.validates :original_assured_shorthold_tenancy_agreement_date, presence: { message: 'must be selected' }
       tenancy.validates :reissued_for_same_property, presence: { message: 'must be selected' }
       tenancy.validates :reissued_for_same_property, inclusion: { in: ['yes', 'no'] }
+      tenancy.validates :reissued_for_same_landlord_and_tenant, presence: { message: 'must be selected' }
+      tenancy.validates :reissued_for_same_landlord_and_tenant, inclusion: { in: ['yes', 'no'] }
     end
   end
 
