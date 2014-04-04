@@ -1,16 +1,26 @@
 {
   title: "JOURNEY 12",
   description: [
-    "base test 3",
+    "Base test 3",
     "1 claimant 1 defendant, no selection on most options"
   ],
   claim: {
-    form_state: "",
     property: {
       street: "Mucho Gracias Road",
       town: "London",
       postcode: "SW1H 9AJ",
       house: "Yes"
+    },
+    javascript: {
+      number_of_claimants: "1",
+      claimant_two_same_address: nil,
+      any_legal_costs: nil,
+      separate_correspondence_address: nil,
+      other_contact_details: nil,
+      add_reference_number: nil,
+      number_of_defendants: "1",
+      defendant_one_living_in_property: "No",
+      defendent_two_living_in_property: nil
     },
     claimant_one: {
       title: "Mr",
@@ -20,67 +30,69 @@
       postcode: "SW1W 0LU"
     },
     claimant_two: {
-      title: "",
-      full_name: "",
-      street: "",
-      town: "",
-      postcode: ""
+      title: nil,
+      full_name: nil,
+      street: nil,
+      town: nil,
+      postcode: nil
     },
     claimant_contact: {
-      legal_costs: "",
-      title: "",
-      full_name: "",
-      company_name: "",
-      street: "",
-      town: "",
-      postcode: "",
-      email: "",
-      phone: "",
-      fax: "",
-      dx_number: "",
-      reference_number: ""
+      legal_costs: nil,
+      title: nil,
+      full_name: nil,
+      company_name: nil,
+      street: nil,
+      town: nil,
+      postcode: nil,
+      email: nil,
+      phone: nil,
+      fax: nil,
+      dx_number: nil,
+      reference_number: nil
     },
     defendant_one: {
       title: "Mr",
-      full_name: "John Major",
-      street: "Sesame Street",
+      full_name: "John Kapur",
+      street: "Endof Road",
       town: "London",
       postcode: "SW1X 2PT"
     },
     defendant_two: {
-      title: "",
-      full_name: "",
-      street: "",
-      town: "",
-      postcode: ""
-    },
-    demoted_tenancy: {
-      demoted_tenancy: "No",
-      demotion_order_date: nil,
-      demotion_order_court: ""
+      title: nil,
+      full_name: nil,
+      street: nil,
+      town: nil,
+      postcode: nil
     },
     tenancy: {
-      start_date: "2010-1-1",
-      latest_agreement_date: "2010-1-1",
+      tenancy_type: "Assured",
+      assured_shorthold_tenancy_type: "one",
+      original_assured_shorthold_tenancy_agreement_date: nil,
+      start_date: "2010-01-01",
+      latest_agreement_date: nil,
       reissued_for_same_property: "No",
       reissued_for_same_landlord_and_tenant: "No",
       assured_shorthold_tenancy_notice_served_by: "Mr Brown",
-      assured_shorthold_tenancy_notice_served_date: "2013-12-1"
+      assured_shorthold_tenancy_notice_served_date: "2013-12-01",
+      demotion_order_date: nil,
+      demotion_order_court: nil,
+      previous_tenancy_type: nil
     },
     notice: {
       served_by: "Somebody",
-      date_served: "2014-2-2",
-      expiry_date: "2014-2-2"
+      date_served: "2014-02-02",
+      expiry_date: "2014-02-02"
     },
     license: {
       multiple_occupation: "No",
-      issued_by: "",
+      issued_under_act_part: nil,
+      issued_by: nil,
       issued_date: nil
     },
     deposit: {
       received: "No",
-      demotion_order_date: nil,
-      ref_number: "",
+      information_given_date: nil,
+      ref_number: nil,
       as_property: "No"
     },
     order: {
@@ -89,9 +101,6 @@
     },
     possession: {
       hearing: "No"
-    },
-    fee: {
-      court_fee: "175.00"
     }
   }
 }

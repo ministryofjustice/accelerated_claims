@@ -9,6 +9,7 @@ feature "submit claim" do
       homepage.start_claim
       claim_form.complete_form
       claim_form.submit
+      #binding.pry
       confirmation_page.is_displayed?.should be_true, claim_form.validation_error_text
       pdf.load confirmation_page.download_pdf
       pdf.assert_pdf_is_correct(expected_data)
