@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Deposit do
 
   describe "when the deposit has not been received" do

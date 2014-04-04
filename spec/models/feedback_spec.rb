@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Feedback do
 
   let(:text) { 'feedback' }

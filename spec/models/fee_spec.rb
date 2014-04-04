@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Fee do
   let(:fee) { Fee.new(court_fee: court_fee) }
 
