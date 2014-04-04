@@ -78,7 +78,7 @@ class Claim < BaseClass
   end
 
   def tenancy_agreement_status hash
-    if @demoted_tenancy.demoted_tenancy?
+    if @tenancy.demoted_tenancy?
       blank_out_replacement_tenancy_agreement_status hash
     else
       set_replacement_tenancy_agreement_status hash if @tenancy.only_start_date_present?

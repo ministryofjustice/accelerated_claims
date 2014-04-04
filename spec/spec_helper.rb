@@ -28,7 +28,7 @@ Capybara.register_driver :selenium do |app|
 end
 
 if ENV['browser']
-  Capybara.javascript_driver = :selenium
+  Capybara.default_driver = Capybara.javascript_driver = :selenium
 else
   Capybara.javascript_driver = :poltergeist
 end

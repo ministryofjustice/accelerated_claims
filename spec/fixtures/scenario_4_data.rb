@@ -40,6 +40,7 @@
       legal_costs: nil,
       title: nil,
       full_name: nil,
+      company_name: nil,
       street: nil,
       town: nil,
       postcode: nil,
@@ -63,18 +64,19 @@
       town: nil,
       postcode: nil
     },
-    demoted_tenancy: {
-      demoted_tenancy: "No",
-      demotion_order_date: nil,
-      demotion_order_court: nil
-    },
     tenancy: {
-      start_date: "2004-03-12",
+      tenancy_type: "Assured",
+      assured_shorthold_tenancy_type: "multiple",
+      original_assured_shorthold_tenancy_agreement_date: "2004-03-12",
+      start_date: nil,
       latest_agreement_date: "2012-06-14",
       reissued_for_same_property: "Yes",
       reissued_for_same_landlord_and_tenant: "No",
       assured_shorthold_tenancy_notice_served_by: nil,
-      assured_shorthold_tenancy_notice_served_date: nil
+      assured_shorthold_tenancy_notice_served_date: nil,
+      demotion_order_date: nil,
+      demotion_order_court: nil,
+      previous_tenancy_type: "assured"
     },
     notice: {
       served_by: "Royal Mail",
@@ -99,9 +101,6 @@
     },
     possession: {
       hearing: "Yes"
-    },
-    fee: {
-      court_fee: "175"
     }
   }
 }

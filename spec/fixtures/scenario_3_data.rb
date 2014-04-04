@@ -37,9 +37,10 @@
       postcode: nil
     },
     claimant_contact: {
-      legal_costs: "600",
+      legal_costs: "£600",
       title: "Mr",
       full_name: "Brent Hunt",
+      company_name: "Brent Hunt Inc",
       street: "SGH Martineau LLP, 1 Colmore Circus Queensway",
       town: "Birmingham",
       postcode: "B4 6AA",
@@ -63,18 +64,19 @@
       town: nil,
       postcode: nil
     },
-    demoted_tenancy: {
-      demoted_tenancy: "No",
-      demotion_order_date: nil,
-      demotion_order_court: nil
-    },
     tenancy: {
+      tenancy_type: "Assured",
+      assured_shorthold_tenancy_type: "one",
+      original_assured_shorthold_tenancy_agreement_date: nil,
       start_date: "2004-02-29",
       latest_agreement_date: nil,
       reissued_for_same_property: nil,
       reissued_for_same_landlord_and_tenant: nil,
       assured_shorthold_tenancy_notice_served_by: nil,
-      assured_shorthold_tenancy_notice_served_date: nil
+      assured_shorthold_tenancy_notice_served_date: nil,
+      demotion_order_date: nil,
+      demotion_order_court: nil,
+      previous_tenancy_type: nil
     },
     notice: {
       served_by: "Brent Hunt",
@@ -99,9 +101,6 @@
     },
     possession: {
       hearing: "Yes"
-    },
-    fee: {
-      court_fee: "175"
     }
   }
 }
