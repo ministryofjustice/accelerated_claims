@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 feature 'Filling in claim form' do
 
   scenario "submitting incomplete form" do

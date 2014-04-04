@@ -32,7 +32,4 @@ AcceleratedClaims::Application.configure do
   # in memory cache store
   config.cache_store = :memory_store
 
-  # inject analytics javascript?
-  config.piwik_enabled = false
-  config.ga_enabled = false
 end

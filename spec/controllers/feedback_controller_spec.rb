@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe FeedbackController do
 
   describe "#new" do

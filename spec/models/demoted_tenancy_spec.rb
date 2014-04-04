@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe DemotedTenancy do
   let(:demoted_tenancy) do
     DemotedTenancy.new(demoted_tenancy: 'Yes',

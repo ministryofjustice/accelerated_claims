@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 feature 'Providing feedback' do
 
   def comments_text

@@ -52,8 +52,6 @@ module AcceleratedClaims
     # Feedback URL (URL for feedback link in phase banner)
     # Use 'auto_add_path' for it to add a path link to the new_feedback route
     config.feedback_url = config.relative_url_root + '/feedback/new'
-    # Google Analytics ID (Tracking ID for the service)
-    config.ga_id = ''
 
     # Enable the asset pipeline
     config.assets.enabled = true

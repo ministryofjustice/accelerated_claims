@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Property do
   let(:bc) { BaseClass.new }
 

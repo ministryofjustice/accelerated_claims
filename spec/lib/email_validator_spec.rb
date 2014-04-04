@@ -1,4 +1,3 @@
-require 'spec_helper'
 require 'email_validator'
 
 describe EmailValidator do
