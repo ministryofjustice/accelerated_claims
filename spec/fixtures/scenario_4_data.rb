@@ -9,7 +9,7 @@
       street: "64 Baxtergate",
       town: "Whitby",
       postcode: "YO21 1BL",
-      house: "House"
+      house: "Yes"
     },
     javascript: {
       number_of_claimants: "1",

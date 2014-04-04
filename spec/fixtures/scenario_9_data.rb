@@ -9,7 +9,7 @@
       street: "107 Addiscombe Rd",
       town: "Croydon",
       postcode: "CR0 6SG",
-      house: "House"
+      house: "Yes"
     },
     javascript: {
       number_of_claimants: "2",
