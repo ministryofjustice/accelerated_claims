@@ -13,7 +13,6 @@ class ClaimForm
     fill_defendant_two
     fill_claimant_contact_details
     fill_solicitor
-    fill_demoted_tenancy
     fill_tenancy
     fill_notice
     fill_licences
@@ -51,7 +50,6 @@ class ClaimForm
     begin
       @data['claim'][prefix][key]
     rescue Exception => e
-      binding.pry
       raise ['no data', prefix, key].join(': ')
     end
   end
@@ -113,23 +111,21 @@ class ClaimForm
     complete_details_of_person('defendant_two')
   end
 
-  def fill_demoted_tenancy
-    prefix = 'demoted_tenancy'
-    choose_radio(prefix, 'demoted_tenancy')
-
-    select_date(prefix, 'demotion_order_date')
-    fill_in_text_field(prefix, 'demotion_order_court')
-  end
-
-
   def fill_tenancy
     prefix = 'tenancy'
-    select_date prefix, 'start_date'
-    select_date prefix, 'latest_agreement_date'
-    choose_radio prefix,'reissued_for_same_property'
-    choose_radio prefix, 'reissued_for_same_landlord_and_tenant'
-    select_date prefix, 'assured_shorthold_tenancy_notice_served_date'
+
+    choose_radio  prefix, 'tenancy_type'
+    choose_radio  prefix, 'assured_shorthold_tenancy_type'
+    select_date   prefix, 'original_assured_shorthold_tenancy_agreement_date'
+    select_date   prefix, 'start_date'
+    select_date   prefix, 'latest_agreement_date'
+    choose_radio  prefix,'reissued_for_same_property'
+    choose_radio  prefix, 'reissued_for_same_landlord_and_tenant'
+    select_date   prefix, 'assured_shorthold_tenancy_notice_served_date'
     fill_in_text_field prefix, 'assured_shorthold_tenancy_notice_served_by'
+    select_date   prefix, 'demotion_order_date'
+    fill_in_text_field prefix, 'demotion_order_court'
+    choose_radio  prefix, 'previous_tenancy_type'
   end
 
   def fill_notice
