@@ -1,11 +1,15 @@
 feature 'Providing feedback' do
 
+  def comments_text
+    comments = remote_test? ? Feedback::TEST_TEXT : 'Some comments'
+  end
+
   context 'with email' do
     scenario "submitting feedback successfully" do
       visit '/'
       click_link 'your feedback'
 
-      fill_in 'Your comments', with: 'Some comments'
+      fill_in 'Your comments', with: comments_text
       fill_in 'Your email address', with: '@bad_address'
 
       click_button 'Send'
@@ -24,7 +28,7 @@ feature 'Providing feedback' do
       visit '/'
       click_link 'your feedback'
 
-      fill_in 'Your comments', with: 'Some comments'
+      fill_in 'Your comments', with: comments_text
       fill_in 'Your email address', with: ''
 
       click_button 'Send'
