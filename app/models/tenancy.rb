@@ -22,19 +22,6 @@ class Tenancy < BaseClass
     tenancy.validates :agreement_reissued_for_same_landlord_and_tenant
   end
 
-  def only_start_date_present?
-    start_date.present? && \
-    (latest_agreement_date.blank? &&
-     agreement_reissued_for_same_property.blank? &&
-     agreement_reissued_for_same_landlord_and_tenant.blank? &&
-     assured_shorthold_tenancy_notice_served_by.blank? &&
-     assured_shorthold_tenancy_notice_served_date.blank?)
-  end
-
-  %w(demoted assured).each do |meth|
-    define_method("#{meth}_tenancy?".to_sym) { tenancy_type == meth }
-  end
-
   with_options if: :demoted_tenancy? do |tenancy|
     tenancy.validates :demotion_order_date, presence: { message: 'must be selected' }
     tenancy.validates :demotion_order_court, presence: { message: 'must be provided' }
@@ -54,10 +41,23 @@ class Tenancy < BaseClass
       tenancy.validates :start_date, absence: { message: "must be blank if single tenancy agreement" }
       tenancy.validates :original_assured_shorthold_tenancy_agreement_date, presence: { message: 'must be selected' }
       tenancy.validates :agreement_reissued_for_same_property, presence: { message: 'must be selected' }
-      tenancy.validates :agreement_reissued_for_same_property, inclusion: { in: ['yes', 'no'] }
+      tenancy.validates :agreement_reissued_for_same_property, inclusion: { in: ['Yes', 'No'] }
       tenancy.validates :agreement_reissued_for_same_landlord_and_tenant, presence: { message: 'must be selected' }
-      tenancy.validates :agreement_reissued_for_same_landlord_and_tenant, inclusion: { in: ['yes', 'no'] }
+      tenancy.validates :agreement_reissued_for_same_landlord_and_tenant, inclusion: { in: ['Yes', 'No'] }
     end
+  end
+
+  def only_start_date_present?
+    start_date.present? && \
+    (latest_agreement_date.blank? &&
+     agreement_reissued_for_same_property.blank? &&
+     agreement_reissued_for_same_landlord_and_tenant.blank? &&
+     assured_shorthold_tenancy_notice_served_by.blank? &&
+     assured_shorthold_tenancy_notice_served_date.blank?)
+  end
+
+  %w(demoted assured).each do |meth|
+    define_method("#{meth}_tenancy?".to_sym) { tenancy_type == meth }
   end
 
   def one_tenancy_agreement?
