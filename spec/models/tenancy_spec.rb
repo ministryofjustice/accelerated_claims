@@ -15,12 +15,8 @@ describe Tenancy do
           "assured_shorthold_tenancy_notice_served_date_day"=>"",
           "assured_shorthold_tenancy_notice_served_date_month"=>"",
           "assured_shorthold_tenancy_notice_served_date_year"=>"",
-          # TODO: rename this field in PDF
-          # "agreement_reissued_for_same_property"=> nil,
-          reissued_for_same_property => "",
-          # TODO: rename this field in PDF
-          # "agreement_reissued_for_same_landlord_and_tenant"=> nil,
-          "reissued_for_same_landlord_and_tenant" => "",
+          "agreement_reissued_for_same_property"=> "",
+          "agreement_reissued_for_same_landlord_and_tenant"=> "",
           "assured_shorthold_tenancy_notice_served_by" => "",
           "assured_shorthold_tenancy_notice_served_date_day" => "",
           "assured_shorthold_tenancy_notice_served_date_month" => "",
@@ -87,8 +83,8 @@ describe Tenancy do
       tenancy_type: 'assured',
       assured_shorthold_tenancy_type: value(:assured_shorthold_tenancy_type, 'one', overrides),
       original_assured_shorthold_tenancy_agreement_date: value(:original_assured_shorthold_tenancy_agreement_date, nil, overrides),
-      reissued_for_same_property: value(:reissued_for_same_property, nil, overrides),
-      reissued_for_same_landlord_and_tenant: value(:reissued_for_same_landlord_and_tenant, nil, overrides)
+      agreement_reissued_for_same_property: value(:reissued_for_same_property, nil, overrides),
+      agreement_reissued_for_same_landlord_and_tenant: value(:reissued_for_same_landlord_and_tenant, nil, overrides)
     }.merge(start_date_fields)
     )
   end
@@ -226,21 +222,21 @@ describe Tenancy do
           assured_shorthold_tenancy_type: 'multiple',
           original_assured_shorthold_tenancy_agreement_date: Date.parse("2009-01-01"),
           start_date: start_date,
-          reissued_for_same_property: 'no',
-          reissued_for_same_landlord_and_tenant: 'yes')
+          agreement_reissued_for_same_property: 'no',
+          agreement_reissued_for_same_landlord_and_tenant: 'yes')
       end
       it { should be_valid }
       its(:one_tenancy_agreement?) { should be_false }
       its(:multiple_tenancy_agreements?) { should be_true }
       its(:only_start_date_present?) { should be_false }
 
-      describe "reissued_for_same_property" do
-        let(:field) { :reissued_for_same_property }
+      describe "agreement_reissued_for_same_property" do
+        let(:field) { :agreement_reissued_for_same_property }
         include_examples 'validates yes/no'
       end
 
-      describe "reissued_for_same_landlord_and_tenant" do
-        let(:field) { :reissued_for_same_landlord_and_tenant }
+      describe "agreement_reissued_for_same_landlord_and_tenant" do
+        let(:field) { :agreement_reissued_for_same_landlord_and_tenant }
         include_examples 'validates yes/no'
       end
 
@@ -261,8 +257,8 @@ describe Tenancy do
         it "should have error messages for each missing field" do
           subject.valid?
           ["Original assured shorthold tenancy agreement date must be selected",
-          "Reissued for same property must be selected",
-          "Reissued for same landlord and tenant must be selected"].each do |msg|
+          "Agreement reissued for same property must be selected",
+          "Agreement reissued for same landlord and tenant must be selected"].each do |msg|
             subject.errors.full_messages.should include msg
           end
         end
@@ -280,8 +276,8 @@ describe Tenancy do
   let(:tenancy) do
     data = {
       tenancy_type: 'assured',
-      reissued_for_same_property: 'No',
-      reissued_for_same_landlord_and_tenant: 'No',
+      agreement_reissued_for_same_property: 'No',
+      agreement_reissued_for_same_landlord_and_tenant: 'No',
       assured_shorthold_tenancy_notice_served_by: 'Mr Brown',
       assured_shorthold_tenancy_notice_served_date: Date.parse("2013-01-01")
     }
