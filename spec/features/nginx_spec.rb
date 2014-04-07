@@ -11,12 +11,12 @@ feature 'nginx configuration', :remote => true do
 
   scenario 'http requests redirect to https' do
     visit '/'
-    expect(page.current_url).to eql Capybara.app_host.gsub('http', 'https')
+    expect(page.current_url).to eql Capybara.app_host.sub('http:', 'https:')
   end
 
   scenario '/ redirects to /accelerated' do
-    base_url = Capybara.app_host.gsub('http', 'https')
+    base_url = Capybara.app_host.sub('http:', 'https:').sub('/accelerated','/')
     visit base_url
-    expect(page.current_url).to eql base_url + "/accelerated"
+    expect(page.current_url).to eql base_url + "accelerated"
   end
 end
