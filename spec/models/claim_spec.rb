@@ -27,6 +27,13 @@ describe Claim do
     end
   end
 
+  describe "fixture data" do
+    let(:data) { claim_post_data['claim'] }
+    it "creates a valid claim" do
+      expect(claim).to be_valid
+    end
+  end
+
   describe '#as_json' do
     context "when both claim fee & legal cost are known" do
       let(:data) { claim_post_data['claim'] }

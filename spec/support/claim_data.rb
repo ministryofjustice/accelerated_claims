@@ -105,7 +105,8 @@ def claim_post_data
         "assured_shorthold_tenancy_notice_served_by" => 'Mr Brown',
         "assured_shorthold_tenancy_notice_served_date(3i)" => "1",
         "assured_shorthold_tenancy_notice_served_date(2i)" => "12",
-        "assured_shorthold_tenancy_notice_served_date(1i)" => "2013"
+        "assured_shorthold_tenancy_notice_served_date(1i)" => "2013",
+        "previous_tenancy_type" => "assured"
       },
       "fee" =>
       {

@@ -17,10 +17,10 @@ class Tenancy < BaseClass
   attr_accessor :demotion_order_court
   attr_accessor :previous_tenancy_type
 
-  with_options if: :latest_agreement_date, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] } do |tenancy|
-    tenancy.validates :agreement_reissued_for_same_property
-    tenancy.validates :agreement_reissued_for_same_landlord_and_tenant
-  end
+  # with_options if: :latest_agreement_date, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] } do |tenancy|
+  #   tenancy.validates :agreement_reissued_for_same_property
+  #   tenancy.validates :agreement_reissued_for_same_landlord_and_tenant
+  # end
 
   with_options if: :demoted_tenancy? do |tenancy|
     tenancy.validates :demotion_order_date, presence: { message: 'must be selected' }
@@ -38,8 +38,10 @@ class Tenancy < BaseClass
     end
 
     with_options if: :multiple_tenancy_agreements? do |tenancy|
+      validates_with DateValidator, :fields => [:original_assured_shorthold_tenancy_agreement_date, :latest_agreement_date]
       tenancy.validates :start_date, absence: { message: "must be blank if single tenancy agreement" }
       tenancy.validates :original_assured_shorthold_tenancy_agreement_date, presence: { message: 'must be selected' }
+      tenancy.validates :latest_agreement_date, presence: { message: 'must be selected' }
       tenancy.validates :agreement_reissued_for_same_property, presence: { message: 'must be selected' }
       tenancy.validates :agreement_reissued_for_same_property, inclusion: { in: ['Yes', 'No'] }
       tenancy.validates :agreement_reissued_for_same_landlord_and_tenant, presence: { message: 'must be selected' }
