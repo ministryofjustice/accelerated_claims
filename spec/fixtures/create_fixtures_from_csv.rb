@@ -1,66 +1,101 @@
-# Assumes you have extracted journey's data sheet to...
+# Data source: 
+# https://docs.google.com/a/digital.justice.gov.uk/spreadsheet/ccc?key=0Arsa0arziNdndHlwM2xJMVl5Z3pDdFVOYnVsRmZST1E&usp=sharing
+# download as CSV
+# copy to the same folder as this script
+# rename as 'data.csv'
 
 require 'csv'
 require 'pry'
 require 'json'
 
-rows = CSV.read('data.csv')
+class DataScenarioGenerator
+  def initialize(csv_filename='data.csv')
+    @rows = CSV.read(csv_filename)
+    @column_containing_first_journey = 3
+    @scenario_data = buildDataHash
+  end
 
-scenarios = []
+  def writeToFile
+    @scenario_data.each_with_index do |data, index|
+      file = File.expand_path("../scenario_#{index + 1}_data.rb", __FILE__)
 
-3.upto(11) do |index|
-  scenarios[index - 3] = { 'claim' => {} }
-  hash = scenarios[index - 3]['claim']
+      File.open(file,'w') do |f|
+        data = JSON.pretty_generate(data)
+        data.gsub!(/"([^"]+)":/, '\1:')
+        data.gsub!('null','nil')
 
-  by_model = rows.group_by{|x| x[1]}
-  by_model.each do |model, attributes|
-    if model
-      hash[model] ||={}
-
-      attributes.group_by {|x| x[2]}.each do |attribute, values|
-        if attribute
-          value = values.first[index]
-
-          if attribute[/date/] && value
-            begin
-              value = Date.parse(value)
-            rescue
-              puts "can't parse #{value} to date"
-            end
-          end
-          hash[model][attribute] = value
-        end
+        f.write data
       end
     end
   end
 
-  hash['fee'] = { 'court_fee' => '175' }
-end
+  def sanitizeValue(model, attribute, value)
+    value = nil if value == '-'
 
-descriptions = [
-  ['JOURNEY 1', 'Husband and wife, renting a property through a rental agency', '2 claimants living together, 2 defendants living in the property, rental agency'],
-  ['JOURNEY 2', 'Middle aged professional with large portfolio including a student house needs to kick out a difficult tenant', '1 claimant, 1 defendant living in the property, part of a house, litigant in person'],
-  ['JOURNEY 3', 'Solicitor acting on behalf of an elder gentleman. Tenants speak little English and communication has been poor.', 'Solicitor for 1 claimant, 2 defendants living in the property'],
-  ['JOURNEY 4', 'Young professional submitting the claim on his own, multiple tenancy agreements, bought a new house with a tenant in there', '1 claimant, 1 defendant living in the property, multiple tenancy agreements, litigant in person'],
-  ['JOURNEY 5', 'Local authority evicting a demoted tenant', '1 claimant, 1 defendant, organisation litigant in person'],
-  ['JOURNEY 6', 'Housing association evicting a tenant', '1 organisation claimant, 1 defendant'],
-  ['JOURNEY 7', 'Young unmarried couple joint own property. Two tenants who were a couple but broke up and 1 has moved out. Both stopped paying rent', '2 claimants, 2 defendants, 1 not living in the property, unknown forwarding address'],
-  ['JOURNEY 8', 'Elder welsh lady, using a solictor to evict 2 young men on benefits', 'Solicitor for 1 claimant, 2 defendants living in the property'],
-  ['JOURNEY 9', 'Two mates living apart joint own a property, tenant is now living at a mates house and the property is abandoned', '2 claimants, 1 defendant, not living in the property, known forwarding address']
-]
+    if(model == 'property' && attribute == 'house')
+      value = (!value.nil? && value.downcase == 'house') ? 'Yes' : 'No'
+    end
 
-scenarios.each_with_index do |data, index|
-  file = File.expand_path("../scenario_#{index + 1}_data.rb", __FILE__)
+    if attribute[/date/] && value
+      begin
+        value = Date.parse(value).strftime('%Y-%m-%d')
+      rescue
+        puts "Error at #{model}, #{attribute}"
+        puts "can't parse #{value} to date"
+      end
+    end
+    value
+  end
 
-  File.open(file,'w') do |f|
-    title = descriptions[index][0]
-    description = descriptions[index][1..2]
+  def buildDataHash
+    scenarios = []
+    beginning = @column_containing_first_journey
+    ending = countScenarios + @column_containing_first_journey - 1
+    beginning.upto(ending) do |index|
+      scenarios << getScenario(index)
+    end
+    scenarios
+  end
 
-    data = { title: title, description: description }.merge data
-    data = JSON.pretty_generate(data)
-    data.gsub!(/"([^"]+)":/, '\1:')
-    data.gsub!('null','nil')
+  def getScenario(index)
+    scenario = {
+      title: @rows[0][index],
+      description: [@rows[1][index], @rows[2][index]],
+      claim: {}
+    }
+    col = index + @column_containing_first_journey - 1
+    validRows.each do |row|
+      model = row[1]
+      field = row[2]
+      value = sanitizeValue(model, field, row[index])
+      scenario[:claim][model.to_sym] ||= {}
+      scenario[:claim][model.to_sym][field.to_sym] = value
+    end
+    scenario
+  end
 
-    f.write data
+  def validRows
+    valid_rows = []
+    @rows.each.with_index do |r, index|
+      if(index > 0 && !r[1].nil?)
+        valid_rows << r
+      end
+    end
+    valid_rows
+  end
+
+
+  def countScenarios
+    r = @rows[0] 
+    col = @column_containing_first_journey 
+    count = 0 
+    while(r[col] != nil) do
+      count += 1
+      col += 1
+    end
+    @scenario_count = count
   end
 end
+
+d = DataScenarioGenerator.new('data.csv')
+d.writeToFile

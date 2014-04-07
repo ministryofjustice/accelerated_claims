@@ -1,16 +1,26 @@
 {
   title: "JOURNEY 10",
   description: [
-    "base test",
+    "Base Test 1",
     "2 claimants, not demoted tenancy"
   ],
   claim: {
-    form_state: "",
     property: {
       street: "Mucho Gracias Road",
       town: "London",
       postcode: "SW1H 9AJ",
       house: "Yes"
+    },
+    javascript: {
+      number_of_claimants: "2",
+      claimant_two_same_address: "No",
+      any_legal_costs: "Yes",
+      separate_correspondence_address: "Yes",
+      other_contact_details: "Yes",
+      add_reference_number: "Yes",
+      number_of_defendants: "1",
+      defendant_one_living_in_property: "No",
+      defendent_two_living_in_property: nil
     },
     claimant_one: {
       title: "Mr",
@@ -22,7 +32,7 @@
     claimant_two: {
       title: "Ms",
       full_name: "Jane Smith",
-      street: "7 Main St",
+      street: "7 Main Street",
       town: "Alfreton",
       postcode: "SW1W 0LU"
     },
@@ -30,8 +40,8 @@
       legal_costs: "123.34",
       title: "Mr",
       full_name: "Jim Brown",
-      company_name: "",
-      street: "3 Smith St",
+      company_name: nil,
+      street: "3 Smith Street",
       town: "Winsum",
       postcode: "SW1W 0LU",
       email: "jim@example.com",
@@ -42,45 +52,46 @@
     },
     defendant_one: {
       title: "Mr",
-      full_name: "John Major",
-      street: "Sesame Street",
+      full_name: "John Kapur",
+      street: "Endof Road",
       town: "London",
       postcode: "SW1X 2PT"
     },
     defendant_two: {
-      title: "",
-      full_name: "",
-      street: "",
-      town: "",
-      postcode: ""
-    },
-    demoted_tenancy: {
-      demoted_tenancy: "No",
-      demotion_order_date: nil,
-      demotion_order_court: ""
+      title: nil,
+      full_name: nil,
+      street: nil,
+      town: nil,
+      postcode: nil
     },
     tenancy: {
-      start_date: "2010-1-1",
-      latest_agreement_date: "2010-1-1",
+      tenancy_type: "Assured",
+      assured_shorthold_tenancy_type: "multiple",
+      original_assured_shorthold_tenancy_agreement_date: "2010-01-01",
+      start_date: nil,
+      latest_agreement_date: "2011-01-01",
       reissued_for_same_property: "Yes",
       reissued_for_same_landlord_and_tenant: "Yes",
       assured_shorthold_tenancy_notice_served_by: "Mr Brown",
-      assured_shorthold_tenancy_notice_served_date: "2013-12-1"
+      assured_shorthold_tenancy_notice_served_date: "2013-12-01",
+      demotion_order_date: nil,
+      demotion_order_court: nil,
+      previous_tenancy_type: nil
     },
     notice: {
       served_by: "Somebody",
-      date_served: "2014-2-2",
-      expiry_date: "2014-2-2"
+      date_served: "2014-02-02",
+      expiry_date: "2014-02-02"
     },
     license: {
       multiple_occupation: "Yes",
       issued_under_act_part: "Part2",
-      issued_by: "Great authority",
-      issued_date: "2014-2-2"
+      issued_by: "Local LA",
+      issued_date: "2014-02-02"
     },
     deposit: {
       received: "Yes",
-      demotion_order_date: nil,
+      information_given_date: nil,
       ref_number: "X1234",
       as_property: "Yes"
     },
@@ -90,9 +101,6 @@
     },
     possession: {
       hearing: "Yes"
-    },
-    fee: {
-      court_fee: "175.00"
     }
   }
 }

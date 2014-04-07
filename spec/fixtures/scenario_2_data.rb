@@ -40,6 +40,7 @@
       legal_costs: nil,
       title: "Mr",
       full_name: "Jay Schneider",
+      company_name: "Schneider & Sons",
       street: "PO Box 1655, 9 Russell Square",
       town: "London",
       postcode: "WC1B 5EQ",
@@ -63,18 +64,19 @@
       town: nil,
       postcode: nil
     },
-    demoted_tenancy: {
-      demoted_tenancy: "No",
-      demotion_order_date: nil,
-      demotion_order_court: nil
-    },
     tenancy: {
+      tenancy_type: "Assured",
+      assured_shorthold_tenancy_type: "one",
+      original_assured_shorthold_tenancy_agreement_date: nil,
       start_date: "2010-05-30",
       latest_agreement_date: nil,
       reissued_for_same_property: nil,
       reissued_for_same_landlord_and_tenant: nil,
       assured_shorthold_tenancy_notice_served_by: "Jay Schneider",
-      assured_shorthold_tenancy_notice_served_date: "2010-05-24"
+      assured_shorthold_tenancy_notice_served_date: "2010-05-24",
+      demotion_order_date: nil,
+      demotion_order_court: nil,
+      previous_tenancy_type: "assured"
     },
     notice: {
       served_by: "Jay Schneider",
@@ -99,9 +101,6 @@
     },
     possession: {
       hearing: "Yes"
-    },
-    fee: {
-      court_fee: "175"
     }
   }
 }

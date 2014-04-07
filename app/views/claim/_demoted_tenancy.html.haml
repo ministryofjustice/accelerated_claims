@@ -1,8 +1,0 @@
-= claim_form.fields_for demoted_tenancy, builder: LabellingFormBuilder do |form|
-  = form.radio_button_fieldset :demoted_tenancy, 'Is it a demoted tenancy?', class: 'striped-choice', choice: {'Yes' => 'Yes', 'No, skip to next section' => 'No'}
-  .sub-panel.extra
-    = form.date_select_field_set :demotion_order_date, 'Date of demotion order', class: 'date-picker full', date_select_options: @date_select_options
-    = form.text_field_row :demotion_order_court, label: 'County court where demotion order was made', class: 'full'
-
-  .row.full.information
-    %p Demoted assured shorthold tenancies are granted by court order. They may be given to tenants who have behaved anti-socially or used the property for illegal activity for example.
