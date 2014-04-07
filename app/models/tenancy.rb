@@ -7,8 +7,8 @@ class Tenancy < BaseClass
   attr_accessor :assured_shorthold_tenancy_type
   attr_accessor :start_date
   attr_accessor :latest_agreement_date
-  attr_accessor :reissued_for_same_property
-  attr_accessor :reissued_for_same_landlord_and_tenant
+  attr_accessor :agreement_reissued_for_same_property
+  attr_accessor :agreement_reissued_for_same_landlord_and_tenant
   attr_accessor :assured_shorthold_tenancy_notice_served_by
   attr_accessor :assured_shorthold_tenancy_notice_served_date
   attr_accessor :original_assured_shorthold_tenancy_agreement_date
@@ -18,15 +18,15 @@ class Tenancy < BaseClass
   attr_accessor :previous_tenancy_type
 
   with_options if: :latest_agreement_date, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] } do |tenancy|
-    tenancy.validates :reissued_for_same_property
-    tenancy.validates :reissued_for_same_landlord_and_tenant
+    tenancy.validates :agreement_reissued_for_same_property
+    tenancy.validates :agreement_reissued_for_same_landlord_and_tenant
   end
 
   def only_start_date_present?
     start_date.present? && \
     (latest_agreement_date.blank? &&
-     reissued_for_same_property.blank? &&
-     reissued_for_same_landlord_and_tenant.blank? &&
+     agreement_reissued_for_same_property.blank? &&
+     agreement_reissued_for_same_landlord_and_tenant.blank? &&
      assured_shorthold_tenancy_notice_served_by.blank? &&
      assured_shorthold_tenancy_notice_served_date.blank?)
   end
@@ -53,10 +53,10 @@ class Tenancy < BaseClass
     with_options if: :multiple_tenancy_agreements? do |tenancy|
       tenancy.validates :start_date, absence: { message: "must be blank if single tenancy agreement" }
       tenancy.validates :original_assured_shorthold_tenancy_agreement_date, presence: { message: 'must be selected' }
-      tenancy.validates :reissued_for_same_property, presence: { message: 'must be selected' }
-      tenancy.validates :reissued_for_same_property, inclusion: { in: ['yes', 'no'] }
-      tenancy.validates :reissued_for_same_landlord_and_tenant, presence: { message: 'must be selected' }
-      tenancy.validates :reissued_for_same_landlord_and_tenant, inclusion: { in: ['yes', 'no'] }
+      tenancy.validates :agreement_reissued_for_same_property, presence: { message: 'must be selected' }
+      tenancy.validates :agreement_reissued_for_same_property, inclusion: { in: ['yes', 'no'] }
+      tenancy.validates :agreement_reissued_for_same_landlord_and_tenant, presence: { message: 'must be selected' }
+      tenancy.validates :agreement_reissued_for_same_landlord_and_tenant, inclusion: { in: ['yes', 'no'] }
     end
   end
 
@@ -75,8 +75,8 @@ class Tenancy < BaseClass
       "start_date_month" => month(start_date),
       "start_date_year" => year(start_date),
       "demoted_tenancy" => format_tenancy_type,
-      "agreement_reissued_for_same_landlord_and_tenant" => reissued_for_same_landlord_and_tenant,
-      "agreement_reissued_for_same_property" => reissued_for_same_property,
+      "agreement_reissued_for_same_landlord_and_tenant" => agreement_reissued_for_same_landlord_and_tenant,
+      "agreement_reissued_for_same_property" => agreement_reissued_for_same_property,
       "assured_shorthold_tenancy_notice_served_by" => assured_shorthold_tenancy_notice_served_by,
       "latest_agreement_date_day" => day(latest_agreement_date),
       "latest_agreement_date_month" => month(latest_agreement_date),

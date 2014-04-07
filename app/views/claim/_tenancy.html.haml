@@ -10,7 +10,7 @@
   .sub-panel.rel
     %h4.section-header Assured shorthold tenancies
 
-  = form.radio_button_fieldset :assured_shorthold_tenancy_type, 'How many tenancy agreements have you had with the defendant?', class: 'striped-choice full', choice: {'One tenancy agreement' => 'one', 'More than one tenancy agreement' => 'multiple'}  
+  = form.radio_button_fieldset :assured_shorthold_tenancy_type, 'How many tenancy agreements have you had with the defendant?', class: 'striped-choice full', choice: {'One tenancy agreement' => 'one', 'More than one tenancy agreement' => 'multiple'}
 
   .sub-panel.extra
     .row.full
@@ -25,13 +25,13 @@
     = form.date_select_field_set :original_assured_shorthold_tenancy_agreement_date, 'Date of the original tenancy agreement', class: 'date-picker full rel', date_select_options: @date_select_options
 
     = form.date_select_field_set :latest_agreement_date, 'Date of the most recent tenancy agreement', class: 'date-picker full rel', date_select_options: @date_select_options
-      
+
     .row.full
-      %p If you have replaced the original tenancy agreement with a new tenancy agreement, or replaced a replacement tenancy agreement: 
+      %p If you have replaced the original tenancy agreement with a new tenancy agreement, or replaced a replacement tenancy agreement:
 
-    = form.radio_button_fieldset :reissued_for_same_property, 'Is the tenancy agreement for the same property?', class: 'striped-choice full rel'
+    = form.radio_button_fieldset :agreement_reissued_for_same_property, 'Is the tenancy agreement for the same property?', class: 'striped-choice full rel'
 
-    = form.radio_button_fieldset :reissued_for_same_landlord_and_tenant, 'Is the tenancy agreement between the same landlord and tenant?', class: 'striped-choice full'
+    = form.radio_button_fieldset :agreement_reissued_for_same_landlord_and_tenant, 'Is the tenancy agreement between the same landlord and tenant?', class: 'striped-choice full'
 
   .row.full
     %p
@@ -58,7 +58,7 @@
   = form.date_select_field_set :assured_shorthold_tenancy_notice_served_date, 'Date notice served', class: 'date-picker', date_select_options: @date_select_options
 
   .row.divider
-  
+
   .sub-panel.rel
     %h4.section-header Demoted assured shorthold tenancies
 
