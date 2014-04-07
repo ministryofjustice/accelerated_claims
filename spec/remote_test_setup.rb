@@ -9,7 +9,7 @@ end
 
 def remote_host
   unless remote_hosts.keys.include? ENV['env']
-    puts ["Execution failed.","Remote host options are :"].concat(remote_hosts.keys).join("\n")
+    puts ['---',"Execution failed. Set remote host e.g. env=demo", "Remote host options are:"].concat(remote_hosts.keys).join("\n")
     exit(1)
   end
   remote_hosts[ENV['env']]

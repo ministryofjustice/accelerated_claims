@@ -100,6 +100,14 @@ e.g.
 cp chromedriver /usr/local/bin
 chmod a+x chromedriver
 
+## Browserstack remote tests
+
+To run with browser stack:
+
+```
+env=<env> BS_USERNAME=<username> BS_PASSWORD=<password> bundle exec rake browserstack:run
+```
+
 ## Production deployment
 
 Please remember to set the environment **SECRET_KEY_BASE** variable.
