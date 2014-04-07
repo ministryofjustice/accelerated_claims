@@ -74,9 +74,9 @@
       reissued_for_same_landlord_and_tenant: "Yes",
       assured_shorthold_tenancy_notice_served_by: "Mr Brown",
       assured_shorthold_tenancy_notice_served_date: "2013-12-01",
-      demotion_order_date: nil,
+      demotion_order_date: "2010-01-01",
       demotion_order_court: "Brighton County Court",
-      previous_tenancy_type: "1/1/2010"
+      previous_tenancy_type: "assured"
     },
     notice: {
       served_by: "Somebody",

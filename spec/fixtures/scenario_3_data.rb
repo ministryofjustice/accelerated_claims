@@ -37,7 +37,7 @@
       postcode: nil
     },
     claimant_contact: {
-      legal_costs: "£600",
+      legal_costs: "600",
       title: "Mr",
       full_name: "Brent Hunt",
       company_name: "Brent Hunt Inc",
