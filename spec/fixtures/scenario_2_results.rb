@@ -19,7 +19,7 @@
   property_address: "94 East St\nBristol",
   property_postcode1: "BS3",
   property_postcode2: "4EY",
-  demoted_tenancy_demoted_tenancy: "No",
+  demoted_tenancy_demoted_tenancy: nil,
   property_house: "No",
   tenancy_start_date_day: "30",
   tenancy_start_date_month: "05",

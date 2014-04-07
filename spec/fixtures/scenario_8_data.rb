@@ -37,7 +37,7 @@
       postcode: nil
     },
     claimant_contact: {
-      legal_costs: "£450",
+      legal_costs: "450",
       title: "Mr",
       full_name: "Dilan Lloyd",
       company_name: "Beor Wilson Lloyd",

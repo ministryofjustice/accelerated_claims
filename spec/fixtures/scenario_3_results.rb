@@ -26,7 +26,7 @@
   IssueDateMonth: nil,
   IssueDateYear: nil,
   property_house: "Yes",
-  demoted_tenancy_demoted_tenancy: "No",
+  demoted_tenancy_demoted_tenancy: nil,
   demoted_tenancy_demotion_order_date_day: nil,
   demoted_tenancy_demotion_order_date_month: nil,
   demoted_tenancy_demotion_order_date_year: nil,

@@ -1,4 +1,8 @@
-# Assumes you have extracted journey's data sheet to...
+# Data source: 
+# https://docs.google.com/a/digital.justice.gov.uk/spreadsheet/ccc?key=0Arsa0arziNdndHlwM2xJMVl5Z3pDdFVOYnVsRmZST1E&usp=sharing
+# download as CSV
+# copy to the same folder as this script
+# rename as 'data.csv'
 
 require 'csv'
 require 'pry'
@@ -95,7 +99,3 @@ end
 
 d = DataScenarioGenerator.new('data.csv')
 d.writeToFile
-
-
-
-
