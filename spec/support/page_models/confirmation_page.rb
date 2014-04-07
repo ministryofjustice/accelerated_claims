@@ -22,11 +22,13 @@ class ConfirmationPage
   end
 
   def download_pdf
-    if Capybara.app_host.blank?
-      capybara_download_pdf
-    else
-      curl_download_pdf
+    pdf_filename = ''
+    begin
+      pdf_filename = capybara_download_pdf
+    rescue Capybara::NotSupportedByDriverError
+      pdf_filename = curl_download_pdf
     end
+    pdf_filename
   end
 
 private
@@ -42,7 +44,7 @@ private
     cookie_id = '_accelerated_claims_session'
     session_id = get_me_the_cookie(cookie_id)[:value]
 
-    http = Curl.get(Capybara.app_host + "/download") do |http|
+    http = Curl.get(get_download_url) do |http|
       http.headers['Cookie'] = "#{cookie_id}=#{session_id}"
       http.ssl_verify_peer = false
       http.ssl_verify_host = false
@@ -51,6 +53,14 @@ private
 
     assert_pdf_content_type(parse_headers http.header_str)
     write_pdf_to_tempfile http.body_str
+  end
+
+  def get_download_url
+    if Capybara.app_host
+      Capybara.app_host + "/download"
+    else
+      Capybara.current_url.gsub('confirmation$', 'download')
+    end
   end
 
   def write_pdf_to_tempfile(ascii)
