@@ -313,7 +313,7 @@ describe Tenancy do
 
   describe "#as_json" do
     it "should generate the correct JSON" do
-      tenancy.as_json.should eq desired_format
+      assert_hash_is_correct tenancy.as_json, desired_format
     end
   end
 
@@ -325,7 +325,7 @@ describe Tenancy do
         'latest_agreement_date_month' => '',
         'latest_agreement_date_year' => ''
       }
-      expect(tenancy.as_json).to eql desired_format.merge(json_mod)
+      assert_hash_is_correct tenancy.as_json, desired_format.merge(json_mod)
     end
   end
 

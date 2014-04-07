@@ -37,7 +37,7 @@ describe Claim do
       end
 
       it 'should return the right JSON' do
-        expect(@claim.as_json).to eql desired_format
+        assert_hash_is_correct @claim.as_json, desired_format
       end
 
       it 'should set demoted tenancy boolean on tenancy' do
@@ -65,7 +65,7 @@ describe Claim do
 
         it "should have no values for tenancy agreement reissued fields" do
           fields.each do |field|
-            expect(@claim.as_json[field]).to eql ""
+            expect("#{field}: #{@claim.as_json[field]}").to eql "#{field}: "
           end
         end
       end
@@ -107,7 +107,7 @@ describe Claim do
 
         context "and it's the only tenancy" do
           it 'should return the right JSON' do
-            expect(@claim.as_json).to eql desired_format
+            assert_hash_is_correct @claim.as_json, desired_format
           end
         end
       end
@@ -138,7 +138,7 @@ describe Claim do
 
         context "and it's the only tenancy" do
           it 'should return the right JSON' do
-            expect(@claim.as_json).to eql desired_format
+            assert_hash_is_correct @claim.as_json, desired_format
           end
         end
 
@@ -157,7 +157,7 @@ describe Claim do
 
           context "and it's the only tenancy" do
             it 'should return the right JSON' do
-              expect(@claim.as_json).to eql desired_format
+              assert_hash_is_correct @claim.as_json, desired_format
             end
           end
         end
@@ -190,7 +190,7 @@ describe Claim do
 
           context "and it's the only tenancy" do
             it 'should return the right JSON' do
-              expect(@claim.as_json).to eql desired_format
+              assert_hash_is_correct @claim.as_json, desired_format
             end
           end
 
@@ -223,7 +223,7 @@ describe Claim do
 
             context "and it's the only tenancy" do
               it 'should return the right JSON' do
-                expect(@claim.as_json).to eql desired_format
+                assert_hash_is_correct @claim.as_json, desired_format
               end
             end
           end
