@@ -87,24 +87,21 @@ def claim_post_data
         "town" => "London",
         "postcode" => "SW1X 2PT"
       },
-      "demoted_tenancy" =>
+      "tenancy" =>
       {
-        'demoted_tenancy' => 'Yes',
+        'tenancy_type' => 'demoted',
         "demotion_order_date(3i)" => "1",
         "demotion_order_date(2i)" => "1",
         "demotion_order_date(1i)" => "2010",
-        'demotion_order_court' => 'Brighton County Court'
-      },
-      "tenancy" =>
-      {
+        'demotion_order_court' => 'Brighton County Court',
         "start_date(3i)" => "1",
         "start_date(2i)" => "1",
         "start_date(1i)" => "2010",
         "latest_agreement_date(3i)" => "1",
         "latest_agreement_date(2i)" => "1",
         "latest_agreement_date(1i)" => "2010",
-        "reissued_for_same_property" => 'No',
-        "reissued_for_same_landlord_and_tenant" => 'No',
+        "agreement_reissued_for_same_property" => 'No',
+        "agreement_reissued_for_same_landlord_and_tenant" => 'No',
         "assured_shorthold_tenancy_notice_served_by" => 'Mr Brown',
         "assured_shorthold_tenancy_notice_served_date(3i)" => "1",
         "assured_shorthold_tenancy_notice_served_date(2i)" => "12",
@@ -173,11 +170,11 @@ def claim_formatted_data
     "deposit_information_given_date_day" => "",
     "deposit_information_given_date_month" => "",
     "deposit_information_given_date_year" => "",
-    'demoted_tenancy_demoted_tenancy' => 'Yes',
-    "demoted_tenancy_demotion_order_date_day" => "01",
-    "demoted_tenancy_demotion_order_date_month" => "01",
-    "demoted_tenancy_demotion_order_date_year" => "2010",
-    'demoted_tenancy_demotion_order_court' => 'Brighton',
+    'tenancy_demoted_tenancy' => 'Yes',
+    "tenancy_demotion_order_date_day" => "01",
+    "tenancy_demotion_order_date_month" => "01",
+    "tenancy_demotion_order_date_year" => "2010",
+    'tenancy_demotion_order_court' => 'Brighton',
     "tenancy_agreement_reissued_for_same_landlord_and_tenant" => "No",
     "tenancy_agreement_reissued_for_same_property" => "No",
     "tenancy_latest_agreement_date_day" => "01",
