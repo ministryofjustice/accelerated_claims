@@ -68,15 +68,20 @@ class Tenancy < BaseClass
   end
 
   def as_json
-    json = super
-    json = split_date :start_date, json
-    json = split_date :latest_agreement_date, json
-    json = split_date :assured_shorthold_tenancy_notice_served_date, json
-    json['agreement_reissued_for_same_property'] = json.delete('reissued_for_same_property')
-    json['agreement_reissued_for_same_landlord_and_tenant'] = json.delete('reissued_for_same_landlord_and_tenant')
-    json["demoted_tenancy"] = format_tenancy_type
-    json.delete 'tenancy_type'
-    json
+    start_date = original_assured_shorthold_tenancy_agreement_date if original_assured_shorthold_tenancy_agreement_date.present?
+    {
+      "start_date_day" => day(start_date),
+      "start_date_month" => month(start_date),
+      "start_date_year" => year(start_date),
+      "demoted_tenancy" => format_tenancy_type,
+      "agreement_reissued_for_same_landlord_and_tenant" => reissued_for_same_landlord_and_tenant,
+      "agreement_reissued_for_same_property" => reissued_for_same_property,
+      "assured_shorthold_tenancy_notice_served_by" => assured_shorthold_tenancy_notice_served_by,
+      "latest_agreement_date_day" => day(latest_agreement_date),
+      "latest_agreement_date_month" => month(latest_agreement_date),
+      "latest_agreement_date_year" => year(latest_agreement_date),
+    }
+
   end
 
   def demoted_tenancy= obj
