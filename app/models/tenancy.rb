@@ -69,11 +69,11 @@ class Tenancy < BaseClass
   end
 
   def as_json
-    start_date = original_assured_shorthold_tenancy_agreement_date if original_assured_shorthold_tenancy_agreement_date.present?
-    {
-      "start_date_day" => day(start_date),
-      "start_date_month" => month(start_date),
-      "start_date_year" => year(start_date),
+    date = original_assured_shorthold_tenancy_agreement_date.present? ? original_assured_shorthold_tenancy_agreement_date : start_date
+    hash = {
+      "start_date_day" => day(date),
+      "start_date_month" => month(date),
+      "start_date_year" => year(date),
       "demoted_tenancy" => format_tenancy_type,
       "agreement_reissued_for_same_landlord_and_tenant" => agreement_reissued_for_same_landlord_and_tenant,
       "agreement_reissued_for_same_property" => agreement_reissued_for_same_property,
@@ -81,8 +81,12 @@ class Tenancy < BaseClass
       "latest_agreement_date_day" => day(latest_agreement_date),
       "latest_agreement_date_month" => month(latest_agreement_date),
       "latest_agreement_date_year" => year(latest_agreement_date),
+      'demotion_order_court' => short_court_name
     }
 
+    split_date(:demotion_order_date, hash)
+    split_date(:assured_shorthold_tenancy_notice_served_date, hash)
+    hash
   end
 
   def demoted_tenancy= obj
@@ -93,7 +97,12 @@ class Tenancy < BaseClass
   end
 
   private
+
   def format_tenancy_type
     tenancy_type == "demoted" ? "Yes" : "No"
+  end
+
+  def short_court_name
+    demotion_order_court.to_s.sub(/ County Court/,'')
   end
 end
