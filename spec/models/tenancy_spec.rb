@@ -27,14 +27,34 @@ describe Tenancy do
           "assured_shorthold_tenancy_notice_served_date_day" => "",
           "assured_shorthold_tenancy_notice_served_date_month" => "",
           "assured_shorthold_tenancy_notice_served_date_year" => "",
-          "original_assured_shorthold_tenancy_agreement_date_day" => "",
-          "original_assured_shorthold_tenancy_agreement_date_month" => "",
-          "original_assured_shorthold_tenancy_agreement_date_year" => "",
           "demotion_order_date_day" => "",
           "demotion_order_date_month" => "",
           "demotion_order_date_year" => "",
           "demotion_order_court" => ""
         }
+      end
+
+      describe "start_date in JSON" do
+        # if original_assured_shorthold_tenancy_agreement_date present
+        # then add it as start_date, otherwise
+        # keep start_date as start_date
+        let(:tenancy) do
+          Tenancy.new("start_date(3i)"=>"10",
+                      "start_date(2i)"=>"10",
+                      "start_date(1i)"=>"2013",
+                      "original_assured_shorthold_tenancy_agreement_date(3i)"=>"05",
+                      "original_assured_shorthold_tenancy_agreement_date(2i)"=>"05",
+                      "original_assured_shorthold_tenancy_agreement_date(1i)"=>"2010")
+        end
+
+        context "if original_assured_shorthold_tenancy_agreement_date not blank" do
+          it "should assign it as start_date" do
+            puts tenancy.as_json
+            tenancy.as_json["start_date_day"].should eq "05"
+            tenancy.as_json["start_date_month"].should eq "05"
+            tenancy.as_json["start_date_year"].should eq "2010"
+          end
+        end
       end
 
       describe "demoted_tenancy in JSON" do
