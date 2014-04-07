@@ -85,8 +85,8 @@ describe Tenancy do
       tenancy_type: 'assured',
       assured_shorthold_tenancy_type: value(:assured_shorthold_tenancy_type, 'one', overrides),
       original_assured_shorthold_tenancy_agreement_date: value(:original_assured_shorthold_tenancy_agreement_date, nil, overrides),
-      agreement_reissued_for_same_property: value(:reissued_for_same_property, nil, overrides),
-      agreement_reissued_for_same_landlord_and_tenant: value(:reissued_for_same_landlord_and_tenant, nil, overrides)
+      agreement_reissued_for_same_property: value(:agreement_reissued_for_same_property, nil, overrides),
+      agreement_reissued_for_same_landlord_and_tenant: value(:agreement_reissued_for_same_landlord_and_tenant, nil, overrides)
     }.merge(start_date_fields)
     )
   end
@@ -224,8 +224,8 @@ describe Tenancy do
           assured_shorthold_tenancy_type: 'multiple',
           original_assured_shorthold_tenancy_agreement_date: Date.parse("2009-01-01"),
           start_date: start_date,
-          agreement_reissued_for_same_property: 'no',
-          agreement_reissued_for_same_landlord_and_tenant: 'yes')
+          agreement_reissued_for_same_property: 'No',
+          agreement_reissued_for_same_landlord_and_tenant: 'Yes')
       end
       it { should be_valid }
       its(:one_tenancy_agreement?) { should be_false }
