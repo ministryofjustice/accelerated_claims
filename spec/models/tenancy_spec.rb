@@ -202,14 +202,14 @@ describe Tenancy do
     end
 
     shared_examples_for 'validates yes/no' do
-      it "should only accept 'yes' & 'no'" do
-        %w(yes no).each do |answer|
+      it "should only accept 'Yes' & 'No'" do
+        %w(Yes No).each do |answer|
           subject.send("#{field}=", answer)
           subject.should be_valid
         end
       end
 
-      it "should not accept answers other than 'yes' & 'no'" do
+      it "should not accept answers other than 'Yes' & 'No'" do
         %w(maybe idontknow).each do |answer|
           subject.send("#{field}=", answer)
           subject.should_not be_valid
