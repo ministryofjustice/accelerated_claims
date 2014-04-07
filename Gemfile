@@ -45,6 +45,8 @@ end
 
 group :test do
   #gem 'webmock'
+  gem 'parallel'
+  gem 'rspec_junit_formatter'
   gem 'capybara'
   gem 'guard-rspec'
   gem 'brakeman'
