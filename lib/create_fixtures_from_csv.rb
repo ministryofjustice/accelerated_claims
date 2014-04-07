@@ -7,9 +7,10 @@
 require 'csv'
 require 'pry'
 require 'json'
+require 'curb'
 
 class DataScenarioGenerator
-  def initialize(csv_filename='data.csv')
+  def initialize(csv_filename)
     @rows = CSV.read(csv_filename)
     @column_containing_first_journey = 3
     @scenario_data = buildDataHash
@@ -17,8 +18,8 @@ class DataScenarioGenerator
 
   def writeToFile
     @scenario_data.each_with_index do |data, index|
-      file = File.expand_path("../scenario_#{index + 1}_data.rb", __FILE__)
-
+      file = File.join(Rails.root, "spec", "fixtures", "scenario_#{index + 1}_data.rb")
+      puts "Writing #{file}"
       File.open(file,'w') do |f|
         data = JSON.pretty_generate(data)
         data.gsub!(/"([^"]+)":/, '\1:')
@@ -97,5 +98,26 @@ class DataScenarioGenerator
   end
 end
 
-d = DataScenarioGenerator.new('data.csv')
-d.writeToFile
+class DownloadScenarioData
+  def self.download
+    url = get_download_url
+    puts "Downloading: #{url}"
+    http = Curl.get(get_download_url) do |http|
+      http.headers['Accept'] = "text/csv"
+      http.follow_location = true
+    end
+
+    write_csv_to_tempfile http.body_str
+  end
+
+  def self.write_csv_to_tempfile(csv_data)
+    file = Tempfile.new('data_csv', encoding: 'utf-8')
+    file.write(csv_data)
+    file.path
+  end
+
+  def self.get_download_url
+    key = "0Arsa0arziNdndHlwM2xJMVl5Z3pDdFVOYnVsRmZST1E"
+    "https://docs.google.com/spreadsheet/pub?key=#{key}&single=true&gid=0&output=csv"
+  end
+end
