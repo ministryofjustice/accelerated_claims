@@ -27,7 +27,9 @@ namespace :browserstack do
 
         puts "testing: #{test_label}"
 
-        system("rspec spec/features --format RspecJunitFormatter --out '#{test_label}.xml'")
+        cmd = "env=#{ENV['env']} rspec spec/features --format RspecJunitFormatter --out '#{test_label}.xml'"
+        puts cmd
+        system(cmd)
       end
       exitstatus = results.count { |e| !e }
     rescue Exception => e
