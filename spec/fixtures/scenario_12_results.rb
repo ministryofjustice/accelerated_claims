@@ -19,7 +19,7 @@
   property_address: "Mucho Gracias Road\nLondon",
   property_postcode1: "SW1H",
   property_postcode2: "9AJ",
-  demoted_tenancy_demoted_tenancy: nil,
+  tenancy_demoted_tenancy: "No",
   property_house: "Yes",
   tenancy_start_date_day: "01",
   tenancy_start_date_month: "01",
@@ -84,8 +84,8 @@
   defendant_one_address: "Mr John Kapur\nEndof Road\nLondon",
   defendant_one_postcode2: "2PT",
   defendant_one_postcode1: "SW1X",
-  demoted_tenancy_demotion_order_date_day: nil,
-  demoted_tenancy_demotion_order_date_month: nil,
-  demoted_tenancy_demotion_order_date_year: nil,
-  demoted_tenancy_demotion_order_court: nil
+  tenancy_demotion_order_date_day: nil,
+  tenancy_demotion_order_date_month: nil,
+  tenancy_demotion_order_date_year: nil,
+  tenancy_demotion_order_court: nil
 }

@@ -19,7 +19,7 @@
   property_address: "107 Addiscombe Rd\nCroydon",
   property_postcode1: "CR0",
   property_postcode2: "6SG",
-  demoted_tenancy_demoted_tenancy: nil,
+  tenancy_demoted_tenancy: "No",
   property_house: "Yes",
   tenancy_start_date_day: "20",
   tenancy_start_date_month: "12",
@@ -84,8 +84,8 @@
   defendant_one_address: "Mr Malcom Greene\n23c Ecclesbourne Rd\nThornton Heath, London",
   defendant_one_postcode2: "7BN",
   defendant_one_postcode1: "CR7",
-  demoted_tenancy_demotion_order_date_day: nil,
-  demoted_tenancy_demotion_order_date_month: nil,
-  demoted_tenancy_demotion_order_date_year: nil,
-  demoted_tenancy_demotion_order_court: nil
+  tenancy_demotion_order_date_day: nil,
+  tenancy_demotion_order_date_month: nil,
+  tenancy_demotion_order_date_year: nil,
+  tenancy_demotion_order_court: nil
 }
