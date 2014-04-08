@@ -88,6 +88,7 @@ class Tenancy < BaseClass
 
     split_date(:demotion_order_date, hash)
     split_date(:assured_shorthold_tenancy_notice_served_date, hash)
+    split_date(:original_assured_shorthold_tenancy_agreement_date, hash)
     hash
   end
 

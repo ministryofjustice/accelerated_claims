@@ -71,12 +71,76 @@ describe Tenancy do
       end
 
       describe "agreement_reissued_for_same_landlord_and_tenant in JSON" do
-        let(:tenancy) { Tenancy.new(agreement_reissued_for_same_landlord_and_tenant: "Yes") }
+        value = "Yes"
+        let(:tenancy) { Tenancy.new(agreement_reissued_for_same_landlord_and_tenant: value) }
 
         subject { tenancy.as_json["agreement_reissued_for_same_landlord_and_tenant"] }
 
-        it { should eq "Yes" }
+        it { should eq value }
       end
+
+      describe "agreement_reissued_for_same_property in JSON" do
+        value = "Yes"
+        let(:tenancy) { Tenancy.new(agreement_reissued_for_same_property: value) }
+        subject { tenancy.as_json["agreement_reissued_for_same_property"] }
+        it { should eq value }
+      end
+
+      describe "assured_shorthold_tenancy_notice_served_by in JSON" do
+        value = "Bob"
+        let(:tenancy) { Tenancy.new(assured_shorthold_tenancy_notice_served_by: value) }
+        subject { tenancy.as_json["assured_shorthold_tenancy_notice_served_by"] }
+        it { should eq value }
+      end
+
+      describe "assured_shorthold_tenancy_notice_served_date in JSON" do
+        let(:tenancy) do
+          Tenancy.new("assured_shorthold_tenancy_notice_served_date(3i)" => "1",
+                      "assured_shorthold_tenancy_notice_served_date(2i)" => "10",
+                      "assured_shorthold_tenancy_notice_served_date(1i)" => "2010")
+        end
+
+        it "should assign it as a correct date" do
+          tenancy.as_json["assured_shorthold_tenancy_notice_served_date_day"].should eq "01"
+          tenancy.as_json["assured_shorthold_tenancy_notice_served_date_month"].should eq "10"
+          tenancy.as_json["assured_shorthold_tenancy_notice_served_date_year"].should eq "2010"
+        end
+      end
+
+      describe "original_assured_shorthold_tenancy_agreement_date in JSON" do
+        let(:tenancy) do
+          Tenancy.new("original_assured_shorthold_tenancy_agreement_date(3i)" => "1",
+                      "original_assured_shorthold_tenancy_agreement_date(2i)" => "2",
+                      "original_assured_shorthold_tenancy_agreement_date(1i)" => "2011")
+        end
+
+        it "should assign it as a correct date" do
+          tenancy.as_json["original_assured_shorthold_tenancy_agreement_date_day"].should eq "01"
+          tenancy.as_json["original_assured_shorthold_tenancy_agreement_date_month"].should eq "02"
+          tenancy.as_json["original_assured_shorthold_tenancy_agreement_date_year"].should eq "2011"
+        end
+      end
+
+      describe "demotion_order_date in JSON" do
+        let(:tenancy) do
+          Tenancy.new("demotion_order_date(3i)" => "1",
+                      "demotion_order_date(2i)" => "1",
+                      "demotion_order_date(1i)" => "2011")
+        end
+
+        it "should assign it as a correct date" do
+          tenancy.as_json["demotion_order_date_day"].should eq "01"
+          tenancy.as_json["demotion_order_date_month"].should eq "01"
+          tenancy.as_json["demotion_order_date_year"].should eq "2011"
+        end
+      end
+
+      describe "demotion_order_court in JSON" do
+        let(:tenancy) { Tenancy.new(demotion_order_court: "Bristol County Court") }
+        subject { tenancy.as_json["demotion_order_court"] }
+        it { should eq "Bristol" }
+      end
+
     end
   end
 
