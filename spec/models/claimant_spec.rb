@@ -13,8 +13,13 @@ describe Claimant do
   context 'when validate_presence false' do
     before { claimant.validate_presence = false }
 
-    context "when full_name is blank" do
+    context "and full_name is blank but other fields present" do
       before { claimant.full_name = "" }
+      it { should_not be_valid }
+    end
+
+    context "and all fields blank" do
+      subject { Claimant.new(title: '', full_name: '', street: '', postcode: '') }
       it { should be_valid }
     end
 
