@@ -6,35 +6,28 @@ describe Claimant do
                  postcode: "SW1H9AJ")
   end
 
-  describe "when given all valid values" do
-    it "should be valid" do
-      claimant.should be_valid
-    end
-  end
+  subject { claimant }
+
+  it { should be_valid }
 
   context 'when validate_presence false' do
-    before do
-      claimant.validate_presence = false
+    before { claimant.validate_presence = false }
+
+    context "and full_name is blank but other fields present" do
+      before { claimant.full_name = "" }
+      it { should_not be_valid }
     end
 
-    subject { claimant }
-
-    describe "full_name name" do
-      it "when blank should be valid" do
-        claimant.full_name = ""
-        claimant.should be_valid
-      end
+    context "and all fields blank" do
+      subject { Claimant.new(title: '', full_name: '', street: '', postcode: '') }
+      it { should be_valid }
     end
 
     include_examples 'address validation'
   end
 
   context 'when validate_presence true' do
-    before do
-      claimant.validate_presence = true
-    end
-
-    subject { claimant }
+    before { claimant.validate_presence = true }
 
     include_examples 'name validation'
     include_examples 'address validation'
@@ -50,9 +43,7 @@ describe Claimant do
       }
     end
 
-    it "should produce formated output" do
-      claimant.as_json.should eq json_output
-    end
+    its(:as_json) { should == json_output }
   end
 
 end

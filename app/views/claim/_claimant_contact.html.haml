@@ -2,7 +2,8 @@
   .sub-panel.extra.rel.js-yesno.yesno-solicitor(data-yesnoid='yesno-solicitor' data-yesnoreq='true')
     .row.full
       = 'Are there any legal representative’s costs?'.html_safe
-    = form.text_field_row :legal_costs, label: 'remove', class: 'legal_costs', input_class: 'pound'
+    .row.legal_costs{ style: 'padding-left: 40px' }
+      = form.text_field :legal_costs, class: 'pound'
   .sub-panel.extra.rel.js-yesno.yesno-correspondance(data-yesnoid='yesno-correspondance' data-yesnoreq='true')
     .row.full
       = 'Is there a separate address? (for the person we should contact about the case)'.html_safe
