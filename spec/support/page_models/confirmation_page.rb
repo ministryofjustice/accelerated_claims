@@ -16,7 +16,7 @@ class ConfirmationPage
     filename = download_pdf
 
       data_from_rendered_pdf = values_from_pdf(filename)
-      
+
       expected_data = load_result_data(1)
       expect(data_from_rendered_pdf).to eql expected_data
   end
@@ -32,9 +32,9 @@ class ConfirmationPage
 private
   def capybara_download_pdf
     expect(Capybara.current_path).to eql @url
-    click_link 'Print completed form'
+    click_link 'View and print completed form'
     assert_pdf_content_type(page.response_headers)
-    
+
     write_pdf_to_tempfile page.body
   end
 
