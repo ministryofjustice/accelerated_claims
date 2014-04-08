@@ -101,6 +101,11 @@ class ClaimForm
 
   def fill_claimant_two
     complete_details_of_person('claimant_two')
+
+    if get_data('javascript', 'claimant_two_same_address') == 'Yes'
+      fill_in("claim_claimant_two_street", with: get_data('claimant_one', 'street'))
+      fill_in("claim_claimant_two_postcode", with: get_data('claimant_one', 'postcode'))
+    end
   end
 
   def fill_defendant_one
