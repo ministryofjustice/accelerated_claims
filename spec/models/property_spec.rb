@@ -1,7 +1,6 @@
 describe Property do
   let(:property) do
-    Property.new(street: "1 Aha Street",
-                 town: "London",
+    Property.new(street: "1 Aha Street\nLondon",
                  postcode: "SW1H 9AJ",
                  house: "Yes")
   end
@@ -23,8 +22,7 @@ describe Property do
 
   describe "validations" do
     let(:property) do
-      Property.new(street: "1 Aha Street",
-                   town: "London",
+      Property.new(street: "1 Aha Street\nLondon",
                    postcode: "SW1H 9AJ",
                    house: "Yes")
     end

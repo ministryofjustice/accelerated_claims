@@ -44,7 +44,7 @@ moj.Modules.addressCopying = (function() {
       copyAddresses( function() {
         submitForm();
       } );
-    } ); 
+    } );
   };
 
   createFakeSubmitButton = function() {
@@ -72,7 +72,6 @@ moj.Modules.addressCopying = (function() {
 
   copyAddress = function( $src, $target ) {
     $target.find( '.street textarea' ).val( $src.find( '.street textarea' ).val() );
-    $target.find( '.town input[type="text"]' ).val( $src.find( '.town input[type="text"]' ).val() );
     $target.find( '.postcode input[type="text"]' ).val( $src.find( '.postcode input[type="text"]' ).val() );
   };
 
