@@ -45,7 +45,6 @@ describe Tenancy do
 
         context "if original_assured_shorthold_tenancy_agreement_date not blank" do
           it "should assign it as start_date" do
-            puts tenancy.as_json
             tenancy.as_json["start_date_day"].should eq "05"
             tenancy.as_json["start_date_month"].should eq "05"
             tenancy.as_json["start_date_year"].should eq "2010"
@@ -69,6 +68,14 @@ describe Tenancy do
 
           it { should eq "No" }
         end
+      end
+
+      describe "agreement_reissued_for_same_landlord_and_tenant in JSON" do
+        let(:tenancy) { Tenancy.new(agreement_reissued_for_same_landlord_and_tenant: "Yes") }
+
+        subject { tenancy.as_json["agreement_reissued_for_same_landlord_and_tenant"] }
+
+        it { should eq "Yes" }
       end
     end
   end
