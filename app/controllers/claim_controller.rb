@@ -2,7 +2,7 @@ class ClaimController < ApplicationController
  # after_filter :delete_all_pdfs, only: :submission
 
   def landing
-    @page_title = 'Property possession'
+    @page_title = 'Accelerated possession claim for property'
     render 'landing'
   end
 
