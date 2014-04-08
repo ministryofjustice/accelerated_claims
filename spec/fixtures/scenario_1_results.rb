@@ -71,7 +71,7 @@
   ClaimantSigneeFullName: nil,
   ClaimantSolicitorFirm: nil,
   ClaimantSigneePositionAtSolicitorFirm: nil,
-  claimant_contact_address: "Mr  Robert Linley\n16 Swinegate\nLeeds",
+  claimant_contact_address: "Mr  Robert Linley\nLinley &amp; Simpson\n16 Swinegate\nLeeds",
   claimant_contact_reference_number: nil,
   claimant_contact_fax: nil,
   claimant_contact_dx_number: nil,

@@ -11,7 +11,6 @@ class ClaimForm
     fill_claimant_two
     fill_defendant_one
     fill_defendant_two
-    fill_claimant_contact_details
     fill_solicitor
     fill_tenancy
     fill_notice
@@ -22,13 +21,16 @@ class ClaimForm
     fill_court_fee
   end
 
-  def fill_claimant_contact_details
+  def fill_solicitor
     prefix = 'claimant_contact'
-
-    ["email", "phone", "fax", "dx_number", "reference_number"].each do |field|
-      value = get_data(prefix, field)
-      fill_in "claim_claimant_contact_#{field}", with: value
-    end
+    fill_in_text_field(prefix, 'legal_costs')
+    complete_details_of_person(prefix)
+    fill_in_text_field(prefix, 'company_name')
+    fill_in_text_field(prefix, 'email')
+    fill_in_text_field(prefix, 'phone')
+    fill_in_text_field(prefix, 'fax')
+    fill_in_text_field(prefix, 'dx_number')
+    fill_in_text_field(prefix, 'reference_number')
   end
 
   def submit
@@ -167,17 +169,6 @@ class ClaimForm
     prefix = 'order'
     check_box(prefix, 'possession')
     check_box(prefix, 'cost')
-  end
-
-  def fill_solicitor
-    prefix = 'claimant_contact'
-    fill_in_text_field(prefix, 'legal_costs')
-    complete_details_of_person(prefix)
-    fill_in_text_field(prefix, 'email')
-    fill_in_text_field(prefix, 'phone')
-    fill_in_text_field(prefix, 'fax')
-    fill_in_text_field(prefix, 'dx_number')
-    fill_in_text_field(prefix, 'reference_number')
   end
 
   def fill_court_fee
