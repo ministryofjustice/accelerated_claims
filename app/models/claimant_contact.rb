@@ -36,8 +36,10 @@ class ClaimantContact < BaseClass
 
   private
   def address_format
-    short_format = "#{title} #{full_name}\n#{street}"
-    long_format = "#{title} #{full_name}\n#{company_name}\n#{street}"
-    company_name.blank? ? short_format : long_format
+    if company_name.blank?
+      "#{title} #{full_name}\n#{street}"
+    else
+      "#{title} #{full_name}\n#{company_name}\n#{street}"
+    end
   end
 end
