@@ -12,4 +12,5 @@
     = form.date_select_field_set :information_given_date, 'Enter the date when this information was given to the defendant', class: 'date-picker full', date_select_options: @date_select_options
     = form.text_field_row  :ref_number, label: 'Enter the tenancy deposit scheme reference number', class: 'full'
 
-  = form.radio_button_fieldset :as_property, 'Did you receive a deposit in the form of property on or after 6 April 2007? (This is a deposit that has been taken instead of cash, eg an item of value like jewellery)', class: 'striped-choice full js-depend', :data => { :depend => 'property-deposit', :show => 'yes, and the deposit was returned at the time notice was given' }
+  - choice = { 'Yes, and the deposit was returned at the time notice was given' => 'Yes', 'No' => 'No'}
+  = form.radio_button_fieldset :as_property, 'Did you receive a deposit in the form of property on or after 6 April 2007? (This is a deposit that has been taken instead of cash, eg an item of value like jewellery)', class: 'striped-choice full js-depend', choice: choice, :data => { :depend => 'property-deposit', :show => 'yes' }
