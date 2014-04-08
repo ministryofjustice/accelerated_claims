@@ -48,9 +48,7 @@ class ClaimForm
 
   def get_data prefix, key
     begin
-      value = @data['claim'][prefix][key]
-      value.gsub!("\r",'') if value
-      value
+      @data['claim'][prefix][key]
     rescue Exception => e
       raise ['no data', prefix, key].join(': ')
     end
