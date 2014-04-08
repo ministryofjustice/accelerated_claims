@@ -39,7 +39,7 @@ class Tenancy < BaseClass
 
     with_options if: :multiple_tenancy_agreements? do |tenancy|
       validates_with DateValidator, :fields => [:original_assured_shorthold_tenancy_agreement_date, :latest_agreement_date]
-      tenancy.validates :start_date, absence: { message: "must be blank if single tenancy agreement" }
+      tenancy.validates :start_date, absence: { message: "must be blank if more than one tenancy agreement" }
       tenancy.validates :original_assured_shorthold_tenancy_agreement_date, presence: { message: 'must be selected' }
       tenancy.validates :latest_agreement_date, presence: { message: 'must be selected' }
       tenancy.validates :agreement_reissued_for_same_property, presence: { message: 'must be selected' }
