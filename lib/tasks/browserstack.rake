@@ -1,5 +1,3 @@
-require 'parallel'
-
 namespace :browserstack do
   desc 'list browsers for browserstack'
   task :browsers do
@@ -11,6 +9,8 @@ namespace :browserstack do
   desc 'run features via browserstack'
   task :run do
     begin
+      require 'parallel'
+
       unless ENV['BS_USERNAME'] && ENV['BS_PASSWORD']
         puts "The BS_USERNAME and BS_PASSWORD environment variables must be set prior to running this task."
         exit
