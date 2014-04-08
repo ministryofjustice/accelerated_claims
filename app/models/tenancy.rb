@@ -92,13 +92,6 @@ class Tenancy < BaseClass
     hash
   end
 
-  def demoted_tenancy= obj
-  end
-
-  def demoted_tenancy
-    true
-  end
-
   private
 
   def format_tenancy_type
