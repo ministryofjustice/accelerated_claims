@@ -19,7 +19,7 @@
   property_address: "64 Baxtergate\nWhitby",
   property_postcode1: "YO21",
   property_postcode2: "1BL",
-  demoted_tenancy_demoted_tenancy: nil,
+  tenancy_demoted_tenancy: "No",
   property_house: "Yes",
   tenancy_start_date_day: "12",
   tenancy_start_date_month: "03",
@@ -84,8 +84,8 @@
   defendant_one_address: "Mr Mark Davis\n\n64 Baxtergate\nWhitby",
   defendant_one_postcode2: "1BL",
   defendant_one_postcode1: "YO21",
-  demoted_tenancy_demotion_order_date_day: nil,
-  demoted_tenancy_demotion_order_date_month: nil,
-  demoted_tenancy_demotion_order_date_year: nil,
-  demoted_tenancy_demotion_order_court: nil
+  tenancy_demotion_order_date_day: nil,
+  tenancy_demotion_order_date_month: nil,
+  tenancy_demotion_order_date_year: nil,
+  tenancy_demotion_order_court: nil
 }
