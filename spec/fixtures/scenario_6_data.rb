@@ -6,8 +6,7 @@
   ],
   claim: {
     property: {
-      street: "78 Town Close Road",
-      town: "Norwich",
+      street: "78 Town Close Road\nNorwich",
       postcode: "NR1 3HP",
       house: "Yes"
     },
@@ -25,15 +24,13 @@
     claimant_one: {
       title: nil,
       full_name: "Affinity Sutton",
-      street: "Maple House, 157-159 Masons Hall",
-      town: "London",
+      street: "Maple House, 157-159 Masons Hall\nLondon",
       postcode: "BR2 9HY"
     },
     claimant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
     claimant_contact: {
@@ -42,7 +39,6 @@
       full_name: nil,
       company_name: nil,
       street: nil,
-      town: nil,
       postcode: nil,
       email: "amyturner@affinitysutton.co.uk",
       phone: "3001005392",
@@ -54,14 +50,12 @@
       title: "Ms",
       full_name: "Linette Barlow",
       street: nil,
-      town: nil,
       postcode: nil
     },
     defendant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
     tenancy: {

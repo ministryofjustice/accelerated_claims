@@ -9,8 +9,7 @@
     = form.text_field_row :title,    class: 'title', input_class: 'smalltext'
     = form.text_field_row :full_name, class: 'rel '
     = form.text_field_row :company_name,  class: 'rel company_name'
-    = form.text_area_row  :street,   class: 'rel street'
-    = form.text_field_row :town,     class: 'rel town'
+    = form.text_area_row  :street,   label: 'Street address', class: 'rel street'
     = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'
   .sub-panel.extra.rel.js-yesno.yesno-contactmethods(data-yesnoid='yesno-contactmethods' data-yesnoreq='true')
     .row.full

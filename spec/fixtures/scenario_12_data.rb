@@ -6,8 +6,7 @@
   ],
   claim: {
     property: {
-      street: "Mucho Gracias Road",
-      town: "London",
+      street: "Mucho Gracias Road\nLondon",
       postcode: "SW1H 9AJ",
       house: "Yes"
     },
@@ -25,15 +24,13 @@
     claimant_one: {
       title: "Mr",
       full_name: "John Smith",
-      street: "2 Brown St",
-      town: "Cwmbran",
+      street: "2 Brown St\nCwmbran",
       postcode: "SW1W 0LU"
     },
     claimant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
     claimant_contact: {
@@ -42,7 +39,6 @@
       full_name: nil,
       company_name: nil,
       street: nil,
-      town: nil,
       postcode: nil,
       email: nil,
       phone: nil,
@@ -53,15 +49,13 @@
     defendant_one: {
       title: "Mr",
       full_name: "John Kapur",
-      street: "Endof Road",
-      town: "London",
+      street: "Endof Road\nLondon",
       postcode: "SW1X 2PT"
     },
     defendant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
     tenancy: {

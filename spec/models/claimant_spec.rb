@@ -4,8 +4,7 @@ describe Claimant do
   let(:claimant) do
     Claimant.new(title: 'Mr',
                  full_name: "John Doe",
-                 street: "Streety Street",
-                 town: "London",
+                 street: "Streety Street\nLondon",
                  postcode: "SW1H9AJ")
   end
 

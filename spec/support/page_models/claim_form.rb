@@ -43,7 +43,7 @@ class ClaimForm
 
 
   def fill_in_text_field(prefix, key)
-    fill_in("claim_#{prefix}_#{key}", with: get_data(prefix, key) )
+    fill_in("claim_#{prefix}_#{key}", with: get_data(prefix, key))
   end
 
   def get_data prefix, key
@@ -82,14 +82,12 @@ class ClaimForm
     fill_in_text_field(prefix, 'title')
     fill_in_text_field(prefix, 'full_name')
     fill_in_text_field(prefix, 'street')
-    fill_in_text_field(prefix, 'town')
     fill_in_text_field(prefix, 'postcode')
   end
 
   def fill_property_details
     prefix = 'property'
     fill_in_text_field(prefix, 'street')
-    fill_in_text_field(prefix, 'town')
     fill_in_text_field(prefix, 'postcode')
 
     choose_radio(prefix, 'house')

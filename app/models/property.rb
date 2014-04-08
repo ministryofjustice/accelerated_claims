@@ -13,7 +13,7 @@ class Property < BaseClass
   def as_json
     postcode1, postcode2 = split_postcode
     {
-      "address" => "#{street}\n#{town}",
+      "address" => "#{street}",
       "postcode1" => "#{postcode1}",
       "postcode2" => "#{postcode2}",
       "house" => house

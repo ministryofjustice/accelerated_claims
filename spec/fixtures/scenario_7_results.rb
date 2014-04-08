@@ -9,10 +9,10 @@
   claimant_two_address: "Miss Heather Cox",
   claimant_two_postcode1: nil,
   claimant_two_postcode2: nil,
-  defendant_one_address: "Mr Kenneth Butler\n\n45 St Martins Precinct Church St\nReading",
+  defendant_one_address: "Mr Kenneth Butler\n45 St Martins Precinct Church St\nReading",
   defendant_one_postcode1: "RG4",
   defendant_one_postcode2: "8BA",
-  defendant_two_address: "Ms Donna Lee\n\n45 St Martins Precinct Church St\nReading",
+  defendant_two_address: "Ms Donna Lee\n45 St Martins Precinct Church St\nReading",
   defendant_two_postcode1: "RG4",
   defendant_two_postcode2: "8BA",
   property_address: "45 St Martins Precinct Church St\nReading",
@@ -88,5 +88,5 @@
   SendCompletedFormToTelephone: nil,
   SendCompletedFormToFax: nil,
   OfficerOfTheCourt: nil,
-  defendant_two: "Ms Donna Lee\n\n45 St Martins Precinct Church St\nReading \nRG4 8BA"
+  defendant_two: "Ms Donna Lee\n45 St Martins Precinct Church St\nReading \nRG4 8BA"
 }

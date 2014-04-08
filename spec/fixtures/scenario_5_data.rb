@@ -6,8 +6,7 @@
   ],
   claim: {
     property: {
-      street: "10a Pelham St",
-      town: "Wolverhampton",
+      street: "10a Pelham St\nWolverhampton",
       postcode: "WV3 0BJ",
       house: "Yes"
     },
@@ -25,15 +24,13 @@
     claimant_one: {
       title: nil,
       full_name: "Wolverhampton City Council",
-      street: "Civic Centre, St. Peter's Square",
-      town: "Wolverhampton",
+      street: "Civic Centre, St. Peter's Square\nWolverhampton",
       postcode: "WV1 1SH"
     },
     claimant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
     claimant_contact: {
@@ -41,8 +38,7 @@
       title: nil,
       full_name: nil,
       company_name: "Wolverhampton Homes",
-      street: "29 Market Street",
-      town: "Wolverhampton",
+      street: "29 Market Street\nWolverhampton",
       postcode: "WV1 3AG",
       email: nil,
       phone: "1902556789",
@@ -54,14 +50,12 @@
       title: "Mr",
       full_name: "Donald Nelson",
       street: nil,
-      town: nil,
       postcode: nil
     },
     defendant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
     tenancy: {

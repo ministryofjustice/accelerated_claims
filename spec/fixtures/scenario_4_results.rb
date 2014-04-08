@@ -81,7 +81,7 @@
   NameOfCourt: nil,
   ClaimNumber: nil,
   order_cost: "No",
-  defendant_one_address: "Mr Mark Davis\n\n64 Baxtergate\nWhitby",
+  defendant_one_address: "Mr Mark Davis\n64 Baxtergate\nWhitby",
   defendant_one_postcode2: "1BL",
   defendant_one_postcode1: "YO21",
   tenancy_demotion_order_date_day: nil,

@@ -6,8 +6,7 @@
   ],
   claim: {
     property: {
-      street: "64 Baxtergate",
-      town: "Whitby",
+      street: "64 Baxtergate\nWhitby",
       postcode: "YO21 1BL",
       house: "Yes"
     },
@@ -25,15 +24,13 @@
     claimant_one: {
       title: "Miss",
       full_name: "Sarah Rogers",
-      street: "7 Byland Rd",
-      town: "Whitby",
+      street: "7 Byland Rd\nWhitby",
       postcode: "YO21 1JH"
     },
     claimant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
     claimant_contact: {
@@ -42,7 +39,6 @@
       full_name: nil,
       company_name: nil,
       street: nil,
-      town: nil,
       postcode: nil,
       email: "serogers@yahoo.co.uk",
       phone: "7456389234",
@@ -54,14 +50,12 @@
       title: "Mr",
       full_name: "Mark Davis",
       street: nil,
-      town: nil,
       postcode: nil
     },
     defendant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
     tenancy: {
