@@ -71,7 +71,7 @@
   ClaimantSigneeFullName: nil,
   ClaimantSolicitorFirm: nil,
   ClaimantSigneePositionAtSolicitorFirm: nil,
-  claimant_contact_address: "Mr Brent Hunt\nSGH Martineau LLP, 1 Colmore Circus Queensway\nBirmingham",
+  claimant_contact_address: "Mr Brent Hunt\nBrent Hunt Inc\nSGH Martineau LLP, 1 Colmore Circus Queensway\nBirmingham",
   claimant_contact_reference_number: nil,
   claimant_contact_fax: nil,
   claimant_contact_dx_number: nil,

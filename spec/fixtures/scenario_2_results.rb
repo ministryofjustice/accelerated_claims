@@ -61,7 +61,7 @@
   ClaimantSigneeFullName: nil,
   ClaimantSolicitorFirm: nil,
   ClaimantSigneePositionAtSolicitorFirm: nil,
-  claimant_contact_address: "Mr Jay Schneider\nPO Box 1655, 9 Russell Square\nLondon",
+  claimant_contact_address: "Mr Jay Schneider\nSchneider &amp; Sons\nPO Box 1655, 9 Russell Square\nLondon",
   claimant_contact_postcode1: "WC1B",
   claimant_contact_postcode2: "5EQ",
   claimant_contact_reference_number: nil,
