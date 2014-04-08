@@ -318,7 +318,7 @@ describe Tenancy do
         it { should_not be_valid }
         it 'should have error message' do
           subject.valid?
-          subject.errors.full_messages.should == ["Start date must be blank if single tenancy agreement"]
+          subject.errors.full_messages.should == ["Start date must be blank if more than one tenancy agreement"]
         end
       end
 
