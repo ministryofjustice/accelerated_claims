@@ -9,10 +9,10 @@
   claimant_two_address: nil,
   claimant_two_postcode1: nil,
   claimant_two_postcode2: nil,
-  defendant_one_address: "Miss Annice Abreu\n\n280 Coventry Rd\nBirmingham",
+  defendant_one_address: "Miss Annice Abreu\n280 Coventry Rd\nBirmingham",
   defendant_one_postcode1: "B10",
   defendant_one_postcode2: "0XA",
-  defendant_two_address: "Mr Dumisani Afolayan\n\n280 Coventry Rd\nBirmingham",
+  defendant_two_address: "Mr Dumisani Afolayan\n280 Coventry Rd\nBirmingham",
   defendant_two_postcode1: "B10",
   defendant_two_postcode2: "0XA",
   property_address: "280 Coventry Rd\nBirmingham",
@@ -88,5 +88,5 @@
   SendCompletedFormToTelephone: nil,
   SendCompletedFormToFax: nil,
   OfficerOfTheCourt: nil,
-  defendant_two: "Mr Dumisani Afolayan\n\n280 Coventry Rd\nBirmingham \nB10 0XA"
+  defendant_two: "Mr Dumisani Afolayan\n280 Coventry Rd\nBirmingham \nB10 0XA"
 }

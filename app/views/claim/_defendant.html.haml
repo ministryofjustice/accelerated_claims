@@ -4,6 +4,5 @@
   .sub-panel.extra.address
     .row.full
       Defendant's address if they're <strong>not</strong> living in the property
-    = form.text_area_row  :street,   class: 'rel street'
-    = form.text_field_row :town,     class: 'rel town'
+    = form.text_area_row  :street,   label: 'Street address', class: 'rel street'
     = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'

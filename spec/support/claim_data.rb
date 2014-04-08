@@ -5,8 +5,7 @@ def claim_post_data
       {
         "title" => "Mr",
         "full_name" => "John Smith",
-        "street" => "2 Brown St",
-        "town" => "Cwmbran",
+        "street" => "2 Brown St\nCwmbran",
         "postcode" => "SW1W 0LU"
       },
       "claimant_contact" =>
@@ -14,8 +13,7 @@ def claim_post_data
         "title" => "Mr",
         "full_name" => "Jim Brown",
         "company_name" => "Winning",
-        "street" => "3 Smith St",
-        "town" => "Winsum",
+        "street" => "3 Smith St\nWinsum",
         "postcode" => "SW1W 0LU",
         "email" => "jim@example.com",
         "phone" => "020 000 000",
@@ -28,13 +26,11 @@ def claim_post_data
       {
         "title" => "Ms",
         "full_name" => "Jane Smith",
-        "street" => "7 Main St",
-        "town" => "Alfreton",
+        "street" => "7 Main St\nAlfreton",
         "postcode" => "SW1W 0LU"
       },
       "property" =>
-      { "street" => "Mucho Gracias Road",
-        "town" => "London",
+      { "street" => "Mucho Gracias Road\nLondon",
         "postcode" => "SW1H 9AJ",
         "house"=>"Yes"
       },
@@ -75,16 +71,14 @@ def claim_post_data
       {
         "title" => "Mr",
         "full_name" => "John Major",
-        "street" => "Sesame Street",
-        "town" => "London",
+        "street" => "Sesame Street\nLondon",
         "postcode" => "SW1X 2PT"
       },
       "defendant_two"=>
       {
         "title" => "Ms",
         "full_name" => "Jane Major",
-        "street" => "Sesame Street",
-        "town" => "London",
+        "street" => "Sesame Street\nLondon",
         "postcode" => "SW1X 2PT"
       },
       "tenancy" =>

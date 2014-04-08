@@ -2,8 +2,7 @@ describe Defendant do
   let(:defendant) do
     Defendant.new(title: "Mr",
                   full_name: "John Major",
-                  street: "Sesame Street",
-                  town: "London",
+                  street: "Sesame Street\nLondon",
                   postcode: "SW1X 2PT")
   end
 

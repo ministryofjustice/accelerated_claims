@@ -81,7 +81,7 @@
   NameOfCourt: nil,
   ClaimNumber: nil,
   order_cost: "No",
-  defendant_one_address: "Mr Andre Drake\n\n94 East St\nBristol",
+  defendant_one_address: "Mr Andre Drake\n94 East St\nBristol",
   defendant_one_postcode2: "4EY",
   defendant_one_postcode1: "BS3",
   tenancy_demotion_order_date_day: nil,

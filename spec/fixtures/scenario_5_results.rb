@@ -81,7 +81,7 @@
   NameOfCourt: nil,
   ClaimNumber: nil,
   order_cost: "Yes",
-  defendant_one_address: "Mr Donald Nelson\n\n10a Pelham St\nWolverhampton",
+  defendant_one_address: "Mr Donald Nelson\n10a Pelham St\nWolverhampton",
   defendant_one_postcode2: "0BJ",
   defendant_one_postcode1: "WV3",
   tenancy_demotion_order_date_day: "20",

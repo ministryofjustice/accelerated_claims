@@ -81,7 +81,7 @@
   NameOfCourt: nil,
   ClaimNumber: nil,
   order_cost: "Yes",
-  defendant_one_address: "Ms Linette Barlow\n\n78 Town Close Road\nNorwich",
+  defendant_one_address: "Ms Linette Barlow\n78 Town Close Road\nNorwich",
   defendant_one_postcode2: "3HP",
   defendant_one_postcode1: "NR1",
   tenancy_demotion_order_date_day: nil,
