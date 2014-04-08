@@ -6,8 +6,7 @@
   ],
   claim: {
     property: {
-      street: "280 Coventry Rd",
-      town: "Birmingham ",
+      street: "280 Coventry Rd\nBirmingham ",
       postcode: "B10 0XA",
       house: "Yes"
     },
@@ -25,15 +24,13 @@
     claimant_one: {
       title: "Mr",
       full_name: "Joe Peters",
-      street: "553 Stratford Road",
-      town: "Birmingham",
+      street: "553 Stratford Road\nBirmingham",
       postcode: "B11 4LP"
     },
     claimant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
     claimant_contact: {
@@ -41,8 +38,7 @@
       title: "Mr",
       full_name: "Brent Hunt",
       company_name: "Brent Hunt Inc",
-      street: "SGH Martineau LLP, 1 Colmore Circus Queensway",
-      town: "Birmingham",
+      street: "SGH Martineau LLP, 1 Colmore Circus Queensway\nBirmingham",
       postcode: "B4 6AA",
       email: "brent.hunt@sghmartineau.com",
       phone: "0800 763 1675",
@@ -54,14 +50,12 @@
       title: "Miss",
       full_name: "Annice Abreu",
       street: nil,
-      town: nil,
       postcode: nil
     },
     defendant_two: {
       title: "Mr",
       full_name: "Dumisani Afolayan",
       street: nil,
-      town: nil,
       postcode: nil
     },
     tenancy: {

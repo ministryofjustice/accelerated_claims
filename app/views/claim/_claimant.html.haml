@@ -2,7 +2,6 @@
   = form.text_field_row :title,    class: 'title', input_class: 'smalltext'
   = form.text_field_row :full_name, class: 'rel'
   .sub-panel.rel.address
-    = form.text_area_row  :street,   class: 'rel street'
-    = form.text_field_row :town,     class: 'rel town'
+    = form.text_area_row  :street,   label: 'Street address', class: 'rel street'
     = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'
 

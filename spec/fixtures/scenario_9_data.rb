@@ -6,8 +6,7 @@
   ],
   claim: {
     property: {
-      street: "107 Addiscombe Rd",
-      town: "Croydon",
+      street: "107 Addiscombe Rd\nCroydon",
       postcode: "CR0 6SG",
       house: "Yes"
     },
@@ -25,15 +24,13 @@
     claimant_one: {
       title: "Mr",
       full_name: "James Cox",
-      street: "104 Burbage Rd",
-      town: "London",
+      street: "104 Burbage Rd\nLondon",
       postcode: "SE24 9HE"
     },
     claimant_two: {
       title: "Mr",
       full_name: "Adam Howard",
-      street: "108 Landor Rd",
-      town: "London",
+      street: "108 Landor Rd\nLondon",
       postcode: "SW9 9NU"
     },
     claimant_contact: {
@@ -42,7 +39,6 @@
       full_name: nil,
       company_name: nil,
       street: nil,
-      town: nil,
       postcode: nil,
       email: "Adamhoward@gmail.com",
       phone: nil,
@@ -53,15 +49,13 @@
     defendant_one: {
       title: "Mr",
       full_name: "Malcom Greene",
-      street: "23c Ecclesbourne Rd",
-      town: "Thornton Heath, London",
+      street: "23c Ecclesbourne Rd\nThornton Heath, London",
       postcode: "CR7 7BN"
     },
     defendant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
     tenancy: {

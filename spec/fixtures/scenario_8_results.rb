@@ -9,10 +9,10 @@
   claimant_two_address: nil,
   claimant_two_postcode1: nil,
   claimant_two_postcode2: nil,
-  defendant_one_address: "Mr Gavin Morgan\n\nUnit 11, Swansea Fforest Fach Park\nSwansea",
+  defendant_one_address: "Mr Gavin Morgan\nUnit 11, Swansea Fforest Fach Park\nSwansea",
   defendant_one_postcode1: "SA5",
   defendant_one_postcode2: "4BB",
-  defendant_two_address: "Mr Owen Harris\n\nUnit 11, Swansea Fforest Fach Park\nSwansea",
+  defendant_two_address: "Mr Owen Harris\nUnit 11, Swansea Fforest Fach Park\nSwansea",
   defendant_two_postcode1: "SA5",
   defendant_two_postcode2: "4BB",
   property_address: "Unit 11, Swansea Fforest Fach Park\nSwansea",
@@ -88,5 +88,5 @@
   SendCompletedFormToTelephone: nil,
   SendCompletedFormToFax: nil,
   OfficerOfTheCourt: nil,
-  defendant_two: "Mr Owen Harris\n\nUnit 11, Swansea Fforest Fach Park\nSwansea\nSA5 4BB"
+  defendant_two: "Mr Owen Harris\nUnit 11, Swansea Fforest Fach Park\nSwansea\nSA5 4BB"
 }

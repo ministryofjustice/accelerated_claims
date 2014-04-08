@@ -6,8 +6,7 @@
   ],
   claim: {
     property: {
-      street: "87 Albion St",
-      town: "Leeds ",
+      street: "87 Albion St\nLeeds ",
       postcode: "LS1 6AG",
       house: "Yes"
     },
@@ -25,15 +24,13 @@
     claimant_one: {
       title: "Mr ",
       full_name: "Matthew Collier",
-      street: "2 Savins Mill Way",
-      town: "Leeds",
+      street: "2 Savins Mill Way\nLeeds",
       postcode: "LS5 3RP"
     },
     claimant_two: {
       title: "Mrs",
       full_name: "Violet Collier",
       street: nil,
-      town: nil,
       postcode: nil
     },
     claimant_contact: {
@@ -41,8 +38,7 @@
       title: "Mr ",
       full_name: "Robert Linley",
       company_name: "Linley & Simpson",
-      street: "16 Swinegate",
-      town: "Leeds",
+      street: "16 Swinegate\nLeeds",
       postcode: "LS1 4AG",
       email: "robertlinley@linleyandsimpson.com",
       phone: "0113 246 9295",
@@ -54,14 +50,12 @@
       title: "Miss",
       full_name: "Virginia Richardson",
       street: nil,
-      town: nil,
       postcode: nil
     },
     defendant_two: {
       title: "Miss",
       full_name: "Maria Gonzalez",
       street: nil,
-      town: nil,
       postcode: nil
     },
     tenancy: {

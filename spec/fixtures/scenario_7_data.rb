@@ -6,8 +6,7 @@
   ],
   claim: {
     property: {
-      street: "45 St Martins Precinct Church St",
-      town: "Reading ",
+      street: "45 St Martins Precinct Church St\nReading ",
       postcode: "RG4 8BA",
       house: "Yes"
     },
@@ -25,15 +24,13 @@
     claimant_one: {
       title: "Mr",
       full_name: "Frank Coleman",
-      street: "13 Princess Square",
-      town: "Bracknell",
+      street: "13 Princess Square\nBracknell",
       postcode: "RG12 1LS"
     },
     claimant_two: {
       title: "Miss",
       full_name: "Heather Cox",
       street: nil,
-      town: nil,
       postcode: nil
     },
     claimant_contact: {
@@ -42,7 +39,6 @@
       full_name: nil,
       company_name: nil,
       street: nil,
-      town: nil,
       postcode: nil,
       email: nil,
       phone: nil,
@@ -54,14 +50,12 @@
       title: "Mr",
       full_name: "Kenneth Butler",
       street: nil,
-      town: nil,
       postcode: nil
     },
     defendant_two: {
       title: "Ms",
       full_name: "Donna Lee",
       street: nil,
-      town: nil,
       postcode: nil
     },
     tenancy: {

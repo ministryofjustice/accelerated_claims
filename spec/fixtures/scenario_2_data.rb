@@ -6,8 +6,7 @@
   ],
   claim: {
     property: {
-      street: "94 East St",
-      town: "Bristol",
+      street: "94 East St\nBristol",
       postcode: "BS3 4EY",
       house: "No"
     },
@@ -25,15 +24,13 @@
     claimant_one: {
       title: "Mr",
       full_name: "Jay Schneider",
-      street: "26 Heath St",
-      town: "London",
+      street: "26 Heath St\nLondon",
       postcode: "NW3 6TE"
     },
     claimant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
     claimant_contact: {
@@ -41,8 +38,7 @@
       title: "Mr",
       full_name: "Jay Schneider",
       company_name: "Schneider & Sons",
-      street: "PO Box 1655, 9 Russell Square",
-      town: "London",
+      street: "PO Box 1655, 9 Russell Square\nLondon",
       postcode: "WC1B 5EQ",
       email: "jayschneider@gmail.com",
       phone: "7985473222",
@@ -54,14 +50,12 @@
       title: "Mr",
       full_name: "Andre Drake",
       street: nil,
-      town: nil,
       postcode: nil
     },
     defendant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
     tenancy: {

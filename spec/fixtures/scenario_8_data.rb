@@ -6,8 +6,7 @@
   ],
   claim: {
     property: {
-      street: "Unit 11, Swansea Fforest Fach Park",
-      town: "Swansea",
+      street: "Unit 11, Swansea Fforest Fach Park\nSwansea",
       postcode: "SA5 4BB",
       house: "Yes"
     },
@@ -25,15 +24,13 @@
     claimant_one: {
       title: "Mrs",
       full_name: "Meredith Williams",
-      street: "38 Pentrefelin St",
-      town: "Carmarthen",
+      street: "38 Pentrefelin St\nCarmarthen",
       postcode: "SA31 1RJ"
     },
     claimant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
     claimant_contact: {
@@ -41,8 +38,7 @@
       title: "Mr",
       full_name: "Dilan Lloyd",
       company_name: "Beor Wilson Lloyd",
-      street: "12 Calvert Terrace",
-      town: "Swansea",
+      street: "12 Calvert Terrace\nSwansea",
       postcode: "SA1 6AP",
       email: "enquiries@bwl-law.co.uk",
       phone: "1792655178",
@@ -54,14 +50,12 @@
       title: "Mr",
       full_name: "Gavin Morgan",
       street: nil,
-      town: nil,
       postcode: nil
     },
     defendant_two: {
       title: "Mr",
       full_name: "Owen Harris",
       street: nil,
-      town: nil,
       postcode: nil
     },
     tenancy: {

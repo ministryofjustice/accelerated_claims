@@ -9,10 +9,10 @@
   claimant_two_address: "Mrs Violet Collier",
   claimant_two_postcode1: nil,
   claimant_two_postcode2: nil,
-  defendant_one_address: "Miss Virginia Richardson\n\n87 Albion St\nLeeds",
+  defendant_one_address: "Miss Virginia Richardson\n87 Albion St\nLeeds",
   defendant_one_postcode1: "LS1",
   defendant_one_postcode2: "6AG",
-  defendant_two_address: "Miss Maria Gonzalez\n\n87 Albion St\nLeeds",
+  defendant_two_address: "Miss Maria Gonzalez\n87 Albion St\nLeeds",
   defendant_two_postcode1: "LS1",
   defendant_two_postcode2: "6AG",
   property_address: "87 Albion St\nLeeds",
@@ -88,5 +88,5 @@
   SendCompletedFormToTelephone: nil,
   SendCompletedFormToFax: nil,
   OfficerOfTheCourt: nil,
-  defendant_two: "Miss Maria Gonzalez\n\n87 Albion St\nLeeds \nLS1 6AG"
+  defendant_two: "Miss Maria Gonzalez\n87 Albion St\nLeeds \nLS1 6AG"
 }
