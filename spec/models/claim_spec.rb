@@ -47,7 +47,7 @@ describe Claim do
       end
 
       it 'should set demoted tenancy boolean on tenancy' do
-        claim.tenancy.demoted_tenancy.should be_true
+        claim.tenancy.demoted_tenancy?.should be_true
       end
     end
 
