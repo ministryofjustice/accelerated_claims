@@ -19,7 +19,7 @@
   property_address: "94 East St\nBristol",
   property_postcode1: "BS3",
   property_postcode2: "4EY",
-  demoted_tenancy_demoted_tenancy: nil,
+  tenancy_demoted_tenancy: "No",
   property_house: "No",
   tenancy_start_date_day: "30",
   tenancy_start_date_month: "05",
@@ -84,8 +84,8 @@
   defendant_one_address: "Mr Andre Drake\n\n94 East St\nBristol",
   defendant_one_postcode2: "4EY",
   defendant_one_postcode1: "BS3",
-  demoted_tenancy_demotion_order_date_day: nil,
-  demoted_tenancy_demotion_order_date_month: nil,
-  demoted_tenancy_demotion_order_date_year: nil,
-  demoted_tenancy_demotion_order_court: nil
+  tenancy_demotion_order_date_day: nil,
+  tenancy_demotion_order_date_month: nil,
+  tenancy_demotion_order_date_year: nil,
+  tenancy_demotion_order_court: nil
 }

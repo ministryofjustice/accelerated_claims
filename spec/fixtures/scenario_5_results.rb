@@ -19,7 +19,7 @@
   property_address: "10a Pelham St\nWolverhampton",
   property_postcode1: "WV3",
   property_postcode2: "0BJ",
-  demoted_tenancy_demoted_tenancy: nil,
+  tenancy_demoted_tenancy: "Yes",
   property_house: "Yes",
   tenancy_start_date_day: "02",
   tenancy_start_date_month: "10",
@@ -84,8 +84,8 @@
   defendant_one_address: "Mr Donald Nelson\n\n10a Pelham St\nWolverhampton",
   defendant_one_postcode2: "0BJ",
   defendant_one_postcode1: "WV3",
-  demoted_tenancy_demotion_order_date_day: nil,
-  demoted_tenancy_demotion_order_date_month: nil,
-  demoted_tenancy_demotion_order_date_year: nil,
-  demoted_tenancy_demotion_order_court: nil
+  tenancy_demotion_order_date_day: "20",
+  tenancy_demotion_order_date_month: "04",
+  tenancy_demotion_order_date_year: "2013",
+  tenancy_demotion_order_court: "Wolverhampton Combined Court"
 }
