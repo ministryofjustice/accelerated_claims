@@ -10,8 +10,10 @@ feature "submit claim" do
       claim_form.complete_form
       claim_form.submit
       confirmation_page.is_displayed?.should be_true, claim_form.validation_error_text
-      pdf.load confirmation_page.download_pdf
+      pdf_filename = confirmation_page.download_pdf
+      pdf.load pdf_filename
       if(ENV.key? 'save_pdf')
+        File.rename(pdf_filename, "spec/fixtures/pdfs/scenario_#{index}.pdf")
         pdf.write_hash_to_file("spec/fixtures/scenario_#{index}_results.rb")
       else
         pdf.assert_pdf_is_correct(expected_data)
