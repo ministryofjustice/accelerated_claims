@@ -40,10 +40,16 @@
     %p= "If both the original (and any additional) tenancy agreements were made on or after <strong>28 February 1997</strong>:".html_safe
 
     %ol.alphabetical
-      %li No notice was served on the defendant stating that the tenancy would not be, or continue to be, an assured shorthold tenancy.
-      %li There is no provision in the tenancy agreement which states that it is not an assured shorthold tenancy.
-      %li The ‘agricultural worker condition’ defined in Schedule 3 to the Housing Act 1988 in not fulfilled with respect to the property.
-
+      %li 
+        = form.check_box :applicable_statements_1, {}, "Yes", "No"
+        = form.label :applicable_statements_1, "No notice was served on the defendant stating that the tenancy would not be, or continue to be, an assured shorthold tenancy."
+      %li
+        = form.check_box :applicable_statements_2, {}, "Yes", "No"
+        = form.label :applicable_statements_2, "There is no provision in the tenancy agreement which states that it is not an assured shorthold tenancy."
+      %li
+        = form.check_box :applicable_statements_3, {}, "Yes", "No"
+        = form.label :applicable_statements_3, "The ‘agricultural worker condition’ defined in Schedule 3 to the Housing Act 1988 in not fulfilled with respect to the property."
+        
     %p
       %strong (or)
 
