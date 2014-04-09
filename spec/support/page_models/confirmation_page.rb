@@ -33,7 +33,8 @@ class ConfirmationPage
 
 private
   def capybara_download_pdf
-    expect(Capybara.current_path).to eql @url
+    expected_url = remote_test? ? "/accelerated#{@url}" : @url
+    expect(Capybara.current_path).to eql expected_url
     click_link 'View and print completed form'
     assert_pdf_content_type(page.response_headers)
 
