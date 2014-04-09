@@ -21,7 +21,6 @@ class PDFDocument
   private
 
   def add_defendant_two result_pdf
-
     if @json.key? "defendant_two_address"
       continuation_template = File.join Rails.root, "templates", "defendant_form.pdf"
       defendant_two = "#{@json["defendant_two_address"]}\n#{@json["defendant_two_postcode1"]} #{@json["defendant_two_postcode2"]}"
@@ -33,4 +32,5 @@ class PDFDocument
       FileUtils.mv "#{combined_pdf.path}", "#{result_pdf.path}"
     end
   end
+
 end
