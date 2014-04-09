@@ -6,8 +6,7 @@
   ],
   claim: {
     property: {
-      street: "78 Town Close Road",
-      town: "Norwich",
+      street: "78 Town Close Road\nNorwich",
       postcode: "NR1 3HP",
       house: "Yes"
     },
@@ -25,23 +24,21 @@
     claimant_one: {
       title: nil,
       full_name: "Affinity Sutton",
-      street: "Maple House, 157-159 Masons Hall",
-      town: "London",
+      street: "Maple House, 157-159 Masons Hall\nLondon",
       postcode: "BR2 9HY"
     },
     claimant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
     claimant_contact: {
       legal_costs: nil,
       title: nil,
       full_name: nil,
+      company_name: nil,
       street: nil,
-      town: nil,
       postcode: nil,
       email: "amyturner@affinitysutton.co.uk",
       phone: "3001005392",
@@ -53,28 +50,27 @@
       title: "Ms",
       full_name: "Linette Barlow",
       street: nil,
-      town: nil,
       postcode: nil
     },
     defendant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
-    demoted_tenancy: {
-      demoted_tenancy: "No",
-      demotion_order_date: nil,
-      demotion_order_court: nil
-    },
     tenancy: {
+      tenancy_type: "Assured",
+      assured_shorthold_tenancy_type: "one",
+      original_assured_shorthold_tenancy_agreement_date: nil,
       start_date: "2011-10-02",
       latest_agreement_date: nil,
-      reissued_for_same_property: nil,
-      reissued_for_same_landlord_and_tenant: nil,
+      agreement_reissued_for_same_property: nil,
+      agreement_reissued_for_same_landlord_and_tenant: nil,
       assured_shorthold_tenancy_notice_served_by: nil,
-      assured_shorthold_tenancy_notice_served_date: nil
+      assured_shorthold_tenancy_notice_served_date: nil,
+      demotion_order_date: nil,
+      demotion_order_court: nil,
+      previous_tenancy_type: "assured"
     },
     notice: {
       served_by: "Amy Turner",
@@ -99,9 +95,6 @@
     },
     possession: {
       hearing: "Yes"
-    },
-    fee: {
-      court_fee: "175"
     }
   }
 }

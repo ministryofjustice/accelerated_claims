@@ -6,8 +6,7 @@
   ],
   claim: {
     property: {
-      street: "107 Addiscombe Rd",
-      town: "Croydon",
+      street: "107 Addiscombe Rd\nCroydon",
       postcode: "CR0 6SG",
       house: "Yes"
     },
@@ -25,23 +24,21 @@
     claimant_one: {
       title: "Mr",
       full_name: "James Cox",
-      street: "104 Burbage Rd",
-      town: "London",
+      street: "104 Burbage Rd\nLondon",
       postcode: "SE24 9HE"
     },
     claimant_two: {
       title: "Mr",
       full_name: "Adam Howard",
-      street: "108 Landor Rd",
-      town: "London",
+      street: "108 Landor Rd\nLondon",
       postcode: "SW9 9NU"
     },
     claimant_contact: {
       legal_costs: nil,
       title: nil,
       full_name: nil,
+      company_name: nil,
       street: nil,
-      town: nil,
       postcode: nil,
       email: "Adamhoward@gmail.com",
       phone: nil,
@@ -52,29 +49,28 @@
     defendant_one: {
       title: "Mr",
       full_name: "Malcom Greene",
-      street: "23c Ecclesbourne Rd",
-      town: "Thornton Heath, London",
+      street: "23c Ecclesbourne Rd\nThornton Heath, London",
       postcode: "CR7 7BN"
     },
     defendant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
-    demoted_tenancy: {
-      demoted_tenancy: "No",
-      demotion_order_date: nil,
-      demotion_order_court: nil
-    },
     tenancy: {
+      tenancy_type: "Assured",
+      assured_shorthold_tenancy_type: "one",
+      original_assured_shorthold_tenancy_agreement_date: nil,
       start_date: "2010-12-20",
       latest_agreement_date: nil,
-      reissued_for_same_property: nil,
-      reissued_for_same_landlord_and_tenant: nil,
+      agreement_reissued_for_same_property: nil,
+      agreement_reissued_for_same_landlord_and_tenant: nil,
       assured_shorthold_tenancy_notice_served_by: nil,
-      assured_shorthold_tenancy_notice_served_date: nil
+      assured_shorthold_tenancy_notice_served_date: nil,
+      demotion_order_date: nil,
+      demotion_order_court: nil,
+      previous_tenancy_type: "assured"
     },
     notice: {
       served_by: "Royal mail",
@@ -99,9 +95,6 @@
     },
     possession: {
       hearing: "Yes"
-    },
-    fee: {
-      court_fee: "175"
     }
   }
 }

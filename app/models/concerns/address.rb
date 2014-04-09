@@ -6,11 +6,9 @@ module Address
 
   included do
     attr_accessor :street
-    attr_accessor :town
     attr_accessor :postcode
 
     validates :street,   length: { maximum: 70 }
-    validates :town,     length: { maximum: 40 }
     validates :postcode, length: { maximum: 8 }
 
     validate :full_postcode
@@ -27,6 +25,6 @@ module Address
   end
 
   def address_blank?
-    (street.blank? && town.blank? && postcode.blank?)
+    (street.blank? && postcode.blank?)
   end
 end

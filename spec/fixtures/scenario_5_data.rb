@@ -6,8 +6,7 @@
   ],
   claim: {
     property: {
-      street: "10a Pelham St",
-      town: "Wolverhampton",
+      street: "10a Pelham St\nWolverhampton",
       postcode: "WV3 0BJ",
       house: "Yes"
     },
@@ -25,23 +24,21 @@
     claimant_one: {
       title: nil,
       full_name: "Wolverhampton City Council",
-      street: "Civic Centre, St. Peter's Square",
-      town: "Wolverhampton",
+      street: "Civic Centre, St. Peter's Square\nWolverhampton",
       postcode: "WV1 1SH"
     },
     claimant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
     claimant_contact: {
       legal_costs: nil,
       title: nil,
-      full_name: "Wolverhampton Homes",
-      street: "29 Market Street",
-      town: "Wolverhampton",
+      full_name: nil,
+      company_name: "Wolverhampton Homes",
+      street: "29 Market Street\nWolverhampton",
       postcode: "WV1 3AG",
       email: nil,
       phone: "1902556789",
@@ -53,28 +50,27 @@
       title: "Mr",
       full_name: "Donald Nelson",
       street: nil,
-      town: nil,
       postcode: nil
     },
     defendant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
-    demoted_tenancy: {
-      demoted_tenancy: "Yes",
-      demotion_order_date: "2013-04-20",
-      demotion_order_court: "Wolverhampton Combined Court"
-    },
     tenancy: {
-      start_date: nil,
+      tenancy_type: "Demoted",
+      assured_shorthold_tenancy_type: "one",
+      original_assured_shorthold_tenancy_agreement_date: nil,
+      start_date: "2010-10-02",
       latest_agreement_date: nil,
-      reissued_for_same_property: nil,
-      reissued_for_same_landlord_and_tenant: nil,
+      agreement_reissued_for_same_property: nil,
+      agreement_reissued_for_same_landlord_and_tenant: nil,
       assured_shorthold_tenancy_notice_served_by: nil,
-      assured_shorthold_tenancy_notice_served_date: nil
+      assured_shorthold_tenancy_notice_served_date: nil,
+      demotion_order_date: "2013-04-20",
+      demotion_order_court: "Wolverhampton Combined Court",
+      previous_tenancy_type: "secure"
     },
     notice: {
       served_by: "Wendy Moore",
@@ -99,9 +95,6 @@
     },
     possession: {
       hearing: "Yes"
-    },
-    fee: {
-      court_fee: "175"
     }
   }
 }

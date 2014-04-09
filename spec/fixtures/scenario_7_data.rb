@@ -6,8 +6,7 @@
   ],
   claim: {
     property: {
-      street: "45 St Martins Precinct Church St",
-      town: "Reading ",
+      street: "45 St Martins Precinct Church St\nReading ",
       postcode: "RG4 8BA",
       house: "Yes"
     },
@@ -25,23 +24,21 @@
     claimant_one: {
       title: "Mr",
       full_name: "Frank Coleman",
-      street: "13 Princess Square",
-      town: "Bracknell",
+      street: "13 Princess Square\nBracknell",
       postcode: "RG12 1LS"
     },
     claimant_two: {
       title: "Miss",
       full_name: "Heather Cox",
       street: nil,
-      town: nil,
       postcode: nil
     },
     claimant_contact: {
       legal_costs: nil,
       title: nil,
       full_name: nil,
+      company_name: nil,
       street: nil,
-      town: nil,
       postcode: nil,
       email: nil,
       phone: nil,
@@ -53,28 +50,27 @@
       title: "Mr",
       full_name: "Kenneth Butler",
       street: nil,
-      town: nil,
       postcode: nil
     },
     defendant_two: {
       title: "Ms",
       full_name: "Donna Lee",
       street: nil,
-      town: nil,
       postcode: nil
     },
-    demoted_tenancy: {
-      demoted_tenancy: "No",
-      demotion_order_date: nil,
-      demotion_order_court: nil
-    },
     tenancy: {
+      tenancy_type: "Assured",
+      assured_shorthold_tenancy_type: "one",
+      original_assured_shorthold_tenancy_agreement_date: nil,
       start_date: "2012-09-16",
       latest_agreement_date: nil,
-      reissued_for_same_property: nil,
-      reissued_for_same_landlord_and_tenant: nil,
+      agreement_reissued_for_same_property: nil,
+      agreement_reissued_for_same_landlord_and_tenant: nil,
       assured_shorthold_tenancy_notice_served_by: nil,
-      assured_shorthold_tenancy_notice_served_date: nil
+      assured_shorthold_tenancy_notice_served_date: nil,
+      demotion_order_date: nil,
+      demotion_order_court: nil,
+      previous_tenancy_type: "assured"
     },
     notice: {
       served_by: "Heather Cox",
@@ -99,9 +95,6 @@
     },
     possession: {
       hearing: "Yes"
-    },
-    fee: {
-      court_fee: "175"
     }
   }
 }

@@ -6,8 +6,7 @@
   ],
   claim: {
     property: {
-      street: "Unit 11, Swansea Fforest Fach Park",
-      town: "Swansea",
+      street: "Unit 11, Swansea Fforest Fach Park\nSwansea",
       postcode: "SA5 4BB",
       house: "Yes"
     },
@@ -25,23 +24,21 @@
     claimant_one: {
       title: "Mrs",
       full_name: "Meredith Williams",
-      street: "38 Pentrefelin St",
-      town: "Carmarthen",
+      street: "38 Pentrefelin St\nCarmarthen",
       postcode: "SA31 1RJ"
     },
     claimant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
     claimant_contact: {
       legal_costs: "450",
       title: "Mr",
       full_name: "Dilan Lloyd",
-      street: "Beor Wilson Lloyd, Calvert Terrace",
-      town: "Swansea",
+      company_name: "Beor Wilson Lloyd",
+      street: "12 Calvert Terrace\nSwansea",
       postcode: "SA1 6AP",
       email: "enquiries@bwl-law.co.uk",
       phone: "1792655178",
@@ -53,28 +50,27 @@
       title: "Mr",
       full_name: "Gavin Morgan",
       street: nil,
-      town: nil,
       postcode: nil
     },
     defendant_two: {
       title: "Mr",
       full_name: "Owen Harris",
       street: nil,
-      town: nil,
       postcode: nil
     },
-    demoted_tenancy: {
-      demoted_tenancy: "No",
-      demotion_order_date: nil,
-      demotion_order_court: nil
-    },
     tenancy: {
+      tenancy_type: "Assured",
+      assured_shorthold_tenancy_type: "one",
+      original_assured_shorthold_tenancy_agreement_date: nil,
       start_date: "1999-04-08",
       latest_agreement_date: nil,
-      reissued_for_same_property: nil,
-      reissued_for_same_landlord_and_tenant: nil,
+      agreement_reissued_for_same_property: nil,
+      agreement_reissued_for_same_landlord_and_tenant: nil,
       assured_shorthold_tenancy_notice_served_by: nil,
-      assured_shorthold_tenancy_notice_served_date: nil
+      assured_shorthold_tenancy_notice_served_date: nil,
+      demotion_order_date: nil,
+      demotion_order_court: nil,
+      previous_tenancy_type: "assured"
     },
     notice: {
       served_by: "Dilan Lloyd",
@@ -99,9 +95,6 @@
     },
     possession: {
       hearing: "Yes"
-    },
-    fee: {
-      court_fee: "175"
     }
   }
 }

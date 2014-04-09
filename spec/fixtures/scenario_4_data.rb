@@ -6,8 +6,7 @@
   ],
   claim: {
     property: {
-      street: "64 Baxtergate",
-      town: "Whitby",
+      street: "64 Baxtergate\nWhitby",
       postcode: "YO21 1BL",
       house: "Yes"
     },
@@ -25,23 +24,21 @@
     claimant_one: {
       title: "Miss",
       full_name: "Sarah Rogers",
-      street: "7 Byland Rd",
-      town: "Whitby",
+      street: "7 Byland Rd\nWhitby",
       postcode: "YO21 1JH"
     },
     claimant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
     claimant_contact: {
       legal_costs: nil,
       title: nil,
       full_name: nil,
+      company_name: nil,
       street: nil,
-      town: nil,
       postcode: nil,
       email: "serogers@yahoo.co.uk",
       phone: "7456389234",
@@ -53,28 +50,27 @@
       title: "Mr",
       full_name: "Mark Davis",
       street: nil,
-      town: nil,
       postcode: nil
     },
     defendant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
-    demoted_tenancy: {
-      demoted_tenancy: "No",
-      demotion_order_date: nil,
-      demotion_order_court: nil
-    },
     tenancy: {
-      start_date: "2004-03-12",
+      tenancy_type: "Assured",
+      assured_shorthold_tenancy_type: "multiple",
+      original_assured_shorthold_tenancy_agreement_date: "2004-03-12",
+      start_date: nil,
       latest_agreement_date: "2012-06-14",
-      reissued_for_same_property: "Yes",
-      reissued_for_same_landlord_and_tenant: "No",
+      agreement_reissued_for_same_property: "Yes",
+      agreement_reissued_for_same_landlord_and_tenant: "No",
       assured_shorthold_tenancy_notice_served_by: nil,
-      assured_shorthold_tenancy_notice_served_date: nil
+      assured_shorthold_tenancy_notice_served_date: nil,
+      demotion_order_date: nil,
+      demotion_order_court: nil,
+      previous_tenancy_type: "assured"
     },
     notice: {
       served_by: "Royal Mail",
@@ -99,9 +95,6 @@
     },
     possession: {
       hearing: "Yes"
-    },
-    fee: {
-      court_fee: "175"
     }
   }
 }

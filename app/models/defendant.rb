@@ -19,7 +19,7 @@ class Defendant < BaseClass
     if present?
       postcode1, postcode2 = split_postcode
       {
-        "address" => "#{title} #{full_name}\n#{street}\n#{town}",
+        "address" => "#{title} #{full_name}\n#{street}",
         "postcode1" => postcode1,
         "postcode2" => postcode2
       }

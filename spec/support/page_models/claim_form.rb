@@ -11,9 +11,7 @@ class ClaimForm
     fill_claimant_two
     fill_defendant_one
     fill_defendant_two
-    fill_claimant_contact_details
     fill_solicitor
-    fill_demoted_tenancy
     fill_tenancy
     fill_notice
     fill_licences
@@ -23,13 +21,16 @@ class ClaimForm
     fill_court_fee
   end
 
-  def fill_claimant_contact_details
+  def fill_solicitor
     prefix = 'claimant_contact'
-
-    ["email", "phone", "fax", "dx_number", "reference_number"].each do |field|
-      value = get_data(prefix, field)
-      fill_in "claim_claimant_contact_#{field}", with: value
-    end
+    fill_in_text_field(prefix, 'legal_costs')
+    complete_details_of_person(prefix)
+    fill_in_text_field(prefix, 'company_name')
+    fill_in_text_field(prefix, 'email')
+    fill_in_text_field(prefix, 'phone')
+    fill_in_text_field(prefix, 'fax')
+    fill_in_text_field(prefix, 'dx_number')
+    fill_in_text_field(prefix, 'reference_number')
   end
 
   def submit
@@ -44,14 +45,13 @@ class ClaimForm
 
 
   def fill_in_text_field(prefix, key)
-    fill_in("claim_#{prefix}_#{key}", with: get_data(prefix, key) )
+    fill_in("claim_#{prefix}_#{key}", with: get_data(prefix, key))
   end
 
   def get_data prefix, key
     begin
       @data['claim'][prefix][key]
     rescue Exception => e
-      binding.pry
       raise ['no data', prefix, key].join(': ')
     end
   end
@@ -84,14 +84,12 @@ class ClaimForm
     fill_in_text_field(prefix, 'title')
     fill_in_text_field(prefix, 'full_name')
     fill_in_text_field(prefix, 'street')
-    fill_in_text_field(prefix, 'town')
     fill_in_text_field(prefix, 'postcode')
   end
 
   def fill_property_details
     prefix = 'property'
     fill_in_text_field(prefix, 'street')
-    fill_in_text_field(prefix, 'town')
     fill_in_text_field(prefix, 'postcode')
 
     choose_radio(prefix, 'house')
@@ -103,6 +101,11 @@ class ClaimForm
 
   def fill_claimant_two
     complete_details_of_person('claimant_two')
+
+    if get_data('javascript', 'claimant_two_same_address') == 'Yes'
+      fill_in("claim_claimant_two_street", with: get_data('claimant_one', 'street'))
+      fill_in("claim_claimant_two_postcode", with: get_data('claimant_one', 'postcode'))
+    end
   end
 
   def fill_defendant_one
@@ -113,23 +116,21 @@ class ClaimForm
     complete_details_of_person('defendant_two')
   end
 
-  def fill_demoted_tenancy
-    prefix = 'demoted_tenancy'
-    choose_radio(prefix, 'demoted_tenancy')
-
-    select_date(prefix, 'demotion_order_date')
-    fill_in_text_field(prefix, 'demotion_order_court')
-  end
-
-
   def fill_tenancy
     prefix = 'tenancy'
-    select_date prefix, 'start_date'
-    select_date prefix, 'latest_agreement_date'
-    choose_radio prefix,'reissued_for_same_property'
-    choose_radio prefix, 'reissued_for_same_landlord_and_tenant'
-    select_date prefix, 'assured_shorthold_tenancy_notice_served_date'
+
+    choose_radio  prefix, 'tenancy_type'
+    choose_radio  prefix, 'assured_shorthold_tenancy_type'
+    select_date   prefix, 'original_assured_shorthold_tenancy_agreement_date'
+    select_date   prefix, 'start_date'
+    select_date   prefix, 'latest_agreement_date'
+    choose_radio  prefix,'agreement_reissued_for_same_property'
+    choose_radio  prefix, 'agreement_reissued_for_same_landlord_and_tenant'
+    select_date   prefix, 'assured_shorthold_tenancy_notice_served_date'
     fill_in_text_field prefix, 'assured_shorthold_tenancy_notice_served_by'
+    select_date   prefix, 'demotion_order_date'
+    fill_in_text_field prefix, 'demotion_order_court'
+    choose_radio  prefix, 'previous_tenancy_type'
   end
 
   def fill_notice
@@ -173,17 +174,6 @@ class ClaimForm
     prefix = 'order'
     check_box(prefix, 'possession')
     check_box(prefix, 'cost')
-  end
-
-  def fill_solicitor
-    prefix = 'claimant_contact'
-    fill_in_text_field(prefix, 'legal_costs')
-    complete_details_of_person(prefix)
-    fill_in_text_field(prefix, 'email')
-    fill_in_text_field(prefix, 'phone')
-    fill_in_text_field(prefix, 'fax')
-    fill_in_text_field(prefix, 'dx_number')
-    fill_in_text_field(prefix, 'reference_number')
   end
 
   def fill_court_fee

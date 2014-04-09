@@ -6,8 +6,7 @@
   ],
   claim: {
     property: {
-      street: "280 Coventry Rd",
-      town: "Birmingham ",
+      street: "280 Coventry Rd\nBirmingham ",
       postcode: "B10 0XA",
       house: "Yes"
     },
@@ -25,23 +24,21 @@
     claimant_one: {
       title: "Mr",
       full_name: "Joe Peters",
-      street: "553 Stratford Road",
-      town: "Birmingham",
+      street: "553 Stratford Road\nBirmingham",
       postcode: "B11 4LP"
     },
     claimant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
     claimant_contact: {
       legal_costs: "600",
       title: "Mr",
       full_name: "Brent Hunt",
-      street: "SGH Martineau LLP, 1 Colmore Circus Queensway",
-      town: "Birmingham",
+      company_name: "Brent Hunt Inc",
+      street: "SGH Martineau LLP, 1 Colmore Circus Queensway\nBirmingham",
       postcode: "B4 6AA",
       email: "brent.hunt@sghmartineau.com",
       phone: "0800 763 1675",
@@ -53,28 +50,27 @@
       title: "Miss",
       full_name: "Annice Abreu",
       street: nil,
-      town: nil,
       postcode: nil
     },
     defendant_two: {
       title: "Mr",
       full_name: "Dumisani Afolayan",
       street: nil,
-      town: nil,
       postcode: nil
     },
-    demoted_tenancy: {
-      demoted_tenancy: "No",
-      demotion_order_date: nil,
-      demotion_order_court: nil
-    },
     tenancy: {
+      tenancy_type: "Assured",
+      assured_shorthold_tenancy_type: "one",
+      original_assured_shorthold_tenancy_agreement_date: nil,
       start_date: "2004-02-29",
       latest_agreement_date: nil,
-      reissued_for_same_property: nil,
-      reissued_for_same_landlord_and_tenant: nil,
+      agreement_reissued_for_same_property: nil,
+      agreement_reissued_for_same_landlord_and_tenant: nil,
       assured_shorthold_tenancy_notice_served_by: nil,
-      assured_shorthold_tenancy_notice_served_date: nil
+      assured_shorthold_tenancy_notice_served_date: nil,
+      demotion_order_date: nil,
+      demotion_order_court: nil,
+      previous_tenancy_type: nil
     },
     notice: {
       served_by: "Brent Hunt",
@@ -99,9 +95,6 @@
     },
     possession: {
       hearing: "Yes"
-    },
-    fee: {
-      court_fee: "175"
     }
   }
 }

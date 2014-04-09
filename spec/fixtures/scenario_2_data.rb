@@ -6,8 +6,7 @@
   ],
   claim: {
     property: {
-      street: "94 East St",
-      town: "Bristol",
+      street: "94 East St\nBristol",
       postcode: "BS3 4EY",
       house: "No"
     },
@@ -25,23 +24,21 @@
     claimant_one: {
       title: "Mr",
       full_name: "Jay Schneider",
-      street: "26 Heath St",
-      town: "London",
+      street: "26 Heath St\nLondon",
       postcode: "NW3 6TE"
     },
     claimant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
     claimant_contact: {
       legal_costs: nil,
       title: "Mr",
       full_name: "Jay Schneider",
-      street: "PO Box 1655, 9 Russell Square",
-      town: "London",
+      company_name: "Schneider & Sons",
+      street: "PO Box 1655, 9 Russell Square\nLondon",
       postcode: "WC1B 5EQ",
       email: "jayschneider@gmail.com",
       phone: "7985473222",
@@ -53,28 +50,27 @@
       title: "Mr",
       full_name: "Andre Drake",
       street: nil,
-      town: nil,
       postcode: nil
     },
     defendant_two: {
       title: nil,
       full_name: nil,
       street: nil,
-      town: nil,
       postcode: nil
     },
-    demoted_tenancy: {
-      demoted_tenancy: "No",
-      demotion_order_date: nil,
-      demotion_order_court: nil
-    },
     tenancy: {
+      tenancy_type: "Assured",
+      assured_shorthold_tenancy_type: "one",
+      original_assured_shorthold_tenancy_agreement_date: nil,
       start_date: "2010-05-30",
       latest_agreement_date: nil,
-      reissued_for_same_property: nil,
-      reissued_for_same_landlord_and_tenant: nil,
+      agreement_reissued_for_same_property: nil,
+      agreement_reissued_for_same_landlord_and_tenant: nil,
       assured_shorthold_tenancy_notice_served_by: "Jay Schneider",
-      assured_shorthold_tenancy_notice_served_date: "2010-05-24"
+      assured_shorthold_tenancy_notice_served_date: "2010-05-24",
+      demotion_order_date: nil,
+      demotion_order_court: nil,
+      previous_tenancy_type: "assured"
     },
     notice: {
       served_by: "Jay Schneider",
@@ -99,9 +95,6 @@
     },
     possession: {
       hearing: "Yes"
-    },
-    fee: {
-      court_fee: "175"
     }
   }
 }
