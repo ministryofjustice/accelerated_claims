@@ -90,7 +90,13 @@ class Tenancy < BaseClass
       "latest_agreement_date_day" => day(latest_agreement_date),
       "latest_agreement_date_month" => month(latest_agreement_date),
       "latest_agreement_date_year" => year(latest_agreement_date),
-      'demotion_order_court' => short_court_name
+      'demotion_order_court' => short_court_name,
+      'applicable_statements_1' => applicable_statements_1,
+      'applicable_statements_2' => applicable_statements_2,
+      'applicable_statements_3' => applicable_statements_3,
+      'applicable_statements_4' => applicable_statements_4,
+      'applicable_statements_5' => applicable_statements_5,
+      'applicable_statements_6' => applicable_statements_6
     }
 
     split_date(:demotion_order_date, hash)
