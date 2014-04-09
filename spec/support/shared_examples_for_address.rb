@@ -1,12 +1,5 @@
 shared_examples 'address validation' do
 
-  context "town over 40 characters" do
-    it "is invalid" do
-      subject.town = "x" * 41
-      subject.should_not be_valid
-    end
-  end
-
   context 'street is over 70 characters' do
     it 'is invalid' do
       subject.street = "x" * 71

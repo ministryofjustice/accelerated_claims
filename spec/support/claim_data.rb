@@ -5,8 +5,7 @@ def claim_post_data
       {
         "title" => "Mr",
         "full_name" => "John Smith",
-        "street" => "2 Brown St",
-        "town" => "Cwmbran",
+        "street" => "2 Brown St\nCwmbran",
         "postcode" => "SW1W 0LU"
       },
       "claimant_contact" =>
@@ -14,8 +13,7 @@ def claim_post_data
         "title" => "Mr",
         "full_name" => "Jim Brown",
         "company_name" => "Winning",
-        "street" => "3 Smith St",
-        "town" => "Winsum",
+        "street" => "3 Smith St\nWinsum",
         "postcode" => "SW1W 0LU",
         "email" => "jim@example.com",
         "phone" => "020 000 000",
@@ -28,13 +26,11 @@ def claim_post_data
       {
         "title" => "Ms",
         "full_name" => "Jane Smith",
-        "street" => "7 Main St",
-        "town" => "Alfreton",
+        "street" => "7 Main St\nAlfreton",
         "postcode" => "SW1W 0LU"
       },
       "property" =>
-      { "street" => "Mucho Gracias Road",
-        "town" => "London",
+      { "street" => "Mucho Gracias Road\nLondon",
         "postcode" => "SW1H 9AJ",
         "house"=>"Yes"
       },
@@ -75,40 +71,36 @@ def claim_post_data
       {
         "title" => "Mr",
         "full_name" => "John Major",
-        "street" => "Sesame Street",
-        "town" => "London",
+        "street" => "Sesame Street\nLondon",
         "postcode" => "SW1X 2PT"
       },
       "defendant_two"=>
       {
         "title" => "Ms",
         "full_name" => "Jane Major",
-        "street" => "Sesame Street",
-        "town" => "London",
+        "street" => "Sesame Street\nLondon",
         "postcode" => "SW1X 2PT"
-      },
-      "demoted_tenancy" =>
-      {
-        'demoted_tenancy' => 'Yes',
-        "demotion_order_date(3i)" => "1",
-        "demotion_order_date(2i)" => "1",
-        "demotion_order_date(1i)" => "2010",
-        'demotion_order_court' => 'Brighton County Court'
       },
       "tenancy" =>
       {
+        'tenancy_type' => 'demoted',
+        "demotion_order_date(3i)" => "1",
+        "demotion_order_date(2i)" => "1",
+        "demotion_order_date(1i)" => "2010",
+        'demotion_order_court' => 'Brighton County Court',
         "start_date(3i)" => "1",
         "start_date(2i)" => "1",
         "start_date(1i)" => "2010",
         "latest_agreement_date(3i)" => "1",
         "latest_agreement_date(2i)" => "1",
         "latest_agreement_date(1i)" => "2010",
-        "reissued_for_same_property" => 'No',
-        "reissued_for_same_landlord_and_tenant" => 'No',
+        "agreement_reissued_for_same_property" => 'No',
+        "agreement_reissued_for_same_landlord_and_tenant" => 'No',
         "assured_shorthold_tenancy_notice_served_by" => 'Mr Brown',
         "assured_shorthold_tenancy_notice_served_date(3i)" => "1",
         "assured_shorthold_tenancy_notice_served_date(2i)" => "12",
-        "assured_shorthold_tenancy_notice_served_date(1i)" => "2013"
+        "assured_shorthold_tenancy_notice_served_date(1i)" => "2013",
+        "previous_tenancy_type" => "assured"
       },
       "fee" =>
       {
@@ -173,11 +165,11 @@ def claim_formatted_data
     "deposit_information_given_date_day" => "",
     "deposit_information_given_date_month" => "",
     "deposit_information_given_date_year" => "",
-    'demoted_tenancy_demoted_tenancy' => 'Yes',
-    "demoted_tenancy_demotion_order_date_day" => "01",
-    "demoted_tenancy_demotion_order_date_month" => "01",
-    "demoted_tenancy_demotion_order_date_year" => "2010",
-    'demoted_tenancy_demotion_order_court' => 'Brighton',
+    'tenancy_demoted_tenancy' => 'Yes',
+    "tenancy_demotion_order_date_day" => "01",
+    "tenancy_demotion_order_date_month" => "01",
+    "tenancy_demotion_order_date_year" => "2010",
+    'tenancy_demotion_order_court' => 'Brighton',
     "tenancy_agreement_reissued_for_same_landlord_and_tenant" => "No",
     "tenancy_agreement_reissued_for_same_property" => "No",
     "tenancy_latest_agreement_date_day" => "01",

@@ -7,7 +7,7 @@ class Claimant < BaseClass
   attr_accessor :title
   attr_accessor :full_name
 
-  with_options if: :validate_presence do |claimant|
+  with_options if: :validate_presence? do |claimant|
     # claimant.validates :title,     presence: { message: 'must be entered' } # Organisations don't have titles
     claimant.validates :full_name, presence: { message: 'must be entered' }
     claimant.validates :street,    presence: { message: 'must be entered' }
@@ -20,9 +20,14 @@ class Claimant < BaseClass
   def as_json
     postcode1, postcode2 = split_postcode
     {
-      "address" => "#{title} #{full_name}\n#{street}\n#{town}",
+      "address" => "#{title} #{full_name}\n#{street}",
       "postcode1" => "#{postcode1}",
       "postcode2" => "#{postcode2}"
     }
+  end
+
+  private
+  def validate_presence?
+    validate_presence || [:title, :full_name, :street, :postcode].any? { |field| send(field).present? }
   end
 end

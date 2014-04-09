@@ -38,3 +38,9 @@ def load_expected_data(dataset_number)
   load_stringified_hash_from_file(filename)
 end
 
+def assert_hash_is_correct(generated_values, expected_values)
+  expected_values.each do |field, value|
+    "#{field}: #{generated_values[field]}".should == "#{field}: #{value}"
+  end
+end
+

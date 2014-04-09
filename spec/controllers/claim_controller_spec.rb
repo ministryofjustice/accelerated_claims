@@ -69,13 +69,13 @@ describe ClaimController do
         expect(response).to render_template("confirmation")
       end
     end
-      
+
     context 'with no claim data' do
       it 'should redirect to the claim form' do
         get :confirmation # no session
         response.should redirect_to('/new')
       end
-    end 
+    end
 
     context 'with invalid claim data' do
       it 'should redirect to the claim form' do
@@ -85,7 +85,7 @@ describe ClaimController do
         get :confirmation
         response.should redirect_to('/new')
       end
-    end   
+    end
   end
 
   describe '#submission' do
@@ -121,4 +121,5 @@ describe ClaimController do
       expect(response).to render_template("landing")
     end
   end
+
 end
