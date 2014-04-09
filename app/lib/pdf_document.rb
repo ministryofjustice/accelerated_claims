@@ -33,4 +33,44 @@ class PDFDocument
     end
   end
 
+  def strike_out_paths index
+    case index
+    when 1
+      [
+        { x0: 35, x1: 505, y: 327 },
+        { x0: 35, x1: 150, y: 315 }
+      ]
+    when 2
+      [ { x0: 35, x1: 505, y: 299 } ]
+    when 3
+      [
+        { x0: 35, x1: 515, y: 282 },
+        { x0: 35, x1: 150, y: 270 }
+      ]
+    when 4
+      [ { x0: 35, x1: 450, y: 215 } ]
+    when 5
+      [ { x0: 35, x1: 475, y: 198 } ]
+    when 6
+      [
+        { x0: 35, x1: 505, y: 180 },
+        { x0: 35, x1: 505, y: 160 }
+      ]
+    when 7
+      [ { x0: 35, x1: 505, y: 123 } ]
+    end
+  end
+
+  def strike_out_applicable_statements
+    1.upto(6) do |index|
+      if @json['tenancy'].delete("applicable_statements_#{index}")[/No/]
+        strike_out_paths(index).each do |path|
+          strike_out path
+        end
+      end
+    end
+  end
+
+  def strike_out path
+  end
 end
