@@ -9,4 +9,5 @@ Capybara.register_driver :selenium do |app|
 end
 
 Capybara.javascript_driver = :selenium
+Capybara.default_driver = Capybara.javascript_driver
 
