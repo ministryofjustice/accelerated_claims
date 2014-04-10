@@ -99,7 +99,6 @@ class PDFDocument
   def strike_out_all result_path, hash
     output = Tempfile.new('strike_out', '/tmp/')
     strikes = Tempfile.new('strikes.json', '/tmp/')
-    File.open('strikes.json', 'w') {|f| f.write hash.to_json}
     strikes.write hash.to_json
     strikes.close
     path = `pwd`
