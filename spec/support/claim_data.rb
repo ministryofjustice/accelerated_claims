@@ -188,6 +188,12 @@ def claim_formatted_data
     "tenancy_assured_shorthold_tenancy_notice_served_date_day" => "01",
     "tenancy_assured_shorthold_tenancy_notice_served_date_month" => "12",
     "tenancy_assured_shorthold_tenancy_notice_served_date_year" => "2013",
+    'tenancy_applicable_statements_1' => 'Yes',
+    'tenancy_applicable_statements_2' => 'Yes',
+    'tenancy_applicable_statements_3' => 'Yes',
+    'tenancy_applicable_statements_4' => 'No',
+    'tenancy_applicable_statements_5' => 'No',
+    'tenancy_applicable_statements_6' => 'No',
     "total_cost" => "298.34"
   }
 end
