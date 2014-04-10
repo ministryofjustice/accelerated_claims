@@ -101,6 +101,7 @@ class PDFDocument
     strikes = Tempfile.new('strikes.json', '/tmp/')
     File.open('strikes.json', 'w') {|f| f.write hash.to_json}
     strikes.write hash.to_json
+    strikes.close
     path = `pwd`
     cmd = "cd /tmp; java -jar #{STRIKER_JAR} -i #{result_path.sub('/tmp/','')} -o #{output.path.sub('/tmp/','')} -j #{strikes.path}; cd #{path}"
     puts cmd
