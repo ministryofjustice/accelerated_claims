@@ -22,7 +22,7 @@ class PDFDocument
   private
 
   CONTINUATION_TEMPLATE = File.join Rails.root, 'templates', 'defendant_form.pdf'
-  STRIKER_JAR = File.join Rails.root, 'scripts', 'striker-0.1.0-standalone.jar'
+  STRIKER_JAR = File.join Rails.root, 'scripts', 'striker-0.2.0-standalone.jar'
 
   def defendant_two_address
     "#{@json['defendant_two_address']}\n#{@json['defendant_two_postcode1']} #{@json['defendant_two_postcode2']}"
@@ -76,27 +76,38 @@ class PDFDocument
   end
 
   def strike_out_applicable_statements result_path
+    puts result_path
+    hash = {}
+    hash['strikes'] = []
+
     1.upto(6) do |index|
       if @json["tenancy_applicable_statements_#{index}"][/No/]
         strike_out_paths(index).each do |line|
-          strike_out result_path, line
+          x = line[:x0]
+          y = line[:y]
+          x1 = line[:x1]
+          hash['strikes'] << { page: 2, x: x, y: y, x1: x1, y1: 0, thickness: 1 }
         end
       end
     end
+
+    unless hash['strikes'].empty?
+      strike_out_all result_path, hash
+    end
   end
 
-  def strike_out result_path, line
+  def strike_out_all result_path, hash
     output = Tempfile.new('strike_out', '/tmp/')
-    page = 2
-    x = line[:x0]
-    y = line[:y]
-    x1 = line[:x1]
+    strikes = Tempfile.new('strikes.json', '/tmp/')
+    File.open('strikes.json', 'w') {|f| f.write hash.to_json}
+    strikes.write hash.to_json
     path = `pwd`
-    cmd = "cd /tmp; java -jar #{STRIKER_JAR} -i #{result_path.sub('/tmp/','')} -o #{output.path.sub('/tmp/','')} -p #{page} --x #{x} --y #{y} --x1 #{x1} --y1 0 -t 1; cd #{path}"
+    cmd = "cd /tmp; java -jar #{STRIKER_JAR} -i #{result_path.sub('/tmp/','')} -o #{output.path.sub('/tmp/','')} -j #{strikes.path}; cd #{path}"
+    puts cmd
 
     if !Rails.env.test? || ENV['browser']
       start = Time.now
-      `#{cmd}`
+      puts `#{cmd}`
       FileUtils.mv output.path, result_path
       puts "duration: #{Time.now - start} secs"
     end
