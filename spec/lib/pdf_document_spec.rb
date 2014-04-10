@@ -9,7 +9,8 @@ describe PDFDocument do
     end
 
     it "should return a file path" do
-      @doc.fill.should match '/tmp/accelerated_claim'
+      pdf = @doc.fill
+      pdf.path.should match '/tmp/accelerated_claim'
     end
   end
 
@@ -21,7 +22,8 @@ describe PDFDocument do
     end
 
     it "should produce 4 page PDF" do
-      pages = %x[pdftk #{@doc.fill} dump_data | awk '/NumberOfPages/ {print $2}']
+      pdf = @doc.fill
+      pages = %x[pdftk #{pdf.path} dump_data | awk '/NumberOfPages/ {print $2}']
       pages.to_i.should eq 4
     end
   end
@@ -31,7 +33,7 @@ describe PDFDocument do
 
     it "should produce 5 page PDF" do
       pdf = @doc.fill
-      pages = %x[pdftk #{pdf} dump_data | awk '/NumberOfPages/ {print $2}']
+      pages = %x[pdftk #{pdf.path} dump_data | awk '/NumberOfPages/ {print $2}']
       pages.to_i.should eq 5
     end
   end

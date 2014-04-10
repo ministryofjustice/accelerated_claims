@@ -352,7 +352,13 @@ describe Tenancy do
       agreement_reissued_for_same_property: 'No',
       agreement_reissued_for_same_landlord_and_tenant: 'No',
       assured_shorthold_tenancy_notice_served_by: 'Mr Brown',
-      assured_shorthold_tenancy_notice_served_date: Date.parse("2013-01-01")
+      assured_shorthold_tenancy_notice_served_date: Date.parse("2013-01-01"),
+      applicable_statements_1: 'Yes',
+      applicable_statements_2: 'Yes',
+      applicable_statements_3: 'Yes',
+      applicable_statements_4: 'No',
+      applicable_statements_5: 'No',
+      applicable_statements_6: 'No'
     }
     data.merge! form_date(:start_date, start_date)
     data.merge! form_date(:latest_agreement_date, Date.parse("2010-01-01"))
@@ -374,7 +380,13 @@ describe Tenancy do
       "assured_shorthold_tenancy_notice_served_by" => 'Mr Brown',
       "assured_shorthold_tenancy_notice_served_date_day" => "01",
       "assured_shorthold_tenancy_notice_served_date_month" => "01",
-      "assured_shorthold_tenancy_notice_served_date_year" => "2013"
+      "assured_shorthold_tenancy_notice_served_date_year" => "2013",
+      'applicable_statements_1' => 'Yes',
+      'applicable_statements_2' => 'Yes',
+      'applicable_statements_3' => 'Yes',
+      'applicable_statements_4' => 'No',
+      'applicable_statements_5' => 'No',
+      'applicable_statements_6' => 'No'
     }
   end
 
