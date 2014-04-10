@@ -9,14 +9,14 @@ class PDFDocument
       result_pdf = Tempfile.new('accelerated_claim', '/tmp/')
       pdf = PdfForms.new(ENV['PDFTK'])
       pdf.fill_form template, result_pdf, @json
-
-      result_path = result_pdf.path
-      add_defendant_two result_path
-      strike_out_applicable_statements result_path
-      result_path
     ensure
       result_pdf.close
     end
+
+    result_path = result_pdf.path
+    add_defendant_two result_path
+    strike_out_applicable_statements result_path
+    result_pdf
   end
 
   private
