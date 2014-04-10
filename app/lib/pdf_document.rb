@@ -65,14 +65,13 @@ class PDFDocument
     when 4
       [ { x0: 42, x1: 420, y: 215+52 } ]
     when 5
-      [ { x0: 42, x1: 475, y: 198+51 } ]
+      [ { x0: 42, x1: 465, y: 198+51 } ]
     when 6
       [
         { x0: 42, x1: 505, y: 180+49 },
-        { x0: 42, x1: 475, y: 160+50 }
+        { x0: 42, x1: 470, y: 160+50 },
+        { x0: 42, x1: 475, y: 123+48 }
       ]
-    when 7
-      [ { x0: 42, x1: 505, y: 123+52 } ]
     end
   end
 
@@ -95,7 +94,7 @@ class PDFDocument
     path = `pwd`
     cmd = "cd /tmp; java -jar #{STRIKER_JAR} -i #{result_path.sub('/tmp/','')} -o #{output.path.sub('/tmp/','')} -p #{page} --x #{x} --y #{y} --x1 #{x1} --y1 0 -t 1; cd #{path}"
 
-    unless Rails.env.test?
+    if !Rails.env.test? || ENV['browser']
       start = Time.now
       `#{cmd}`
       FileUtils.mv output.path, result_path
