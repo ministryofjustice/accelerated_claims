@@ -48,8 +48,23 @@ a
   font-family: serif
 
 .alphabetical
-  li
-    list-style-type: lower-alpha
+  counter-reset: list
+
+  &> li 
+    list-style: none
+    position: relative
+
+  &> li:before
+    content: counter(list, lower-alpha) ") "
+    counter-increment: list
+    position: absolute
+    left: -12px
+
+  &> li > input[type=checkbox]
+    position: absolute
+    left: -40px
+    top: 3px
+
 .roman
   li
     list-style-type: lower-roman
