@@ -75,35 +75,43 @@ class PDFDocument
     end
   end
 
-  def strike_out_applicable_statements result_path
-    puts result_path
-    hash = {}
-    hash['strikes'] = []
-
+  def add_applicable_statement_strike_outs list
     1.upto(6) do |index|
       if @json["tenancy_applicable_statements_#{index}"][/No/]
         strike_out_paths(index).each do |line|
           x = line[:x0]
           y = line[:y]
           x1 = line[:x1]
-          hash['strikes'] << { page: 2, x: x, y: y, x1: x1, y1: 0, thickness: 1 }
+          list << { page: 2, x: x, y: y, x1: x1, y1: 0, thickness: 1 }
         end
       end
     end
+  end
 
-    unless hash['strikes'].empty?
-      strike_out_all result_path, hash
+  def add_previous_tenancy_type_strike_out list
+    case @json['tenancy_previous_tenancy_type']
+    when Tenancy::ASSURED
+      list << { page: 2, x: 266, y: 557, x1: 42, y1: 0, thickness: 1 }
+    when Tenancy::SECURE
+      list << { page: 2, x: 309, y: 557, x1: 37, y1: 0, thickness: 1 }
     end
   end
 
-  def strike_out_all result_path, hash
+  def strike_out_applicable_statements result_path
+    list = []
+    add_applicable_statement_strike_outs list
+    add_previous_tenancy_type_strike_out list
+
+    strike_out_all(result_path, list) unless list.empty?
+  end
+
+  def strike_out_all result_path, list
     output = Tempfile.new('strike_out', '/tmp/')
     strikes = Tempfile.new('strikes.json', '/tmp/')
-    strikes.write hash.to_json
+    strikes.write({ 'strikes' => list }.to_json)
     strikes.close
     path = `pwd`
     cmd = "cd /tmp; java -jar #{STRIKER_JAR} -i #{result_path.sub('/tmp/','')} -o #{output.path.sub('/tmp/','')} -j #{strikes.path}; cd #{path}"
-    puts cmd
 
     if !Rails.env.test? || ENV['browser']
       start = Time.now

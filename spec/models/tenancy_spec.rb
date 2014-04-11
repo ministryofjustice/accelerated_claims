@@ -1,163 +1,32 @@
 describe Tenancy do
 
-  describe "#as_json" do
-    describe "the base structure" do
-      let(:desired_format) do
-        {
-          # tenancy_type derived
-          "demoted_tenancy"=>"",
-          "start_date_day"=>"",
-          "start_date_month"=>"",
-          "start_date_year"=>"",
-          "latest_agreement_date_day"=>"",
-          "latest_agreement_date_month"=>"",
-          "latest_agreement_date_year"=>"",
-          "assured_shorthold_tenancy_notice_served_date_day"=>"",
-          "assured_shorthold_tenancy_notice_served_date_month"=>"",
-          "assured_shorthold_tenancy_notice_served_date_year"=>"",
-          "agreement_reissued_for_same_property"=> "",
-          "agreement_reissued_for_same_landlord_and_tenant"=> "",
-          "assured_shorthold_tenancy_notice_served_by" => "",
-          "assured_shorthold_tenancy_notice_served_date_day" => "",
-          "assured_shorthold_tenancy_notice_served_date_month" => "",
-          "assured_shorthold_tenancy_notice_served_date_year" => "",
-          "demotion_order_date_day" => "",
-          "demotion_order_date_month" => "",
-          "demotion_order_date_year" => "",
-          "demotion_order_court" => ""
-        }
-      end
-
-      describe "start_date in JSON" do
-        # if original_assured_shorthold_tenancy_agreement_date present
-        # then add it as start_date, otherwise
-        # keep start_date as start_date
-        let(:tenancy) do
-          Tenancy.new("start_date(3i)"=>"10",
-                      "start_date(2i)"=>"10",
-                      "start_date(1i)"=>"2013",
-                      "original_assured_shorthold_tenancy_agreement_date(3i)"=>"05",
-                      "original_assured_shorthold_tenancy_agreement_date(2i)"=>"05",
-                      "original_assured_shorthold_tenancy_agreement_date(1i)"=>"2010")
-        end
-
-        context "if original_assured_shorthold_tenancy_agreement_date not blank" do
-          it "should assign it as start_date" do
-            tenancy.as_json["start_date_day"].should eq "05"
-            tenancy.as_json["start_date_month"].should eq "05"
-            tenancy.as_json["start_date_year"].should eq "2010"
-          end
-        end
-      end
-
-      describe "demoted_tenancy in JSON" do
-        context "when it's demoted" do
-          let(:tenancy) { Tenancy.new(tenancy_type: "demoted") }
-
-          subject { tenancy.as_json["demoted_tenancy"] }
-
-          it { should eq "Yes" }
-        end
-
-        context "when it's assured" do
-          let(:tenancy) { Tenancy.new(tenancy_type: "assured") }
-
-          subject { tenancy.as_json["demoted_tenancy"] }
-
-          it { should eq "No" }
-        end
-      end
-
-      describe "agreement_reissued_for_same_landlord_and_tenant in JSON" do
-        value = "Yes"
-        let(:tenancy) { Tenancy.new(agreement_reissued_for_same_landlord_and_tenant: value) }
-
-        subject { tenancy.as_json["agreement_reissued_for_same_landlord_and_tenant"] }
-
-        it { should eq value }
-      end
-
-      describe "agreement_reissued_for_same_property in JSON" do
-        value = "Yes"
-        let(:tenancy) { Tenancy.new(agreement_reissued_for_same_property: value) }
-        subject { tenancy.as_json["agreement_reissued_for_same_property"] }
-        it { should eq value }
-      end
-
-      describe "assured_shorthold_tenancy_notice_served_by in JSON" do
-        value = "Bob"
-        let(:tenancy) { Tenancy.new(assured_shorthold_tenancy_notice_served_by: value) }
-        subject { tenancy.as_json["assured_shorthold_tenancy_notice_served_by"] }
-        it { should eq value }
-      end
-
-      describe "assured_shorthold_tenancy_notice_served_date in JSON" do
-        let(:tenancy) do
-          Tenancy.new("assured_shorthold_tenancy_notice_served_date(3i)" => "1",
-                      "assured_shorthold_tenancy_notice_served_date(2i)" => "10",
-                      "assured_shorthold_tenancy_notice_served_date(1i)" => "2010")
-        end
-
-        it "should assign it as a correct date" do
-          tenancy.as_json["assured_shorthold_tenancy_notice_served_date_day"].should eq "01"
-          tenancy.as_json["assured_shorthold_tenancy_notice_served_date_month"].should eq "10"
-          tenancy.as_json["assured_shorthold_tenancy_notice_served_date_year"].should eq "2010"
-        end
-      end
-
-      describe "original_assured_shorthold_tenancy_agreement_date in JSON" do
-        let(:tenancy) do
-          Tenancy.new("original_assured_shorthold_tenancy_agreement_date(3i)" => "1",
-                      "original_assured_shorthold_tenancy_agreement_date(2i)" => "2",
-                      "original_assured_shorthold_tenancy_agreement_date(1i)" => "2011")
-        end
-
-        it "should assign it as a correct date" do
-          tenancy.as_json["original_assured_shorthold_tenancy_agreement_date_day"].should eq "01"
-          tenancy.as_json["original_assured_shorthold_tenancy_agreement_date_month"].should eq "02"
-          tenancy.as_json["original_assured_shorthold_tenancy_agreement_date_year"].should eq "2011"
-        end
-      end
-
-      describe "demotion_order_date in JSON" do
-        let(:tenancy) do
-          Tenancy.new("demotion_order_date(3i)" => "1",
-                      "demotion_order_date(2i)" => "1",
-                      "demotion_order_date(1i)" => "2011")
-        end
-
-        it "should assign it as a correct date" do
-          tenancy.as_json["demotion_order_date_day"].should eq "01"
-          tenancy.as_json["demotion_order_date_month"].should eq "01"
-          tenancy.as_json["demotion_order_date_year"].should eq "2011"
-        end
-      end
-
-      describe "demotion_order_court in JSON" do
-        let(:tenancy) { Tenancy.new(demotion_order_court: "Bristol County Court") }
-        subject { tenancy.as_json["demotion_order_court"] }
-        it { should eq "Bristol" }
-      end
-
-    end
-  end
-
   def value attribute, default, overrides
     overrides.has_key?(attribute) ? overrides[attribute] : default
   end
 
   def assured_tenancy overrides={}
-    start_date_fields = form_date(:start_date, value(:start_date, Date.parse("2010-01-01"), overrides))
-    latest_agreement_date_fields = form_date(:latest_agreement_date, value(:latest_agreement_date, Date.parse("2013-01-01"), overrides))
+    date_fields = {}.merge (
+      form_date(:start_date, value(:start_date, Date.parse("2010-01-05"), overrides))
+    ).merge (
+      form_date(:assured_shorthold_tenancy_notice_served_date, value(:assured_shorthold_tenancy_notice_served_date, nil, overrides))
+    ).merge (
+      form_date(:original_assured_shorthold_tenancy_agreement_date, value(:original_assured_shorthold_tenancy_agreement_date, nil, overrides))
+    ).merge (
+      form_date(:latest_agreement_date, value(:latest_agreement_date, nil, overrides))
+    )
 
     Tenancy.new({
       tenancy_type: 'assured',
       assured_shorthold_tenancy_type: value(:assured_shorthold_tenancy_type, 'one', overrides),
-      original_assured_shorthold_tenancy_agreement_date: value(:original_assured_shorthold_tenancy_agreement_date, nil, overrides),
-      latest_agreement_date: value(:latest_agreement_date, nil, overrides),
       agreement_reissued_for_same_property: value(:agreement_reissued_for_same_property, nil, overrides),
-      agreement_reissued_for_same_landlord_and_tenant: value(:agreement_reissued_for_same_landlord_and_tenant, nil, overrides)
-    }.merge(start_date_fields)
+      agreement_reissued_for_same_landlord_and_tenant: value(:agreement_reissued_for_same_landlord_and_tenant, nil, overrides),
+      applicable_statements_1: 'Yes',
+      applicable_statements_2: 'Yes',
+      applicable_statements_3: 'Yes',
+      applicable_statements_4: 'No',
+      applicable_statements_5: 'No',
+      applicable_statements_6: 'No'
+    }.merge(date_fields)
     )
   end
 
@@ -176,6 +45,16 @@ describe Tenancy do
     it { should be_valid }
     its(:demoted_tenancy?) { should be_true }
     its(:assured_tenancy?) { should be_false }
+
+    describe 'as_json' do
+      subject { demoted_tenancy.as_json }
+      its(['demoted_tenancy']) { should == 'Yes'}
+      its(['demotion_order_date_day']) { should eq '01' }
+      its(['demotion_order_date_month']) { should eq '01' }
+      its(['demotion_order_date_year']) { should eq '2010' }
+      its(['demotion_order_court']) { should eq 'Brighton' }
+      its(['previous_tenancy_type']) { should == 'assured' }
+    end
 
     context 'and required fields are blank' do
       subject { demoted_tenancy(demotion_order_date: nil, demotion_order_court: nil, previous_tenancy_type: nil) }
@@ -225,6 +104,17 @@ describe Tenancy do
     its(:demoted_tenancy?) { should be_false }
     its(:assured_tenancy?) { should be_true }
 
+    describe 'as_json' do
+      subject { assured_tenancy.as_json }
+      its(['demoted_tenancy']) { should == 'No'}
+      its(['start_date_day']) { should == '05' }
+      its(['start_date_month']) { should == '01' }
+      its(['start_date_year']) { should == '2010' }
+      its(['latest_agreement_date_day']) { should == '' }
+      its(['latest_agreement_date_month']) { should == '' }
+      its(['latest_agreement_date_year']) { should == '' }
+    end
+
     context "and start date is blank" do
       subject { assured_tenancy(start_date: nil) }
       it { should_not be_valid }
@@ -242,9 +132,10 @@ describe Tenancy do
     context 'and single tenancy agreement' do
       subject{ assured_tenancy(assured_shorthold_tenancy_type: 'one') }
       it { should be_valid }
+
       its(:one_tenancy_agreement?) { should be_true }
       its(:multiple_tenancy_agreements?) { should be_false }
-      its(:start_date) { should == Date.parse("2010-01-01") }
+      its(:start_date) { should == Date.parse("2010-01-05") }
       its(:latest_agreement_date) { should be_nil }
       its(:only_start_date_present?) { should be_true }
 
@@ -289,15 +180,30 @@ describe Tenancy do
 
     context 'and multiple tenancy agreements' do
       let(:start_date) { nil }
-      subject do
+      let(:multiple_tenancy) {
         assured_tenancy(
           assured_shorthold_tenancy_type: 'multiple',
-          original_assured_shorthold_tenancy_agreement_date: Date.parse("2009-01-01"),
+          assured_shorthold_tenancy_notice_served_date: Date.parse("2010-10-01"),
+          original_assured_shorthold_tenancy_agreement_date: Date.parse("2009-02-01"),
           latest_agreement_date: Date.parse("2012-01-02"),
           start_date: start_date,
           agreement_reissued_for_same_property: 'No',
           agreement_reissued_for_same_landlord_and_tenant: 'Yes')
+      }
+      subject { multiple_tenancy }
+
+      describe 'as_json' do
+        subject { multiple_tenancy.as_json }
+        its(['agreement_reissued_for_same_landlord_and_tenant']) { should == 'Yes' }
+        its(['agreement_reissued_for_same_property']) { should == 'No' }
+        its(['assured_shorthold_tenancy_notice_served_date_day']) { should eq '01' }
+        its(['assured_shorthold_tenancy_notice_served_date_month']) { should eq '10' }
+        its(['assured_shorthold_tenancy_notice_served_date_year']) { should eq '2010' }
+        its(['original_assured_shorthold_tenancy_agreement_date_day']) { should eq '01' }
+        its(['original_assured_shorthold_tenancy_agreement_date_month']) { should eq '02' }
+        its(['original_assured_shorthold_tenancy_agreement_date_year']) { should eq '2009' }
       end
+
       it { should be_valid }
       its(:one_tenancy_agreement?) { should be_false }
       its(:multiple_tenancy_agreements?) { should be_true }
@@ -341,70 +247,6 @@ describe Tenancy do
         end
       end
 
-    end
-  end
-
-  let(:start_date) { Date.parse("2010-01-01") }
-
-  let(:tenancy) do
-    data = {
-      tenancy_type: 'assured',
-      agreement_reissued_for_same_property: 'No',
-      agreement_reissued_for_same_landlord_and_tenant: 'No',
-      assured_shorthold_tenancy_notice_served_by: 'Mr Brown',
-      assured_shorthold_tenancy_notice_served_date: Date.parse("2013-01-01"),
-      applicable_statements_1: 'Yes',
-      applicable_statements_2: 'Yes',
-      applicable_statements_3: 'Yes',
-      applicable_statements_4: 'No',
-      applicable_statements_5: 'No',
-      applicable_statements_6: 'No'
-    }
-    data.merge! form_date(:start_date, start_date)
-    data.merge! form_date(:latest_agreement_date, Date.parse("2010-01-01"))
-
-    Tenancy.new(data)
-  end
-
-  let(:desired_format) do
-    {
-      "demoted_tenancy" => "No",
-      "start_date_day" => "01",
-      "start_date_month" => "01",
-      "start_date_year" => "2010",
-      "latest_agreement_date_day" => "01",
-      "latest_agreement_date_month" => "01",
-      "latest_agreement_date_year" => "2010",
-      "agreement_reissued_for_same_property" => 'No',
-      "agreement_reissued_for_same_landlord_and_tenant" => 'No',
-      "assured_shorthold_tenancy_notice_served_by" => 'Mr Brown',
-      "assured_shorthold_tenancy_notice_served_date_day" => "01",
-      "assured_shorthold_tenancy_notice_served_date_month" => "01",
-      "assured_shorthold_tenancy_notice_served_date_year" => "2013",
-      'applicable_statements_1' => 'Yes',
-      'applicable_statements_2' => 'Yes',
-      'applicable_statements_3' => 'Yes',
-      'applicable_statements_4' => 'No',
-      'applicable_statements_5' => 'No',
-      'applicable_statements_6' => 'No'
-    }
-  end
-
-  describe "#as_json" do
-    it "should generate the correct JSON" do
-      assert_hash_is_correct tenancy.as_json, desired_format
-    end
-  end
-
-  describe "the latest_agreement_date value" do
-    it "can be blank" do
-      tenancy.latest_agreement_date = nil
-      json_mod = {
-        'latest_agreement_date_day' => '',
-        'latest_agreement_date_month' => '',
-        'latest_agreement_date_year' => ''
-      }
-      assert_hash_is_correct tenancy.as_json, desired_format.merge(json_mod)
     end
   end
 
