@@ -92,7 +92,9 @@ class PDFDocument
     case @json['tenancy_previous_tenancy_type']
     when Tenancy::ASSURED
       list << { page: 2, x: 309, y: 557, x1: 37, y1: 0, thickness: 1 }
+      list << { page: 2, x: 488, y: 542, x1: 43, y1: 0, thickness: 1 }
     when Tenancy::SECURE
+      list << { page: 2, x: 430, y: 542, x1: 55, y1: 0, thickness: 1 }
       list << { page: 2, x: 266, y: 557, x1: 42, y1: 0, thickness: 1 }
     end
   end
