@@ -1,6 +1,7 @@
 class PDFDocument
   def initialize(json)
     @json = json
+    remove_backslash_r!
   end
 
   def fill
@@ -20,6 +21,20 @@ class PDFDocument
   end
 
   private
+
+  def remove_backslash_r!
+    @json.each do |key, value|
+      if value && value.include?("\r\n")
+        @json[key] = value.gsub("\r\n","\n")
+      end
+    end
+
+    @json.each do |key, value|
+      if value && value.include?("\r")
+        @json[key] = value.gsub("\r","")
+      end
+    end
+  end
 
   CONTINUATION_TEMPLATE = File.join Rails.root, 'templates', 'defendant_form.pdf'
   STRIKER_JAR = File.join Rails.root, 'scripts', 'striker-0.2.0-standalone.jar'
