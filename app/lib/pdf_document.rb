@@ -91,9 +91,9 @@ class PDFDocument
   def add_previous_tenancy_type_strike_out list
     case @json['tenancy_previous_tenancy_type']
     when Tenancy::ASSURED
-      list << { page: 2, x: 266, y: 557, x1: 42, y1: 0, thickness: 1 }
-    when Tenancy::SECURE
       list << { page: 2, x: 309, y: 557, x1: 37, y1: 0, thickness: 1 }
+    when Tenancy::SECURE
+      list << { page: 2, x: 266, y: 557, x1: 42, y1: 0, thickness: 1 }
     end
   end
 
