@@ -128,6 +128,12 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   def labelled_input attribute, input, input_options, label=nil
     label = label(attribute, label_for(attribute, label))
 
+    if (input == :text_field)
+      if max_length = max_length(attribute)
+        input_options.merge!(maxlength: max_length)
+      end
+    end
+
     value = send(input, attribute, input_options)
 
     [ label, value ].join("\n").html_safe
@@ -143,10 +149,19 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     label.html_safe
   end
 
-  def presence_required? attribute
-    validators = @object.class.validators_on(attribute)
+  def max_length attribute
+    if validator = validators(attribute).detect{|x| x.is_a?(ActiveModel::Validations::LengthValidator)}
+      validator.options[:maximum]
+    end
+  end
 
-    required = validators.any? do |v|
+  def validators attribute
+    @object.class.validators_on(attribute)
+  end
+
+  def presence_required? attribute
+
+    required = validators(attribute).any? do |v|
       if v.is_a?(ActiveModel::Validations::PresenceValidator)
         if conditional = v.options[:if]
           @object.send(conditional)
