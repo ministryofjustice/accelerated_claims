@@ -40,7 +40,7 @@
     %p= "If both the original (and any additional) tenancy agreements were made on or after <strong>28 February 1997</strong>:".html_safe
 
     %ol.alphabetical
-      %li 
+      %li
         = form.check_box :applicable_statements_1, {}, "Yes", "No"
         = form.label :applicable_statements_1, "No notice was served on the defendant stating that the tenancy would not be, or continue to be, an assured shorthold tenancy."
       %li
@@ -52,15 +52,15 @@
     %p
       %strong (or)
     %p If both the original (and any additional) tenancy agreements were made on or after 15 January 1989:
-    
+
     %ol.alphabetical
-      %li 
+      %li
         = form.check_box :applicable_statements_4, {}, "Yes", "No"
         = form.label :applicable_statements_4, "The [first] tenancy agreement was for a fixed term of not less than six months."
-      %li 
+      %li
         = form.check_box :applicable_statements_5, {}, "Yes", "No"
         = form.label :applicable_statements_5, "There was no power for the landlord to end the tenancy earlier than six months after it began."
-      %li 
+      %li
         = form.check_box :applicable_statements_6, {}, "Yes", "No"
         = form.label :applicable_statements_6, "Before the tenancy began a notice in writing, stating that the tenancy was to be an assured shorthold tenancy, was served on the defendant"
 
@@ -75,4 +75,4 @@
     .sub-panel.extra
       = form.date_select_field_set :demotion_order_date, 'Date of demotion order', class: 'date-picker full', date_select_options: @date_select_options
       = form.text_field_row :demotion_order_court, label: 'County court where demotion order was made', class: 'full'
-      = form.radio_button_fieldset :previous_tenancy_type, 'What kind of tenancy agreement did the defendant have before it got demoted?', class: 'striped-choice full', choice: {'Assured' => 'assured', 'Secure' => 'secure'}
+      = form.radio_button_fieldset :previous_tenancy_type, 'What kind of tenancy agreement did the defendant have before it got demoted?', class: 'striped-choice full', choice: {'Assured' => Tenancy::ASSURED, 'Secure' => Tenancy::SECURE }

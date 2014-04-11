@@ -1,5 +1,8 @@
 class Tenancy < BaseClass
 
+  ASSURED = 'assured'
+  SECURE  = 'secure'
+
   attr_accessor :tenancy_type
   validates :tenancy_type, presence: { message: 'must be selected' }
   validates :tenancy_type, inclusion: { in: ['demoted', 'assured'] }
@@ -96,7 +99,8 @@ class Tenancy < BaseClass
       'applicable_statements_3' => applicable_statements_3,
       'applicable_statements_4' => applicable_statements_4,
       'applicable_statements_5' => applicable_statements_5,
-      'applicable_statements_6' => applicable_statements_6
+      'applicable_statements_6' => applicable_statements_6,
+      'previous_tenancy_type' => previous_tenancy_type
     }
 
     split_date(:demotion_order_date, hash)
