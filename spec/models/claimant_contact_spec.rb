@@ -12,13 +12,13 @@ describe ClaimantContact do
   end
 
   describe "company name" do
-    context "when over 60 characters" do
+    context "when over 40 characters" do
       subject { claimant_contact('company_name' => ("x" * 41)) }
 
       it { should_not be_valid }
     end
 
-    context "when under 60 characters" do
+    context "when under 40 characters" do
       subject { claimant_contact('company_name' => ("x" * 40)) }
 
       it { should be_valid }
