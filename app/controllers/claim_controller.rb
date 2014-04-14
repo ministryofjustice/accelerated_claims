@@ -39,7 +39,9 @@ class ClaimController < ApplicationController
 
     if @claim.valid?
       pdf = PDFDocument.new(@claim.as_json).fill
-      send_file(pdf.path, filename: "accelerated-claim.pdf", disposition: "inline", type: "application/pdf")
+      file_path = pdf.path.html_safe
+
+      send_file(file_path, filename: "accelerated-claim.pdf", disposition: "inline", type: "application/pdf")
     else
       redirect_to_with_protocol :new
     end
