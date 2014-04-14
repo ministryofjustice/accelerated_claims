@@ -6,6 +6,7 @@ class Deposit < BaseClass
   attr_accessor :information_given_date
 
   attr_accessor :ref_number
+  validates :ref_number, length: { maximum: 20 }
 
   attr_accessor :as_property
   validates :as_property, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }

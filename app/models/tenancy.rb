@@ -34,13 +34,14 @@ class Tenancy < BaseClass
 
   with_options if: :demoted_tenancy? do |tenancy|
     tenancy.validates :demotion_order_date, presence: { message: 'must be selected' }
-    tenancy.validates :demotion_order_court, presence: { message: 'must be provided' }
+    tenancy.validates :demotion_order_court, presence: { message: 'must be provided' }, length: { maximum: 40 }
     tenancy.validates :previous_tenancy_type, presence: { message: 'must be selected' }
   end
 
   with_options if: :assured_tenancy? do |tenancy|
     tenancy.validates :assured_shorthold_tenancy_type, presence: { message: 'must be selected' }
     tenancy.validates :assured_shorthold_tenancy_type, inclusion: { in: ['one', 'multiple'] }
+    tenancy.validates :assured_shorthold_tenancy_notice_served_by, length: { maximum: 70 }
 
     with_options if: :one_tenancy_agreement? do |tenancy|
       tenancy.validates :start_date, presence: { message: 'must be selected' }

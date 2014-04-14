@@ -15,8 +15,15 @@ class ClaimantContact < BaseClass
   attr_accessor :legal_costs
 
   validates :title, length: { maximum: 8 }
-  validates :company_name, length: { maximum: 60 }
+  validates :company_name, length: { maximum: 40 }
   validates :full_name, length: { maximum: 40 }
+
+  validates :email, length: { maximum: 40 }
+  validates :phone, length: { maximum: 40 }
+  validates :fax, length: { maximum: 40 }
+  validates :dx_number, length: { maximum: 40 }
+  validates :reference_number, length: { maximum: 40 }
+
   validates :legal_costs, format: { with: /\A\d+(\.\d{2})?\z/, message: 'must be a valid amount' }, allow_blank: true
 
   def as_json
