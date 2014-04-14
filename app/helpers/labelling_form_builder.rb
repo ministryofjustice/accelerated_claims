@@ -128,10 +128,8 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   def labelled_input attribute, input, input_options, label=nil
     label = label(attribute, label_for(attribute, label))
 
-    if (input == :text_field)
-      if max_length = max_length(attribute)
-        input_options.merge!(maxlength: max_length)
-      end
+    if max_length = max_length(attribute)
+      input_options.merge!(maxlength: max_length)
     end
 
     value = send(input, attribute, input_options)
