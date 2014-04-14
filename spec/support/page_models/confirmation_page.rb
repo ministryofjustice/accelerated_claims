@@ -25,7 +25,7 @@ private
   def capybara_download_pdf
     expected_url = remote_test? ? "/accelerated#{@url}" : @url
     expect(Capybara.current_path).to eql expected_url
-    Capybara.execute_script("jQuery('.pdf-download').removeAttr('target')")
+    #Capybara.execute_script("jQuery('.pdf-download').removeAttr('target')")
     click_link 'View and print completed form'
 
     assert_pdf_content_type(page.response_headers)
