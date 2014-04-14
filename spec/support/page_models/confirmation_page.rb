@@ -13,9 +13,9 @@ class ConfirmationPage
   end
 
   def download_pdf
-    begin
+    if Capybara.run_server
       pdf_file = capybara_download_pdf
-    rescue Capybara::NotSupportedByDriverError
+    else
       pdf_file = curl_download_pdf
     end
     pdf_file
@@ -25,9 +25,10 @@ private
   def capybara_download_pdf
     expected_url = remote_test? ? "/accelerated#{@url}" : @url
     expect(Capybara.current_path).to eql expected_url
+    Capybara.execute_script("jQuery('.pdf-download').removeAttr('target')")
     click_link 'View and print completed form'
-    assert_pdf_content_type(page.response_headers)
 
+    assert_pdf_content_type(page.response_headers)
     write_pdf_to_tempfile page.body
   end
 
@@ -54,9 +55,9 @@ private
     end
   end
 
-  def write_pdf_to_tempfile(ascii)
+  def write_pdf_to_tempfile(text)
     file = Tempfile.new('pdf_download', encoding: 'utf-8')
-    file.write(ascii.encode("ASCII-8BIT").force_encoding("UTF-8"))
+    file.write(text.encode("ASCII-8BIT").force_encoding("UTF-8"))
     file.close
     file
   end
