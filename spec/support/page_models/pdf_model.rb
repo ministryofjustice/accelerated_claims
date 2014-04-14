@@ -24,7 +24,8 @@ class PdfModel
 
 private
   def values_from_pdf file
-    fields = `pdftk #{file} dump_data_fields`
+    raise "File not found" unless File.exists?(file)
+    fields = `pdftk #{file} dump_data_fields_utf8`
     fields.strip.split('---').each_with_object({}) do |fieldset, hash|
       field = fieldset[/FieldName: ([^\s]+)/,1]
       value = fieldset[/FieldValue: (.+)/,1]
