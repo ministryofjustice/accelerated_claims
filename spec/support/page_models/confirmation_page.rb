@@ -12,15 +12,6 @@ class ConfirmationPage
     page.has_text?('You now need to send the completed form and documents to the court to make your claim')
   end
 
-  def assert_rendered_pdf(expected_data)
-    filename = download_pdf
-
-      data_from_rendered_pdf = values_from_pdf(filename)
-
-      expected_data = load_result_data(1)
-      expect(data_from_rendered_pdf).to eql expected_data
-  end
-
   def download_pdf
     begin
       pdf_file = capybara_download_pdf
@@ -66,6 +57,7 @@ private
   def write_pdf_to_tempfile(ascii)
     file = Tempfile.new('pdf_download', encoding: 'utf-8')
     file.write(ascii.encode("ASCII-8BIT").force_encoding("UTF-8"))
+    file.close
     file
   end
 
