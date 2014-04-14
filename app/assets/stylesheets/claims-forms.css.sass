@@ -3,10 +3,22 @@
 @import "_css3"
 @import "claims-mixins"
 
+#wrapper
+  background-color: #dfd
+  @include media(tablet)
+    background-color: #ddf
+
 @mixin highlight-row
-  width: 640px
+  width: auto
   padding: 15px
-  margin-left: 90px
+  margin:
+    left: 10px
+    right: 10px
+
+  @include media(tablet)
+    margin:
+      left: 90px
+      right: 90px
 
 input, input[type="text"], input[type="password"], button, select, textarea
   font-family: "nta", arial, sans-serif
@@ -18,6 +30,7 @@ input[type="text"], input[type="password"], textarea
   border: 1px solid $grey-2
   color: $black
   background: $white
+  display: block
 
 input[type="text"].pound
   background-image: image-url('poundbg.png')
@@ -109,7 +122,11 @@ span.error
 .section-header
   font-size: 24px
   letter-spacing: .005em
-  margin-bottom: 10px
+  margin:
+    left: 10px
+    bottom: 10px
+  @include media(tablet)
+    margin-left: 0
   a
     font-size: 19px
     letter-spacing: 0
@@ -183,19 +200,28 @@ fieldset.plain
 
 
   fieldset, .row
-    float: left
+    float: none
     clear: both
     margin:
       top: 25px
       bottom: 5px
-      left: 0
+      left: auto
+      right: auto
     padding:
       top: 5px
       bottom: 5px
+      left: 10px
+      right: 10px
+    width: auto
 
-    width: 480px
-    padding-left: 280px
-    padding-right: 90px
+    @include media(tablet)
+      width: 480px
+      padding:
+        left: 280px
+        right: 90px
+      margin:
+        left: 0
+        right: 0
 
 
     &:first-child, &.nomargin
@@ -215,21 +241,34 @@ fieldset.plain
   .row
     @include clearfix
     &.error
-      padding-left: 277px
+      padding-left: 7px
       border-left: 3px solid $errorcolour
       background-color: $errorbgcolour
 
+      @include media(tablet)
+        padding-left: 277px
+
     label
-      width: 180px
-      float: left
-      display: inline-block
-      margin-left: -190px
-      margin-right: 10px
+      width: auto
+      float: none
+      display: block
+      margin:
+        left: 0
+        right: 0
       line-height: 25px
 
+      @include media(tablet)
+        display: inline-block
+        float: left
+        width: 180px
+        margin-left: -190px
+
     input[type="text"]
+      display: block
+      @include media(tablet)
+        display: inline-block
       width: 300px
-      display: inline-block
+      
       &.pound
         padding-left: 40px
         width: 260px
@@ -251,8 +290,12 @@ fieldset.plain
         height: 300px
 
     &.full
-      width: 670px
-      padding-left: 90px
+      width: 460px
+      padding-left: 10px
+
+      @include media(tablet)
+        width: 670px
+        padding-left: 90px
 
       &.warning
         @include highlight-row
@@ -297,24 +340,33 @@ fieldset.plain
 
 
     &.divider
-      width: 670px
-      height: 0
+      width: auto
+      height: 25px
       padding: 0
       margin:
-        left: 90px
+        left: 10px
+        right: 10px
         top: 25px
         bottom: 25px
       overflow: hidden
       border-bottom: 1px dotted #c2c2c2
+
+      @include media(tablet)
+        margin:
+          left: 90px
+          right: 90px
 
 
 
   fieldset
 
     &.error
-      padding-left: 277px
+      padding-left: 7px
       border-left: 3px solid $errorcolour
       background-color: $errorbgcolour
+
+      @include media(tablet)
+        padding-left: 277px
 
     &.date-picker
 
@@ -351,25 +403,36 @@ fieldset.plain
       font-size: 19px
       width: 180px
       margin:
-        left: -190px
+        left: 0
         bottom: 0
       float: left
       line-height: 25px
+      display: block
+
+      @include media(tablet)
+        display: inline-block
+        margin-left: -190px
 
     .options
       @include clearfix
       float: left
-      width: 480px
+      width: 460px
       position: relative
+
+      @include media(tablet)
+        width: 480px
 
       .row
         clear: right
         position: relative
         margin-top: 15px
-        width: 480px
+        width: 460px
         padding:
           left: 0
           right: 0
+
+        @include media(tablet)
+          width: 480px
 
         &:first-child
           margin-top: 0
@@ -397,7 +460,8 @@ fieldset.plain
 
 .sub-panel
   @include clearfix
-  float: left
+  @include media(tablet)
+    float: left
   padding-top: 40px
 
   &.rel
@@ -408,7 +472,9 @@ fieldset.plain
 
 
   > h4
-    margin: 0 0 40px 90px
+    margin: 0 0 40px 10px
+    @include media(tablet)
+      margin-left: 90px
     font-size: 24px
     clear: both
     &:first-child
@@ -416,12 +482,18 @@ fieldset.plain
 
   &.extra
     background: $white
-    width: 670px
+    width: auto
     margin:
-      left: 90px
+      left: 10px
+      right: 10px
       top: 40px
       bottom: 15px
     padding: 35px 0 25px 0
+    @include media(tablet)
+      width: 670px
+      margin:
+        left: 90px
+        right: 90px
 
     &.rel
       margin-top: 0
