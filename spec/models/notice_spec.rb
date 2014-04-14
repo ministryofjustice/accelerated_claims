@@ -36,7 +36,7 @@ describe Notice do
       notice.should_not be_valid
     end
 
-    it "should be under 40 characters" do
+    it "should be under 70 characters" do
       notice.served_by = "x" * 71
       notice.should_not be_valid
     end
