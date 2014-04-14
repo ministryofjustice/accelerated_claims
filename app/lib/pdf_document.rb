@@ -1,4 +1,8 @@
 class PDFDocument
+
+  CONTINUATION_TEMPLATE = File.join Rails.root, 'templates', 'defendant_form.pdf'
+  STRIKER_JAR = File.join Rails.root, 'scripts', 'striker-0.2.0-standalone.jar'
+  
   def initialize(json)
     @json = json
     remove_backslash_r!
@@ -35,9 +39,6 @@ class PDFDocument
       end
     end
   end
-
-  CONTINUATION_TEMPLATE = File.join Rails.root, 'templates', 'defendant_form.pdf'
-  STRIKER_JAR = File.join Rails.root, 'scripts', 'striker-0.2.0-standalone.jar'
 
   def defendant_two_address
     "#{@json['defendant_two_address']}\n#{@json['defendant_two_postcode1']} #{@json['defendant_two_postcode2']}"
