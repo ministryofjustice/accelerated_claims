@@ -22,13 +22,12 @@ class ConfirmationPage
   end
 
   def download_pdf
-    pdf_filename = ''
     begin
-      pdf_filename = capybara_download_pdf
+      pdf_file = capybara_download_pdf
     rescue Capybara::NotSupportedByDriverError
-      pdf_filename = curl_download_pdf
+      pdf_file = curl_download_pdf
     end
-    pdf_filename
+    pdf_file
   end
 
 private
@@ -67,7 +66,7 @@ private
   def write_pdf_to_tempfile(ascii)
     file = Tempfile.new('pdf_download', encoding: 'utf-8')
     file.write(ascii.encode("ASCII-8BIT").force_encoding("UTF-8"))
-    file.path
+    file
   end
 
   def assert_pdf_content_type(headers_hash)
