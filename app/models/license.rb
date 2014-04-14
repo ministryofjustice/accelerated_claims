@@ -9,7 +9,7 @@ class License < BaseClass
 
   with_options if: :in_multiple_occupation? do |license|
     license.validates :issued_under_act_part, presence: { message: 'must be selected' }, inclusion: { in: ['Part2', 'Part3'] }
-    license.validates :issued_by, presence: { message: "can't be blank" }
+    license.validates :issued_by, presence: { message: "can't be blank" }, length: { maximum: 70 }
     license.validates :issued_date, presence: { message: "can't be blank" }
     validates_with DateValidator, :fields => [:issued_date]
   end
