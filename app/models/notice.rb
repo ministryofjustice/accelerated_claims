@@ -1,7 +1,7 @@
 class Notice < BaseClass
 
   attr_accessor :served_by
-  validates :served_by, presence: { message: 'must be entered' }, length: { maximum: 40 }
+  validates :served_by, presence: { message: 'must be entered' }, length: { maximum: 70 }
 
   attr_accessor :date_served
   validates :date_served, presence: { message: 'must be entered' }
