@@ -91,10 +91,12 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def radio_button_row attribute, label, choice
+    label = label.sub(/^([A-Z])/) { |letter| letter.downcase }
+
     @template.surround("<div class='row'>".html_safe, "</div>".html_safe) do
       [
         radio_button(attribute, choice),
-        label(attribute, label, value: choice)
+        label(attribute, label.html_safe, value: choice)
       ].join("\n")
     end
   end
