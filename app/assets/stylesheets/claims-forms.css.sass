@@ -4,21 +4,21 @@
 @import "claims-mixins"
 
 #wrapper
-  background-color: #dfd
-  @include media(tablet)
-    background-color: #ddf
+  background-color: #ddf
+  @include media(mobile)
+    background-color: #dfd
 
 @mixin highlight-row
   width: auto
   padding: 15px
   margin:
-    left: 10px
-    right: 10px
+    left: 90px
+    right: 90px
 
-  @include media(tablet)
+  @include media(mobile)
     margin:
-      left: 90px
-      right: 90px
+      left: 15px
+      right: 15px
 
 input, input[type="text"], input[type="password"], button, select, textarea
   font-family: "nta", arial, sans-serif
@@ -123,10 +123,10 @@ span.error
   font-size: 24px
   letter-spacing: .005em
   margin:
-    left: 10px
+    left: 0
     bottom: 10px
-  @include media(tablet)
-    margin-left: 0
+  @include media(mobile)
+    margin-left: 15px
   a
     font-size: 19px
     letter-spacing: 0
@@ -198,30 +198,34 @@ fieldset.plain
 
 
 
-
   fieldset, .row
     float: none
     clear: both
-    margin:
-      top: 25px
-      bottom: 5px
-      left: auto
-      right: auto
+
+    width: 480px
     padding:
+      left: 280px
+      right: 90px
       top: 5px
       bottom: 5px
-      left: 10px
-      right: 10px
-    width: auto
+    margin:
+      left: 0
+      right: 0
+      top: 25px
+      bottom: 5px
 
-    @include media(tablet)
-      width: 480px
-      padding:
-        left: 280px
-        right: 90px
+    background-color: yellow
+
+    @include media(mobile)
       margin:
-        left: 0
-        right: 0
+        left: auto
+        right: auto
+      padding:
+        left: 15px
+        right: 15px
+      width: auto
+
+      background-color: transparent
 
 
     &:first-child, &.nomargin
@@ -241,32 +245,32 @@ fieldset.plain
   .row
     @include clearfix
     &.error
-      padding-left: 7px
+      padding-left: 277px
       border-left: 3px solid $errorcolour
       background-color: $errorbgcolour
 
-      @include media(tablet)
-        padding-left: 277px
+      @include media(mobile)
+        padding-left: 12px
 
     label
-      width: auto
-      float: none
-      display: block
+      width: 180px
+      float: left
+      display: inline-block
       margin:
-        left: 0
+        left: -190px
         right: 0
       line-height: 25px
 
-      @include media(tablet)
-        display: inline-block
-        float: left
-        width: 180px
-        margin-left: -190px
+      @include media(mobile)
+        display: block
+        float: none
+        width: auto
+        margin-left: 0
 
     input[type="text"]
-      display: block
-      @include media(tablet)
-        display: inline-block
+      display: inline-block
+      @include media(mobile)
+        display: block
       width: 300px
       
       &.pound
@@ -290,12 +294,12 @@ fieldset.plain
         height: 300px
 
     &.full
-      width: 460px
-      padding-left: 10px
+      width: 670px
+      padding-left: 90px
 
-      @include media(tablet)
-        width: 670px
-        padding-left: 90px
+      @include media(mobile)
+        width: 460px
+        padding-left: 10px
 
       &.warning
         @include highlight-row
@@ -344,29 +348,30 @@ fieldset.plain
       height: 25px
       padding: 0
       margin:
-        left: 10px
-        right: 10px
+        left: 90px
+        right: 90px
         top: 25px
         bottom: 25px
       overflow: hidden
       border-bottom: 1px dotted #c2c2c2
 
-      @include media(tablet)
+      @include media(mobile)
         margin:
-          left: 90px
-          right: 90px
+          top: 0
+          left: 15px
+          right: 15px
 
 
 
   fieldset
 
     &.error
-      padding-left: 7px
+      padding-left: 277px
       border-left: 3px solid $errorcolour
       background-color: $errorbgcolour
 
-      @include media(tablet)
-        padding-left: 277px
+      @include media(mobile)
+        padding-left: 7px
 
     &.date-picker
 
@@ -403,36 +408,36 @@ fieldset.plain
       font-size: 19px
       width: 180px
       margin:
-        left: 0
+        left: -190px
         bottom: 0
       float: left
       line-height: 25px
-      display: block
+      display: inline-block
 
-      @include media(tablet)
-        display: inline-block
-        margin-left: -190px
+      @include media(mobile)
+        display: block
+        margin-left: 0
 
     .options
       @include clearfix
       float: left
-      width: 460px
+      width: 480px
       position: relative
 
-      @include media(tablet)
-        width: 480px
+      @include media(mobile)
+        width: 460px
 
       .row
         clear: right
         position: relative
         margin-top: 15px
-        width: 460px
+        width: 480px
         padding:
           left: 0
           right: 0
 
-        @include media(tablet)
-          width: 480px
+        @include media(mobile)
+          width: 460px
 
         &:first-child
           margin-top: 0
@@ -460,8 +465,9 @@ fieldset.plain
 
 .sub-panel
   @include clearfix
-  @include media(tablet)
-    float: left
+  float: left
+  @include media(mobile)
+    float: none
   padding-top: 40px
 
   &.rel
@@ -472,9 +478,9 @@ fieldset.plain
 
 
   > h4
-    margin: 0 0 40px 10px
-    @include media(tablet)
-      margin-left: 90px
+    margin: 0 0 40px 90px
+    @include media(mobile)
+      margin-left: 15px
     font-size: 24px
     clear: both
     &:first-child
@@ -482,18 +488,18 @@ fieldset.plain
 
   &.extra
     background: $white
-    width: auto
+    width: 670px
     margin:
-      left: 10px
-      right: 10px
+      left: 90px
+      right: 90px
       top: 40px
       bottom: 15px
     padding: 35px 0 25px 0
-    @include media(tablet)
-      width: 670px
+    @include media(mobile)
+      width: auto
       margin:
-        left: 90px
-        right: 90px
+        left: 15px
+        right: 15px
 
     &.rel
       margin-top: 0
@@ -503,15 +509,33 @@ fieldset.plain
       padding:
         left: 230px
         right: 40px
+
       label
         margin-left: -190px
         width: 180px
+        display: block
+
+      @include media(mobile)
+        width: auto
+        padding:
+          left: 15px
+          right: 15px
+        
+        label
+          margin-left: 0
+          width: auto
 
       &.full
         width: 510px
         padding:
           left: 40px
           right: 40px
+
+        @include media(mobile)
+          width: auto
+          padding:
+            left: 15px
+            right: 15px
 
         label
           margin-left: 0
