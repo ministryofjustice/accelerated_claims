@@ -24,7 +24,7 @@ class ClaimantContact < BaseClass
   validates :dx_number, length: { maximum: 40 }
   validates :reference_number, length: { maximum: 40 }
 
-  validates :legal_costs, format: { with: /\A\d+(\.\d{2})?\z/, message: 'must be a valid amount' }, allow_blank: true
+  validates :legal_costs, format: { with: /\A\d+(\.\d{2})?\z/, message: 'must be a valid amount' }, allow_blank: true, length: { maximum: 8 }
 
   def as_json
     postcode1, postcode2 = split_postcode
