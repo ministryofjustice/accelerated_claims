@@ -49,8 +49,8 @@
     defendant_one: {
       title: "Mr",
       full_name: "Kenneth Butler",
-      street: nil,
-      postcode: nil
+      street: "13 Market St, Bracknell",
+      postcode: "RG13 2JD"
     },
     defendant_two: {
       title: "Ms",

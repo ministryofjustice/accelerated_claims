@@ -36,11 +36,20 @@ class Tenancy < BaseClass
     tenancy.validates :demotion_order_date, presence: { message: 'must be selected' }
     tenancy.validates :demotion_order_court, presence: { message: 'must be provided' }, length: { maximum: 40 }
     tenancy.validates :previous_tenancy_type, presence: { message: 'must be selected' }
+
+    tenancy.validates :assured_shorthold_tenancy_type,
+      :assured_shorthold_tenancy_type,
+      :assured_shorthold_tenancy_notice_served_by,
+      :start_date,
+      :latest_agreement_date,
+      :original_assured_shorthold_tenancy_agreement_date,
+      :agreement_reissued_for_same_property,
+      :agreement_reissued_for_same_landlord_and_tenant,
+      absence: { message: 'leave blank as you specified tenancy is demoted' }
   end
 
   with_options if: :assured_tenancy? do |tenancy|
-    tenancy.validates :assured_shorthold_tenancy_type, presence: { message: 'must be selected' }
-    tenancy.validates :assured_shorthold_tenancy_type, inclusion: { in: ['one', 'multiple'] }
+    tenancy.validates :assured_shorthold_tenancy_type, presence: { message: 'must be selected' }, inclusion: { in: ['one', 'multiple'] }
     tenancy.validates :assured_shorthold_tenancy_notice_served_by, length: { maximum: 70 }
 
     with_options if: :one_tenancy_agreement? do |tenancy|
@@ -53,10 +62,8 @@ class Tenancy < BaseClass
       tenancy.validates :start_date, absence: { message: "must be blank if more than one tenancy agreement" }
       tenancy.validates :original_assured_shorthold_tenancy_agreement_date, presence: { message: 'must be selected' }
       tenancy.validates :latest_agreement_date, presence: { message: 'must be selected' }
-      tenancy.validates :agreement_reissued_for_same_property, presence: { message: 'must be selected' }
-      tenancy.validates :agreement_reissued_for_same_property, inclusion: { in: ['Yes', 'No'] }
-      tenancy.validates :agreement_reissued_for_same_landlord_and_tenant, presence: { message: 'must be selected' }
-      tenancy.validates :agreement_reissued_for_same_landlord_and_tenant, inclusion: { in: ['Yes', 'No'] }
+      tenancy.validates :agreement_reissued_for_same_property, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
+      tenancy.validates :agreement_reissued_for_same_landlord_and_tenant, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
     end
   end
 

@@ -60,9 +60,9 @@
     },
     tenancy: {
       tenancy_type: "Demoted",
-      assured_shorthold_tenancy_type: "one",
+      assured_shorthold_tenancy_type: nil,
       original_assured_shorthold_tenancy_agreement_date: nil,
-      start_date: "2010-10-02",
+      start_date: nil,
       latest_agreement_date: nil,
       agreement_reissued_for_same_property: nil,
       agreement_reissued_for_same_landlord_and_tenant: nil,
