@@ -32,13 +32,14 @@ class Tenancy < BaseClass
   #   tenancy.validates :agreement_reissued_for_same_landlord_and_tenant
   # end
 
+  after_validation :remove_shorthold_tenancies_radio_selection_if_demoted
+
   with_options if: :demoted_tenancy? do |tenancy|
     tenancy.validates :demotion_order_date, presence: { message: 'must be selected' }
     tenancy.validates :demotion_order_court, presence: { message: 'must be provided' }, length: { maximum: 40 }
     tenancy.validates :previous_tenancy_type, presence: { message: 'must be selected' }
 
     tenancy.validates :assured_shorthold_tenancy_type,
-      :assured_shorthold_tenancy_type,
       :assured_shorthold_tenancy_notice_served_by,
       :start_date,
       :latest_agreement_date,
@@ -52,24 +53,24 @@ class Tenancy < BaseClass
     tenancy.validates :assured_shorthold_tenancy_type, presence: { message: 'must be selected' }, inclusion: { in: ['one', 'multiple'] }
     tenancy.validates :assured_shorthold_tenancy_notice_served_by, length: { maximum: 70 }
 
-    with_options if: :one_tenancy_agreement? do |tenancy|
-      tenancy.validates :start_date, presence: { message: 'must be selected' }
-      validates_with DateValidator, :fields => [:start_date, :latest_agreement_date]
-    end
-
-    with_options if: :multiple_tenancy_agreements? do |tenancy|
-      validates_with DateValidator, :fields => [:original_assured_shorthold_tenancy_agreement_date, :latest_agreement_date]
-      tenancy.validates :start_date, absence: { message: "must be blank if more than one tenancy agreement" }
-      tenancy.validates :original_assured_shorthold_tenancy_agreement_date, presence: { message: 'must be selected' }
-      tenancy.validates :latest_agreement_date, presence: { message: 'must be selected' }
-      tenancy.validates :agreement_reissued_for_same_property, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
-      tenancy.validates :agreement_reissued_for_same_landlord_and_tenant, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
-    end
-
     tenancy.validates :demotion_order_date,
       :demotion_order_court,
       :previous_tenancy_type,
       absence: { message: 'leave blank as you specified tenancy is not demoted' }
+  end
+
+  with_options if: :one_tenancy_agreement? do |t|
+    t.validates :start_date, presence: { message: 'must be selected' }
+    t.validates_with DateValidator, :fields => [:start_date, :latest_agreement_date]
+  end
+
+  with_options if: :multiple_tenancy_agreements? do |t|
+    t.validates_with DateValidator, :fields => [:original_assured_shorthold_tenancy_agreement_date, :latest_agreement_date]
+    t.validates :start_date, absence: { message: "must be blank if more than one tenancy agreement" }
+    t.validates :original_assured_shorthold_tenancy_agreement_date, presence: { message: 'must be selected' }
+    t.validates :latest_agreement_date, presence: { message: 'must be selected' }
+    t.validates :agreement_reissued_for_same_property, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
+    t.validates :agreement_reissued_for_same_landlord_and_tenant, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
   end
 
   def only_start_date_present?
@@ -81,16 +82,20 @@ class Tenancy < BaseClass
      assured_shorthold_tenancy_notice_served_date.blank?)
   end
 
-  %w(demoted assured).each do |meth|
-    define_method("#{meth}_tenancy?".to_sym) { tenancy_type == meth }
+  def demoted_tenancy?
+    tenancy_type == 'demoted'
+  end
+
+  def assured_tenancy?
+    tenancy_type == 'assured'
   end
 
   def one_tenancy_agreement?
-    assured_shorthold_tenancy_type == "one"
+    assured_tenancy? && (assured_shorthold_tenancy_type == "one")
   end
 
   def multiple_tenancy_agreements?
-    assured_shorthold_tenancy_type == "multiple"
+    assured_tenancy? && (assured_shorthold_tenancy_type == "multiple")
   end
 
   def as_json
@@ -130,5 +135,11 @@ class Tenancy < BaseClass
 
   def short_court_name
     demotion_order_court.to_s.sub(/ County Court/,'')
+  end
+
+  def remove_shorthold_tenancies_radio_selection_if_demoted
+    if demoted_tenancy? && !errors.blank?
+      self.assured_shorthold_tenancy_type = nil
+    end
   end
 end

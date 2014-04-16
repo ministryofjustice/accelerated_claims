@@ -49,6 +49,28 @@ describe Tenancy do
     its(:demoted_tenancy?) { should be_true }
     its(:assured_tenancy?) { should be_false }
 
+    context 'when assured_shorthold_tenancy_type "one"' do
+      before { subject.assured_shorthold_tenancy_type = 'one' }
+      it { should_not be_valid }
+      its(:one_tenancy_agreement?) { should be_false }
+
+      it "should have error message" do
+        subject.valid?
+        subject.errors.full_messages.should include 'Assured shorthold tenancy type leave blank as you specified tenancy is demoted'
+      end
+    end
+
+    context 'when assured_shorthold_tenancy_type "multiple"' do
+      before { subject.assured_shorthold_tenancy_type = '"multiple"' }
+      it { should_not be_valid }
+      its(:multiple_tenancy_agreements?) { should be_false }
+
+      it "should have error message" do
+        subject.valid?
+        subject.errors.full_messages.should include 'Assured shorthold tenancy type leave blank as you specified tenancy is demoted'
+      end
+    end
+
     describe 'as_json' do
       subject { demoted_tenancy.as_json }
       its(['demoted_tenancy']) { should == 'Yes'}
