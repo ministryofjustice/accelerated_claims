@@ -38,7 +38,13 @@ describe Tenancy do
     Tenancy.new({
       tenancy_type: 'demoted',
       demotion_order_court: "Brighton County Court",
-      previous_tenancy_type: "assured"
+      previous_tenancy_type: "assured",
+      applicable_statements_1: 'No',
+      applicable_statements_2: 'No',
+      applicable_statements_3: 'No',
+      applicable_statements_4: 'No',
+      applicable_statements_5: 'No',
+      applicable_statements_6: 'No'
     }.merge(date_fields).merge(overrides))
   end
 
