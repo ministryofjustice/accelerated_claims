@@ -96,6 +96,14 @@ class Tenancy < BaseClass
       absence: { message: "must be blank if more than one tenancy agreement" }
   end
 
+  with_options if: -> tenancy { tenancy.assured_shorthold_tenancy_notice_served_date.present? } do |t|
+    t.validates :assured_shorthold_tenancy_notice_served_by, presence: { message: 'must be completed' }
+  end
+
+  with_options if: -> tenancy { tenancy.assured_shorthold_tenancy_notice_served_by.present? } do |t|
+    t.validates :assured_shorthold_tenancy_notice_served_date, presence: { message: 'must be entered' }
+  end
+
   def only_start_date_present?
     start_date.present? && \
     (latest_agreement_date.blank? &&
