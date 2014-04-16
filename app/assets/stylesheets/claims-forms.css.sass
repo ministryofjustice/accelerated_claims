@@ -3,11 +3,6 @@
 @import "_css3"
 @import "claims-mixins"
 
-#wrapper
-  background-color: #ddf
-  @include media(mobile)
-    background-color: #dfd
-
 @mixin highlight-row
   width: auto
   padding: 15px
@@ -155,7 +150,9 @@ fieldset.plain
 
 
 
-
+.required-notice
+  @include media(mobile)
+    padding-right: 15px
 
 .moj-panel
   @include clearfix
@@ -214,8 +211,6 @@ fieldset.plain
       top: 25px
       bottom: 5px
 
-    background-color: yellow
-
     @include media(mobile)
       margin:
         left: auto
@@ -224,8 +219,6 @@ fieldset.plain
         left: 15px
         right: 15px
       width: auto
-
-      background-color: transparent
 
 
     &:first-child, &.nomargin
@@ -298,8 +291,10 @@ fieldset.plain
       padding-left: 90px
 
       @include media(mobile)
-        width: 460px
-        padding-left: 10px
+        width: auto
+        padding:
+          left: 15px
+          right: 15px
 
       &.warning
         @include highlight-row
@@ -324,6 +319,8 @@ fieldset.plain
 
       p
         width: 670px
+        @include media(mobile)
+          width: auto
       label
         width: auto
         display: block
@@ -380,25 +377,38 @@ fieldset.plain
           top: 0
           left: 0
           right: 0
-        clear: none
+        clear: both
 
     &.full
       padding-left: 90px
       width: 670px
 
+      @include media(mobile)
+        width: auto
+        padding:
+          left: 15px
+          right: 15px
+
       legend, h3
         margin:
           left: 0
           bottom: 10px
-        width: 670px
+        width: auto
         display: block
+
+        @include media(mobile)
 
       .options
         .row
           width: 670px
           clear: both
+          @include media(mobile)
+            width: auto
         label
           width: 610px
+          @include media(mobile)
+            width: auto
+            max-width: 450px
 
       .row.error
         span.error
@@ -425,7 +435,7 @@ fieldset.plain
       position: relative
 
       @include media(mobile)
-        width: 460px
+        width: 100%
 
       .row
         clear: right
@@ -551,15 +561,30 @@ fieldset.plain
           left: 40px
           right: 40px
 
+        @include media(mobile)
+          width: auto
+          padding:
+            left: 15px
+            right: 15px
+
         legend, h3
           margin:
             left: 0
             bottom: 10px
           width: 590px
+          @include media(mobile)
+            width: auto
+            display: block
         .row
           width: 590px
+          @include media(mobile)
+            width: 100%
+            float: none
+            clear: both
           label
             width: 500px
+            @include media(mobile)
+              width: auto
 
 
 
@@ -597,3 +622,5 @@ fieldset.plain
 
 .action-buttons
   margin-bottom: 40px
+  @include media(mobile)
+    padding-left: 15px
