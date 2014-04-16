@@ -49,8 +49,8 @@
     defendant_one: {
       title: "Mr",
       full_name: "Kenneth Butler",
-      street: nil,
-      postcode: nil
+      street: "13 Market St, Bracknell",
+      postcode: "RG13 2JD"
     },
     defendant_two: {
       title: "Ms",
@@ -70,7 +70,7 @@
       assured_shorthold_tenancy_notice_served_date: nil,
       demotion_order_date: nil,
       demotion_order_court: nil,
-      previous_tenancy_type: "assured"
+      previous_tenancy_type: nil
     },
     notice: {
       served_by: "Heather Cox",
