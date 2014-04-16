@@ -83,7 +83,8 @@ def claim_post_data
       },
       "tenancy" =>
       {
-        'tenancy_type' => 'demoted',
+        'tenancy_type' => 'assured',
+        'assured_shorthold_tenancy_type' => 'one',
         "demotion_order_date(3i)" => "1",
         "demotion_order_date(2i)" => "1",
         "demotion_order_date(1i)" => "2010",
@@ -171,7 +172,7 @@ def claim_formatted_data
     "deposit_information_given_date_day" => "",
     "deposit_information_given_date_month" => "",
     "deposit_information_given_date_year" => "",
-    'tenancy_demoted_tenancy' => 'Yes',
+    'tenancy_demoted_tenancy' => 'No',
     "tenancy_demotion_order_date_day" => "01",
     "tenancy_demotion_order_date_month" => "01",
     "tenancy_demotion_order_date_year" => "2010",

@@ -1,7 +1,7 @@
 describe Tenancy do
 
   def value attribute, default, overrides
-    overrides.has_key?(attribute) ? overrides[attribute] : default
+    overrides.has_key?(attribute) ? overrides.delete(attribute) : default
   end
 
   def assured_tenancy overrides={}
@@ -17,26 +17,29 @@ describe Tenancy do
 
     Tenancy.new({
       tenancy_type: 'assured',
-      assured_shorthold_tenancy_type: value(:assured_shorthold_tenancy_type, 'one', overrides),
-      agreement_reissued_for_same_property: value(:agreement_reissued_for_same_property, nil, overrides),
-      agreement_reissued_for_same_landlord_and_tenant: value(:agreement_reissued_for_same_landlord_and_tenant, nil, overrides),
+      assured_shorthold_tenancy_type: 'one',
+      agreement_reissued_for_same_property: nil,
+      agreement_reissued_for_same_landlord_and_tenant: nil,
       applicable_statements_1: 'Yes',
       applicable_statements_2: 'Yes',
       applicable_statements_3: 'Yes',
       applicable_statements_4: 'No',
       applicable_statements_5: 'No',
       applicable_statements_6: 'No'
-    }.merge(date_fields)
+    }.merge(date_fields).merge(overrides)
     )
   end
 
   def demoted_tenancy overrides={}
-    Tenancy.new(
-      tenancy_type: 'demoted',
-      demotion_order_date: value(:demotion_order_date, Date.parse("2010-01-01"), overrides),
-      demotion_order_court: value(:demotion_order_court, "Brighton County Court", overrides),
-      previous_tenancy_type: value(:previous_tenancy_type, "assured", overrides)
+    date_fields = {}.merge(
+      form_date(:demotion_order_date, value(:demotion_order_date, Date.parse("2010-01-01"), overrides))
     )
+
+    Tenancy.new({
+      tenancy_type: 'demoted',
+      demotion_order_court: "Brighton County Court",
+      previous_tenancy_type: "assured"
+    }.merge(date_fields).merge(overrides))
   end
 
   context "when 'demoted'" do
@@ -75,6 +78,22 @@ describe Tenancy do
         subject.previous_tenancy_type = answer
         subject.valid?
         subject.should be_valid
+      end
+    end
+
+  end
+
+  context "when 'demoted' and non-relevant fields are not blank" do
+    subject { assured_tenancy(demoted_tenancy.attributes) }
+
+    it { should_not be_valid }
+
+    it "should have error messages for each non-relevant field" do
+      subject.valid?
+      ['Assured shorthold tenancy type leave blank as you specified tenancy is demoted',
+       'Assured shorthold tenancy type leave blank as you specified tenancy is demoted',
+       'Start date leave blank as you specified tenancy is demoted'].each do |msg|
+        subject.errors.full_messages.should include msg
       end
     end
   end

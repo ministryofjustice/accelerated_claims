@@ -35,19 +35,14 @@ describe Claim do
   describe '#as_json' do
     context "when both claim fee & legal cost are known" do
       let(:data) { claim_post_data['claim'] }
-      let(:desired_format) do
-        format = claim_formatted_data
-        format["tenancy_agreement_reissued_for_same_landlord_and_tenant"] = ""
-        format["tenancy_agreement_reissued_for_same_property"] = ""
-        format
-      end
+      let(:desired_format) { claim_formatted_data }
 
       it 'should return the right JSON' do
         assert_hash_is_correct claim.as_json, desired_format
       end
 
       it 'should set demoted tenancy boolean on tenancy' do
-        claim.tenancy.demoted_tenancy?.should be_true
+        claim.tenancy.demoted_tenancy?.should be_false
       end
     end
 
