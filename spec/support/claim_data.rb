@@ -84,15 +84,18 @@ def claim_post_data
       "tenancy" =>
       {
         'tenancy_type' => 'assured',
-        'assured_shorthold_tenancy_type' => 'one',
+        'assured_shorthold_tenancy_type' => 'multiple',
         "demotion_order_date(3i)" => nil,
         "demotion_order_date(2i)" => nil,
         "demotion_order_date(1i)" => nil,
         'demotion_order_court' => nil,
         "previous_tenancy_type" => nil,
-        "start_date(3i)" => "1",
-        "start_date(2i)" => "1",
-        "start_date(1i)" => "2010",
+        "start_date(3i)" => nil,
+        "start_date(2i)" => nil,
+        "start_date(1i)" => nil,
+        "original_assured_shorthold_tenancy_agreement_date(3i)" => "1",
+        "original_assured_shorthold_tenancy_agreement_date(2i)" => "1",
+        "original_assured_shorthold_tenancy_agreement_date(1i)" => "2010",
         "latest_agreement_date(3i)" => "1",
         "latest_agreement_date(2i)" => "1",
         "latest_agreement_date(1i)" => "2010",
@@ -243,4 +246,3 @@ def demoted_claim_formatted_data
     )
   data
 end
-

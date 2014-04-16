@@ -34,43 +34,66 @@ class Tenancy < BaseClass
   after_validation :remove_shorthold_tenancies_radio_selection_if_demoted
   after_validation :remove_previous_tenancy_radio_selection_if_not_demoted
 
-  with_options if: :demoted_tenancy? do |tenancy|
-    tenancy.validates :demotion_order_date, presence: { message: 'must be selected' }
-    tenancy.validates :demotion_order_court, presence: { message: 'must be provided' }, length: { maximum: 40 }
-    tenancy.validates :previous_tenancy_type, presence: { message: 'must be selected' }, inclusion: { in: ['assured', 'secure'] }
+  DEMOTED_FIELDS = [:demotion_order_date,
+      :demotion_order_court,
+      :previous_tenancy_type]
 
-    tenancy.validates :assured_shorthold_tenancy_type,
-      :assured_shorthold_tenancy_notice_served_by,
-      :start_date,
+  ONE_TENANCY_FIELDS = [:start_date]
+
+  MULTIPLE_TENANCY_FIELDS = [:original_assured_shorthold_tenancy_agreement_date,
       :latest_agreement_date,
-      :original_assured_shorthold_tenancy_agreement_date,
       :agreement_reissued_for_same_property,
-      :agreement_reissued_for_same_landlord_and_tenant,
+      :agreement_reissued_for_same_landlord_and_tenant]
+
+  ASSURED_TENANCY_FIELDS = [:assured_shorthold_tenancy_type,
+      :assured_shorthold_tenancy_notice_served_by,
+      :assured_shorthold_tenancy_notice_served_date]
+
+  STATEMENTS_FIELDS = [:applicable_statements_1,
+      :applicable_statements_2,
+      :applicable_statements_3,
+      :applicable_statements_4,
+      :applicable_statements_5,
+      :applicable_statements_6]
+
+  with_options if: :demoted_tenancy? do |t|
+    t.validates :demotion_order_date, presence: { message: 'must be selected' }
+    t.validates :demotion_order_court, presence: { message: 'must be provided' }, length: { maximum: 40 }
+    t.validates :previous_tenancy_type, presence: { message: 'must be selected' }, inclusion: { in: ['assured', 'secure'] }
+
+    t.validates *(ASSURED_TENANCY_FIELDS + ONE_TENANCY_FIELDS + MULTIPLE_TENANCY_FIELDS),
       absence: { message: 'leave blank as you specified tenancy is demoted' }
+
+    t.validates *STATEMENTS_FIELDS, inclusion: { in: ['No'], message: 'must be unchecked if tenancy is demoted' }
   end
 
-  with_options if: :assured_tenancy? do |tenancy|
-    tenancy.validates :assured_shorthold_tenancy_type, presence: { message: 'must be selected' }, inclusion: { in: ['one', 'multiple'] }
-    tenancy.validates :assured_shorthold_tenancy_notice_served_by, length: { maximum: 70 }
+  with_options if: :assured_tenancy? do |t|
+    t.validates :assured_shorthold_tenancy_type, presence: { message: 'must be selected' }, inclusion: { in: ['one', 'multiple'] }
+    t.validates :assured_shorthold_tenancy_notice_served_by, length: { maximum: 70 }
 
-    tenancy.validates :demotion_order_date,
-      :demotion_order_court,
-      :previous_tenancy_type,
+    t.validates *DEMOTED_FIELDS,
       absence: { message: 'leave blank as you specified tenancy is not demoted' }
   end
 
   with_options if: :one_tenancy_agreement? do |t|
     t.validates :start_date, presence: { message: 'must be selected' }
-    t.validates_with DateValidator, :fields => [:start_date, :latest_agreement_date]
+    t.validates_with DateValidator, fields: [:start_date]
+
+    t.validates *MULTIPLE_TENANCY_FIELDS,
+      absence: { message: 'must be blank if one tenancy agreement'}
   end
 
   with_options if: :multiple_tenancy_agreements? do |t|
-    t.validates_with DateValidator, :fields => [:original_assured_shorthold_tenancy_agreement_date, :latest_agreement_date]
-    t.validates :start_date, absence: { message: "must be blank if more than one tenancy agreement" }
     t.validates :original_assured_shorthold_tenancy_agreement_date, presence: { message: 'must be selected' }
     t.validates :latest_agreement_date, presence: { message: 'must be selected' }
     t.validates :agreement_reissued_for_same_property, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
     t.validates :agreement_reissued_for_same_landlord_and_tenant, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
+
+    t.validates_with DateValidator, fields:
+      [:original_assured_shorthold_tenancy_agreement_date, :latest_agreement_date]
+
+    t.validates *ONE_TENANCY_FIELDS,
+      absence: { message: "must be blank if more than one tenancy agreement" }
   end
 
   def only_start_date_present?

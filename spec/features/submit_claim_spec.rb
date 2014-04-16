@@ -23,10 +23,10 @@ feature "submit claim" do
 
   Dir.glob('spec/fixtures/scenario_*_data.rb') do |item|
     index = item[/scenario_(\d+)_data/,1].to_i
+
     data = load_fixture_data(index)
     title = data['title']
     description = data['description']
-
     eval(%Q|
       scenario "#{title}: #{description.first} (#{description.last})" do
         run_scenario #{index}
