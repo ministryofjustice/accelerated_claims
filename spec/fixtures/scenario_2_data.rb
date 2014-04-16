@@ -70,7 +70,7 @@
       assured_shorthold_tenancy_notice_served_date: "2010-05-24",
       demotion_order_date: nil,
       demotion_order_court: nil,
-      previous_tenancy_type: "assured"
+      previous_tenancy_type: nil
     },
     notice: {
       served_by: "Jay Schneider",

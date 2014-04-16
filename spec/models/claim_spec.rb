@@ -27,6 +27,7 @@ describe Claim do
 
   describe "fixture data" do
     let(:data) { claim_post_data['claim'] }
+
     it "creates a valid claim" do
       expect(claim).to be_valid
     end
@@ -48,26 +49,18 @@ describe Claim do
 
     describe "when it is a demoted tenancy" do
       describe "when demotion order & county court are filled in" do
-        let(:data) do
-          claim = claim_post_data['claim']
-          claim["tenancy"]["tenancy_type"] = 'demoted'
-          claim
-        end
-        let(:desired_format) do
-          format = claim_formatted_data
-          format["tenancy_agreement_reissued_for_same_property"] = ''
-          format["tenancy_agreement_reissued_for_same_landlord_and_tenant"] = ''
-          format
-        end
-        let(:fields) do
-          ["tenancy_agreement_reissued_for_same_property",
-           "tenancy_agreement_reissued_for_same_landlord_and_tenant"]
-        end
+        let(:data) { demoted_claim_post_data['claim'] }
+        let(:desired_format) { demoted_claim_formatted_data }
 
         it "should have no values for tenancy agreement reissued fields" do
-          fields.each do |field|
+          ["tenancy_agreement_reissued_for_same_property",
+           "tenancy_agreement_reissued_for_same_landlord_and_tenant"].each do |field|
             expect("#{field}: #{claim.as_json[field]}").to eql "#{field}: "
           end
+        end
+
+        it 'should return the right JSON' do
+          assert_hash_is_correct claim.as_json, desired_format
         end
       end
     end
