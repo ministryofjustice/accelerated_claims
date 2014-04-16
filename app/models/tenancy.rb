@@ -65,6 +65,11 @@ class Tenancy < BaseClass
       tenancy.validates :agreement_reissued_for_same_property, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
       tenancy.validates :agreement_reissued_for_same_landlord_and_tenant, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
     end
+
+    tenancy.validates :demotion_order_date,
+      :demotion_order_court,
+      :previous_tenancy_type,
+      absence: { message: 'leave blank as you specified tenancy is not demoted' }
   end
 
   def only_start_date_present?
