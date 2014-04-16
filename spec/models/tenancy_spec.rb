@@ -42,6 +42,22 @@ describe Tenancy do
     }.merge(date_fields).merge(overrides))
   end
 
+  shared_examples_for 'assured_shorthold_tenancy_type unset' do
+    it { should_not be_valid }
+    its(:one_tenancy_agreement?) { should be_false }
+    its(:multiple_tenancy_agreements?) { should be_false }
+
+    it "should have error message" do
+      subject.valid?
+      subject.errors.full_messages.should include 'Assured shorthold tenancy type leave blank as you specified tenancy is demoted'
+    end
+
+    it "should set assured_shorthold_tenancy_type nil" do
+      subject.valid?
+      subject.assured_shorthold_tenancy_type.should be_nil
+    end
+  end
+
   context "when 'demoted'" do
     subject { demoted_tenancy }
 
@@ -51,24 +67,12 @@ describe Tenancy do
 
     context 'when assured_shorthold_tenancy_type "one"' do
       before { subject.assured_shorthold_tenancy_type = 'one' }
-      it { should_not be_valid }
-      its(:one_tenancy_agreement?) { should be_false }
-
-      it "should have error message" do
-        subject.valid?
-        subject.errors.full_messages.should include 'Assured shorthold tenancy type leave blank as you specified tenancy is demoted'
-      end
+      include_examples 'assured_shorthold_tenancy_type unset'
     end
 
     context 'when assured_shorthold_tenancy_type "multiple"' do
-      before { subject.assured_shorthold_tenancy_type = '"multiple"' }
-      it { should_not be_valid }
-      its(:multiple_tenancy_agreements?) { should be_false }
-
-      it "should have error message" do
-        subject.valid?
-        subject.errors.full_messages.should include 'Assured shorthold tenancy type leave blank as you specified tenancy is demoted'
-      end
+      before { subject.assured_shorthold_tenancy_type = 'multiple' }
+      include_examples 'assured_shorthold_tenancy_type unset'
     end
 
     describe 'as_json' do
@@ -138,6 +142,20 @@ describe Tenancy do
     end
   end
 
+  shared_examples_for 'previous_tenancy_type unset' do
+    it { should_not be_valid }
+
+    it "should have error message" do
+      subject.valid?
+      subject.errors.full_messages.should include 'Previous tenancy type leave blank as you specified tenancy is not demoted'
+    end
+
+    it "should set previous_tenancy_type nil" do
+      subject.valid?
+      subject.previous_tenancy_type.should be_nil
+    end
+  end
+
   context "when 'assured'" do
     subject { assured_tenancy }
 
@@ -154,6 +172,16 @@ describe Tenancy do
       its(['latest_agreement_date_day']) { should == '' }
       its(['latest_agreement_date_month']) { should == '' }
       its(['latest_agreement_date_year']) { should == '' }
+    end
+
+    context 'when previous_tenancy_type "secure"' do
+      before { subject.previous_tenancy_type = 'secure' }
+      include_examples 'previous_tenancy_type unset'
+    end
+
+    context 'when previous_tenancy_type "assured"' do
+      before { subject.previous_tenancy_type = 'assured' }
+      include_examples 'previous_tenancy_type unset'
     end
 
     context "and start date is blank" do

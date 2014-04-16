@@ -4,8 +4,7 @@ class Tenancy < BaseClass
   SECURE  = 'secure'
 
   attr_accessor :tenancy_type
-  validates :tenancy_type, presence: { message: 'must be selected' }
-  validates :tenancy_type, inclusion: { in: ['demoted', 'assured'] }
+  validates :tenancy_type, presence: { message: 'must be selected' }, inclusion: { in: ['demoted', 'assured'] }
 
   attr_accessor :assured_shorthold_tenancy_type
   attr_accessor :start_date
@@ -33,11 +32,12 @@ class Tenancy < BaseClass
   # end
 
   after_validation :remove_shorthold_tenancies_radio_selection_if_demoted
+  after_validation :remove_previous_tenancy_radio_selection_if_not_demoted
 
   with_options if: :demoted_tenancy? do |tenancy|
     tenancy.validates :demotion_order_date, presence: { message: 'must be selected' }
     tenancy.validates :demotion_order_court, presence: { message: 'must be provided' }, length: { maximum: 40 }
-    tenancy.validates :previous_tenancy_type, presence: { message: 'must be selected' }
+    tenancy.validates :previous_tenancy_type, presence: { message: 'must be selected' }, inclusion: { in: ['assured', 'secure'] }
 
     tenancy.validates :assured_shorthold_tenancy_type,
       :assured_shorthold_tenancy_notice_served_by,
@@ -140,6 +140,12 @@ class Tenancy < BaseClass
   def remove_shorthold_tenancies_radio_selection_if_demoted
     if demoted_tenancy? && !errors.blank?
       self.assured_shorthold_tenancy_type = nil
+    end
+  end
+
+  def remove_previous_tenancy_radio_selection_if_not_demoted
+    if assured_tenancy? && !errors.blank?
+      self.previous_tenancy_type = nil
     end
   end
 end
