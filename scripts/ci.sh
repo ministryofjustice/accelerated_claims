@@ -13,5 +13,5 @@ bundle install --deployment --without development --path vendor/bundler
 msg "setting up CI & running the specs"
 RAILS_ENV=test bundle exec rake ci:setup:rspec spec
 
-msg "running brakeman"
-bundle exec brakeman -z
+# msg "running brakeman"
+# bundle exec brakeman -z
