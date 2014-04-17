@@ -12,23 +12,42 @@ describe Defendant do
     end
   end
 
-  context 'when validate_presence false' do
-    before { defendant.validate_presence = false }
+  context 'when first_defendant false' do
+    before { defendant.first_defendant = false }
 
     subject { defendant }
 
-    describe "full_name name" do
-      it "when blank should be valid" do
+    context "name fields blank" do
+      before do
+        defendant.title = ""
         defendant.full_name = ""
-        defendant.should be_valid
+      end
+      it { should be_valid }
+    end
+
+    context 'only title blank' do
+      before { defendant.title = "" }
+      it { should_not be_valid }
+      it 'has error message' do
+        subject.valid?
+        subject.errors.full_messages.should == ['Title must be entered']
+      end
+    end
+
+    context 'only full_name blank' do
+      before { defendant.full_name = "" }
+      it { should_not be_valid }
+      it 'has error message' do
+        subject.valid?
+        subject.errors.full_messages.should == ['Full name must be entered']
       end
     end
 
     include_examples 'address validation'
   end
 
-  context 'when validate_presence true' do
-    before { defendant.validate_presence = true }
+  context 'when first_defendant true' do
+    before { defendant.first_defendant = true }
 
     subject { defendant }
 
