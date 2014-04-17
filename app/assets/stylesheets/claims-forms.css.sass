@@ -199,7 +199,6 @@ fieldset.plain
     float: none
     clear: both
 
-    width: 480px
     padding:
       left: 280px
       right: 90px
@@ -272,6 +271,7 @@ fieldset.plain
       &.smalltext
         width: 132px
         min-width: 132px
+        margin-right: 168px
 
     select
       width: 300px
@@ -287,11 +287,10 @@ fieldset.plain
         height: 300px
 
     &.full
-      width: 670px
+      width: auto
       padding-left: 90px
 
       @include media(mobile)
-        width: auto
         padding:
           left: 15px
           right: 15px
@@ -318,9 +317,7 @@ fieldset.plain
           margin: 5px 0
 
       p
-        width: 670px
-        @include media(mobile)
-          width: auto
+        width: auto
       label
         width: auto
         display: block
@@ -381,10 +378,9 @@ fieldset.plain
 
     &.full
       padding-left: 90px
-      width: 670px
+      width: auto
 
       @include media(mobile)
-        width: auto
         padding:
           left: 15px
           right: 15px
@@ -396,18 +392,13 @@ fieldset.plain
         width: auto
         display: block
 
-        @include media(mobile)
-
       .options
         .row
-          width: 670px
+          width: auto
           clear: both
-          @include media(mobile)
-            width: auto
         label
-          width: 610px
+          width: auto
           @include media(mobile)
-            width: auto
             max-width: 450px
 
       .row.error
@@ -430,8 +421,9 @@ fieldset.plain
 
     .options
       @include clearfix
-      float: left
-      width: 480px
+      clear: both
+      float: none
+      width: auto
       position: relative
 
       @include media(mobile)
@@ -443,7 +435,7 @@ fieldset.plain
         margin-top: 15px
         width: 480px
         padding:
-          left: 0
+          left: 40px
           right: 0
 
         @include media(mobile)
@@ -455,9 +447,8 @@ fieldset.plain
         input[type="checkbox"], input[type="radio"]
           display: inline-block
           margin:
-            left: 10px
+            left: -30px
             top: 5px
-          width: 40px
           float: left
 
         label
@@ -469,13 +460,12 @@ fieldset.plain
       &:first-of-type
         margin-top: 0
 
-
-
+  > .sub-panel
+    width: auto
 
 
 .sub-panel
   @include clearfix
-  float: left
   @include media(mobile)
     float: none
   padding-top: 40px
@@ -497,8 +487,8 @@ fieldset.plain
       margin-bottom: 0
 
   &.extra
+    float: none
     background: $white
-    width: 670px
     margin:
       left: 90px
       right: 90px
@@ -515,13 +505,12 @@ fieldset.plain
       margin-top: 0
 
     > .row
-      width: 400px
       padding:
-        left: 230px
+        left: 40px
         right: 40px
 
       label
-        margin-left: -190px
+        margin-left: 0
         width: 180px
         display: block
 
@@ -536,13 +525,12 @@ fieldset.plain
           width: auto
 
       &.full
-        width: 510px
+        width: auto
         padding:
           left: 40px
           right: 40px
 
         @include media(mobile)
-          width: auto
           padding:
             left: 15px
             right: 15px
@@ -556,13 +544,12 @@ fieldset.plain
     > fieldset
 
       &.full
-        width: 510px
+        width: auto
         padding:
           left: 40px
           right: 40px
 
         @include media(mobile)
-          width: auto
           padding:
             left: 15px
             right: 15px
@@ -571,20 +558,17 @@ fieldset.plain
           margin:
             left: 0
             bottom: 10px
-          width: 590px
+          width: auto
           @include media(mobile)
-            width: auto
             display: block
         .row
-          width: 590px
+          width: auto
           @include media(mobile)
             width: 100%
             float: none
             clear: both
           label
-            width: 500px
-            @include media(mobile)
-              width: auto
+            width: auto
 
 
 
