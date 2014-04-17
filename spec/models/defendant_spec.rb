@@ -12,7 +12,7 @@ describe Defendant do
     end
   end
 
-  context 'when first_defendant false' do
+  context 'when not first_defendant' do
     before { defendant.first_defendant = false }
 
     subject { defendant }
@@ -22,7 +22,18 @@ describe Defendant do
         defendant.title = ""
         defendant.full_name = ""
       end
-      it { should be_valid }
+
+      context 'and address blank' do
+        before do
+          defendant.street = ""
+          defendant.postcode = ""
+        end
+        it { should be_valid }
+      end
+
+      context 'and address present' do
+        it { should_not be_valid }
+      end
     end
 
     context 'only title blank' do

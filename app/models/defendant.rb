@@ -24,6 +24,11 @@ class Defendant < BaseClass
     defendant.validates :title, presence: { message: 'must be entered' }
   end
 
+  with_options if: -> d { !d.first_defendant && (d.street.present? || d.postcode.present?) && (d.title.blank? && d.full_name.blank?) } do |defendant|
+    defendant.validates :title, presence: { message: 'must be entered' }
+    defendant.validates :full_name, presence: { message: 'must be entered' }
+  end
+
   def as_json
     if present?
       postcode1, postcode2 = split_postcode
