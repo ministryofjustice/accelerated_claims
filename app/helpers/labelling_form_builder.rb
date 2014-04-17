@@ -162,9 +162,17 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     required = validators(attribute).any? do |v|
       if v.is_a?(ActiveModel::Validations::PresenceValidator)
         if conditional = v.options[:if]
-          @object.send(conditional)
+          if conditional.is_a?(Proc)
+            conditional.call(@object)
+          else
+            @object.send(conditional)
+          end
         elsif conditional = v.options[:unless]
-          !@object.send(conditional)
+          if conditional.is_a?(Proc)
+            !conditional.call(@object)
+          else
+            !@object.send(conditional)
+          end
         elsif attribute == :court_fee
           false
         else
