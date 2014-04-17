@@ -13,9 +13,7 @@ describe Defendant do
   end
 
   context 'when validate_presence false' do
-    before do
-      defendant.validate_presence = false
-    end
+    before { defendant.validate_presence = false }
 
     subject { defendant }
 
@@ -30,9 +28,7 @@ describe Defendant do
   end
 
   context 'when validate_presence true' do
-    before do
-      defendant.validate_presence = true
-    end
+    before { defendant.validate_presence = true }
 
     subject { defendant }
 
@@ -62,4 +58,5 @@ describe Defendant do
       end
     end
   end
+
 end
