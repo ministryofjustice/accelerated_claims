@@ -33,10 +33,42 @@ input[type="text"].pound
   background-repeat: no-repeat
   padding-left: 40px
 
+
+
+
+input[type="text"]
+  display: inline-block
+  @include media(mobile)
+    display: block
+  width: 300px
+  
+  &.pound
+    padding-left: 40px
+    width: 260px
+  &.smalltext
+    width: 132px
+    min-width: 132px
+    margin-right: 168px
+
+select
+  width: 300px
+  &.date-date, &.date-year, &.day, &.year
+    width: 80px
+  &.date-month, &.month, &.small
+    width: 130px
+
+textarea
+  width: 300px
+  height: 70px
+  &.feedback
+    height: 300px
+
 fieldset, legend
   @include clearfix
   margin: 0
   padding: 0
+
+
 
 select, option, legend
   color: $black
@@ -222,8 +254,62 @@ fieldset.plain
     legend, h3
       font-size: 19px
     &.stacked
-      .row
+      .row // YOU ARE HERE - CHANGE THIS TO .option, STOP THE CLASH BETWEEN .row CLASSES
         padding: 0
+        margin-top: 15px
+        &:first-child
+          margin-top: 0
+
+        label
+          display: block
+          clear: left
+          position: relative
+          background: $grey-3
+          border: 1px solid $grey-3
+          padding: 18px 30px 15px 45px
+          cursor: pointer
+          &:hover
+            border-color: $black
+
+          span.hint
+            display: block
+            color: $grey-1
+
+          input
+            position: absolute
+            left: 17px
+            top: 22px
+            cursor: pointer
+
+    .row
+      @include clearfix
+      &.error
+        padding-left: 277px
+        border-left: 3px solid $errorcolour
+        background-color: $errorbgcolour
+
+        @include media(mobile)
+          padding-left: 12px
+
+      margin-top: 45px
+      &:first-child
+        margin-top: 15px
+
+
+    label
+      width: 180px
+      float: left
+      display: inline-block
+      margin:
+        left: 0
+        right: 0
+      line-height: 25px
+
+      @include media(mobile)
+        display: block
+        float: none
+        width: auto
+        margin-left: 0
 
 
   // .row
@@ -456,111 +542,111 @@ fieldset.plain
   //   width: auto
 
 
-.sub-panel
-  @include clearfix
-  @include media(mobile)
-    float: none
-  padding-top: 40px
+// .sub-panel
+//   @include clearfix
+//   @include media(mobile)
+//     float: none
+//   padding-top: 40px
 
-  &.rel
-    padding-top: 0
+//   &.rel
+//     padding-top: 0
 
-  &:first-child
-    padding-top: 0
+//   &:first-child
+//     padding-top: 0
 
 
-  > h4
-    margin: 0 0 40px 90px
-    @include media(mobile)
-      margin-left: 15px
-    font-size: 24px
-    clear: both
-    &:first-child
-      margin-bottom: 0
+//   > h4
+//     margin: 0 0 40px 90px
+//     @include media(mobile)
+//       margin-left: 15px
+//     font-size: 24px
+//     clear: both
+//     &:first-child
+//       margin-bottom: 0
 
-  &.extra
-    float: none
-    background: $white
-    margin:
-      left: 90px
-      right: 90px
-      top: 40px
-      bottom: 15px
-    padding: 35px 0 25px 0
-    @include media(mobile)
-      width: auto
-      margin:
-        left: 15px
-        right: 15px
+//   &.extra
+//     float: none
+//     background: $white
+//     margin:
+//       left: 90px
+//       right: 90px
+//       top: 40px
+//       bottom: 15px
+//     padding: 35px 0 25px 0
+//     @include media(mobile)
+//       width: auto
+//       margin:
+//         left: 15px
+//         right: 15px
 
-    &.rel
-      margin-top: 0
+//     &.rel
+//       margin-top: 0
 
-    > .row
-      padding:
-        left: 40px
-        right: 40px
+//     > .row
+//       padding:
+//         left: 40px
+//         right: 40px
 
-      label
-        margin-left: 0
-        width: 180px
-        display: block
+//       label
+//         margin-left: 0
+//         width: 180px
+//         display: block
 
-      @include media(mobile)
-        width: auto
-        padding:
-          left: 15px
-          right: 15px
+//       @include media(mobile)
+//         width: auto
+//         padding:
+//           left: 15px
+//           right: 15px
         
-        label
-          margin-left: 0
-          width: auto
+//         label
+//           margin-left: 0
+//           width: auto
 
-      &.full
-        width: auto
-        padding:
-          left: 40px
-          right: 40px
+//       &.full
+//         width: auto
+//         padding:
+//           left: 40px
+//           right: 40px
 
-        @include media(mobile)
-          padding:
-            left: 15px
-            right: 15px
+//         @include media(mobile)
+//           padding:
+//             left: 15px
+//             right: 15px
 
-        label
-          margin-left: 0
-          width: 590px
-          display: block
+//         label
+//           margin-left: 0
+//           width: 590px
+//           display: block
 
 
-    > fieldset
+//     > fieldset
 
-      &.full
-        width: auto
-        padding:
-          left: 40px
-          right: 40px
+//       &.full
+//         width: auto
+//         padding:
+//           left: 40px
+//           right: 40px
 
-        @include media(mobile)
-          padding:
-            left: 15px
-            right: 15px
+//         @include media(mobile)
+//           padding:
+//             left: 15px
+//             right: 15px
 
-        legend, h3
-          margin:
-            left: 0
-            bottom: 10px
-          width: auto
-          @include media(mobile)
-            display: block
-        .row
-          width: auto
-          @include media(mobile)
-            width: 100%
-            float: none
-            clear: both
-          label
-            width: auto
+//         legend, h3
+//           margin:
+//             left: 0
+//             bottom: 10px
+//           width: auto
+//           @include media(mobile)
+//             display: block
+//         .row
+//           width: auto
+//           @include media(mobile)
+//             width: 100%
+//             float: none
+//             clear: both
+//           label
+//             width: auto
 
 
 
