@@ -30,4 +30,20 @@ shared_examples 'address validation' do
       subject.errors.full_messages.should == ["Postcode not full postcode"]
     end
   end
+
+  context 'missing postcode' do
+    it 'is invalid' do
+      subject.postcode = nil
+      subject.should_not be_valid
+      subject.errors.full_messages.should == ["Postcode must be entered"]
+    end
+  end
+
+  context 'missing address' do
+    it 'is invalid' do
+      subject.street = nil
+      subject.should_not be_valid
+      subject.errors.full_messages.should == ["Street must be entered"]
+    end
+  end
 end
