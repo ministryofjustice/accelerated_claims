@@ -187,7 +187,11 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
       if @object.validate_presence
         required
       else
-        false
+        if @object.respond_to?(:first_defendant) && @object.first_defendant
+          required
+        else
+          false
+        end
       end
     else
       required

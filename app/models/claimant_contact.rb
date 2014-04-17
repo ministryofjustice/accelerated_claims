@@ -1,5 +1,6 @@
 class ClaimantContact < BaseClass
 
+  @do_partial_address_completion_validation = true
   include Address
 
   attr_accessor :title
