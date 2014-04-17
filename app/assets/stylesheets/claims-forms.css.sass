@@ -196,28 +196,16 @@ fieldset.plain
 
 
   fieldset, .row
+    @include clearfix
     float: none
     clear: both
 
-    padding:
-      left: 280px
-      right: 90px
-      top: 5px
-      bottom: 5px
-    margin:
-      left: 0
-      right: 0
-      top: 25px
-      bottom: 5px
 
-    @include media(mobile)
-      margin:
-        left: auto
-        right: auto
-      padding:
-        left: 15px
-        right: 15px
-      width: auto
+    width: auto
+    padding:
+      left: 90px
+      right: 90px
+    
 
 
     &:first-child, &.nomargin
@@ -228,240 +216,244 @@ fieldset.plain
       &:first-child
         margin-top: 0
 
-    &.help-link
-      margin-top: 15px
-      padding-left: 280px
-
-
-
-  .row
-    @include clearfix
-    &.error
-      padding-left: 277px
-      border-left: 3px solid $errorcolour
-      background-color: $errorbgcolour
-
-      @include media(mobile)
-        padding-left: 12px
-
-    label
-      width: 180px
-      float: left
-      display: inline-block
-      margin:
-        left: -190px
-        right: 0
-      line-height: 25px
-
-      @include media(mobile)
-        display: block
-        float: none
-        width: auto
-        margin-left: 0
-
-    input[type="text"]
-      display: inline-block
-      @include media(mobile)
-        display: block
-      width: 300px
-      
-      &.pound
-        padding-left: 40px
-        width: 260px
-      &.smalltext
-        width: 132px
-        min-width: 132px
-        margin-right: 168px
-
-    select
-      width: 300px
-      &.date-date, &.date-year, &.day, &.year
-        width: 80px
-      &.date-month, &.month, &.small
-        width: 130px
-
-    textarea
-      width: 300px
-      height: 70px
-      &.feedback
-        height: 300px
-
-    &.full
-      width: auto
-      padding-left: 90px
-
-      @include media(mobile)
-        padding:
-          left: 15px
-          right: 15px
-
-      &.warning
-        @include highlight-row
-        background-color: $mellow-red-25
-
-      &.information
-        @include highlight-row
-        background-color: $grey-3
-
-      &.highlight
-        @include highlight-row
-        background-color: $white
-
-      &.warning, &.information, &.highlight
-        p, ul, ol
-          width: auto
-          margin: 1em 0 0 0
-          &:first-child
-            margin-top: 0
-        li
-          margin: 5px 0
-
-      p
-        width: auto
-      label
-        width: auto
-        display: block
-        float: none
-        margin: 0
-      textarea
-        width: 660px
-        height: 200px
-        &.small
-          height: 100px
-      input[type="checkbox"]
-        float: left
-        margin-top: 3px
-      input + label
-        width: auto
-        max-width: 630px
-        margin-left: 10px
-
-
-    &.divider
-      width: auto
-      height: 25px
-      padding: 0
-      margin:
-        left: 90px
-        right: 90px
-        top: 25px
-        bottom: 25px
-      overflow: hidden
-      border-bottom: 1px dotted #c2c2c2
-
-      @include media(mobile)
-        margin:
-          top: 0
-          left: 15px
-          right: 15px
-
 
 
   fieldset
-
-    &.error
-      padding-left: 277px
-      border-left: 3px solid $errorcolour
-      background-color: $errorbgcolour
-
-      @include media(mobile)
-        padding-left: 7px
-
-    &.date-picker
-
-      .row
-        padding:
-          top: 0
-          left: 0
-          right: 0
-        clear: both
-
-    &.full
-      padding-left: 90px
-      width: auto
-
-      @include media(mobile)
-        padding:
-          left: 15px
-          right: 15px
-
-      legend, h3
-        margin:
-          left: 0
-          bottom: 10px
-        width: auto
-        display: block
-
-      .options
-        .row
-          width: auto
-          clear: both
-        label
-          width: auto
-          @include media(mobile)
-            max-width: 450px
-
-      .row.error
-        span.error
-          padding-left: 52px
-
     legend, h3
       font-size: 19px
-      width: 180px
-      margin:
-        left: -190px
-        bottom: 0
-      float: left
-      line-height: 25px
-      display: inline-block
-
-      @include media(mobile)
-        display: block
-        margin-left: 0
-
-    .options
-      @include clearfix
-      clear: both
-      float: none
-      width: auto
-      position: relative
-
-      @include media(mobile)
-        width: 100%
-
+    &.stacked
       .row
-        clear: right
-        position: relative
-        margin-top: 15px
-        width: 480px
-        padding:
-          left: 40px
-          right: 0
+        padding: 0
 
-        @include media(mobile)
-          width: 460px
 
-        &:first-child
-          margin-top: 0
+  // .row
+  //   @include clearfix
+  //   &.error
+  //     padding-left: 277px
+  //     border-left: 3px solid $errorcolour
+  //     background-color: $errorbgcolour
 
-        input[type="checkbox"], input[type="radio"]
-          display: inline-block
-          margin:
-            left: -30px
-            top: 5px
-          float: left
+  //     @include media(mobile)
+  //       padding-left: 12px
 
-        label
-          display: inline-block
-          margin-left: 0
-          cursor: pointer
+  //   label
+  //     width: 180px
+  //     float: left
+  //     display: inline-block
+  //     margin:
+  //       left: -190px
+  //       right: 0
+  //     line-height: 25px
 
-    > .row
-      &:first-of-type
-        margin-top: 0
+  //     @include media(mobile)
+  //       display: block
+  //       float: none
+  //       width: auto
+  //       margin-left: 0
 
-  > .sub-panel
-    width: auto
+  //   input[type="text"]
+  //     display: inline-block
+  //     @include media(mobile)
+  //       display: block
+  //     width: 300px
+      
+  //     &.pound
+  //       padding-left: 40px
+  //       width: 260px
+  //     &.smalltext
+  //       width: 132px
+  //       min-width: 132px
+  //       margin-right: 168px
+
+  //   select
+  //     width: 300px
+  //     &.date-date, &.date-year, &.day, &.year
+  //       width: 80px
+  //     &.date-month, &.month, &.small
+  //       width: 130px
+
+  //   textarea
+  //     width: 300px
+  //     height: 70px
+  //     &.feedback
+  //       height: 300px
+
+  //   &.full
+  //     width: auto
+  //     padding-left: 90px
+
+  //     @include media(mobile)
+  //       padding:
+  //         left: 15px
+  //         right: 15px
+
+  //     &.warning
+  //       @include highlight-row
+  //       background-color: $mellow-red-25
+
+  //     &.information
+  //       @include highlight-row
+  //       background-color: $grey-3
+
+  //     &.highlight
+  //       @include highlight-row
+  //       background-color: $white
+
+  //     &.warning, &.information, &.highlight
+  //       p, ul, ol
+  //         width: auto
+  //         margin: 1em 0 0 0
+  //         &:first-child
+  //           margin-top: 0
+  //       li
+  //         margin: 5px 0
+
+  //     p
+  //       width: auto
+  //     label
+  //       width: auto
+  //       display: block
+  //       float: none
+  //       margin: 0
+  //     textarea
+  //       width: 660px
+  //       height: 200px
+  //       &.small
+  //         height: 100px
+  //     input[type="checkbox"]
+  //       float: left
+  //       margin-top: 3px
+  //     input + label
+  //       width: auto
+  //       max-width: 630px
+  //       margin-left: 10px
+
+
+  //   &.divider
+  //     width: auto
+  //     height: 25px
+  //     padding: 0
+  //     margin:
+  //       left: 90px
+  //       right: 90px
+  //       top: 25px
+  //       bottom: 25px
+  //     overflow: hidden
+  //     border-bottom: 1px dotted #c2c2c2
+
+  //     @include media(mobile)
+  //       margin:
+  //         top: 0
+  //         left: 15px
+  //         right: 15px
+
+
+
+  // fieldset
+
+  //   &.error
+  //     padding-left: 277px
+  //     border-left: 3px solid $errorcolour
+  //     background-color: $errorbgcolour
+
+  //     @include media(mobile)
+  //       padding-left: 7px
+
+  //   &.date-picker
+
+  //     .row
+  //       padding:
+  //         top: 0
+  //         left: 0
+  //         right: 0
+  //       clear: both
+
+  //   &.full
+  //     padding-left: 90px
+  //     width: auto
+
+  //     @include media(mobile)
+  //       padding:
+  //         left: 15px
+  //         right: 15px
+
+  //     legend, h3
+  //       margin:
+  //         left: 0
+  //         bottom: 10px
+  //       width: auto
+  //       display: block
+
+  //     .options
+  //       .row
+  //         width: auto
+  //         clear: both
+  //       label
+  //         width: auto
+  //         @include media(mobile)
+  //           max-width: 450px
+
+  //     .row.error
+  //       span.error
+  //         padding-left: 52px
+
+  //   legend, h3
+  //     font-size: 19px
+  //     width: 180px
+  //     margin:
+  //       left: -190px
+  //       bottom: 0
+  //     float: left
+  //     line-height: 25px
+  //     display: inline-block
+
+  //     @include media(mobile)
+  //       display: block
+  //       margin-left: 0
+
+  //   .options
+  //     @include clearfix
+  //     clear: both
+  //     float: none
+  //     width: auto
+  //     position: relative
+
+  //     @include media(mobile)
+  //       width: 100%
+
+  //     .row
+  //       clear: right
+  //       position: relative
+  //       margin-top: 15px
+  //       width: 480px
+  //       padding:
+  //         left: 40px
+  //         right: 0
+
+  //       @include media(mobile)
+  //         width: 460px
+
+  //       &:first-child
+  //         margin-top: 0
+
+  //       input[type="checkbox"], input[type="radio"]
+  //         display: inline-block
+  //         margin:
+  //           left: -30px
+  //           top: 5px
+  //         float: left
+
+  //       label
+  //         display: inline-block
+  //         margin-left: 0
+  //         cursor: pointer
+
+  //   > .row
+  //     &:first-of-type
+  //       margin-top: 0
+
+  // > .sub-panel
+  //   width: auto
 
 
 .sub-panel

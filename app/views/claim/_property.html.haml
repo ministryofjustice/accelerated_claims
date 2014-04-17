@@ -1,9 +1,7 @@
 = claim_form.fields_for property, builder: LabellingFormBuilder do |form|
+
+  = form.radio_button_fieldset :house, 'The property you are claiming possession of is:', class: 'stacked', choice: {'A single self-contained household space <span class="hint">For example a house or a flat within a block of flats</span>'.html_safe => 'Yes', 'Part of a single self-contained household space <span class="hint">For example part of a house or part of a flat</span>'.html_safe => 'No'}
+
   .sub-panel.address#property
-    = form.text_area_row  :street,   label: 'Street address', class: 'street'
+    = form.text_area_row  :street,   label: 'Full address', class: 'street'
     = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'
-
-  = form.radio_button_fieldset :house, 'Type of property', class: 'striped-choice', choice: {'house' => 'Yes', 'part of a house' => 'No'}
-
-  .row.full.information
-    %p A house, or part of a house is a property, or part of property, used a residence rather than for business.  Choose ‘part of a house’ if some rooms are shared, eg the kitchen, bathroom or living room.
