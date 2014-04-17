@@ -138,10 +138,15 @@ class Claim < BaseClass
   def params_for attribute_name, claim_params
     params = claim_params.key?(attribute_name) ? claim_params[attribute_name] : {}
 
-    if attribute_name[/claimant_one|defendant_one/]
-      params.merge!(validate_presence: true)
-    elsif attribute_name[/claimant_two|defendant_two/]
-      params.merge!(validate_presence: false)
+    case attribute_name
+      when /claimant_one/
+        params.merge!(validate_presence: true)
+      when /claimant_two/
+        params.merge!(validate_presence: false)
+      when /defendant_one/
+        params.merge!(first_defendant: true)
+      when /defendant_two/
+        params.merge!(first_defendant: false)
     end
 
     params
