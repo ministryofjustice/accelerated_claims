@@ -91,12 +91,18 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def radio_button_row attribute, label, choice
+    input = radio_button(attribute, choice)
+    id = input[/id="([^"]+)"/,1]
+
     @template.surround("<div class='row'>".html_safe, "</div>".html_safe) do
-      [
-        radio_button(attribute, choice),
-        label(attribute, label, value: choice)
-      ].join("\n")
+      @template.surround("<label for='#{id}'>".html_safe, "</label>".html_safe) do
+        [
+          input,
+          label
+        ].join("\n")
+      end
     end
+
   end
 
   def css_for attribute, options
