@@ -38,30 +38,37 @@ input[type="text"].pound
 
 input[type="text"]
   display: inline-block
+  width: 100%
+  max-width: 300px
   @include media(mobile)
     display: block
-  width: 300px
+    max-width: 280px
   
   &.pound
     padding-left: 40px
-    width: 260px
+    max-width: 260px
+    @include media(mobile)
+      max-width: 240px
   &.smalltext
     width: 132px
     min-width: 132px
     margin-right: 168px
 
 select
-  width: 300px
+  max-width: 300px
   &.date-date, &.date-year, &.day, &.year
     width: 80px
   &.date-month, &.month, &.small
     width: 130px
 
 textarea
-  width: 300px
+  width: 100%
+  max-width: 300px
   height: 70px
   &.feedback
     height: 300px
+  @include media(mobile)
+    max-width: 280px
 
 fieldset, legend
   @include clearfix
@@ -272,6 +279,11 @@ fieldset.plain
           left: 15px
           right: 15px
 
+        input[type="text"], textarea
+          max-width: 250px
+          &.pound
+            max-width: 210px
+
       .row, fieldset
         padding:
           left: 30px
@@ -349,11 +361,8 @@ fieldset.plain
           left: 0
           right: 0
         select
-          margin-left: 15px
           float: left
           clear: none
-          &:first-child
-            margin-left: 0
 
     .option
       @include clearfix
@@ -438,7 +447,6 @@ fieldset.plain
     textarea
       display: block
       clear: left
-      width: 300px
       height: 70px
       &.feedback
         height: 300px
