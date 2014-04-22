@@ -18,11 +18,11 @@
     %h3.section-header Claimant (landlord)
     .moj-panel.has-multiple#claimants(data-multiple="claimant" data-caption="No. of claimants" data-single="person" data-plural="people")
       .sub-panel.claimant#claimant_one
-        %h4.section-header Claimant 1
+        %h4 Claimant 1
         = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_one}
       .row.divider
       .sub-panel.rel.claimant.same-address#claimant_two
-        %h4.section-header Claimant 2
+        %h4 Claimant 2
         = render partial: 'claimant', object: @claim.claimant_two, locals: { claim_form: claim_form, claimant_field: :claimant_two}
       .row.divider
       = render partial: 'claimant_contact', object: @claim.claimant_contact, locals: { claim_form: claim_form, claimant_field: :claimant_contact}

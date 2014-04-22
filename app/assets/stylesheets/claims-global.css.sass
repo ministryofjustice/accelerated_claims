@@ -24,6 +24,9 @@ a
 //   .hide
 //     display: none
 
+.nomargin
+  margin: 0
+
 .hidden
   display: none !important
 
@@ -49,21 +52,23 @@ a
 
 .alphabetical
   counter-reset: list
+  position: relative
 
-  &> li 
+  & > li
     list-style: none
     position: relative
+    clear: left
 
-  &> li:before
+  & > li:before
     content: counter(list, lower-alpha) ") "
     counter-increment: list
     position: absolute
-    left: -12px
+    left: -22px
 
-  &> li > input[type=checkbox]
+  & > li input[type=checkbox]
     position: absolute
     left: -40px
-    top: 3px
+    top: 7px
 
 .roman
   li

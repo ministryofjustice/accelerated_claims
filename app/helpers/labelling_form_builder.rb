@@ -39,7 +39,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def row attribute, options={}
-    @template.haml_tag haml_tag_text('div row', attribute, options) do
+    @template.haml_tag haml_tag_text('div option', attribute, options) do
       yield
     end
   end
@@ -94,7 +94,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     input = radio_button(attribute, choice)
     id = input[/id="([^"]+)"/,1]
 
-    @template.surround("<div class='row'>".html_safe, "</div>".html_safe) do
+    @template.surround("<div class='option'>".html_safe, "</div>".html_safe) do
       @template.surround("<label for='#{id}'>".html_safe, "</label>".html_safe) do
         [
           input,

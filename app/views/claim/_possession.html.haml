@@ -1,8 +1,8 @@
 = claim_form.fields_for possession, builder: LabellingFormBuilder do |form|
 
-  = form.radio_button_fieldset :hearing, 'If the defendant asks for more time due to hardship you can choose whether to say:', class: 'striped-choice full', choice: {'the request may be considered at a court hearing without you being present' => 'Yes', 'the request must be considered at a court hearing which you will be invited to attend' => 'No'}
+  = form.radio_button_fieldset :hearing, 'If the defendant asks for more time due to hardship you can choose whether to say:', class: 'radio', choice: {'the request may be considered at a court hearing without you being present' => 'Yes', 'the request must be considered at a court hearing which you will be invited to attend' => 'No'}
 
-  .row.full.information
+  .row.information
     %p In cases where the defendant  is experiencing extreme hardship, they can ask for more time before they have to leave the property (up to 42 days).
 
     %p See more about the #{link_to 'time it can take to gain possession', 'https://www.gov.uk/gaining-possession-of-a-privately-rented-property-let-on-an-assured-shorthold-tenancy#seeking-possession-under-section-21', class: 'external', rel: 'external', target: '_blank'} of the property.
