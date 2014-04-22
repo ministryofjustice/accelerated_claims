@@ -217,44 +217,95 @@ fieldset.plain
     &.pound
       background-image: image-url('poundbg-disabled.png')
 
-  > h4
-    margin-left: 30px
-    font-weight: bold
-    margin-top: 40px
+  h4
+    margin:
+      left: 90px
+      top: 40px
+    font-size: 24px
 
     &:first-child, &.nomargin
       margin-top: 0
 
+    @include media(mobile)
+      margin-left: 15px
 
 
-  fieldset, .row
+
+  fieldset, .row, .sub-panel
     @include clearfix
     float: none
     clear: both
-
-
     width: auto
     padding:
       left: 90px
       right: 90px
-    
+    margin-top: 40px
 
+    @include media(mobile)
+      padding:
+        left: 15px
+        right: 15px
 
     &:first-child, &.nomargin
       margin-top: 0
 
     &.rel
-      margin-top: 0
+      margin-top: 15px
       &:first-child
         margin-top: 0
+
+    h3 + .row, h3 + .sub-panel
+      margin-top: 0
+
+  .sub-panel
+    padding: 0
+
+    &.inset
+      background-color: $white
+      padding: 30px 0
+      margin:
+        left: 90px
+        right: 90px
+
+      @include media(mobile)
+        margin:
+          left: 15px
+          right: 15px
+
+      .row, fieldset
+        padding:
+          left: 30px
+          right: 30px
+        @include media(mobile)
+          padding:
+            left: 15px
+            right: 15px
+
+        .row
+          padding:
+            left: 0
+            right: 0
 
 
 
   fieldset
+    &.error
+      padding:
+        left: 87px
+        top: 15px
+        bottom: 15px
+      border-left: 3px solid $errorcolour
+      background-color: $errorbgcolour
+
+      @include media(mobile)
+        padding-left: 7px
+
     legend, h3
       font-size: 19px
-    &.stacked
-      .row // YOU ARE HERE - CHANGE THIS TO .option, STOP THE CLASH BETWEEN .row CLASSES
+    &.radio
+      .options
+        padding-top: 10px
+      .option
         padding: 0
         margin-top: 15px
         &:first-child
@@ -263,6 +314,8 @@ fieldset.plain
         label
           display: block
           clear: left
+          float: none
+          width: auto
           position: relative
           background: $grey-3
           border: 1px solid $grey-3
@@ -280,16 +333,38 @@ fieldset.plain
             left: 17px
             top: 22px
             cursor: pointer
+    &.inline
+      .option
+        float: left
+        margin:
+          left: 15px
+          top: 0
+        &:first-child
+          margin-left: 0
 
-    .row
+    &.date-picker
+      .row
+        margin-top: 5px
+        padding:
+          left: 0
+          right: 0
+        select
+          margin-left: 15px
+          float: left
+          clear: none
+          &:first-child
+            margin-left: 0
+
+    .option
       @include clearfix
       &.error
-        padding-left: 277px
         border-left: 3px solid $errorcolour
         background-color: $errorbgcolour
-
-        @include media(mobile)
-          padding-left: 12px
+        label
+          background-color: $errorbgcolour
+          border-color: $errorbgcolour
+        span.error
+          margin-left: 45px
 
       margin-top: 45px
       &:first-child
@@ -297,8 +372,6 @@ fieldset.plain
 
 
     label
-      width: 180px
-      float: left
       display: inline-block
       margin:
         left: 0
@@ -312,57 +385,103 @@ fieldset.plain
         margin-left: 0
 
 
-  // .row
-  //   @include clearfix
-  //   &.error
-  //     padding-left: 277px
-  //     border-left: 3px solid $errorcolour
-  //     background-color: $errorbgcolour
+  .row
+    @include clearfix
+    &.error
+      padding:
+        left: 87px
+        top: 15px
+        bottom: 15px
+      border-left: 3px solid $errorcolour
+      background-color: $errorbgcolour
 
-  //     @include media(mobile)
-  //       padding-left: 12px
+      @include media(mobile)
+        padding-left: 12px
 
-  //   label
-  //     width: 180px
-  //     float: left
-  //     display: inline-block
-  //     margin:
-  //       left: -190px
-  //       right: 0
-  //     line-height: 25px
+    label
+      width: auto
+      float: left
+      display: block
+      margin:
+        left: 0
+        right: 0
+      line-height: 25px
 
-  //     @include media(mobile)
-  //       display: block
-  //       float: none
-  //       width: auto
-  //       margin-left: 0
+      @include media(mobile)
+        display: block
+        float: none
+        width: auto
+        margin-left: 0
 
-  //   input[type="text"]
-  //     display: inline-block
-  //     @include media(mobile)
-  //       display: block
-  //     width: 300px
+    input[type="text"]
+      display: block
+      clear: left
+      width: 300px
       
-  //     &.pound
-  //       padding-left: 40px
-  //       width: 260px
-  //     &.smalltext
-  //       width: 132px
-  //       min-width: 132px
-  //       margin-right: 168px
+      &.pound
+        padding-left: 40px
+        width: 260px
+      &.smalltext
+        width: 150px
+        min-width: 150px
+        margin-right: 150px
 
-  //   select
-  //     width: 300px
-  //     &.date-date, &.date-year, &.day, &.year
-  //       width: 80px
-  //     &.date-month, &.month, &.small
-  //       width: 130px
+    select
+      display: block
+      clear: left
+      width: 300px
+      &.date-date, &.date-year, &.day, &.year
+        width: 80px
+      &.date-month, &.month, &.small
+        width: 130px
 
-  //   textarea
-  //     width: 300px
-  //     height: 70px
-  //     &.feedback
-  //       height: 300px
+    textarea
+      display: block
+      clear: left
+      width: 300px
+      height: 70px
+      &.feedback
+        height: 300px
+
+    &.divider
+      width: auto
+      height: 25px
+      padding: 0
+      margin:
+        left: 90px
+        right: 90px
+        top: 15px
+        bottom: 30px
+      overflow: hidden
+      border-bottom: 1px dotted #c2c2c2
+
+      @include media(mobile)
+        margin:
+          top: 0
+          left: 15px
+          right: 15px
+
+    &.warning
+      @include highlight-row
+      background-color: $mellow-red-25
+
+    // &.information
+    //   @include highlight-row
+    //   background-color: $grey-3
+
+    &.highlight
+      @include highlight-row
+      background-color: $white
+
+    &.warning, &.information, &.highlight
+      p, ul, ol
+        width: auto
+        margin: 1em 0 0 0
+        &:first-child
+          margin-top: 0
+      li
+        margin: 5px 0
+
 
   //   &.full
   //     width: auto

@@ -1,8 +1,8 @@
 = claim_form.fields_for notice, builder: LabellingFormBuilder do |form|
-  .row.full
+  .row
     Enter details of when notice to leave the property was given to the defendant. See more about #{link_to 'giving notice', 'https://www.gov.uk/gaining-possession-of-a-privately-rented-property-let-on-an-assured-shorthold-tenancy#seeking-possession-under-section-21', class: 'external', rel: 'external', target: '_blank', id: 'giving-notice-link'}.
 
-  = form.text_field_row  :served_by, label: 'Who served the notice, and how was it served? eg in person or by post', class: 'full'
+  = form.text_field_row  :served_by, label: 'Who served the notice, and how was it served? eg in person or by post'
 
   = form.date_select_field_set :date_served, 'Date notice served', class: 'date-picker', date_select_options: @date_select_options
   = form.date_select_field_set :expiry_date, 'Date notice expired', class: 'date-picker', date_select_options: @date_select_options
