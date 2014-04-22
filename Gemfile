@@ -33,6 +33,7 @@ gem 'mail'
 
 group :production do
   gem 'redis-rails'
+  gem 'newrelic_rpm'
 end
 
 group :development, :test do
