@@ -5,18 +5,29 @@ class PDFDocument
   end
 
   def fill
-    begin
-      template = File.join Rails.root, 'templates', 'form.pdf'
-      result_pdf = Tempfile.new('accelerated_claim', '/tmp/')
-      pdf = PdfForms.new(ENV['PDFTK'])
-      pdf.fill_form template, result_pdf, @json
-    ensure
-      result_pdf.close
+    result_pdf = nil
+
+    ActiveSupport::Notifications.instrument('generate.pdf') do
+      begin
+        template = File.join Rails.root, 'templates', 'form.pdf'
+        result_pdf = Tempfile.new('accelerated_claim', '/tmp/')
+        ActiveSupport::Notifications.instrument('fill_form.pdf') do
+          pdf = PdfForms.new(ENV['PDFTK'])
+          pdf.fill_form template, result_pdf, @json
+        end
+      ensure
+        result_pdf.close
+      end
+
+      result_path = result_pdf.path
+      ActiveSupport::Notifications.instrument('add_defendant_two.pdf') do
+        add_defendant_two result_path
+      end
+      ActiveSupport::Notifications.instrument('strike_out_statements.pdf') do
+        strike_out_applicable_statements result_path
+      end
     end
 
-    result_path = result_pdf.path
-    add_defendant_two result_path
-    strike_out_applicable_statements result_path
     result_pdf
   end
 
