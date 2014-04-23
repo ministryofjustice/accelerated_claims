@@ -29,7 +29,7 @@ moj.Modules.jsState = (function() {
     cacheEls();
 
     //TODO: turn this back on
-    //checkState();
+    // checkState();
   };
 
   cacheEls = function() {

@@ -24,15 +24,6 @@
   :erb
     </fieldset>
 
-%script#multiple-selector(type='text/x-handlebars-template')
-  .row
-    %label(for='multiplePanelSelector_{{id}}') {{caption}}
-    %select.multiplePanelSelector.small(id='multiplePanelSelector_{{id}}' name='multiplePanelSelector_{{id}}')
-      {{#each items}}
-      %option(value='{{val}}') {{val}} {{text}}
-      {{/each}}
-  .row.divider
-
 %script#multiple-radio(type='text/x-handlebars-template')
   %fieldset.radio.inline
     %h3 {{caption}}
@@ -40,7 +31,7 @@
       {{#each items}}
       .option
         %label
-          %input.multiplePanelSelector(type='radio' name='multiplePanelSelector_{{group}}' value='{{val}}')
+          %input.multiplePanelRadio(type='radio' name='multiplePanelRadio_{{group}}' id='multiplePanelRadio_{{group}}_{{val}}' value='{{val}}')
           {{text}}
       {{/each}}
 
