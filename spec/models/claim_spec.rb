@@ -229,7 +229,7 @@ describe Claim do
     context "when only claim fee is known" do
       let(:data) do
         hash = claim_post_data['claim']
-        hash["legal_cost"].delete("legal_costs")
+        hash['legal_cost'].delete('legal_costs')
         hash
       end
 
