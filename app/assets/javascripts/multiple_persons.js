@@ -27,7 +27,7 @@ moj.Modules.multiplePersons = (function() {
   };
 
   bindEvents = function() {
-    $( document ).on( 'change', '.multiplePanelSelector', function() {
+    $( document ).on( 'change', '.multiplePanelRadio', function() {
       var $this = $( this );
       showMultiples( $this.closest( '.has-multiple' ), $this.val() );
     } );
@@ -72,7 +72,7 @@ moj.Modules.multiplePersons = (function() {
 
         showMultiples( $panel, 0 );
 
-        moj.Modules.jsState.registerField( $('#multiplePanelSelector_' + $panel.attr( 'id' )) );
+        moj.Modules.jsState.registerField( $( 'input[name="multiplePanelRadio_' + $panel.attr( 'id' ) + '"]' ) );
       }
     }
   };
