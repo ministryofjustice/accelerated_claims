@@ -19,7 +19,13 @@ def claim_post_data
         "phone" => "020 000 000",
         "fax" => "020 000 000",
         "dx_number" => "DX 123",
-        "reference_number" => "my-ref-123",
+      },
+      "reference_number" =>
+      {
+        "reference_number" => "my-ref-123"
+      },
+      'legal_cost' =>
+      {
         "legal_costs" => '123.34'
       },
       "claimant_two" =>

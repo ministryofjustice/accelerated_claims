@@ -1,11 +1,6 @@
 = claim_form.fields_for claimant_field, claimant_contact, builder: LabellingFormBuilder do |form|
   .sub-panel.inset
     .row
-      = 'Are there any legal representative’s costs?'.html_safe
-    .row.rel.legal_costs
-      = form.text_field :legal_costs, class: 'pound', maxlength: 8
-  .sub-panel.inset
-    .row
       = 'Is there a separate address? (for the person we should contact about the case)'.html_safe
     = form.text_field_row :title,    class: 'rel title', input_class: 'smalltext'
     = form.text_field_row :full_name, class: 'rel '
@@ -19,7 +14,3 @@
     = form.text_field_row :phone, class: 'rel phone'
     = form.text_field_row :fax, class: 'rel fax'
     = form.text_field_row :dx_number, label: 'DX number', class: 'rel dx_number'
-  .sub-panel.inset
-    .row
-      = 'Would you like to add your own reference number?'.html_safe
-    = form.text_field_row :reference_number, class: 'rel reference_number'
