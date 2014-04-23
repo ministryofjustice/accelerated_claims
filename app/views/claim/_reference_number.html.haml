@@ -1,0 +1,5 @@
+= claim_form.fields_for reference_number, builder: LabellingFormBuilder do |form|
+  .sub-panel.inset
+    .row
+      = 'Would you like to add your own reference number?'.html_safe
+    = form.text_field_row :reference_number, class: 'rel reference_number'
