@@ -24,13 +24,13 @@ class ClaimantContact < BaseClass
   def as_json
     postcode1, postcode2 = split_postcode
     {
-      "address" => "#{address_format}",
-      "postcode1" => "#{postcode1}",
-      "postcode2" => "#{postcode2}",
-      "email" => "#{email}",
-      "phone" => "#{phone}",
-      "fax" => "#{fax}",
-      "dx_number" => "#{dx_number}"
+      "address" => address_format,
+      "postcode1" => postcode1.to_s,
+      "postcode2" => postcode2.to_s,
+      "email" => email.to_s,
+      "phone" => phone.to_s,
+      "fax" => fax.to_s,
+      "dx_number" => dx_number.to_s
     }
   end
 
