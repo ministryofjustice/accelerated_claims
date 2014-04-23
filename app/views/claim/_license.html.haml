@@ -1,8 +1,8 @@
 = claim_form.fields_for license, builder: LabellingFormBuilder do |form|
   = form.radio_button_fieldset :multiple_occupation, 'Do you have a house in multiple occupation licence?', class: 'radio inline'
 
-  .sub-panel.inset
-    - choice = { 'licence issued under part 2 of the Housing Act 2004. For properties that are <strong>3 or more storeys high</strong> and occupied by <strong>5 or more people</strong>'.html_safe => 'Part2', 'licence issued under part 3 of the Housing act 2004. For properties that are <strong>within a geographical area</strong> defined by a local council.'.html_safe => 'Part3'}
+  .sub-panel
+    - choice = { 'Licence issued under part 2 of the Housing Act 2004. <span class="hint">For properties that are <strong>3 or more storeys high</strong> and occupied by <strong>5 or more people</strong></span>'.html_safe => 'Part2', 'Licence issued under part 3 of the Housing act 2004. <span class="hint">For properties that are <strong>within a geographical area</strong> defined by a local council</span>'.html_safe => 'Part3'}
     = form.radio_button_fieldset :issued_under_act_part, 'If <strong>yes</strong>, which licence do you have?'.html_safe, class: 'radio', choice: choice
 
     = form.text_field_row  :issued_by, label: 'Which local authority issued the licence?'
