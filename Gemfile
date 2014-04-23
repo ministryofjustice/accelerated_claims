@@ -33,7 +33,6 @@ gem 'mail'
 
 group :production do
   gem 'redis-rails'
-  gem 'newrelic_rpm'
   gem 'appsignal'
 end
 
