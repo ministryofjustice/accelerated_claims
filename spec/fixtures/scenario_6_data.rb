@@ -33,8 +33,10 @@
       street: nil,
       postcode: nil
     },
+    legal_cost: {
+      legal_costs: nil
+    },
     claimant_contact: {
-      legal_costs: nil,
       title: nil,
       full_name: nil,
       company_name: nil,
@@ -43,7 +45,9 @@
       email: "amyturner@affinitysutton.co.uk",
       phone: "3001005392",
       fax: nil,
-      dx_number: nil,
+      dx_number: nil
+    },
+    reference_number: {
       reference_number: "T003900DF07"
     },
     defendant_one: {

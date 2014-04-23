@@ -33,8 +33,10 @@
       street: "108 Landor Rd\nLondon",
       postcode: "SW9 9NU"
     },
+    legal_cost: {
+      legal_costs: nil
+    },
     claimant_contact: {
-      legal_costs: nil,
       title: nil,
       full_name: nil,
       company_name: nil,
@@ -43,7 +45,9 @@
       email: "Adamhoward@gmail.com",
       phone: nil,
       fax: nil,
-      dx_number: nil,
+      dx_number: nil
+    },
+    reference_number: {
       reference_number: nil
     },
     defendant_one: {

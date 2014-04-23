@@ -33,8 +33,10 @@
       street: "7 Main Street\nAlfreton",
       postcode: "SW1W 0LU"
     },
+    legal_cost: {
+      legal_costs: "123.34"
+    },
     claimant_contact: {
-      legal_costs: "123.34",
       title: "Mr",
       full_name: "Jim Brown",
       company_name: nil,
@@ -43,7 +45,9 @@
       email: "jim@example.com",
       phone: "020 000 000",
       fax: "020 000 000",
-      dx_number: "DX 123",
+      dx_number: "DX 123"
+    },
+    reference_number: {
       reference_number: "my-ref-123"
     },
     defendant_one: {

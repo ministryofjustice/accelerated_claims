@@ -11,9 +11,6 @@ class ClaimantContact < BaseClass
   attr_accessor :phone
   attr_accessor :fax
   attr_accessor :dx_number
-  attr_accessor :reference_number
-
-  attr_accessor :legal_costs
 
   validates :title, length: { maximum: 8 }
   validates :company_name, length: { maximum: 40 }
@@ -23,9 +20,6 @@ class ClaimantContact < BaseClass
   validates :phone, length: { maximum: 40 }
   validates :fax, length: { maximum: 40 }
   validates :dx_number, length: { maximum: 40 }
-  validates :reference_number, length: { maximum: 40 }
-
-  validates :legal_costs, format: { with: /\A\d+(\.\d{2})?\z/, message: 'must be a valid amount' }, allow_blank: true, length: { maximum: 8 }
 
   def as_json
     postcode1, postcode2 = split_postcode
@@ -36,9 +30,7 @@ class ClaimantContact < BaseClass
       "email" => "#{email}",
       "phone" => "#{phone}",
       "fax" => "#{fax}",
-      "dx_number" => "#{dx_number}",
-      "reference_number" => "#{reference_number}",
-      "legal_costs" => "#{legal_costs}"
+      "dx_number" => "#{dx_number}"
     }
   end
 

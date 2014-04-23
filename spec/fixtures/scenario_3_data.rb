@@ -33,8 +33,10 @@
       street: nil,
       postcode: nil
     },
+    legal_cost: {
+      legal_costs: "600"
+    },
     claimant_contact: {
-      legal_costs: "600",
       title: "Mr",
       full_name: "Brent Hunt",
       company_name: "Brent Hunt Inc",
@@ -43,7 +45,9 @@
       email: "brent.hunt@sghmartineau.com",
       phone: "0800 763 1675",
       fax: nil,
-      dx_number: nil,
+      dx_number: nil
+    },
+    reference_number: {
       reference_number: nil
     },
     defendant_one: {

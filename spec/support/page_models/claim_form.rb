@@ -11,7 +11,7 @@ class ClaimForm
     fill_claimant_two
     fill_defendant_one
     fill_defendant_two
-    fill_solicitor
+    fill_claimant_contact
     fill_tenancy
     fill_notice
     fill_licences
@@ -19,18 +19,26 @@ class ClaimForm
     fill_postponement
     check_order_possession_and_cost
     fill_court_fee
+    fill_legal_costs
+    fill_reference_number
   end
 
-  def fill_solicitor
+  def fill_claimant_contact
     prefix = 'claimant_contact'
-    fill_in_text_field(prefix, 'legal_costs')
     complete_details_of_person(prefix)
     fill_in_text_field(prefix, 'company_name')
     fill_in_text_field(prefix, 'email')
     fill_in_text_field(prefix, 'phone')
     fill_in_text_field(prefix, 'fax')
     fill_in_text_field(prefix, 'dx_number')
-    fill_in_text_field(prefix, 'reference_number')
+  end
+
+  def fill_legal_costs
+    fill_in_text_field('legal_cost', 'legal_costs')
+  end
+
+  def fill_reference_number
+    fill_in_text_field('reference_number', 'reference_number')
   end
 
   def submit
