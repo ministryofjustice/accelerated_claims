@@ -135,17 +135,21 @@ class PDFDocument
 
   def strike_out_all result_path, list
     output = Tempfile.new('strike_out', '/tmp/')
-    strikes = Tempfile.new('strikes.json', '/tmp/')
-    strikes.write({ 'strikes' => list }.to_json)
-    strikes.close
-    path = `pwd`
-    cmd = "cd /tmp; java -jar #{STRIKER_JAR} -i #{result_path.sub('/tmp/','')} -o #{output.path.sub('/tmp/','')} -j #{strikes.path}; cd #{path}"
 
-    if !Rails.env.test? || ENV['browser']
-      start = Time.now
-      puts `#{cmd}`
-      FileUtils.mv output.path, result_path
-      puts "duration: #{Time.now - start} secs"
+    strikes = nil
+    ActiveSupport::Notifications.instrument('store_strikes.pdf') do
+      strikes = Tempfile.new('strikes.json', '/tmp/')
+      strikes.write({ 'strikes' => list }.to_json)
+      strikes.close
+    end
+    path = `pwd`
+    ActiveSupport::Notifications.instrument('add_strikes.pdf') do
+      cmd = "cd /tmp; java -jar #{STRIKER_JAR} -i #{result_path.sub('/tmp/','')} -o #{output.path.sub('/tmp/','')} -j #{strikes.path}; cd #{path}"
+
+      if !Rails.env.test? || ENV['browser']
+        `#{cmd}`
+        FileUtils.mv output.path, result_path
+      end
     end
   end
 
