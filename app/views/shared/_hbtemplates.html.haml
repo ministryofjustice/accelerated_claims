@@ -33,6 +33,17 @@
       {{/each}}
   .row.divider
 
+%script#multiple-radio(type='text/x-handlebars-template')
+  %fieldset.radio.inline
+    %h3 {{caption}}
+    .options
+      {{#each items}}
+      .option
+        %label
+          %input.multiplePanelSelector(type='radio' name='multiplePanelSelector_{{group}}' value='{{val}}')
+          {{text}}
+      {{/each}}
+
 %script#title-dropdown(type='text/x-handlebars-template')
   %select.title-dropdown.small(id='{{id}}' name='{{name}}')
     %option(value='') &nbsp;
