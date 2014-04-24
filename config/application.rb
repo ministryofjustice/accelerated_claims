@@ -65,3 +65,4 @@ end
 
 puts "Rails env: #{ENV['RAILS_ENV']}"
 puts "Rack env: #{ENV['RACK_ENV']}"
+puts "New relic key: #{ENV['NEW_RELIC_LICENSE_KEY']}"
