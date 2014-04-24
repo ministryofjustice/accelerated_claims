@@ -12,32 +12,23 @@ class ConfirmationPage
     page.has_text?('You now need to send the completed form and documents to the court to make your claim')
   end
 
-  def assert_rendered_pdf(expected_data)
-    filename = download_pdf
-
-      data_from_rendered_pdf = values_from_pdf(filename)
-
-      expected_data = load_result_data(1)
-      expect(data_from_rendered_pdf).to eql expected_data
-  end
-
   def download_pdf
-    pdf_filename = ''
-    begin
-      pdf_filename = capybara_download_pdf
-    rescue Capybara::NotSupportedByDriverError
-      pdf_filename = curl_download_pdf
+    if Capybara.run_server
+      pdf_file = capybara_download_pdf
+    else
+      pdf_file = curl_download_pdf
     end
-    pdf_filename
+    pdf_file
   end
 
 private
   def capybara_download_pdf
     expected_url = remote_test? ? "/accelerated#{@url}" : @url
     expect(Capybara.current_path).to eql expected_url
+    #Capybara.execute_script("jQuery('.pdf-download').removeAttr('target')")
     click_link 'View and print completed form'
-    assert_pdf_content_type(page.response_headers)
 
+    assert_pdf_content_type(page.response_headers)
     write_pdf_to_tempfile page.body
   end
 
@@ -64,10 +55,11 @@ private
     end
   end
 
-  def write_pdf_to_tempfile(ascii)
+  def write_pdf_to_tempfile(text)
     file = Tempfile.new('pdf_download', encoding: 'utf-8')
-    file.write(ascii.encode("ASCII-8BIT").force_encoding("UTF-8"))
-    file.path
+    file.write(text.encode("ASCII-8BIT").force_encoding("UTF-8"))
+    file.close
+    file
   end
 
   def assert_pdf_content_type(headers_hash)
