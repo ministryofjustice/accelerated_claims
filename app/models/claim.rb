@@ -21,8 +21,16 @@ class Claim < BaseClass
     json_out = {}
     json_in.each do |attribute, submodel_data|
       submodel_data.each do |key, value|
-        value = 'Yes' if(value.class.name == 'TrueClass')
-        value = 'No' if(value.class.name == 'FalseClass')
+        value = case value
+                when TrueClass
+                  'Yes'
+                when FalseClass
+                  'No'
+                else
+                  value
+                end
+        attribute = 'claimant_contact' if attribute[/reference_number|legal_cost/]
+
         json_out["#{attribute}_#{key}"] = value
       end
     end
@@ -102,7 +110,7 @@ class Claim < BaseClass
   end
 
   def singular_submodels
-    %w(Fee Property Notice License Deposit Possession Order Tenancy ClaimantContact)
+    %w(Fee Property Notice License Deposit Possession Order Tenancy ClaimantContact LegalCost ReferenceNumber)
   end
 
   def doubled_submodels
