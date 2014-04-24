@@ -1,13 +1,17 @@
 feature "submit claim" do
 
-  def run_scenario index
+  def run_scenario index, options={}
     data = load_fixture_data(index)
     expected_data = load_expected_data(index)
 
     AppModel.new(data).exec do
       homepage.visit
       homepage.start_claim
-      claim_form.complete_form
+      if options[:js]
+        claim_form.complete_form_with_javascript
+      else
+        claim_form.complete_form
+      end
       claim_form.submit
       confirmation_page.is_displayed?.should be_true, claim_form.validation_error_text
       pdf_filename = confirmation_page.download_pdf
@@ -29,7 +33,13 @@ feature "submit claim" do
     description = data['description']
     eval(%Q|
       scenario "#{title}: #{description.first} (#{description.last})" do
-        run_scenario #{index}
+        run_scenario #{index}, js: false
+      end
+    |)
+
+    eval(%Q|
+      scenario "#{title} with JS: #{description.first} (#{description.last})", js: true do
+        run_scenario #{index}, js: true
       end
     |)
   end
