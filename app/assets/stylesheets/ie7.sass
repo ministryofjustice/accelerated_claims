@@ -1,31 +1,35 @@
 .moj-panel
   position: relative
 
-  fieldset.striped-choice, fieldset.date-picker
-    position: relative
-
-    legend, h3
-      position: absolute
-      left: 0
-      margin-left: 90px
-      white-space: normal
-
-    .row
-      clear: both
-
-      input[type="checkbox"], input[type="radio"]
-        margin-top: 3px
-
-    &.full
-      legend, h3
-        position: relative
-        margin-left: 0px
-          
-
   fieldset.date-picker
-    .row
-      margin-top: 0
+    position: relative
   
   fieldset.error
     background: image-url('ie-errorbg.png') 0 0 repeat-y
     border: none
+
+ol.alphabetical
+  float: none
+  clear: both
+  position: relative
+  display: block
+  zoom: 1
+
+  li
+    list-style: lower-alpha
+    float: none
+    clear: both
+    position: relative
+    display: block
+    zoom: 1
+
+    &:before
+      content: none
+      counter-increment: auto
+      position: relative
+      left: auto
+
+    input[type="checkbox"]
+      position: relative
+      left: auto
+      top: auto
