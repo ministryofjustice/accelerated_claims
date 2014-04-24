@@ -32,7 +32,7 @@ moj.Modules.defendantAddress = (function() {
 
     source = $( '#hb-yesno' ).html();
     template = Handlebars.compile( source );
-    context = { question: 'Are they living in the property?', id: 'defendant' + ( n + 1 ) + 'address', reverse: 'true' };
+    context = { question: 'Is the defendant living in the property?', id: 'defendant' + ( n + 1 ) + 'address', reverse: 'true' };
 
     $el.before( template( context ) ).addClass( 'rel' ).hide().find( '.caption' ).remove();
 

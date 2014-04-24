@@ -64,7 +64,7 @@ select
 textarea
   width: 100%
   max-width: 300px
-  height: 70px
+  height: 110px
   &.feedback
     height: 300px
   @include media(mobile)
@@ -75,7 +75,8 @@ fieldset, legend
   margin: 0
   padding: 0
 
-
+.hint
+  color: $grey-1
 
 select, option, legend
   color: $black
@@ -338,7 +339,6 @@ fieldset.plain
 
           span.hint
             display: block
-            color: $grey-1
 
           input
             position: absolute
@@ -349,10 +349,9 @@ fieldset.plain
       .option
         float: left
         margin:
-          left: 15px
+          right: 15px
           top: 0
-        &:first-child
-          margin-left: 0
+          bottom: 15px
 
     &.date-picker
       .row
@@ -447,7 +446,6 @@ fieldset.plain
     textarea
       display: block
       clear: left
-      height: 70px
       &.feedback
         height: 300px
 
