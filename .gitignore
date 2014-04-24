@@ -24,3 +24,5 @@ vagrant
 /public/assets
 /run_ac_front.sh
 /vendor/bundler
+casper.rake
+config/environments/history.txt
