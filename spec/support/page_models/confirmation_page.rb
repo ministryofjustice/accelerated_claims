@@ -25,7 +25,7 @@ class ConfirmationPage
     pdf_filename = ''
     begin
       pdf_filename = capybara_download_pdf
-    rescue Capybara::NotSupportedByDriverError
+    rescue Capybara::NotSupportedByDriverError, RSpec::Expectations::ExpectationNotMetError
       pdf_filename = curl_download_pdf
     end
     pdf_filename
@@ -60,7 +60,7 @@ private
     if Capybara.app_host
       Capybara.app_host + "/download"
     else
-      Capybara.current_url.gsub('confirmation$', 'download')
+      Capybara.current_url.gsub(/confirmation$/, 'download')
     end
   end
 

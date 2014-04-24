@@ -23,6 +23,67 @@ class ClaimForm
     fill_reference_number
   end
 
+  def complete_form_with_javascript
+    fill_property_details
+    number_of_claimants = select_number_of :claimants
+
+    fill_claimant_one
+    if number_of_claimants == 2
+      choose_claimant_two_address_the_same
+      fill_claimant_two
+    end
+
+    number_of_defendants = select_number_of :defendants
+
+    choose_defendant_living_in_property 'one',1
+    fill_defendant_one
+    if number_of_defendants == 2
+      choose_defendant_living_in_property 'two',2
+      fill_defendant_two
+    end
+
+    fill_claimant_contact
+    fill_tenancy
+    fill_notice
+    fill_licences
+    fill_deposit
+    fill_postponement
+    check_order_possession_and_cost
+    fill_court_fee
+    fill_legal_costs
+    fill_reference_number
+  end
+
+  def select_number_of type
+    number = get_data('javascript', "number_of_#{type}").to_i
+
+    case number
+      when 1
+        choose("multiplePanelRadio_#{type}_1")
+      when 2
+        choose("multiplePanelRadio_#{type}_2")
+    end
+    number
+  end
+
+  def choose_claimant_two_address_the_same
+    case get_data('javascript','claimant_two_same_address')
+    when 'Yes'
+      choose('claimant2address-yes')
+    else
+      choose('claimant2address-no')
+    end
+  end
+
+  def choose_defendant_living_in_property count, index
+    case get_data('javascript', "choose_defendant_#{count}_living_in_property")
+    when 'Yes'
+      choose("defendant#{index}address-yes")
+    else
+      choose("defendant#{index}address-no")
+    end
+  end
+
   def fill_claimant_contact
     prefix = 'claimant_contact'
     complete_details_of_person(prefix)
@@ -88,11 +149,15 @@ class ClaimForm
     end
   end
 
-  def complete_details_of_person(prefix)
+  def complete_details_of_person(prefix, options={})
+    options = { complete_address: true }.merge(options)
     fill_in_text_field(prefix, 'title')
     fill_in_text_field(prefix, 'full_name')
-    fill_in_text_field(prefix, 'street')
-    fill_in_text_field(prefix, 'postcode')
+
+    if options[:complete_address]
+      fill_in_text_field(prefix, 'street')
+      fill_in_text_field(prefix, 'postcode')
+    end
   end
 
   def fill_property_details
@@ -108,12 +173,9 @@ class ClaimForm
   end
 
   def fill_claimant_two
-    complete_details_of_person('claimant_two')
+    complete_address = (get_data('javascript', 'claimant_two_same_address') != 'Yes')
 
-    if get_data('javascript', 'claimant_two_same_address') == 'Yes'
-      fill_in("claim_claimant_two_street", with: get_data('claimant_one', 'street'))
-      fill_in("claim_claimant_two_postcode", with: get_data('claimant_one', 'postcode'))
-    end
+    complete_details_of_person('claimant_two', complete_address: complete_address)
   end
 
   def fill_defendant_one
