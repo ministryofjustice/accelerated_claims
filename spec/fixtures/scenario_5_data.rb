@@ -33,8 +33,10 @@
       street: nil,
       postcode: nil
     },
+    legal_cost: {
+      legal_costs: nil
+    },
     claimant_contact: {
-      legal_costs: nil,
       title: nil,
       full_name: nil,
       company_name: "Wolverhampton Homes",
@@ -43,7 +45,9 @@
       email: nil,
       phone: "1902556789",
       fax: nil,
-      dx_number: nil,
+      dx_number: nil
+    },
+    reference_number: {
       reference_number: "T054PB7"
     },
     defendant_one: {

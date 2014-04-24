@@ -33,8 +33,10 @@
       street: nil,
       postcode: nil
     },
+    legal_cost: {
+      legal_costs: nil
+    },
     claimant_contact: {
-      legal_costs: nil,
       title: nil,
       full_name: nil,
       company_name: nil,
@@ -43,7 +45,9 @@
       email: nil,
       phone: nil,
       fax: nil,
-      dx_number: nil,
+      dx_number: nil
+    },
+    reference_number: {
       reference_number: nil
     },
     defendant_one: {

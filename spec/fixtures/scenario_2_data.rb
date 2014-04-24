@@ -33,8 +33,10 @@
       street: nil,
       postcode: nil
     },
+    legal_cost: {
+      legal_costs: nil
+    },
     claimant_contact: {
-      legal_costs: nil,
       title: "Mr",
       full_name: "Jay Schneider",
       company_name: "Schneider & Sons",
@@ -43,7 +45,9 @@
       email: "jayschneider@gmail.com",
       phone: "7985473222",
       fax: nil,
-      dx_number: nil,
+      dx_number: nil
+    },
+    reference_number: {
       reference_number: nil
     },
     defendant_one: {

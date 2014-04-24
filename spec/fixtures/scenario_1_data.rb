@@ -33,8 +33,10 @@
       street: nil,
       postcode: nil
     },
+    legal_cost: {
+      legal_costs: nil
+    },
     claimant_contact: {
-      legal_costs: nil,
       title: "Mr ",
       full_name: "Robert Linley",
       company_name: "Linley & Simpson",
@@ -43,7 +45,9 @@
       email: "robertlinley@linleyandsimpson.com",
       phone: "0113 246 9295",
       fax: nil,
-      dx_number: nil,
+      dx_number: nil
+    },
+    reference_number: {
       reference_number: nil
     },
     defendant_one: {

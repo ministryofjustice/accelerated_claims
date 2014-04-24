@@ -33,8 +33,10 @@
       street: nil,
       postcode: nil
     },
+    legal_cost: {
+      legal_costs: "450"
+    },
     claimant_contact: {
-      legal_costs: "450",
       title: "Mr",
       full_name: "Dilan Lloyd",
       company_name: "Beor Wilson Lloyd",
@@ -43,7 +45,9 @@
       email: "enquiries@bwl-law.co.uk",
       phone: "1792655178",
       fax: nil,
-      dx_number: nil,
+      dx_number: nil
+    },
+    reference_number: {
       reference_number: nil
     },
     defendant_one: {
