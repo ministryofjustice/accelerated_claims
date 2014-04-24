@@ -336,6 +336,14 @@ fieldset.plain
           cursor: pointer
           &:hover
             border-color: $black
+          &.highlight
+            background-color: $white
+            border-color: $black
+          &.focus
+            .js-enabled &
+              outline: 3px solid $yellow
+              input
+                outline: none
 
           span.hint
             display: block
@@ -485,6 +493,25 @@ fieldset.plain
         margin: 5px 0
 
 
+.js-enabled
+  .details
+    .row
+      display: none
+      &:first-child
+        display: block
+    .caption
+      padding-left: 20px
+      background: image-url('summary-arrow-sprite.gif') 0 5px no-repeat
+      color: $link-colour
+      cursor: pointer
+      &:hover
+        text-decoration: underline
+    &.open
+      .row
+        display: block
+      .caption
+        background-position: -1000px 5px
+        color: $link-active-colour
 
 
 .confirmation-intro

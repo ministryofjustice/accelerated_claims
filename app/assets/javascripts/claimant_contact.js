@@ -1,5 +1,5 @@
 /*jslint browser: true, evil: false, plusplus: true, white: true, indent: 2 */
-/*global moj, $, Handlebars */
+/*global moj, $ */
 
 moj.Modules.claimantContact = (function() {
   "use strict";
@@ -7,40 +7,48 @@ moj.Modules.claimantContact = (function() {
   var //functions
       init,
       cacheEls,
-      setupDetailsBlock,
+      bindEvents,
+      toggleDetailsBlock,
+      showPanel,
+      hidePanel,
 
       //elements
       $panel,
-      $detailsBlocks
+      $captions
       ;
 
   init = function() {
     cacheEls();
+    bindEvents();
 
-    $detailsBlocks.each( function() {
-      setupDetailsBlock( $( this ) );
-    } );
+    hidePanel();
   };
 
   cacheEls = function() {
     $panel = $( '.claimant-solicitor' );
-    $detailsBlocks = $( '.details', $panel );
+    $captions = $( '.caption', $panel );
   };
 
-  setupDetailsBlock = function( $el ) {
-    moj.log( $el );
+  bindEvents = function() {
+    $captions.on( 'click', function() {
+      toggleDetailsBlock( $( this ).closest( '.details' ) );
+    } );
 
-    // var source,
-    //     template,
-    //     context;
+    $( 'input[name="multiplePanelRadio_claimants"]' ).on( 'click', function() {
+      showPanel();
+    } );
+  };
 
-    // source = $( '#hb-yesno' ).html();
-    // template = Handlebars.compile( source );
-    // context = { question: 'Is the address the same as the first claimant?', id: 'claimant2address', reverse: 'true' };
+  toggleDetailsBlock = function( $el ) {
+    $el.toggleClass( 'open' );
+  };
 
-    // $el.find( '.sub-panel.address' ).addClass( 'rel' ).before( template( context ) ).hide();
+  hidePanel = function() {
+    $panel.add( $panel.prev( '.divider' ) ).hide();
+  };
 
-    // moj.Modules.jsState.registerField( $( 'input[name=claimant2address]' ) );
+  showPanel = function() {
+    $panel.add( $panel.prev( '.divider' ) ).show();
   };
 
   // public
