@@ -60,7 +60,8 @@ module AcceleratedClaims
       ie8.css
     )
 
-
-
   end
 end
+
+puts "Rails env: #{ENV['RAILS_ENV']}"
+puts "Rack env: #{ENV['RACK_ENV']}"

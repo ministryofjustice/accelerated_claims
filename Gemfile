@@ -36,6 +36,10 @@ group :production do
   gem 'appsignal'
 end
 
+group :production, :development do
+  gem 'newrelic_rpm'
+end
+
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'quiet_assets'
