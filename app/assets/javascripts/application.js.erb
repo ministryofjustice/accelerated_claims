@@ -24,12 +24,22 @@
 //= require claimant_address
 //= require claimant_contact
 //= require defendant_address
+//= require tenancy_module
+//= require show_hide
 
 // TODO: reimplement these one by one
 // require address_copying
-// require show_hide
 // require js_alt_text
 
 
 //  js_state must go last in this list
 //= require js_state
+
+
+moj.Modules.devs = {
+  init: function() {
+
+  }
+};
+
+$( '.remove' ).remove();
