@@ -5,7 +5,7 @@
       %span.hint (optional)
     .sub-panel.details
       .row
-        .caption
+        .caption#correspondence-address
           = 'Correspondence address if different from above'.html_safe
       = form.text_field_row :title,    class: 'rel title', input_class: 'smalltext'
       = form.text_field_row :full_name, class: 'rel '
@@ -14,7 +14,7 @@
       = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'
     .sub-panel.details
       .row
-        .caption
+        .caption#contact-details
           = 'Contact details such as phone and email'.html_safe
       = form.text_field_row :email, class: 'rel email'
       = form.text_field_row :phone, class: 'rel phone'
