@@ -88,21 +88,22 @@ class ClaimForm
     if get_data('javascript','separate_correspondence_address') == 'Yes'
       find('#correspondence-address').click
       complete_details_of_person('claimant_contact')
+      fill_in_text_field('claimant_contact', 'company_name')
     end
     if get_data('javascript','other_contact_details') == 'Yes'
       find('#contact-details').click
-      complete_details_of_person('claimant_contact')
+      fill_claimant_contact_details
     end
   end
 
   def fill_claimant_contact
     complete_details_of_person('claimant_contact')
+    fill_in_text_field('claimant_contact', 'company_name')
     fill_claimant_contact_details
   end
 
   def fill_claimant_contact_details
     prefix = 'claimant_contact'
-    fill_in_text_field(prefix, 'company_name')
     fill_in_text_field(prefix, 'email')
     fill_in_text_field(prefix, 'phone')
     fill_in_text_field(prefix, 'fax')
