@@ -7,15 +7,12 @@
   = claim_form.hidden_field(:form_state, id: 'js-state')
 
   %section
-    %span.right.required-notice
-      %span.req> *
-      required
     %h3.section-header Property
     .moj-panel
       = render partial: 'property', object: @claim.property, locals: { claim_form: claim_form }
 
   %section
-    %h3.section-header Claimant (landlord)
+    %h3.section-header Claimants (landlords)
     .moj-panel.has-multiple#claimants(data-multiple="claimant" data-caption="How many claimants are there?" data-single="claimant" data-plural="claimants")
       .sub-panel.claimant#claimant_one
         %h4 First claimant
