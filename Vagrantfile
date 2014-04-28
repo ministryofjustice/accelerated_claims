@@ -19,6 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # mount salt required folders
   config.vm.synced_folder "../civil-claims-deploy/providers", "/srv/providers/"
   config.vm.synced_folder "../civil-claims-deploy/salt", "/srv/salt/"
+  config.vm.synced_folder "../civil-claims-deploy/vendor/_root", "/srv/salt-formulas", type: "rsync", rsync__args: ["--verbose", "--archive", "--delete", "-z", "-L"]
   config.vm.synced_folder "../civilclaims-pillars", "/srv/pillar/"
 
 
