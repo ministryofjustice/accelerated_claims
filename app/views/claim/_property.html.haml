@@ -1,6 +1,6 @@
 = claim_form.fields_for property, builder: LabellingFormBuilder do |form|
 
-  = form.radio_button_fieldset :house, 'The property you are claiming possession of is:', class: 'radio', choice: {'A single self-contained household space <span class="hint">For example a house or a flat within a block of flats</span>'.html_safe => 'Yes', 'Part of a single self-contained household space <span class="hint">For example part of a house or part of a flat</span>'.html_safe => 'No'}
+  = form.radio_button_fieldset :house, 'The property you want to take back is:', class: 'radio', choice: {'A self-contained house, flat or bedsit'.html_safe => 'Yes', 'A room in a property <span class="hint">(tenants may share kitchen, bathroom or other rooms)</span>'.html_safe => 'No'}
 
   .sub-panel.address#property
     = form.text_area_row  :street,   label: 'Full address', class: 'street'
