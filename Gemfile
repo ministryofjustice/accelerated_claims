@@ -30,6 +30,7 @@ gem 'moj_template', '0.11.1'
 gem 'zendesk_api'
 gem 'mail'
 
+gem 'faraday'
 
 group :production do
   gem 'redis-rails'
@@ -49,7 +50,7 @@ group :development, :test do
 end
 
 group :test do
-  #gem 'webmock'
+  gem 'webmock'
   gem 'parallel'
   gem 'rspec_junit_formatter'
   gem 'capybara'

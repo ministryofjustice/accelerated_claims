@@ -1,5 +1,11 @@
 feature "submit claim" do
 
+
+  before do
+    stub_request(:post, "http://localhost:4000/").
+      to_return(:status => 200, :body => "", :headers => {})
+  end
+
   def run_scenario index, options={}
     data = load_fixture_data(index)
     expected_data = load_expected_data(index)
