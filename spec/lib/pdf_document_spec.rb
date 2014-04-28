@@ -1,5 +1,10 @@
 describe PDFDocument do
-  before(:each) { @doc = PDFDocument.new(json) }
+
+  before do
+    @doc = PDFDocument.new(json)
+    stub_request(:post, "http://localhost:4000/").
+         to_return(:status => 200, :body => "", :headers => {})
+  end
 
   describe ".fill" do
     let(:json) { claim_formatted_data }

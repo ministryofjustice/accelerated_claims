@@ -6,6 +6,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara/rails'
 require 'capybara/rspec'
+require 'webmock/rspec'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
@@ -29,5 +30,15 @@ RSpec.configure do |config|
 
   config.order = 'random'
   config.include ShowMeTheCookies, type: :feature
+
+  # config.before(:all) do
+    # $striker_pid = `java -jar scripts/strike2-0.1.0-standalone.jar & $!`
+    # puts "running: #{$striker_pid}"
+  # end
+#
+  # config.after(:all) do
+    # `trap "kill #{$striker_pid}" EXIT`
+    # puts "killed: #{$striker_pid}"
+  # end
 end
 

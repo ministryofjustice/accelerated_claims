@@ -96,8 +96,12 @@ describe ClaimController do
   end
 
   describe '#download' do
+
     context 'with valid claim data' do
       it "should return a PDF" do
+        stub_request(:post, "http://localhost:4000/").
+        to_return(:status => 200, :body => "", :headers => {})
+
         post :submission, claim: claim_post_data['claim']
         get :download
         response.headers["Content-Type"].should eq "application/pdf"
