@@ -8,75 +8,64 @@ moj.Modules.addressCopying = (function() {
       init,
       cacheEls,
       bindEvents,
-      copyAddresses,
-      copyAddress,
-      createFakeSubmitButton,
+      checkData,
       submitForm,
 
       //elements
-      $addressPanels,
       $form,
       $submitButton,
-      $sourceAddressPanel,
-      $claimantOneAddressPanel,
-      $propertyAddressPanel
+      $numClaimants,
+      $secondClaimantAddressSameAsFirst,
+      $firstClaimantAddress,
+      $firstClaimantPostcode,
+      $secondClaimantAddress,
+      $secondClaimantPostcode
       ;
 
   init = function() {
     cacheEls();
     bindEvents();
-
-    createFakeSubmitButton();
   };
 
   cacheEls = function() {
-    $addressPanels = $( '#claimant_two, .sub-panel.defendant' );
-    $form = $( 'form#claimForm' ).eq( 0 );
-    $submitButton = $form.find( '#submit' );
-    $claimantOneAddressPanel = $( '.sub-panel#claimant_one' );
-    $propertyAddressPanel = $( '.sub-panel#property' );
+    $form = $( 'form' ).eq( 0 );
+    $submitButton = $( '#submit', $form );
+    $numClaimants = $( 'input[name="multiplePanelRadio_claimants"]' );
+    $secondClaimantAddressSameAsFirst = $( 'input[name="claimant2address"]' );
+
+    $firstClaimantAddress = $( '[name="claim[claimant_one][street]"]' );
+    $secondClaimantAddress = $( '[name="claim[claimant_two][street]"]' );
+    $firstClaimantPostcode = $( '[name="claim[claimant_one][postcode]"]' );
+    $secondClaimantPostcode = $( '[name="claim[claimant_two][postcode]"]' );
   };
 
   bindEvents = function() {
-    $( document ).on( 'click', '#fakeSubmit', function( e ) {
+    $form.on( 'submit', function( e ) {
+      var data;
+
       e.preventDefault();
 
-      copyAddresses( function() {
-        submitForm();
-      } );
+      checkData();
     } );
   };
 
-  createFakeSubmitButton = function() {
-    $submitButton.after( $submitButton.clone().attr( 'id', 'fakeSubmit' ) ).hide();
-  };
-
-  copyAddresses = function( callback ) {
-    $addressPanels.each( function() {
-      var $this = $( this ),
-          $sourceAddressPanel;
-
-      if( $this.find( 'input.yesno[value="yes"]' ).is( ':checked' ) ) {
-        if( $this.hasClass( 'claimant' ) ) {
-          $sourceAddressPanel = $claimantOneAddressPanel;
-        } else if( $this.hasClass( 'defendant' ) ) {
-          $sourceAddressPanel = $propertyAddressPanel;
-        }
-
-        copyAddress( $sourceAddressPanel, $this );
+  checkData = function() {
+    if( moj.Modules.tools.getRadioVal( $numClaimants ).toString() === '2' ) {
+      if( moj.Modules.tools.getRadioVal( $secondClaimantAddressSameAsFirst ) === 'yes' ) {
+        $secondClaimantAddress.val( $firstClaimantAddress.val() );
+        $secondClaimantPostcode.val( $firstClaimantPostcode.val() );
       }
-    } );
+    }
 
-    callback();
-  };
-
-  copyAddress = function( $src, $target ) {
-    $target.find( '.street textarea' ).val( $src.find( '.street textarea' ).val() );
-    $target.find( '.postcode input[type="text"]' ).val( $src.find( '.postcode input[type="text"]' ).val() );
+    submitForm();
   };
 
   submitForm = function() {
-    $submitButton.click();
+    $form.unbind( 'submit' );
+
+    window.setTimeout( function(){
+      $submitButton.trigger( 'click' );
+    }, 100 );
   };
 
   // public

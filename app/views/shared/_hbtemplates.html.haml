@@ -1,37 +1,33 @@
 %script#hb-yesno(type='text/x-handlebars-template')
-  :erb
-    {{#if full}}
-      <fieldset class="striped-choice full">
-    {{else}}
-      <fieldset class="striped-choice">
-    {{/if}}
+  %fieldset.radio.inline
+    %h3
+      {{#if question}}
+      {{question}}
+      {{/if}}
+      {{#if req}}
+      %span.req> *
+      {{/if}}
+    
+    .options(data-reverse='{{#if reverse}}true{{else}}false{{/if}}')
+      .option
+        %label(for='{{id}}-yes')
+          Yes
+          %input.yesno(type='radio' name='{{id}}' value='yes' id='{{id}}-yes')
+      .option
+        %label(for='{{id}}-no')
+          No
+          %input.yesno(type='radio' name='{{id}}' value='no' id='{{id}}-no')
 
-  %legend
-    {{#if question}}
-    {{question}}
-    {{/if}}
-    {{#if req}}
-    %span.req> *
-    {{/if}}
-  
-  .options(data-reverse='{{#if reverse}}true{{else}}false{{/if}}')
-    .row
-      %input.yesno(type='radio' name='{{id}}' value='yes' id='{{id}}-yes')
-      %label(for='{{id}}-yes') Yes
-    .row
-      %input.yesno(type='radio' name='{{id}}' value='no' id='{{id}}-no')
-      %label(for='{{id}}-no') No
-  :erb
-    </fieldset>
-
-%script#multiple-selector(type='text/x-handlebars-template')
-  .row
-    %label(for='multiplePanelSelector_{{id}}') {{caption}}
-    %select.multiplePanelSelector.small(id='multiplePanelSelector_{{id}}' name='multiplePanelSelector_{{id}}')
+%script#multiple-radio(type='text/x-handlebars-template')
+  %fieldset.radio.inline
+    %h3 {{caption}}
+    .options
       {{#each items}}
-      %option(value='{{val}}') {{val}} {{text}}
+      .option
+        %label
+          %input.multiplePanelRadio(type='radio' name='multiplePanelRadio_{{group}}' id='multiplePanelRadio_{{group}}_{{val}}' value='{{val}}')
+          {{text}}
       {{/each}}
-  .row.divider
 
 %script#title-dropdown(type='text/x-handlebars-template')
   %select.title-dropdown.small(id='{{id}}' name='{{name}}')

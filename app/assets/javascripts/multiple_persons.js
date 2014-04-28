@@ -27,7 +27,7 @@ moj.Modules.multiplePersons = (function() {
   };
 
   bindEvents = function() {
-    $( document ).on( 'change', '.multiplePanelSelector', function() {
+    $( document ).on( 'change', '.multiplePanelRadio', function() {
       var $this = $( this );
       showMultiples( $this.closest( '.has-multiple' ), $this.val() );
     } );
@@ -45,7 +45,7 @@ moj.Modules.multiplePersons = (function() {
         context;
 
     if( $multiples.length > 0 ) {
-      source = $( '#multiple-selector' ).html();
+      source = $( '#multiple-radio' ).html();
       template = Handlebars.compile( source );
 
       for( x = 0; x < $multiples.length; x++ ) {
@@ -53,14 +53,12 @@ moj.Modules.multiplePersons = (function() {
         $panel = $multiples.eq( x );
         childItemClass = $panel.data( 'multiple' );
         $childItems = $panel.find( '.' + childItemClass );
-        $childItems.addClass( 'rel' );
-
-        showMultiples( $panel, 1 );
 
         for( y = 0; y < $childItems.length; y++ ) {
           childItemsArray[ childItemsArray.length ] = {
             val:    y + 1,
-            text:   ( y === 0 ? $panel.data( 'single' ) : $panel.data( 'plural' ) )
+            text:   moj.Modules.tools.ucFirst( moj.Modules.tools.numToWords( y + 1 ) ) + ' ' + ( y === 0 ? $panel.data( 'single' ) : $panel.data( 'plural' ) ),
+            group:  $panel.attr( 'id' )
           };
         }
 
@@ -72,33 +70,35 @@ moj.Modules.multiplePersons = (function() {
 
         $panel.prepend( template( context ) );
 
-        moj.Modules.jsState.registerField( $('#multiplePanelSelector_' + $panel.attr( 'id' )) );
+        showMultiples( $panel, 0 );
+
+        moj.Modules.jsState.registerField( $( 'input[name="multiplePanelRadio_' + $panel.attr( 'id' ) + '"]' ) );
       }
     }
   };
 
   showMultiples = function( $panel, shownum ) {
+
     var x,
-        show = shownum || 1,
+        show = shownum || 0,
         childItemClass = $panel.data( 'multiple' ),
         $childItems = $panel.find( '.' + childItemClass );
-    
+
     for( x = 0; x < $childItems.length; x++ ) {
       if( ( x + 1 ) > show ) {
+        $childItems.eq( x ).prev( '.divider' ).hide();
         $childItems.eq( x ).hide();
         $childItems.eq( x ).find( 'input[type=text], textarea' ).val( '' );
-
-        $childItems.eq( x ).prev( '.divider' ).hide();
       } else {
-        $childItems.eq( x ).show();
         $childItems.eq( x ).prev( '.divider' ).show();
+        $childItems.eq( x ).show();
       }
     }
 
     if( show > 1 ) {
-      $childItems.find( 'h4' ).show();
+      $childItems.find( 'h4' ).show().next( '.row' ).removeClass( 'nomargin' );
     } else {
-      $childItems.find( 'h4' ).hide(); 
+      $childItems.find( 'h4' ).hide().next( '.row' ).addClass( 'nomargin' ); 
     }
   };
 

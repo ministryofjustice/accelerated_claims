@@ -64,7 +64,7 @@ select
 textarea
   width: 100%
   max-width: 300px
-  height: 70px
+  height: 110px
   &.feedback
     height: 300px
   @include media(mobile)
@@ -75,7 +75,8 @@ fieldset, legend
   margin: 0
   padding: 0
 
-
+.hint
+  color: $grey-1
 
 select, option, legend
   color: $black
@@ -335,10 +336,16 @@ fieldset.plain
           cursor: pointer
           &:hover
             border-color: $black
+          &.highlight
+            background-color: $white
+            border-color: $black
+          &.focus
+            outline: 3px solid $yellow
+            input
+              outline: none
 
           span.hint
             display: block
-            color: $grey-1
 
           input
             position: absolute
@@ -349,10 +356,9 @@ fieldset.plain
       .option
         float: left
         margin:
-          left: 15px
+          right: 15px
           top: 0
-        &:first-child
-          margin-left: 0
+          bottom: 15px
 
     &.date-picker
       .row
@@ -447,7 +453,6 @@ fieldset.plain
     textarea
       display: block
       clear: left
-      height: 70px
       &.feedback
         height: 300px
 
@@ -487,6 +492,25 @@ fieldset.plain
         margin: 5px 0
 
 
+.js-enabled
+  .details
+    .row
+      display: none
+      &:first-child
+        display: block
+    .caption
+      padding-left: 20px
+      background: image-url('summary-arrow-sprite.gif') 0 5px no-repeat
+      color: $link-colour
+      cursor: pointer
+      &:hover
+        text-decoration: underline
+    &.open
+      .row
+        display: block
+      .caption
+        background-position: -1000px 5px
+        color: $link-active-colour
 
 
 .confirmation-intro

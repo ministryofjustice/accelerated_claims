@@ -61,7 +61,7 @@ moj.Modules.yesNo = (function() {
     if( ( $el.val() === 'yes' && !reverse ) || ( $el.val() === 'no' && reverse ) ) {
       $el.closest( 'fieldset' ).next().show();
     } else {
-      $el.closest( 'fieldset' ).next().hide().find( 'input[type=text], textarea' ).val( '' );
+      $el.closest( 'fieldset' ).next().hide();
     }
   };
 
