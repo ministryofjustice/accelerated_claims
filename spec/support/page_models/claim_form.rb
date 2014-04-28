@@ -6,6 +6,7 @@ class ClaimForm
   end
 
   def complete_form
+    @js_on = false
     fill_property_details
     fill_claimant_one
     fill_claimant_two
@@ -23,10 +24,89 @@ class ClaimForm
     fill_reference_number
   end
 
+  def complete_form_with_javascript
+    @js_on = true
+    fill_property_details
+    number_of_claimants = select_number_of :claimants
+
+    fill_claimant_one
+    if number_of_claimants == 2
+      choose_claimant_two_address_the_same
+      fill_claimant_two
+    end
+
+    number_of_defendants = select_number_of :defendants
+
+    choose_defendant_living_in_property 'one',1
+    fill_defendant_one
+    if number_of_defendants == 2
+      choose_defendant_living_in_property 'two',2
+      fill_defendant_two
+    end
+
+    fill_claimant_contact_with_js
+
+    fill_tenancy
+    fill_notice
+    fill_licences
+    fill_deposit
+    fill_postponement
+    check_order_possession_and_cost
+    fill_court_fee
+    fill_legal_costs
+    fill_reference_number
+  end
+
+  def select_number_of type
+    number = get_data('javascript', "number_of_#{type}").to_i
+
+    case number
+      when 1
+        choose("multiplePanelRadio_#{type}_1")
+      when 2
+        choose("multiplePanelRadio_#{type}_2")
+    end
+    number
+  end
+
+  def choose_claimant_two_address_the_same
+    case get_data('javascript','claimant_two_same_address')
+    when 'Yes'
+      choose('claimant2address-yes')
+    else
+      choose('claimant2address-no')
+    end
+  end
+
+  def choose_defendant_living_in_property count, index
+    case get_data('javascript', "choose_defendant_#{count}_living_in_property")
+    when 'Yes'
+      choose("defendant#{index}address-yes")
+    else
+      choose("defendant#{index}address-no")
+    end
+  end
+
+  def fill_claimant_contact_with_js
+    if get_data('javascript','separate_correspondence_address') == 'Yes'
+      find('#correspondence-address').click
+      complete_details_of_person('claimant_contact')
+      fill_in_text_field('claimant_contact', 'company_name')
+    end
+    if get_data('javascript','other_contact_details') == 'Yes'
+      find('#contact-details').click
+      fill_claimant_contact_details
+    end
+  end
+
   def fill_claimant_contact
+    complete_details_of_person('claimant_contact')
+    fill_in_text_field('claimant_contact', 'company_name')
+    fill_claimant_contact_details
+  end
+
+  def fill_claimant_contact_details
     prefix = 'claimant_contact'
-    complete_details_of_person(prefix)
-    fill_in_text_field(prefix, 'company_name')
     fill_in_text_field(prefix, 'email')
     fill_in_text_field(prefix, 'phone')
     fill_in_text_field(prefix, 'fax')
@@ -88,11 +168,19 @@ class ClaimForm
     end
   end
 
-  def complete_details_of_person(prefix)
+  def complete_details_of_person(prefix, options={})
+    options = { complete_address: true }.merge(options)
     fill_in_text_field(prefix, 'title')
     fill_in_text_field(prefix, 'full_name')
-    fill_in_text_field(prefix, 'street')
-    fill_in_text_field(prefix, 'postcode')
+
+    if options[:complete_address]
+      fill_in_text_field(prefix, 'street')
+      fill_in_text_field(prefix, 'postcode')
+
+    elsif !@js_on && (prefix == 'claimant_two') && get_data('javascript', 'claimant_two_same_address').to_s[/Yes/]
+      fill_in("claim_claimant_two_street", with: get_data('claimant_one', 'street'))
+      fill_in("claim_claimant_two_postcode", with: get_data('claimant_one', 'postcode'))
+    end
   end
 
   def fill_property_details
@@ -108,12 +196,9 @@ class ClaimForm
   end
 
   def fill_claimant_two
-    complete_details_of_person('claimant_two')
+    complete_address = (get_data('javascript', 'claimant_two_same_address') != 'Yes')
 
-    if get_data('javascript', 'claimant_two_same_address') == 'Yes'
-      fill_in("claim_claimant_two_street", with: get_data('claimant_one', 'street'))
-      fill_in("claim_claimant_two_postcode", with: get_data('claimant_one', 'postcode'))
-    end
+    complete_details_of_person('claimant_two', complete_address: complete_address)
   end
 
   def fill_defendant_one
@@ -126,19 +211,25 @@ class ClaimForm
 
   def fill_tenancy
     prefix = 'tenancy'
-
     choose_radio  prefix, 'tenancy_type'
-    choose_radio  prefix, 'assured_shorthold_tenancy_type'
-    select_date   prefix, 'original_assured_shorthold_tenancy_agreement_date'
-    select_date   prefix, 'start_date'
-    select_date   prefix, 'latest_agreement_date'
-    choose_radio  prefix,'agreement_reissued_for_same_property'
-    choose_radio  prefix, 'agreement_reissued_for_same_landlord_and_tenant'
-    select_date   prefix, 'assured_shorthold_tenancy_notice_served_date'
-    fill_in_text_field prefix, 'assured_shorthold_tenancy_notice_served_by'
-    select_date   prefix, 'demotion_order_date'
-    fill_in_text_field prefix, 'demotion_order_court'
-    choose_radio  prefix, 'previous_tenancy_type'
+
+    case get_data(prefix, 'tenancy_type')
+    when 'Assured'
+      choose_radio  prefix, 'assured_shorthold_tenancy_type'
+      select_date   prefix, 'original_assured_shorthold_tenancy_agreement_date'
+      select_date   prefix, 'start_date'
+      select_date   prefix, 'latest_agreement_date'
+      choose_radio  prefix,'agreement_reissued_for_same_property'
+      choose_radio  prefix, 'agreement_reissued_for_same_landlord_and_tenant'
+      select_date   prefix, 'assured_shorthold_tenancy_notice_served_date'
+      fill_in_text_field prefix, 'assured_shorthold_tenancy_notice_served_by'
+    when 'Demoted'
+      select_date   prefix, 'demotion_order_date'
+      fill_in_text_field prefix, 'demotion_order_court'
+      choose_radio  prefix, 'previous_tenancy_type'
+    else
+      raise 'Unexpected tenancy type'
+    end
   end
 
   def fill_notice

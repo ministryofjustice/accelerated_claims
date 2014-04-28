@@ -1,81 +1,83 @@
 = claim_form.fields_for tenancy, builder: LabellingFormBuilder do |form|
   .sub-panel
-    = form.radio_button_fieldset :tenancy_type, 'What kind of tenancy agreement do you have?', class: 'radio', choice: {'Assured shorthold tenancy <span class="hint">This is the most common form of tenancy. Most new tenancies are automatically this type.</span>' => 'assured', 'Demoted assured shorthold tenancy <span class="hint">These tenancies are arranged by court order. They may be given to tenants who have behaved anti-socially or used the property for illegal activity.</span>' => 'demoted'}
+    = form.radio_button_fieldset :tenancy_type, 'What kind of tenancy agreement do you have?', class: 'radio js-depend', choice: {'Assured shorthold tenancy <span class="hint">This is the most common form of <a href="https://www.gov.uk/tenancy-agreements-a-guide-for-landlords/tenancy-types" rel="external">tenancy</a>. Most new tenancies are automatically this type.</span>' => 'assured', 'Demoted assured shorthold tenancy <span class="hint">These tenancies are arranged by court order. They may be given to tenants who have behaved anti-socially or used the property for illegal activity.</span>' => 'demoted'}, data: { depend: "tenancyType" }
 
-  .row.divider
+  .row.divider.hide.js-tenancyType.assured
 
-  .sub-panel.rel
+  .sub-panel.rel.hide.js-tenancyType.assured
     %h4.section-header Assured shorthold tenancies
 
-  = form.radio_button_fieldset :assured_shorthold_tenancy_type, 'How many tenancy agreements have you had with the defendant?', class: 'radio', choice: {'One tenancy agreement' => 'one', 'More than one tenancy agreement' => 'multiple'}
+    = form.radio_button_fieldset :assured_shorthold_tenancy_type, 'How many tenancy agreements have you had with the defendant?', class: 'radio js-depend', choice: {'One tenancy agreement' => 'one', 'More than one tenancy agreement' => 'multiple'}, data: { depend: "tenancyNumber" }
 
-  .sub-panel.inset
-    .row
-      %p= "If you've had <strong>one</strong> tenancy agreement, enter the details".html_safe
 
-    = form.date_select_field_set :start_date, 'Start date of the tenancy agreement', class: 'date-picker rel', date_select_options: @date_select_options
+    .sub-panel.assuredTenancyOptions.hide.js-tenancyNumber.one.multiple
+      .sub-panel.hide.inset.js-tenancyNumber.one
+        .row.remove
+          %p= "If you've had <strong>one</strong> tenancy agreement, enter the details".html_safe
 
-  .sub-panel.inset
-    .row
-      = 'If you\'ve had <strong>more than one</strong> tenancy agreement, enter the details'.html_safe
+        = form.date_select_field_set :start_date, 'Start date of the tenancy agreement', class: 'date-picker rel', date_select_options: @date_select_options
 
-    = form.date_select_field_set :original_assured_shorthold_tenancy_agreement_date, 'Date of the original tenancy agreement', class: 'date-picker', date_select_options: @date_select_options
+      .sub-panel.hide.inset.js-tenancyNumber.multiple
+        .row.remove
+          = 'If you\'ve had <strong>more than one</strong> tenancy agreement, enter the details'.html_safe
 
-    = form.date_select_field_set :latest_agreement_date, 'Date of the most recent tenancy agreement', class: 'date-picker rel', date_select_options: @date_select_options
+        = form.date_select_field_set :original_assured_shorthold_tenancy_agreement_date, 'Date of the original tenancy agreement', class: 'date-picker', date_select_options: @date_select_options
 
-    .row
-      %p.nomargin If you have replaced the original tenancy agreement with a new tenancy agreement, or replaced a replacement tenancy agreement:
+        = form.date_select_field_set :latest_agreement_date, 'Date of the most recent tenancy agreement', class: 'date-picker rel', date_select_options: @date_select_options
 
-    = form.radio_button_fieldset :agreement_reissued_for_same_property, 'Is the tenancy agreement for the same property?', class: 'radio inline'
+        .row
+          %p.nomargin If you have replaced the original tenancy agreement with a new tenancy agreement, or replaced a replacement tenancy agreement:
 
-    = form.radio_button_fieldset :agreement_reissued_for_same_landlord_and_tenant, 'Is the tenancy agreement between the same landlord and tenant?', class: 'radio inline rel'
+        = form.radio_button_fieldset :agreement_reissued_for_same_property, 'Is the tenancy agreement for the same property?', class: 'radio inline'
 
-  .row
-    %p
-      %strong Check the statements that apply
+        = form.radio_button_fieldset :agreement_reissued_for_same_landlord_and_tenant, 'Is the tenancy agreement between the same landlord and tenant?', class: 'radio inline rel'
 
-    %p= "If both the original (and any additional) tenancy agreements were made on or after <strong>28 February 1997</strong>:".html_safe
+      .row
+        %p
+          %strong Check the statements that apply
 
-    %ol.alphabetical
-      %li
-        = form.label :applicable_statements_1 do
-          = form.check_box :applicable_statements_1, {}, "Yes", "No"
-          No notice was served on the defendant stating that the tenancy would not be, or continue to be, an assured shorthold tenancy.
-      %li
-        = form.label :applicable_statements_2 do
-          = form.check_box :applicable_statements_2, {}, "Yes", "No"
-          There is no provision in the tenancy agreement which states that it is not an assured shorthold tenancy.
-      %li
-        = form.label :applicable_statements_3 do
-          = form.check_box :applicable_statements_3, {}, "Yes", "No"
-          The ‘agricultural worker condition’ defined in Schedule 3 to the Housing Act 1988 in not fulfilled with respect to the property.
-    %p
-      %strong (or)
-    %p= "If both the original (and any additional) tenancy agreements were made on or after <strong>15 January 1989</strong>:".html_safe
+        %p= "If both the original (and any additional) tenancy agreements were made on or after <strong>28 February 1997</strong>:".html_safe
 
-    %ol.alphabetical
-      %li
-        = form.label :applicable_statements_4 do
-          = form.check_box :applicable_statements_4, {}, "Yes", "No"
-          The [first] tenancy agreement was for a fixed term of not less than six months.
-      %li
-        = form.label :applicable_statements_5 do
-          = form.check_box :applicable_statements_5, {}, "Yes", "No"
-          There was no power for the landlord to end the tenancy earlier than six months after it began.
-      %li
-        = form.label :applicable_statements_6 do
-          = form.check_box :applicable_statements_6, {}, "Yes", "No"
-          Before the tenancy began a notice in writing, stating that the tenancy was to be an assured shorthold tenancy, was served on the defendant.
+        %ol.alphabetical
+          %li
+            = form.label :applicable_statements_1 do
+              = form.check_box :applicable_statements_1, {}, "Yes", "No"
+              No notice was served on the defendant stating that the tenancy would not be, or continue to be, an assured shorthold tenancy.
+          %li
+            = form.label :applicable_statements_2 do
+              = form.check_box :applicable_statements_2, {}, "Yes", "No"
+              There is no provision in the tenancy agreement which states that it is not an assured shorthold tenancy.
+          %li
+            = form.label :applicable_statements_3 do
+              = form.check_box :applicable_statements_3, {}, "Yes", "No"
+              The ‘agricultural worker condition’ defined in Schedule 3 to the Housing Act 1988 in not fulfilled with respect to the property.
+        %p
+          %strong (or)
+        %p= "If both the original (and any additional) tenancy agreements were made on or after <strong>15 January 1989</strong>:".html_safe
 
-  = form.text_field_row :assured_shorthold_tenancy_notice_served_by, label: 'Notice served by', class: ''
-  = form.date_select_field_set :assured_shorthold_tenancy_notice_served_date, 'Date notice served', class: 'date-picker', date_select_options: @date_select_options
+        %ol.alphabetical
+          %li
+            = form.label :applicable_statements_4 do
+              = form.check_box :applicable_statements_4, {}, "Yes", "No"
+              The [first] tenancy agreement was for a fixed term of not less than six months.
+          %li
+            = form.label :applicable_statements_5 do
+              = form.check_box :applicable_statements_5, {}, "Yes", "No"
+              There was no power for the landlord to end the tenancy earlier than six months after it began.
+          %li
+            = form.label :applicable_statements_6 do
+              = form.check_box :applicable_statements_6, {}, "Yes", "No"
+              Before the tenancy began a notice in writing, stating that the tenancy was to be an assured shorthold tenancy, was served on the defendant.
 
-  .row.divider
+      = form.text_field_row :assured_shorthold_tenancy_notice_served_by, label: 'Notice served by', class: ''
+      = form.date_select_field_set :assured_shorthold_tenancy_notice_served_date, 'Date notice served', class: 'date-picker', date_select_options: @date_select_options
 
-  .sub-panel.rel
+  .row.divider.hide.js-tenancyType.demoted
+
+  .sub-panel.rel.hide.js-tenancyType.demoted
     %h4.section-header Demoted assured shorthold tenancies
 
     .sub-panel.inset
       = form.date_select_field_set :demotion_order_date, 'Date of demotion order', class: 'date-picker', date_select_options: @date_select_options
       = form.text_field_row :demotion_order_court, label: 'County court where demotion order was made'
-      = form.radio_button_fieldset :previous_tenancy_type, 'What kind of tenancy agreement did the defendant have before it got demoted?', class: 'radio', choice: {'Assured' => Tenancy::ASSURED, 'Secure' => Tenancy::SECURE }
+      = form.radio_button_fieldset :previous_tenancy_type, 'What kind of tenancy agreement did the defendant have before it got demoted?', class: 'radio inline', choice: {'Assured' => Tenancy::ASSURED, 'Secure' => Tenancy::SECURE }

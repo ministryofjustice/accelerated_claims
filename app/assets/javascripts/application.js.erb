@@ -16,14 +16,31 @@
 //= require tools
 
 //= require event_tracking
-//= require claimant_address
-//= require defendant_address
-//= require address_copying
-//= require show_hide
-//= require yes_no
+
+//= require select_state
+
 //= require multiple_persons
-//= require js_alt_text
-//= require title_fields
+//= require yes_no
+//= require claimant_address
+//= require claimant_contact
+//= require defendant_address
+//= require tenancy_module
+//= require show_hide
+//= require address_copying
+
+// TODO: reimplement these one by one
+
+// require js_alt_text
+
 
 //  js_state must go last in this list
 //= require js_state
+
+
+moj.Modules.devs = {
+  init: function() {
+
+  }
+};
+
+$( '.remove' ).remove();

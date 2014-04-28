@@ -33,18 +33,15 @@ moj.Modules.showHide = (function() {
 
   chooseOption = function( $el ) {
     var clickValue = $el.val().toLowerCase(),
-        showValue = $el.closest( '.js-depend' ).data( 'show' ),
-        showElClass = $el.closest( '.js-depend' ).data( 'depend' ),
-        $showEls = $( '.js-' + showElClass );
+        dependGroup = $el.closest( '.js-depend' ).data( 'depend' ),
+        $groupEls = $( '.js-' + dependGroup );
 
-    if( clickValue === showValue ) {
-      $showEls.show();
-    } else {
-      $showEls.hide();
-    }
+    $groupEls.hide();
+    $groupEls.filter( '.' + clickValue ).show();
   };
 
   showPreChecked = function() {
+    // TODO: remove this once state saving is working - there are no pre-checked by default buttons
     $( radios ).each( function() {
       var $this = $( this );
       if( $this.is( ':checked' ) ) {
