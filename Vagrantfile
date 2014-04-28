@@ -19,6 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # mount salt required folders
   config.vm.synced_folder "../civil-claims-deploy/providers", "/srv/providers/"
   config.vm.synced_folder "../civil-claims-deploy/salt", "/srv/salt/"
+  config.vm.synced_folder "../civil-claims-deploy/vendor/_root", "/srv/salt-formulas", type: "rsync", rsync__args: ["--verbose", "--archive", "--delete", "-z", "-L"]
   config.vm.synced_folder "../civilclaims-pillars", "/srv/pillar/"
 
 
@@ -38,18 +39,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     salt.verbose = true
 
   end
-  
-  hacks = [
-    'mkdir -p /etc/salt',
-    'cp /srv/salt/minions/vagrant/templates/minion /etc/salt/minion',
-    'salt-key -A --yes || true',
-    'service salt-minion restart',
-    'sleep 5', # This might not be needed, but why rush these things?
-    "salt-call state.highstate --local --retcode-passthrough",
-  ]
-  hacks.each do |cmd|
-    config.vm.provision :shell, inline: cmd
-  end
-  
-  
+
+  script = <<-SCRIPT
+    mkdir -p /etc/salt
+    cp /srv/salt/minions/vagrant/templates/minion /etc/salt/minion
+    service salt-minion restart
+    sleep 5 # This might not be needed, but why rush these things?
+    salt-call state.highstate --local --retcode-passthrough
+  SCRIPT
+  config.vm.provision :shell, inline: script, keep_color: false
+
 end
