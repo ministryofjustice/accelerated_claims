@@ -167,6 +167,9 @@ span.error
     letter-spacing: 0
     margin-top: 4px
 
+h3.section-header
+  font-weight: bold
+
 
 
 
@@ -299,6 +302,12 @@ fieldset.plain
             left: 0
             right: 0
 
+      li
+        .row, fieldset
+          padding:
+            left: 0
+            right: 0
+
 
 
   fieldset
@@ -420,13 +429,17 @@ fieldset.plain
       margin:
         left: 0
         right: 0
-      line-height: 25px
 
       @include media(mobile)
         display: block
         float: none
         width: auto
         margin-left: 0
+
+      .row, fieldset
+        padding:
+          left: 0
+          right: 0
 
     input[type="text"]
       display: block
