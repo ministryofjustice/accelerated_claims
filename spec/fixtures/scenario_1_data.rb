@@ -15,7 +15,7 @@
       claimant_two_same_address: "Yes",
       any_legal_costs: "No",
       separate_correspondence_address: "Yes",
-      other_contact_details: nil,
+      other_contact_details: "Yes",
       add_reference_number: "No",
       number_of_defendants: "2",
       defendant_one_living_in_property: "Yes",

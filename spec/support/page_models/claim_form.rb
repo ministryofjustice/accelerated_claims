@@ -6,6 +6,7 @@ class ClaimForm
   end
 
   def complete_form
+    @js_on = false
     fill_property_details
     fill_claimant_one
     fill_claimant_two
@@ -24,6 +25,7 @@ class ClaimForm
   end
 
   def complete_form_with_javascript
+    @js_on = true
     fill_property_details
     number_of_claimants = select_number_of :claimants
 
@@ -43,6 +45,7 @@ class ClaimForm
     end
 
     fill_claimant_contact_with_js
+
     fill_tenancy
     fill_notice
     fill_licences
@@ -173,6 +176,10 @@ class ClaimForm
     if options[:complete_address]
       fill_in_text_field(prefix, 'street')
       fill_in_text_field(prefix, 'postcode')
+
+    elsif !@js_on && (prefix == 'claimant_two') && get_data('javascript', 'claimant_two_same_address').to_s[/Yes/]
+      fill_in("claim_claimant_two_street", with: get_data('claimant_one', 'street'))
+      fill_in("claim_claimant_two_postcode", with: get_data('claimant_one', 'postcode'))
     end
   end
 
@@ -204,19 +211,25 @@ class ClaimForm
 
   def fill_tenancy
     prefix = 'tenancy'
-
     choose_radio  prefix, 'tenancy_type'
-    choose_radio  prefix, 'assured_shorthold_tenancy_type'
-    select_date   prefix, 'original_assured_shorthold_tenancy_agreement_date'
-    select_date   prefix, 'start_date'
-    select_date   prefix, 'latest_agreement_date'
-    choose_radio  prefix,'agreement_reissued_for_same_property'
-    choose_radio  prefix, 'agreement_reissued_for_same_landlord_and_tenant'
-    select_date   prefix, 'assured_shorthold_tenancy_notice_served_date'
-    fill_in_text_field prefix, 'assured_shorthold_tenancy_notice_served_by'
-    select_date   prefix, 'demotion_order_date'
-    fill_in_text_field prefix, 'demotion_order_court'
-    choose_radio  prefix, 'previous_tenancy_type'
+
+    case get_data(prefix, 'tenancy_type')
+    when 'Assured'
+      choose_radio  prefix, 'assured_shorthold_tenancy_type'
+      select_date   prefix, 'original_assured_shorthold_tenancy_agreement_date'
+      select_date   prefix, 'start_date'
+      select_date   prefix, 'latest_agreement_date'
+      choose_radio  prefix,'agreement_reissued_for_same_property'
+      choose_radio  prefix, 'agreement_reissued_for_same_landlord_and_tenant'
+      select_date   prefix, 'assured_shorthold_tenancy_notice_served_date'
+      fill_in_text_field prefix, 'assured_shorthold_tenancy_notice_served_by'
+    when 'Demoted'
+      select_date   prefix, 'demotion_order_date'
+      fill_in_text_field prefix, 'demotion_order_court'
+      choose_radio  prefix, 'previous_tenancy_type'
+    else
+      raise 'Unexpected tenancy type'
+    end
   end
 
   def fill_notice
