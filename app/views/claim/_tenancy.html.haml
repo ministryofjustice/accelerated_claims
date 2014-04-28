@@ -80,4 +80,4 @@
     .sub-panel.inset
       = form.date_select_field_set :demotion_order_date, 'Date of demotion order', class: 'date-picker', date_select_options: @date_select_options
       = form.text_field_row :demotion_order_court, label: 'County court where demotion order was made'
-      = form.radio_button_fieldset :previous_tenancy_type, 'What kind of tenancy agreement did the defendant have before it got demoted?', class: 'radio', choice: {'Assured' => Tenancy::ASSURED, 'Secure' => Tenancy::SECURE }
+      = form.radio_button_fieldset :previous_tenancy_type, 'What kind of tenancy agreement did the defendant have before it got demoted?', class: 'radio inline', choice: {'Assured' => Tenancy::ASSURED, 'Secure' => Tenancy::SECURE }

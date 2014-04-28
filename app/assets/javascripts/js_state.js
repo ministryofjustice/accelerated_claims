@@ -12,7 +12,6 @@ moj.Modules.jsState = (function() {
       storeState,
       getValue,
       getType,
-      getRadioVal,
       checkState,
       setRadio,
       setSelect,
@@ -75,7 +74,7 @@ moj.Modules.jsState = (function() {
 
   getValue = function( $el ) {
     if( $el.is( 'input' ) && $el.attr( 'type' ) === 'radio' ) {
-      return getRadioVal( $el );
+      return moj.Modules.tools.getRadioVal( $el );
     }
     
     return $el.val();
@@ -88,19 +87,6 @@ moj.Modules.jsState = (function() {
     if( $el.is( 'select' ) ) {
       return 'select';
     }
-  };
-
-  getRadioVal = function ( $el ) {
-    var radioVal = 'unchecked',
-        x;
-
-    for( x = 0; x < $el.length; x++ ) {
-      if( $( $el[ x ] ).is( ':checked' ) ) {
-        radioVal = $( $el[ x ] ).val();
-      }
-    }
-
-    return radioVal;
   };
 
   checkState = function() {

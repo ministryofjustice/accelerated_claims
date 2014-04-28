@@ -7,7 +7,8 @@ moj.Modules.tools = (function() {
   var //functions
       removeFromArray,
       numToWords,
-      ucFirst
+      ucFirst,
+      getRadioVal
       ;
 
   removeFromArray = function( arr, item ) {
@@ -98,12 +99,26 @@ moj.Modules.tools = (function() {
     return f + str.substr( 1 );
   };
 
+  getRadioVal = function ( $el ) {
+    var radioVal = 'unchecked',
+        x;
+
+    for( x = 0; x < $el.length; x++ ) {
+      if( $( $el[ x ] ).is( ':checked' ) ) {
+        radioVal = $( $el[ x ] ).val();
+      }
+    }
+
+    return radioVal;
+  };
+
   // public
 
   return {
     removeFromArray: removeFromArray,
     numToWords: numToWords,
-    ucFirst: ucFirst
+    ucFirst: ucFirst,
+    getRadioVal: getRadioVal
   };
 
 }());

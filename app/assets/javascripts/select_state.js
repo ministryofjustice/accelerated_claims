@@ -16,10 +16,9 @@ moj.Modules.selectState = (function() {
   };
 
   bindEvents = function() {
-    $( document ).on( 'click', 'fieldset.radio input[type="radio"]', function() {
+    $( document ).on( 'focus', 'fieldset.radio input[type="radio"]', function() {
       radioClick( $( this ) );
-    } );
-    $( document ).on( 'blur', 'fieldset.radio input[type="radio"]', function() {
+    } ).on( 'blur', 'fieldset.radio input[type="radio"]', function() {
       radioBlur( $( this ) );
     } );
   };

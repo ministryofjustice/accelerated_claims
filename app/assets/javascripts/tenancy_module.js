@@ -7,7 +7,6 @@ moj.Modules.tenancyModule = (function() {
   var //functions
       init,
       cacheEls,
-      bindEvents,
 
       //elements
       $div
@@ -15,19 +14,12 @@ moj.Modules.tenancyModule = (function() {
 
   init = function() {
     cacheEls();
-    bindEvents();
-
-    moj.log( 'uhhh' );
 
     $div.addClass( 'inset' ).find( '.inset' ).removeClass( 'inset' ).removeClass( 'sub-panel' );
   };
 
   cacheEls = function() {
     $div = $( '.assuredTenancyOptions' ).eq( 0 );
-  };
-
-  bindEvents = function() {
-
   };
 
   // public
