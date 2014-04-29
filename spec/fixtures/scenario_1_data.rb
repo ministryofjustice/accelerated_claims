@@ -77,7 +77,8 @@
       previous_tenancy_type: nil
     },
     notice: {
-      served_by: "Robert Linley",
+      served_by_name: "Robert Linley",
+      served_method: "In person",
       date_served: "2014-01-13",
       expiry_date: "2014-03-13"
     },

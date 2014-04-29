@@ -77,7 +77,8 @@
       previous_tenancy_type: nil
     },
     notice: {
-      served_by: "Dilan Lloyd",
+      served_by_name: "Dilan Lloyd",
+      served_method: "By post",
       date_served: "2013-12-13",
       expiry_date: "2014-02-13"
     },

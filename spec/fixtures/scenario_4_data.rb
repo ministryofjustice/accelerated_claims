@@ -77,7 +77,8 @@
       previous_tenancy_type: nil
     },
     notice: {
-      served_by: "Royal Mail",
+      served_by_name: "Royal Mail",
+      served_method: "In person",
       date_served: "2013-12-13",
       expiry_date: "2014-02-13"
     },

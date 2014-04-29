@@ -77,7 +77,8 @@
       previous_tenancy_type: nil
     },
     notice: {
-      served_by: "Royal mail",
+      served_by_name: "Royal mail",
+      served_method: "By post",
       date_served: "2013-09-08",
       expiry_date: "2013-11-08"
     },

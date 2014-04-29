@@ -77,7 +77,8 @@
       previous_tenancy_type: "secure"
     },
     notice: {
-      served_by: "Wendy Moore",
+      served_by_name: "Wendy Moore",
+      served_method: "By post",
       date_served: "2014-01-13",
       expiry_date: "2014-03-13"
     },

@@ -77,7 +77,8 @@
       previous_tenancy_type: nil
     },
     notice: {
-      served_by: "Heather Cox",
+      served_by_name: "Heather Cox",
+      served_method: "By email",
       date_served: "2013-09-30",
       expiry_date: "2013-11-30"
     },

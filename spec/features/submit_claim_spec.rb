@@ -25,7 +25,7 @@ feature "submit claim" do
     end
   end
 
-  Dir.glob('spec/fixtures/scenario_*_data.rb') do |item|
+  Dir.glob('spec/fixtures/scenario_1_data.rb') do |item|
     index = item[/scenario_(\d+)_data/,1].to_i
 
     data = load_fixture_data(index)
