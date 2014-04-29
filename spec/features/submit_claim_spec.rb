@@ -31,11 +31,14 @@ feature "submit claim" do
     data = load_fixture_data(index)
     title = data['title']
     description = data['description']
-    eval(%Q|
-      scenario "#{title}: #{description.first} (#{description.last})" do
-        run_scenario #{index}, js: false
-      end
-    |)
+
+    unless remote_test?
+      eval(%Q|
+        scenario "#{title}: #{description.first} (#{description.last})" do
+          run_scenario #{index}, js: false
+        end
+      |)
+    end
 
     eval(%Q|
       scenario "#{title} with JS: #{description.first} (#{description.last})", js: true do
