@@ -42,7 +42,8 @@ def claim_post_data
       },
       "notice" =>
       {
-        "served_by" => "Somebody",
+        "served_by_name" => "Somebody",
+        "served_method" => "In person",
         "date_served(3i)" => "2",
         "date_served(2i)" => "2",
         "date_served(1i)" => "2014",
@@ -174,7 +175,7 @@ def claim_formatted_data
     "notice_expiry_date_day" => "02",
     "notice_expiry_date_month" => "02",
     "notice_expiry_date_year" => "2014",
-    "notice_served_by" => "Somebody",
+    "notice_served_by" => "Somebody, In person",
     "order_cost" => 'No',
     "order_possession" => 'Yes',
     "license_multiple_occupation" => 'Yes',

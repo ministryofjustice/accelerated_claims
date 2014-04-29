@@ -234,7 +234,8 @@ class ClaimForm
 
   def fill_notice
     prefix = 'notice'
-    fill_in_text_field(prefix, 'served_by')
+    fill_in_text_field(prefix, 'served_by_name')
+    fill_in_text_field(prefix, 'served_method')
     select_date(prefix, 'date_served')
     select_date(prefix, 'expiry_date')
   end
