@@ -88,7 +88,8 @@ describe Claim do
           format["tenancy_demotion_order_date_year"] = ""
           format["tenancy_agreement_reissued_for_same_property"] = 'NA'
           format["tenancy_agreement_reissued_for_same_landlord_and_tenant"] = 'NA'
-          format["tenancy_assured_shorthold_tenancy_notice_served_by"] = ""
+          format["tenancy_assured_shorthold_tenancy_notice_served_by_name"] = ""
+          format["tenancy_assured_shorthold_tenancy_notice_served_method"] = ""
           format["tenancy_assured_shorthold_tenancy_notice_served_date_day"] = ""
           format["tenancy_assured_shorthold_tenancy_notice_served_date_month"] = ""
           format["tenancy_assured_shorthold_tenancy_notice_served_date_year"] = ""
