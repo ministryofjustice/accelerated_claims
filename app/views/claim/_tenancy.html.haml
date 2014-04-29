@@ -15,21 +15,21 @@
         .row.remove
           %p= "If you've had <strong>one</strong> tenancy agreement, enter the details".html_safe
 
-        = form.date_select_field_set :start_date, 'Start date of the tenancy agreement', class: 'date-picker rel', date_select_options: @date_select_options
+        = form.date_select_field_set :start_date, 'Start date of the tenancy agreement', class: 'date-picker rel conditional original', date_select_options: @date_select_options
 
       .sub-panel.hide.inset.js-tenancyNumber.multiple
         .row.remove
           = 'If you\'ve had <strong>more than one</strong> tenancy agreement, enter the details'.html_safe
 
-        = form.date_select_field_set :original_assured_shorthold_tenancy_agreement_date, 'Date of the original tenancy agreement', class: 'date-picker', date_select_options: @date_select_options
+        = form.date_select_field_set :original_assured_shorthold_tenancy_agreement_date, 'Date of the original tenancy agreement', class: 'date-picker conditional original', date_select_options: @date_select_options
 
-        = form.date_select_field_set :latest_agreement_date, 'Date of the most recent tenancy agreement', class: 'date-picker rel', date_select_options: @date_select_options
+        = form.date_select_field_set :latest_agreement_date, 'Date of the most recent tenancy agreement', class: 'date-picker rel conditional latest', date_select_options: @date_select_options
 
         = form.radio_button_fieldset :agreement_reissued_for_same_property, 'Is the tenancy agreement for the same property?', class: 'radio inline'
 
         = form.radio_button_fieldset :agreement_reissued_for_same_landlord_and_tenant, 'Is the tenancy agreement between the same landlord and tenant?', class: 'radio inline rel'
 
-      .row
+      .row.hide.js-conditionals
 
         %p= "If your original tenancy agreement (and any additional agreements) were made on or after <strong>28 February 1997</strong>, read the statements below.".html_safe
         
