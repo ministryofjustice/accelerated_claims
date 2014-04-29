@@ -36,7 +36,7 @@
   notice_date_served_day: "08",
   notice_date_served_month: "09",
   notice_date_served_year: "2013",
-  notice_served_by: "Royal mail",
+  notice_served_by: "Royal mail, By post",
   notice_expiry_date_day: "08",
   notice_expiry_date_month: "11",
   notice_expiry_date_year: "2013",

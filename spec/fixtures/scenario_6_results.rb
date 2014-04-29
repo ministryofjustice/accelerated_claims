@@ -36,7 +36,7 @@
   notice_date_served_day: "04",
   notice_date_served_month: "01",
   notice_date_served_year: "2014",
-  notice_served_by: "Amy Turner",
+  notice_served_by: "Amy Turner, By post",
   notice_expiry_date_day: "04",
   notice_expiry_date_month: "03",
   notice_expiry_date_year: "2014",

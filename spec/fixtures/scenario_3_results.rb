@@ -46,7 +46,7 @@
   notice_date_served_day: "30",
   notice_date_served_month: "09",
   notice_date_served_year: "2013",
-  notice_served_by: "Brent Hunt",
+  notice_served_by: "Brent Hunt, By post",
   notice_expiry_date_day: "30",
   notice_expiry_date_month: "11",
   notice_expiry_date_year: "2013",

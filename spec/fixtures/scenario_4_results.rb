@@ -36,7 +36,7 @@
   notice_date_served_day: "13",
   notice_date_served_month: "12",
   notice_date_served_year: "2013",
-  notice_served_by: "Royal Mail",
+  notice_served_by: "Royal Mail, In person",
   notice_expiry_date_day: "13",
   notice_expiry_date_month: "02",
   notice_expiry_date_year: "2014",
