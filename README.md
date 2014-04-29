@@ -21,6 +21,12 @@ export ANONYMOUS_PLACEHOLDER_EMAIL=[noreply-email]
 rails s
 ```
 
+You also need to run the PDF strike through service:
+
+```
+java -jar scripts/strike2-0.*.0-standalone.jar
+```
+
 
 ## Using the Vagrant development environment
 
