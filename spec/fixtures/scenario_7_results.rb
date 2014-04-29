@@ -46,7 +46,7 @@
   notice_date_served_day: "30",
   notice_date_served_month: "09",
   notice_date_served_year: "2013",
-  notice_served_by: "Heather Cox",
+  notice_served_by: "Heather Cox, By email",
   notice_expiry_date_day: "30",
   notice_expiry_date_month: "11",
   notice_expiry_date_year: "2013",

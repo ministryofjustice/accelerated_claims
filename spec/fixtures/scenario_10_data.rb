@@ -77,7 +77,8 @@
       previous_tenancy_type: nil
     },
     notice: {
-      served_by: "Somebody",
+      served_by_name: "Somebody",
+      served_method: "In person",
       date_served: "2014-02-02",
       expiry_date: "2014-02-02"
     },

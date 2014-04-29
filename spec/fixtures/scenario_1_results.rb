@@ -46,7 +46,7 @@
   notice_date_served_day: "13",
   notice_date_served_month: "01",
   notice_date_served_year: "2014",
-  notice_served_by: "Robert Linley",
+  notice_served_by: "Robert Linley, In person",
   notice_expiry_date_day: "13",
   notice_expiry_date_month: "03",
   notice_expiry_date_year: "2014",

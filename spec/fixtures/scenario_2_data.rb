@@ -77,7 +77,8 @@
       previous_tenancy_type: nil
     },
     notice: {
-      served_by: "Jay Schneider",
+      served_by_name: "Jay Schneider",
+      served_method: "By post",
       date_served: "2014-01-04",
       expiry_date: "2014-03-04"
     },

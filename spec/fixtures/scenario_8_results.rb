@@ -46,7 +46,7 @@
   notice_date_served_day: "13",
   notice_date_served_month: "12",
   notice_date_served_year: "2013",
-  notice_served_by: "Dilan Lloyd",
+  notice_served_by: "Dilan Lloyd, By post",
   notice_expiry_date_day: "13",
   notice_expiry_date_month: "02",
   notice_expiry_date_year: "2014",
