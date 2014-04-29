@@ -122,6 +122,8 @@ class PDFDocument
     when Tenancy::SECURE
       list << { page: 2, x: 430, y: 542, x1: 55, y1: 0, thickness: 1 }
       list << { page: 2, x: 266, y: 557, x1: 42, y1: 0, thickness: 1 }
+    else
+      # do nothing
     end
   end
 
@@ -135,22 +137,51 @@ class PDFDocument
 
   def strike_out_all result_path, list
     output = Tempfile.new('strike_out', '/tmp/')
+    output_path = output.path
 
-    strikes = nil
-    ActiveSupport::Notifications.instrument('store_strikes.pdf') do
-      strikes = Tempfile.new('strikes.json', '/tmp/')
-      strikes.write({ 'strikes' => list }.to_json)
-      strikes.close
-    end
-    path = `pwd`
     ActiveSupport::Notifications.instrument('add_strikes.pdf') do
-      cmd = "cd /tmp; java -jar #{STRIKER_JAR} -i #{result_path.sub('/tmp/','')} -o #{output.path.sub('/tmp/','')} -j #{strikes.path}; cd #{path}"
-
-      if !Rails.env.test? || ENV['browser']
-        `#{cmd}`
-        FileUtils.mv output.path, result_path
-      end
+      perform_strike_through list, result_path, output_path
     end
+  end
+
+  def perform_strike_through list, result_path, output_path
+    begin
+      connection = Faraday.new(url: 'http://localhost:4000')
+      response = connection.post do |request|
+        request.path = '/'
+        request.body = strike_through_json(list, result_path, output_path)
+        request.headers['Content-Type'] = 'application/json'
+        request.headers['Accept'] = 'application/json'
+      end
+    rescue Faraday::ConnectionFailed
+      use_strike_through_command list, result_path, output_path
+    end
+
+    if !Rails.env.test? || ENV['browser']
+      FileUtils.mv output_path, result_path
+    end
+  end
+
+  def use_strike_through_command list, result_path, output_path
+     if !Rails.env.test? || ENV['browser']
+       strikes = nil
+       ActiveSupport::Notifications.instrument('store_strikes.pdf') do
+         strikes = Tempfile.new('strikes.json', '/tmp/')
+         strikes.write({ 'strikes' => list }.to_json)
+         strikes.close
+       end
+       path = `pwd`
+       cmd = "cd /tmp; java -jar #{STRIKER_JAR} -i #{result_path.sub('/tmp/','')} -o #{output_path.sub('/tmp/','')} -j #{strikes.path}; cd #{path}"
+       `#{cmd}`
+     end
+  end
+
+  def strike_through_json list, result_path, output_path
+    {
+      'strikes' => list,
+      'input' => result_path,
+      'output' => output_path
+    }.to_json
   end
 
 end
