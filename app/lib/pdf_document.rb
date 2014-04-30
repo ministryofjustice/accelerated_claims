@@ -136,40 +136,39 @@ class PDFDocument
   end
 
   def strike_out_all result_path, list
-    output = Tempfile.new('strike_out', '/tmp/')
-    output_path = output.path
-
     ActiveSupport::Notifications.instrument('add_strikes.pdf') do
-      perform_strike_through list, result_path, output_path
+      perform_strike_through list, result_path
     end
   end
 
-  def perform_strike_through list, result_path, output_path
+  def perform_strike_through list, result_path
+    output = Tempfile.new('strike_out', '/tmp/')
+
     begin
       connection = Faraday.new(url: 'http://localhost:4000')
       response = connection.post do |request|
         ActiveSupport::Notifications.instrument('add_strikes_service.pdf') do
           request.path = '/'
-          request.body = strike_through_json(list, result_path, output_path)
+          request.body = strike_through_json(list, result_path, output.path)
           request.headers['Content-Type'] = 'application/json'
           request.headers['Accept'] = 'application/json'
         end
       end
     rescue Faraday::ConnectionFailed, Errno::EPIPE, Exception => e
-      puts "e: #{e.class}: #{e.to_s}:\n  #{e.backtrace[1..3].join("\n  ")}"
+      puts "e: #{e.class}: #{e.to_s}:\n  #{e.backtrace[1..3].join("\n  ")}" unless Rails.env.test?
       ActiveSupport::Notifications.instrument('error_add_strikes_commandline.pdf') do
-        use_strike_through_command list, result_path, output_path
+        use_strike_through_command list, result_path, output.path
       end
     end
 
-    unless File.exists?(output_path)
+    unless File.exists?(output.path)
       ActiveSupport::Notifications.instrument('missing_file_add_strikes_commandline.pdf') do
-        use_strike_through_command list, result_path, output_path
+        use_strike_through_command list, result_path, output.path
       end
     end
 
     if !Rails.env.test? || ENV['browser']
-      FileUtils.mv output_path, result_path
+      FileUtils.mv output.path, result_path
     end
   end
 
