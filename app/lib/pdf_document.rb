@@ -146,15 +146,19 @@ class PDFDocument
 
   def perform_strike_through list, result_path, output_path
     begin
-      connection = Faraday.new(url: 'http://localhost:4000')
-      response = connection.post do |request|
-        request.path = '/'
-        request.body = strike_through_json(list, result_path, output_path)
-        request.headers['Content-Type'] = 'application/json'
-        request.headers['Accept'] = 'application/json'
+      ActiveSupport::Notifications.instrument('add_strikes_service.pdf') do
+        connection = Faraday.new(url: 'http://localhost:4000')
+        response = connection.post do |request|
+          request.path = '/'
+          request.body = strike_through_json(list, result_path, output_path)
+          request.headers['Content-Type'] = 'application/json'
+          request.headers['Accept'] = 'application/json'
+        end
       end
     rescue Faraday::ConnectionFailed
-      use_strike_through_command list, result_path, output_path
+      ActiveSupport::Notifications.instrument('add_strikes_commandline.pdf') do
+        use_strike_through_command list, result_path, output_path
+      end
     end
 
     if !Rails.env.test? || ENV['browser']

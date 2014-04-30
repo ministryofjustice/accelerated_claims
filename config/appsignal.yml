@@ -2,7 +2,7 @@ default: &defaults
   push_api_key: "<%= ENV['APPSIGNAL_PUSH_API_KEY'] %>"
 
   # Your app's name
-  name: "AcceleratedClaims"
+  name: "accelerated_claims_<%= ENV['ENV_NAME'] %>"
 
   # The cuttoff point in ms above which a request is considered slow, default is 200
   # slow_request_threshold: 200
@@ -11,7 +11,7 @@ default: &defaults
 # to false to not push metrics for that environment.
 development:
   <<: *defaults
-  active: true
+  active: false
 
 production:
   <<: *defaults
