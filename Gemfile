@@ -38,7 +38,7 @@ group :production do
 end
 
 group :production, :development do
-  gem 'newrelic_rpm'
+#  gem 'newrelic_rpm'
 end
 
 group :development, :test do
