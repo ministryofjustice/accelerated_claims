@@ -143,6 +143,7 @@ class PDFDocument
 
     begin
       puts "result_pdf: #{result_pdf.path} size: #{File.size?(result_pdf.path)}"
+      result_pdf.chmod(0666)
       connection = Faraday.new(url: 'http://localhost:4000')
       response = connection.post do |request|
         ActiveSupport::Notifications.instrument('add_strikes_service.pdf') do
