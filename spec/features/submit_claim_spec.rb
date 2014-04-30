@@ -8,6 +8,7 @@ feature "submit claim" do
   end
 
   def run_scenario index, options={}
+    pending
     data = load_fixture_data(index)
     expected_data = load_expected_data(index)
 

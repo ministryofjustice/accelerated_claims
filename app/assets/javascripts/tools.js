@@ -8,7 +8,9 @@ moj.Modules.tools = (function() {
       removeFromArray,
       numToWords,
       ucFirst,
-      getRadioVal
+      getRadioVal,
+      lz,
+      stringToDate
       ;
 
   removeFromArray = function( arr, item ) {
@@ -99,7 +101,7 @@ moj.Modules.tools = (function() {
     return f + str.substr( 1 );
   };
 
-  getRadioVal = function ( $el ) {
+  getRadioVal = function( $el ) {
     var radioVal = 'unchecked',
         x;
 
@@ -112,13 +114,26 @@ moj.Modules.tools = (function() {
     return radioVal;
   };
 
+  lz = function( n ) {
+    return ( parseInt( n, 10 ) > 0  && parseInt( n, 10 ) < 10 ? '0' + n.toString() : n );
+  };
+
+  stringToDate = function( str ) {
+    // expects string in format YYYY-MM-DD
+    // returns date as number of ms
+    var d = new Date( str.split( '-' )[ 0 ], str.split( '-' )[ 1 ], str.split( '-' )[ 2 ], 0, 0, 0, 0 );
+    return d.getTime();
+  };
+
   // public
 
   return {
     removeFromArray: removeFromArray,
     numToWords: numToWords,
     ucFirst: ucFirst,
-    getRadioVal: getRadioVal
+    getRadioVal: getRadioVal,
+    lz: lz,
+    stringToDate: stringToDate
   };
 
 }());
