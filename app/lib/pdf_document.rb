@@ -161,6 +161,12 @@ class PDFDocument
       end
     end
 
+    unless File.exists?(output_path)
+      ActiveSupport::Notifications.instrument('missing_file_add_strikes_commandline.pdf') do
+        use_strike_through_command list, result_path, output_path
+      end
+    end
+
     if !Rails.env.test? || ENV['browser']
       FileUtils.mv output_path, result_path
     end
