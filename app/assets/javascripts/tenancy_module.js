@@ -8,7 +8,10 @@ moj.Modules.tenancyModule = (function() {
       init,
       cacheEls,
       bindEvents,
-      checkDate,
+      changeDate,
+      checkDates,
+      hideConditionals,
+      resetHidden,
 
       //elements
       $optionsDiv,
@@ -26,8 +29,6 @@ moj.Modules.tenancyModule = (function() {
     bindEvents();
 
     $optionsDiv.addClass( 'inset' ).find( '.inset' ).removeClass( 'inset' ).removeClass( 'sub-panel' );
-
-
   };
 
   cacheEls = function() {
@@ -39,20 +40,87 @@ moj.Modules.tenancyModule = (function() {
     $datepickers.each( function() {
       var $this = $( this );
       $this.find( 'select' ).on( 'change', function() {
-        checkDate( $this );
+        changeDate( $this );
       } );
+    } );
+
+    $( document ).on( 'change', 'input[name="claim[tenancy][assured_shorthold_tenancy_type]"]', function() {
+      resetHidden();
     } );
   };
 
-  checkDate = function( $fs ) {
+  changeDate = function( $fs ) {
     var day = $fs.find( '.day' ).val(),
         month = $fs.find( '.month' ).val(),
         year = $fs.find( '.year' ).val();
 
 
     if( day && month && year ) {
-      moj.log(day + '-' + month + '-' + year);
+      $fs.addClass( 'selected' );
+    } else {
+      $fs.removeClass( 'selected' );
     }
+
+    checkDates();
+    
+    if( $('.date-picker.selected').length === 0 ) {
+      hideConditionals();
+    }
+  };
+
+  checkDates = function() {
+    var showOlder = false,
+        showCurrent = false,
+        visDates = $datepickers.filter( ':visible' ),
+        d,
+        m,
+        y,
+        x,
+        selectedDate = 0,
+        firstDate = moj.Modules.tools.stringToDate( dates.first ),
+        secondDate = moj.Modules.tools.stringToDate( dates.second );
+
+
+    for( x = 0; x < visDates.length; x++) {
+      d = $( visDates[ x ] ).find( '.day' ).val();
+      m = ( $( visDates[ x ] ).find( '.month' ).val() - 1 );
+      y = $( visDates[ x ] ).find( '.year' ).val();
+
+      if( d !== '' && m !== '' && y !== '') {
+        selectedDate = moj.Modules.tools.stringToDate( y + '-' + m + '-' + d );
+      }
+
+      if( selectedDate > firstDate && selectedDate <= secondDate ) {
+        showOlder = true;
+      } else if( selectedDate > secondDate ) {
+        showCurrent = true;
+      }
+    }
+
+    if( showOlder ) {
+      $( '.statements.older, .js-conditionals' ).show();
+    } else {
+      $( '.statements.older' ).hide().find( 'input:checked' ).attr( 'checked', false );
+    }
+
+    if( showCurrent ) {
+      $( '.statements.current, .js-conditionals' ).show();
+    } else {
+      $( '.statements.current' ).hide().find( 'input:checked' ).attr( 'checked', false );
+    }
+
+    if( !showOlder && !showCurrent ) {
+      $( '.js-conditionals' ).hide();
+    }
+  };
+
+  hideConditionals = function() {
+    $( '.js-conditionals, .js-conditionals.statements' ).hide();
+  };
+
+  resetHidden = function() {
+    $( '.conditional:hidden' ).find( 'select' ).val( '' );
+    checkDates();
   };
 
   // public
