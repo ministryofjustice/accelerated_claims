@@ -146,9 +146,9 @@ class PDFDocument
 
   def perform_strike_through list, result_path, output_path
     begin
-      ActiveSupport::Notifications.instrument('add_strikes_service.pdf') do
-        connection = Faraday.new(url: 'http://localhost:4000')
-        response = connection.post do |request|
+      connection = Faraday.new(url: 'http://localhost:4000')
+      response = connection.post do |request|
+        ActiveSupport::Notifications.instrument('add_strikes_service.pdf') do
           request.path = '/'
           request.body = strike_through_json(list, result_path, output_path)
           request.headers['Content-Type'] = 'application/json'
