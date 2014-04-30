@@ -74,8 +74,8 @@
                 = form.check_box :applicable_statements_6, {}, "Yes", "No"
                 = 'You gave the defendant written notice (eg a letter) to say they\'d have an assured shorthold tenancy before they moved in'.html_safe
 
-                = form.text_field_row :assured_shorthold_tenancy_notice_served_by, label: 'Name of the person who served notice', class: 'rel'
-                = form.date_select_field_set :assured_shorthold_tenancy_notice_served_date, 'Date notice was served', class: 'date-picker rel', date_select_options: @date_select_options
+              = form.text_field_row :assured_shorthold_tenancy_notice_served_by, label: 'Name of the person who served notice', class: 'rel'
+              = form.date_select_field_set :assured_shorthold_tenancy_notice_served_date, 'Date notice was served', class: 'date-picker rel', date_select_options: @date_select_options
 
   .row.divider.hide.js-tenancyType.demoted
 

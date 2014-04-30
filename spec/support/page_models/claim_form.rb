@@ -216,13 +216,44 @@ class ClaimForm
     case get_data(prefix, 'tenancy_type')
     when 'Assured'
       choose_radio  prefix, 'assured_shorthold_tenancy_type'
-      select_date   prefix, 'original_assured_shorthold_tenancy_agreement_date'
-      select_date   prefix, 'start_date'
-      select_date   prefix, 'latest_agreement_date'
-      choose_radio  prefix,'agreement_reissued_for_same_property'
-      choose_radio  prefix, 'agreement_reissued_for_same_landlord_and_tenant'
-      select_date   prefix, 'assured_shorthold_tenancy_notice_served_date'
-      fill_in_text_field prefix, 'assured_shorthold_tenancy_notice_served_by'
+
+      case get_data(prefix, 'assured_shorthold_tenancy_type')
+      when 'one'
+        select_date   prefix, 'start_date'
+
+        if (Date.parse(get_data(prefix, 'start_date')) >= Date.parse('1989-01-15')) && (Date.parse(get_data(prefix, 'start_date')) <= Date.parse('1997-02-27'))
+          fill_in_text_field prefix, 'assured_shorthold_tenancy_notice_served_by'
+          select_date   prefix, 'assured_shorthold_tenancy_notice_served_date'
+        end
+
+      when 'multiple'
+
+        choose_radio  prefix,'agreement_reissued_for_same_property'
+        choose_radio  prefix, 'agreement_reissued_for_same_landlord_and_tenant'
+
+        select_date   prefix, 'original_assured_shorthold_tenancy_agreement_date'
+        select_date   prefix, 'latest_agreement_date'
+
+        puts get_data(prefix, 'original_assured_shorthold_tenancy_agreement_date')
+        if (Date.parse(get_data(prefix, 'original_assured_shorthold_tenancy_agreement_date')) >= Date.parse('1989-01-15')) && (Date.parse(get_data(prefix, 'original_assured_shorthold_tenancy_agreement_date')) <= Date.parse('1997-02-27'))
+
+          puts 'date is within first range'
+
+          # save_and_open_page
+
+          fill_in_text_field prefix, 'assured_shorthold_tenancy_notice_served_by'
+
+          puts 'try to fill notice date: ' + get_data(prefix, 'assured_shorthold_tenancy_notice_served_date')
+          select_date   prefix, 'assured_shorthold_tenancy_notice_served_date'
+          puts 'filled notice date'
+
+        else
+          puts 'date is not within first range'
+        end
+
+      else
+        raise 'Unexpected number of tenancy agreements'
+      end
     when 'Demoted'
       select_date   prefix, 'demotion_order_date'
       fill_in_text_field prefix, 'demotion_order_court'
