@@ -2,7 +2,7 @@
 = render partial: 'shared/flash'
 
 .container.start
-  %p There are a number of different ways to evict tenants from your property, use this form to make an #{link_to 'accelerated possession claim for property', 'https://www.gov.uk/gaining-possession-of-a-privately-rented-property-let-on-an-assured-shorthold-tenancy', :class => 'external', :rel => 'external', :id => 'find-out-more'}.
+  %p There are a different ways to evict tenants from your property, use this form to make an #{link_to 'accelerated possession claim for property', 'https://www.gov.uk/gaining-possession-of-a-privately-rented-property-let-on-an-assured-shorthold-tenancy', :class => 'external', :rel => 'external', :id => 'find-out-more'}.
 
   %p In most cases, the judge will order that the property is given back within 14 days of the order being made. This decision is usually made without a court hearing. You can’t ask tenants to leave before the end of the fixed-term tenancy or without a court order.
 
@@ -20,6 +20,10 @@
   .action-buttons.cf
     = link_to 'Start now', new_path, class: 'button primary large chevron left'
 
+  %p= "<strong>Do you qualify for legal aid?</strong>".html_safe
+
+  %p You may qualify for legal aid. Visit #{link_to 'www.gov.uk/legal-aid', 'https://www.gov.uk/legal-aid', :class => 'external', :rel => 'external', :id => 'legal-aid'} for more information or a citizens advice bureau at #{link_to 'www.adviceguide.org.uk', 'http://www.adviceguide.org.uk', :class => 'external', :rel => 'external', :id => 'advice-guide'}
+
   %p= "<strong>What happens next</strong>".html_safe
 
   %ul
@@ -28,7 +32,3 @@
     %li complete and sign the statement of truth on page 4 of the form
     %li send it to the court along with copies of required documents, eg the tenancy agreement
     %li pay the £175 court fee to start the claim.
-
-  %p= "<strong>Do you qualify for legal aid?</strong>".html_safe
-
-  %p You may qualify for legal aid. Visit #{link_to 'www.gov.uk/legal-aid', 'https://www.gov.uk/legal-aid', :class => 'external', :rel => 'external', :id => 'legal-aid'} for more information or a citizens advice bureau at #{link_to 'www.adviceguide.org.uk', 'http://www.adviceguide.org.uk', :class => 'external', :rel => 'external', :id => 'advice-guide'}
