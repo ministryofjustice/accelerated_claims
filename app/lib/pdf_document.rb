@@ -157,7 +157,7 @@ class PDFDocument
       puts "output_pdf: #{output_pdf.path} size: #{File.size?(output_pdf.path)}"
 
     rescue Faraday::ConnectionFailed, Errno::EPIPE, Exception => e
-      puts "e: #{e.class}: #{e.to_s}:\n  #{e.backtrace[1..3].join("\n  ")}" unless Rails.env.test?
+      puts "e: #{e.class}: #{e.to_s}:\n  #{e.backtrace[0..3].join("\n  ")}" unless Rails.env.test?
       ActiveSupport::Notifications.instrument('error_add_strikes_commandline.pdf') do
         use_strike_through_command list, result_pdf, output_pdf
       end
