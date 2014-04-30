@@ -16,7 +16,6 @@ class PDFDocument
           pdf.fill_form template, result_pdf, @json
         end
       ensure
-        result_pdf.chmod(0666)
         result_pdf.close
       end
 
@@ -140,7 +139,6 @@ class PDFDocument
 
   def perform_strike_through list, result_pdf
     output_pdf = Tempfile.new('strike_out', '/tmp/')
-    output_pdf.chmod(0666)
 
     begin
       puts "result_pdf: #{result_pdf.path} size: #{File.size?(result_pdf.path)}"
