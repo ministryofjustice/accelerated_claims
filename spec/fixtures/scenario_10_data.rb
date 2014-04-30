@@ -65,7 +65,7 @@
     tenancy: {
       tenancy_type: "Assured",
       assured_shorthold_tenancy_type: "multiple",
-      original_assured_shorthold_tenancy_agreement_date: "2010-01-01",
+      original_assured_shorthold_tenancy_agreement_date: "1995-01-01",
       start_date: nil,
       latest_agreement_date: "2011-01-01",
       agreement_reissued_for_same_property: "Yes",

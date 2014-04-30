@@ -23,7 +23,7 @@
   property_house: "Yes",
   tenancy_start_date_day: "01",
   tenancy_start_date_month: "01",
-  tenancy_start_date_year: "2010",
+  tenancy_start_date_year: "1995",
   tenancy_latest_agreement_date_day: "01",
   tenancy_latest_agreement_date_month: "01",
   tenancy_latest_agreement_date_year: "2011",
