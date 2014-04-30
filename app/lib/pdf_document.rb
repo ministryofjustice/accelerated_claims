@@ -155,8 +155,9 @@ class PDFDocument
           request.headers['Accept'] = 'application/json'
         end
       end
-    rescue Faraday::ConnectionFailed
-      ActiveSupport::Notifications.instrument('add_strikes_commandline.pdf') do
+    rescue Faraday::ConnectionFailed, Errno::EPIPE, Exception => e
+      puts "e: #{e.class}: #{e.to_s}:\n  #{e.backtrace[1..3].join("\n  ")}"
+      ActiveSupport::Notifications.instrument('error_add_strikes_commandline.pdf') do
         use_strike_through_command list, result_path, output_path
       end
     end
