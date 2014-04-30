@@ -15,60 +15,64 @@
         .row.remove
           %p= "If you've had <strong>one</strong> tenancy agreement, enter the details".html_safe
 
-        = form.date_select_field_set :start_date, 'Start date of the tenancy agreement', class: 'date-picker rel', date_select_options: @date_select_options
+        = form.date_select_field_set :start_date, 'Start date of the tenancy agreement', class: 'date-picker rel conditional original', date_select_options: @date_select_options
 
       .sub-panel.hide.inset.js-tenancyNumber.multiple
         .row.remove
           = 'If you\'ve had <strong>more than one</strong> tenancy agreement, enter the details'.html_safe
 
-        = form.date_select_field_set :original_assured_shorthold_tenancy_agreement_date, 'Date of the original tenancy agreement', class: 'date-picker', date_select_options: @date_select_options
+        = form.date_select_field_set :original_assured_shorthold_tenancy_agreement_date, 'Date of the original tenancy agreement', class: 'date-picker conditional original', date_select_options: @date_select_options
 
-        = form.date_select_field_set :latest_agreement_date, 'Date of the most recent tenancy agreement', class: 'date-picker rel', date_select_options: @date_select_options
+        = form.date_select_field_set :latest_agreement_date, 'Date of the most recent tenancy agreement', class: 'date-picker rel conditional latest', date_select_options: @date_select_options
 
         = form.radio_button_fieldset :agreement_reissued_for_same_property, 'Is the tenancy agreement for the same property?', class: 'radio inline'
 
         = form.radio_button_fieldset :agreement_reissued_for_same_landlord_and_tenant, 'Is the tenancy agreement between the same landlord and tenant?', class: 'radio inline rel'
 
-      .row
+      .row.hide.js-conditionals
 
-        %p= "If your original tenancy agreement (and any additional agreements) were made on or after <strong>28 February 1997</strong>, read the statements below.".html_safe
-        
-        %p
-          %strong Select all that apply:
+        .statements.hide.current
+          %p= "If your original tenancy agreement (and any additional agreements) were made on or after <strong>28 February 1997</strong>, read the statements below.".html_safe
+          
+          %p
+            %strong Select all that apply:
 
-        %ol.alphabetical
-          %li
-            = form.label :applicable_statements_1 do
-              = form.check_box :applicable_statements_1, {}, "Yes", "No"
-              = 'You didn\'t tell the defendant that the agreement would change at any time'.html_safe
-          %li
-            = form.label :applicable_statements_2 do
-              = form.check_box :applicable_statements_2, {}, "Yes", "No"
-              = "There\'s nothing in the agreement to say it\'s <strong>not</strong> an assured shorthold tenancy".html_safe
-          %li
-            = form.label :applicable_statements_3 do
-              = form.check_box :applicable_statements_3, {}, "Yes", "No"
-              = 'The defendant is not living in the property as an agricultural worker in connection with their work (so <a href="http://www.legislation.gov.uk/ukpga/1988/50/part/I/chapter/III" rel="external" class="external" target="_blank">Schedule 3, Housing Act 1988 does not apply</a>) '.html_safe
-        %p
+          %ol.alphabetical
+            %li
+              = form.label :applicable_statements_1 do
+                = form.check_box :applicable_statements_1, {}, "Yes", "No"
+                = 'You didn\'t tell the defendant that the agreement would change at any time'.html_safe
+            %li
+              = form.label :applicable_statements_2 do
+                = form.check_box :applicable_statements_2, {}, "Yes", "No"
+                = "There\'s nothing in the agreement to say it\'s <strong>not</strong> an assured shorthold tenancy".html_safe
+            %li
+              = form.label :applicable_statements_3 do
+                = form.check_box :applicable_statements_3, {}, "Yes", "No"
+                = 'The defendant is not living in the property as an agricultural worker in connection with their work (so <a href="http://www.legislation.gov.uk/ukpga/1988/50/part/I/chapter/III" rel="external" class="external" target="_blank">Schedule 3, Housing Act 1988 does not apply</a>) '.html_safe
+
+        %p.remove
           %strong (or)
-        %p= "If your original tenancy agreement (and any additional agreements) were made between <strong>15 January 1989 and 27 February 1997</strong>, read the statements below.".html_safe
-        
-        %p
-          %strong Select all that apply:
 
-        %ol.alphabetical
-          %li
-            = form.label :applicable_statements_4 do
-              = form.check_box :applicable_statements_4, {}, "Yes", "No"
-              = 'The tenancy agreement was for 6 months (or more)'.html_safe
-          %li
-            = form.label :applicable_statements_5 do
-              = form.check_box :applicable_statements_5, {}, "Yes", "No"
-              = 'You couldn\'t have ended the tenancy agreement in the first 6 months'.html_safe
-          %li.noticeStatement
-            = form.label :applicable_statements_6 do
-              = form.check_box :applicable_statements_6, {}, "Yes", "No"
-              = 'You gave the defendant written notice (e.g. a letter) to say they\'d have an assured shorthold tenancy before they moved in'.html_safe
+        .statements.hide.older
+          %p= "If your original tenancy agreement (and any additional agreements) were made between <strong>15 January 1989 and 27 February 1997</strong>, read the statements below.".html_safe
+          
+          %p
+            %strong Select all that apply:
+
+          %ol.alphabetical
+            %li
+              = form.label :applicable_statements_4 do
+                = form.check_box :applicable_statements_4, {}, "Yes", "No"
+                = 'The tenancy agreement was for 6 months (or more)'.html_safe
+            %li
+              = form.label :applicable_statements_5 do
+                = form.check_box :applicable_statements_5, {}, "Yes", "No"
+                = 'You couldn\'t have ended the tenancy agreement in the first 6 months'.html_safe
+            %li.noticeStatement
+              = form.label :applicable_statements_6 do
+                = form.check_box :applicable_statements_6, {}, "Yes", "No"
+                = 'You gave the defendant written notice (eg a letter) to say they\'d have an assured shorthold tenancy before they moved in'.html_safe
 
               = form.text_field_row :assured_shorthold_tenancy_notice_served_by, label: 'Name of the person who served notice', class: 'rel'
               = form.date_select_field_set :assured_shorthold_tenancy_notice_served_date, 'Date notice was served', class: 'date-picker rel', date_select_options: @date_select_options
