@@ -28,4 +28,5 @@ Capybara.register_driver :browserstack do |app|
     desired_capabilities: cap)
 end
 
+Capybara.javascript_driver = :browserstack
 Capybara.default_driver = :browserstack
