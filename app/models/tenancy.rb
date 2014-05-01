@@ -52,12 +52,15 @@ class Tenancy < BaseClass
       :assured_shorthold_tenancy_notice_served_by,
       :assured_shorthold_tenancy_notice_served_date]
 
-  STATEMENTS_FIELDS = [:applicable_statements_1,
+  LATER_PERIOD_STATEMENTS = [:applicable_statements_1,
       :applicable_statements_2,
-      :applicable_statements_3,
-      :applicable_statements_4,
+      :applicable_statements_3]
+
+  EARLIER_PERIOD_STATEMENTS = [:applicable_statements_4,
       :applicable_statements_5,
       :applicable_statements_6]
+
+  STATEMENTS_FIELDS = LATER_PERIOD_STATEMENTS + EARLIER_PERIOD_STATEMENTS
 
   with_options if: :demoted_tenancy? do |t|
     t.validates :demotion_order_date, presence: { message: 'must be selected' }
@@ -99,6 +102,16 @@ class Tenancy < BaseClass
       absence: { message: "must be blank if more than one tenancy agreement" }
   end
 
+  with_options if: :in_first_rules_period? do |t|
+    t.validates *LATER_PERIOD_STATEMENTS,
+      inclusion: { in: ['No'], message: "leave blank as you specified original tenancy agreement was made before #{Tenancy::RULES_CHANGE_DATE.to_s(:printed)}" }
+  end
+
+  with_options if: :in_second_rules_period? do |t|
+    t.validates *EARLIER_PERIOD_STATEMENTS,
+      inclusion: { in: ['No'], message: "leave blank as you specified original tenancy agreement was made on or after #{Tenancy::RULES_CHANGE_DATE.to_s(:printed)}" }
+  end
+
   with_options if: -> tenancy { tenancy.assured_shorthold_tenancy_notice_served_date.present? } do |t|
     t.validates :assured_shorthold_tenancy_notice_served_by, presence: { message: 'must be completed' }
   end
@@ -108,11 +121,31 @@ class Tenancy < BaseClass
   end
 
   def self.in_first_rules_period? date
-    date >= Tenancy::APPLICABLE_FROM_DATE && date < Tenancy::RULES_CHANGE_DATE
+    date.is_a?(Date) && (date >= Tenancy::APPLICABLE_FROM_DATE) && (date < Tenancy::RULES_CHANGE_DATE)
   end
 
   def self.in_second_rules_period? date
-    date >= Tenancy::RULES_CHANGE_DATE
+    date.is_a?(Date) && (date >= Tenancy::RULES_CHANGE_DATE)
+  end
+
+  def in_first_rules_period?
+    if one_tenancy_agreement?
+      Tenancy.in_first_rules_period? start_date
+    elsif multiple_tenancy_agreements?
+      Tenancy.in_first_rules_period? original_assured_shorthold_tenancy_agreement_date
+    else
+      false
+    end
+  end
+
+  def in_second_rules_period?
+    if one_tenancy_agreement?
+      Tenancy.in_second_rules_period? start_date
+    elsif multiple_tenancy_agreements?
+      Tenancy.in_second_rules_period? original_assured_shorthold_tenancy_agreement_date
+    else
+      false
+    end
   end
 
   def only_start_date_present?
