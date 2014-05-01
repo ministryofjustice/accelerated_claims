@@ -11,6 +11,7 @@ moj.Modules.jsValidate = (function() {
       jsValidate,
       checkData,
       submitForm,
+      clearHidden,
 
       //elements
       $form,
@@ -78,6 +79,7 @@ moj.Modules.jsValidate = (function() {
   checkData = function() {
     if( moj.Modules.tools.getRadioVal( $numClaimants ).toString() === '2' ) {
       if( moj.Modules.tools.getRadioVal( $secondClaimantAddressSameAsFirst ) === 'yes' ) {
+        $( '#claimant_two .address' ).show();
         $secondClaimantAddress.val( $firstClaimantAddress.val() );
         $secondClaimantPostcode.val( $firstClaimantPostcode.val() );
       }
@@ -87,12 +89,19 @@ moj.Modules.jsValidate = (function() {
   };
 
   submitForm = function() {
+    clearHidden();
+
     $form.unbind( 'submit' );
 
     // this looks horrible but it's necessary
     window.setTimeout( function(){
       $submitButton.trigger( 'click' );
     }, 100 );
+  };
+
+  clearHidden = function() {
+    $( '[type=text]:hidden, textarea:hidden, select:hidden', $form ).val('');
+    $( ':checked:hidden', $form ).attr( 'checked', false );
   };
 
   // public
