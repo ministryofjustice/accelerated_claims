@@ -35,6 +35,7 @@ private
   def capybara_download_pdf
     expected_url = remote_test? ? "/accelerated#{@url}" : @url
     expect(Capybara.current_path).to eql expected_url
+    page.should have_content('View and print completed form')
     click_link 'View and print completed form'
     assert_pdf_content_type(page.response_headers)
 

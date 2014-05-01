@@ -234,21 +234,9 @@ class ClaimForm
         select_date   prefix, 'original_assured_shorthold_tenancy_agreement_date'
         select_date   prefix, 'latest_agreement_date'
 
-        puts get_data(prefix, 'original_assured_shorthold_tenancy_agreement_date')
         if (Date.parse(get_data(prefix, 'original_assured_shorthold_tenancy_agreement_date')) >= Date.parse('1989-01-15')) && (Date.parse(get_data(prefix, 'original_assured_shorthold_tenancy_agreement_date')) <= Date.parse('1997-02-27'))
-
-          puts 'date is within first range'
-
-          # save_and_open_page
-
           fill_in_text_field prefix, 'assured_shorthold_tenancy_notice_served_by'
-
-          puts 'try to fill notice date: ' + get_data(prefix, 'assured_shorthold_tenancy_notice_served_date')
           select_date   prefix, 'assured_shorthold_tenancy_notice_served_date'
-          puts 'filled notice date'
-
-        else
-          puts 'date is not within first range'
         end
 
       else

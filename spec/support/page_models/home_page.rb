@@ -6,6 +6,7 @@ class HomePage
   end
 
   def start_claim
+    page.has_text?('Start now')
     click_link 'Start now'
   end
 end
