@@ -99,13 +99,13 @@ moj.Modules.tenancyModule = (function() {
     if( showOlder ) {
       $( '.statements.older, .js-conditionals' ).show();
     } else {
-      $( '.statements.older' ).hide().find( 'input:checked' ).attr( 'checked', false );
+      $( '.statements.older' ).hide().find( ':checked' ).attr( 'checked', false );
     }
 
     if( showCurrent ) {
       $( '.statements.current, .js-conditionals' ).show();
     } else {
-      $( '.statements.current' ).hide().find( 'input:checked' ).attr( 'checked', false );
+      $( '.statements.current' ).hide().find( ':checked' ).attr( 'checked', false );
     }
 
     if( !showOlder && !showCurrent ) {
