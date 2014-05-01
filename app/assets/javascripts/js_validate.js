@@ -42,10 +42,7 @@ moj.Modules.jsValidate = (function() {
 
   bindEvents = function() {
     $form.on( 'submit', function( e ) {
-      var data;
-
       e.preventDefault();
-
       jsValidate();
     } );
   };
