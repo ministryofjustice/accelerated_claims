@@ -235,6 +235,15 @@ describe Tenancy do
           subject.errors.full_messages.should == ["Start date is invalid date"]
         end
       end
+
+      context 'when start_date before 15 January 1989' do
+      end
+
+      context 'when start_date between 15 January 1989 and 27 February 1997' do
+      end
+
+      context 'when start_date on or after 28 February 1997' do
+      end
     end
 
     shared_examples_for 'validates yes/no' do

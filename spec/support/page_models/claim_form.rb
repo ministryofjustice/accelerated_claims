@@ -219,26 +219,9 @@ class ClaimForm
 
       case get_data(prefix, 'assured_shorthold_tenancy_type')
       when 'one'
-        select_date   prefix, 'start_date'
-
-        if (Date.parse(get_data(prefix, 'start_date')) >= Date.parse('1989-01-15')) && (Date.parse(get_data(prefix, 'start_date')) <= Date.parse('1997-02-27'))
-          fill_in_text_field prefix, 'assured_shorthold_tenancy_notice_served_by'
-          select_date   prefix, 'assured_shorthold_tenancy_notice_served_date'
-        end
-
+        fill_single_tenancy
       when 'multiple'
-
-        choose_radio  prefix,'agreement_reissued_for_same_property'
-        choose_radio  prefix, 'agreement_reissued_for_same_landlord_and_tenant'
-
-        select_date   prefix, 'original_assured_shorthold_tenancy_agreement_date'
-        select_date   prefix, 'latest_agreement_date'
-
-        if (Date.parse(get_data(prefix, 'original_assured_shorthold_tenancy_agreement_date')) >= Date.parse('1989-01-15')) && (Date.parse(get_data(prefix, 'original_assured_shorthold_tenancy_agreement_date')) <= Date.parse('1997-02-27'))
-          fill_in_text_field prefix, 'assured_shorthold_tenancy_notice_served_by'
-          select_date   prefix, 'assured_shorthold_tenancy_notice_served_date'
-        end
-
+        fill_multiple_tenancy
       else
         raise 'Unexpected number of tenancy agreements'
       end
@@ -248,6 +231,31 @@ class ClaimForm
       choose_radio  prefix, 'previous_tenancy_type'
     else
       raise 'Unexpected tenancy type'
+    end
+  end
+
+  def fill_single_tenancy
+    prefix = 'tenancy'
+    select_date prefix, 'start_date'
+    start_date = Date.parse(get_data(prefix, 'start_date'))
+
+    if Tenancy.in_first_rules_period? start_date
+      fill_in_text_field prefix, 'assured_shorthold_tenancy_notice_served_by'
+      select_date   prefix, 'assured_shorthold_tenancy_notice_served_date'
+    end
+  end
+
+  def fill_multiple_tenancy
+    prefix = 'tenancy'
+    choose_radio  prefix,'agreement_reissued_for_same_property'
+    choose_radio  prefix, 'agreement_reissued_for_same_landlord_and_tenant'
+    select_date   prefix, 'original_assured_shorthold_tenancy_agreement_date'
+    select_date   prefix, 'latest_agreement_date'
+    start_date = Date.parse(get_data(prefix, 'original_assured_shorthold_tenancy_agreement_date'))
+
+    if Tenancy.in_first_rules_period? start_date
+      fill_in_text_field prefix, 'assured_shorthold_tenancy_notice_served_by'
+      select_date   prefix, 'assured_shorthold_tenancy_notice_served_date'
     end
   end
 

@@ -32,8 +32,8 @@
       .row.hide.js-conditionals
 
         .statements.hide.current
-          %p= "If your original tenancy agreement (and any additional agreements) were made on or after <strong>28 February 1997</strong>, read the statements below.".html_safe
-          
+          %p= "If your original tenancy agreement (and any additional agreements) were made on or after <strong>#{(Tenancy::RULES_CHANGE_DATE).to_s(:printed)}</strong>, read the statements below.".html_safe
+
           %p
             %strong Select all that apply:
 
@@ -55,8 +55,8 @@
           %strong (or)
 
         .statements.hide.older
-          %p= "If your original tenancy agreement (and any additional agreements) were made between <strong>15 January 1989 and 27 February 1997</strong>, read the statements below.".html_safe
-          
+          %p= "If your original tenancy agreement (and any additional agreements) were made between <strong>#{Tenancy::APPLICABLE_FROM_DATE.to_s(:printed)} and #{(Tenancy::RULES_CHANGE_DATE - 1).to_s(:printed)}</strong>, read the statements below.".html_safe
+
           %p
             %strong Select all that apply:
 
