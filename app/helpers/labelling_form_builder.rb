@@ -63,6 +63,10 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     "#{@object_name.tr('[]','_')}_#{attribute}_error".squeeze('_')
   end
 
+  def id_for attribute
+    error_for?(attribute) ? error_id_for(attribute) : ''
+  end
+
   private
 
   def fieldset_tag(legend = nil, options = {}, &block)
@@ -84,10 +88,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   def set_class_and_id attribute, options
     options[:class] = css_for(attribute, options)
     options[:id] = id_for(attribute) unless id_for(attribute).blank?
-  end
-
-  def id_for attribute
-    error_for?(attribute) ? error_id_for(attribute) : ''
   end
 
   def radio_button_row attribute, label, choice

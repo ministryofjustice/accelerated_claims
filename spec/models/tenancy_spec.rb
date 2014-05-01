@@ -235,6 +235,59 @@ describe Tenancy do
           subject.errors.full_messages.should == ["Start date is invalid date"]
         end
       end
+
+      context 'when start_date before 15 January 1989' do
+        subject{ assured_tenancy(assured_shorthold_tenancy_type: 'one',
+          start_date: (Tenancy::APPLICABLE_FROM_DATE - 1)) }
+
+        # it { should_not be_valid }
+      end
+
+      context 'when start_date between 15 January 1989 and 27 February 1997' do
+        subject{ assured_tenancy(assured_shorthold_tenancy_type: 'one',
+          start_date: Tenancy::APPLICABLE_FROM_DATE) }
+
+        context 'and incorrect applicable statements selected' do
+          before do
+            subject.applicable_statements_1 = 'Yes'
+            subject.applicable_statements_2 = 'Yes'
+            subject.applicable_statements_3 = 'Yes'
+          end
+
+          it { should_not be_valid }
+          it 'should have validation errors' do
+            subject.valid?
+            ["Applicable statements 1 leave blank as you specified original tenancy agreement was made before 28 February 1997",
+             "Applicable statements 2 leave blank as you specified original tenancy agreement was made before 28 February 1997",
+             "Applicable statements 3 leave blank as you specified original tenancy agreement was made before 28 February 1997"].each do |msg|
+              subject.errors.full_messages.should include msg
+            end
+          end
+        end
+      end
+
+      context 'when start_date on or after 28 February 1997' do
+        subject{ assured_tenancy(assured_shorthold_tenancy_type: 'one',
+          start_date: Tenancy::RULES_CHANGE_DATE) }
+
+        context 'and incorrect applicable statements selected' do
+          before do
+            subject.applicable_statements_4 = 'Yes'
+            subject.applicable_statements_5 = 'Yes'
+            subject.applicable_statements_6 = 'Yes'
+          end
+
+          it { should_not be_valid }
+          it 'should have validation errors' do
+            subject.valid?
+            ["Applicable statements 4 leave blank as you specified original tenancy agreement was made on or after 28 February 1997",
+             "Applicable statements 5 leave blank as you specified original tenancy agreement was made on or after 28 February 1997",
+             "Applicable statements 6 leave blank as you specified original tenancy agreement was made on or after 28 February 1997"].each do |msg|
+              subject.errors.full_messages.should include msg
+            end
+          end
+        end
+      end
     end
 
     shared_examples_for 'validates yes/no' do
