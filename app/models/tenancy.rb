@@ -3,6 +3,9 @@ class Tenancy < BaseClass
   ASSURED = 'assured'
   SECURE  = 'secure'
 
+  APPLICABLE_FROM_DATE = Date.parse('1989-01-15') # 15 January 1989
+  RULES_CHANGE_DATE = Date.parse('1997-02-28') # 28 February 1997
+
   attr_accessor :tenancy_type
   validates :tenancy_type, presence: { message: 'must be selected' }, inclusion: { in: ['demoted', 'assured'] }
 
@@ -102,6 +105,14 @@ class Tenancy < BaseClass
 
   with_options if: -> tenancy { tenancy.assured_shorthold_tenancy_notice_served_by.present? } do |t|
     t.validates :assured_shorthold_tenancy_notice_served_date, presence: { message: 'must be entered' }
+  end
+
+  def self.in_first_rules_period? date
+    date >= Tenancy::APPLICABLE_FROM_DATE && date < Tenancy::RULES_CHANGE_DATE
+  end
+
+  def self.in_second_rules_period? date
+    date >= Tenancy::RULES_CHANGE_DATE
   end
 
   def only_start_date_present?

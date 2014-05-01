@@ -15,7 +15,7 @@ class ClaimController < ApplicationController
       with_css_classes: true,
       prompt: { day: 'Day', month: 'Month', year: 'Year' },
       start_year: Date.today.year,
-      end_year: 1989
+      end_year: Tenancy::APPLICABLE_FROM_DATE.year
     }
     if(data = session[:claim])
       @claim = Claim.new(data)
