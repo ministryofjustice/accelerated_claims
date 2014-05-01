@@ -44,7 +44,7 @@ moj.Modules.tenancyModule = (function() {
       } );
     } );
 
-    $( document ).on( 'change', 'input[name="claim[tenancy][assured_shorthold_tenancy_type]"]', function() {
+    $( document ).on( 'change', '[name="claim[tenancy][assured_shorthold_tenancy_type]"]', function() {
       resetHidden();
     } );
   };
@@ -80,6 +80,8 @@ moj.Modules.tenancyModule = (function() {
         firstDate = moj.Modules.tools.stringToDate( dates.first ),
         secondDate = moj.Modules.tools.stringToDate( dates.second );
 
+    moj.log( 'checkDates' );
+    moj.log( 'visDates.length: ' + visDates.length );
 
     for( x = 0; x < visDates.length; x++) {
       d = $( visDates[ x ] ).find( '.day' ).val();
@@ -126,7 +128,8 @@ moj.Modules.tenancyModule = (function() {
   // public
 
   return {
-    init: init
+    init: init,
+    checkDates: checkDates
   };
 
 }());

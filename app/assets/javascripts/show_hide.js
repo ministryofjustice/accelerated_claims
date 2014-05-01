@@ -9,7 +9,6 @@ moj.Modules.showHide = (function() {
       cacheEls,
       bindEvents,
       chooseOption,
-      showPreChecked,
 
       //elements
       radios
@@ -18,11 +17,16 @@ moj.Modules.showHide = (function() {
   init = function() {
     cacheEls();
     bindEvents();
-    showPreChecked();
+
+    //moj.Modules.jsState.registerField( $( '[name='+$el.data( 'yesnoid' )+']' ) );
+
+    radios.each( function() {
+      moj.Modules.jsState.registerField( $( this ) );
+    } );
   };
 
   cacheEls = function() {
-    radios = $( '.js-depend input[type=radio]' );
+    radios = $( '.js-depend [type=radio]' );
   };
 
   bindEvents = function() {
@@ -38,16 +42,6 @@ moj.Modules.showHide = (function() {
 
     $groupEls.hide();
     $groupEls.filter( '.' + clickValue ).show();
-  };
-
-  showPreChecked = function() {
-    // TODO: remove this once state saving is working - there are no pre-checked by default buttons
-    $( radios ).each( function() {
-      var $this = $( this );
-      if( $this.is( ':checked' ) ) {
-        $this.click();
-      }
-    } );
   };
 
   // public

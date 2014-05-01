@@ -36,7 +36,7 @@ moj.Modules.claimantAddress = (function() {
 
     $el.find( '.sub-panel.address' ).addClass( 'rel' ).before( template( context ) ).hide();
 
-    moj.Modules.jsState.registerField( $( 'input[name=claimant2address]' ) );
+    moj.Modules.jsState.registerField( $( '[name=claimant2address]' ) );
   };
 
   // public
