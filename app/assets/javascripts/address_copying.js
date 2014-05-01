@@ -28,7 +28,7 @@ moj.Modules.addressCopying = (function() {
   };
 
   cacheEls = function() {
-    $form = $( 'form' ).eq( 0 );
+    $form = $( 'form#claimForm' ).eq( 0 );
     $submitButton = $( '#submit', $form );
     $numClaimants = $( 'input[name="multiplePanelRadio_claimants"]' );
     $secondClaimantAddressSameAsFirst = $( 'input[name="claimant2address"]' );
