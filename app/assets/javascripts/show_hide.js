@@ -18,8 +18,6 @@ moj.Modules.showHide = (function() {
     cacheEls();
     bindEvents();
 
-    //moj.Modules.jsState.registerField( $( '[name='+$el.data( 'yesnoid' )+']' ) );
-
     radios.each( function() {
       moj.Modules.jsState.registerField( $( this ) );
     } );
