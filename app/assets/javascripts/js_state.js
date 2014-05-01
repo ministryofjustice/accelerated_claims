@@ -16,6 +16,7 @@ moj.Modules.jsState = (function() {
       setRadio,
       setSelect,
       setText,
+      focusRadios,
 
       //elements
       $stateField,
@@ -27,8 +28,9 @@ moj.Modules.jsState = (function() {
   init = function() {
     cacheEls();
 
-    //TODO: turn this back on
-    // checkState();
+    checkState();
+    focusRadios();
+    moj.Modules.tenancyModule.checkDates();
   };
 
   cacheEls = function() {
@@ -60,6 +62,7 @@ moj.Modules.jsState = (function() {
 
     for( x = 0; x < watchEls.length; x++ ) {
       obj = {
+        id:   $( watchEls[ x ] ).attr( 'id' ),
         name:   $( watchEls[ x ] ).attr( 'name' ),
         type:   getType( $( watchEls[ x ] ) ),
         value:  getValue( $( watchEls[ x ] ) )
@@ -108,7 +111,7 @@ moj.Modules.jsState = (function() {
 
   setRadio = function( obj ) {
     if( obj.value !== 'unchecked' ) {
-      $( 'input#' + obj.name + '-' + obj.value ).trigger( 'click' );
+      $( '[name="' + obj.name + '"][value="' + obj.value + '"]' ).trigger( 'click' );
     }
   };
 
@@ -121,7 +124,11 @@ moj.Modules.jsState = (function() {
       moj.Modules.titleFields.switchToText( $( 'select[name="' + obj.name + '"]' ) );
     }
 
-    $( 'input[name="' + obj.name + '"]' ).val( obj.value );
+    $( '[name="' + obj.name + '"]' ).val( obj.value );
+  };
+
+  focusRadios = function() {
+    $( '[type="radio"]:checked' ).trigger( 'focus' ).trigger( 'blur' );
   };
 
   // public

@@ -16,9 +16,9 @@ moj.Modules.selectState = (function() {
   };
 
   bindEvents = function() {
-    $( document ).on( 'focus', 'fieldset.radio input[type="radio"]', function() {
+    $( document ).on( 'focus', 'fieldset.radio [type="radio"]', function() {
       radioClick( $( this ) );
-    } ).on( 'blur', 'fieldset.radio input[type="radio"]', function() {
+    } ).on( 'blur', 'fieldset.radio [type="radio"]', function() {
       radioBlur( $( this ) );
     } );
   };
@@ -26,7 +26,7 @@ moj.Modules.selectState = (function() {
   radioClick = function( $el ) {
     var name = $el.attr( 'name' );
 
-    $( 'input[name="' + name + '"]' ).closest( 'label' ).removeClass( 'highlight' );
+    $( '[name="' + name + '"]' ).closest( 'label' ).removeClass( 'highlight' );
     $el.closest( 'label' ).addClass( 'highlight focus' );
   };
 

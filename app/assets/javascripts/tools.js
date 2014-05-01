@@ -1,5 +1,5 @@
 /*jslint browser: true, evil: false, plusplus: true, white: true, indent: 2 */
-/*global moj */
+/*global moj, $, Handlebars */
 
 moj.Modules.tools = (function() {
   "use strict";
@@ -10,7 +10,9 @@ moj.Modules.tools = (function() {
       ucFirst,
       getRadioVal,
       lz,
-      stringToDate
+      stringToDate,
+      dedupeArray,
+      jsError
       ;
 
   removeFromArray = function( arr, item ) {
@@ -125,7 +127,33 @@ moj.Modules.tools = (function() {
     return d.getTime();
   };
 
-  // public
+  dedupeArray = function( arr ) {
+    var i,
+        len = arr.length,
+        out = [],
+        obj = {};
+    
+    for ( i = 0; i < len; i++ ) {
+      obj[ arr[ i ] ] = 0;
+    }
+    for ( i in obj ) {
+      out.push( i );
+    }
+    return out;
+  };
+
+  jsError = function( arr ) {
+    var source = $( '#js-error-summary' ).html(),
+        template = Handlebars.compile( source ),
+        context;
+
+    context = {
+      errors: arr
+    };
+
+    $( '#content > header.page-header ' ).after( template( context ) );
+    window.scrollTo( 0, 0 );
+  };
 
   return {
     removeFromArray: removeFromArray,
@@ -133,7 +161,9 @@ moj.Modules.tools = (function() {
     ucFirst: ucFirst,
     getRadioVal: getRadioVal,
     lz: lz,
-    stringToDate: stringToDate
+    stringToDate: stringToDate,
+    dedupeArray: dedupeArray,
+    jsError: jsError
   };
 
 }());
