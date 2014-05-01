@@ -1,13 +1,6 @@
 %script#hb-yesno(type='text/x-handlebars-template')
-  %fieldset.radio.inline
-    %h3
-      {{#if question}}
-      {{question}}
-      {{/if}}
-      {{#if req}}
-      %span.req> *
-      {{/if}}
-    
+  %fieldset.radio.inline.jsVal
+    %h3.caption {{question}}
     .options(data-reverse='{{#if reverse}}true{{else}}false{{/if}}')
       .option
         %label(for='{{id}}-yes')
@@ -19,8 +12,8 @@
           %input.yesno(type='radio' name='{{id}}' value='no' id='{{id}}-no')
 
 %script#multiple-radio(type='text/x-handlebars-template')
-  %fieldset.radio.inline
-    %h3 {{caption}}
+  %fieldset.radio.inline.jsVal
+    %h3.caption {{caption}}
     .options
       {{#each items}}
       .option
@@ -39,3 +32,14 @@
 
 %script#title-input(type='text/x-handlebars-template')
   %input.smalltext(type='text' id='{{id}}' name='{{name}}')
+
+%script#js-error-summary(type='text/x-handlebars-template')
+  %section.flash.error-summary.js-errors
+    %h2#error-heading You need to fix the errors on this page before continuing.
+    %p See highlighted errors below.
+    %ul
+      {{#each errors}}
+      %li
+        %a(href='#jsError{{num}}') {{text}}
+      {{/each}}
+

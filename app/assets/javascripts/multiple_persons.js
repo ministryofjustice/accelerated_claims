@@ -72,7 +72,7 @@ moj.Modules.multiplePersons = (function() {
 
         showMultiples( $panel, 0 );
 
-        moj.Modules.jsState.registerField( $( 'input[name="multiplePanelRadio_' + $panel.attr( 'id' ) + '"]' ) );
+        moj.Modules.jsState.registerField( $( '[name="multiplePanelRadio_' + $panel.attr( 'id' ) + '"]' ) );
       }
     }
   };
@@ -88,7 +88,7 @@ moj.Modules.multiplePersons = (function() {
       if( ( x + 1 ) > show ) {
         $childItems.eq( x ).prev( '.divider' ).hide();
         $childItems.eq( x ).hide();
-        $childItems.eq( x ).find( 'input[type=text], textarea' ).val( '' );
+        $childItems.eq( x ).find( '[type=text], textarea' ).val( '' );
       } else {
         $childItems.eq( x ).prev( '.divider' ).show();
         $childItems.eq( x ).show();

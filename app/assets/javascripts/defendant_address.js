@@ -36,7 +36,7 @@ moj.Modules.defendantAddress = (function() {
 
     $el.before( template( context ) ).addClass( 'rel' ).hide().find( '.caption' ).remove();
 
-    moj.Modules.jsState.registerField( $( 'input[name=defendant' + ( n + 1 ) + 'address]' ) );
+    moj.Modules.jsState.registerField( $( '[name=defendant' + ( n + 1 ) + 'address]' ) );
   };
 
   // public
