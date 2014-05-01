@@ -7,7 +7,7 @@ feature 'Providing feedback' do
   context 'with email' do
     scenario "submitting feedback successfully" do
       visit '/'
-      page.should have_content("your feedback")
+      page.should have_content('your feedback')
       click_link 'your feedback'
 
       fill_in 'Your comments', with: comments_text
@@ -27,7 +27,7 @@ feature 'Providing feedback' do
   context 'without email' do
     scenario "submitting feedback successfully" do
       visit '/'
-      page.should have_content("your feedback")
+      page.should have_content('your feedback')
       click_link 'your feedback'
 
       fill_in 'Your comments', with: comments_text
