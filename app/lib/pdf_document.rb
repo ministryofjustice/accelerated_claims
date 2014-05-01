@@ -141,7 +141,7 @@ class PDFDocument
     output_pdf = Tempfile.new('strike_out', '/tmp/')
 
     begin
-      puts "result_pdf: #{result_pdf.path} size: #{File.size?(result_pdf.path)}"
+      Rails.logger.debug "result_pdf: #{result_pdf.path} size: #{File.size?(result_pdf.path)}"
       connection = Faraday.new(url: 'http://localhost:4000')
       response = connection.post do |request|
         ActiveSupport::Notifications.instrument('add_strikes_service.pdf') do
@@ -151,11 +151,11 @@ class PDFDocument
           request.headers['Accept'] = 'application/json'
         end
       end
-      puts "response: #{response.body}"
-      puts "output_pdf: #{output_pdf.path} size: #{File.size?(output_pdf.path)}"
+      Rails.logger.debug "response: #{response.body}"
+      Rails.logger.debug "output_pdf: #{output_pdf.path} size: #{File.size?(output_pdf.path)}"
 
     rescue Faraday::ConnectionFailed, Errno::EPIPE, Exception => e
-      puts "e: #{e.class}: #{e.to_s}:\n  #{e.backtrace[0..3].join("\n  ")}" unless Rails.env.test?
+      Rails.logger.warn "e: #{e.class}: #{e.to_s}:\n  #{e.backtrace[0..3].join("\n  ")}"
       ActiveSupport::Notifications.instrument('error_add_strikes_commandline.pdf') do
         use_strike_through_command list, result_pdf, output_pdf
       end
@@ -170,7 +170,7 @@ class PDFDocument
     if !Rails.env.test? || ENV['browser']
       FileUtils.mv output_pdf.path, result_pdf.path
     end
-    puts "result_pdf: #{result_pdf.path} size: #{File.size?(result_pdf.path)}"
+    Rails.logger.debug "result_pdf: #{result_pdf.path} size: #{File.size?(result_pdf.path)}"
   end
 
   def use_strike_through_command list, result_pdf, output_pdf
