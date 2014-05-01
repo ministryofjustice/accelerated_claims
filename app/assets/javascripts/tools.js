@@ -147,8 +147,6 @@ moj.Modules.tools = (function() {
         template = Handlebars.compile( source ),
         context;
 
-    $( '.error-summary' ).remove();
-
     context = {
       errors: arr
     };

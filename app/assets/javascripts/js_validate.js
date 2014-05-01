@@ -55,6 +55,10 @@ moj.Modules.jsValidate = (function() {
         checkEls = $( '.jsVal:visible' ),
         x;
 
+    $( '.error-summary' ).remove();
+    $( 'h3 > .error' ).remove();
+    $( 'fieldset.error' ).removeClass( 'error' );
+
     for( x = 0; x < checkEls.length; x++ ) {
       if( $( checkEls[ x ] ).hasClass( 'radio' ) ) {
         if( $( checkEls[ x ] ).find( ':checked' ).length === 0 ) {
@@ -70,7 +74,6 @@ moj.Modules.jsValidate = (function() {
     if( errors.length === 0) {
       checkData();
     } else {
-      // alert( errors.join( '\n' ) );
       moj.Modules.tools.jsError( errors );
     }
   };
