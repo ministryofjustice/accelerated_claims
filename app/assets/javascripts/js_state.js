@@ -39,7 +39,6 @@ moj.Modules.jsState = (function() {
 
   registerField = function( $el ) {
     watchEls[ watchEls.length ] = $el;
-    moj.log( 'REGISTER: ' + $el.attr( 'name' ) );
     $el.on( 'change', function() {
       storeState();
     } );
