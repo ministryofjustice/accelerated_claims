@@ -1,6 +1,6 @@
 = claim_form.fields_for tenancy, builder: LabellingFormBuilder do |form|
   .sub-panel
-    = form.radio_button_fieldset :tenancy_type, 'What kind of tenancy agreement do you have with the defendant?', class: 'radio js-depend', choice: {'Assured shorthold tenancy <span class="hint">This is the most common form of <a href="https://www.gov.uk/tenancy-agreements-a-guide-for-landlords/tenancy-types" class="external" rel="external" target="_blank">tenancy</a></span>' => 'assured', 'Demoted assured shorthold tenancy <span class="hint">This is a tenancy agreement that has been \'demoted\' by the court. This may be because the tenants behaved anti-socially or used the property for illegal activity.</span>' => 'demoted'}, data: { depend: "tenancyType" }
+    = form.radio_button_fieldset :tenancy_type, 'What kind of tenancy agreement do you have with the defendant?', class: 'radio js-depend', choice: {'Assured shorthold tenancy <span class="hint">This is the most common form of <a href="https://www.gov.uk/tenancy-agreements-a-guide-for-landlords/tenancy-types" class="external" rel="external" target="_blank">tenancy</a></span>' => 'assured', 'Demoted assured shorthold tenancy <span class="hint">This is a tenancy agreement that has been \'demoted\' by the court. This may be because the tenants behaved anti-socially or used the property for illegal activity</span>' => 'demoted'}, data: { depend: "tenancyType" }
 
   .row.divider.hide.js-tenancyType.assured
 
