@@ -1,14 +1,14 @@
 = claim_form.fields_for deposit, builder: LabellingFormBuilder do |form|
 
-  = form.radio_button_fieldset :received, 'Did you receive a deposit from the tenant on or after 6 April 2007?', class: 'radio inline'
+  = form.radio_button_fieldset :received, 'Did you receive a deposit from the tenant on or after 6 April 2007? <span class="hint block">(a cash deposit)</span>'.html_safe, class: 'radio inline js-depend', data: { depend: 'deposit' }
 
-  .row.information
+  .row.information.hide.js-deposit.yes
     %p.nonjs If you answered <strong>yes</strong>, you need to be sure that:
     %ul
       %li= 'you kept the deposit in a <a href="https://www.gov.uk/tenancy-deposit-protection/overview" class="external" rel="external" target="_blank">government-backed deposit protection scheme</a> and met the scheme\'s requirements'.html_safe
       %li= 'you gave the tenant all the information about the deposit scheme that <a href="https://www.gov.uk/tenancy-deposit-protection/information-landlords-must-give-tenants" class="external" rel="external" target="_blank">landlords must provide</a>'.html_safe
 
-  .sub-panel.inset
+  .sub-panel.inset.hide.js-deposit.yes
     - if false # suppress field until we receive new pdf
       = form.date_select_field_set :information_given_date, 'Enter the date when this information was given to the defendant', class: 'date-picker', date_select_options: @date_select_options
     = form.text_field_row  :ref_number, label: 'Enter the tenancy deposit scheme reference number'

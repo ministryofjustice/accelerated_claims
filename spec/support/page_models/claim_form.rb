@@ -269,7 +269,6 @@ class ClaimForm
 
   def fill_licences
     prefix = 'license'
-
     choose_radio(prefix, 'multiple_occupation')
 
     case hmo = get_data(prefix, 'multiple_occupation')
@@ -286,6 +285,7 @@ class ClaimForm
         fill_in_text_field(prefix, 'issued_by')
         select_date(prefix, 'issued_date')
       when /No/
+      when nil
       else
         raise hmo
     end
@@ -294,7 +294,16 @@ class ClaimForm
   def fill_deposit
     prefix = 'deposit'
     choose_radio(prefix,'received')
-    fill_in_text_field(prefix, 'ref_number')
+
+    case received = get_data(prefix,'received')
+      when /Yes/
+        fill_in_text_field(prefix, 'ref_number')
+      when /No/
+      when nil
+      else
+        raise received
+    end
+    
     choose_radio(prefix, 'as_property')
   end
 
