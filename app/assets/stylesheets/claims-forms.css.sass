@@ -506,6 +506,40 @@ fieldset.plain
       li
         margin: 5px 0
 
+    .statements
+      clear: both
+      float: left
+      & + .statements
+        padding-top: 30px
+      ol
+        margin:
+          top: 0
+          bottom: 20px
+        clear: both
+        float: left
+        padding:
+          left: 30px
+          right: 30px
+      li
+        list-style-type: none
+        margin-bottom: 15px
+        clear: both
+        float: left
+
+        input[type="checkbox"]
+          width: 20px
+
+        &.noticeStatement
+          .row, fieldset
+            clear: both
+            float: left
+            margin-top: 10px
+            padding:
+              left: 20px
+
+            .row
+              padding-left: 0
+
 
 .js-enabled
   .details
@@ -532,30 +566,6 @@ fieldset.plain
   .row, fieldset
     float: left
 
-
-.statements
-  clear: both
-  float: left
-  & + .statements
-    padding-top: 30px
-  ol
-    margin:
-      top: 0
-      bottom: 20px
-    clear: both
-    float: left
-    padding:
-      left: 30px
-      right: 30px
-  li
-    list-style-type: none
-    margin-bottom: 15px
-    clear: both
-    float: left
-
-    .row, fieldset
-      padding:
-        left: 20px
 
 
 .confirmation-intro
