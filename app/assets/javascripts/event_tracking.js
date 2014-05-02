@@ -4,53 +4,26 @@
 moj.Modules.eventTracking = (function() {
   "use strict";
 
-  var //functions
-      init,
-      cacheEls,
-      bindEvents,
-      eventCategory,
+  var init,
       dispatchTrackingEvent,
-
-      // vars
       $tracked_elements
       ;
 
   init = function() {
-    cacheEls();
-    bindEvents();
-  };
-
-  cacheEls = function() {
-    $tracked_elements = $( '[data-event-label]' );
-  };
-
-  bindEvents = function() {
-    $tracked_elements.on( 'click', function() {
-      var category = eventCategory( $(this) ),
+    $( '[data-event-label]' ).on( 'click', function() {
+      var category = this['href'].replace(/https?:\/\/[^\/]+/i, ""),
+          action   = this.text,
           label    = $( this ).data( 'event-label' );
 
-      dispatchTrackingEvent( category, 'click', label );
+      dispatchTrackingEvent( category, action, label );
     });
   };
 
-  dispatchTrackingEvent = function( category, event, label ) {
-    if( typeof ga == 'function' ) { // google analytics
-      ga( 'send', 'event', category, event, label );
-    }
-    if( typeof _paq == 'object' ) { // piwik
-      _paq.push( ['trackPageView', category+'/'+label] )
+  dispatchTrackingEvent = function( category, action, label ) {
+    if( typeof ga == 'function' ) {
+      ga( 'send', 'event', category, action, label ); // google analytics
     }
   }
-
-  eventCategory = function( $el ) {
-    var cat = 'undefined';
-    if( $el.hasClass( 'button' ) || $el.get(0).tagName == 'button' ) {
-      cat = 'button';
-    }
-    return cat;
-  }
-
-  // public
 
   return {
     init: init
