@@ -8,7 +8,8 @@ moj.Modules.selectState = (function() {
       init,
       bindEvents,
       radioClick,
-      radioBlur
+      elementBlur,
+      checkboxClick
       ;
 
   init = function() {
@@ -16,11 +17,17 @@ moj.Modules.selectState = (function() {
   };
 
   bindEvents = function() {
-    $( document ).on( 'focus', 'fieldset.radio [type="radio"]', function() {
+    $( document ).on( 'focus', '.option [type="radio"]', function() {
       radioClick( $( this ) );
-    } ).on( 'blur', 'fieldset.radio [type="radio"]', function() {
-      radioBlur( $( this ) );
+    } ).on( 'blur', '.option [type="radio"]', function() {
+      elementBlur( $( this ) );
+    } ).on( 'click', '.option [type="checkbox"]', function() {
+      checkboxClick( $( this ) );
+    } ).on( 'blur', '.option [type="checkbox"]', function() {
+      elementBlur( $( this ) );
     } );
+
+    $( ':checked' ).closest( 'label' ).addClass( 'highlight' );
   };
 
   radioClick = function( $el ) {
@@ -30,7 +37,16 @@ moj.Modules.selectState = (function() {
     $el.closest( 'label' ).addClass( 'highlight focus' );
   };
 
-  radioBlur = function( $el ) {
+  checkboxClick = function( $el ) {
+    $el.closest( 'label' ).addClass( 'focus' );
+    if( $el.is( ':checked' ) ) {
+      $el.closest( 'label' ).addClass( 'highlight' );
+    } else {
+      $el.closest( 'label' ).removeClass( 'highlight' );
+    }
+  };
+
+  elementBlur = function( $el ) {
     $el.closest( 'label' ).removeClass( 'focus' );
   };
 
