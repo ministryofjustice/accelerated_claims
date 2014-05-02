@@ -3,7 +3,7 @@
     = 'You need to tell us about how you gave the defendant <a href="https://www.gov.uk/gaining-possession-of-a-privately-rented-property-let-on-an-assured-shorthold-tenancy#seeking-possession-under-section-21" class="external" rel="external" target="_blank">notice to leave the property</a>'.html_safe
 
   = form.text_field_row  :served_by_name, label: 'Name of the person who served the notice'
-  = form.text_field_row  :served_method, label: 'How was it served? <span class="hint block">(eg in person or by post)</span>'
+  = form.text_field_row  :served_method, label: 'How was it served? <span class="hint block">(For example in person or by post)</span>'
 
   = form.date_select_field_set :date_served, 'Date notice served', class: 'date-picker', date_select_options: @date_select_options
   = form.date_select_field_set :expiry_date, 'Date notice ended', class: 'date-picker', date_select_options: @date_select_options

@@ -1,7 +1,7 @@
 %header.content-header
   %p Use this form to report a problem or suggest improvements to the service.
   %p
-    %strong Please don't include any sensitive personal information (eg. bank details, address etc.)
+    %strong Please don't include any sensitive personal information (For example bank details, address etc.)
 
 = form_for @feedback, url: feedback_path, html: { novalidate: 'novalidate' }, builder: LabellingFormBuilder do |f|
   %input{name: 'feedback[referrer]', type: 'hidden', value: (params[:referrer] || (params[:feedback][:referrer] if params[:feedback]))}/
