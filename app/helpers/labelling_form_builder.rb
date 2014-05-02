@@ -45,6 +45,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def fieldset attribute, options={}
+    options.delete(:id) unless options[:id].present?
     @template.haml_tag haml_tag_text('fieldset', attribute, options) do
       yield
     end
@@ -63,8 +64,8 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     "#{@object_name.tr('[]','_')}_#{attribute}_error".squeeze('_')
   end
 
-  def id_for attribute
-    error_for?(attribute) ? error_id_for(attribute) : ''
+  def id_for attribute, default=nil
+    error_for?(attribute) ? error_id_for(attribute) : (default || '')
   end
 
   private
@@ -79,7 +80,11 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     legend_options = {:id => id}
     options[:"aria-describedby"] = id
 
-    output = tag(:fieldset, options, true)
+    options_for_fieldset = {}.merge(options)
+    options_for_fieldset.delete(:choice)
+    options_for_fieldset.delete(:date_select_options)
+
+    output = tag(:fieldset, options_for_fieldset, true)
     output.safe_concat(content_tag(:h3, legend, legend_options)) unless legend.blank?
     output.concat(capture(&block)) if block_given?
     output.safe_concat("</fieldset>")
