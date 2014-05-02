@@ -1,6 +1,6 @@
 = claim_form.fields_for order, builder: LabellingFormBuilder do |form|
   .row
-    You need to confirm that you want the court to order the defendant to move out of the property. You can also ask that the tenant pay the costs of submitting this claim. (If you are using a legal representative, then this doesn't include their fees).
+    You need to confirm that you want the court to order the defendant to move out of the property. You can also ask that the tenant pay the costs of submitting this claim.
   %fieldset.radio{ id: (form.error_for?(:possession) ? form.error_id_for(:possession) : '') }
     %h3
       Select all options that apply:
@@ -14,6 +14,6 @@
       - form.row :cost do
         = form.label :cost do
           = form.check_box :cost, {}, "Yes", "No"
-          The defendant must pay the fees for this claim
+          The defendant must pay the cost of submitting this claim
 
   .row.divider
