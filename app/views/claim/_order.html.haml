@@ -1,7 +1,7 @@
 = claim_form.fields_for order, builder: LabellingFormBuilder do |form|
   .row
     You need to confirm that you want the court to order the defendant to move out of the property. You can also ask that the tenant pay the costs of submitting this claim.
-  %fieldset.radio{ id: (form.error_for?(:possession) ? form.error_id_for(:possession) : '') }
+  %fieldset.radio{ id: (form.error_for?(:possession) ? form.error_id_for(:possession) : 'possession_fieldset') }
     %h3
       Select all options that apply:
     .options
