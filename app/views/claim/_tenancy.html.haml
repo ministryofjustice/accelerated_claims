@@ -1,6 +1,6 @@
 = claim_form.fields_for tenancy, builder: LabellingFormBuilder do |form|
   .sub-panel
-    = form.radio_button_fieldset :tenancy_type, 'What kind of tenancy agreement do you have with the defendant?', class: 'radio js-depend', choice: {'Assured shorthold tenancy <span class="hint">This is the most common form of <a href="https://www.gov.uk/tenancy-agreements-a-guide-for-landlords/tenancy-types" class="external" rel="external" target="_blank">tenancy</a></span>' => 'assured', 'Demoted assured shorthold tenancy <span class="hint">This is a tenancy agreement that has been \'demoted\' by the court. This may be because the tenants behaved anti-socially or used the property for illegal activity</span>' => 'demoted'}, data: { depend: "tenancyType" }
+    = form.radio_button_fieldset :tenancy_type, 'What kind of tenancy agreement do you have with the defendant?', class: 'radio js-depend', choice: {'Assured shorthold tenancy <span class="hint">This is the most common form of <a href="https://www.gov.uk/tenancy-agreements-a-guide-for-landlords/tenancy-types" class="external" rel="external" target="_blank">tenancy</a></span>' => 'assured', 'Demoted assured shorthold tenancy <span class="hint">This is a tenancy agreement that has been ‘demoted’ by the court. This may be because the tenants behaved anti-socially or used the property for illegal activity</span>' => 'demoted'}, data: { depend: "tenancyType" }
 
   .row.divider.hide.js-tenancyType.assured
 
@@ -13,13 +13,13 @@
     .sub-panel.assuredTenancyOptions.hide.js-tenancyNumber.one.multiple
       .sub-panel.hide.inset.js-tenancyNumber.one
         .row.remove
-          %p= "If you've had <strong>one</strong> tenancy agreement, enter the details".html_safe
+          %p= "If you’ve had <strong>one</strong> tenancy agreement, enter the details".html_safe
 
         = form.date_select_field_set :start_date, 'Start date of the tenancy agreement', class: 'date-picker rel conditional original', date_select_options: @date_select_options
 
       .sub-panel.hide.inset.js-tenancyNumber.multiple
         .row.remove
-          = 'If you\'ve had <strong>more than one</strong> tenancy agreement, enter the details'.html_safe
+          = 'If you’ve had <strong>more than one</strong> tenancy agreement, enter the details'.html_safe
 
         = form.date_select_field_set :original_assured_shorthold_tenancy_agreement_date, 'Date of the original tenancy agreement', class: 'date-picker conditional original', date_select_options: @date_select_options
 
@@ -32,7 +32,7 @@
       .row.hide.js-conditionals
 
         .statements.hide.current
-          %p= "If your original tenancy agreement (and any additional agreements) were made on or after <strong>#{(Tenancy::RULES_CHANGE_DATE).to_s(:printed)}</strong>, read the statements below.".html_safe
+          %p= "If your original tenancy agreement (and any additional agreements) were made <strong>on or after #{(Tenancy::RULES_CHANGE_DATE).to_s(:printed)}</strong>, read the statements below.".html_safe
 
           %p
             %strong Select all that apply:
@@ -41,14 +41,14 @@
             %li{ id: form.id_for(:applicable_statements_1, 'as1').to_s }
               = form.label :applicable_statements_1 do
                 = form.check_box :applicable_statements_1, {}, "Yes", "No"
-                = 'You didn\'t tell the defendant that the agreement would change at any time'.html_safe
+                = 'You didn’t tell the defendant that the agreement would change at any time'.html_safe
               - if form.error_for? :applicable_statements_1
                 %br
                 = form.error_span :applicable_statements_1
             %li{ id: form.id_for(:applicable_statements_2, 'as2').to_s }
               = form.label :applicable_statements_2 do
                 = form.check_box :applicable_statements_2, {}, "Yes", "No"
-                = "There\'s nothing in the agreement to say it\'s <strong>not</strong> an assured shorthold tenancy".html_safe
+                = "There’s nothing in the agreement to say it’s <strong>not</strong> an assured shorthold tenancy".html_safe
               - if form.error_for? :applicable_statements_2
                 %br
                 = form.error_span :applicable_statements_2
@@ -88,7 +88,7 @@
             %li{ id: form.id_for(:applicable_statements_6, 'as6').to_s }
               = form.label :applicable_statements_6 do
                 = form.check_box :applicable_statements_6, {}, "Yes", "No"
-                = 'You couldn\'t have ended the tenancy agreement in the first 6 months'.html_safe
+                = 'You couldn’t have ended the tenancy agreement in the first 6 months'.html_safe
               - if form.error_for? :applicable_statements_6
                 %br
                 = form.error_span :applicable_statements_6
