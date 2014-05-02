@@ -272,18 +272,23 @@ class ClaimForm
 
     choose_radio(prefix, 'multiple_occupation')
 
-    case part = get_data(prefix, 'issued_under_act_part')
-      when /Part2/
-        choose 'claim_license_issued_under_act_part_part2'
-      when /Part3/
-        choose 'claim_license_issued_under_act_part_part3'
-      when nil
+    case hmo = get_data(prefix, 'multiple_occupation')
+      when /Yes/
+        case part = get_data(prefix, 'issued_under_act_part')
+          when /Part2/
+            choose 'claim_license_issued_under_act_part_part2'
+          when /Part3/
+            choose 'claim_license_issued_under_act_part_part3'
+          when nil
+          else
+            raise part
+        end
+        fill_in_text_field(prefix, 'issued_by')
+        select_date(prefix, 'issued_date')
+      when /No/
       else
-        raise part
+        raise hmo
     end
-
-    fill_in_text_field(prefix, 'issued_by')
-    select_date(prefix, 'issued_date')
   end
 
   def fill_deposit
