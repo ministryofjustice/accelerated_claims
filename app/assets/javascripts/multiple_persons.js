@@ -88,7 +88,6 @@ moj.Modules.multiplePersons = (function() {
       if( ( x + 1 ) > show ) {
         $childItems.eq( x ).prev( '.divider' ).hide();
         $childItems.eq( x ).hide();
-        $childItems.eq( x ).find( '[type=text], textarea' ).val( '' );
       } else {
         $childItems.eq( x ).prev( '.divider' ).show();
         $childItems.eq( x ).show();
