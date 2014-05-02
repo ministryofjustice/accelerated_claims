@@ -10,6 +10,7 @@ AcceleratedClaims::Application.routes.draw do
     get  '/download',      controller: :claim, action: :download
 
     get  '/cookies',       controller: :static, action: :cookies
+    get  '/terms',         controller: :static, action: :terms
 
     # zendesk
     resource :feedback,   only: [:new, :create], controller: 'feedback' 
