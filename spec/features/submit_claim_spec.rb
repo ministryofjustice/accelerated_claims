@@ -20,7 +20,9 @@ feature "submit claim" do
         claim_form.complete_form
       end
       claim_form.submit
+
       confirmation_page.is_displayed?.should be_true, claim_form.validation_error_text
+
       pdf_filename = confirmation_page.download_pdf
       pdf.load pdf_filename
       if(ENV.key? 'save_pdf')
