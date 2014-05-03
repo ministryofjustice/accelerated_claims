@@ -33,6 +33,7 @@ moj.Modules.scrolling = (function() {
   };
 
   setup = function() {
+    $( '#ypos' ).remove(); // just in case
     $form.append( '<input type="hidden" id="ypos" name="ypos" />' );
     moj.Modules.jsState.registerField( $( '#ypos' ) );
   };
