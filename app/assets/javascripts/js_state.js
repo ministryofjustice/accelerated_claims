@@ -16,6 +16,7 @@ moj.Modules.jsState = (function() {
       setRadio,
       setSelect,
       setText,
+      setScroll,
       focusRadios,
 
       //elements
@@ -104,6 +105,8 @@ moj.Modules.jsState = (function() {
           setRadio( stateArr[ x ] );
         } else if( stateArr[ x ].type === 'select' ) {
           setSelect( stateArr[ x ] );
+        } else if( stateArr[ x ].type === 'hidden' && stateArr[ x ].name === 'ypos' ) {
+          setScroll( stateArr[ x ] );
         }
       }
     }
@@ -125,6 +128,14 @@ moj.Modules.jsState = (function() {
     }
 
     $( '[name="' + obj.name + '"]' ).val( obj.value );
+  };
+
+  setScroll = function( obj ) {
+    if( obj.value ) {
+      window.setTimeout( function() {
+        window.scrollTo( 0, obj.value );
+      }, 350 );
+    }
   };
 
   focusRadios = function() {
