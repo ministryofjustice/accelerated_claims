@@ -11,6 +11,7 @@ moj.Modules.claimantContact = (function() {
       toggleDetailsBlock,
       showPanel,
       hidePanel,
+      checkPanel,
 
       //elements
       $panel,
@@ -22,6 +23,7 @@ moj.Modules.claimantContact = (function() {
     bindEvents();
 
     hidePanel();
+    checkPanel();
   };
 
   cacheEls = function() {
@@ -49,6 +51,28 @@ moj.Modules.claimantContact = (function() {
 
   showPanel = function() {
     $panel.add( $panel.prev( '.divider' ) ).show();
+  };
+
+  checkPanel = function() {
+    var subPanels = $( '.sub-panel', $panel ),
+        x,
+        y,
+        show,
+        els;
+
+    for( x = 0; x < subPanels.length; x++ ) {
+      els = $( subPanels[ x ] ).find( '[type="text"], textarea' );
+      moj.log( els.length );
+      show = false;
+      for( y = 0; y < els.length; y++ ) {
+        if( $( els[ y ] ).val() !== '' ) {
+          show = true;
+        }
+      }
+      if( show ) {
+        $( subPanels[ x ] ).addClass( 'open' );
+      }
+    }
   };
 
   // public
