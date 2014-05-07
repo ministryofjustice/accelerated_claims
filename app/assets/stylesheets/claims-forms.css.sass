@@ -158,6 +158,7 @@ span.error
 
 .section-header
   font-size: 24px
+  font-weight: bold
   letter-spacing: .005em
   margin:
     left: 0
@@ -168,9 +169,6 @@ span.error
     font-size: 19px
     letter-spacing: 0
     margin-top: 4px
-
-h3.section-header
-  font-weight: bold
 
 
 
@@ -230,7 +228,7 @@ fieldset.plain
     &.pound
       background-image: image-url('poundbg-disabled.png')
 
-  h4
+  .section-header
     margin:
       left: 90px
       top: 40px
@@ -324,7 +322,7 @@ fieldset.plain
       @include media(mobile)
         padding-left: 7px
 
-    legend, h3
+    legend, h3, .legend
       font-size: 19px
     &.radio
       .options
