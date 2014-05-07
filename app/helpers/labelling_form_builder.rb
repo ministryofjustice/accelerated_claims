@@ -68,7 +68,35 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     error_for?(attribute) ? error_id_for(attribute) : (default || '')
   end
 
+  def labelled_check_box attribute, label, yes='Yes', no='No', options={}
+    hidden_input = check_box_input_hidden attribute, options, yes, no
+
+    labeled_input = label(attribute) do
+      check_box_input(attribute, options, yes, no) + label
+    end
+
+    list = [hidden_input, labeled_input]
+
+    if error_for?(attribute)
+      list << error_span(attribute)
+    end
+
+    list.join("\n").html_safe
+  end
+
   private
+
+  def check_box_input attribute, options, yes, no
+    html = check_box(attribute, options, yes, no)
+    html.gsub!(/<[^<]*type="hidden"[^>]*>/,'')
+    html.html_safe
+  end
+
+  def check_box_input_hidden attribute, options, yes, no
+    html = check_box(attribute, options, yes, no)
+    html.gsub!(/.*(<[^<]*type="hidden"[^>]*>).*/, '\1')
+    html.html_safe
+  end
 
   def fieldset_tag(legend = nil, options = {}, &block)
     if options.has_key?(:id)
