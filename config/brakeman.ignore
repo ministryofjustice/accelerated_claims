@@ -3,12 +3,12 @@
     {
       "warning_type": "File Access",
       "warning_code": 16,
-      "fingerprint": "252ac36c04a6259b23e3a8198089f23d6ee990658fd5904742c9885a9621f19f",
+      "fingerprint": "a8f5321622ae1e38f533f7a15e5f74ac0180057839ba6a45010194b24355fed1",
       "message": "Model attribute used in file name",
       "file": "app/controllers/claim_controller.rb",
-      "line": 33,
+      "line": 44,
       "link": "http://brakemanscanner.org/docs/warning_types/file_access/",
-      "code": "send_file(PDFDocument.new(Claim.new(session[:claim]).as_json).fill, :filename => \"accelerated-claim.pdf\", :disposition => \"inline\", :type => \"application/pdf\")",
+      "code": "send_file(PDFDocument.new(Claim.new(session[:claim]).as_json).fill.path, :filename => \"accelerated-claim.pdf\", :disposition => \"inline\", :type => \"application/pdf\")",
       "render_path": null,
       "location": {
         "type": "method",
@@ -33,8 +33,27 @@
       "user_input": null,
       "confidence": "High",
       "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "252ac36c04a6259b23e3a8198089f23d6ee990658fd5904742c9885a9621f19f",
+      "message": "Model attribute used in file name",
+      "file": "app/controllers/claim_controller.rb",
+      "line": 33,
+      "link": "http://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "send_file(PDFDocument.new(Claim.new(session[:claim]).as_json).fill, :filename => \"accelerated-claim.pdf\", :disposition => \"inline\", :type => \"application/pdf\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ClaimController",
+        "method": "download"
+      },
+      "user_input": "Claim.new(session[:claim]).as_json",
+      "confidence": "Weak",
+      "note": ""
     }
   ],
-  "updated": "2014-03-10 11:53:12 +0000",
+  "updated": "2014-05-07 17:49:29 +0100",
   "brakeman_version": "2.4.1"
 }
