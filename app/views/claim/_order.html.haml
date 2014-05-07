@@ -6,14 +6,8 @@
       Select all options that apply:
     .options
       - form.row :possession do
-        = form.label :possession do
-          = form.check_box :possession, {}, "Yes", "No"
-          The defendant must give up the property
-        - if form.error_for? :possession
-          = form.error_span :possession
+        = form.labelled_check_box :possession, 'The defendant must give up the property'
       - form.row :cost do
-        = form.label :cost do
-          = form.check_box :cost, {}, "Yes", "No"
-          The defendant must pay the cost of submitting this claim
+        = form.labelled_check_box :cost, 'The defendant must pay the cost of submitting this claim'
 
   .row.divider
