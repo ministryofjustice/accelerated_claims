@@ -22,7 +22,7 @@ feature 'Filling in claim form' do
     visit '/new'
     click_button 'Complete form'
 
-    expect(page).to have_content(%Q|Question "As the landlord, you're known as the claimant in this case. How many claimants are there?" not answered|)
+    expect(page).to have_content(%Q|Question "As the landlord, you’re known as the claimant in this case. How many claimants are there?" not answered|)
     expect(page).to have_content(%Q|Question "Your tenants are known as defendants in this case. How many defendants are there?" not answered|)
 
     choose('multiplePanelRadio_claimants_1')
