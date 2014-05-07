@@ -7,13 +7,13 @@
   = claim_form.hidden_field(:form_state, id: 'js-state')
 
   %section
-    %h3.section-header Property
+    %h2.section-header Property
     .moj-panel
       = render partial: 'property', object: @claim.property, locals: { claim_form: claim_form }
 
   %section
-    %h3.section-header Claimants (landlords)
-    .moj-panel.has-multiple#claimants(data-multiple="claimant" data-caption="As the landlord, you're known as the claimant in this case. How many claimants are there?" data-single="claimant" data-plural="claimants")
+    %h2.section-header Claimants (landlords)
+    .moj-panel.has-multiple#claimants(data-multiple="claimant" data-caption="As the landlord, you’re known as the claimant in this case. How many claimants are there?" data-single="claimant" data-plural="claimants")
       .sub-panel.claimant#claimant_one
         %h4 First claimant
         = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_one}
@@ -25,7 +25,7 @@
       = render partial: 'claimant_contact', object: @claim.claimant_contact, locals: { claim_form: claim_form, claimant_field: :claimant_contact}
 
   %section
-    %h3.section-header Defendants (tenants)
+    %h2.section-header Defendants (tenants)
     .moj-panel.has-multiple#defendants(data-multiple="defendant" data-caption="Your tenants are known as defendants in this case. How many defendants are there?" data-single="defendant" data-plural="defendants")
       .sub-panel.defendant#defendant_one
         %h4 First defendant
@@ -38,27 +38,27 @@
         = render partial: 'defendant', object: @claim.defendant_two, locals: { claim_form: claim_form, defendant_field: :defendant_two}
 
   %section
-    %h3.section-header Tenancy agreement
+    %h2.section-header Tenancy agreement
     .moj-panel
       = render partial: 'tenancy', object: @claim.tenancy, locals: { claim_form: claim_form }
 
   %section
-    %h3.section-header Notice
+    %h2.section-header Notice
     .moj-panel
       = render partial: 'notice', object: @claim.notice, locals: { claim_form: claim_form }
 
   %section
-    %h3.section-header Licences
+    %h2.section-header Licences
     .moj-panel
       = render partial: 'license', object: @claim.license, locals: { claim_form: claim_form }
 
   %section
-    %h3.section-header Deposit
+    %h2.section-header Deposit
     .moj-panel
       = render partial: 'deposit', object: @claim.deposit, locals: { claim_form: claim_form }
 
   %section
-    %h3.section-header The court order
+    %h2.section-header The court order
     .moj-panel
       = render partial: 'order', object: @claim.order, locals: { claim_form: claim_form }
       = render partial: 'possession', object: @claim.possession, locals: { claim_form: claim_form }
@@ -68,7 +68,7 @@
 
   %section
     .action-buttons.cf
-      %button.button.primary.large.chevron.left#submit{name: 'Complete form', value: '', type: 'submit'} Complete form
+      %input.button.primary.large.chevron.left#submit{name: 'Complete form', value: 'Complete form', type: 'submit'}
 
   %section
     %p
