@@ -1,6 +1,6 @@
 %script#hb-yesno(type='text/x-handlebars-template')
   %fieldset.radio.inline.jsVal
-    %h3.caption {{question}}
+    %span.caption {{question}}
     .options(data-reverse='{{#if reverse}}true{{else}}false{{/if}}')
       .option
         %label(for='{{id}}-yes')
@@ -13,7 +13,7 @@
 
 %script#multiple-radio(type='text/x-handlebars-template')
   %fieldset.radio.inline.jsVal
-    %h3.caption {{caption}}
+    %span.caption {{caption}}
     .options
       {{#each items}}
       .option

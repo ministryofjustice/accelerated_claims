@@ -105,7 +105,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
       id = '_' + SecureRandom.hex(20)
     end
 
-    legend_options = {:id => id}
+    legend_options = {:id => id, :class => 'legend'}
     options[:"aria-describedby"] = id
 
     options_for_fieldset = {}.merge(options)
@@ -113,7 +113,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     options_for_fieldset.delete(:date_select_options)
 
     output = tag(:fieldset, options_for_fieldset, true)
-    output.safe_concat(content_tag(:h3, legend, legend_options)) unless legend.blank?
+    output.safe_concat(content_tag(:span, legend, legend_options)) unless legend.blank?
     output.concat(capture(&block)) if block_given?
     output.safe_concat("</fieldset>")
   end
