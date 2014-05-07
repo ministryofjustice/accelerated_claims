@@ -36,8 +36,8 @@ feature 'Filling in claim form' do
 
     click_button 'Complete form'
 
-    expect(page).to have_content('Major')
-    expect(page).to have_content('Tom')
+    find_field('claim_claimant_one_title').value.should == 'Major'
+    find_field('claim_claimant_one_full_name').value.should == 'Tom'
   end
 
 end
