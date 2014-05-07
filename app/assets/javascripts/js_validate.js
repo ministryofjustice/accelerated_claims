@@ -61,10 +61,10 @@ moj.Modules.jsValidate = (function() {
       if( $( checkEls[ x ] ).hasClass( 'radio' ) ) {
         if( $( checkEls[ x ] ).find( ':checked' ).length === 0 ) {
           errors.push( {
-            text: 'Question "' + $( checkEls[ x ] ).find( 'h3' ).eq( 0 ).text() + '" not answered',
+            text: 'Question "' + $( checkEls[ x ] ).find( '.caption' ).eq( 0 ).text() + '" not answered',
             num:  x
           } );
-          $( checkEls[ x ] ).addClass( 'error' ).find( 'h3' ).eq( 0 ).attr( 'id', 'jsError' + x ).append( '<span class="error">Must be answered</span>' );
+          $( checkEls[ x ] ).addClass( 'error' ).find( '.caption' ).eq( 0 ).attr( 'id', 'jsError' + x ).append( '<span class="error">Must be answered</span>' );
         }
       }
     }

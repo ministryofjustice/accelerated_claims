@@ -13,7 +13,7 @@
 
   %section
     %h2.section-header Claimants (landlords)
-    .moj-panel.has-multiple#claimants(data-multiple="claimant" data-caption="As the landlord, you're known as the claimant in this case. How many claimants are there?" data-single="claimant" data-plural="claimants")
+    .moj-panel.has-multiple#claimants(data-multiple="claimant" data-caption="As the landlord, you’re known as the claimant in this case. How many claimants are there?" data-single="claimant" data-plural="claimants")
       .sub-panel.claimant#claimant_one
         %h4 First claimant
         = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_one}
