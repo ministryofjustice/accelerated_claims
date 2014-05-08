@@ -77,8 +77,12 @@ fieldset, legend
 
 .hint
   color: $grey-1
+  font-weight: normal
   &.block
     display: block
+    &.hide
+      .js-enabled &
+        display: none
 
 select, option, legend
   color: $black
