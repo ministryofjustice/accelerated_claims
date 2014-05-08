@@ -95,9 +95,9 @@ moj.Modules.multiplePersons = (function() {
     }
 
     if( show > 1 ) {
-      $childItems.find( 'h4' ).show().next( '.row' ).removeClass( 'nomargin' );
+      $childItems.find( '.person' ).show().next( '.row' ).removeClass( 'nomargin' );
     } else {
-      $childItems.find( 'h4' ).hide().next( '.row' ).addClass( 'nomargin' ); 
+      $childItems.find( '.person' ).hide().next( '.row' ).addClass( 'nomargin' ); 
     }
   };
 
