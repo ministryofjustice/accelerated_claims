@@ -1,6 +1,7 @@
 class PDFDocument
-  def initialize(json)
+  def initialize(json, flatten=true)
     @json = json
+    @flatten = flatten
     remove_backslash_r!
   end
 
@@ -48,7 +49,7 @@ class PDFDocument
   end
 
   CONTINUATION_TEMPLATE = File.join Rails.root, 'templates', 'defendant_form.pdf'
-  STRIKER_JAR = File.join Rails.root, 'scripts', 'striker-0.2.0-standalone.jar'
+  STRIKER_JAR = File.join Rails.root, 'scripts', 'striker-0.3.1-standalone.jar'
 
   def defendant_two_address
     "#{@json['defendant_two_address']}\n#{@json['defendant_two_postcode1']} #{@json['defendant_two_postcode2']}"
@@ -178,7 +179,7 @@ class PDFDocument
        strikes = nil
        ActiveSupport::Notifications.instrument('store_strikes.pdf') do
          strikes = Tempfile.new('strikes.json', '/tmp/')
-         strikes.write({ 'strikes' => list }.to_json)
+         strikes.write({ 'strikes' => list, 'flatten' => "#{@flatten}" }.to_json)
          strikes.close
        end
        path = `pwd`
@@ -191,8 +192,8 @@ class PDFDocument
     {
       'strikes' => list,
       'input' => result_pdf.path,
-      'output' => output_pdf.path
+      'output' => output_pdf.path,
+      'flatten' => @flatten
     }.to_json
   end
-
 end
