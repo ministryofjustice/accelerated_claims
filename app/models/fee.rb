@@ -4,7 +4,7 @@ class Fee < BaseClass
   validates :court_fee, presence: { message: 'must be entered' }, length: { maximum: 8 }
 
   def court_fee
-    "175.00"
+    "280.00"
   end
 
 end

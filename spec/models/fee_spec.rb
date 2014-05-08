@@ -7,18 +7,18 @@ describe Fee do
     let(:court_fee) { "" }
 
     it { should be_valid }
-    its(:court_fee) { should == "175.00" }
+    its(:court_fee) { should == "280.00" }
 
-    its(:as_json) { should == { "court_fee" => "175.00" } }
+    its(:as_json) { should == { "court_fee" => "280.00" } }
   end
 
   context "with a random court fee" do
     let(:court_fee) { 250 }
 
     it { should be_valid }
-    its(:court_fee) { should == "175.00" }
+    its(:court_fee) { should == "280.00" }
 
-    its(:as_json) { should == { "court_fee" => "175.00" } }
+    its(:as_json) { should == { "court_fee" => "280.00" } }
   end
 
 end

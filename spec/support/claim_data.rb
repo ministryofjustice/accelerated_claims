@@ -121,7 +121,7 @@ def claim_post_data
       },
       "fee" =>
       {
-        "court_fee" => "175.00"
+        "court_fee" => "280.00"
       }
     }
   }
@@ -142,7 +142,7 @@ end
 
 def claim_formatted_data
   {
-    "fee_court_fee" => "175.00",
+    "fee_court_fee" => "280.00",
     "claimant_one_address" => "Mr John Smith\n2 Brown St\nCwmbran",
     "claimant_one_postcode1" => "SW1W",
     "claimant_one_postcode2" => "0LU",
@@ -218,7 +218,7 @@ def claim_formatted_data
     'tenancy_applicable_statements_4' => 'No',
     'tenancy_applicable_statements_5' => 'No',
     'tenancy_applicable_statements_6' => 'No',
-    "total_cost" => "298.34"
+    "total_cost" => "403.34"
   }
 end
 
