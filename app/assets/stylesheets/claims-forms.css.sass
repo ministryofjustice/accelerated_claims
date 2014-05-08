@@ -311,6 +311,14 @@ fieldset.plain
             left: 0
             right: 0
 
+    h3.person
+      padding-left: 90px
+      font-weight: bold
+      margin-bottom: 15px
+      @include media(mobile)
+        padding:
+          left: 15px
+
 
 
   fieldset
@@ -327,6 +335,7 @@ fieldset.plain
 
     legend, h3, .legend
       font-size: 19px
+      display: block
     &.radio
       .options
         padding-top: 10px
