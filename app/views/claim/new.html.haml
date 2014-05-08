@@ -19,7 +19,9 @@
         = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_one}
       .row.divider
       .sub-panel.claimant.same-address#claimant_two
-        %h3.person Second claimant
+        %h3.person
+          Second claimant
+          %span.hint.block.hide (optional)
         = render partial: 'claimant', object: @claim.claimant_two, locals: { claim_form: claim_form, claimant_field: :claimant_two}
       .row.divider
       = render partial: 'claimant_contact', object: @claim.claimant_contact, locals: { claim_form: claim_form, claimant_field: :claimant_contact}
@@ -34,7 +36,9 @@
       .row.divider
 
       .sub-panel.rel.defendant#defendant_two
-        %h3.person Second defendant
+        %h3.person
+          Second defendant
+          %span.hint.block.hide (optional)
         = render partial: 'defendant', object: @claim.defendant_two, locals: { claim_form: claim_form, defendant_field: :defendant_two}
 
   %section
