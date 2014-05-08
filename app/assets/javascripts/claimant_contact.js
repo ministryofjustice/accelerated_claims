@@ -62,7 +62,6 @@ moj.Modules.claimantContact = (function() {
 
     for( x = 0; x < subPanels.length; x++ ) {
       els = $( subPanels[ x ] ).find( '[type="text"], textarea' );
-      moj.log( els.length );
       show = false;
       for( y = 0; y < els.length; y++ ) {
         if( $( els[ y ] ).val() !== '' ) {
