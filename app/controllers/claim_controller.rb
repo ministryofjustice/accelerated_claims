@@ -38,7 +38,8 @@ class ClaimController < ApplicationController
     @claim = Claim.new(session[:claim])
 
     if @claim.valid?
-      pdf = PDFDocument.new(@claim.as_json).fill
+      flatten = params[:flatten] == 'false' ? false : true
+      pdf = PDFDocument.new(@claim.as_json, flatten).fill
 
       ActiveSupport::Notifications.instrument('send_file') do
         send_file(pdf.path, filename: "accelerated-claim.pdf", disposition: "inline", type: "application/pdf")
