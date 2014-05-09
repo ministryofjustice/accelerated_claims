@@ -107,6 +107,8 @@ e.g.
 cp chromedriver /usr/local/bin
 chmod a+x chromedriver
 
+Or just install via homebrew if on OS X: `brew install chromedriver`.
+
 ## Browserstack remote tests
 
 To run with browser stack:
