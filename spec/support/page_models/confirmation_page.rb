@@ -58,9 +58,9 @@ private
 
   def get_download_url
     if Capybara.app_host
-      Capybara.app_host + "/download"
+      Capybara.app_host + '/download?flatten=false'
     else
-      Capybara.current_url.gsub(/confirmation$/, 'download')
+      Capybara.current_url.gsub(/confirmation$/, 'download?flatten=false')
     end
   end
 
