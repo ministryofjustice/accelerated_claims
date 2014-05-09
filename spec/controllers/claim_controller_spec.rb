@@ -95,7 +95,7 @@ describe ClaimController do
     end
   end
 
-  describe '#download' do
+  describe 'GET download' do
 
     context 'with valid claim data' do
       it "should return a PDF" do
@@ -104,6 +104,17 @@ describe ClaimController do
 
         post :submission, claim: claim_post_data['claim']
         get :download
+        response.headers["Content-Type"].should eq "application/pdf"
+      end
+    end
+
+    context "with 'flatten=false' parameter" do
+      it 'should still return PDF' do
+        stub_request(:post, "http://localhost:4000/").
+        to_return(:status => 200, :body => "", :headers => {})
+
+        post :submission, claim: claim_post_data['claim']
+        get :download, params: { 'flatten' => 'false' }
         response.headers["Content-Type"].should eq "application/pdf"
       end
     end
