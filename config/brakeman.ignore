@@ -3,12 +3,12 @@
     {
       "warning_type": "File Access",
       "warning_code": 16,
-      "fingerprint": "a8f5321622ae1e38f533f7a15e5f74ac0180057839ba6a45010194b24355fed1",
+      "fingerprint": "6b5738fc72bdc7641dcb1483622b7d043b5f780fadb224028616a890607a29dd",
       "message": "Model attribute used in file name",
       "file": "app/controllers/claim_controller.rb",
-      "line": 44,
+      "line": 45,
       "link": "http://brakemanscanner.org/docs/warning_types/file_access/",
-      "code": "send_file(PDFDocument.new(Claim.new(session[:claim]).as_json).fill.path, :filename => \"accelerated-claim.pdf\", :disposition => \"inline\", :type => \"application/pdf\")",
+      "code": "send_file(PDFDocument.new(Claim.new(session[:claim]).as_json, (false or true)).fill.path, :filename => \"accelerated-claim.pdf\", :disposition => \"inline\", :type => \"application/pdf\")",
       "render_path": null,
       "location": {
         "type": "method",
@@ -37,6 +37,25 @@
     {
       "warning_type": "File Access",
       "warning_code": 16,
+      "fingerprint": "a8f5321622ae1e38f533f7a15e5f74ac0180057839ba6a45010194b24355fed1",
+      "message": "Model attribute used in file name",
+      "file": "app/controllers/claim_controller.rb",
+      "line": 44,
+      "link": "http://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "send_file(PDFDocument.new(Claim.new(session[:claim]).as_json).fill.path, :filename => \"accelerated-claim.pdf\", :disposition => \"inline\", :type => \"application/pdf\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ClaimController",
+        "method": "download"
+      },
+      "user_input": "Claim.new(session[:claim]).as_json",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
       "fingerprint": "252ac36c04a6259b23e3a8198089f23d6ee990658fd5904742c9885a9621f19f",
       "message": "Model attribute used in file name",
       "file": "app/controllers/claim_controller.rb",
@@ -54,6 +73,6 @@
       "note": ""
     }
   ],
-  "updated": "2014-05-07 17:49:29 +0100",
-  "brakeman_version": "2.4.1"
+  "updated": "2014-05-09 15:20:58 +0100",
+  "brakeman_version": "2.5.0"
 }
