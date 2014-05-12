@@ -2,6 +2,12 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  bootstrap_vendor_formulas = <<-SCRIPT
+    cd ../accelerated_claims;
+    fab vendor_formulas
+  SCRIPT
+  system bootstrap_vendor_formulas
+
 
   config.vm.box = "base"
   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
