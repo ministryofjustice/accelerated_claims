@@ -3,7 +3,7 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   bootstrap_vendor_formulas = <<-SCRIPT
-    cd ../accelerated_claims;
+    cd ../civil-claims-deploy;
     fab vendor_formulas
   SCRIPT
   system bootstrap_vendor_formulas
