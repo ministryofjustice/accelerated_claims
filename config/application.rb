@@ -45,7 +45,7 @@ module AcceleratedClaims
     config.proposition_title = 'Property possession'
     # phase governs text indicators and highlight colours
     # presumed values: alpha, beta, live
-    config.phase = 'alpha'
+    config.phase = 'beta'
     # product type may also govern highlight colours
     # known values: information, service
     config.product_type = 'service'
