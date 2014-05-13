@@ -89,9 +89,10 @@ guard # watches for changes, runs the minimum set of tests on change
 
 ### Running the Feature tests against a remote environment
 
-`rake spec:features env=demo`
+`rake spec:features env=demo browser=chrome`
 
-Remote options are:
+Where **env** remote options are:
+
 * dev
 * demo
 * staging
@@ -101,7 +102,7 @@ By default, the tests will run headlessly.
 
 If you want to watch your tests run on your desktop, append `browser=[chrome|firefox]` to the command, like `rake spec:features env=production browser=chrome`
 
-To run tests with browser=chrome, [download chromedriver](http://chromedriver.storage.googleapis.com/index.html) we've
+To run tests with **browser=chrome**, [download chromedriver](http://chromedriver.storage.googleapis.com/index.html) we've
 tested locally with version 2.9. Uncompress download and put chromedriver executable in your path,
 e.g.
 cp chromedriver /usr/local/bin
