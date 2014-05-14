@@ -43,7 +43,7 @@ input, [type="text"], [type="password"], button, select, textarea
   @include media(mobile)
     display: block
     max-width: 280px
-  
+
   &.pound
     padding-left: 40px
     max-width: 260px
@@ -461,7 +461,7 @@ fieldset.plain
       display: block
       clear: left
       width: 300px
-      
+
       &.pound
         padding-left: 40px
         width: 260px
@@ -568,12 +568,16 @@ fieldset.plain
       cursor: pointer
       &:hover
         text-decoration: underline
+      &:focus
+        background: rgb(254, 188, 64) image-url('summary-arrow-sprite.gif') 0 5px no-repeat
     &.open
       .row
         display: block
       .caption
         background-position: -1000px 5px
         color: $link-active-colour
+        &:focus
+          background: rgb(254, 188, 64) image-url('summary-arrow-sprite.gif') 0 5px no-repeat
 
 
 .noticeStatement
