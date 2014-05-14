@@ -1,6 +1,6 @@
 = claim_form.fields_for deposit, builder: LabellingFormBuilder do |form|
 
-  = form.radio_button_fieldset :received, 'Did you receive a deposit from the tenant on or after 6 April 2007? <span class="hint block">(a cash deposit)</span>'.html_safe, class: 'radio inline js-depend', data: { depend: 'deposit' }
+  = form.radio_button_fieldset :received, 'Did you receive a deposit for the property on or after 6 April 2007?', class: 'radio inline js-depend', data: { depend: 'deposit' }
 
   .row.information.hide.js-deposit.yes
     %p.nonjs If you answered <strong>yes</strong>, you need to be sure that:
@@ -14,4 +14,7 @@
     = form.text_field_row  :ref_number, label: 'Enter the tenancy deposit scheme reference number'
 
   - choice = { 'Yes, and the deposit had been returned by the time notice was given' => 'Yes', 'No' => 'No'}
+  
+
+
   = form.radio_button_fieldset :as_property, 'Did you receive a deposit in the form of property on or after 6 April 2007? (This is a deposit, like an item of jewellery, that has been taken instead of cash.)', class: 'radio', choice: choice
