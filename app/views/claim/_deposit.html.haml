@@ -17,7 +17,7 @@
       %li= 'you gave the tenant all the information about the deposit scheme that landlords must provide'.html_safe
       %li= 'you kept the deposit in a government-backed deposit protection scheme and met the scheme’s requirements'.html_safe
 
-    = form.text_field_row  :ref_number, label: 'Enter the tenancy deposit scheme reference number'
+  = form.text_field_row  :ref_number, label: 'Enter the tenancy deposit scheme reference number', class: 'rel hide js-depositTypeMoney yes'
 
   .row.property-deposit-type.hide.js-depositTypeProperty.yes
     %ul
