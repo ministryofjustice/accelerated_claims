@@ -1,7 +1,7 @@
 = claim_form.fields_for possession, builder: LabellingFormBuilder do |form|
 
   .row.information
-    %p= 'In cases where the defendant is experiencing extreme hardship, they can ask for <a href="https://www.gov.uk/gaining-possession-of-a-privately-rented-property-let-on-an-assured-shorthold-tenancy#seeking-possession-under-section-21" class="external" rel="external" target="_blank">more time</a> before they have to give up the property. There may be a court hearing in this case.'.html_safe
+    %p= 'In cases where giving up the property would cause the defendant extreme hardship, they can ask for <a href="https://www.gov.uk/gaining-possession-of-a-privately-rented-property-let-on-an-assured-shorthold-tenancy#seeking-possession-under-section-21" class="external" rel="external" target="_blank">more time (up to 42 days)</a>. The court will consider their request, sometimes this will involve a court hearing.'.html_safe
 
   = form.radio_button_fieldset :hearing, 'Select from the options below:', class: 'radio', choice: {'I wish to be at court when the request is being considered (this may mean the claim takes longer to be completed)' => 'No', 'I do not need to be present at court when the request is being considered' => 'Yes'}
 
