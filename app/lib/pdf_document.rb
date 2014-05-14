@@ -130,8 +130,8 @@ class PDFDocument
 
   def strike_out_applicable_statements result_pdf
     list = []
-    add_applicable_statement_strike_outs list
     add_previous_tenancy_type_strike_out list
+    add_applicable_statement_strike_outs(list) unless @json["tenancy_demoted_tenancy"] == 'Yes'
 
     ActiveSupport::Notifications.instrument('add_strikes.pdf') do
       perform_strike_through(list, result_pdf) unless list.empty?
