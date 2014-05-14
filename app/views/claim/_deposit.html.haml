@@ -2,27 +2,26 @@
 
   = form.radio_button_fieldset :received, 'Did you receive a deposit for the property on or after 6 April 2007?', class: 'radio inline js-depend', data: { depend: 'deposit' }
 
-  %fieldset.hide.js-deposit.yes.radio{ id: 'deposit_type_fieldset' }
+  %fieldset.hide.js-deposit.yes.radio.js-depend{ id: 'deposit_type_fieldset' }
     %h3 What kind of deposit?
     .options
       - form.row :money_deposit do
-        = form.labelled_check_box :money_deposit, 'A money deposit (for example cash or cheque)'.html_safe, class: 'js-depend', data: {depend: 'deposit-type-money'}
+        = form.labelled_check_box :money_deposit, 'A money deposit (for example cash or cheque)'.html_safe, 'yes', 'no', data: {depend: 'depositTypeMoney'}
       - form.row :property_deposit do
-        = form.labelled_check_box :property_deposit, 'A deposit in the form of property (for example an item of jewellery)'.html_safe, class: 'js-depend', data: { depend: 'deposit-type-property'}
+        = form.labelled_check_box :property_deposit, 'A deposit in the form of property (for example an item of jewellery)'.html_safe, 'yes', 'no', data: { depend: 'depositTypeProperty'}
 
-    %p
 
-    .money-deposit-type.hide.js-deposit-type-money.yes
-      %h3= 'You need to be sure that:'.html_safe
-      %ul
-        %li= 'you gave the tenant all the information about the deposit scheme that landlords must provide'.html_safe
-        %li= 'you kept the deposit in a government-backed deposit protection scheme and met the scheme’s requirements'.html_safe
+  .row.money-deposit-type.hide.js-depositTypeMoney.yes
+    %h3= 'You need to be sure that:'.html_safe
+    %ul
+      %li= 'you gave the tenant all the information about the deposit scheme that landlords must provide'.html_safe
+      %li= 'you kept the deposit in a government-backed deposit protection scheme and met the scheme’s requirements'.html_safe
 
-      = form.text_field_row  :ref_number, label: 'Enter the tenancy deposit scheme reference number'
+    = form.text_field_row  :ref_number, label: 'Enter the tenancy deposit scheme reference number'
 
-    .property-deposit-type.hide.js-depoist-type-property.yes
-      %ul
-        %li= 'You need to be sure the deposit in the form of property was returned at the time notice was given.'.html_safe         
+  .row.property-deposit-type.hide.js-depositTypeProperty.yes
+    %ul
+      %li= 'You need to be sure the deposit in the form of property was returned at the time notice was given.'.html_safe
       
 
 
