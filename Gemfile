@@ -16,8 +16,9 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
-# Use jquery as the JavaScript library
+# Use jquery + underscore as the JavaScript library
 gem 'jquery-rails'
+gem 'underscore-rails'
 
 # production webserver
 gem 'unicorn'

@@ -8,7 +8,6 @@ moj.Modules.jsValidate = (function() {
       init,
       cacheEls,
       bindEvents,
-      jsValidate,
       checkData,
       submitForm,
       clearHidden,
@@ -44,36 +43,8 @@ moj.Modules.jsValidate = (function() {
   bindEvents = function() {
     $form.on( 'submit', function( e ) {
       e.preventDefault();
-      jsValidate();
-    } );
-  };
-
-  jsValidate = function() {
-    var errors = [],
-        checkEls = $( '.jsVal:visible' ),
-        x;
-
-    $( '.error-summary' ).remove();
-    $( 'h3 > .error' ).remove();
-    $( 'fieldset.error' ).removeClass( 'error' );
-
-    for( x = 0; x < checkEls.length; x++ ) {
-      if( $( checkEls[ x ] ).hasClass( 'radio' ) ) {
-        if( $( checkEls[ x ] ).find( ':checked' ).length === 0 ) {
-          errors.push( {
-            text: 'Question "' + $( checkEls[ x ] ).find( '.caption' ).eq( 0 ).text() + '" not answered',
-            num:  x
-          } );
-          $( checkEls[ x ] ).addClass( 'error' ).find( '.caption' ).eq( 0 ).attr( 'id', 'jsError' + x ).append( '<span class="error">Must be answered</span>' );
-        }
-      }
-    }
-
-    if( errors.length === 0) {
       checkData();
-    } else {
-      moj.Modules.tools.jsError( errors );
-    }
+    } );
   };
 
   checkData = function() {
