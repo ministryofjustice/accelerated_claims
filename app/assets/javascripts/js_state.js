@@ -13,6 +13,7 @@ moj.Modules.jsState = (function() {
       getValue,
       getType,
       checkState,
+      setCheckbox,
       setRadio,
       setSelect,
       setText,
@@ -110,6 +111,9 @@ moj.Modules.jsState = (function() {
   getValue = function( $el ) {
     if( $el.is( 'input' ) && $el.attr( 'type' ) === 'radio' ) {
       return moj.Modules.tools.getRadioVal( $el );
+    } else if( $el.is( 'input' ) && $el.attr( 'type' ) === 'checkbox' ) {
+      var x = ( $el.is( ':checked' ) ? 'true' : 'false' );
+      return x;
     }
 
     return $el.val();
@@ -132,6 +136,8 @@ moj.Modules.jsState = (function() {
       for( x = 0; x < stateArr.length; x++ ) {
         if( stateArr[ x ].type === 'text' ) {
           setText( stateArr[ x ] );
+        } else if( stateArr[ x ].type === 'checkbox' ) {
+          setCheckbox( stateArr[ x ] );
         } else if( stateArr[ x ].type === 'radio' ) {
           setRadio( stateArr[ x ] );
         } else if( stateArr[ x ].type === 'select' ) {
@@ -145,7 +151,13 @@ moj.Modules.jsState = (function() {
 
   setRadio = function( obj ) {
     if( obj.value !== 'unchecked' ) {
-      $( '[name="' + obj.name + '"][value="' + obj.value + '"]' ).trigger( 'click' );
+      $( '[name="' + obj.name + '"][value="' + obj.value + '"]' ).trigger( 'click' ).trigger( 'blur' );
+    }
+  };
+
+  setCheckbox = function( obj ) {
+    if ( obj.value === 'true' ) {
+      $( '[name="' + obj.name + '"]' ).attr( 'checked', false ).trigger( 'click' ).trigger( 'blur' );
     }
   };
 

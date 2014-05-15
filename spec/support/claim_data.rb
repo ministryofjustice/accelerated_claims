@@ -63,7 +63,8 @@ def claim_post_data
       {
         "received" => 'Yes',
         "ref_number" => "X1234",
-        "as_property" => 'Yes'
+        "as_property" => 'Yes',
+        "as_money" => 'Yes'
       },
       "possession" =>
       {

@@ -9,9 +9,11 @@ moj.Modules.showHide = (function() {
       cacheEls,
       bindEvents,
       chooseOption,
+      cbClick,
 
       //elements
-      radios
+      radios,
+      cbs
       ;
 
   init = function() {
@@ -21,15 +23,23 @@ moj.Modules.showHide = (function() {
     radios.each( function() {
       moj.Modules.jsState.registerField( $( this ) );
     } );
+    cbs.each( function() {
+      moj.Modules.jsState.registerField( $( this ) );
+    } );
   };
 
   cacheEls = function() {
     radios = $( '.js-depend [type=radio]' );
+    cbs = $( '.js-depend [type=checkbox]' );
   };
 
   bindEvents = function() {
     $( radios ).on( 'click', function( e ) {
       chooseOption( $( e.target ) );
+    } );
+
+    $( cbs ).on( 'click', function( e ) {
+      cbClick( $( e.target ) );
     } );
   };
 
@@ -40,6 +50,17 @@ moj.Modules.showHide = (function() {
 
     $groupEls.hide();
     $groupEls.filter( '.' + clickValue ).show();
+  };
+
+  cbClick = function( $el ) {
+    var dependGroup = $el.data( 'depend' ),
+        $groupEls = $( '.js-' + dependGroup );
+
+    if( $el.is( ':checked' ) ) {
+      $groupEls.show();
+    } else {
+      $groupEls.hide();
+    }
   };
 
   // public
