@@ -32,7 +32,10 @@ describe Deposit do
     let(:deposit) { Deposit.new(received: 'Yes',
                                 ref_number: 'x123',
                                 as_property: 'No',
+                                as_money: 'Yes',
                                 information_given_date: Date.parse("2010-01-10")) }
+
+   
 
     describe "when given all valid values" do
       it "should be valid" do
@@ -58,6 +61,7 @@ describe Deposit do
       it 'should return correct json' do
         deposit.as_json.should == {
           "as_property" => "No",
+          "as_money" => "Yes",
           "information_given_date_day"=>"10",
           "information_given_date_month"=>"01",
           "information_given_date_year"=>"2010",
@@ -67,4 +71,26 @@ describe Deposit do
       end
     end
   end
+
+  context 'validation of type of deposit' do
+    it 'should not validate if neither property nor money selected' do
+      deposit = Deposit.new(received: 'Yes',
+                            ref_number: 'x123',
+                            as_property: 'No',
+                            as_money: 'No',
+                            information_given_date: Date.parse("2010-01-10")) 
+      deposit.should_not be_valid
+      deposit.errors[:as_money].should == ["or As Property must be selected as the type of deposit"]
+    end
+
+    it 'should validate if both money and property are selected' do
+      deposit = Deposit.new(received: 'Yes',
+                            ref_number: 'x123',
+                            as_property: 'Yes',
+                            as_money: 'Yes',
+                            information_given_date: Date.parse("2010-01-10")) 
+      deposit.should be_valid
+    end
+  end
+    
 end

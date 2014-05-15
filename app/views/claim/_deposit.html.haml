@@ -1,17 +1,26 @@
 = claim_form.fields_for deposit, builder: LabellingFormBuilder do |form|
 
-  = form.radio_button_fieldset :received, 'Did you receive a deposit from the tenant on or after 6 April 2007? <span class="hint block">(a cash deposit)</span>'.html_safe, class: 'radio inline js-depend', data: { depend: 'deposit' }
+  = form.radio_button_fieldset :received, 'Did you receive a deposit for the property on or after 6 April 2007?', class: 'radio inline js-depend', data: { depend: 'deposit' }
 
-  .row.information.hide.js-deposit.yes
-    %p.nonjs If you answered <strong>yes</strong>, you need to be sure that:
+  %fieldset.hide.js-deposit.yes.radio.js-depend{ id: 'deposit_type_fieldset' }
+    %h3 What kind of deposit?
+    .options
+      - form.row :as_money do
+        = form.labelled_check_box :as_money, 'A money deposit (for example cash or cheque)'.html_safe, 'Yes', 'No', data: {depend: 'depositTypeMoney'}
+      - form.row :as_property do
+        = form.labelled_check_box :as_property, 'A deposit in the form of property (for example an item of jewellery)'.html_safe, 'Yes', 'No', data: { depend: 'depositTypeProperty'}
+
+
+  .row.money-deposit-type.hide.js-depositTypeMoney.yes
+    %h3= 'You need to be sure that:'.html_safe
     %ul
-      %li= 'you kept the deposit in a <a href="https://www.gov.uk/tenancy-deposit-protection/overview" class="external" rel="external" target="_blank">government-backed deposit protection scheme</a> and met the scheme’s requirements'.html_safe
-      %li= 'you gave the tenant all the information about the deposit scheme that <a href="https://www.gov.uk/tenancy-deposit-protection/information-landlords-must-give-tenants" class="external" rel="external" target="_blank">landlords must provide</a>'.html_safe
+      %li= 'you kept the deposit in a government-backed deposit protection scheme and met the scheme’s requirements'.html_safe
+      %li= 'you gave the tenant all the information about the deposit scheme that landlords must provide'.html_safe
 
-  .sub-panel.inset.hide.js-deposit.yes
-    - if false # suppress field until we receive new pdf
-      = form.date_select_field_set :information_given_date, 'Enter the date when this information was given to the defendant', class: 'date-picker', date_select_options: @date_select_options
-    = form.text_field_row  :ref_number, label: 'Enter the tenancy deposit scheme reference number'
+  = form.text_field_row  :ref_number, label: 'Enter the tenancy deposit scheme reference number', class: 'rel hide js-depositTypeMoney yes'
 
-  - choice = { 'Yes, and the deposit had been returned by the time notice was given' => 'Yes', 'No' => 'No'}
-  = form.radio_button_fieldset :as_property, 'Did you receive a deposit in the form of property on or after 6 April 2007? (This is a deposit, like an item of jewellery, that has been taken instead of cash.)', class: 'radio', choice: choice
+  .row.property-deposit-type.hide.js-depositTypeProperty.yes
+    %ul
+      %li= 'You need to be sure the deposit in the form of property was returned at the time notice was given.'.html_safe
+      
+
