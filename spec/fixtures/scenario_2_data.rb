@@ -92,7 +92,8 @@
       received: "Yes",
       information_given_date: "2010-05-25",
       ref_number: "aCpRBZaWPz",
-      as_property: "No"
+      as_property: "No",
+      as_money: 'Yes'
     },
     order: {
       possession: "Yes",

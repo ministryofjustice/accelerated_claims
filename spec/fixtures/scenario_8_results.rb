@@ -62,7 +62,7 @@
   license_part3_year: nil,
   deposit_received: "No",
   deposit_ref_number: nil,
-  deposit_as_property: "Yes",
+  deposit_as_property: "No",
   possession_hearing: "Yes",
   order_possession: "Yes",
   ClaimantSignatureDateDay: nil,

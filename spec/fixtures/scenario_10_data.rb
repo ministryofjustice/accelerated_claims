@@ -92,6 +92,7 @@
       received: "Yes",
       information_given_date: nil,
       ref_number: "X1234",
+      as_money: 'Yes',
       as_property: "Yes"
     },
     order: {
