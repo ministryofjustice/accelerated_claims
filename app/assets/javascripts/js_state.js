@@ -166,11 +166,11 @@ moj.Modules.jsState = (function() {
       document.location.hash = 'top';
       window.setTimeout( function() {
         window.scrollTo( 0, 0 );
-      }, 500 );
+      }, 100 );
     } else if( obj.value && parseInt( obj.value, 10 ) !== 'NaN' ) {
       window.setTimeout( function() {
         window.scrollTo( 0, obj.value );
-      }, 500 );
+      }, 100 );
     }
   };
 
