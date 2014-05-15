@@ -5,10 +5,10 @@
   %fieldset.hide.js-deposit.yes.radio.js-depend{ id: 'deposit_type_fieldset' }
     %h3 What kind of deposit?
     .options
-      - form.row :money_deposit do
-        = form.labelled_check_box :money_deposit, 'A money deposit (for example cash or cheque)'.html_safe, 'yes', 'no', data: {depend: 'depositTypeMoney'}
-      - form.row :property_deposit do
-        = form.labelled_check_box :property_deposit, 'A deposit in the form of property (for example an item of jewellery)'.html_safe, 'yes', 'no', data: { depend: 'depositTypeProperty'}
+      - form.row :as_money do
+        = form.labelled_check_box :as_money, 'A money deposit (for example cash or cheque)'.html_safe, 'Yes', 'No', data: {depend: 'depositTypeMoney'}
+      - form.row :as_property do
+        = form.labelled_check_box :as_property, 'A deposit in the form of property (for example an item of jewellery)'.html_safe, 'Yes', 'No', data: { depend: 'depositTypeProperty'}
 
 
   .row.money-deposit-type.hide.js-depositTypeMoney.yes
@@ -24,16 +24,3 @@
       %li= 'You need to be sure the deposit in the form of property was returned at the time notice was given.'.html_safe
       
 
-
-
-
-  / .sub-panel.inset.hide.js-deposit.yes
-  /   - if false # suppress field until we receive new pdf
-  /     = form.date_select_field_set :information_given_date, 'Enter the date when this information was given to the defendant', class: 'date-picker', date_select_options: @date_select_options
-  
-
-  / - choice = { 'Yes, and the deposit had been returned by the time notice was given' => 'Yes', 'No' => 'No'}
-  
-
-
-  / = form.radio_button_fieldset :as_property, 'Did you receive a deposit in the form of property on or after 6 April 2007? (This is a deposit, like an item of jewellery, that has been taken instead of cash.)', class: 'radio', choice: choice

@@ -151,7 +151,9 @@ class ClaimForm
   end
 
   def check_box(prefix, key)
-    check("claim_#{prefix}_#{key}") if(get_data(prefix, key).downcase == 'yes')
+    if(get_data(prefix, key).downcase == 'yes')
+      check("claim_#{prefix}_#{key}") 
+    end
   end
 
   def select_date prefix, key
@@ -295,16 +297,13 @@ class ClaimForm
     prefix = 'deposit'
     choose_radio(prefix,'received')
 
-    case received = get_data(prefix,'received')
-      when /Yes/
+    if get_data(prefix, 'received') == 'Yes'
+      check_box(prefix, 'as_property') if get_data(prefix, 'as_property') == 'Yes'
+      if get_data(prefix, 'as_money') == 'Yes'
+        check_box(prefix, 'as_money') if get_data(prefix, 'as_money') == 'Yes'
         fill_in_text_field(prefix, 'ref_number')
-      when /No/
-      when nil
-      else
-        raise received
+      end
     end
-    
-    choose_radio(prefix, 'as_property')
   end
 
   def fill_postponement
