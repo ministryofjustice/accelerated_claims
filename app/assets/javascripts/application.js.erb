@@ -12,6 +12,7 @@
 //
 
 //= require jquery_ujs
+//= require underscore
 //= require handlebars-v1.3.0
 //= require tools
 
@@ -46,7 +47,7 @@ moj.Modules.devs = {
 
 $( '.remove' ).remove();
 
-$.fn.scrollStopped = function(callback) {          
+$.fn.scrollStopped = function(callback) {
   $(this).scroll(function(){
     var self = this, $this = $(self);
     if ($this.data('scrollTimeout')) {

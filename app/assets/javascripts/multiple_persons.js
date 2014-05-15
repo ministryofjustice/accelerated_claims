@@ -16,6 +16,7 @@ moj.Modules.multiplePersons = (function() {
       ;
 
   init = function() {
+    $.hidden = new Object();
     cacheEls();
     bindEvents();
 
@@ -78,26 +79,29 @@ moj.Modules.multiplePersons = (function() {
   };
 
   showMultiples = function( $panel, shownum ) {
-
     var x,
+        section,
         show = shownum || 0,
         childItemClass = $panel.data( 'multiple' ),
         $childItems = $panel.find( '.' + childItemClass );
 
     for( x = 0; x < $childItems.length; x++ ) {
+      section = $childItems.eq( x );
       if( ( x + 1 ) > show ) {
-        $childItems.eq( x ).prev( '.divider' ).hide();
-        $childItems.eq( x ).hide();
+        section.prev( '.divider' ).hide();
+        section.hide();
+        $.hidden[ section.attr('id') ] = true;
       } else {
-        $childItems.eq( x ).prev( '.divider' ).show();
-        $childItems.eq( x ).show();
+        section.prev( '.divider' ).show();
+        section.show();
+        $.hidden[ section.attr('id') ] = false;
       }
     }
 
     if( show > 1 ) {
       $childItems.find( '.person' ).show().next( '.row' ).removeClass( 'nomargin' );
     } else {
-      $childItems.find( '.person' ).hide().next( '.row' ).addClass( 'nomargin' ); 
+      $childItems.find( '.person' ).hide().next( '.row' ).addClass( 'nomargin' );
     }
   };
 
