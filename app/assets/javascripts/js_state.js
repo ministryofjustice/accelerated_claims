@@ -131,10 +131,15 @@ moj.Modules.jsState = (function() {
   };
 
   setScroll = function( obj ) {
-    if( obj.value && parseInt( obj.value, 10 ) !== 'NaN' ) {
+    if( document.location.hash === '#global-header' ) {
+      document.location.hash = 'top';
+      window.setTimeout( function() {
+        window.scrollTo( 0, 0 );
+      }, 500 );
+    } else if( obj.value && parseInt( obj.value, 10 ) !== 'NaN' ) {
       window.setTimeout( function() {
         window.scrollTo( 0, obj.value );
-      }, 350 );
+      }, 500 );
     }
   };
 
