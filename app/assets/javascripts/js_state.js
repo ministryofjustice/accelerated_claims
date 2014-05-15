@@ -18,6 +18,7 @@ moj.Modules.jsState = (function() {
       setText,
       setScroll,
       focusRadios,
+      validate_hidden_section_selection,
 
       //elements
       $stateField,
@@ -32,6 +33,36 @@ moj.Modules.jsState = (function() {
     checkState();
     focusRadios();
     moj.Modules.tenancyModule.checkDates();
+
+    validate_hidden_section_selection(/defendant_one/, "defendant_one", '#defendants', 1);
+    validate_hidden_section_selection(/claimant_one/, "claimant_one", '#claimants', 2);
+  };
+
+  validate_hidden_section_selection = function(error_regex, panel_id, section_id, num) {
+    var errors = _.toArray($("div[id*=error]"));
+    var section_errors = _.filter( errors, function(d) {
+        return !!$(d).attr('id').match(error_regex);
+      }
+    );
+
+    var section_hidden = $.hidden[panel_id];
+
+    if( (section_errors.length > 0) && section_hidden ) {
+      var caption = $(section_id).find('.jsVal').eq( 0 ).addClass('error').find( '.caption' );
+
+      var text = 'Question "' + caption.text() + '" not answered';
+      var ul = $('.error-summary').eq(0).find('ul').eq(0);
+      $("<li><a href='" + section_id + "'>" + text + "</a></li>").prependTo(ul);
+
+      caption.eq( 0 ).append( '<span class="error">Must be answered</span>' );
+
+      _.each(section_errors, function(e) {
+          var id = $(e).attr('id');
+          var li = $('a[href="#' + id + '"]').parent();
+          li.remove();
+      })
+    }
+
   };
 
   cacheEls = function() {
@@ -80,7 +111,7 @@ moj.Modules.jsState = (function() {
     if( $el.is( 'input' ) && $el.attr( 'type' ) === 'radio' ) {
       return moj.Modules.tools.getRadioVal( $el );
     }
-    
+
     return $el.val();
   };
 
@@ -97,7 +128,7 @@ moj.Modules.jsState = (function() {
     if( $stateField.length > 0 && $stateField.val() !== '' ) {
       var stateArr = $.parseJSON( $stateField.val() ),
           x;
-      
+
       for( x = 0; x < stateArr.length; x++ ) {
         if( stateArr[ x ].type === 'text' ) {
           setText( stateArr[ x ] );

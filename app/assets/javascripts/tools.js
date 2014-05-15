@@ -44,7 +44,7 @@ moj.Modules.tools = (function() {
         sk,
         y,
         i;
-    
+
 
     s = s.toString();
     s = s.replace(/[\, ]/g,'');
@@ -92,7 +92,7 @@ moj.Modules.tools = (function() {
       }
     }
     return str.replace(/\s+/g,' ');
-    
+
   };
 
   ucFirst = function( str ) {
@@ -132,7 +132,7 @@ moj.Modules.tools = (function() {
         len = arr.length,
         out = [],
         obj = {};
-    
+
     for ( i = 0; i < len; i++ ) {
       obj[ arr[ i ] ] = 0;
     }
@@ -140,19 +140,6 @@ moj.Modules.tools = (function() {
       out.push( i );
     }
     return out;
-  };
-
-  jsError = function( arr ) {
-    var source = $( '#js-error-summary' ).html(),
-        template = Handlebars.compile( source ),
-        context;
-
-    context = {
-      errors: arr
-    };
-
-    $( '#content > header.page-header ' ).after( template( context ) );
-    window.scrollTo( 0, 0 );
   };
 
   return {

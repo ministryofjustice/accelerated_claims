@@ -33,13 +33,4 @@
 %script#title-input(type='text/x-handlebars-template')
   %input.smalltext(type='text' id='{{id}}' name='{{name}}')
 
-%script#js-error-summary(type='text/x-handlebars-template')
-  %section.flash.error-summary.js-errors
-    %h2#error-heading You need to fix the errors on this page before continuing.
-    %p See highlighted errors below.
-    %ul
-      {{#each errors}}
-      %li
-        %a(href='#jsError{{num}}') {{text}}
-      {{/each}}
 
