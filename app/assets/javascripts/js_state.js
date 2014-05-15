@@ -34,11 +34,11 @@ moj.Modules.jsState = (function() {
     focusRadios();
     moj.Modules.tenancyModule.checkDates();
 
-    validate_hidden_section_selection(/defendant_one/, "defendant_one", '#defendants', 1);
-    validate_hidden_section_selection(/claimant_one/, "claimant_one", '#claimants', 2);
+    validate_hidden_section_selection(/defendant_one/, "defendant_one", '#defendants');
+    validate_hidden_section_selection(/claimant_one/, "claimant_one", '#claimants');
   };
 
-  validate_hidden_section_selection = function(error_regex, panel_id, section_id, num) {
+  validate_hidden_section_selection = function(error_regex, panel_id, section_id) {
     var errors = _.toArray($("div[id*=error]"));
     var section_errors = _.filter( errors, function(d) {
         return !!$(d).attr('id').match(error_regex);
