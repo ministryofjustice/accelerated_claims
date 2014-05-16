@@ -21,6 +21,7 @@ moj.Modules.jsState = (function() {
       focusRadios,
       validate_hidden_section_selection,
       bindEvents,
+      findInput,
 
       //elements
       $stateField,
@@ -43,17 +44,38 @@ moj.Modules.jsState = (function() {
   };
 
   bindEvents = function() {
+
     $('.error-link').on( 'click', function() {
       var id = $( this ).attr('data-id');
-      var input = $(id).parent().find( 'input' ).eq(0);
-      if( input.size() === 0) {
-        input = $(id).parent().find( 'select' ).eq(0);
-      }
+      var input = findInput(id);
+
       if( input.size() > 0) {
         input.focus();
       }
     } );
   };
+
+  findInput = function(selector) {
+    var input = $(id).find( 'textarea:visible' ).eq(0);
+
+    if( input.size() === 0 ) {
+      input = $(id).find( 'input:visible' ).eq(0);
+    }
+
+    if( input.size() === 0 ) {
+      input = $(id).find( 'select:visible' ).eq(0);
+    }
+
+    if( input.size() === 0 ) {
+      input = $(id).parent().find( 'input:visible' ).eq(0);
+    }
+
+    if( input.size() === 0 ) {
+      input = $(id).parent().find( 'select:visible' ).eq(0);
+    }
+
+    return input;
+  }
 
   validate_hidden_section_selection = function(error_regex, panel_id, section_id) {
     var errors = _.toArray($("div[id*=error]"));
