@@ -58,4 +58,45 @@ feature 'Filling in claim form' do
     find_field('claim_claimant_one_full_name').value.should == 'Tom'
   end
 
+  def select_tenancy_start_date date
+    day = date.day
+    month = Date::MONTHNAMES[date.month]
+    year = date.year
+
+    select(  day, :from => "claim_tenancy_start_date_3i")
+    select(month, :from => "claim_tenancy_start_date_2i")
+    select( year, :from => "claim_tenancy_start_date_1i")
+  end
+
+  scenario 'tenancy start_date before 15 January 1989', js: true do
+    visit '/new'
+    choose('claim_tenancy_tenancy_type_assured')
+    choose('claim_tenancy_assured_shorthold_tenancy_type_one')
+    select_tenancy_start_date(Tenancy::APPLICABLE_FROM_DATE - 1)
+
+    expect(page).to_not have_content("You didn’t tell the defendant that the agreement was likely to change")
+    expect(page).to_not have_content("The tenancy agreement was for 6 months (or more)")
+  end
+
+  scenario 'tenancy start_date between 15 January 1989 and 27 February 1997', js: true do
+    visit '/new'
+    choose('claim_tenancy_tenancy_type_assured')
+    choose('claim_tenancy_assured_shorthold_tenancy_type_one')
+    select_tenancy_start_date Tenancy::APPLICABLE_FROM_DATE
+
+    expect(page).to have_content("Read the statements below and select all that apply:")
+    expect(page).to_not have_content("You didn’t tell the defendant that the agreement was likely to change")
+    expect(page).to have_content("The tenancy agreement was for 6 months (or more)")
+  end
+
+  scenario 'tenancy start_date on or after 28 February 1997', js: true do
+    visit '/new'
+    choose('claim_tenancy_tenancy_type_assured')
+    choose('claim_tenancy_assured_shorthold_tenancy_type_one')
+    select_tenancy_start_date Tenancy::RULES_CHANGE_DATE
+
+    expect(page).to_not have_content("The tenancy agreement was for 6 months (or more)")
+    expect(page).to have_content("You didn’t tell the defendant that the agreement was likely to change")
+  end
+
 end
