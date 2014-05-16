@@ -11,6 +11,32 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     row_input attribute, :text_area, options
   end
 
+
+  def moj_date attribute, legend, options={}
+    set_class_and_id attribute, options
+    fieldset_tag label_for(attribute, legend), options do
+      date = @object.send(attribute)
+      fields_for(:date_served, @object.date_served) do |date_form|
+        obj_name   = @object.class.to_s.underscore
+        day_id     = "claim_#{obj_name}_#{attribute}_3i"
+        month_id   = "claim_#{obj_name}_#{attribute}_2i"
+        year_id    = "claim_#{obj_name}_#{attribute}_1i"
+        day_name   = "claim[#{obj_name}][#{attribute}(3i)]"
+        month_name = "claim[#{obj_name}][#{attribute}(2i)]"
+        year_name  = "claim[#{obj_name}][#{attribute}(1i)]"
+
+        day       = date_form.text_field :day,    maxlength: 2, id: day_id,   name: day_name,   class: 'moj-date-day',    placeholder: 'DD'
+        month     = date_form.text_field :month,  maxlength: 9, id: month_id, name: month_name, class: 'moj-date-month',  placeholder: 'MM'
+        year      = date_form.text_field :year,   maxlength: 4, id: year_id,  name: year_name,  class: 'moj-date-year',   placeholder: 'YYYY'
+        "#{day}&nbsp;#{month}&nbsp#{year}".html_safe
+      end
+    end
+
+  end
+
+
+
+
   def date_select_field_set attribute, legend, options={}
     set_class_and_id attribute, options
 
