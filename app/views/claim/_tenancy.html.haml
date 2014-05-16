@@ -43,12 +43,12 @@
             %li{ id: form.id_for(:applicable_statements_3, 'as3').to_s }
               = form.labelled_check_box :applicable_statements_3, 'The defendant is not living in the property as an agricultural worker in connection with their work (so Schedule 3, Housing Act 1988 does not apply) '.html_safe
 
-        %p.remove
+        %p.statements.remove
           %strong (or)
 
-          -# TODO: 'Read the statements below and select all that apply:' in JS version instead of the paragraph below.
-
-          %p= "If your tenancy agreement was made between <strong>#{Tenancy::APPLICABLE_FROM_DATE.to_s(:printed)} and #{(Tenancy::RULES_CHANGE_DATE - 1).to_s(:printed)}</strong>, read the statements below and select all that apply:".html_safe
+        .statements.hide.older
+          -# following paragraph replaced when JS turned on - see tenancy_module.js
+          %p#read-statements= "If your tenancy agreement was made between <strong>#{Tenancy::APPLICABLE_FROM_DATE.to_s(:printed)} and #{(Tenancy::RULES_CHANGE_DATE - 1).to_s(:printed)}</strong>, read the statements below and select all that apply:".html_safe
 
           %p
             %strong Select all that apply:
