@@ -180,8 +180,6 @@ moj.Modules.jsState = (function() {
           setRadio( stateArr[ x ] );
         } else if( stateArr[ x ].type === 'select' ) {
           setSelect( stateArr[ x ] );
-        } else if( stateArr[ x ].type === 'hidden' && stateArr[ x ].name === 'ypos' ) {
-          setScroll( stateArr[ x ] );
         }
       }
     }
@@ -209,19 +207,6 @@ moj.Modules.jsState = (function() {
     }
 
     $( '[name="' + obj.name + '"]' ).val( obj.value );
-  };
-
-  setScroll = function( obj ) {
-    if( document.location.hash === '#global-header' ) {
-      document.location.hash = 'top';
-      window.setTimeout( function() {
-        window.scrollTo( 0, 0 );
-      }, 100 );
-    } else if( obj.value && parseInt( obj.value, 10 ) !== 'NaN' ) {
-      window.setTimeout( function() {
-        window.scrollTo( 0, obj.value );
-      }, 100 );
-    }
   };
 
   focusRadios = function() {

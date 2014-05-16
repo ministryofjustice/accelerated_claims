@@ -61,8 +61,6 @@ moj.Modules.jsValidate = (function() {
 
   submitForm = function() {
     clearHidden();
-
-    $form.attr( 'action', $form.attr( 'action' ) + '#global-header' );
     $form.unbind( 'submit' );
 
     // this looks horrible but it's necessary
