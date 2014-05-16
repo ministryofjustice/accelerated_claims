@@ -6,7 +6,7 @@
     .sub-panel.details
       .row
         %a.caption.js-only#correspondence-address{ href: '#correspondence-address' }
-          = 'Alternative address <span class="hint">(optional)</span>'.html_safe
+          = 'Alternative address'.html_safe
       = form.text_field_row :title,    class: 'rel title', input_class: 'smalltext'
       = form.text_field_row :full_name, class: 'rel '
       = form.text_field_row :company_name,  class: 'rel company_name'
@@ -15,7 +15,7 @@
     .sub-panel.details
       .row
         %a.caption#contact-details{ href: '#contact-details' }
-          = 'Phone, email, DX number for correspondence about the case <span class="hint">(optional)</span>'.html_safe
+          = 'Phone and email for correspondence about the case <span class="hint">(optional)</span>'.html_safe
       = form.text_field_row :email, class: 'rel email'
       = form.text_field_row :phone, class: 'rel phone'
       = form.text_field_row :fax, class: 'rel fax'
