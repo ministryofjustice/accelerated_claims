@@ -55,7 +55,7 @@ moj.Modules.jsState = (function() {
     } );
   };
 
-  findInput = function(selector) {
+  findInput = function(id) {
     var input = $(id).find( 'textarea:visible' ).eq(0);
 
     if( input.size() === 0 ) {
