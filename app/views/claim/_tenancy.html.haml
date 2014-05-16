@@ -32,11 +32,9 @@
       .row.hide.js-conditionals
 
         .statements.hide.current
-          %p= "If your original tenancy agreement (and any additional agreements) were made <strong>on or after #{(Tenancy::RULES_CHANGE_DATE).to_s(:printed)}</strong>, read the statements below.".html_safe
+          %p= "If your original tenancy agreement (and any additional agreements) were made <strong>on or after #{(Tenancy::RULES_CHANGE_DATE).to_s(:printed)}</strong>, read the statements below and select all that apply.".html_safe
 
           %p
-            %strong Select all that apply:
-
           %ol
             %li{ id: form.id_for(:applicable_statements_1, 'as1').to_s }
               = form.labelled_check_box :applicable_statements_1, 'You didn’t tell the defendant that the agreement would change at any time'
@@ -49,7 +47,7 @@
           %strong (or)
 
         .statements.hide.older
-          %p= "If your original tenancy agreement (and any additional agreements) were made between <strong>#{Tenancy::APPLICABLE_FROM_DATE.to_s(:printed)} and #{(Tenancy::RULES_CHANGE_DATE - 1).to_s(:printed)}</strong>, read the statements below.".html_safe
+          %p= "If your tenancy agreement was made between <strong>#{Tenancy::APPLICABLE_FROM_DATE.to_s(:printed)} and #{(Tenancy::RULES_CHANGE_DATE - 1).to_s(:printed)}</strong>, read the statements below and select all that apply:".html_safe
 
           %p
             %strong Select all that apply:
