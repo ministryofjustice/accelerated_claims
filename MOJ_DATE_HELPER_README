@@ -1,0 +1,110 @@
+
+
+# OBjectives:
+
+
+# 1: provide markup to display three boxes to allow input of dates
+# 2: provide label and id markup for the fields
+# 3: provide javascript(?) validationi
+# 4: allow spec of min and max date ranges
+# 5: allow IOS input of date
+# 6: gemify
+
+
+# Tickets:
+# https://www.pivotaltracker.com/story/show/70513998
+
+# https://www.pivotaltracker.com/story/show/71415158
+
+# https://www.pivotaltracker.com/story/show/71415334
+
+
+
+# Current code:
+
+
+
+ = form.date_select_field_set(:start_date, 
+        'Start date of the tenancy agreement', 
+        class: 'date-picker rel conditional original', 
+        date_select_options: @date_select_options)
+
+
+
+ # defined in labelling form builder as:
+
+
+   def date_select_field_set attribute, legend, options={}
+    set_class_and_id attribute, options
+
+    fieldset_tag label_for(attribute, legend), options do
+      @template.surround("<div class='row'>".html_safe, "</div>".html_safe) do
+        if @object.send(attribute).is_a?(InvalidDate)
+          @object.send("#{attribute}=", nil) # nil date to avoid exception on date_select call
+        end
+        date_select(attribute, options[:date_select_options])
+      end
+    end
+  end
+
+
+  # called with params:
+:start_date,
+'Start date of the tenancy agreement',
+{
+  :class=>"date-picker rel conditional original", 
+  :date_select_options => {
+    :order=> [:day, :month, :year], 
+    :with_css_classes=>true, 
+    :prompt => {
+      :day=>"Day", 
+      :month=>"Month", 
+      :year=>"Year"
+    }, 
+    :start_year=>2014, 
+    :end_year=>1989
+  }
+}
+
+# calls set_class_and_id with attribute and options:
+
+def set_class_and_id attribute, options
+  options[:class] = css_for(attribute, options)
+  options[:id] = id_for(attribute) unless id_for(attribute).blank?
+end 
+
+
+
+def css_for attribute, options
+  css = ''
+  css += " #{options[:class]}" if options[:class].present?
+  css += ' error' if error_for?(attribute)
+  css.strip
+end
+
+
+
+def fieldset_tag(legend = nil, options = {}, &block)
+  if options.has_key?(:id)
+    id = options.delete(:id)
+  else
+    id = '_' + SecureRandom.hex(20)
+  end
+
+  legend_options = {:id => id, :class => 'legend'}
+  options[:"aria-describedby"] = id
+
+  options_for_fieldset = {}.merge(options)
+  options_for_fieldset.delete(:choice)
+  options_for_fieldset.delete(:date_select_options)
+
+  output = tag(:fieldset, options_for_fieldset, true)
+  output.safe_concat(content_tag(:span, legend, legend_options)) unless legend.blank?
+  output.concat(capture(&block)) if block_given?
+  output.safe_concat("</fieldset>")
+end
+
+
+
+
+
