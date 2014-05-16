@@ -20,6 +20,7 @@ moj.Modules.jsState = (function() {
       setScroll,
       focusRadios,
       validate_hidden_section_selection,
+      bindEvents,
 
       //elements
       $stateField,
@@ -37,6 +38,21 @@ moj.Modules.jsState = (function() {
 
     validate_hidden_section_selection(/defendant_one/, "defendant_one", '#defendants');
     validate_hidden_section_selection(/claimant_one/, "claimant_one", '#claimants');
+
+    bindEvents();
+  };
+
+  bindEvents = function() {
+    $('.error-link').on( 'click', function() {
+      var id = $( this ).attr('data-id');
+      var input = $(id).parent().find( 'input' ).eq(0);
+      if( input.size() === 0) {
+        input = $(id).parent().find( 'select' ).eq(0);
+      }
+      if( input.size() > 0) {
+        input.focus();
+      }
+    } );
   };
 
   validate_hidden_section_selection = function(error_regex, panel_id, section_id) {
@@ -53,7 +69,7 @@ moj.Modules.jsState = (function() {
 
       var text = 'Question "' + caption.text() + '" not answered';
       var ul = $('.error-summary').eq(0).find('ul').eq(0);
-      $("<li><a href='" + section_id + "'>" + text + "</a></li>").prependTo(ul);
+      $("<li><a class='error-link' data-id='" + section_id + "' href='" + section_id + "'>" + text + "</a></li>").prependTo(ul);
 
       caption.eq( 0 ).append( '<span class="error">Must be answered</span>' );
 
