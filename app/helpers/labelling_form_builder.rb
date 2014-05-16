@@ -12,13 +12,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def date_select_field_set attribute, legend, options={}
-    puts "++++++ DEBUG DATE_SELECT_FIELD_SET ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    puts "attribute: #{attribute}"
-    puts "legend: #{legend}"
-    puts "options: #{options.inspect}"
-    puts "++++++ DEBUG END ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    
-    
     set_class_and_id attribute, options
 
     fieldset_tag label_for(attribute, legend), options do
