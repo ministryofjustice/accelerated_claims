@@ -58,7 +58,7 @@ moj.Modules.multiplePersons = (function() {
         for( y = 0; y < $childItems.length; y++ ) {
           childItemsArray[ childItemsArray.length ] = {
             val:    y + 1,
-            text:   ( y + 1 ) + ' ' + ( y === 0 ? $panel.data( 'single' ) : $panel.data( 'plural' ) ),
+            text:   ( y + 1 ),
             group:  $panel.attr( 'id' )
           };
         }
