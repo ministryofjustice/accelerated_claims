@@ -5,10 +5,6 @@
   = form.text_field_row  :served_by_name, label: 'Name of the person who gave the notice'
   = form.text_field_row  :served_method, label: 'How was the notice given?'
 
-  = form.moj_date :date_served, 'Date Notice Served'
 
-  /= form.moj_date :expiry_date, 'Date Notice Ended'
-
-
-  /= form.date_select_field_set :date_served, 'Date notice served', class: 'date-picker', date_select_options: @date_select_options
-  = form.date_select_field_set :expiry_date, 'Date notice ended', class: 'date-picker', date_select_options: @date_select_options
+  = form.moj_date_fieldset :date_served, 'Date Notice Served'
+  = form.moj_date_fieldset :expiry_date, 'Date Notice Ended'
