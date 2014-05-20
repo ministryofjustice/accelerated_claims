@@ -42,9 +42,7 @@ moj.Modules.jsState = (function() {
 
     bindEvents();
 
-    window.setTimeout( function() {
-      window.scrollTo( 0, 0 );
-    }, 10 );
+    window.scrollTo( 0, 0 );
   };
 
   bindEvents = function() {
