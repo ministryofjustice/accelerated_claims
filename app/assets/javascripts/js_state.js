@@ -41,6 +41,8 @@ moj.Modules.jsState = (function() {
     validate_hidden_section_selection(/claimant_one/, "claimant_one", '#claimants');
 
     bindEvents();
+
+    window.scrollTo( 0, 0 );
   };
 
   bindEvents = function() {
