@@ -9,24 +9,232 @@ feature "moj date fieldset" do
 
   context 'without javascript' do
     unless remote_test?
-      scenario "user types 13 01 2014" do
-        data = load_fixture_data(1)
-        data['claim']['notice']['date_served'] = '2014-01-13'
-        expected_data = load_expected_data(1)
+      scenario "user types two digit numeric day two digit numeric month: 13 01 2014" do
+        data, expected_data = update_data_and_results('2014-01-13')
         run_scenario(data, expected_data, js: false)
       end
+
+      scenario "user types two digit numeric day one digit numeric month: 13 1 2014" do
+        data, expected_data = update_data_and_results('2014-1-13')
+        run_scenario(data, expected_data, js: false)
+      end
+
+      scenario "user types two digit numeric day, month name in lower case: 13 january 2014" do
+        data, expected_data = update_data_and_results('2014-january-13')
+        run_scenario(data, expected_data, js: false)
+      end
+
+      scenario "user types two digit numeric day, abbreviated month name in lower case:  13 jan 2014" do
+        data, expected_data = update_data_and_results('2014-jan-13')
+        run_scenario(data, expected_data, js: false)
+      end
+
+      scenario "user types two digit numeric day, abbreviated month name in mixed case:  13 JAn 2014" do
+        data, expected_data = update_data_and_results('2014-JAn-13')
+        run_scenario(data, expected_data, js: false)
+      end
+
+      scenario "user types one digit numeric day, abbreviated month name in mixed case: 1 JAn 2014" do
+        data, expected_data = update_data_and_results('2014-JAn-1', notice_date_served_day: '01')
+        run_scenario(data, expected_data, js: false)
+      end
+
+      scenario "user types one digit day, one digit month: 1 1 2014" do
+        data, expected_data = update_data_and_results('2014-1-1', notice_date_served_day: '01')
+        run_scenario(data, expected_data, js: false)
+      end
+
+      scenario 'user types 29 Feb 2012 - which is OK because its a leap year' do
+        data, expected_data = update_data_and_results('2012-Feb-29', notice_date_served_day: '29', notice_date_served_month: '02', notice_date_served_year: '2012')
+        run_scenario(data, expected_data, js: false)
+      end
+
+      scenario 'user types 29 02 2014 - which is an invalid day number for Feb' do
+        data, expected_data = update_data_and_results('2014-02-29')
+        expect {
+          run_scenario(data, expected_data, js: false)
+        }.to raise_error RSpec::Expectations::ExpectationNotMetError, "Validation Errors:\n\tDate served is invalid date: #claim_notice_date_served_error" 
+      end
+
+      scenario 'user types invalid day number for January: 33 01 2014' do
+        data, expected_data = update_data_and_results('2014-01-33')
+        expect {
+          run_scenario(data, expected_data, js: false)
+        }.to raise_error RSpec::Expectations::ExpectationNotMetError, "Validation Errors:\n\tDate served is invalid date: #claim_notice_date_served_error" 
+      end
+
+      scenario 'user types invalid day number for april: 31 APRIL 2014'  do
+        data, expected_data = update_data_and_results('2014-April-31')
+        expect {
+          run_scenario(data, expected_data, js: false)
+        }.to raise_error RSpec::Expectations::ExpectationNotMetError, "Validation Errors:\n\tDate served is invalid date: #claim_notice_date_served_error" 
+      end      
+
+
+      scenario 'user types invalid month name:  15-avgust-2014' do 
+        data, expected_data = update_data_and_results('2012-avgust-15')
+        expect {
+          run_scenario(data, expected_data, js: false)
+        }.to raise_error RSpec::Expectations::ExpectationNotMetError, "Validation Errors:\n\tDate served is invalid date: #claim_notice_date_served_error" 
+      end
+
+      scenario 'user types invalid month number: 3-15-2014' do 
+        data, expected_data = update_data_and_results('2012-15-3')
+        expect {
+          run_scenario(data, expected_data, js: false)
+        }.to raise_error RSpec::Expectations::ExpectationNotMetError, "Validation Errors:\n\tDate served is invalid date: #claim_notice_date_served_error" 
+      end     
+
+      scenario 'user omits day' do  
+        data, expected_data = update_data_and_results('2012-15- ')
+        expect {
+          run_scenario(data, expected_data, js: false)
+        }.to raise_error RSpec::Expectations::ExpectationNotMetError, "Validation Errors:\n\tDate served must be entered: #claim_notice_date_served_error" 
+      end
+
+      scenario 'user omits month' do
+        data, expected_data = update_data_and_results('2012--3')
+        expect {
+          run_scenario(data, expected_data, js: false)
+        }.to raise_error RSpec::Expectations::ExpectationNotMetError, "Validation Errors:\n\tDate served must be entered: #claim_notice_date_served_error" 
+      end
+
+      scenario 'user omits year' do
+        data, expected_data = update_data_and_results(' -1-3')
+        expect {
+          run_scenario(data, expected_data, js: false)
+        }.to raise_error RSpec::Expectations::ExpectationNotMetError, "Validation Errors:\n\tDate served must be entered: #claim_notice_date_served_error" 
+      end
+
+      scenario 'user specifies two digit year' do
+        expect {
+          data, expected_data = update_data_and_results('14-1-1', notice_date_served_day: '01')
+          run_scenario(data, expected_data, js: false)
+        }.to raise_error RSpec::Expectations::ExpectationNotMetError, "Validation Errors:\n\tDate served must be entered: #claim_notice_date_served_error" 
+      end
+
     end
   end
+
 
   context 'with javascript' do
-    scenario "user types 13 01 2014", js: true  do
-      data = load_fixture_data(1)
-      data['claim']['notice']['date_served'] = '2014-01-13'
-      expected_data = load_expected_data(1)
+    scenario "user types two digit numeric day two digit numeric month: 13 01 2014", js: true do
+      data, expected_data = update_data_and_results('2014-01-13')
       run_scenario(data, expected_data, js: true)
     end
+
+    scenario "user types two digit numeric day one digit numeric month: 13 1 2014", js: true do
+      data, expected_data = update_data_and_results('2014-1-13')
+      run_scenario(data, expected_data, js: true)
+    end
+
+    scenario "user types two digit numeric day, month name in lower case: 13 january 2014", js: true do
+      data, expected_data = update_data_and_results('2014-january-13')
+      run_scenario(data, expected_data, js: true)
+    end
+
+    scenario "user types two digit numeric day, abbreviated month name in lower case:  13 jan 2014", js: true do
+      data, expected_data = update_data_and_results('2014-jan-13')
+      run_scenario(data, expected_data, js: true)
+    end
+
+    scenario "user types two digit numeric day, abbreviated month name in mixed case:  13 JAn 2014", js: true do
+      data, expected_data = update_data_and_results('2014-JAn-13')
+      run_scenario(data, expected_data, js: true)
+    end
+
+    scenario "user types one digit numeric day, abbreviated month name in mixed case: 1 JAn 2014", js: true do
+      data, expected_data = update_data_and_results('2014-JAn-1', notice_date_served_day: '01')
+      run_scenario(data, expected_data, js: true)
+    end
+
+    scenario "user types one digit day, one digit month: 1 1 2014", js: true do
+      data, expected_data = update_data_and_results('2014-1-1', notice_date_served_day: '01')
+      run_scenario(data, expected_data, js: true)
+    end
+
+    scenario 'user types 29 Feb 2012 - which is OK because its a leap year', js: true do
+      data, expected_data = update_data_and_results('2012-Feb-29', notice_date_served_day: '29', notice_date_served_month: '02', notice_date_served_year: '2012')
+      run_scenario(data, expected_data, js: true)
+    end
+
+    scenario 'user types 29 02 2014 - which is an invalid day number for Feb', js: true do
+      data, expected_data = update_data_and_results('2014-02-29')
+      expect {
+        run_scenario(data, expected_data, js: true)
+      }.to raise_error RSpec::Expectations::ExpectationNotMetError, "Validation Errors:\n\tDate served is invalid date: #claim_notice_date_served_error" 
+    end
+
+    scenario 'user types invalid day number for January: 33 01 2014', js: true do
+      data, expected_data = update_data_and_results('2014-01-33')
+      expect {
+        run_scenario(data, expected_data, js: true)
+      }.to raise_error RSpec::Expectations::ExpectationNotMetError, "Validation Errors:\n\tDate served is invalid date: #claim_notice_date_served_error" 
+    end
+
+    scenario 'user types invalid day number for april: 31 APRIL 2014', js: true  do
+      data, expected_data = update_data_and_results('2014-April-31')
+      expect {
+        run_scenario(data, expected_data, js: true)
+      }.to raise_error RSpec::Expectations::ExpectationNotMetError, "Validation Errors:\n\tDate served is invalid date: #claim_notice_date_served_error" 
+    end      
+
+
+    scenario 'user types invalid month name:  15-avgust-2014', js: true do 
+      data, expected_data = update_data_and_results('2012-avgust-15')
+      expect {
+        run_scenario(data, expected_data, js: true)
+      }.to raise_error RSpec::Expectations::ExpectationNotMetError, "Validation Errors:\n\tDate served is invalid date: #claim_notice_date_served_error" 
+    end
+
+    scenario 'user types invalid month number: 3-15-2014', js: true do 
+      data, expected_data = update_data_and_results('2012-15-3')
+      expect {
+        run_scenario(data, expected_data, js: true)
+      }.to raise_error RSpec::Expectations::ExpectationNotMetError, "Validation Errors:\n\tDate served is invalid date: #claim_notice_date_served_error" 
+    end     
+
+    scenario 'user omits day', js: true do  
+      data, expected_data = update_data_and_results('2012-15- ')
+      expect {
+        run_scenario(data, expected_data, js: true)
+      }.to raise_error RSpec::Expectations::ExpectationNotMetError, "Validation Errors:\n\tDate served must be entered: #claim_notice_date_served_error" 
+    end
+
+    scenario 'user omits month', js: true do
+      data, expected_data = update_data_and_results('2012--3')
+      expect {
+        run_scenario(data, expected_data, js: true)
+      }.to raise_error RSpec::Expectations::ExpectationNotMetError, "Validation Errors:\n\tDate served must be entered: #claim_notice_date_served_error" 
+    end
+
+    scenario 'user omits year', js: true do
+      data, expected_data = update_data_and_results(' -1-3')
+      expect {
+        run_scenario(data, expected_data, js: true)
+      }.to raise_error RSpec::Expectations::ExpectationNotMetError, "Validation Errors:\n\tDate served must be entered: #claim_notice_date_served_error" 
+    end
+
+    scenario 'user specifies two digit year', js: true do
+      expect {
+        data, expected_data = update_data_and_results('14-1-1', notice_date_served_day: '01')
+        run_scenario(data, expected_data, js: true)
+      }.to raise_error RSpec::Expectations::ExpectationNotMetError, "Validation Errors:\n\tDate served must be entered: #claim_notice_date_served_error" 
+    end
+
   end
 
+
+
+  def update_data_and_results(date_string, result_fields = {})
+    data = load_fixture_data(1)
+    data['claim']['notice']['date_served'] = date_string
+    expected_data = load_expected_data(1)
+    result_fields.each do |field, new_value|
+      expected_data[field.to_s] = new_value
+    end
+    [data, expected_data]
+  end
 
 
 
