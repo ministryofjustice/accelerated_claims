@@ -44,7 +44,7 @@ moj.Modules.jsState = (function() {
 
     window.setTimeout( function() {
       window.scrollTo( 0, 0 );
-    }, 100 );
+    }, 10 );
   };
 
   bindEvents = function() {
