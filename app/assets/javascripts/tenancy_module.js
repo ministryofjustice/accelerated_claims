@@ -30,7 +30,7 @@ moj.Modules.tenancyModule = (function() {
 
     $optionsDiv.addClass( 'inset' ).find( '.inset' ).removeClass( 'inset' ).removeClass( 'sub-panel' );
 
-    $('#read-statements').text('Read the statements below and select all that apply:');
+    $( '#read-statements' ).text( 'Read the statements below and select all that apply:' ).addClass( 'strong' ).prependTo( $( '.js-conditionals' ) );
   };
 
   cacheEls = function() {
