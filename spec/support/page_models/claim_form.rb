@@ -66,6 +66,9 @@ class ClaimForm
       when 2
         choose("multiplePanelRadio_#{type}_2")
     end
+
+    find("#claim_#{type.to_s.singularize}_one_title") # wait for selector to be shown
+
     number
   end
 
@@ -152,7 +155,7 @@ class ClaimForm
 
   def check_box(prefix, key)
     if(get_data(prefix, key).downcase == 'yes')
-      check("claim_#{prefix}_#{key}") 
+      check("claim_#{prefix}_#{key}")
     end
   end
 
