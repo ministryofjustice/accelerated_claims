@@ -92,8 +92,8 @@
       received: "No",
       information_given_date: nil,
       ref_number: nil,
-      as_property: "No",
-      as_money: 'No'
+      as_money: "No",
+      as_property: "No"
     },
     order: {
       possession: "Yes",

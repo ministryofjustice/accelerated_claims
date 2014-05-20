@@ -29,6 +29,8 @@ moj.Modules.tenancyModule = (function() {
     bindEvents();
 
     $optionsDiv.addClass( 'inset' ).find( '.inset' ).removeClass( 'inset' ).removeClass( 'sub-panel' );
+
+    $( '#read-statements' ).text( 'Read the statements below and select all that apply:' ).addClass( 'strong' ).prependTo( $( '.js-conditionals' ) );
   };
 
   cacheEls = function() {
@@ -62,7 +64,7 @@ moj.Modules.tenancyModule = (function() {
     }
 
     checkDates();
-    
+
     if( $('.date-picker.selected').length === 0 ) {
       hideConditionals();
     }
@@ -82,16 +84,16 @@ moj.Modules.tenancyModule = (function() {
 
     for( x = 0; x < visDates.length; x++) {
       d = $( visDates[ x ] ).find( '.day' ).val();
-      m = ( $( visDates[ x ] ).find( '.month' ).val() - 1 );
+      m = ( $( visDates[ x ] ).find( '.month' ).val() );
       y = $( visDates[ x ] ).find( '.year' ).val();
 
       if( d !== '' && m !== '' && y !== '') {
         selectedDate = moj.Modules.tools.stringToDate( y + '-' + m + '-' + d );
       }
 
-      if( selectedDate > firstDate && selectedDate <= secondDate ) {
+      if( selectedDate >= firstDate && selectedDate < secondDate ) {
         showOlder = true;
-      } else if( selectedDate > secondDate ) {
+      } else if( selectedDate >= secondDate ) {
         showCurrent = true;
       }
     }

@@ -12,8 +12,10 @@
       = render partial: 'property', object: @claim.property, locals: { claim_form: claim_form }
 
   %section
-    %h2.section-header Claimants (landlords)
-    .moj-panel.has-multiple#claimants(data-multiple="claimant" data-caption="As the landlord, you’re known as the claimant in this case. How many claimants are there?" data-single="claimant" data-plural="claimants")
+    %h2.section-header Claimants
+    .moj-panel.has-multiple#claimants(data-multiple="claimant" data-caption="As the landlord, you’re known as the claimant in this case. How many claimants are there?")
+      .row.hide
+        %h3 As the landlord, you’re known as the claimant in this case.
       .sub-panel.claimant#claimant_one
         %h3.person First claimant
         = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_one}
@@ -28,8 +30,10 @@
 
 
   %section
-    %h2.section-header Defendants (tenants)
-    .moj-panel.has-multiple#defendants(data-multiple="defendant" data-caption="Your tenants are known as defendants in this case. How many defendants are there?" data-single="defendant" data-plural="defendants")
+    %h2.section-header Defendants
+    .moj-panel.has-multiple#defendants(data-multiple="defendant" data-caption="Your tenants are known as defendants in this case. How many defendants are there?")
+      .row.hide
+        %h3 Your tenants are known as defendants in this case.
       .sub-panel.defendant#defendant_one
         %h3.person First defendant
         = render partial: 'defendant', object: @claim.defendant_one, locals: { claim_form: claim_form, defendant_field: :defendant_one}
@@ -59,7 +63,7 @@
 
   %section
     %h2.section-header Deposit
-    .moj-panel
+    .moj-panel#deposit-module
       = render partial: 'deposit', object: @claim.deposit, locals: { claim_form: claim_form }
 
   %section
@@ -77,7 +81,7 @@
 
   %section
     %p
-      = link_to 'Terms and conditions', :terms, class: 't-n-c'
+      = link_to 'Terms and conditions and privacy policy', :terms, class: 't-n-c'
 
 
 / handlebars templates

@@ -1,13 +1,13 @@
 = claim_form.fields_for tenancy, builder: LabellingFormBuilder do |form|
   .sub-panel
-    = form.radio_button_fieldset :tenancy_type, 'What kind of tenancy agreement do you have with the defendant?', class: 'radio js-depend', choice: {'Assured shorthold tenancy <span class="hint">This is the most common form of <a href="https://www.gov.uk/tenancy-agreements-a-guide-for-landlords/tenancy-types" class="external" rel="external" target="_blank">tenancy</a></span>' => 'assured', 'Demoted assured shorthold tenancy <span class="hint">This is a tenancy agreement that has been ‘demoted’ by the court. This may be because the tenants behaved anti-socially or used the property for illegal activity</span>' => 'demoted'}, data: { depend: "tenancyType" }
+    = form.radio_button_fieldset :tenancy_type, 'What kind of tenancy agreement do you have with the defendant?', class: 'radio js-depend', choice: {'Assured shorthold tenancy <span class="hint">(this is the most common form of tenancy)</span>' => 'assured', 'Demoted assured shorthold tenancy <span class="hint">(this is a tenancy agreement that has been ‘demoted’ by the court, for example because tenants behaved anti-socially or used the property for illegal activity)</span>' => 'demoted'}, data: { depend: "tenancyType" }
 
   .row.divider.hide.js-tenancyType.assured
 
   .sub-panel.rel.hide.js-tenancyType.assured
     %h3.section-header Assured shorthold tenancies
 
-    = form.radio_button_fieldset :assured_shorthold_tenancy_type, 'How many tenancy agreements have you had with the defendant?', class: 'radio js-depend', choice: {'1 tenancy agreement' => 'one', 'More than 1' => 'multiple'}, data: { depend: "tenancyNumber" }
+    = form.radio_button_fieldset :assured_shorthold_tenancy_type, 'How many tenancy agreements have you had with the defendant?', class: 'radio js-depend', choice: {'1' => 'one', 'More than 1' => 'multiple'}, data: { depend: "tenancyNumber" }
 
 
     .sub-panel.assuredTenancyOptions.hide.js-tenancyNumber.one.multiple
@@ -32,27 +32,20 @@
       .row.hide.js-conditionals
 
         .statements.hide.current
-          %p= "If your original tenancy agreement (and any additional agreements) were made <strong>on or after #{(Tenancy::RULES_CHANGE_DATE).to_s(:printed)}</strong>, read the statements below.".html_safe
-
-          %p
-            %strong Select all that apply:
+          -# following paragraph replaced and moved when JS turned on - see tenancy_module.js
+          %p#read-statements= "If your original tenancy agreement (and any additional agreements) were made <strong>on or after #{(Tenancy::RULES_CHANGE_DATE).to_s(:printed)}</strong>, read the statements below and select all that apply.".html_safe
 
           %ol
             %li{ id: form.id_for(:applicable_statements_1, 'as1').to_s }
-              = form.labelled_check_box :applicable_statements_1, 'You didn’t tell the defendant that the agreement would change at any time'
+              = form.labelled_check_box :applicable_statements_1, 'You didn’t tell the defendant that the agreement was likely to change'
             %li{ id: form.id_for(:applicable_statements_2, 'as2').to_s }
-              = form.labelled_check_box :applicable_statements_2, 'There’s nothing in the agreement to say it’s <strong>not</strong> an assured shorthold tenancy'.html_safe
+              = form.labelled_check_box :applicable_statements_2, 'You have an assured shorthold tenancy agreement (with no exceptions)'.html_safe
             %li{ id: form.id_for(:applicable_statements_3, 'as3').to_s }
-              = form.labelled_check_box :applicable_statements_3, 'The defendant is not living in the property as an agricultural worker in connection with their work (so <a href="http://www.legislation.gov.uk/ukpga/1988/50/part/I/chapter/III" rel="external" class="external" target="_blank">Schedule 3, Housing Act 1988 does not apply</a>) '.html_safe
-
-        %p.remove
-          %strong (or)
+              = form.labelled_check_box :applicable_statements_3, 'The defendant is not living in the property as an agricultural worker in connection with their work (so Schedule 3, Housing Act 1988 does not apply) '.html_safe
 
         .statements.hide.older
-          %p= "If your original tenancy agreement (and any additional agreements) were made between <strong>#{Tenancy::APPLICABLE_FROM_DATE.to_s(:printed)} and #{(Tenancy::RULES_CHANGE_DATE - 1).to_s(:printed)}</strong>, read the statements below.".html_safe
+          %p.hide= "If your original tenancy agreement (and any additional agreements) were made between <strong>#{Tenancy::APPLICABLE_FROM_DATE.to_s(:printed)} and #{(Tenancy::RULES_CHANGE_DATE - 1).to_s(:printed)}</strong>, read the statements below and select all that apply:".html_safe
 
-          %p
-            %strong Select all that apply:
           %ol
             %li{ id: form.id_for(:applicable_statements_4, 'as4').to_s }
               = form.labelled_check_box :applicable_statements_4, 'The tenancy agreement was for 6 months (or more)'

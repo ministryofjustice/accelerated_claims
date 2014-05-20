@@ -20,6 +20,8 @@ moj.Modules.jsState = (function() {
       setScroll,
       focusRadios,
       validate_hidden_section_selection,
+      bindEvents,
+      findInput,
 
       //elements
       $stateField,
@@ -37,7 +39,45 @@ moj.Modules.jsState = (function() {
 
     validate_hidden_section_selection(/defendant_one/, "defendant_one", '#defendants');
     validate_hidden_section_selection(/claimant_one/, "claimant_one", '#claimants');
+
+    bindEvents();
+
+    window.scrollTo( 0, 0 );
   };
+
+  bindEvents = function() {
+
+    $('.error-link').on( 'click', function() {
+      var id = $( this ).attr('data-id');
+      var input = findInput(id);
+
+      if( input.size() > 0) {
+        input.focus();
+      }
+    } );
+  };
+
+  findInput = function(id) {
+    var input = $(id).find( 'textarea:visible' ).eq(0);
+
+    if( input.size() === 0 ) {
+      input = $(id).find( 'input:visible' ).eq(0);
+    }
+
+    if( input.size() === 0 ) {
+      input = $(id).find( 'select:visible' ).eq(0);
+    }
+
+    if( input.size() === 0 ) {
+      input = $(id).parent().find( 'input:visible' ).eq(0);
+    }
+
+    if( input.size() === 0 ) {
+      input = $(id).parent().find( 'select:visible' ).eq(0);
+    }
+
+    return input;
+  }
 
   validate_hidden_section_selection = function(error_regex, panel_id, section_id) {
     var errors = _.toArray($("div[id*=error]"));
@@ -53,7 +93,7 @@ moj.Modules.jsState = (function() {
 
       var text = 'Question "' + caption.text() + '" not answered';
       var ul = $('.error-summary').eq(0).find('ul').eq(0);
-      $("<li><a href='" + section_id + "'>" + text + "</a></li>").prependTo(ul);
+      $("<li><a class='error-link' data-id='" + section_id + "' href='" + section_id + "'>" + text + "</a></li>").prependTo(ul);
 
       caption.eq( 0 ).append( '<span class="error">Must be answered</span>' );
 
@@ -142,8 +182,6 @@ moj.Modules.jsState = (function() {
           setRadio( stateArr[ x ] );
         } else if( stateArr[ x ].type === 'select' ) {
           setSelect( stateArr[ x ] );
-        } else if( stateArr[ x ].type === 'hidden' && stateArr[ x ].name === 'ypos' ) {
-          setScroll( stateArr[ x ] );
         }
       }
     }
@@ -171,19 +209,6 @@ moj.Modules.jsState = (function() {
     }
 
     $( '[name="' + obj.name + '"]' ).val( obj.value );
-  };
-
-  setScroll = function( obj ) {
-    if( document.location.hash === '#global-header' ) {
-      document.location.hash = 'top';
-      window.setTimeout( function() {
-        window.scrollTo( 0, 0 );
-      }, 100 );
-    } else if( obj.value && parseInt( obj.value, 10 ) !== 'NaN' ) {
-      window.setTimeout( function() {
-        window.scrollTo( 0, obj.value );
-      }, 100 );
-    }
   };
 
   focusRadios = function() {
