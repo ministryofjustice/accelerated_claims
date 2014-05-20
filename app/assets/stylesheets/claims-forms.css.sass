@@ -275,6 +275,9 @@ fieldset.plain
     h3 + .row, h3 + .sub-panel
       margin-top: 0
 
+    .row.js-depositTypeMoney.yes
+      padding-left: 40px
+
   .sub-panel
     padding: 0
 
@@ -523,12 +526,10 @@ fieldset.plain
     .statements
       clear: both
       float: left
-      & + .statements
-        padding-top: 30px
       ol
         margin:
           top: 0
-          bottom: 20px
+          bottom: 0
         clear: both
         float: left
         padding:
@@ -542,14 +543,16 @@ fieldset.plain
 
         input[type="checkbox"]
           width: 20px
+          position: absolute
+          margin-left: -30px
+          margin-top: 5px
 
         &.noticeStatement
           .row, fieldset
             clear: both
             float: left
             margin-top: 10px
-            padding:
-              left: 20px
+            padding-left: 0
 
             .row
               padding-left: 0
