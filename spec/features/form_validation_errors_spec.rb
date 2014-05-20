@@ -106,11 +106,11 @@ feature 'Filling in claim form' do
     expect(page).to have_content("you kept the deposit in a government-backed deposit protection scheme and met the scheme’s requirements")
     
     check('claim_deposit_as_property')
-    expect(page).to have_content("You need to be sure the deposit in the form of property was returned at the time notice was given")
+    expect(page).to have_content("the deposit in the form of property was returned at the time notice was given")
     
     choose('claim_deposit_received_no')
     expect(page).to_not have_content("you kept the deposit in a government-backed deposit protection scheme and met the scheme’s requirements")
-    expect(page).to_not have_content("You need to be sure the deposit in the form of property was returned at the time notice was given")
+    expect(page).to_not have_content("the deposit in the form of property was returned at the time notice was given")
 
     choose('claim_deposit_received_yes')
     page.has_no_checked_field?('claim_deposit_as_money').should == true
