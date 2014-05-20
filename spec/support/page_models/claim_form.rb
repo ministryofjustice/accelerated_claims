@@ -172,10 +172,8 @@ class ClaimForm
 
   def fill_in_moj_date_fieldset(prefix, key)
     data = get_data(prefix, key)
-    puts "++++++ DEBUG #{prefix} #{key} #{data} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    
+
     # data expected as three hyphen separated strings in order year month day
-    
     if data =~ /^([0-9]{4})-([0-9A-Za-z]{1,9})-([0-9]{1,2})$/
       day = $3
       month = $2
