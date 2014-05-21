@@ -1,3 +1,6 @@
+require_relative '../mocks/mock_template'
+
+
 feature "moj date fieldset" do
 
   before do
@@ -7,7 +10,7 @@ feature "moj date fieldset" do
      WebMock.disable_net_connect!(:allow => "127.0.0.1")
   end
 
-  context 'without javascript' do
+  context 'submitting form without javascript' do
     unless remote_test?
       scenario "user types two digit numeric day two digit numeric month: 13 01 2014" do
         data, expected_data = update_data_and_results('2014-01-13')
@@ -17,11 +20,41 @@ feature "moj date fieldset" do
   end
 
 
-  context 'with javascript' do
+  context 'submitting form with javascript' do
     scenario "user types two digit numeric day two digit numeric month: 13 01 2014", js: true do
       data, expected_data = update_data_and_results('2014-01-13')
       run_scenario(data, expected_data, js: true)
     end
+  end
+
+
+  context 'emit html' do
+
+    before(:each) do
+     SecureRandom.stub(:hex).with(20).and_return('0123456789abcdef')
+    end
+
+    let(:notice)      { Notice.new }
+    let(:template)    { MockTemplate.new }
+    let(:form)        { LabellingFormBuilder.new(:notice, notice, template, {}) }
+
+    
+    it 'should emit plain vanilla html when no options given' do
+      mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', {} )
+      html = mdf.emit
+      html.should == expected_vanilla_moj_date_fieldset
+    end
+
+
+    it 'should emit html with fieldset css classes added' do
+      mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', {fieldset: {class: 'date-picker conditional'}} )
+      html = mdf.emit
+      html.should == html_with_fieldset_classes
+    end
+
+
+    it 'should emit html with day month year css classes added'
+    it 'should emit html with other options added'
   end
 
 
@@ -63,7 +96,86 @@ feature "moj date fieldset" do
     end
   end
 
-  
+ 
+ def expected_vanilla_moj_date_fieldset
+  str = <<-EOHTML
+<fieldset aria-describedby="_0123456789abcdef" class="">
+  <span class="legend" id="_0123456789abcdef">
+    Date Notice Served
+  </span>
+  <input  class="moj-date-day" 
+          id="claim_notice_date_served_3i" 
+          maxlength="2" 
+          name="claim[notice][date_served(3i)]" 
+          placeholder="DD" 
+          size="2" 
+          type="text" />
+  &nbsp;
+  <input  class="moj-date-month" 
+          id="claim_notice_date_served_2i" 
+          maxlength="9" 
+          name="claim[notice][date_served(2i)]" 
+          placeholder="MM" 
+          size="9" 
+          type="text" />
+  &nbsp
+  <input  class="moj-date-year" 
+          id="claim_notice_date_served_1i" 
+          maxlength="4" 
+          name="claim[notice][date_served(1i)]" 
+          placeholder="YYYY" 
+          size="4" 
+          type="text" />
+</fieldset>
+EOHTML
+  squash(str)
+end
+
+
+def html_with_fieldset_classes
+  str = <<-EOHTML
+<fieldset aria-describedby="_0123456789abcdef" class="date-picker conditional">
+  <span class="legend" id="_0123456789abcdef">
+    Date Notice Served
+  </span>
+  <input  class="moj-date-day" 
+          id="claim_notice_date_served_3i" 
+          maxlength="2" 
+          name="claim[notice][date_served(3i)]" 
+          placeholder="DD" 
+          size="2" 
+          type="text" />
+  &nbsp;
+  <input  class="moj-date-month" 
+          id="claim_notice_date_served_2i" 
+          maxlength="9" 
+          name="claim[notice][date_served(2i)]" 
+          placeholder="MM" 
+          size="9" 
+          type="text" />
+  &nbsp
+  <input  class="moj-date-year" 
+          id="claim_notice_date_served_1i" 
+          maxlength="4" 
+          name="claim[notice][date_served(1i)]" 
+          placeholder="YYYY" 
+          size="4" 
+          type="text" />
+</fieldset>
+EOHTML
+  squash(str)
+end
+
+
+
+def squash(str)
+  str.gsub!("\n", "")
+  str.gsub!(/\s+/," ")
+  str.gsub!(" <", "<")
+  str.gsub!("> ", ">")
+  str
+end
+
 
 
 end
