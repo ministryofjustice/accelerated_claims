@@ -38,23 +38,53 @@ feature "moj date fieldset" do
     let(:template)    { MockTemplate.new }
     let(:form)        { LabellingFormBuilder.new(:notice, notice, template, {}) }
 
+    pending it 'should raise an exception if an invalid option key is supplied' do
+      expect {
+        MojDateFieldset.new(form, :date_served, 'Date Notice Served', class: 'my-class' )
+      }.to raise_error ArgumentError, 'Invalid key for options: :class'
+    end
+
     
-    it 'should emit plain vanilla html when no options given' do
+    pending it 'should emit plain vanilla html when no options given' do
       mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', {} )
       html = mdf.emit
       html.should == expected_vanilla_moj_date_fieldset
     end
 
 
-    it 'should emit html with fieldset css classes added' do
+    pending it 'should emit html with fieldset css classes added' do
       mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', {fieldset: {class: 'date-picker conditional'}} )
       html = mdf.emit
       html.should == html_with_fieldset_classes
     end
 
 
-    it 'should emit html with day month year css classes added'
-    it 'should emit html with other options added'
+    pending it 'should emit html with day month year css classes added' do
+      options = {
+        fieldset: {class: 'date-picker conditional'},
+        day:      {class: 'my-special-day mydate'},
+        month:    {class: 'my-special-month mydate'},
+        year:     {class: 'my-special-year mydate'} 
+      }
+      mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', options )
+      html = mdf.emit
+      html.should == html_with_day_month_year_classes
+    end
+
+
+    pending it 'should emit html with other options added' do
+      options = {
+        fieldset: {class: 'date-picker conditional'},
+        day:      {class: 'my-special-day mydate', placeholder: 'dd'},
+        month:    {class: 'my-special-month mydate', placeholder: 'month'},
+        year:     {class: 'my-special-year mydate'} 
+      }
+      mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', options )
+      html = mdf.emit
+      html.should == html_with_other_options
+    end
+
+
   end
 
 
@@ -99,7 +129,7 @@ feature "moj date fieldset" do
  
  def expected_vanilla_moj_date_fieldset
   str = <<-EOHTML
-<fieldset aria-describedby="_0123456789abcdef" class="">
+<fieldset aria-describedby="_0123456789abcdef">
   <span class="legend" id="_0123456789abcdef">
     Date Notice Served
   </span>
@@ -166,6 +196,76 @@ EOHTML
   squash(str)
 end
 
+
+
+def html_with_day_month_year_classes
+  str = <<-EOHTML
+<fieldset aria-describedby="_0123456789abcdef" class="date-picker conditional">
+  <span class="legend" id="_0123456789abcdef">
+    Date Notice Served
+  </span>
+  <input  class="moj-date-day my-special-day mydate" 
+          id="claim_notice_date_served_3i" 
+          maxlength="2" 
+          name="claim[notice][date_served(3i)]" 
+          placeholder="DD" 
+          size="2" 
+          type="text" />
+  &nbsp;
+  <input  class="moj-date-month my-special-month mydate" 
+          id="claim_notice_date_served_2i" 
+          maxlength="9" 
+          name="claim[notice][date_served(2i)]" 
+          placeholder="MM" 
+          size="9" 
+          type="text" />
+  &nbsp
+  <input  class="moj-date-year my-special-year mydate" 
+          id="claim_notice_date_served_1i" 
+          maxlength="4" 
+          name="claim[notice][date_served(1i)]" 
+          placeholder="YYYY" 
+          size="4" 
+          type="text" />
+</fieldset>
+EOHTML
+  squash(str)
+end
+
+
+def html_with_other_options
+    str = <<-EOHTML
+<fieldset aria-describedby="_0123456789abcdef" class="date-picker conditional">
+  <span class="legend" id="_0123456789abcdef">
+    Date Notice Served
+  </span>
+  <input  class="moj-date-day my-special-day mydate" 
+          id="claim_notice_date_served_3i" 
+          maxlength="2" 
+          name="claim[notice][date_served(3i)]" 
+          placeholder="dd" 
+          size="2" 
+          type="text" />
+  &nbsp;
+  <input  class="moj-date-month my-special-month mydate" 
+          id="claim_notice_date_served_2i" 
+          maxlength="9" 
+          name="claim[notice][date_served(2i)]" 
+          placeholder="month" 
+          size="9" 
+          type="text" />
+  &nbsp
+  <input  class="moj-date-year my-special-year mydate" 
+          id="claim_notice_date_served_1i" 
+          maxlength="4" 
+          name="claim[notice][date_served(1i)]" 
+          placeholder="YYYY" 
+          size="4" 
+          type="text" />
+</fieldset>
+EOHTML
+  squash(str)
+end
 
 
 def squash(str)
