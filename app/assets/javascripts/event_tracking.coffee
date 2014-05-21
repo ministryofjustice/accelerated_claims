@@ -1,9 +1,9 @@
 jQuery ->
 
-  dispatchTrackingEvent: (category, action, label) ->
+  dispatchTrackingEvent = (category, action, label) ->
     ga 'send', 'event', category, action, label if typeof ga is 'function'
 
-  dispatchPageView: (url) ->
+  dispatchPageView = (url) ->
     ga 'send', 'pageview', url if typeof ga is 'function'
 
   $('[data-event-label]').on 'click', ->
