@@ -1,3 +1,11 @@
+# Class to generate html for moj_date_fieldset method in LabellingFormBuilder.
+# @param [LabellingFormBuilder] form : the form builder
+# @param [Symbol] attribute: the name of the attribute to be updated (usually a Date class)
+# @param [String] legend: the legend for the date control
+# @param [Hash] options : HTML options to be passed in.  These options are merged applied to the fieldset and span elements before the 
+#  date boxes themselves.  Attributes to be applied to the day, month or year text boxes should be specified as inner hashes with keys 
+#  "_day", "_month", "_year" respectively.  Attributes thus specified will be merged with the default attributes.
+
 class MojDateFieldset
 
   def initialize(form, attribute, legend, options)
@@ -5,10 +13,10 @@ class MojDateFieldset
     @attribute        = attribute
     @legend           = legend
     @options          = options
-    # @fieldset_options = {}
-    # @day_options      = {}
-    # @month_options    = {}
-    # @year_options     = {}
+    @day_options      = nil
+    @month_options    = nil
+    @year_options     = nil
+    extract_sub_options
   end
 
 
@@ -22,45 +30,30 @@ class MojDateFieldset
       
       @form.fields_for(@attribute, date) do |date_form|
         obj_name   = @form.object.class.to_s.underscore
-        day_id     = "claim_#{obj_name}_#{@attribute}_3i"
-        month_id   = "claim_#{obj_name}_#{@attribute}_2i"
-        year_id    = "claim_#{obj_name}_#{@attribute}_1i"
-        day_name   = "claim[#{obj_name}][#{@attribute}(3i)]"
-        month_name = "claim[#{obj_name}][#{@attribute}(2i)]"
-        year_name  = "claim[#{obj_name}][#{@attribute}(1i)]"
-
+        
         default_day_options = { maxlength: 2, 
-                                id: day_id,   
-                                name: day_name,   
+                                id: "claim_#{obj_name}_#{@attribute}_3i", 
+                                name: "claim[#{obj_name}][#{@attribute}(3i)]",   
                                 class: 'moj-date-day', 
                                 placeholder: 'DD'
                               }
-        default_month_options = { maxlength: 2, 
-                                id: month_id,   
-                                name: month_name,   
+        default_month_options = { maxlength: 9, 
+                                id: "claim_#{obj_name}_#{@attribute}_2i",   
+                                name: "claim[#{obj_name}][#{@attribute}(2i)]",   
                                 class: 'moj-date-month', 
                                 placeholder: 'MM'
                               }
-        default_year_options = { maxlength: 2, 
-                                id: year_id,   
-                                name: year_name,   
+        default_year_options = { maxlength: 4, 
+                                id: "claim_#{obj_name}_#{@attribute}_1i",   
+                                name: "claim[#{obj_name}][#{@attribute}(1i)]",   
                                 class: 'moj-date-year', 
-                                placeholder: 'DD'
+                                placeholder: 'YYYY'
                               }
         day       = date_form.text_field(:day, default_day_options)              
                                           
-        month     = date_form.text_field(:long_monthname,   
-                                          maxlength: 9, 
-                                          id: month_id, 
-                                          name: month_name, 
-                                          class: merge_css_class('moj-date-month', @options[:month]),  
-                                          placeholder: 'MM')
-        year      = date_form.text_field(:year,             
-                                          maxlength: 4, 
-                                          id: year_id,  
-                                          name: year_name,  
-                                          class: merge_css_class('moj-date-year', @options[:year]),
-                                          placeholder: 'YYYY')
+        month     = date_form.text_field(:long_monthname, default_month_options) 
+                                          
+        year      = date_form.text_field(:year, default_year_options)            
         "#{day}&nbsp;#{month}&nbsp#{year}".html_safe
       end
     end
@@ -69,22 +62,11 @@ class MojDateFieldset
   private
 
 
-  # def validate_options
-  #   @options.keys.each do |key|
-  #     case key
-  #     when :fieldset
-  #       @fieldset_options = @options[:fieldset]
-  #     when :day
-  #       @day_options = @options[:day]
-  #     when :month
-  #       @month_options = @options[:month]
-  #     when :year
-  #       @year_options = @options[:year]
-  #     else
-  #       raise ArgumentError.new("Invalid key for options: #{key.inspect}")
-  #     end
-  #   end
-  # end
+  def extract_sub_options
+    @day_options   = @options.delete('_day')
+    @month_options = @options.delete('_month')
+    @year_options  = @options.delete('_year')
+  end
 
 
   # takes a hash of html options and merges in any css classes that are provided as strings

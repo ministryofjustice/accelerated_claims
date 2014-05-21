@@ -38,14 +38,8 @@ feature "moj date fieldset" do
     let(:template)    { MockTemplate.new }
     let(:form)        { LabellingFormBuilder.new(:notice, notice, template, {}) }
 
-    pending it 'should raise an exception if an invalid option key is supplied' do
-      expect {
-        MojDateFieldset.new(form, :date_served, 'Date Notice Served', class: 'my-class' )
-      }.to raise_error ArgumentError, 'Invalid key for options: :class'
-    end
-
-    
-    pending it 'should emit plain vanilla html when no options given' do
+        
+    it 'should emit plain vanilla html when no options given' do
       mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', {} )
       html = mdf.emit
       html.should == expected_vanilla_moj_date_fieldset
@@ -129,7 +123,7 @@ feature "moj date fieldset" do
  
  def expected_vanilla_moj_date_fieldset
   str = <<-EOHTML
-<fieldset aria-describedby="_0123456789abcdef">
+<fieldset aria-describedby="_0123456789abcdef" class="">
   <span class="legend" id="_0123456789abcdef">
     Date Notice Served
   </span>

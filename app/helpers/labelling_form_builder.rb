@@ -17,6 +17,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
 
+
   def date_select_field_set attribute, legend, options={}
     set_class_and_id attribute, options
 
@@ -94,7 +95,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   def set_class_and_id attribute, options
     options[:class] = css_for(attribute, options)
     options[:id] = id_for(attribute) unless id_for(attribute).blank?
-      
   end
 
   def label_for attribute, label
