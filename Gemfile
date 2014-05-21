@@ -19,6 +19,7 @@ gem 'uglifier', '>= 1.3.0'
 # Use jquery + underscore as the JavaScript library
 gem 'jquery-rails'
 gem 'underscore-rails'
+gem 'coffee-rails'
 
 # production webserver
 gem 'unicorn'
@@ -49,6 +50,7 @@ group :development, :test do
   gem 'byebug'
   gem 'dotenv-rails'  # set environment variables via the filesystem
   gem 'launchy'
+  gem 'guard-coffeescript'
 end
 
 group :test do
