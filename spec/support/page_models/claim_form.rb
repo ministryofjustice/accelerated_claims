@@ -173,6 +173,23 @@ class ClaimForm
     end
   end
 
+  def fill_in_moj_date_fieldset(prefix, key)
+    data = get_data(prefix, key)
+
+    # data expected as three hyphen separated strings in order year month day
+    if data =~ /^([0-9]{4})-([0-9A-Za-z]{1,9})-([0-9]{1,2})$/
+      day = $3
+      month = $2
+      year = $1
+
+      fill_in("claim_#{prefix}_#{key}_3i", with: day)
+      fill_in("claim_#{prefix}_#{key}_2i", with: month)
+      fill_in("claim_#{prefix}_#{key}_1i", with: year)
+    end
+  end
+
+
+
   def complete_details_of_person(prefix, options={})
     options = { complete_address: true }.merge(options)
     fill_in_text_field(prefix, 'title')
@@ -268,8 +285,10 @@ class ClaimForm
     prefix = 'notice'
     fill_in_text_field(prefix, 'served_by_name')
     fill_in_text_field(prefix, 'served_method')
-    select_date(prefix, 'date_served')
-    select_date(prefix, 'expiry_date')
+    fill_in_moj_date_fieldset(prefix, 'date_served')
+    fill_in_moj_date_fieldset(prefix, 'expiry_date')
+    # select_date(prefix, 'date_served')
+    # select_date(prefix, 'expiry_date')
   end
 
   def fill_licences
