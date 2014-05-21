@@ -4,85 +4,119 @@
 
 .container.steps
   %section
-    %h2 Next steps
 
     %ol.steps
       %li.claim
-        Step 1: print copies of the completed form
+        %strong Step 1: print copies of the completed form
         .box
           %ul.nodot
             %li= "<strong>1</strong> for the court".html_safe
             %li= "<strong>1</strong> for each defendant".html_safe
-            %li= "<strong>1</strong> for each claimant".html_safe
+            %li= "<strong>1</strong> for your records".html_safe
           %p
             = link_to 'View and print completed form', download_path, class: 'button large chevron pdf-download', target: '_blank', data: { 'event-label' => 'View and print completed form' }
 
       %li.sign
-        Step 2: sign the statement of truth on all copies
+        %strong Step 2: sign the statement of truth on all copies
         .box
           %ul.nodot
             %li
-              And fill in all appropriate fields. This needs to be signed by the claimant in black ink
-            %li= "The statement of truth is on <strong>page 4</strong> of the form".html_safe
+              You need to sign this in black ink on <strong>page 4</strong> on all copies of the form
       %li.docs
-        Step 3: attach copies of the following documents:
+        %strong Step 3: include <strong>copies</strong> of all documents:
         .box
           %ul.nodot
             %li
-              %strong For assured shorthold tenancies
+              %strong Tenancy Agreement
             %li
-              the first tenancy agreement with the defendant - marked
-              %strong 'A'
+              %u If you have an assured shorthold tenancy agreement:
+              %ul
+                %li.withdot
+                  the first tenancy agreement with the defendant - marked
+                  %strong 'A'
+                %li.withdot
+                  if you've had more than one tenancy agreement, inlcude the current tenancy agreement - marked
+                  %strong 'A1'
+                %li
+                  %u 
+                    If your tenancy agreement was made between 
+                    %strong 15 January 1989 and 27 February 1997
+                    only:
+
+                %ul
+
+                  %li.withdot
+                    if you gave the defendant written notice to say they’d have an assured shorthold tenancy agreement before they moved in, include a copy - marked 
+                    %strong 'B'
+
+                  %li.withdot
+                    if you sent this notice by post, include proof of post - marked 
+                    %strong ‘B1’
+
+
+
             %li
-              if you have had more than one tenancy agreement: the current tenancy agreement - marked
-              %strong 'A1'
+              %strong Notice to leave the property
+
+              %ul
+                %li.withdot
+                  the section 21 notice that you gave to the tenant - marked
+                  %strong 'C'
+                %li.withdot
+                  proof this notice was given - marked 
+                  %strong 'C1'
+            
             %li
-              if the defendant was given written notice that the tenancy was to be an assured shorthold tenancy before the tenancy began, include this - marked
-              %strong 'B'
+              %strong If you kept the tenant’s deposit in a tenancy deposit scheme
+              %ul
+                %li.withdot
+                  The tenancy deposit scheme certificate - marked 
+                  %strong ‘F’
+
+
             %li
-              %strong For demoted assured shorthold tenancies
-            %li
-              the most recent tenancy agreement - marked
-              %strong 'A'
-            %li
-              the demotion order - marked
-              %strong 'B'
-            %li
-              %strong For all tenancies
-            %li
-              the section 21 notice that was served to the defendant   - marked
-              %strong 'C'
-            %li
-              evidence the notice was served, eg a sworn affidavit or proof of post - marked
-              %strong 'C1'
-            %li
-              If the tenancy started on or after the 6 April 2007, the tenancy deposit scheme certificate - marked
-              %strong 'F'
-            %li
-              %strong For houses in multiple occupation that have applied for a licence
-            %li
-              evidence of the application for a house in multiple occupation license under part 2 of the housing act - marked
-              %strong 'D'
-            %li
-              evidence of the application for a house in multiple occupation license under part 3 of the housing act - marked
-              %strong 'E'
+              %strong If you’ve applied for a house in multiple occupation (HMO) licence (but not yet received it) 
+
+            %li You need to include evidence of your application. 
+
+            %ul
+              %li.withdot
+                if it’s for a property that is 
+                %strong 3 or more storeys high 
+                and occupied by 
+                %strong 5 or more people 
+                (issued under part 2 of the Housing Act 2004) - marked 
+                %strong ‘D’  
+
+              %li.withdot 
+                If it’s for a property 
+                %strong within an area 
+                defined by a local council (issued under under part 3 of the Housing Act 2004) - marked 
+                %strong ‘E’ 
 
       %li.pound
-        Step 4: pay the £280 court fee
+        %strong Step 4: include the £280 court fee
         .box
           %ul.nodot
             %li
               %strong You can pay by:
-            %li
-              cheque or postal order (made payable to ‘HM Courts & Tribunals Service’)
-            %li
-              debit or credit card (you’ll need to #{link_to 'contact the court', 'https://courttribunalfinder.service.gov.uk/', :class => 'external', :rel => 'external', :target => '_blank'} to pay this way)
-            %li
+            %li.withdot
+              cheque or postal order - made payable to ‘HM Courts & Tribunals Service’
+            %li.withdot
+              debit or credit card - you’ll need to #{link_to 'contact the court', 'https://courttribunalfinder.service.gov.uk/', :class => 'external', :rel => 'external', :target => '_blank'} to pay this way 
+            %li.withdot
               cash (do not send cash through the post. #{link_to 'Contact the court', 'https://courttribunalfinder.service.gov.uk/', :class => 'external', :rel => 'external', :target => '_blank'} to pay in person)
       %li.court
-        = "Step 5: post <strong>all</strong> copies of the form and documents to court".html_safe
+        %strong Step 5: post all copies of the form and documents to court
         .box
-          %ul.nodot
-            %li you can choose which court to send this claim to.
-            %li use the #{link_to 'court finder', 'https://courttribunalfinder.service.gov.uk/', :class => 'external', :rel => 'external', :target => '_blank'} to find your nearest court.
-            %li= "you need to write the court’s name and address <strong>in black ink</strong> at the top of <strong>page 1</strong> and the bottom of <strong>page 4</strong> of the form.".html_safe
+          %ul
+            %li use #{link_to 'court finder', 'https://courttribunalfinder.service.gov.uk/', :class => 'external', :rel => 'external', :target => '_blank'} to find your nearest court.
+            %li enter postcode and select ‘housing possession’ under area of law 
+            %li 
+              write court details in 
+              %strong black ink 
+              at the top of 
+              %strong page 1 
+              on all copies of the claim form
+
+           
