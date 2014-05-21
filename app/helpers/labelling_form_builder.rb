@@ -17,66 +17,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
 
-  # provides html for day, month, year text boxes
-  # @param [Symbol] attribute - The atttribute on the model use to populate the fields and received data from the fields (normally a Date object)
-  # @param [String] legend = The title to be displayed above the fields
-  # @options [Hash] html options to be added to the elements.  This is specified as a hash of hashes, the outer hash being keyed by:
-  #  - fieldset
-  #  - day
-  #  - month
-  #  - date
-  #  
-  # e.g. form.moj_date_fieldset(:expiry_date, "When did it expire?", {fieldset: {class: 'date-picker conditional'}, day: {placeholder: 'dd'}})
-  # def moj_date_fieldset attribute, legend, options={}
-  #   set_class_and_id attribute, options
-  #   fieldset_tag label_for(attribute, legend), options do
-  #     date = @object.send(attribute)
-  #     date = nil if date.is_a?(InvalidDate)
-      
-  #     fields_for(attribute, date) do |date_form|
-  #       obj_name   = @object.class.to_s.underscore
-  #       day_id     = "claim_#{obj_name}_#{attribute}_3i"
-  #       month_id   = "claim_#{obj_name}_#{attribute}_2i"
-  #       year_id    = "claim_#{obj_name}_#{attribute}_1i"
-  #       day_name   = "claim[#{obj_name}][#{attribute}(3i)]"
-  #       month_name = "claim[#{obj_name}][#{attribute}(2i)]"
-  #       year_name  = "claim[#{obj_name}][#{attribute}(1i)]"
-
-  #       day       = date_form.text_field(:day,              
-  #                                         maxlength: 2, 
-  #                                         id: day_id,   
-  #                                         name: day_name,   
-  #                                         class: merge_css_class('moj-date-day', options), 
-  #                                         placeholder: 'DD')
-  #       month     = date_form.text_field(:long_monthname,   
-  #                                         maxlength: 9, 
-  #                                         id: month_id, 
-  #                                         name: month_name, 
-  #                                         class: merge_css_class('moj-date-month', options),  
-  #                                         placeholder: 'MM')
-  #       year      = date_form.text_field(:year,             
-  #                                         maxlength: 4, 
-  #                                         id: year_id,  
-  #                                         name: year_name,  
-  #                                         class: merge_css_class('moj-date-year', options),
-  #                                         placeholder: 'YYYY')
-  #       "#{day}&nbsp;#{month}&nbsp#{year}".html_safe
-  #     end
-  #   end
-  # end
-
-
-  #   # takes a hash of html options and merges in any css classes that are provided as strings
-  # def merge_css_class(css_class, options)
-  #   if options[:class].nil? || options[:class].blank?
-  #     css_class
-  #   else
-  #     "#{css_class} #{options[:class]}"
-  #   end
-  # end
-
-
-
   def date_select_field_set attribute, legend, options={}
     set_class_and_id attribute, options
 
@@ -156,6 +96,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   def set_class_and_id attribute, options
     options[:class] = css_for(attribute, options)
     options[:id] = id_for(attribute) unless id_for(attribute).blank?
+      
   end
 
   def label_for attribute, label
