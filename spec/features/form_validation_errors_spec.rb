@@ -63,9 +63,13 @@ feature 'Filling in claim form' do
     month = Date::MONTHNAMES[date.month]
     year = date.year
 
-    select(  day, :from => "claim_tenancy_start_date_3i")
-    select(month, :from => "claim_tenancy_start_date_2i")
-    select( year, :from => "claim_tenancy_start_date_1i")
+    fill_in("claim_tenancy_start_date_3i", with: day)
+    fill_in("claim_tenancy_start_date_2i", with: month)
+    fill_in("claim_tenancy_start_date_1i", with: year)
+
+    # select(  day, :from => "claim_tenancy_start_date_3i")
+    # select(month, :from => "claim_tenancy_start_date_2i")
+    # select( year, :from => "claim_tenancy_start_date_1i")
   end
 
   scenario 'tenancy start_date before 15 January 1989', js: true do
