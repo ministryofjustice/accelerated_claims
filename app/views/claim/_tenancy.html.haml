@@ -30,7 +30,8 @@
         .row.remove
           = 'If you’ve had <strong>more than 1</strong> tenancy agreement, enter the details'.html_safe
 
-        = form.date_select_field_set :original_assured_shorthold_tenancy_agreement_date, 'Date of the original tenancy agreement', class: 'date-picker conditional original', date_select_options: @date_select_options
+        = form.moj_date_fieldset :original_assured_shorthold_tenancy_agreement_date, 'Date of the original tenancy agreement', class: 'date-picker conditional original'
+        /= form.date_select_field_set :original_assured_shorthold_tenancy_agreement_date, 'Date of the original tenancy agreement', class: 'date-picker conditional original', date_select_options: @date_select_options
 
         = form.date_select_field_set :latest_agreement_date, 'Date of the most recent tenancy agreement', class: 'date-picker rel conditional latest', date_select_options: @date_select_options
 
