@@ -1,13 +1,22 @@
 = claim_form.fields_for tenancy, builder: LabellingFormBuilder do |form|
   .sub-panel
-    = form.radio_button_fieldset :tenancy_type, 'What kind of tenancy agreement do you have with the defendant?', class: 'radio js-depend', choice: {'Assured shorthold tenancy <span class="hint">(this is the most common form of tenancy)</span>' => 'assured', 'Demoted assured shorthold tenancy <span class="hint">(this is a tenancy agreement that has been ‘demoted’ by the court, for example because tenants behaved anti-socially or used the property for illegal activity)</span>' => 'demoted'}, data: { depend: "tenancyType" }
+    = form.radio_button_fieldset :tenancy_type,
+        'What kind of tenancy agreement do you have with the defendant?',
+        class: 'radio js-depend',
+        choice: {'Assured shorthold tenancy <span class="hint">(this is the most common form of tenancy)</span>' => 'assured',
+            'Demoted assured shorthold tenancy <span class="hint">(this is a tenancy agreement that has been ‘demoted’ by the court, for example because tenants behaved anti-socially or used the property for illegal activity)</span>' => 'demoted'},
+        data: { depend: 'tenancyType', 'virtual-pageview' => 'tenancy_section' }
 
   .row.divider.hide.js-tenancyType.assured
 
   .sub-panel.rel.hide.js-tenancyType.assured
     %h3.section-header Assured shorthold tenancies
 
-    = form.radio_button_fieldset :assured_shorthold_tenancy_type, 'How many tenancy agreements have you had with the defendant?', class: 'radio js-depend', choice: {'1' => 'one', 'More than 1' => 'multiple'}, data: { depend: "tenancyNumber" }
+    = form.radio_button_fieldset :assured_shorthold_tenancy_type,
+        'How many tenancy agreements have you had with the defendant?',
+        class: 'radio js-depend',
+        choice: {'1' => 'one', 'More than 1' => 'multiple'},
+        data: { depend: 'tenancyNumber' }
 
 
     .sub-panel.assuredTenancyOptions.hide.js-tenancyNumber.one.multiple
