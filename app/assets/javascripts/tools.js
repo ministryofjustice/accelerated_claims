@@ -1,5 +1,5 @@
 /*jslint browser: true, evil: false, plusplus: true, white: true, indent: 2 */
-/*global moj, $, Handlebars */
+/*global moj, $ */
 
 moj.Modules.tools = (function() {
   "use strict";
@@ -12,7 +12,10 @@ moj.Modules.tools = (function() {
       lz,
       stringToDate,
       dedupeArray,
-      jsError
+      monthToNum,
+      isDate,
+      isValidDate,
+      validMonth
       ;
 
   removeFromArray = function( arr, item ) {
@@ -34,10 +37,10 @@ moj.Modules.tools = (function() {
     // provided that all of the code (including this copyright notice) is
     // used exactly as shown (you can change the numbering system if you wish)
 
-    var th = ['','thousand','million', 'billion','trillion'],
-        dg = ['zero','one','two','three','four', 'five','six','seven','eight','nine'],
-        tn = ['ten','eleven','twelve','thirteen', 'fourteen','fifteen','sixteen', 'seventeen','eighteen','nineteen'],
-        tw = ['twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'],
+    var th = ['', 'thousand', 'million', 'billion', 'trillion'],
+        dg = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'],
+        tn = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'],
+        tw = ['twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'],
         x,
         n,
         str,
@@ -47,51 +50,51 @@ moj.Modules.tools = (function() {
 
 
     s = s.toString();
-    s = s.replace(/[\, ]/g,'');
-    if (s != parseFloat(s)) {
+    s = s.replace( /[\, ]/g, '' );
+    if ( s !== parseFloat( s ) ) {
       return 'not a number';
     }
-    x = s.indexOf('.');
-    if (x == -1) {
+    x = s.indexOf( '.' );
+    if ( x === -1 ) {
       x = s.length;
     }
-    if (x > 15) {
+    if ( x > 15 ) {
       return 'too big';
     }
-    n = s.split('');
+    n = s.split( '' );
     str = '';
     sk = 0;
-    for (i=0; i < x; i++) {
-      if ((x-i)%3==2) {
-        if (n[i] == '1') {
-          str += tn[Number(n[i+1])] + ' ';
+    for ( i = 0; i < x; i++ ) {
+      if ( ( x - i ) %3 === 2 ) {
+        if ( n [ i ] === '1' ) {
+          str += tn[ Number( n [ i + 1 ] ) ] + ' ';
           i++;
-          sk=1;
-        } else if (n[i]!=0) {
-          str += tw[n[i]-2] + ' ';
-          sk=1;
+          sk = 1;
+        } else if ( n [ i ] !== 0 ) {
+          str += tw[ n [ i ] - 2 ] + ' ';
+          sk = 1;
         }
-      } else if (n[i]!=0) {
-        str += dg[n[i]] +' ';
-        if ((x-i)%3==0) {
+      } else if ( n [ i ] !== 0 ) {
+        str += dg[ n [ i ] ] +' ';
+        if ( ( x - i ) %3 === 0 ) {
           str += 'hundred ';
         }
-        sk=1;
-      } if ((x-i)%3==1) {
-        if (sk) {
-          str += th[(x-i-1)/3] + ' ';
+        sk = 1;
+      } if ( ( x - i ) %3 === 1 ) {
+        if ( sk ) {
+          str += th[ ( x - i - 1 ) / 3 ] + ' ';
         }
-        sk=0;
+        sk = 0;
       }
     }
-    if (x != s.length) {
+    if (x !== s.length) {
       y = s.length;
       str += 'point ';
-      for (i=x+1; i<y; i++) {
-        str += dg[n[i]] +' ';
+      for (i = x + 1; i < y; i++ ) {
+        str += dg[ n [ i ] ] +' ';
       }
     }
-    return str.replace(/\s+/g,' ');
+    return str.replace( /\s+/g, ' ' );
 
   };
 
@@ -137,9 +140,61 @@ moj.Modules.tools = (function() {
       obj[ arr[ i ] ] = 0;
     }
     for ( i in obj ) {
-      out.push( i );
+      if( obj.hasOwnProperty( i ) ) {
+        out.push( i );
+      }
     }
     return out;
+  };
+
+  isDate = function( d, m, y ) {
+    return isValidDate( y + '-' + m + '-' + d );
+  };
+
+  monthToNum = function( str ) {
+    var months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ],
+      x;
+
+    for( x = 0; x < months.length; x++ ) {
+      if( str.substr( 0, 3 ).toLowerCase() === months[ x ].substr( 0, 3 ).toLowerCase() ) {
+        return x + 1;
+      }
+    }
+
+    return false;
+  };
+
+  validMonth = function( m ) {
+    if( !isNaN( m ) && parseInt( m, 10) >= 1 && parseInt( m, 10) <= 12 ) {
+      return m;
+    }
+    if( isNaN( m ) ) {
+      return monthToNum( m );
+    }
+
+    return false;
+  };
+
+  isValidDate = function ( str ) {
+    var d = new Date( str );
+
+    if ( Object.prototype.toString.call( d ) !== "[object Date]" ) {
+      return false;
+    }
+    return !isNaN( d.getTime() );
   };
 
   return {
@@ -150,7 +205,8 @@ moj.Modules.tools = (function() {
     lz: lz,
     stringToDate: stringToDate,
     dedupeArray: dedupeArray,
-    jsError: jsError
+    isDate: isDate,
+    validMonth: validMonth
   };
 
 }());
