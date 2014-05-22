@@ -63,7 +63,8 @@
               = form.labelled_check_box :applicable_statements_5, 'You told the defendant (in writing) that they’d have an assured shorthold tenancy before they moved in'
 
               = form.text_field_row :assured_shorthold_tenancy_notice_served_by, label: 'Who told the defendant?', class: 'rel'
-              = form.date_select_field_set :assured_shorthold_tenancy_notice_served_date, 'When? <span class="hint">(date)</span>', class: 'date-picker rel', date_select_options: @date_select_options
+              = form.moj_date_fieldset :assured_shorthold_tenancy_notice_served_date, 'When? <span class="hint">(date)</span>', class: 'date-picker rel'
+              / = form.date_select_field_set :assured_shorthold_tenancy_notice_served_date, 'When? <span class="hint">(date)</span>', class: 'date-picker rel', date_select_options: @date_select_options
             %li{ id: form.id_for(:applicable_statements_6, 'as6').to_s }
               = form.labelled_check_box :applicable_statements_6, 'You couldn’t have ended the tenancy agreement in the first 6 months'
 
@@ -73,6 +74,7 @@
     %h3.section-header.hide Demoted assured shorthold tenancies
 
     .sub-panel.inset
-      = form.date_select_field_set :demotion_order_date, 'Date of demotion order', class: 'date-picker', date_select_options: @date_select_options
+      = form.moj_date_fieldset  :demotion_order_date, 'Date of demotion order', class: 'date-picker'
+      / = form.date_select_field_set :demotion_order_date, 'Date of demotion order', class: 'date-picker', date_select_options: @date_select_options
       = form.text_field_row :demotion_order_court, label: 'Court where demotion order was made'
       = form.radio_button_fieldset :previous_tenancy_type, 'What kind of <a href="https://www.gov.uk/private-renting-tenancy-agreements/tenancy-types" class="external" rel="external" target="_blank">tenancy agreement</a> did the defendant have before it was demoted?', class: 'radio inline', choice: {'Assured' => Tenancy::ASSURED, 'Secure' => Tenancy::SECURE }

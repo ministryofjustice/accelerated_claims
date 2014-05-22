@@ -159,19 +159,19 @@ class ClaimForm
     end
   end
 
-  def select_date prefix, key
-    data = get_data(prefix, key)
-    if data
-      d = Date.parse(data)
-      day = d.day
-      month = Date::MONTHNAMES[d.month]
-      year = d.year
+  # def select_date prefix, key
+  #   data = get_data(prefix, key)
+  #   if data
+  #     d = Date.parse(data)
+  #     day = d.day
+  #     month = Date::MONTHNAMES[d.month]
+  #     year = d.year
 
-      select(  day, :from => "claim_#{prefix}_#{key}_3i")
-      select(month, :from => "claim_#{prefix}_#{key}_2i")
-      select( year, :from => "claim_#{prefix}_#{key}_1i")
-    end
-  end
+  #     select(  day, :from => "claim_#{prefix}_#{key}_3i")
+  #     select(month, :from => "claim_#{prefix}_#{key}_2i")
+  #     select( year, :from => "claim_#{prefix}_#{key}_1i")
+  #   end
+  # end
 
   def fill_in_moj_date_fieldset(prefix, key)
     data = get_data(prefix, key)
