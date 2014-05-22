@@ -9,13 +9,13 @@
 class MojDateFieldset
 
   def initialize(form, attribute, legend, options)
-    @form             = form
-    @attribute        = attribute
-    @legend           = legend
-    @options          = options
-    @day_options      = nil
-    @month_options    = nil
-    @year_options     = nil
+    @form                    = form
+    @attribute               = attribute
+    @legend                  = legend
+    @options                 = options
+    @passed_in_day_options   = nil
+    @passed_in_month_options = nil
+    @passed_in_year_options  = nil
     extract_sub_options
   end
 
@@ -49,11 +49,9 @@ class MojDateFieldset
                                 class: 'moj-date-year', 
                                 placeholder: 'YYYY'
                               }
-        day       = date_form.text_field(:day, default_day_options)              
-                                          
-        month     = date_form.text_field(:long_monthname, default_month_options) 
-                                          
-        year      = date_form.text_field(:year, default_year_options)            
+        day       = date_form.text_field(:day, default_day_options.merge(@passed_in_day_options))              
+        month     = date_form.text_field(:long_monthname, default_month_options.merge(@passed_in_month_options)) 
+        year      = date_form.text_field(:year, default_year_options.merge(@passed_in_year_options))            
         "#{day}&nbsp;#{month}&nbsp#{year}".html_safe
       end
     end
@@ -63,9 +61,9 @@ class MojDateFieldset
 
 
   def extract_sub_options
-    @day_options   = @options.delete('_day')
-    @month_options = @options.delete('_month')
-    @year_options  = @options.delete('_year')
+    @passed_in_day_options   = @options.delete('_day') || {}
+    @passed_in_month_options = @options.delete('_month') || {}
+    @passed_in_year_options  = @options.delete('_year') || {}
   end
 
 
