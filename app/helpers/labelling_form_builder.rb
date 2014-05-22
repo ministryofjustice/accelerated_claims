@@ -25,6 +25,8 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def radio_button_fieldset attribute, legend, options={}
+    virtual_pageview = options[:data] ? options[:data].delete('virtual-pageview') : nil
+
     set_class_and_id attribute, options
 
     options[:choice] ||= {'Yes'=>'Yes', 'No'=>'No'}
@@ -32,7 +34,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     fieldset_tag label_for(attribute, legend), options do
       @template.surround("<div class='options'>".html_safe, "</div>".html_safe) do
         options[:choice].map do |label, choice|
-          radio_button_row(attribute, label, choice)
+          radio_button_row(attribute, label, choice, virtual_pageview)
         end.join("\n")
       end
     end
@@ -123,8 +125,12 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     options[:id] = id_for(attribute) unless id_for(attribute).blank?
   end
 
-  def radio_button_row attribute, label, choice
-    input = radio_button(attribute, choice)
+  def radio_button_row attribute, label, choice, virtual_pageview
+    input = if virtual_pageview
+              radio_button(attribute, choice, data: { 'virtual_pageview' => virtual_pageview })
+            else
+              radio_button(attribute, choice)
+            end
     id = input[/id="([^"]+)"/,1]
 
     @template.surround("<div class='option'>".html_safe, "</div>".html_safe) do

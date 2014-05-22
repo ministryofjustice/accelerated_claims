@@ -23,9 +23,10 @@ jQuery ->
     if !referrerIsSelf(document.referrer)
       dispatchPageView '/new'
 
-    $(document).on 'click', '[data-virtual-pageview]', ->
-      url = $(this).data('virtual-pageview')
-      alert(url)
-      dispatchPageView url
-      return true
+    if $('.error-summary').length == 0
+      $(document).on 'click', '[data-virtual-pageview]', ->
+        url = $(this).data('virtual-pageview')
+        alert(url)
+        dispatchPageView url
+        return true
 
