@@ -20,10 +20,10 @@ jQuery ->
     return true
 
   if $('#claimForm').length > 0
-    if !referrerIsSelf(document.referrer)
-      dispatchPageView '/new'
-
     if $('.error-summary').length == 0
+      if !referrerIsSelf(document.referrer)
+        dispatchPageView '/accelerated-possession-eviction'
+
       $(document).on 'click', '[data-virtual-pageview]', ->
         url = $(this).data('virtual-pageview')
         alert(url)
