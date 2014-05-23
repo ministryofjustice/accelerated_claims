@@ -26,7 +26,6 @@ jQuery ->
 
       $(document).on 'click', '[data-virtual-pageview]', ->
         url = $(this).data('virtual-pageview')
-        alert(url)
         dispatchPageView url
         return true
 
