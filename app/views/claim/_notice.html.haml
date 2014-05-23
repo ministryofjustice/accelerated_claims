@@ -2,7 +2,7 @@
   .row
     = 'You need to tell us about how you gave the defendant <a href="https://www.gov.uk/gaining-possession-of-a-privately-rented-property-let-on-an-assured-shorthold-tenancy#seeking-possession-under-section-21" class="external" rel="external" target="_blank">notice to leave the property</a>'.html_safe
 
-  = form.text_field_row  :served_by_name, label: 'Name of the person who gave the notice'
+  = form.text_field_row  :served_by_name, label: 'Name of the person who gave the notice', data: { 'virtual-pageview' => '/accelerated/notice_section' }
   = form.text_field_row  :served_method, label: 'How was the notice given?'
 
   = form.date_select_field_set :date_served, 'Date notice served', class: 'date-picker', date_select_options: @date_select_options
