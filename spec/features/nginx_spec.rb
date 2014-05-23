@@ -15,8 +15,8 @@ feature 'nginx configuration', :remote => true do
   end
 
   scenario '/ redirects to /accelerated' do
-    base_url = Capybara.app_host.sub('http:', 'https:').sub('/accelerated','/')
+    base_url = Capybara.app_host.sub('http:', 'https:').sub('/accelerated-possession-eviction','/')
     visit base_url
-    expect(page.current_url).to eql base_url + "accelerated"
+    expect(page.current_url).to eql base_url + "accelerated-possession-eviction"
   end
 end
