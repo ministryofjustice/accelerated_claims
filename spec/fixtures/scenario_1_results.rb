@@ -88,5 +88,4 @@
   SendCompletedFormToTelephone: nil,
   SendCompletedFormToFax: nil,
   OfficerOfTheCourt: nil,
-  defendant_two: "Miss Maria Gonzalez\n87 Albion St\nLeeds \nLS1 6AG"
 }

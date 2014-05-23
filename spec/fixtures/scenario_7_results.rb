@@ -88,5 +88,4 @@
   SendCompletedFormToTelephone: nil,
   SendCompletedFormToFax: nil,
   OfficerOfTheCourt: nil,
-  defendant_two: "Ms Donna Lee\n45 St Martins Precinct Church St\nReading \nRG4 8BA"
 }
