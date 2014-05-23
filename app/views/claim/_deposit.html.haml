@@ -1,6 +1,9 @@
 = claim_form.fields_for deposit, builder: LabellingFormBuilder do |form|
 
-  = form.radio_button_fieldset :received, 'Did you receive a deposit for the property on or after 6 April 2007?', class: 'radio inline js-depend', data: { depend: 'deposit' }
+  = form.radio_button_fieldset :received,
+      'Did you receive a deposit for the property on or after 6 April 2007?',
+      class: 'radio inline js-depend',
+      data: { depend: 'deposit', 'virtual-pageview' => '/accelerated/deposit-section' }
 
   %fieldset.hide.js-deposit.yes.radio.js-depend{ id: 'deposit_type_fieldset' }
     %h3
@@ -29,5 +32,5 @@
       need to be sure that:
     %ul
       %li= 'the deposit in the form of property was returned at the time notice was given.'.html_safe
-      
+
 
