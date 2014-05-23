@@ -4,6 +4,7 @@
 - content_for :stylesheets do
   = stylesheet_link_tag "application", media: "all"
   :erb
+    <!--[if IE 6]> <%= stylesheet_link_tag "ie6", media: "all" %> <![endif]-->
     <!--[if IE 7]> <%= stylesheet_link_tag "ie7", media: "all" %> <![endif]-->
     <!--[if IE 8]> <%= stylesheet_link_tag "ie8", media: "all" %> <![endif]-->
 
@@ -14,6 +15,10 @@
 - content_for :head do
   = csrf_meta_tag
   = render partial: 'shared/analytics'
+
+- content_for :after_header do
+  :erb
+    <!--[if lte IE 6]> <script>document.body.className = document.body.className.replace('js-enabled','');</script> <![endif]-->
 
 - content_for :cookie_message do
   %p GOV.UK uses cookies to make the site simpler. #{link_to 'Find out more about cookies', controller: :static, action: :cookies}
