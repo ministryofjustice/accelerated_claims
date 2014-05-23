@@ -12,8 +12,8 @@ describe ClaimController do
         @controller.request.stub(:referrer).and_return("http://example.com#{referrer_path}")
       end
 
-      context '/new' do
-        let(:referrer_path) { '/new' }
+      context '/' do
+        let(:referrer_path) { '/' }
 
         it 'should not clear session' do
           controller.should_not_receive(:reset_session)
@@ -39,18 +39,11 @@ describe ClaimController do
         end
       end
 
-      context '/accelerated' do
-        let(:referrer_path) { '/accelerated' }
-
-        it 'should clear session' do
-          @controller.stub(:url_root).and_return '/accelerated'
-          controller.should_receive(:reset_session)
-          get :new
-        end
-      end
-
-      context '/' do
-        let(:referrer_path) { '/' }
+      context 'is gov.uk landing page' do
+        before {
+          @controller.request.stub(:referrer).and_return('https://www.gov.uk/accelerated-possession-eviction')
+        }
+        let(:referrer_path) { nil }
 
         it 'should clear session' do
           controller.should_receive(:reset_session)
@@ -73,7 +66,7 @@ describe ClaimController do
     context 'with no claim data' do
       it 'should redirect to the claim form' do
         get :confirmation # no session
-        response.should redirect_to('/new')
+        response.should redirect_to('/')
       end
     end
 
@@ -83,7 +76,7 @@ describe ClaimController do
         data['claimant_one'].delete('full_name')
         @controller.session['claim'] = data
         get :confirmation
-        response.should redirect_to('/new')
+        response.should redirect_to('/')
       end
     end
   end
@@ -125,16 +118,8 @@ describe ClaimController do
         data['claimant_one'].delete('full_name')
         post :submission, claim: data
         get :download
-        response.should redirect_to('/new')
+        response.should redirect_to('/')
       end
     end
   end
-
-  describe '#landing' do
-    it 'should render the landing page' do
-      get :landing
-      expect(response).to render_template("landing")
-    end
-  end
-
 end
