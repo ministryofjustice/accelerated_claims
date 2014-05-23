@@ -22,7 +22,7 @@ jQuery ->
   if $('#claimForm').length > 0
     if $('.error-summary').length == 0
       if !referrerIsSelf(document.referrer)
-        dispatchPageView '/accelerated-possession-eviction'
+        dispatchTrackingEvent '/accelerated-possession-eviction', 'View service form', 'View service form'
 
       $(document).on 'click', '[data-virtual-pageview]', ->
         url = $(this).data('virtual-pageview')
