@@ -16,7 +16,7 @@ def remote_host
 end
 
 Capybara.run_server = false
-Capybara.app_host = "https://#{remote_host}/accelerated"
+Capybara.app_host = "https://#{remote_host}/accelerated-possession-eviction"
 puts "Running tests remotely against " + Capybara.app_host
 Capybara.default_driver = Capybara.javascript_driver
 WebMock.disable! if defined? WebMock
