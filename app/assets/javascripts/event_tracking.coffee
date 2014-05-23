@@ -1,11 +1,17 @@
+dispatchTrackingEvent = (category, action, label) ->
+  ga 'send', 'event', category, action, label if typeof ga is 'function'
+
+dispatchPageView = (url) ->
+  ga 'send', 'pageview', url if typeof ga is 'function'
+
+referrerIsSelf = (referrer) ->
+  if referrer?
+    if referrer.match(/dsd\.io/)? || referrer.match(/civilclaims\.service\.gov\.uk/)?
+      return true
+    else
+      return false
+
 jQuery ->
-
-  dispatchTrackingEvent = (category, action, label) ->
-    ga 'send', 'event', category, action, label if typeof ga is 'function'
-
-  dispatchPageView = (url) ->
-    ga 'send', 'pageview', url if typeof ga is 'function'
-
   $('[data-event-label]').on 'click', ->
     category = this['href'].replace(/https?:\/\/[^\/]+/i, '')
     action = @text
@@ -13,9 +19,13 @@ jQuery ->
     dispatchTrackingEvent category, action, label
     return true
 
-  $('[data-virtual-pageview]').on 'click', ->
-    url = $(this).data('virtual-pageview')
-    dispatchPageView url
-    return true
+  if $('#claimForm').length > 0
+    if $('.error-summary').length == 0
+      if !referrerIsSelf(document.referrer)
+        dispatchTrackingEvent '/accelerated-possession-eviction', 'View service form', 'View service form'
 
-  return
+      $(document).on 'click', '[data-virtual-pageview]', ->
+        url = $(this).data('virtual-pageview')
+        dispatchPageView url
+        return true
+
