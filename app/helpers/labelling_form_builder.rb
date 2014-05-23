@@ -177,12 +177,15 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def row_input attribute, input, options
+    virtual_pageview = options[:data] ? options[:data].delete('virtual-pageview') : nil
+
     css = "row #{css_for(attribute, options)}".strip
 
     id = id_for(attribute).blank? ? '' : "id='#{id_for(attribute)}' "
 
     @template.surround("<div #{id}class='#{css}'>".html_safe, "</div>".html_safe) do
       input_options = options.merge(class: options[:input_class])
+      input_options.merge!(data: {'virtual_pageview' => virtual_pageview}) if virtual_pageview
       input_options.delete(:label)
       input_options.delete(:input_class)
 
