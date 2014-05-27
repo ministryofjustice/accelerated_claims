@@ -1,5 +1,7 @@
 AcceleratedClaims::Application.routes.draw do
 
+  mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
+
   scope AcceleratedClaims::Application.config.relative_url_root || '/' do
     root 'claim#new'
 

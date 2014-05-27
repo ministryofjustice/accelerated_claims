@@ -46,6 +46,9 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
+  gem 'jasmine', '~> 1.3.2'
+  gem 'jasmine-rails'
+  gem 'guard-jasmine'
   gem 'quiet_assets'
   gem 'byebug'
   gem 'dotenv-rails'  # set environment variables via the filesystem
@@ -61,10 +64,10 @@ group :test do
   gem 'guard-rspec'
   gem 'brakeman'
   gem 'ci_reporter'
-  gem "poltergeist"
+  gem 'poltergeist'
   gem 'selenium-webdriver'
   gem 'curb'
-  gem "show_me_the_cookies"
+  gem 'show_me_the_cookies'
 end
 
 gem 'pdf-forms', '0.5.5'
