@@ -8,7 +8,7 @@
 
   .sub-panel.hide.js-hmo.yes
     - choice = { 'Licence for properties that are <strong>3 or more storeys high</strong> and occupied by <strong>5 or more people</strong> (issued under part 2 of the Housing Act 2004)'.html_safe => 'Part2', 'Licence for properties that are <strong>within an area</strong> defined by a local council (issued under part 3 of the Housing act 2004)'.html_safe => 'Part3'}
-    = form.radio_button_fieldset :issued_under_act_part, 'If <strong>yes</strong>, which licence do you have?'.html_safe, class: 'radio', choice: choice
+    = form.radio_button_fieldset :issued_under_act_part, 'Which licence do you have?'.html_safe, class: 'radio', choice: choice
 
     = form.text_field_row  :issued_by, label: 'Which local authority issued the licence?'
 
