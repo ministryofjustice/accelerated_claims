@@ -51,14 +51,16 @@ class PDFDocument
   CONTINUATION_TEMPLATE = File.join Rails.root, 'templates', 'defendant_form.pdf'
   STRIKER_JAR = File.join Rails.root, 'scripts', 'striker-0.3.1-standalone.jar'
 
-  def defendant_two_address
-    "#{@json['defendant_two_address']}\n#{@json['defendant_two_postcode1']} #{@json['defendant_two_postcode2']}"
+  def defendant_two_data
+    { 'defendant_two_address'   => "#{@json['defendant_two_address']}",
+      'defendant_two_postcode1' => "#{@json['defendant_two_postcode1']}",
+      'defendant_two_postcode2' => "#{@json['defendant_two_postcode2']}" }
   end
 
   def create_continuation_pdf
     continuation_pdf = Tempfile.new('continuation', '/tmp/')
     pdf = PdfForms.new(ENV['PDFTK'])
-    pdf.fill_form CONTINUATION_TEMPLATE, continuation_pdf, { 'defendant_two' => defendant_two_address }
+    pdf.fill_form CONTINUATION_TEMPLATE, continuation_pdf, defendant_two_data
     continuation_pdf.path
   end
 
