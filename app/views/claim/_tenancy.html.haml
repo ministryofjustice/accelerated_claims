@@ -10,7 +10,7 @@
   .row.divider.hide.js-tenancyType.assured
 
   .sub-panel.rel.hide.js-tenancyType.assured
-    %h3.section-header Assured shorthold tenancies
+    %h3.section-header.hide Assured shorthold tenancies
 
     = form.radio_button_fieldset :assured_shorthold_tenancy_type,
         'How many tenancy agreements have you had with the defendant?',
@@ -69,7 +69,7 @@
   .row.divider.hide.js-tenancyType.demoted
 
   .sub-panel.rel.hide.js-tenancyType.demoted
-    %h3.section-header Demoted assured shorthold tenancies
+    %h3.section-header.hide Demoted assured shorthold tenancies
 
     .sub-panel.inset
       = form.date_select_field_set :demotion_order_date, 'Date of demotion order', class: 'date-picker', date_select_options: @date_select_options
