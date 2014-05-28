@@ -51,7 +51,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     cp /srv/salt/minions/vagrant/templates/minion /etc/salt/minion
     service salt-minion restart
     sleep 5 # This might not be needed, but why rush these things?
-    salt-call state.highstate --local --retcode-passthrough
+    salt-call state.highstate --local --retcode-passthrough pillar="{htaccess_users: ~}"
   SCRIPT
   config.vm.provision :shell, inline: script, keep_color: false
 
