@@ -13,12 +13,12 @@
 
 %script#multiple-radio(type='text/x-handlebars-template')
   %fieldset.radio.inline.jsVal
-    %span.caption {{caption}}
+    %span.caption {{{caption}}}
     .options
       {{#each items}}
       .option
         %label
-          %input.multiplePanelRadio(type='radio' name='multiplePanelRadio_{{group}}' id='multiplePanelRadio_{{group}}_{{val}}' data-virtual-pageview='/multiplePanelRadio_{{group}}_{{val}}' value='{{val}}')
+          %input.multiplePanelRadio(type='radio' name='multiplePanelRadio_{{group}}' id='multiplePanelRadio_{{group}}_{{val}}' data-virtual-pageview='/accelerated/{{group}}-section' value='{{val}}')
           {{text}}
       {{/each}}
 

@@ -88,5 +88,4 @@
   SendCompletedFormToTelephone: nil,
   SendCompletedFormToFax: nil,
   OfficerOfTheCourt: nil,
-  defendant_two: "Mr Owen Harris\nUnit 11, Swansea Fforest Fach Park\nSwansea\nSA5 4BB"
 }

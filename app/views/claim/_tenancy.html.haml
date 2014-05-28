@@ -1,25 +1,34 @@
 = claim_form.fields_for tenancy, builder: LabellingFormBuilder do |form|
   .sub-panel
-    = form.radio_button_fieldset :tenancy_type, 'What kind of tenancy agreement do you have with the defendant?', class: 'radio js-depend', choice: {'Assured shorthold tenancy <span class="hint">(this is the most common form of tenancy)</span>' => 'assured', 'Demoted assured shorthold tenancy <span class="hint">(this is a tenancy agreement that has been ‘demoted’ by the court, for example because tenants behaved anti-socially or used the property for illegal activity)</span>' => 'demoted'}, data: { depend: "tenancyType" }
+    = form.radio_button_fieldset :tenancy_type,
+        'What kind of tenancy agreement do you have with the defendant?',
+        class: 'radio js-depend',
+        choice: {'Assured shorthold tenancy <span class="hint">(this is the most common form of tenancy)</span>' => 'assured',
+            'Demoted assured shorthold tenancy <span class="hint">(this is a tenancy agreement that has been ‘demoted’ by the court, for example because tenants behaved anti-socially or used the property for illegal activity)</span>' => 'demoted'},
+        data: { depend: 'tenancyType', 'virtual-pageview' => '/accelerated/tenancy-section' }
 
   .row.divider.hide.js-tenancyType.assured
 
   .sub-panel.rel.hide.js-tenancyType.assured
-    %h3.section-header Assured shorthold tenancies
+    %h3.section-header.hide Assured shorthold tenancies
 
-    = form.radio_button_fieldset :assured_shorthold_tenancy_type, 'How many tenancy agreements have you had with the defendant?', class: 'radio js-depend', choice: {'1' => 'one', 'More than 1' => 'multiple'}, data: { depend: "tenancyNumber" }
+    = form.radio_button_fieldset :assured_shorthold_tenancy_type,
+        'How many tenancy agreements have you had with the defendant?',
+        class: 'radio inline js-depend',
+        choice: {'1' => 'one', 'More than 1' => 'multiple'},
+        data: { depend: 'tenancyNumber' }
 
 
     .sub-panel.assuredTenancyOptions.hide.js-tenancyNumber.one.multiple
       .sub-panel.hide.inset.js-tenancyNumber.one
         .row.remove
-          %p= "If you’ve had <strong>one</strong> tenancy agreement, enter the details".html_safe
+          %p= "If you’ve had <strong>1</strong> tenancy agreement, enter the details".html_safe
 
         = form.moj_date_fieldset :start_date, 'Start date of the tenancy agreement', class: 'date-picker rel conditional original'
 
       .sub-panel.hide.inset.js-tenancyNumber.multiple
         .row.remove
-          = 'If you’ve had <strong>more than one</strong> tenancy agreement, enter the details'.html_safe
+          = 'If you’ve had <strong>more than 1</strong> tenancy agreement, enter the details'.html_safe
 
         = form.moj_date_fieldset :original_assured_shorthold_tenancy_agreement_date, 'Date of the original tenancy agreement', class: 'date-picker conditional original'
         /= form.date_select_field_set :original_assured_shorthold_tenancy_agreement_date, 'Date of the original tenancy agreement', class: 'date-picker conditional original', date_select_options: @date_select_options
@@ -34,7 +43,7 @@
 
         .statements.hide.current
           -# following paragraph replaced and moved when JS turned on - see tenancy_module.js
-          %p#read-statements= "If your original tenancy agreement (and any additional agreements) were made <strong>on or after #{(Tenancy::RULES_CHANGE_DATE).to_s(:printed)}</strong>, read the statements below and select all that apply.".html_safe
+          %p#read-statements= "If your original tenancy agreement (and any additional agreements) were made <strong>on or after #{(Tenancy::RULES_CHANGE_DATE).to_s(:printed)}</strong>, read the statements below and select all that apply:".html_safe
 
           %ol
             %li{ id: form.id_for(:applicable_statements_1, 'as1').to_s }
@@ -62,7 +71,7 @@
   .row.divider.hide.js-tenancyType.demoted
 
   .sub-panel.rel.hide.js-tenancyType.demoted
-    %h3.section-header Demoted assured shorthold tenancies
+    %h3.section-header.hide Demoted assured shorthold tenancies
 
     .sub-panel.inset
       = form.moj_date_fieldset  :demotion_order_date, 'Date of demotion order', class: 'date-picker'

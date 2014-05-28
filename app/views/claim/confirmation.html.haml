@@ -13,8 +13,9 @@
             %li= "<strong>1</strong> for the court".html_safe
             %li= "<strong>1</strong> for each defendant".html_safe
             %li= "<strong>1</strong> for your records".html_safe
-          %p
-            = link_to 'View and print completed form', download_path, class: 'button large chevron pdf-download', target: '_blank', data: { 'event-label' => 'View and print completed form' }
+            %li= link_to 'View and print completed form', download_path, class: 'button large chevron pdf-download', target: '_blank', data: { 'event-label' => 'View and print completed form' }
+          %ul.nodot
+            %li After you’ve printed the form, complete our #{link_to 'satisfaction survey', 'https://www.gov.uk/done/accelerated-possession-eviction', :class => 'external', :rel => 'external', :target => '_blank'}.<br>Your feedback helps us improve the service.
 
       %li.sign
         %strong Step 2: sign the statement of truth on all copies
@@ -35,25 +36,30 @@
                   the first tenancy agreement with the defendant - marked
                   %strong 'A'
                 %li.withdot
-                  if you've had more than one tenancy agreement, inlcude the current tenancy agreement - marked
+                  if you've had more than 1 tenancy agreement, include the current tenancy agreement - marked
                   %strong 'A1'
                 %li
-                  %u 
-                    If your tenancy agreement was made between 
+                  %u
+                    If your tenancy agreement was made between
                     %strong 15 January 1989 and 27 February 1997
                     only:
 
                 %ul
 
                   %li.withdot
-                    if you gave the defendant written notice to say they’d have an assured shorthold tenancy agreement before they moved in, include a copy - marked 
+                    if you gave the defendant written notice to say they’d have an assured shorthold tenancy agreement before they moved in, include a copy - marked
                     %strong 'B'
 
                   %li.withdot
-                    if you sent this notice by post, include proof of post - marked 
+                    if you sent this notice by post, include proof of post - marked
                     %strong ‘B1’
 
 
+            %li
+              %u If you have a demoted assured shorthold tenancy agreement:
+              %ul
+                %li.withdot the most recent tenancy agreement - marked ‘A’
+                %li.withdot the demotion order - marked ‘B’
 
             %li
               %strong Notice to leave the property
@@ -63,36 +69,36 @@
                   the section 21 notice that you gave to the tenant - marked
                   %strong 'C'
                 %li.withdot
-                  proof this notice was given - marked 
+                  proof this notice was given - marked
                   %strong 'C1'
-            
+
             %li
               %strong If you kept the tenant’s deposit in a tenancy deposit scheme
               %ul
                 %li.withdot
-                  The tenancy deposit scheme certificate - marked 
+                  The tenancy deposit scheme certificate - marked
                   %strong ‘F’
 
 
             %li
-              %strong If you’ve applied for a house in multiple occupation (HMO) licence (but not yet received it) 
+              %strong If you’ve applied for a house in multiple occupation (HMO) licence (but not yet received it)
 
-            %li You need to include evidence of your application. 
+            %li You need to include evidence of your application.
 
             %ul
               %li.withdot
-                if it’s for a property that is 
-                %strong 3 or more storeys high 
-                and occupied by 
-                %strong 5 or more people 
-                (issued under part 2 of the Housing Act 2004) - marked 
-                %strong ‘D’  
+                if it’s for a property that is
+                %strong 3 or more storeys high
+                and occupied by
+                %strong 5 or more people
+                (issued under part 2 of the Housing Act 2004) - marked
+                %strong ‘D’
 
-              %li.withdot 
-                If it’s for a property 
-                %strong within an area 
-                defined by a local council (issued under under part 3 of the Housing Act 2004) - marked 
-                %strong ‘E’ 
+              %li.withdot
+                If it’s for a property
+                %strong within an area
+                defined by a local council (issued under under part 3 of the Housing Act 2004) - marked
+                %strong ‘E’
 
       %li.pound
         %strong Step 4: include the £280 court fee
@@ -103,7 +109,7 @@
             %li.withdot
               cheque or postal order - made payable to ‘HM Courts & Tribunals Service’
             %li.withdot
-              debit or credit card - you’ll need to #{link_to 'contact the court', 'https://courttribunalfinder.service.gov.uk/', :class => 'external', :rel => 'external', :target => '_blank'} to pay this way 
+              debit or credit card - you’ll need to #{link_to 'contact the court', 'https://courttribunalfinder.service.gov.uk/', :class => 'external', :rel => 'external', :target => '_blank'} to pay this way
             %li.withdot
               cash (do not send cash through the post. #{link_to 'Contact the court', 'https://courttribunalfinder.service.gov.uk/', :class => 'external', :rel => 'external', :target => '_blank'} to pay in person)
       %li.court
@@ -111,12 +117,10 @@
         .box
           %ul
             %li use #{link_to 'court finder', 'https://courttribunalfinder.service.gov.uk/', :class => 'external', :rel => 'external', :target => '_blank'} to find your nearest court.
-            %li enter postcode and select ‘housing possession’ under area of law 
-            %li 
-              write court details in 
-              %strong black ink 
-              at the top of 
-              %strong page 1 
+            %li enter postcode and select ‘housing possession’ under area of law
+            %li
+              write court details in
+              %strong black ink
+              at the top of
+              %strong page 1
               on all copies of the claim form
-
-           

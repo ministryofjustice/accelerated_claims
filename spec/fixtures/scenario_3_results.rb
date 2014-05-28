@@ -88,5 +88,4 @@
   SendCompletedFormToTelephone: nil,
   SendCompletedFormToFax: nil,
   OfficerOfTheCourt: nil,
-  defendant_two: "Mr Dumisani Afolayan\n280 Coventry Rd\nBirmingham \nB10 0XA"
 }

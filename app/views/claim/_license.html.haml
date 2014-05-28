@@ -1,11 +1,14 @@
 = claim_form.fields_for license, builder: LabellingFormBuilder do |form|
   .row
     ='If more than 3 tenants live in your property (forming more than 1 household), or the bathroom or kitchen are shared, it may be classed as a <a href="https://www.gov.uk/private-renting/houses-in-multiple-occupation" class="external" rel="external" target="_blank">House in Multiple Occupation (HMO)</a>. If so, you should have a HMO licence.'.html_safe
-  = form.radio_button_fieldset :multiple_occupation, 'Do you have a HMO licence?', class: 'radio inline js-depend', data: { depend: "hmo" }
+  = form.radio_button_fieldset :multiple_occupation,
+      'Do you have a HMO licence?',
+      class: 'radio inline js-depend',
+      data: { depend: 'hmo', 'virtual-pageview' => '/accelerated/licenses-section' }
 
   .sub-panel.hide.js-hmo.yes
     - choice = { 'Licence for properties that are <strong>3 or more storeys high</strong> and occupied by <strong>5 or more people</strong> (issued under part 2 of the Housing Act 2004)'.html_safe => 'Part2', 'Licence for properties that are <strong>within an area</strong> defined by a local council (issued under part 3 of the Housing act 2004)'.html_safe => 'Part3'}
-    = form.radio_button_fieldset :issued_under_act_part, 'If <strong>yes</strong>, which licence do you have?'.html_safe, class: 'radio', choice: choice
+    = form.radio_button_fieldset :issued_under_act_part, 'Which licence do you have?'.html_safe, class: 'radio', choice: choice
 
     = form.text_field_row  :issued_by, label: 'Which local authority issued the licence?'
     = form.moj_date_fieldset :issued_date, 'When was it issued?', class: 'date-picker'

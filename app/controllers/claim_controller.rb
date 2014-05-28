@@ -71,7 +71,7 @@ class ClaimController < ApplicationController
   def referrer_is_landing_page?
     referrer = request.referrer
     if referrer.present?
-      URI.parse(referrer).path == url_root
+      referrer == 'https://www.gov.uk/accelerated-possession-eviction'
     else
       false
     end

@@ -7,7 +7,7 @@ feature 'Filling in claim form' do
 
   unless remote_test?
     scenario "submitting incomplete form", js: false do
-      visit '/new'
+      visit '/'
       click_button 'Complete form'
       expect(page).to have_content("Street must be entered")
 
@@ -25,7 +25,7 @@ feature 'Filling in claim form' do
   end
 
   scenario "submitting incomplete form", js: true do
-    visit '/new'
+    visit '/'
     click_button 'Complete form'
 
     check_focus_after_click 'Question "As the landlord, you’re known as the claimant in this case. How many claimants are there?" not answered', 'multiplePanelRadio_claimants_1'
@@ -70,7 +70,7 @@ feature 'Filling in claim form' do
   end
 
   scenario 'tenancy start_date before 15 January 1989', js: true do
-    visit '/new'
+    visit '/'
     choose('claim_tenancy_tenancy_type_assured')
     choose('claim_tenancy_assured_shorthold_tenancy_type_one')
     select_tenancy_start_date(Tenancy::APPLICABLE_FROM_DATE - 1)
@@ -80,7 +80,7 @@ feature 'Filling in claim form' do
   end
 
   scenario 'tenancy start_date between 15 January 1989 and 27 February 1997', js: true do
-    visit '/new'
+    visit '/'
     choose('claim_tenancy_tenancy_type_assured')
     choose('claim_tenancy_assured_shorthold_tenancy_type_one')
     select_tenancy_start_date Tenancy::APPLICABLE_FROM_DATE
@@ -91,7 +91,7 @@ feature 'Filling in claim form' do
   end
 
   scenario 'tenancy start_date on or after 28 February 1997', js: true do
-    visit '/new'
+    visit '/'
     choose('claim_tenancy_tenancy_type_assured')
     choose('claim_tenancy_assured_shorthold_tenancy_type_one')
     select_tenancy_start_date Tenancy::RULES_CHANGE_DATE
@@ -101,14 +101,14 @@ feature 'Filling in claim form' do
   end
 
   scenario 'user checks deposit checkboxes then changes mind to no deposit', js: true do
-    visit '/new'
+    visit '/'
     choose('claim_deposit_received_yes')
     check('claim_deposit_as_money')
     expect(page).to have_content("you kept the deposit in a government-backed deposit protection scheme and met the scheme’s requirements")
-    
+
     check('claim_deposit_as_property')
     expect(page).to have_content("the deposit in the form of property was returned at the time notice was given")
-    
+
     choose('claim_deposit_received_no')
     expect(page).to_not have_content("you kept the deposit in a government-backed deposit protection scheme and met the scheme’s requirements")
     expect(page).to_not have_content("the deposit in the form of property was returned at the time notice was given")
