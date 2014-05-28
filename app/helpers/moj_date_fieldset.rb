@@ -8,10 +8,14 @@
 
 class MojDateFieldset
 
-  def initialize(form, attribute, legend, options)
+  @@hint  = "eg&nbsp;&nbsp;#{Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')}"
+
+  
+  def initialize(form, attribute, legend, options = {}, explanatory_text = nil)
     @form                    = form
     @attribute               = attribute
     @legend                  = legend
+    @explanatory_text        = explanatory_text || @@hint
     @options                 = options
     @passed_in_day_options   = nil
     @passed_in_month_options = nil
@@ -23,6 +27,7 @@ class MojDateFieldset
  
   def emit
     @form.set_class_and_id @attribute, @options
+    @legend = embed_explanatiory_text(@elgend, @explanatory_text) unless @explanatory_text.nil?
     @form.fieldset_tag @form.label_for(@attribute, @legend), @options do
       
       date = @form.object.send(@attribute)
@@ -55,6 +60,11 @@ class MojDateFieldset
   end
 
   private
+
+
+  def embed_explanatiory_text(legend, text)
+    %Q(#{@legend}<span class="hint block">#{@explanatory_text}</span>)
+  end
 
 
   def extract_sub_options
