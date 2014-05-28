@@ -13,10 +13,9 @@
             %li= "<strong>1</strong> for the court".html_safe
             %li= "<strong>1</strong> for each defendant".html_safe
             %li= "<strong>1</strong> for your records".html_safe
-          %p
-            = link_to 'View and print completed form', download_path, class: 'button large chevron pdf-download', target: '_blank', data: { 'event-label' => 'View and print completed form' }
-          %p
-            After you’ve printed the form, complete our <a href="https://www.gov.uk/done/accelerated-possession-eviction">satisfaction survey</a>. <br> Your feedback helps us improve the service.
+            %li= link_to 'View and print completed form', download_path, class: 'button large chevron pdf-download', target: '_blank', data: { 'event-label' => 'View and print completed form' }
+          %ul.nodot
+            %li After you’ve printed the form, complete our #{link_to 'satisfaction survey', 'https://www.gov.uk/done/accelerated-possession-eviction', :class => 'external', :rel => 'external', :target => '_blank'}.<br>Your feedback helps us improve the service.
 
       %li.sign
         %strong Step 2: sign the statement of truth on all copies
