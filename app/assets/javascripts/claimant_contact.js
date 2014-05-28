@@ -32,7 +32,8 @@ moj.Modules.claimantContact = (function() {
   };
 
   bindEvents = function() {
-    $captions.on( 'click', function() {
+    $captions.on( 'click', function( e ) {
+      e.preventDefault();
       toggleDetailsBlock( $( this ).closest( '.details' ) );
     } );
 
@@ -43,6 +44,9 @@ moj.Modules.claimantContact = (function() {
 
   toggleDetailsBlock = function( $el ) {
     $el.toggleClass( 'open' );
+    if( $el.hasClass( 'open' ) ) {
+      $( 'input', $el ).eq( 0 ).trigger( 'focus' );
+    }
   };
 
   hidePanel = function() {
