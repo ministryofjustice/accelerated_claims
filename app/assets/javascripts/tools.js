@@ -148,7 +148,17 @@ moj.Modules.tools = (function() {
   };
 
   isDate = function( d, m, y ) {
-    return isValidDate( y + '-' + m + '-' + d );
+    var monthno = validMonth(m);
+    if (monthno == false) {
+      monthno = monthToNum(m);
+    }
+    if (monthno != false) {
+      var monthno_str = monthno.toString(10);
+      var pad = "00";
+      var padded_monthno_str = pad.substring(0, pad.length - monthno_str.length) + monthno_str;
+      return isValidDate( y + '-' + padded_monthno_str + '-' + d );
+    }
+    return false;
   };
 
   monthToNum = function( str ) {
