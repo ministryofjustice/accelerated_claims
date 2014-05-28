@@ -34,20 +34,17 @@ class MojDateFieldset
         default_day_options = { maxlength: 2, 
                                 id: "claim_#{obj_name}_#{@attribute}_3i", 
                                 name: "claim[#{obj_name}][#{@attribute}(3i)]",   
-                                class: 'moj-date-day', 
-                                placeholder: 'DD'
+                                class: 'moj-date-day'
                               }
         default_month_options = { maxlength: 9, 
                                 id: "claim_#{obj_name}_#{@attribute}_2i",   
                                 name: "claim[#{obj_name}][#{@attribute}(2i)]",   
-                                class: 'moj-date-month', 
-                                placeholder: 'MM'
+                                class: 'moj-date-month'
                               }
         default_year_options = { maxlength: 4, 
                                 id: "claim_#{obj_name}_#{@attribute}_1i",   
                                 name: "claim[#{obj_name}][#{@attribute}(1i)]",   
-                                class: 'moj-date-year', 
-                                placeholder: 'YYYY'
+                                class: 'moj-date-year'
                               }
         day       = date_form.text_field(:day, default_day_options.merge(@passed_in_day_options))              
         month     = date_form.text_field(:long_monthname, default_month_options.merge(@passed_in_month_options)) 
