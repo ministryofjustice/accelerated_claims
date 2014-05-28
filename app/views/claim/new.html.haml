@@ -16,7 +16,7 @@
     -# TODO: the line below, data-caption, should be split by a newline between sentences, 'claimant' in the first sentence should be bold.
     .moj-panel.has-multiple#claimants(data-multiple="claimant" data-caption="As the landlord, you’re known as the claimant in this case. How many claimants are there?")
       .row.hide
-        %h3 As the landlord, you’re known as the <b>claimant</b> in this case.
+        %h3 As the landlord, you’re known as the <strong>claimant</strong> in this case.
       .sub-panel.claimant#claimant_one
         %h3.person First claimant
         = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_one}
@@ -35,7 +35,7 @@
     -# TODO: the line below, data-caption, there should be a newline between the sentences and 'defendants' in the first sentence should be bold.
     .moj-panel.has-multiple#defendants(data-multiple="defendant" data-caption="Your tenants are known as defendants in this case. How many defendants are there?")
       .row.hide
-        %h3 Your tenants are known as defendants in this case.
+        %h3 Your tenants are known as <strong>defendants</strong> in this case.
       .sub-panel.defendant#defendant_one
         %h3.person First defendant
         = render partial: 'defendant', object: @claim.defendant_one, locals: { claim_form: claim_form, defendant_field: :defendant_one}
