@@ -22,7 +22,7 @@ describe 'LabellingFormBuilder'  do
 
     it 'shuould intantiate an moj_date_fieldsset object with the params and call emit' do
       mdf = double MojDateFieldset
-      expect(MojDateFieldset).to receive(:new).with(form, :date_served, "Date Served", {}).and_return(mdf)
+      expect(MojDateFieldset).to receive(:new).with(form, :date_served, "Date Served", {}, nil).and_return(mdf)
       expect(mdf).to receive(:emit)
 
       form.moj_date_fieldset(:date_served, "Date Served")
