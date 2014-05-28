@@ -138,7 +138,6 @@ feature "moj date fieldset" do
           id="claim_notice_date_served_3i" 
           maxlength="2" 
           name="claim[notice][date_served(3i)]" 
-          placeholder="DD" 
           size="2" 
           type="text" />
   &nbsp;
@@ -146,7 +145,6 @@ feature "moj date fieldset" do
           id="claim_notice_date_served_2i" 
           maxlength="9" 
           name="claim[notice][date_served(2i)]" 
-          placeholder="MM" 
           size="9" 
           type="text" />
   &nbsp
@@ -154,7 +152,6 @@ feature "moj date fieldset" do
           id="claim_notice_date_served_1i" 
           maxlength="4" 
           name="claim[notice][date_served(1i)]" 
-          placeholder="YYYY" 
           size="4" 
           type="text" />
 </fieldset>
@@ -173,7 +170,6 @@ def html_with_fieldset_classes
           id="claim_notice_date_served_3i" 
           maxlength="2" 
           name="claim[notice][date_served(3i)]" 
-          placeholder="DD" 
           size="2" 
           type="text" />
   &nbsp;
@@ -181,7 +177,6 @@ def html_with_fieldset_classes
           id="claim_notice_date_served_2i" 
           maxlength="9" 
           name="claim[notice][date_served(2i)]" 
-          placeholder="MM" 
           size="9" 
           type="text" />
   &nbsp
@@ -189,7 +184,6 @@ def html_with_fieldset_classes
           id="claim_notice_date_served_1i" 
           maxlength="4" 
           name="claim[notice][date_served(1i)]" 
-          placeholder="YYYY" 
           size="4" 
           type="text" />
 </fieldset>
@@ -208,7 +202,6 @@ def html_with_fieldset_classes_and_id
           id="claim_notice_date_served_3i" 
           maxlength="2" 
           name="claim[notice][date_served(3i)]" 
-          placeholder="DD" 
           size="2" 
           type="text" />
   &nbsp;
@@ -216,7 +209,6 @@ def html_with_fieldset_classes_and_id
           id="claim_notice_date_served_2i" 
           maxlength="9" 
           name="claim[notice][date_served(2i)]" 
-          placeholder="MM" 
           size="9" 
           type="text" />
   &nbsp
@@ -224,7 +216,6 @@ def html_with_fieldset_classes_and_id
           id="claim_notice_date_served_1i" 
           maxlength="4" 
           name="claim[notice][date_served(1i)]" 
-          placeholder="YYYY" 
           size="4" 
           type="text" />
 </fieldset>
@@ -243,7 +234,6 @@ def html_with_day_month_year_classes
           id="claim_notice_date_served_3i" 
           maxlength="2" 
           name="claim[notice][date_served(3i)]" 
-          placeholder="DD" 
           size="2" 
           type="text" />
   &nbsp;
@@ -251,7 +241,6 @@ def html_with_day_month_year_classes
           id="claim_notice_date_served_2i" 
           maxlength="9" 
           name="claim[notice][date_served(2i)]" 
-          placeholder="MM" 
           size="9" 
           type="text" />
   &nbsp
@@ -259,7 +248,6 @@ def html_with_day_month_year_classes
           id="claim_notice_date_served_1i" 
           maxlength="4" 
           name="claim[notice][date_served(1i)]" 
-          placeholder="YYYY" 
           size="4" 
           type="text" />
 </fieldset>
@@ -294,7 +282,6 @@ def html_with_other_options
           id="claim_notice_date_served_1i" 
           maxlength="4" 
           name="claim[notice][date_served(1i)]" 
-          placeholder="YYYY" 
           size="4" 
           type="text" />
 </fieldset>
