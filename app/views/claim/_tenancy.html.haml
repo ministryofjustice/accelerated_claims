@@ -22,13 +22,13 @@
     .sub-panel.assuredTenancyOptions.hide.js-tenancyNumber.one.multiple
       .sub-panel.hide.inset.js-tenancyNumber.one
         .row.remove
-          %p= "If you’ve had <strong>one</strong> tenancy agreement, enter the details".html_safe
+          %p= "If you’ve had <strong>1</strong> tenancy agreement, enter the details".html_safe
 
         = form.date_select_field_set :start_date, 'Start date of the tenancy agreement', class: 'date-picker rel conditional original', date_select_options: @date_select_options
 
       .sub-panel.hide.inset.js-tenancyNumber.multiple
         .row.remove
-          = 'If you’ve had <strong>more than one</strong> tenancy agreement, enter the details'.html_safe
+          = 'If you’ve had <strong>more than 1</strong> tenancy agreement, enter the details'.html_safe
 
         = form.date_select_field_set :original_assured_shorthold_tenancy_agreement_date, 'Date of the original tenancy agreement', class: 'date-picker conditional original', date_select_options: @date_select_options
 
