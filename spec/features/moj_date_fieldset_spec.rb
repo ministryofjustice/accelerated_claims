@@ -28,6 +28,8 @@ feature "moj date fieldset" do
   end
 
 
+
+
   context 'emit html' do
 
     before(:each) do
@@ -132,7 +134,7 @@ feature "moj date fieldset" do
   str = <<-EOHTML
 <fieldset aria-describedby="_0123456789abcdef" class="">
   <span class="legend" id="_0123456789abcdef">
-    Date Notice Served
+    Date Notice Served<span class="hint block">eg&nbsp;&nbsp;#{Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')}</span>
   </span>
   <input  class="moj-date-day" 
           id="claim_notice_date_served_3i" 
@@ -164,7 +166,7 @@ def html_with_fieldset_classes
   str = <<-EOHTML
 <fieldset aria-describedby="_0123456789abcdef" class="date-picker conditional">
   <span class="legend" id="_0123456789abcdef">
-    Date Notice Served
+    Date Notice Served<span class="hint block">eg&nbsp;&nbsp;#{Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')}</span>
   </span>
   <input  class="moj-date-day" 
           id="claim_notice_date_served_3i" 
@@ -196,7 +198,7 @@ def html_with_fieldset_classes_and_id
   str = <<-EOHTML
 <fieldset aria-describedby="claim_notice_date_served_error" class="date-picker conditional">
   <span class="legend" id="claim_notice_date_served_error">
-    Date Notice Served
+    Date Notice Served<span class="hint block">eg&nbsp;&nbsp;#{Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')}</span>
   </span>
   <input  class="moj-date-day" 
           id="claim_notice_date_served_3i" 
@@ -228,7 +230,7 @@ def html_with_day_month_year_classes
   str = <<-EOHTML
 <fieldset aria-describedby="xxxxx" class="date-picker conditional">
   <span class="legend" id="xxxxx">
-    Date Notice Served
+    Date Notice Served<span class="hint block">eg&nbsp;&nbsp;#{Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')}</span>
   </span>
   <input  class="my-special-day mydate" 
           id="claim_notice_date_served_3i" 
@@ -260,7 +262,7 @@ def html_with_other_options
     str = <<-EOHTML
 <fieldset aria-describedby="_0123456789abcdef" class="date-picker conditional">
   <span class="legend" id="_0123456789abcdef">
-    Date Notice Served
+    Date Notice Served<span class="hint block">eg&nbsp;&nbsp;#{Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')}</span>
   </span>
   <input  class="my-special-day mydate" 
           id="claim_notice_date_served_3i" 

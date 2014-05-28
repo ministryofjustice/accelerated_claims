@@ -11,8 +11,8 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     row_input attribute, :text_area, options
   end
 
-  def moj_date_fieldset attribute, legend, options={}
-    df = MojDateFieldset.new(self, attribute, legend, options)
+  def moj_date_fieldset attribute, legend, options = {}, explanatory_text = nil
+    df = MojDateFieldset.new(self, attribute, legend, options, explanatory_text)
     df.emit
   end
 
@@ -198,6 +198,8 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     [ label, value ].join("\n").html_safe
   end
 
+
+  
 
 
   def max_length attribute
