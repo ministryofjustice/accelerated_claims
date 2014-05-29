@@ -2,6 +2,13 @@ AcceleratedClaims::Application.routes.draw do
 
   mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
 
+  if defined?(Jasmine::Jquery::Rails::Engine)
+    JasmineFixtureServer = Proc.new do |env|
+      Rack::Directory.new('spec/javascripts/fixtures').call(env)
+    end
+    mount JasmineFixtureServer => '/spec/javascripts/fixtures'
+  end
+
   scope AcceleratedClaims::Application.config.relative_url_root || '/' do
     root 'claim#new'
 

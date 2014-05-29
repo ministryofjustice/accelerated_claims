@@ -1,5 +1,19 @@
-dispatchTrackingEvent = (category, action, label) ->
-  ga 'send', 'event', category, action, label if typeof ga is 'function'
+root = exports ? this
+
+class EventTrack
+  constructor: ($) ->
+    tracker = this
+    $('[data-event-label]').on 'click', ->
+      category = this['href'].replace(/https?:\/\/[^\/]+/i, '')
+      action = @text
+      label = $(this).data('event-label')
+      tracker.dispatchTrackingEvent(category, action, label)
+      return true
+
+  dispatchTrackingEvent: (category, action, label) ->
+    ga 'send', 'event', category, action, label if typeof ga is 'function'
+
+root.EventTrack = EventTrack
 
 dispatchPageView = (url) ->
   new_pageview = !($.sent_pageviews[url]?) || (!$.sent_pageviews[url])
@@ -17,12 +31,7 @@ referrerIsSelf = (referrer) ->
 jQuery ->
   $.sent_pageviews = new Object()
 
-  $('[data-event-label]').on 'click', ->
-    category = this['href'].replace(/https?:\/\/[^\/]+/i, '')
-    action = @text
-    label = $(this).data('event-label')
-    dispatchTrackingEvent category, action, label
-    return true
+  new root.EventTrack( $ )
 
   if $('#claimForm').length > 0
     if $('.error-summary').length == 0

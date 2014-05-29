@@ -48,6 +48,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'jasmine', '~> 1.3.2'
   gem 'jasmine-rails'
+  gem 'jasmine-jquery-rails', '~> 1.5.9'
   gem 'guard-jasmine'
   gem 'quiet_assets'
   gem 'byebug'
