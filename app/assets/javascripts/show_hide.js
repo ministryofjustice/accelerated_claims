@@ -48,8 +48,10 @@ moj.Modules.showHide = (function() {
         dependGroup = $el.closest( '.js-depend' ).data( 'depend' ),
         $groupEls = $( '.js-' + dependGroup );
 
-    $groupEls.hide();
-    $groupEls.filter( '.' + clickValue ).show();
+    moj.Modules.animate.showhide( $groupEls, $el, 'hide' );
+    if( $groupEls.filter( '.' + clickValue ).length > 0 ) {
+      moj.Modules.animate.showhide( $groupEls.filter( '.' + clickValue ), $el, 'show' );
+    }
   };
 
   cbClick = function( $el ) {
@@ -57,9 +59,9 @@ moj.Modules.showHide = (function() {
         $groupEls = $( '.js-' + dependGroup );
 
     if( $el.is( ':checked' ) ) {
-      $groupEls.show();
+      moj.Modules.animate.showhide( $groupEls, $el, 'show' );
     } else {
-      $groupEls.hide();
+      moj.Modules.animate.showhide( $groupEls, $el, 'hide' );
     }
   };
 
