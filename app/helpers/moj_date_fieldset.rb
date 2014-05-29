@@ -31,7 +31,6 @@ class MojDateFieldset
     @form.fieldset_tag @form.label_for(@attribute, @legend), @options do
       
       date = @form.object.send(@attribute)
-      date = nil if date.is_a?(InvalidDate)
       
       @form.fields_for(@attribute, date) do |date_form|
         obj_name   = @form.object.class.to_s.underscore
