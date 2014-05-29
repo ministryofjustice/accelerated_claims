@@ -59,9 +59,9 @@ moj.Modules.yesNo = (function() {
   yesnoClick = function( $el ) {
     var reverse = $el.closest( '.options' ).data( 'reverse' );
     if( ( $el.val() === 'yes' && !reverse ) || ( $el.val() === 'no' && reverse ) ) {
-      $el.closest( 'fieldset' ).next().show();
+      moj.Modules.animate.showhide( $el.closest( 'fieldset' ).next(), $el, 'show' );
     } else {
-      $el.closest( 'fieldset' ).next().hide();
+      moj.Modules.animate.showhide( $el.closest( 'fieldset' ).next(), $el, 'hide' );
     }
   };
 
