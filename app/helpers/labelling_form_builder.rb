@@ -11,6 +11,13 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     row_input attribute, :text_area, options
   end
 
+  def moj_date_fieldset attribute, legend, options = {}, explanatory_text = nil
+    df = MojDateFieldset.new(self, attribute, legend, options, explanatory_text)
+    df.emit
+  end
+
+
+
   def date_select_field_set attribute, legend, options={}
     set_class_and_id attribute, options
 
@@ -86,18 +93,18 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     list.join("\n").html_safe
   end
 
-  private
 
-  def check_box_input attribute, options, yes, no
-    html = check_box(attribute, options, yes, no)
-    html.gsub!(/<[^<]*type="hidden"[^>]*>/,'')
-    html.html_safe
+  def set_class_and_id attribute, options
+    options[:class] = css_for(attribute, options)
+    options[:id] = id_for(attribute) unless id_for(attribute).blank?
   end
 
-  def check_box_input_hidden attribute, options, yes, no
-    html = check_box(attribute, options, yes, no)
-    html.gsub!(/.*(<[^<]*type="hidden"[^>]*>).*/, '\1')
-    html.html_safe
+  def label_for attribute, label
+    label ||= attribute.to_s.humanize
+
+    label = %Q|#{label} #{error_span(attribute)}| if error_for? attribute
+
+    label.html_safe
   end
 
   def fieldset_tag(legend = nil, options = {}, &block)
@@ -120,10 +127,22 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     output.safe_concat("</fieldset>")
   end
 
-  def set_class_and_id attribute, options
-    options[:class] = css_for(attribute, options)
-    options[:id] = id_for(attribute) unless id_for(attribute).blank?
+
+
+  private
+
+  def check_box_input attribute, options, yes, no
+    html = check_box(attribute, options, yes, no)
+    html.gsub!(/<[^<]*type="hidden"[^>]*>/,'')
+    html.html_safe
   end
+
+  def check_box_input_hidden attribute, options, yes, no
+    html = check_box(attribute, options, yes, no)
+    html.gsub!(/.*(<[^<]*type="hidden"[^>]*>).*/, '\1')
+    html.html_safe
+  end
+
 
   def radio_button_row attribute, label, choice, virtual_pageview
     input = if virtual_pageview
@@ -182,13 +201,13 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     [ label, value ].join("\n").html_safe
   end
 
-  def label_for attribute, label
-    label ||= attribute.to_s.humanize
+  # def label_for attribute, label
+  #   label ||= attribute.to_s.humanize
 
-    label = %Q|#{label} #{error_span(attribute)}| if error_for? attribute
+  #   label = %Q|#{label} #{error_span(attribute)}| if error_for? attribute
 
-    label.html_safe
-  end
+  #   label.html_safe
+  # end
 
   def max_length attribute
     if validator = validators(attribute).detect{|x| x.is_a?(ActiveModel::Validations::LengthValidator)}
