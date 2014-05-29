@@ -88,6 +88,19 @@ describe Property do
       set_date(notice, '3', '7', '')
       notice.expiry_date.should be_nil
     end
+
+    it 'should not accept a date before 01 Jan 1989' do
+      set_date(notice, '3', '7', '1988')
+      notice.valid?
+      notice.errors[:expiry_date].first.should == 'cannot be before 01 Jan 1989'
+    end
+
+    it 'should not accept a date after today' do
+      date = 2.days.from_now
+      set_date(notice, date.day.to_s, date.month.to_s, date.year.to_s)
+      notice.valid?
+      notice.errors[:expiry_date].first.should == 'cannot be later than current date'
+    end
   
   end
 end

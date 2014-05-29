@@ -102,10 +102,19 @@ class BaseClass
 end
 
 class DateValidator < ActiveModel::Validator
+  @@earliest_possible_date = Date.new(1989, 1, 1)
   def validate(record)
     options[:fields].each do |field|
-      if record.send(field).is_a?(InvalidDate)
+      date = record.send(field)
+      next if date.nil?
+      if date.is_a?(InvalidDate)
         record.errors.add(field, 'is invalid date')
+      elsif date.blank?
+        record.errors.add(field, 'cannot be blank')
+      elsif date < @@earliest_possible_date
+        record.errors.add(field, 'cannot be before 01 Jan 1989')
+      elsif date > Date.today
+        record.errors.add(field, 'cannot be later than current date')
       end
     end
   end
