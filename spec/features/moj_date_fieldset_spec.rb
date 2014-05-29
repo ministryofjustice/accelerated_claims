@@ -108,7 +108,7 @@ feature "moj date fieldset" do
 
     AppModel.new(data).exec do
       homepage.visit
-      homepage.start_claim
+      # homepage.start_claim
       if options[:js]
         claim_form.complete_form_with_javascript
       else
