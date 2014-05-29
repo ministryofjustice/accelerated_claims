@@ -159,19 +159,22 @@ class ClaimForm
     end
   end
 
-  def select_date prefix, key
+  def fill_in_moj_date_fieldset(prefix, key)
     data = get_data(prefix, key)
-    if data
-      d = Date.parse(data)
-      day = d.day
-      month = Date::MONTHNAMES[d.month]
-      year = d.year
 
-      select(  day, :from => "claim_#{prefix}_#{key}_3i")
-      select(month, :from => "claim_#{prefix}_#{key}_2i")
-      select( year, :from => "claim_#{prefix}_#{key}_1i")
+    # data expected as three hyphen separated strings in order year month day
+    if data =~ /^([0-9]{4})-([0-9A-Za-z]{1,9})-([0-9]{1,2})$/
+      day = $3
+      month = $2
+      year = $1
+
+      fill_in("claim_#{prefix}_#{key}_3i", with: day)
+      fill_in("claim_#{prefix}_#{key}_2i", with: month)
+      fill_in("claim_#{prefix}_#{key}_1i", with: year)
     end
   end
+
+
 
   def complete_details_of_person(prefix, options={})
     options = { complete_address: true }.merge(options)
@@ -231,7 +234,7 @@ class ClaimForm
         raise 'Unexpected number of tenancy agreements'
       end
     when 'Demoted'
-      select_date   prefix, 'demotion_order_date'
+      fill_in_moj_date_fieldset prefix, 'demotion_order_date'
       fill_in_text_field prefix, 'demotion_order_court'
       choose_radio  prefix, 'previous_tenancy_type'
     else
@@ -240,13 +243,13 @@ class ClaimForm
   end
 
   def fill_single_tenancy
-    prefix = 'tenancy'
-    select_date prefix, 'start_date'
-    start_date = Date.parse(get_data(prefix, 'start_date'))
+    prefix      = 'tenancy'
+    fill_in_moj_date_fieldset('tenancy', 'start_date')
+    start_date  = Date.parse(get_data(prefix, 'start_date'))
 
     if Tenancy.in_first_rules_period? start_date
       fill_in_text_field prefix, 'assured_shorthold_tenancy_notice_served_by'
-      select_date   prefix, 'assured_shorthold_tenancy_notice_served_date'
+      fill_in_moj_date_fieldset prefix, 'assured_shorthold_tenancy_notice_served_date'
     end
   end
 
@@ -254,13 +257,14 @@ class ClaimForm
     prefix = 'tenancy'
     choose_radio  prefix,'agreement_reissued_for_same_property'
     choose_radio  prefix, 'agreement_reissued_for_same_landlord_and_tenant'
-    select_date   prefix, 'original_assured_shorthold_tenancy_agreement_date'
-    select_date   prefix, 'latest_agreement_date'
+    fill_in_moj_date_fieldset   prefix, 'original_assured_shorthold_tenancy_agreement_date'
+    fill_in_moj_date_fieldset prefix, 'latest_agreement_date'
+
     start_date = Date.parse(get_data(prefix, 'original_assured_shorthold_tenancy_agreement_date'))
 
     if Tenancy.in_first_rules_period? start_date
       fill_in_text_field prefix, 'assured_shorthold_tenancy_notice_served_by'
-      select_date   prefix, 'assured_shorthold_tenancy_notice_served_date'
+      fill_in_moj_date_fieldset prefix, 'assured_shorthold_tenancy_notice_served_date'
     end
   end
 
@@ -268,8 +272,8 @@ class ClaimForm
     prefix = 'notice'
     fill_in_text_field(prefix, 'served_by_name')
     fill_in_text_field(prefix, 'served_method')
-    select_date(prefix, 'date_served')
-    select_date(prefix, 'expiry_date')
+    fill_in_moj_date_fieldset(prefix, 'date_served')
+    fill_in_moj_date_fieldset(prefix, 'expiry_date')
   end
 
   def fill_licences
@@ -288,7 +292,7 @@ class ClaimForm
             raise part
         end
         fill_in_text_field(prefix, 'issued_by')
-        select_date(prefix, 'issued_date')
+        fill_in_moj_date_fieldset prefix, 'issued_date'
       when /No/
       when nil
       else
