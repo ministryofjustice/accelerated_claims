@@ -92,7 +92,7 @@ describe Property do
     it 'should not accept a date before 01 Jan 1989' do
       set_date(notice, '3', '7', '1988')
       notice.valid?
-      notice.errors[:expiry_date].first.should == 'cannot be before 01 Jan 1989'
+      notice.errors[:expiry_date].first.should == 'Incorrect date: you can only use this form with an assured shorthold tenancy (introduced 15 January 1989)'
     end
 
     it 'should not accept a date after today' do
