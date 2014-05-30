@@ -13,21 +13,16 @@ class PageviewTracker
   onFocusOut: (event) ->
     if @value.length > 0
       url = $(this).data('virtual-pageview')
-      event.data.tracker.triggerPageView url
+      event.data.tracker.dispatchPageView url
+      $(this).off 'focusout', @onFocusOut
     return true
 
   onClick: (event) ->
     if @type != 'text'
       url = $(this).data('virtual-pageview')
-      event.data.tracker.triggerPageView url
+      event.data.tracker.dispatchPageView url
+      $(this).off 'click', @onClick
     return true
-
-  triggerPageView: (url) ->
-    newPageview = !(@sentPageviews[url]?) || (!@sentPageviews[url])
-    if newPageview
-      alert(url)
-      @dispatchPageView(url)
-      @sentPageviews[url] = true
 
   dispatchPageView: (url) ->
     ga 'send', 'pageview', url if typeof ga is 'function'

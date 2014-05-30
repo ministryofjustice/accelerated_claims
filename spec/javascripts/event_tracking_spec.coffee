@@ -3,15 +3,14 @@
 //= require event_tracker
 //= require pageview_tracker
 //= require event_tracking
-//= require helpers/with_html
 
 element = null
 
 beforeEach ->
   element = $('<form>' +
     '<a data-event-label="data event label" href="/clicked">Link text</a>' +
-    '<input data-virtual-pageview="/accelerated/notice_section" id="text_input" type="text" />' +
-    '<input data-virtual-pageview="/accelerated/property-section" id="radio_input" type="radio" value="Yes" />' +
+    '<input data-virtual-pageview="/text" id="text_input" type="text" />' +
+    '<input data-virtual-pageview="/radio" id="radio_input" type="radio" value="Yes" />' +
     '</form>')
   $(document.body).append(element)
 
@@ -19,40 +18,36 @@ afterEach ->
   element.remove()
   element = null
 
-describe 'Focusout on "data-virtual-pageview" text input', ->
-  it 'dispatches virtual pageview when input contains text', ->
+describe 'PageviewTracker', ->
+  track = null
+
+  beforeEach ->
     track = new window.PageviewTracker($)
 
-    spyOn track, 'dispatchPageView'
-    input = $('#text_input')
-    input.value = 'something entered'
-    input.focusout()
+  describe '"data-virtual-pageview" non-text input', ->
 
-    setTimeout( (-> expect(track.dispatchPageView).toHaveBeenCalled() ), 0)
+    describe 'on first click', ->
+      it 'dispatches pageview', ->
+        spyOn track, 'dispatchPageView'
+        $('#radio_input').trigger 'click'
 
-describe 'Click on "data-virtual-pageview" non-text input', ->
-  it 'dispatches virtual pageview on first click', ->
-    track = new window.PageviewTracker($)
+        expect(track.dispatchPageView).toHaveBeenCalledWith('/radio')
 
-    spyOn track, 'dispatchPageView'
-    $('#radio_input').trigger 'click'
+    describe 'on second click', ->
+      it 'does not dispatch pageview', ->
+        $('#radio_input').trigger 'click'
+        spyOn track, 'dispatchPageView'
+        $('#radio_input').trigger 'click'
 
-    expect(track.dispatchPageView).toHaveBeenCalled()
+        expect(track.dispatchPageView).not.toHaveBeenCalled()
 
-  it 'does not dispatch virtual pageview on second click', ->
-    track = new window.PageviewTracker($)
-    $('#radio_input').trigger 'click'
-    spyOn track, 'dispatchPageView'
-    $('#radio_input').trigger 'click'
+describe 'EventTracker', ->
+  describe 'click on "data-event-label" element', ->
+    it "dispatches analytics event", ->
+      track = new window.EventTracker($)
 
-    expect(track.dispatchPageView).not.toHaveBeenCalled()
+      spyOn track, 'dispatchTrackingEvent'
+      $('[data-event-label]').trigger 'click'
 
-describe 'Click on "data-event-label" element', ->
-  it "dispatches analytics event", ->
-    track = new window.EventTracker($)
-
-    spyOn track, 'dispatchTrackingEvent'
-    $('[data-event-label]').trigger 'click'
-
-    expect(track.dispatchTrackingEvent).toHaveBeenCalledWith '/clicked', 'Link text', 'data event label'
+      expect(track.dispatchTrackingEvent).toHaveBeenCalledWith '/clicked', 'Link text', 'data event label'
 
