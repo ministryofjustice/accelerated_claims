@@ -87,5 +87,6 @@
   tenancy_demotion_order_date_day: nil,
   tenancy_demotion_order_date_month: nil,
   tenancy_demotion_order_date_year: nil,
-  tenancy_demotion_order_court: nil
+  tenancy_demotion_order_court: nil,
+  copy_number: 3
 }

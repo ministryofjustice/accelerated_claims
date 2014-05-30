@@ -87,5 +87,6 @@
   tenancy_demotion_order_date_day: "01",
   tenancy_demotion_order_date_month: "01",
   tenancy_demotion_order_date_year: "2010",
-  tenancy_demotion_order_court: "Brighton"
+  tenancy_demotion_order_court: "Brighton",
+  copy_number: 4
 }

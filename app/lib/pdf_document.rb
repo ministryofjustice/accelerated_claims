@@ -3,6 +3,7 @@ class PDFDocument
     @json = json
     @flatten = flatten
     remove_backslash_r!
+    add_document_count
   end
 
   def fill
@@ -33,6 +34,9 @@ class PDFDocument
   end
 
   private
+  def add_document_count
+    DocumentCount.new(@json).add
+  end
 
   def remove_backslash_r!
     @json.each do |key, value|
@@ -111,7 +115,7 @@ class PDFDocument
           x = line[:x0]
           y = line[:y]
           x1 = line[:x1]
-          list << { page: 2, x: x, y: y, x1: x1, y1: 0, thickness: 1 }
+          list << { page: 3, x: x, y: y, x1: x1, y1: 0, thickness: 1 }
         end
       end
     end
@@ -120,11 +124,11 @@ class PDFDocument
   def add_previous_tenancy_type_strike_out list
     case @json['tenancy_previous_tenancy_type']
     when Tenancy::ASSURED
-      list << { page: 2, x: 309, y: 557, x1: 37, y1: 0, thickness: 1 }
-      list << { page: 2, x: 488, y: 542, x1: 43, y1: 0, thickness: 1 }
+      list << { page: 3, x: 309, y: 557, x1: 37, y1: 0, thickness: 1 }
+      list << { page: 3, x: 488, y: 542, x1: 43, y1: 0, thickness: 1 }
     when Tenancy::SECURE
-      list << { page: 2, x: 430, y: 542, x1: 55, y1: 0, thickness: 1 }
-      list << { page: 2, x: 266, y: 557, x1: 42, y1: 0, thickness: 1 }
+      list << { page: 3, x: 430, y: 542, x1: 55, y1: 0, thickness: 1 }
+      list << { page: 3, x: 266, y: 557, x1: 42, y1: 0, thickness: 1 }
     else
       # do nothing
     end

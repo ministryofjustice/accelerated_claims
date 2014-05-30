@@ -87,5 +87,6 @@
   tenancy_demotion_order_date_day: "20",
   tenancy_demotion_order_date_month: "04",
   tenancy_demotion_order_date_year: "2013",
-  tenancy_demotion_order_court: "Wolverhampton Combined Court"
+  tenancy_demotion_order_court: "Wolverhampton Combined Court",
+  copy_number: 3
 }
