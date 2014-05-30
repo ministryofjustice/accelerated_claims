@@ -42,6 +42,25 @@ describe 'PageviewTracker', ->
 
         expect(window.dispatchPageView).not.toHaveBeenCalled()
 
+  describe 'focusout on "data-virtual-pageview" text input', ->
+    describe 'when input contains text', ->
+      it 'dispatches virtual pageview', ->
+        spyOn window, 'dispatchPageView'
+        textInput = $('#text_input')
+        textInput.val('something entered')
+        textInput.focusout()
+
+        expect(window.dispatchPageView).toHaveBeenCalled()
+
+    describe 'when input does not contain text', ->
+      it 'does not dispatch virtual pageview', ->
+        spyOn window, 'dispatchPageView'
+        textInput = $('#text_input')
+        textInput.focusout()
+
+        expect(window.dispatchPageView).not.toHaveBeenCalled()
+
+
 describe 'EventTracker', ->
   describe 'click on "data-event-label" element', ->
     it "dispatches analytics event", ->
@@ -77,5 +96,4 @@ describe 'AnalyticsTracking', ->
       spyOn window, 'dispatchTrackingEvent'
       new window.AnalyticsTracking($)
       expect(window.dispatchTrackingEvent).not.toHaveBeenCalled()
-
 
