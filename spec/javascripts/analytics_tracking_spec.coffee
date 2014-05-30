@@ -2,7 +2,7 @@
 //= require jasmine-jquery
 //= require event_tracker
 //= require pageview_tracker
-//= require event_tracking
+//= require analytics_tracking
 
 element = null
 
