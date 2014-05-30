@@ -36,6 +36,7 @@ describe 'PageviewTracker', ->
     describe 'on second click', ->
       it 'does not dispatch pageview', ->
         $('#radio_input').trigger 'click'
+
         spyOn window, 'dispatchPageView'
         $('#radio_input').trigger 'click'
 
@@ -57,3 +58,24 @@ describe 'AnalyticsTracking', ->
       spyOn window, 'dispatchTrackingEvent'
       new window.AnalyticsTracking($)
       expect(window.dispatchTrackingEvent).toHaveBeenCalledWith('/accelerated-possession-eviction', 'View service form', 'View service form')
+
+  describe 'onload of #claimForm with .error-summary', ->
+    it 'does not dispatch event', ->
+      element.remove() # remove form
+      errorForm = $('<form id="claimForm"><div class="error-summary" /></form>')
+      $(document.body).append(errorForm)
+
+      spyOn window, 'dispatchTrackingEvent'
+      new window.AnalyticsTracking($)
+      expect(window.dispatchTrackingEvent).not.toHaveBeenCalled()
+
+  describe 'onload of non-form', ->
+    it 'does not dispatch event', ->
+      element.remove() # remove form
+      $(document.body).append(element)
+
+      spyOn window, 'dispatchTrackingEvent'
+      new window.AnalyticsTracking($)
+      expect(window.dispatchTrackingEvent).not.toHaveBeenCalled()
+
+

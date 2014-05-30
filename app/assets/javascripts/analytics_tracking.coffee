@@ -4,12 +4,14 @@ class AnalyticsTracking
   constructor: ($) ->
     new root.EventTracker( $ )
 
-    if $('#claimForm').length > 0
-      if $('.error-summary').length == 0
-        if !@referrerIsSelf(document.referrer)
-          root.dispatchTrackingEvent('/accelerated-possession-eviction', 'View service form', 'View service form')
+    if @formWithOutErrors( $ )
+      new root.PageviewTracker( $ )
 
-        new root.PageviewTracker( $ )
+      if !@referrerIsSelf(document.referrer)
+        root.dispatchTrackingEvent('/accelerated-possession-eviction', 'View service form', 'View service form')
+
+  formWithOutErrors: ($) ->
+    ( $('#claimForm').length > 0 ) && ( $('.error-summary').length == 0 )
 
   referrerIsSelf: (referrer) ->
     if referrer?
