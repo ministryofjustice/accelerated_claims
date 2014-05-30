@@ -9,7 +9,7 @@ class ConfirmationPage
   end
 
   def is_displayed?
-    page.has_text?('You now need to send the completed form and documents to the court to make your claim')
+    page.has_text?('After you’ve printed the form, complete our satisfaction survey')
   end
 
   def assert_rendered_pdf(expected_data)
@@ -35,7 +35,7 @@ private
   def capybara_download_pdf
     expected_url = remote_test? ? "/accelerated#{@url}" : @url
     expect(Capybara.current_path).to eql expected_url
-    click_link 'View and print completed form'
+    click_link 'View and print the form'
     assert_pdf_content_type(page.response_headers)
 
     write_pdf_to_tempfile page.body
