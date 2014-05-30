@@ -1,6 +1,6 @@
 # A sample Guardfile
 # More info at https://github.com/guard/guard#readme
-
+=begin
 guard :rspec do
   watch(%r{^spec/.+_spec\.rb$})
 
@@ -23,7 +23,7 @@ guard :rspec do
   # Turnip features and steps
   watch(%r{^spec/acceptance/(.+)\.feature$})
   watch(%r{^spec/acceptance/steps/(.+)_steps\.rb$})   { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'spec/acceptance' }
-end
+=end
 
 guard :jasmine, server: :webrick, server_mount: '/specs', server_env: :development do
   watch(%r{spec/javascripts/spec\.(js\.coffee|js|coffee)$}) { 'spec/javascripts' }
