@@ -86,7 +86,7 @@ class BaseClass
       date = begin
                Date.parse( date_string )
              rescue
-               InvalidDate.new
+               InvalidDate.new( date_string )
              end
       send( "#{field}=", date )
     end
@@ -102,14 +102,22 @@ class BaseClass
 end
 
 class DateValidator < ActiveModel::Validator
+  @@earliest_possible_date = Date.new(1989, 1, 15)
   def validate(record)
     options[:fields].each do |field|
-      if record.send(field).is_a?(InvalidDate)
+      date = record.send(field)
+      next if date.nil?
+      if date.is_a?(InvalidDate)
         record.errors.add(field, 'is invalid date')
+      elsif date.blank?
+        record.errors.add(field, 'cannot be blank')
+      elsif date < @@earliest_possible_date
+        record.errors.add(field, 'Incorrect date: you can only use this form with an assured shorthold tenancy (introduced 15 January 1989)')
+      elsif date > Date.today
+        record.errors.add(field, 'cannot be later than current date')
       end
     end
   end
 end
 
-class InvalidDate
-end
+

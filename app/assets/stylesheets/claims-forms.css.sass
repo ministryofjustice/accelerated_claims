@@ -34,8 +34,6 @@ input, [type="text"], [type="password"], button, select, textarea
   padding-left: 40px
 
 
-
-
 [type="text"]
   display: inline-block
   width: 100%
@@ -43,6 +41,15 @@ input, [type="text"], [type="password"], button, select, textarea
   @include media(mobile)
     display: block
     max-width: 280px
+
+  &.moj-date-day
+    max-width: 30px
+
+  &.moj-date-month  
+    max-width: 100px
+
+  &.moj-date-year
+    max-width: 60px
 
   &.pound
     padding-left: 40px
@@ -397,6 +404,8 @@ fieldset.plain
         select
           float: left
           clear: none
+      [type="text"]
+        display: inline-block
 
     .option
       @include clearfix

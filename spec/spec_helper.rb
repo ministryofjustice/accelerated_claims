@@ -42,3 +42,16 @@ RSpec.configure do |config|
   # end
 end
 
+
+
+def diffmerge(actual, expected)
+  home = ENV['HOME']
+  File.open(File.join(home, 'tmp', 'actual.html'), 'w') do |fp|
+    fp.print actual
+  end
+  File.open(File.join(home, 'tmp', 'expected.html'), 'w') do |fp|
+    fp.print expected
+  end
+  puts "**** HTML written to actual.html and expected.html in #{home}/tmp for comparison in diffmerge"
+
+end

@@ -2,8 +2,8 @@ require 'capybara/poltergeist'
 
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app,
-    :phantomjs_options => ['--ignore-ssl-errors=yes'],
-    :phantomjs_logger => open('/dev/null')
+    :phantomjs_options => ['--ignore-ssl-errors=yes']
+    # :phantomjs_logger => open('/dev/null')
   )
 end
 

@@ -41,20 +41,22 @@ moj.Modules.tenancyModule = (function() {
   bindEvents = function() {
     $datepickers.each( function() {
       var $this = $( this );
-      $this.find( 'select' ).on( 'change', function() {
+      $this.find( '[type="text"]' ).on( 'keyup', function() {
         changeDate( $this );
       } );
     } );
 
     $( document ).on( 'change', '[name="claim[tenancy][assured_shorthold_tenancy_type]"]', function() {
-      resetHidden();
+      window.setTimeout( function(){
+        resetHidden();
+      }, 1 );
     } );
   };
 
   changeDate = function( $fs ) {
-    var day = $fs.find( '.day' ).val(),
-        month = $fs.find( '.month' ).val(),
-        year = $fs.find( '.year' ).val();
+    var day = $fs.find( '.moj-date-day' ).val(),
+        month = $fs.find( '.moj-date-month' ).val(),
+        year = $fs.find( '.moj-date-year' ).val();
 
 
     if( day && month && year ) {
@@ -76,6 +78,7 @@ moj.Modules.tenancyModule = (function() {
         visDates = $datepickers.filter( ':visible' ),
         d,
         m,
+        valMonth,
         y,
         x,
         selectedDate = 0,
@@ -83,12 +86,15 @@ moj.Modules.tenancyModule = (function() {
         secondDate = moj.Modules.tools.stringToDate( dates.second );
 
     for( x = 0; x < visDates.length; x++) {
-      d = $( visDates[ x ] ).find( '.day' ).val();
-      m = ( $( visDates[ x ] ).find( '.month' ).val() );
-      y = $( visDates[ x ] ).find( '.year' ).val();
+      d = $( visDates[ x ] ).find( '.moj-date-day' ).val();
+      m = ( $( visDates[ x ] ).find( '.moj-date-month' ).val() );
+      y = $( visDates[ x ] ).find( '.moj-date-year' ).val();
 
-      if( d !== '' && m !== '' && y !== '') {
-        selectedDate = moj.Modules.tools.stringToDate( y + '-' + m + '-' + d );
+      if( d !== '' && m !== '' && y !== '' && moj.Modules.tools.isDate( d, m, y ) ) {
+        valMonth = moj.Modules.tools.validMonth( m );
+        if( valMonth ) {
+          selectedDate = moj.Modules.tools.stringToDate( y + '-' + valMonth + '-' + d );
+        }
       }
 
       if( selectedDate >= firstDate && selectedDate < secondDate ) {
@@ -120,7 +126,7 @@ moj.Modules.tenancyModule = (function() {
   };
 
   resetHidden = function() {
-    $( '.conditional:hidden' ).find( 'select' ).val( '' );
+    $( '.conditional:hidden' ).find( '[type="text"]' ).val( '' );
     checkDates();
   };
 
