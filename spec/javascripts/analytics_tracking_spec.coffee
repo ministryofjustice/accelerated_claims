@@ -8,10 +8,10 @@ element = null
 
 beforeEach ->
   element = $('<form id="claimForm">' +
-    '<a data-event-label="data event label" href="/clicked">Link event text</a>' +
+    '<a data-event-label="data event label" href="/clicked_event">Link event text</a>' +
     '<input data-virtual-pageview="/text" id="text_input" type="text" />' +
     '<input data-virtual-pageview="/radio" id="radio_input" type="radio" value="Yes" />' +
-    '<a data-virtual-pageviewl="/clicked_link" href="/clicked_link">Link pageview text</a>' +
+    '<a data-virtual-pageview="/clicked_pageview" href="/clicked_link">Link pageview text</a>' +
     '</form>')
   $(document.body).append(element)
 
@@ -25,8 +25,15 @@ describe 'PageviewTracker', ->
   beforeEach ->
     track = new window.PageviewTracker($)
 
-  describe '"data-virtual-pageview" non-text input', ->
+  describe '"data-virtual-pageview" anchor link', ->
+    describe 'on first click', ->
+      it 'dispatches pageview', ->
+        spyOn window, 'dispatchPageView'
+        $('#radio_input').trigger 'click'
 
+        expect(window.dispatchPageView).toHaveBeenCalledWith('/clicked_pageview')
+
+  describe '"data-virtual-pageview" non-text input', ->
     describe 'on first click', ->
       it 'dispatches pageview', ->
         spyOn window, 'dispatchPageView'
