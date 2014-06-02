@@ -8,9 +8,10 @@ element = null
 
 beforeEach ->
   element = $('<form id="claimForm">' +
-    '<a data-event-label="data event label" href="/clicked">Link text</a>' +
+    '<a data-event-label="data event label" href="/clicked">Link event text</a>' +
     '<input data-virtual-pageview="/text" id="text_input" type="text" />' +
     '<input data-virtual-pageview="/radio" id="radio_input" type="radio" value="Yes" />' +
+    '<a data-virtual-pageviewl="/clicked_link" href="/clicked_link">Link pageview text</a>' +
     '</form>')
   $(document.body).append(element)
 
@@ -69,7 +70,7 @@ describe 'EventTracker', ->
       spyOn window, 'dispatchTrackingEvent'
       $('[data-event-label]').trigger 'click'
 
-      expect(window.dispatchTrackingEvent).toHaveBeenCalledWith '/clicked', 'Link text', 'data event label'
+      expect(window.dispatchTrackingEvent).toHaveBeenCalledWith(jasmine.any(String), 'Link event text', 'data event label')
 
 describe 'AnalyticsTracking', ->
   describe 'onload of #claimForm', ->
