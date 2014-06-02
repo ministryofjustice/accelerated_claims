@@ -1,7 +1,14 @@
 # A sample Guardfile
 # More info at https://github.com/guard/guard#readme
 
-guard :rspec do
+guard :jasmine, server: :webrick, server_mount: '/specs', server_env: :development do
+  watch(%r{spec/javascripts/spec\.(js\.coffee|js|coffee)$}) { 'spec/javascripts' }
+  watch(%r{spec/javascripts/.+_spec\.(js\.coffee|js|coffee)$})
+  watch(%r{spec/javascripts/fixtures/.+$})
+  watch(%r{app/assets/javascripts/(.+?)\.(js\.coffee|js|coffee)(?:\.\w+)*$}) { |m| "spec/javascripts/#{ m[1] }_spec.#{ m[2] }" }
+end
+
+guard :rspec, all_on_start: true do
   watch(%r{^spec/.+_spec\.rb$})
 
   watch(%r{^spec/models/(.+)_spec\.rb$}) { |m| "spec/models/#{m[1]}_spec.rb" }
@@ -23,12 +30,5 @@ guard :rspec do
   # Turnip features and steps
   watch(%r{^spec/acceptance/(.+)\.feature$})
   watch(%r{^spec/acceptance/steps/(.+)_steps\.rb$})   { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'spec/acceptance' }
-end
-
-guard :jasmine, server: :webrick, server_mount: '/specs', server_env: :development do
-  watch(%r{spec/javascripts/spec\.(js\.coffee|js|coffee)$}) { 'spec/javascripts' }
-  watch(%r{spec/javascripts/.+_spec\.(js\.coffee|js|coffee)$})
-  watch(%r{spec/javascripts/fixtures/.+$})
-  watch(%r{app/assets/javascripts/(.+?)\.(js\.coffee|js|coffee)(?:\.\w+)*$}) { |m| "spec/javascripts/#{ m[1] }_spec.#{ m[2] }" }
 end
 
