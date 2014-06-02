@@ -1,7 +1,12 @@
 %section.confirmation
   .moj-panel
     %h1 Your form is ready to print
-    = link_to 'View and print the form', download_path, class: 'button large chevron pdf-download', target: '_blank', data: { 'event-label' => 'View and print completed form' }
+    = link_to 'View and print the form',
+        download_path,
+        class: 'button large chevron pdf-download',
+        target: '_blank',
+        data: { 'event-label' => 'View and print completed form',
+        'virtual-pageview' => '/accelerated-possession-eviction/download' }
     %p
       After you’ve printed the form, complete our #{link_to 'satisfaction survey', 'https://www.gov.uk/done/accelerated-possession-eviction', :class => 'external', :rel => 'external', :target => '_blank'}.
       %br/
