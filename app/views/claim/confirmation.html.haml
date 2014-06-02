@@ -8,12 +8,13 @@
         data: { 'event-label' => 'View and print completed form',
         'virtual-pageview' => '/accelerated-possession-eviction/download' }
     %p
-      After you’ve printed the form, complete our #{link_to 'satisfaction survey',
+      After you’ve printed the form, complete our
+      = link_to('satisfaction survey',
           'https://www.gov.uk/done/accelerated-possession-eviction',
           class: 'external',
           rel: 'external',
           target: '_blank',
           data: { 'event-label' => 'View GDS done page',
-          'virtual-pageview' => '/done/accelerated-possession-eviction' }.
+          'virtual-pageview' => '/done/accelerated-possession-eviction' }) + '.'
       %br/
       Your feedback helps us improve the service.
