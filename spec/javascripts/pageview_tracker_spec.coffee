@@ -1,3 +1,4 @@
+//= require underscore
 //= require jquery
 //= require jasmine-jquery
 //= require pageview_tracker
@@ -7,11 +8,11 @@ describe 'PageviewTracker', ->
   track = null
 
   beforeEach ->
-    element = $('<form id="claimForm">' +
+    element = $('<body><form id="claimForm">' +
       '<a id="a_link" data-event-label="data event label" data-virtual-pageview="/clicked_pageview" href="/clicked_event">Link event text</a>' +
       '<input data-virtual-pageview="/text" id="text_input" type="text" />' +
       '<input data-virtual-pageview="/radio" id="radio_input" type="radio" value="Yes" />' +
-      '</form>')
+      '</form></body>')
     $(document.body).append(element)
     track = new window.PageviewTracker($)
 
@@ -27,6 +28,14 @@ describe 'PageviewTracker', ->
 
         expect(window.dispatchPageView).toHaveBeenCalledWith('/clicked_pageview')
 
+    describe 'on second click', ->
+      it 'does not dispatch pageview', ->
+        $('#a_link').trigger 'click'
+        spyOn window, 'dispatchPageView'
+        $('#a_link').trigger 'click'
+
+        expect(window.dispatchPageView).not.toHaveBeenCalled()
+
   describe '"data-virtual-pageview" non-text input', ->
     describe 'on first click', ->
       it 'dispatches pageview', ->
@@ -38,7 +47,6 @@ describe 'PageviewTracker', ->
     describe 'on second click', ->
       it 'does not dispatch pageview', ->
         $('#radio_input').trigger 'click'
-
         spyOn window, 'dispatchPageView'
         $('#radio_input').trigger 'click'
 
@@ -53,6 +61,15 @@ describe 'PageviewTracker', ->
         textInput.focusout()
 
         expect(window.dispatchPageView).toHaveBeenCalled()
+
+    describe 'on second focus out', ->
+      it 'does not dispatch virtual pageview', ->
+        textInput = $('#text_input')
+        textInput.val('something entered')
+        textInput.focusout()
+        spyOn window, 'dispatchPageView'
+        textInput.focusout()
+        expect(window.dispatchPageView).not.toHaveBeenCalled()
 
     describe 'when input does not contain text', ->
       it 'does not dispatch virtual pageview', ->
