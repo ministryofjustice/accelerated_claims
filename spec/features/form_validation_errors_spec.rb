@@ -28,6 +28,9 @@ feature 'Filling in claim form' do
     visit '/?anim=false'
     click_button 'Complete form'
 
+    expect(page).to have_content('Question "As the landlord, you’re known as the claimant in this case. How many claimants are there?" not answered')
+
+    sleep(0.3) # otherwise next assertion fails
     check_focus_after_click 'Question "As the landlord, you’re known as the claimant in this case. How many claimants are there?" not answered', 'multiplePanelRadio_claimants_1'
     check_focus_after_click 'Question "Your tenants are known as defendants in this case. How many defendants are there?" not answered', 'multiplePanelRadio_defendants_1'
 
