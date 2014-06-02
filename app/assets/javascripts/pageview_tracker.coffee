@@ -11,22 +11,29 @@ class PageviewTracker
     inputs = $('input[data-virtual-pageview]')
     links = $('a[data-virtual-pageview]')
 
-    textInput.on 'focusout', @onFocusOut
-    inputs.on 'click', @onClick
-    links.on 'click', @onClick
+    @bind textInput, 'focusout', @onFocusOut
+    @bind inputs, 'click', @onClick
+    @bind links, 'click', @onClick
+
+  bind: (elements, event, handler) ->
+    _.each( elements, (element) =>
+      selector = '#' + element.id
+      $('body').on event, selector, handler )
 
   onFocusOut: (event) ->
     if @value.length > 0
       url = $(this).data('virtual-pageview')
       root.dispatchPageView url
-      $(this).off 'focusout', @onFocusOut
+      selector = '#' + this.id
+      $('body').off 'focusout', selector, @onFocusOut
     return true
 
   onClick: (event) ->
     if @type != 'text'
       url = $(this).data('virtual-pageview')
       root.dispatchPageView url
-      $(this).off 'click', @onClick
+      selector = '#' + this.id
+      $('body').off 'click', selector, @onClick
     return true
 
 root.PageviewTracker = PageviewTracker

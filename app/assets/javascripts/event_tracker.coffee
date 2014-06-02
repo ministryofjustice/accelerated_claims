@@ -5,14 +5,20 @@ root.dispatchTrackingEvent = (category, action, label) ->
 
 class EventTracker
   constructor: ($) ->
-    $('[data-event-label]').on 'click', @onClick
+    @bind $('[data-event-label]'), 'click', @onClick
+
+  bind: (elements, event, handler) ->
+    _.each( elements, (element) =>
+      selector = '#' + element.id
+      $('body').on event, selector, handler )
 
   onClick: (event) ->
     category = this['href'].replace(/https?:\/\/[^\/]+/i, '')
     action = this.text
     label = $(this).data('event-label')
     root.dispatchTrackingEvent(category, action, label)
-    $(this).off 'click', @onClick
+    selector = '#' + this.id
+    $('body').off 'click', selector, @onClick
     return true
 
 root.EventTracker = EventTracker
