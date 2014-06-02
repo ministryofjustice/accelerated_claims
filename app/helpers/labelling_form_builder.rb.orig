@@ -135,6 +135,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     html = check_box(attribute, options, yes, no)
     html.gsub!(/<[^<]*type="hidden"[^>]*>/,'')
     html.html_safe
+<<<<<<< HEAD
   end
 
   def check_box_input_hidden attribute, options, yes, no
@@ -143,6 +144,17 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     html.html_safe
   end
 
+
+=======
+  end
+
+  def check_box_input_hidden attribute, options, yes, no
+    html = check_box(attribute, options, yes, no)
+    html.gsub!(/.*(<[^<]*type="hidden"[^>]*>).*/, '\1')
+    html.html_safe
+  end
+
+>>>>>>> 0d7c5902d063f6185f28295d10882304ed92ea13
 
   def radio_button_row attribute, label, choice, virtual_pageview
     input = if virtual_pageview
@@ -205,9 +217,16 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   #   label ||= attribute.to_s.humanize
 
   #   label = %Q|#{label} #{error_span(attribute)}| if error_for? attribute
+<<<<<<< HEAD
 
   #   label.html_safe
   # end
+
+=======
+
+  #   label.html_safe
+  # end
+>>>>>>> 0d7c5902d063f6185f28295d10882304ed92ea13
 
   def max_length attribute
     if validator = validators(attribute).detect{|x| x.is_a?(ActiveModel::Validations::LengthValidator)}
