@@ -8,6 +8,8 @@ require 'capybara/rails'
 require 'capybara/rspec'
 require 'webmock/rspec'
 
+require_relative File.join('..', 'app', 'lib', 'checklist')
+
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 if ENV['BS_USERNAME']
@@ -42,8 +44,6 @@ RSpec.configure do |config|
   # end
 end
 
-
-
 def diffmerge(actual, expected)
   home = ENV['HOME']
   File.open(File.join(home, 'tmp', 'actual.html'), 'w') do |fp|
@@ -53,5 +53,4 @@ def diffmerge(actual, expected)
     fp.print expected
   end
   puts "**** HTML written to actual.html and expected.html in #{home}/tmp for comparison in diffmerge"
-
 end
