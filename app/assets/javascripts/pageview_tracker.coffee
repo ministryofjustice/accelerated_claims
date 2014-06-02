@@ -9,9 +9,11 @@ class PageviewTracker
 
     textInput = $('input[type="text"][data-virtual-pageview]')
     inputs = $('input[data-virtual-pageview]')
+    links = $('a[data-virtual-pageview]')
 
     textInput.on 'focusout', @onFocusOut
     inputs.on 'click', @onClick
+    links.on 'click', @onClick
 
   onFocusOut: (event) ->
     if @value.length > 0
