@@ -11,7 +11,7 @@ beforeEach ->
     '<a data-event-label="data event label" href="/clicked_event">Link event text</a>' +
     '<input data-virtual-pageview="/text" id="text_input" type="text" />' +
     '<input data-virtual-pageview="/radio" id="radio_input" type="radio" value="Yes" />' +
-    '<a data-virtual-pageview="/clicked_pageview" href="/clicked_link">Link pageview text</a>' +
+    '<a data-virtual-pageview="/clicked_pageview" id="a_link" href="/clicked_link">Link pageview text</a>' +
     '</form>')
   $(document.body).append(element)
 
@@ -29,7 +29,7 @@ describe 'PageviewTracker', ->
     describe 'on first click', ->
       it 'dispatches pageview', ->
         spyOn window, 'dispatchPageView'
-        $('#radio_input').trigger 'click'
+        $('#a_link').trigger 'click'
 
         expect(window.dispatchPageView).toHaveBeenCalledWith('/clicked_pageview')
 
