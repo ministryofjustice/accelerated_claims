@@ -134,3 +134,13 @@ env=<env> BS_USERNAME=<username> BS_PASSWORD=<password> bundle exec rake browser
 ## Production deployment
 
 Please remember to set the environment **SECRET_KEY_BASE** variable.
+
+
+## Load Testing
+
+Load testing is done through the tsung-wrapper repo.
+
+Tsung cannot cope with sending back Rails CSRF authenticity tokens, so the server has to be run without CSRF protection for loadtesting.  This is 
+acheived by setting an environment variable CC_NO_CSRF to '1'.  Setting this environment variable in production environment has no effect.
+
+
