@@ -637,9 +637,14 @@ fieldset.plain
     padding-left: 15px
 
 .pdf-download
+<<<<<<< HEAD
   margin: 0 auto 30px
   text-align: center
   display: block
   float: none
   width: 300px
   
+=======
+  margin-bottom: 1em
+  
+>>>>>>> 0d7c5902d063f6185f28295d10882304ed92ea13
