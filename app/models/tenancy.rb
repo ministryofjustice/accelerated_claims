@@ -64,6 +64,7 @@ class Tenancy < BaseClass
 
   with_options if: :demoted_tenancy? do |t|
     t.validates :demotion_order_date, presence: { message: 'must be selected' }
+    t.validates_with DateValidator, fields: [:demotion_order_date]
     t.validates :demotion_order_court, presence: { message: 'must be provided' }, length: { maximum: 40 }
     t.validates :previous_tenancy_type, presence: { message: 'must be selected' }, inclusion: { in: ['assured', 'secure'] }
 
