@@ -143,10 +143,8 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     html.html_safe
   end
 
-<<<<<<< HEAD
-=======
 
->>>>>>> fixes after merge of master
+
   def radio_button_row attribute, label, choice, virtual_pageview
     input = if virtual_pageview
               radio_button(attribute, choice, data: { 'virtual_pageview' => virtual_pageview })
@@ -204,11 +202,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     [ label, value ].join("\n").html_safe
   end
 
-<<<<<<< HEAD
-
-  
-
-=======
   # def label_for attribute, label
   #   label ||= attribute.to_s.humanize
 
@@ -216,7 +209,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
   #   label.html_safe
   # end
->>>>>>> fixes after merge of master
+
 
   def max_length attribute
     if validator = validators(attribute).detect{|x| x.is_a?(ActiveModel::Validations::LengthValidator)}
