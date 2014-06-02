@@ -8,10 +8,9 @@ element = null
 
 beforeEach ->
   element = $('<form id="claimForm">' +
-    '<a data-event-label="data event label" href="/clicked_event">Link event text</a>' +
+    '<a id="a_link" data-event-label="data event label" data-virtual-pageview="/clicked_pageview" href="/clicked_event">Link event text</a>' +
     '<input data-virtual-pageview="/text" id="text_input" type="text" />' +
     '<input data-virtual-pageview="/radio" id="radio_input" type="radio" value="Yes" />' +
-    '<a data-virtual-pageview="/clicked_pageview" id="a_link" href="/clicked_link">Link pageview text</a>' +
     '</form>')
   $(document.body).append(element)
 
