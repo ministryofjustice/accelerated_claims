@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null session instead.
-  if Rails.env.production? || ENV['CC_NO_CSRF'] != '1'
+  if ENV['CC_NO_CSRF'].nil?
     protect_from_forgery with: :exception
   end
 
