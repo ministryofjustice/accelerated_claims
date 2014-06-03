@@ -1,7 +1,5 @@
-require 'checklist/tenancy_checklist'
-require 'checklist/notice_checklist'
-require 'checklist/license_checklist'
-require 'checklist/deposit_checklist'
+@@checklist_names = ['tenancy', 'notice', 'license', 'deposit']
+@@checklist_names.each {|checklist_name| require "checklist/#{checklist_name}_checklist"}
 
 class Checklist
   def initialize(json)
@@ -9,27 +7,9 @@ class Checklist
   end
 
   def add
-    add_tenancy_checklist
-    add_notice_checklist
-    add_license_checklist
-    add_deposit_checklist
-  end
-
-  private
-
-  def add_tenancy_checklist
-    TenancyChecklist.new(@json).add
-  end
-
-  def add_notice_checklist
-    NoticeChecklist.new(@json).add
-  end
-
-  def add_license_checklist
-    LicenseChecklist.new(@json).add
-  end
-
-  def add_deposit_checklist
-    DepositChecklist.new(@json).add
+    @@checklist_names.each do |ch_name|
+      klass = "#{ch_name.capitalize}Checklist".constantize
+      klass.new(@json).add
+    end
   end
 end

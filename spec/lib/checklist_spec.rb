@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 describe Checklist do
   let(:json) { claim_formatted_data }
 
