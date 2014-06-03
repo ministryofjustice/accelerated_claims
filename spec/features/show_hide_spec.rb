@@ -6,13 +6,13 @@ feature 'Show and hide tenancy section' do
   end
 
   scenario 'select assured', js: true do
-    visit '/?anim=false'
+    visit '/'
     choose('claim_tenancy_tenancy_type_assured')
     expect(page).to have_content("How many tenancy agreements have you had with the defendant?")
   end
 
   scenario 'select assured, then demoted', js: true do
-    visit '/?anim=false'
+    visit '/'
     choose('claim_tenancy_tenancy_type_assured')
     choose('claim_tenancy_tenancy_type_demoted')
     expect(page).to_not have_content("How many tenancy agreements have you had with the defendant?")
@@ -20,7 +20,7 @@ feature 'Show and hide tenancy section' do
   end
 
   scenario 'select assured, then demoted, then assured', js: true do
-    visit '/?anim=false'
+    visit '/'
     choose('claim_tenancy_tenancy_type_assured')
     choose('claim_tenancy_tenancy_type_demoted')
     choose('claim_tenancy_tenancy_type_assured')
