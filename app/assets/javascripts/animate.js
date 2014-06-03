@@ -11,7 +11,7 @@ moj.Modules.animate = (function() {
       mouseWithin,
 
       //vars
-      animateFlag = true,
+      animateFlag = false,
       ms = 250,
       mpos = {
         x: 0,
@@ -20,8 +20,8 @@ moj.Modules.animate = (function() {
       ;
 
   init = function() {
-    if( window.location.search && moj.Modules.tools.getQueryVar( 'anim' ).toString() === 'false' ) {
-      animateFlag = false;
+    if( window.location.search && moj.Modules.tools.getQueryVar( 'anim' ).toString() === 'true' ) {
+      animateFlag = true;
     }
 
     if( animateFlag ) {
