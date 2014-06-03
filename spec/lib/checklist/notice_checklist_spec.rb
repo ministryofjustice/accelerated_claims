@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 describe NoticeChecklist do
   describe '#add' do
     let(:json) do
@@ -6,8 +5,8 @@ describe NoticeChecklist do
       data['required_documents'] = ''
       data
     end
-    let(:text) { "• the section 21 notice that you gave to the defendant - marked 'C'
-• proof this notice was given - marked 'C1'" }
+    let(:text) { "* the section 21 notice that you gave to the defendant - marked 'C'
+* proof this notice was given - marked 'C1'\n" }
     let(:notice) { NoticeChecklist.new(json).add['required_documents'] }
 
     it { expect(notice).to eq text }
