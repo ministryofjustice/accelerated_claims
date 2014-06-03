@@ -83,13 +83,7 @@ describe Notice do
 
     it 'should not raise if the expiry date is after the served date' do
       notice.expiry_date = notice.date_served + 10
-      notice.should_not valid
-    end
-
-    it 'should kjkjkj' do
-      notice.expiry_date = nil
-      notice.should_not be_valid
-      notice.errors["expiry_date"].should == ["must be entered"]
+      notice.should be_valid
     end
 
 
