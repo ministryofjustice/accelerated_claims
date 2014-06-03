@@ -53,6 +53,8 @@ module AcceleratedClaims
     # Use 'auto_add_path' for it to add a path link to the new_feedback route
     config.feedback_url = config.relative_url_root + '/feedback/new'
 
+    config.autoload_paths += %W(#{Rails.root}/app/lib/checklist #{Rails.root}/app/lib)
+
     # Enable the asset pipeline
     config.assets.enabled = true
     config.assets.precompile += %w(
