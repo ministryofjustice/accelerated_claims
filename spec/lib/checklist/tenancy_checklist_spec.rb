@@ -6,13 +6,13 @@ describe TenancyChecklist do
 
     describe 'Assured shorthold tenancy' do
       context 'when there is only 1 tenancy agreement' do
-        let(:text) { "• the tenancy agreement marked 'A'\n" }
+        let(:text) { "* the tenancy agreement marked 'A'\n" }
 
         context 'optional section is filled' do
           let(:json) { claim_formatted_data }
 
-          let(:full_text) { text.concat "• the notice stating defendants would have an assured shorthold tenancy agreement (given before they moved in) - marked 'B'
-• proof this notice was given - marked 'B1'"}
+          let(:full_text) { text.concat "* the notice stating defendants would have an assured shorthold tenancy agreement (given before they moved in) - marked 'B'
+* proof this notice was given - marked 'B1'\n"}
 
           it { expect(@documents.should).to eq full_text }
         end
@@ -32,7 +32,7 @@ describe TenancyChecklist do
       end
 
       context 'when there is more than 1 tenancy agreements' do
-        let(:text) { "• the first tenancy agreement marked - 'A'\n• the current tenancy agreement marked - 'A1'\n"}
+        let(:text) { "* the first tenancy agreement marked - 'A'\n* the current tenancy agreement marked - 'A1'\n"}
         let(:json) do
           data = claim_formatted_data
           data['tenancy_previous_tenancy_type'] = 'assured'
@@ -40,8 +40,8 @@ describe TenancyChecklist do
         end
 
         context 'optional section is filled' do
-          let(:full_text) { text.concat "• the notice stating defendants would have an assured shorthold tenancy agreement (given before they moved in) - marked 'B'
-• proof this notice was given - marked 'B1'"}
+          let(:full_text) { text.concat "* the notice stating defendants would have an assured shorthold tenancy agreement (given before they moved in) - marked 'B'
+* proof this notice was given - marked 'B1'\n"}
 
           it { expect(@documents.should).to eq full_text }
         end
@@ -56,7 +56,7 @@ describe TenancyChecklist do
             data['tenancy_assured_shorthold_tenancy_notice_served_date_year'] = ''
             data
           end
-          let(:foo) { "• the first tenancy agreement marked - 'A'\n• the current tenancy agreement marked - 'A1'\n" }
+          let(:foo) { "* the first tenancy agreement marked - 'A'\n* the current tenancy agreement marked - 'A1'\n" }
 
           it { expect(@documents.should).to eq text }
         end
@@ -70,7 +70,7 @@ describe TenancyChecklist do
         data['tenancy_demoted_tenancy'] = 'Yes'
         data
       end
-      let(:text) { "• the most recent tenancy agreement - marked 'A'\n• the demotion order - marked 'B'" }
+      let(:text) { "* the most recent tenancy agreement - marked 'A'\n* the demotion order - marked 'B'\n" }
 
       it 'should have the appropriate text' do
         @documents.should eq text
