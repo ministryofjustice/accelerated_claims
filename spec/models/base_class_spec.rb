@@ -49,6 +49,11 @@ describe Property do
       notice.expiry_date.should == Date.new(2012, 2, 29)
     end
 
+    it 'should accept 2-digit year 23 march 14' do
+      set_date(notice, '23', 'march', '14')
+      notice.expiry_date.should == Date.new(2014, 3, 23)
+    end
+
     it "should not accept 29 02 2014 - which is an invalid day number for Feb" do
       set_date(notice, '29', '02', '2014')
       notice.expiry_date.should be_instance_of(InvalidDate)
@@ -77,6 +82,11 @@ describe Property do
     it 'should not accept missing day' do  
       set_date(notice, '', '15', '2014')
       notice.expiry_date.should be_nil
+    end
+
+    it 'should accept numeric values in the hash' do
+      set_date(notice, 23, 5, 2014)
+      notice.expiry_date.should == Date.new(2014, 5, 23)
     end
 
     it 'should not accept missing month' do
