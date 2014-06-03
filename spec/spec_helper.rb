@@ -8,8 +8,6 @@ require 'capybara/rails'
 require 'capybara/rspec'
 require 'webmock/rspec'
 
-require_relative File.join('..', 'app', 'lib', 'checklist')
-
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 if ENV['BS_USERNAME']
