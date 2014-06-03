@@ -68,4 +68,25 @@ describe Notice do
     end
   end
 
+  context 'date_validation' do
+    it 'should raise if the expiry date is same as served date' do
+      notice.expiry_date = notice.date_served
+      notice.should_not be_valid
+      notice.errors["expiry_date"].should == ["must be later than the Date Notice Served "]
+    end
+
+    it 'should raise if the expiry date is before the served date' do
+      notice.expiry_date = notice.date_served - 10
+      notice.should_not be_valid
+      notice.errors["expiry_date"].should == ["must be later than the Date Notice Served "]
+    end
+
+    it 'should not raise if the expiry date is after the served date' do
+      notice.expiry_date = notice.date_served + 10
+      notice.should be_valid
+    end
+
+
+  end
+
 end
