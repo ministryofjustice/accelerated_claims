@@ -23,15 +23,15 @@ class TenancyChecklist
   end
 
   def multiple_assured_tenancies_text
-    @checklist = "* the first tenancy agreement marked - 'A'\n* the current tenancy agreement marked - 'A1'\n"
+    @checklist = "* the first tenancy agreement marked - 'A'\n* the current tenancy agreement marked - 'A1'\n\n"
   end
 
   def single_assured_tenancy_text
-    @checklist = "* the tenancy agreement marked 'A'\n"
+    @checklist = "* the tenancy agreement marked 'A'\n\n"
   end
 
   def demoted_tenancy_text
-    @checklist = "* the most recent tenancy agreement - marked 'A'\n* the demotion order - marked 'B'\n"
+    @checklist = "* the most recent tenancy agreement - marked 'A'\n* the demotion order - marked 'B'\n\n"
   end
 
   def optional_tenancy_section
@@ -46,6 +46,6 @@ class TenancyChecklist
 
   def optional_text
     @checklist.concat "* the notice stating defendants would have an assured shorthold tenancy agreement (given before they moved in) - marked 'B'
-* proof this notice was given - marked 'B1'\n"
+* proof this notice was given - marked 'B1'\n\n"
   end
 end
