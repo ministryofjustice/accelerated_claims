@@ -37,3 +37,19 @@ describe 'AnalyticsTracking', ->
       expect(window.dispatchTrackingEvent).not.toHaveBeenCalled()
       element.remove()
 
+  describe 'onload of form with .error-link', ->
+
+    it 'dispatches event per error', ->
+      element = $('<form id="claimForm">' +
+        '<a class="error-link" data-id="#claimants" href="#claimants">Question "As the landlord, you’re known as the claimant in this case. How many claimants are there?" not answered</a>' +
+        '<a class="error-link" data-id="#claim_property_street_error" href="#claim_property_street_error">Street must be entered</a>' +
+        '</form>')
+      $(document.body).append(element)
+
+      spyOn window, 'dispatchTrackingEvent'
+      new window.AnalyticsTracking($)
+      expect(window.dispatchTrackingEvent).toHaveBeenCalledWith('/accelerated/claimants_error', 'Accelerated form error', 'Question "As the landlord, you’re known as the claimant in this case. How many claimants are there?" not answered')
+      expect(window.dispatchTrackingEvent).toHaveBeenCalledWith('/accelerated/claim_property_street_error', 'Accelerated form error', 'Street must be entered')
+
+      element.remove()
+
