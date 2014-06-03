@@ -5,6 +5,9 @@ class BaseClass
 
   after_validation :remove_not_included_in_list_error
 
+
+  @@valid_month_names = %w{ january jan february feb march mar april apr may june jun july jul august aug september sep october oct november nov december dec }
+
   def attributes
     instance_values
   end
@@ -79,15 +82,21 @@ class BaseClass
     values = value.sort_by {|a| a[:part] }.collect {|a| a[:value] }
 
     if values.all?(&:present?)
-      p1 = values[0]
-      p2 = ( values[1].size() > 0 ? ( values[1].size() == 1 ? "0#{values[1]}" : values[1] ) : "01" )
-      p3 = ( values[2].size() > 0 ? ( values[2].size() == 1 ? "0#{values[2]}" : values[2] ) : "01" )
-      date_string = [ p1, p2, p3 ].join( "-" )
-      date = begin
-               Date.parse( date_string )
-             rescue
-               InvalidDate.new( date_string )
-             end
+      day         = value[0][:value]
+      month       = value[1][:value]
+      year        = value[2][:value]
+      date_string = [day, month, year].join('-')
+
+      # This to cater for the fact that Date.parse will parse any invalid month name to june (Date.parse('23-xxxx-2014') => #<Date: 2014-06-15 ((2456824j,0s,0n),+0s,2299161j)>)
+      if !month.is_a?(Fixnum) && month !~ /^[0-9]{1,2}$/  && !@@valid_month_names.include?(month.downcase) 
+        date = InvalidDate.new( date_string )
+      else
+        date = begin
+                 Date.parse( date_string )
+               rescue
+                 InvalidDate.new( date_string )
+               end
+      end
       send( "#{field}=", date )
     end
   end
