@@ -37,7 +37,7 @@ class PDFDocument
   private
 
   def add_list_of_required_documents
-    # TODO: Invoke Checklist.new(@json).add here
+    Checklist.new(@json).add
   end
 
   def add_document_count
