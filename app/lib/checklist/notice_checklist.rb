@@ -12,7 +12,7 @@ class NoticeChecklist
 
   def add_notice
     checklist = "* the section 21 notice that you gave to the defendant - marked 'C'
-* proof this notice was given - marked 'C1'\n"
+* proof this notice was given - marked 'C1'\n\n"
     @json['required_documents'] = @json['required_documents'].concat checklist
   end
 end

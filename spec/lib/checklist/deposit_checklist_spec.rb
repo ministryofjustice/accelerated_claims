@@ -9,7 +9,7 @@ describe DepositChecklist do
       data
     end
     let(:deposit) { DepositChecklist.new(json).add['required_documents'] }
-    let(:text) { "The tenancy deposit scheme certificate - marked 'F'\n" }
+    let(:text) { "* The tenancy deposit scheme certificate - marked 'F'\n\n" }
 
     context 'when money deposit is given' do
       it { expect(deposit).to eq text }
