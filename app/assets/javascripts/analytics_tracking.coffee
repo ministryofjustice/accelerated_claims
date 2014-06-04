@@ -19,7 +19,6 @@ class AnalyticsTracking
   dispatchValidationErrorEvent: (element) ->
     category = '/accelerated-possession-eviction/' + $(element).data('id')
     category += '_error' unless category.match(/_error$/)
-
     root.dispatchTrackingEvent(category, 'Accelerated form error', $(element).text() )
 
   formWithOutErrors: ($) ->
