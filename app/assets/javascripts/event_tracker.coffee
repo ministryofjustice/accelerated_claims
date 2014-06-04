@@ -8,9 +8,9 @@ class EventTracker
     @bind $('[data-event-label]'), 'click', @onClick
 
   bind: (elements, event, handler) ->
-    _.each( elements, (element) =>
+    _.each elements, (element) =>
       selector = '#' + element.id
-      $('body').on event, selector, handler )
+      $('body').on event, selector, handler
 
   unbind: (element) ->
     selector = '#' + element.id
