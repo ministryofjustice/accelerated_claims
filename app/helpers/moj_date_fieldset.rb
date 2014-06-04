@@ -62,17 +62,10 @@ class MojDateFieldset
                                 name: "claim[#{obj_name}][#{@attribute}(1i)]",   
                                 class: 'moj-date-year'
                               }
-
-
-
-
-        day       = date_form.text_field(:day, default_day_options.merge(@passed_in_day_options))              
-        month     = date_form.text_field(:long_monthname, default_month_options.merge(@passed_in_month_options)) 
-        year      = date_form.text_field(:year, default_year_options.merge(@passed_in_year_options))   
         
-        html  = div_and_label_for(:day, default_day_options.merge(@passed_in_day_options)) +
-                div_and_label_for(:long_monthname, default_day_options.merge(@passed_in_day_options)) +
-                div_and_label_for(:year, default_day_options.merge(@passed_in_day_options))
+        html  = div_and_label_for(date_form, :day, default_day_options.merge(@passed_in_day_options)) +
+                div_and_label_for(date_form, :long_monthname, default_month_options.merge(@passed_in_month_options)) +
+                div_and_label_for(date_form, :year, default_year_options.merge(@passed_in_year_options))
         html.html_safe
       end
     end
@@ -81,14 +74,24 @@ class MojDateFieldset
   private
 
 
-  def div_and_label_for(attribute, options)
-    %Q[
+  def div_and_label_for(form, attribute, options)
+    html = %Q[
       <div class="#{@@div_classes[attribute]}">
         <label for="#{options[:id]}">#{@@div_labels[attribute]}</label>
-        #{date_form.text_field(:day, default_day_options.merge(@passed_in_day_options)) }
+        #{form.text_field(attribute, options) }
       </div>
-    ].gsub("\n", "").squeeze(" ")
+    ]
+    squash(html)
   end
+
+  def squash(str)
+    str.gsub!("\n", "")
+    str.gsub!(/\s+/," ")
+    str.gsub!(" <", "<")
+    str.gsub!("> ", ">")
+    str
+  end
+
 
 
   def embed_explanatiory_text(legend, text)
