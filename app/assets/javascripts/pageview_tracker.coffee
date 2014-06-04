@@ -13,18 +13,24 @@ class PageviewTracker
 
     @bind textInput, 'focusout', @onFocusOut
     @bind inputs, 'click', @onClick
+
+    $(document).on 'click', '#multiplePanelRadio_claimants_1', @onClick
+    $(document).on 'click', '#multiplePanelRadio_claimants_2', @onClick
+    $(document).on 'click', '#multiplePanelRadio_defendants_1', @onClick
+    $(document).on 'click', '#multiplePanelRadio_defendants_2', @onClick
+
     @bind links, 'click', @onClick
 
   bind: (elements, event, handler) ->
     _.each elements, (element) =>
       selector = '#' + element.id
-      $('body').on event, selector, handler
+      $(document).on event, selector, handler
 
   unbind: (url, event, handler) ->
     items = $('[data-virtual-pageview="' + url + '"]')
     _.each items, (item) ->
       selector = '#' + item.id
-      $('body').off event, selector, handler
+      $(document).off event, selector, handler
 
   onFocusOut: (event) =>
     element = event.currentTarget
