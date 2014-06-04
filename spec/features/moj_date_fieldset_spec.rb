@@ -18,6 +18,7 @@ feature "moj date fieldset" do
     it 'should emit plain vanilla html when no options given' do
       mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', {} )
       html = mdf.emit
+      diffmerge html, expected_vanilla_moj_date_fieldset
       html.should == expected_vanilla_moj_date_fieldset
     end
 
@@ -83,26 +84,33 @@ feature "moj date fieldset" do
   <span class="legend" id="_0123456789abcdef">
     Date Notice Served<span class="hint block">eg&nbsp;&nbsp;#{Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')}</span>
   </span>
-  <input  class="moj-date-day" 
-          id="claim_notice_date_served_3i" 
-          maxlength="2" 
-          name="claim[notice][date_served(3i)]" 
-          size="2" 
-          type="text" />
-  &nbsp;
-  <input  class="moj-date-month" 
-          id="claim_notice_date_served_2i" 
-          maxlength="9" 
-          name="claim[notice][date_served(2i)]" 
-          size="9" 
-          type="text" />
-  &nbsp
-  <input  class="moj-date-year" 
+  <div class="moj-date-day-div">
+    <label for="claim_notice_date_served_3i">Day</label>
+    <input  class="moj-date-day" 
+            id="claim_notice_date_served_3i" 
+            maxlength="2" 
+            name="claim[notice][date_served(3i)]" 
+            size="2" 
+            type="text" />
+  </div>
+  <div class="moj-date-month-div">
+    <label for="claim_notice_date_served_3i">Month</label>
+    <input  class="moj-date-month" 
+            id="claim_notice_date_served_2i" 
+            maxlength="9" 
+            name="claim[notice][date_served(2i)]" 
+            size="9" 
+            type="text" />
+  </div>
+  <div class="moj-date-year-div">
+    <label for="claim_notice_date_served_3i">Year</label>
+    <input  class="moj-date-year" 
           id="claim_notice_date_served_1i" 
           maxlength="4" 
           name="claim[notice][date_served(1i)]" 
           size="4" 
           type="text" />
+  </div>
 </fieldset>
 EOHTML
   squash(str)
