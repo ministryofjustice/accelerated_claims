@@ -12,6 +12,7 @@ describe 'PageviewTracker', ->
       '<a id="a_link" data-event-label="data event label" data-virtual-pageview="/clicked_pageview" href="/clicked_event">Link event text</a>' +
       '<input data-virtual-pageview="/text" id="text_input" type="text" />' +
       '<input data-virtual-pageview="/radio" id="radio_input" type="radio" value="Yes" />' +
+      '<input data-virtual-pageview="/radio" id="radio_input_no" type="radio" value="No" />' +
       '</form></body>')
     $(document.body).append(element)
     track = new window.PageviewTracker($)
@@ -49,6 +50,14 @@ describe 'PageviewTracker', ->
         $('#radio_input').trigger 'click'
         spyOn window, 'dispatchPageView'
         $('#radio_input').trigger 'click'
+
+        expect(window.dispatchPageView).not.toHaveBeenCalled()
+
+    describe 'on click two inputs with same pageview path', ->
+      it 'does not dispatch pageview', ->
+        $('#radio_input').trigger 'click'
+        spyOn window, 'dispatchPageView'
+        $('#radio_input_no').trigger 'click'
 
         expect(window.dispatchPageView).not.toHaveBeenCalled()
 
