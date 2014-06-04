@@ -1,7 +1,7 @@
 root = exports ? this
 
 root.dispatchPageView = (url) ->
-    ga 'send', 'pageview', url if typeof ga is 'function'
+  ga 'send', 'pageview', url if typeof ga is 'function'
 
 class PageviewTracker
   constructor: ($) ->
