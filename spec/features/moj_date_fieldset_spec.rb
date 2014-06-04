@@ -83,26 +83,33 @@ feature "moj date fieldset" do
   <span class="legend" id="_0123456789abcdef">
     Date Notice Served<span class="hint block">eg&nbsp;&nbsp;#{Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')}</span>
   </span>
-  <input  class="moj-date-day" 
-          id="claim_notice_date_served_3i" 
-          maxlength="2" 
-          name="claim[notice][date_served(3i)]" 
-          size="2" 
-          type="text" />
-  &nbsp;
-  <input  class="moj-date-month" 
-          id="claim_notice_date_served_2i" 
-          maxlength="9" 
-          name="claim[notice][date_served(2i)]" 
-          size="9" 
-          type="text" />
-  &nbsp
-  <input  class="moj-date-year" 
+  <div class="moj-date-day-div">
+    <label for="claim_notice_date_served_3i">Day</label>
+    <input  class="moj-date-day" 
+            id="claim_notice_date_served_3i" 
+            maxlength="2" 
+            name="claim[notice][date_served(3i)]" 
+            size="2" 
+            type="text" />
+  </div>
+  <div class="moj-date-month-div">
+    <label for="claim_notice_date_served_2i">Month</label>
+    <input  class="moj-date-month" 
+            id="claim_notice_date_served_2i" 
+            maxlength="9" 
+            name="claim[notice][date_served(2i)]" 
+            size="9" 
+            type="text" />
+  </div>
+  <div class="moj-date-year-div">
+    <label for="claim_notice_date_served_1i">Year</label>
+    <input  class="moj-date-year" 
           id="claim_notice_date_served_1i" 
           maxlength="4" 
           name="claim[notice][date_served(1i)]" 
           size="4" 
           type="text" />
+  </div>
 </fieldset>
 EOHTML
   squash(str)
@@ -115,26 +122,33 @@ def html_with_fieldset_classes
   <span class="legend" id="_0123456789abcdef">
     Date Notice Served<span class="hint block">eg&nbsp;&nbsp;#{Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')}</span>
   </span>
-  <input  class="moj-date-day" 
-          id="claim_notice_date_served_3i" 
-          maxlength="2" 
-          name="claim[notice][date_served(3i)]" 
-          size="2" 
-          type="text" />
-  &nbsp;
-  <input  class="moj-date-month" 
-          id="claim_notice_date_served_2i" 
-          maxlength="9" 
-          name="claim[notice][date_served(2i)]" 
-          size="9" 
-          type="text" />
-  &nbsp
-  <input  class="moj-date-year" 
-          id="claim_notice_date_served_1i" 
-          maxlength="4" 
-          name="claim[notice][date_served(1i)]" 
-          size="4" 
-          type="text" />
+  <div class="moj-date-day-div">
+    <label for="claim_notice_date_served_3i">Day</label>
+    <input  class="moj-date-day" 
+            id="claim_notice_date_served_3i" 
+            maxlength="2" 
+            name="claim[notice][date_served(3i)]" 
+            size="2" 
+            type="text" />
+  </div>
+  <div class="moj-date-month-div">
+    <label for="claim_notice_date_served_2i">Month</label>
+    <input  class="moj-date-month" 
+            id="claim_notice_date_served_2i" 
+            maxlength="9" 
+            name="claim[notice][date_served(2i)]" 
+            size="9" 
+            type="text" />
+  </div>
+  <div class="moj-date-year-div">
+    <label for="claim_notice_date_served_1i">Year</label>
+    <input  class="moj-date-year" 
+            id="claim_notice_date_served_1i" 
+            maxlength="4" 
+            name="claim[notice][date_served(1i)]" 
+            size="4" 
+            type="text" />
+  </div>
 </fieldset>
 EOHTML
   squash(str)
@@ -147,26 +161,33 @@ def html_with_fieldset_classes_and_id
   <span class="legend" id="claim_notice_date_served_error">
     Date Notice Served<span class="hint block">eg&nbsp;&nbsp;#{Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')}</span>
   </span>
-  <input  class="moj-date-day" 
-          id="claim_notice_date_served_3i" 
-          maxlength="2" 
-          name="claim[notice][date_served(3i)]" 
-          size="2" 
-          type="text" />
-  &nbsp;
-  <input  class="moj-date-month" 
-          id="claim_notice_date_served_2i" 
-          maxlength="9" 
-          name="claim[notice][date_served(2i)]" 
-          size="9" 
-          type="text" />
-  &nbsp
-  <input  class="moj-date-year" 
-          id="claim_notice_date_served_1i" 
-          maxlength="4" 
-          name="claim[notice][date_served(1i)]" 
-          size="4" 
-          type="text" />
+  <div class="moj-date-day-div">
+    <label for="claim_notice_date_served_3i">Day</label>
+    <input  class="moj-date-day" 
+            id="claim_notice_date_served_3i" 
+            maxlength="2" 
+            name="claim[notice][date_served(3i)]" 
+            size="2" 
+            type="text" />
+  </div>
+  <div class="moj-date-month-div">
+    <label for="claim_notice_date_served_2i">Month</label>
+    <input  class="moj-date-month" 
+            id="claim_notice_date_served_2i" 
+            maxlength="9" 
+            name="claim[notice][date_served(2i)]" 
+            size="9" 
+            type="text" />
+  </div>
+  <div class="moj-date-year-div">
+    <label for="claim_notice_date_served_1i">Year</label>
+    <input  class="moj-date-year" 
+            id="claim_notice_date_served_1i" 
+            maxlength="4" 
+            name="claim[notice][date_served(1i)]" 
+            size="4" 
+            type="text" />
+  </div>
 </fieldset>
 EOHTML
   squash(str)
@@ -179,26 +200,33 @@ def html_with_day_month_year_classes
   <span class="legend" id="xxxxx">
     Date Notice Served<span class="hint block">eg&nbsp;&nbsp;#{Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')}</span>
   </span>
+  <div class="moj-date-day-div">
+    <label for="claim_notice_date_served_3i">Day</label>
   <input  class="my-special-day mydate" 
           id="claim_notice_date_served_3i" 
           maxlength="2" 
           name="claim[notice][date_served(3i)]" 
           size="2" 
           type="text" />
-  &nbsp;
-  <input  class="my-special-month mydate" 
-          id="claim_notice_date_served_2i" 
-          maxlength="9" 
-          name="claim[notice][date_served(2i)]" 
-          size="9" 
-          type="text" />
-  &nbsp
-  <input  class="my-special-year mydate" 
+  </div>
+  <div class="moj-date-month-div">
+    <label for="claim_notice_date_served_2i">Month</label>
+    <input  class="my-special-month mydate" 
+            id="claim_notice_date_served_2i" 
+            maxlength="9" 
+            name="claim[notice][date_served(2i)]" 
+            size="9" 
+            type="text" />
+  </div>
+  <div class="moj-date-year-div">
+    <label for="claim_notice_date_served_1i">Year</label>
+    <input  class="my-special-year mydate" 
           id="claim_notice_date_served_1i" 
           maxlength="4" 
           name="claim[notice][date_served(1i)]" 
           size="4" 
           type="text" />
+  </div>
 </fieldset>
 EOHTML
   squash(str)
@@ -211,28 +239,35 @@ def html_with_other_options
   <span class="legend" id="_0123456789abcdef">
     Date Notice Served<span class="hint block">eg&nbsp;&nbsp;#{Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')}</span>
   </span>
-  <input  class="my-special-day mydate" 
-          id="claim_notice_date_served_3i" 
-          maxlength="2" 
-          name="claim[notice][date_served(3i)]" 
-          placeholder="dd" 
-          size="2" 
-          type="text" />
-  &nbsp;
-  <input  class="my-special-month mydate" 
-          id="claim_notice_date_served_2i" 
-          maxlength="9" 
-          name="claim[notice][date_served(2i)]" 
-          placeholder="month" 
-          size="9" 
-          type="text" />
-  &nbsp
-  <input  class="my-special-year mydate" 
-          id="claim_notice_date_served_1i" 
-          maxlength="4" 
-          name="claim[notice][date_served(1i)]" 
-          size="4" 
-          type="text" />
+  <div class="moj-date-day-div">
+    <label for="claim_notice_date_served_3i">Day</label>
+    <input  class="my-special-day mydate" 
+            id="claim_notice_date_served_3i" 
+            maxlength="2" 
+            name="claim[notice][date_served(3i)]" 
+            placeholder="dd" 
+            size="2" 
+            type="text" />
+  </div>
+  <div class="moj-date-month-div">
+    <label for="claim_notice_date_served_2i">Month</label>
+    <input  class="my-special-month mydate" 
+            id="claim_notice_date_served_2i" 
+            maxlength="9" 
+            name="claim[notice][date_served(2i)]" 
+            placeholder="month" 
+            size="9" 
+            type="text" />
+  </div>
+  <div class="moj-date-year-div">
+    <label for="claim_notice_date_served_1i">Year</label>
+    <input  class="my-special-year mydate" 
+            id="claim_notice_date_served_1i" 
+            maxlength="4" 
+            name="claim[notice][date_served(1i)]" 
+            size="4" 
+            type="text" />
+  </div>
 </fieldset>
 EOHTML
   squash(str)
