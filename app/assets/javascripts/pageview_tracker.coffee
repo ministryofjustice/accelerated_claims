@@ -1,7 +1,7 @@
 root = exports ? this
 
 root.dispatchPageView = (url) ->
-    ga 'send', 'pageview', url if typeof ga is 'function'
+  ga 'send', 'pageview', url if typeof ga is 'function'
 
 class PageviewTracker
   constructor: ($) ->
@@ -13,27 +13,40 @@ class PageviewTracker
 
     @bind textInput, 'focusout', @onFocusOut
     @bind inputs, 'click', @onClick
+
+    $(document).on 'click', '#multiplePanelRadio_claimants_1', @onClick
+    $(document).on 'click', '#multiplePanelRadio_claimants_2', @onClick
+    $(document).on 'click', '#multiplePanelRadio_defendants_1', @onClick
+    $(document).on 'click', '#multiplePanelRadio_defendants_2', @onClick
+
     @bind links, 'click', @onClick
 
   bind: (elements, event, handler) ->
-    _.each( elements, (element) =>
+    _.each elements, (element) =>
       selector = '#' + element.id
-      $('body').on event, selector, handler )
+      $(document).on event, selector, handler
 
-  onFocusOut: (event) ->
-    if @value.length > 0
-      url = $(this).data('virtual-pageview')
+  unbind: (url, event, handler) ->
+    items = $('[data-virtual-pageview="' + url + '"]')
+    _.each items, (item) ->
+      selector = '#' + item.id
+      $(document).off event, selector, handler
+
+  onFocusOut: (event) =>
+    element = event.currentTarget
+    if element.value.length > 0
+      element = event.currentTarget
+      url = $(element).data('virtual-pageview')
       root.dispatchPageView url
-      selector = '#' + this.id
-      $('body').off 'focusout', selector, @onFocusOut
+      @unbind url, 'focusout', @onFocusOut
     return true
 
-  onClick: (event) ->
-    if @type != 'text'
-      url = $(this).data('virtual-pageview')
+  onClick: (event) =>
+    element = event.currentTarget
+    if element.type != 'text'
+      url = $(element).data('virtual-pageview')
       root.dispatchPageView url
-      selector = '#' + this.id
-      $('body').off 'click', selector, @onClick
+      @unbind url, 'click', @onClick
     return true
 
 root.PageviewTracker = PageviewTracker
