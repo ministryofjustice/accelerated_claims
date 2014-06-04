@@ -17,6 +17,8 @@ describe LicenseChecklist do
 
     context 'with HMO license' do
       context 'when section 2 is choosen' do
+        before { json['license_part3'] = 'No' }
+
         it { expect(license).to eq section2 }
       end
 
@@ -28,17 +30,17 @@ describe LicenseChecklist do
 
       context 'when all other options are left blank' do
         before do
-          json['license_multiple_occupation'] = 'No'
+          json['license_multiple_occupation'] = 'Yes'
           json['license_part2_authority']= ''
           json['license_part2_day']= ''
           json['license_part2_month']= ''
           json['license_part2_year']= ''
           json['license_part_year']= ''
-          json['part3'] = ''
-          json['part3_authority'] = ''
-          json['part3_day'] = ''
-          json['part3_month'] = ''
-          json['part3_year'] = ''
+          json['license_part3'] = ''
+          json['license_part3_authority'] = ''
+          json['license_part3_day'] = ''
+          json['license_part3_month'] = ''
+          json['license_part3_year'] = ''
         end
 
         it { expect(license).to eq both_sections }
@@ -46,7 +48,19 @@ describe LicenseChecklist do
     end
 
     context 'without HMO license' do
-      before { json['license_multiple_occupation'] = 'No' }
+      before do
+          json['license_multiple_occupation'] = 'No'
+          json['license_part2_authority']= ''
+          json['license_part2_day']= ''
+          json['license_part2_month']= ''
+          json['license_part2_year']= ''
+          json['license_part_year']= ''
+          json['license_part3'] = ''
+          json['license_part3_authority'] = ''
+          json['license_part3_day'] = ''
+          json['license_part3_month'] = ''
+          json['license_part3_year'] = ''
+        end
 
       it { expect(license).to be_blank }
     end

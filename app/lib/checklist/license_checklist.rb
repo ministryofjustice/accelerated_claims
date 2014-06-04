@@ -12,9 +12,14 @@ class LicenseChecklist
 
   def add_license_text
     if @json['license_multiple_occupation'] == 'Yes'
-      (@json['license_part3'] == 'Yes') ? myappend(part3_text) : myappend(part2_text)
-    else
-      full_text if other_options_blank?
+      case @json['license_part3']
+      when 'Yes'
+        myappend(part3_text)
+      when 'No'
+        myappend(part2_text)
+      else
+        full_text if other_options_blank?
+      end
     end
   end
 
