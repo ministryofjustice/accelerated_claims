@@ -8,10 +8,24 @@ class AnalyticsTracking
       new root.PageviewTracker( $ )
 
       if !@referrerIsSelf(document.referrer)
-        root.dispatchTrackingEvent('/accelerated-possession-eviction', 'View service form', 'View service form')
+        @dispatchViewFormEvent()
+
+    if @formWithErrors( $ )
+      _.each $('.error-link'), @dispatchValidationErrorEvent
+
+  dispatchViewFormEvent: () ->
+    root.dispatchTrackingEvent('/accelerated-possession-eviction', 'View service form', 'View service form')
+
+  dispatchValidationErrorEvent: (element) ->
+    category = '/accelerated-possession-eviction/' + $(element).data('id')
+    category += '_error' unless category.match(/_error$/)
+    root.dispatchTrackingEvent(category, 'Accelerated form error', $(element).text() )
 
   formWithOutErrors: ($) ->
     ( $('#claimForm').length > 0 ) && ( $('.error-summary').length == 0 )
+
+  formWithErrors: ($) ->
+    ( $('#claimForm').length > 0 ) && ( $('.error-summary').length > 0 )
 
   referrerIsSelf: (referrer) ->
     if referrer?
