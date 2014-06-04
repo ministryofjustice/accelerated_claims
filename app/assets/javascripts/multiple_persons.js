@@ -30,7 +30,7 @@ moj.Modules.multiplePersons = (function() {
   bindEvents = function() {
     $( document ).on( 'change', '.multiplePanelRadio', function() {
       var $this = $( this );
-      showMultiples( $this.closest( '.has-multiple' ), $this.val() );
+      showMultiples( $this.closest( '.has-multiple' ), $this, $this.val() );
     } );
   };
 
@@ -71,14 +71,14 @@ moj.Modules.multiplePersons = (function() {
 
         $panel.prepend( template( context ) );
 
-        showMultiples( $panel, 0 );
+        showMultiples( $panel, null, 0 );
 
         moj.Modules.jsState.registerField( $( '[name="multiplePanelRadio_' + $panel.attr( 'id' ) + '"]' ) );
       }
     }
   };
 
-  showMultiples = function( $panel, shownum ) {
+  showMultiples = function( $panel, $srcEl, shownum ) {
     var x,
         section,
         show = shownum || 0,
@@ -88,20 +88,24 @@ moj.Modules.multiplePersons = (function() {
     for( x = 0; x < $childItems.length; x++ ) {
       section = $childItems.eq( x );
       if( ( x + 1 ) > show ) {
-        section.prev( '.divider' ).hide();
-        section.hide();
+        moj.Modules.animate.showhide( section.prev( '.divider' ), $srcEl, 'hide' );
+        moj.Modules.animate.showhide( section, $srcEl, 'hide' );
         $.hidden[ section.attr('id') ] = true;
       } else {
-        section.prev( '.divider' ).show();
-        section.show();
+        moj.Modules.animate.showhide( section.prev( '.divider' ), $srcEl, 'show' );
+        moj.Modules.animate.showhide( section, $srcEl, 'show' );
         $.hidden[ section.attr('id') ] = false;
       }
     }
 
     if( show > 1 ) {
-      $childItems.find( '.person' ).show().next( '.row' ).removeClass( 'nomargin' );
+      moj.Modules.animate.showhide( $childItems.find( '.person' ), $srcEl, 'show', function() {
+        $childItems.find( '.person' ).next( '.row' ).removeClass( 'nomargin' );
+      } );
     } else {
-      $childItems.find( '.person' ).hide().next( '.row' ).addClass( 'nomargin' );
+      moj.Modules.animate.showhide( $childItems.find( '.person' ), $srcEl, 'hide', function() {
+        $childItems.find( '.person' ).next( '.row' ).addClass( 'nomargin' );
+      } );
     }
   };
 

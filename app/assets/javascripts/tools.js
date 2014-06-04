@@ -15,7 +15,9 @@ moj.Modules.tools = (function() {
       monthToNum,
       isDate,
       isValidDate,
-      validMonth
+      validMonth,
+      jsError,
+      getQueryVar
       ;
 
   removeFromArray = function( arr, item ) {
@@ -207,6 +209,22 @@ moj.Modules.tools = (function() {
     return !isNaN( d.getTime() );
   };
 
+  getQueryVar = function( q ) {
+    var str = decodeURIComponent( window.location.search ).substr( 1 ),
+        arr = str.split( '&' ),
+        x,
+        item;
+
+
+    for( x = 0; x < arr.length; x++ ) {
+      item = arr[x];
+      if( item.split( '=' )[ 0 ] === q ) {
+        return item.split( '=' )[ 1 ];
+      }
+    }
+    return false;
+  };
+
   return {
     removeFromArray: removeFromArray,
     numToWords: numToWords,
@@ -216,7 +234,9 @@ moj.Modules.tools = (function() {
     stringToDate: stringToDate,
     dedupeArray: dedupeArray,
     isDate: isDate,
-    validMonth: validMonth
+    validMonth: validMonth,
+    jsError: jsError,
+    getQueryVar: getQueryVar
   };
 
 }());
