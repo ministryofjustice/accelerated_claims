@@ -6,13 +6,13 @@ describe LicenseChecklist do
       data
     end
     let(:license) { LicenseChecklist.new(json).add['required_documents'] }
-    let(:section2) { "* Evidence of your HMO license application issued under part 2 of Housing Act 2004 - marked 'D'\n\n" }
-    let(:section3) { "* Evidence of your HMO license application issued under part 3 of Housing Act 2004 - marked 'E'\n\n" }
+    let(:section2) { "- Evidence of your HMO license application issued under part 2 of Housing Act 2004 - marked 'D'\n\n" }
+    let(:section3) { "- Evidence of your HMO license application issued under part 3 of Housing Act 2004 - marked 'E'\n\n" }
     let(:both_sections) do
-      "* Evidence of your HMO license application
+      "- Evidence of your HMO license application
 
-* if issued under part 2 of Housing Act 2004 - marked 'D'
-* if issued under part 3 of Housing Act 2004 - marked 'E'\n\n"
+- if issued under part 2 of Housing Act 2004 - marked 'D'
+- if issued under part 3 of Housing Act 2004 - marked 'E'\n\n"
     end
 
     context 'with HMO license' do
