@@ -14,19 +14,19 @@ class TenancyChecklist
 
   def add_tenancy
     case @json['tenancy_demoted_tenancy']
-    when 'No'
-      (@json['tenancy_previous_tenancy_type'] == 'assured') ? multiple_assured_tenancies_text : single_assured_tenancy_text
-      optional_tenancy_section
     when 'Yes'
       demoted_tenancy_text
+    when 'No'
+      (@json['tenancy_assured_shorthold_tenancy_type'] == 'multiple') ? multiple_assured_tenancy_text : one_assured_tenancy_text
+      optional_tenancy_section
     end
   end
 
-  def multiple_assured_tenancies_text
+  def multiple_assured_tenancy_text
     @checklist = "- the first tenancy agreement marked - 'A'\n- the current tenancy agreement marked - 'A1'\n\n"
   end
 
-  def single_assured_tenancy_text
+  def one_assured_tenancy_text
     @checklist = "- the tenancy agreement marked 'A'\n\n"
   end
 

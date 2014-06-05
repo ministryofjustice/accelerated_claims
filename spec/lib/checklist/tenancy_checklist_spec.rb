@@ -34,9 +34,8 @@ describe TenancyChecklist do
       context 'when there is more than 1 tenancy agreements' do
         let(:text) { "- the first tenancy agreement marked - 'A'\n- the current tenancy agreement marked - 'A1'\n\n"}
         let(:json) do
-          data = claim_formatted_data
-          data['tenancy_previous_tenancy_type'] = 'assured'
-          data
+          claim_formatted_data.merge({ 'tenancy_previous_tenancy_type' => 'assured',
+                                       'tenancy_assured_shorthold_tenancy_type' => 'multiple' })
         end
 
         context 'optional section is filled' do
@@ -44,19 +43,19 @@ describe TenancyChecklist do
 - proof this notice was given - marked 'B1'\n\n"}
 
           it { expect(@documents.should).to eq full_text }
+          #it { puts full_text }
         end
 
         context 'optional section is not filled' do
           let(:json) do
-            data = claim_formatted_data
-            data['tenancy_previous_tenancy_type'] = 'assured'
-            data['tenancy_assured_shorthold_tenancy_notice_served_by'] = ''
-            data['tenancy_assured_shorthold_tenancy_notice_served_date_day'] = ''
-            data['tenancy_assured_shorthold_tenancy_notice_served_date_month'] = ''
-            data['tenancy_assured_shorthold_tenancy_notice_served_date_year'] = ''
-            data
+            claim_formatted_data.merge({ 'tenancy_previous_tenancy_type' => 'assured',
+                                         'tenancy_assured_shorthold_tenancy_type' => 'multiple',
+                                         'tenancy_assured_shorthold_tenancy_notice_served_by' => '',
+                                         'tenancy_assured_shorthold_tenancy_notice_served_date_day' => '',
+                                         'tenancy_assured_shorthold_tenancy_notice_served_date_month' => '',
+                                         'tenancy_assured_shorthold_tenancy_notice_served_date_year' => '' })
           end
-          let(:foo) { "- the first tenancy agreement marked - 'A'\n- the current tenancy agreement marked - 'A1'\n\n" }
+          let(:text) { "- the first tenancy agreement marked - 'A'\n- the current tenancy agreement marked - 'A1'\n\n" }
 
           it { expect(@documents.should).to eq text }
         end

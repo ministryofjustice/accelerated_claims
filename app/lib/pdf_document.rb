@@ -4,7 +4,7 @@ class PDFDocument
     @flatten = flatten
     remove_backslash_r!
     add_document_count
-    add_list_of_required_documents
+    add_checklist
   end
 
   def fill
@@ -36,7 +36,7 @@ class PDFDocument
 
   private
 
-  def add_list_of_required_documents
+  def add_checklist
     Checklist.new(@json).add
   end
 
