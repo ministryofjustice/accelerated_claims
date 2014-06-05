@@ -6,5 +6,5 @@
   = form.text_field_row  :served_method, label: 'How was the notice given?'
 
 
-  = form.moj_date_fieldset :date_served, 'Date Notice Served', {}
-  = form.moj_date_fieldset :expiry_date, 'Date Notice Ended'
+  = form.moj_date_fieldset :date_served, 'Date Notice Served', { class: 'date-picker' }, 9.weeks.ago
+  = form.moj_date_fieldset :expiry_date, 'Date Notice Ended', { class: 'date-picker' }, 1.week.ago
