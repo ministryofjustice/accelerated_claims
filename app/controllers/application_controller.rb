@@ -8,4 +8,8 @@ class ApplicationController < ActionController::Base
   def redirect_to_with_protocol action, options={}
     redirect_to url_for( options.merge(action: action, protocol: (Rails.env.production? ? 'https' : 'http') ) )
   end
+
+  def heartbeat
+    render text: ''
+  end
 end
