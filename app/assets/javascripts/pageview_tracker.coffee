@@ -13,13 +13,14 @@ class PageviewTracker
 
     @bind textInput, 'focusout', @onFocusOut
     @bind inputs, 'click', @onClick
+    @bind links, 'click', @onClick
+    @bindDynamicallyCreatedElements()
 
+  bindDynamicallyCreatedElements: () ->
     $(document).on 'click', '#multiplePanelRadio_claimants_1', @onClick
     $(document).on 'click', '#multiplePanelRadio_claimants_2', @onClick
     $(document).on 'click', '#multiplePanelRadio_defendants_1', @onClick
     $(document).on 'click', '#multiplePanelRadio_defendants_2', @onClick
-
-    @bind links, 'click', @onClick
 
   bind: (elements, event, handler) ->
     _.each elements, (element) =>
