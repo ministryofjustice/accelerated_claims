@@ -1,14 +1,10 @@
 # Class to generate html for moj_date_fieldset method in LabellingFormBuilder.
-# @param [LabellingFormBuilder] form : the form builder
-# @param [Symbol] attribute: the name of the attribute to be updated (usually a Date class)
-# @param [String] legend: the legend for the date control
-# @param [Hash] options : HTML options to be passed in.  These options are merged applied to the fieldset and span elements before the 
-#  date boxes themselves.  Attributes to be applied to the day, month or year text boxes should be specified as inner hashes with keys 
-#  "_day", "_month", "_year" respectively.  Attributes thus specified will be merged with the default attributes.
+
 
 class MojDateFieldset
 
-  @@hint  = "eg&nbsp;&nbsp;#{Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')}"
+  @@hint      = "For example,&nbsp;&nbsp;"
+  @@date_mask = '%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y'
 
   @@div_classes = {
     :day            => 'moj-date-day-div',
@@ -22,12 +18,22 @@ class MojDateFieldset
     :year           => 'Year'
   }
 
-  
-  def initialize(form, attribute, legend, options = {}, explanatory_text = nil)
+
+  # @param [LabellingFormBuilder] form : the form builder
+  # @param [Symbol] attribute: the name of the attribute to be updated (usually a Date class)
+  # @param [String] legend: the legend for the date control
+  # @param [Hash] options : HTML options to be passed in.  These options are merged applied to the fieldset and span elements before the 
+  #  date boxes themselves.  Attributes to be applied to the day, month or year text boxes should be specified as inner hashes with keys 
+  #  "_day", "_month", "_year" respectively.  Attributes thus specified will be merged with the default attributes.
+  # @param [Date] example_date : the date to use as the example in the explanatory text, defaults to today
+  # @param [String] explanatory_text : the explanatory text to use if the standard example date isn't to be used (if this is non-nil, the example date is ignored)
+  #
+  def initialize(form, attribute, legend, options = {}, example_date = Date.today, explanatory_text = nil)
     @form                    = form
     @attribute               = attribute
     @legend                  = legend
-    @explanatory_text        = explanatory_text || @@hint
+    @example_date            = example_date
+    @explanatory_text        = explanatory_text || "#{@@hint}#{@example_date.strftime(@@date_mask)}"
     @options                 = options
     @passed_in_day_options   = nil
     @passed_in_month_options = nil

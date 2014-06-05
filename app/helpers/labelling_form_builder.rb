@@ -11,8 +11,8 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     row_input attribute, :text_area, options
   end
 
-  def moj_date_fieldset attribute, legend, options = {}, explanatory_text = nil
-    df = MojDateFieldset.new(self, attribute, legend, options, explanatory_text)
+  def moj_date_fieldset attribute, legend, options = {}, example_date = Date.today, explanatory_text = nil
+    df = MojDateFieldset.new(self, attribute, legend, options, example_date, explanatory_text)
     df.emit
   end
 
