@@ -10,7 +10,7 @@ class ClaimController < ApplicationController
     reset_session if referrer_is_landing_page?
 
     @page_title = 'Property possession'
-    
+
     @date_select_options = {
       order: [:day, :month, :year],
       with_css_classes: true,
@@ -20,7 +20,7 @@ class ClaimController < ApplicationController
     }
     if(data = session[:claim])
       @claim = Claim.new(data)
-      
+
       @errors = @claim.errors unless @claim.valid?
     else
       @claim = Claim.new

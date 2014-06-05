@@ -10,8 +10,12 @@ class AnalyticsTracking
       if !@referrerIsSelf(document.referrer)
         @dispatchViewFormEvent()
 
-    if @formWithErrors( $ )
+    else if @formWithErrors( $ )
       _.each $('.error-link'), @dispatchValidationErrorEvent
+
+    else
+      new root.PageviewTracker( $ )
+
 
   dispatchViewFormEvent: () ->
     root.dispatchTrackingEvent('/accelerated-possession-eviction', 'View service form', 'View service form')

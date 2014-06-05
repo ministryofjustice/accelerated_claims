@@ -16,8 +16,26 @@ describe 'AnalyticsTracking', ->
       expect(window.dispatchTrackingEvent).not.toHaveBeenCalled()
       element.remove()
 
-  describe 'onload of #claimForm', ->
+  describe 'click on "data-virtual-pageview" link on page with no #claimForm', ->
+    it 'dispatches pageview', ->
+      element = $('<body>' +
+        '<a id="a_link" data-event-label="data event label" data-virtual-pageview="/clicked_pageview" href="/clicked_event">Link event text</a>' +
+        '</body>')
 
+      $(document.body).append(element)
+      new window.AnalyticsTracking($)
+
+      spyOn window, 'dispatchTrackingEvent'
+      spyOn window, 'dispatchPageView'
+
+      $('#a_link').trigger 'click'
+
+      expect(window.dispatchTrackingEvent).toHaveBeenCalledWith(jasmine.any(String), 'Link event text', 'data event label')
+      expect(window.dispatchPageView).toHaveBeenCalledWith('/clicked_pageview')
+
+      element.remove()
+
+  describe 'onload of #claimForm', ->
     it 'dispatches event', ->
       element = $('<form id="claimForm"></form>')
       $(document.body).append(element)
@@ -38,7 +56,7 @@ describe 'AnalyticsTracking', ->
       expect(window.dispatchTrackingEvent).not.toHaveBeenCalled()
       element.remove()
 
-  describe 'onload of form with .error-summary', ->
+  describe 'onload of #claimForm form with .error-summary', ->
 
     it 'dispatches event per error', ->
       element = $('<form id="claimForm"><div class="error-summary">' +
