@@ -14,49 +14,84 @@ describe DateParser do
 
   context 'valid date strings' do
 
-    it 'should create valid dates from the entered values' do
+    it 'should reject 19th feb in a non leap year' do
+      DateParser.new(set_values( ['31', '01', '2014'] )).parse.should == Date.new(2014, 1, 31)
+    end
 
-      test_values = {
-        ['31', '01', '2014']      => Date.new(2014, 1, 31),
-        ['1', '1', '99']          => Date.new(1999, 1, 1),
-        ['1', '3', '49']          => Date.new(2049, 3, 1),
-        ['13', 'jan', '2014']     => Date.new(2014, 1, 13),
-        ['13', 'jan', '2014']     => Date.new(2014, 1, 13),
-        ['13', 'JAn', '2014']     => Date.new(2014, 1, 13),
-        ['1', 'JAn', '2014']      => Date.new(2014, 1, 1),
-        ['1', '1', '2014']        => Date.new(2014, 1, 1),
-        ['29', 'Feb', '2012']     => Date.new(2012, 2, 29),
-        ['23', 'march', '14']     => Date.new(2014, 3, 23),
-        [23, 5, 2014]             => Date.new(2014, 5, 23)
-      }
+    it 'should accept 1 digit day month 2 digit year' do
+      DateParser.new(set_values( [ '1', '1', '99' ] )).parse.should == Date.new(1999, 1, 1)
+    end
 
-      test_values.each do |dmy, expected_date|
-        values = set_values(dmy)
-        DateParser.new(values).parse.should == expected_date
-      end
+    it 'should translate 2-digit year of 49 into 2049' do
+      DateParser.new(set_values( [ '1', '3', '49' ] )).parse.should == Date.new(2049, 3, 1)
+    end
+
+    it 'should accept 3-letter month names' do
+      DateParser.new(set_values( [ '13', 'jan', '2014' ] )).parse.should == Date.new(2014, 1, 13)
+    end
+
+    it 'should accept mixed case month names' do
+      DateParser.new(set_values( [ '13', 'JAn', '2014' ] )).parse.should == Date.new(2014, 1, 13)
+    end
+
+    it 'should accept mixed case month names with 1 digit day' do
+      DateParser.new(set_values( [ '1', 'JAn', '2014' ] )).parse.should == Date.new(2014, 1, 1)
+    end
+
+    it 'should accept 1 digit day and month and 4 digit year' do
+      DateParser.new(set_values( [ '1', '1', '2014' ] )).parse.should == Date.new(2014, 1, 1)
+    end
+
+    it 'should accept 29th Feb in a leap year' do
+      DateParser.new(set_values( [ '29', 'Feb', '2012' ] )).parse.should == Date.new(2012, 2, 29)
+    end
+
+    it 'should accept month names and 2-digit year' do
+      DateParser.new(set_values( [ '23', 'march', '14' ] )).parse.should == Date.new(2014, 3, 23)
+    end
+
+    it 'should accept 2-digit day and 2-digit month' do
+      DateParser.new(set_values( [ 23, 5, 2014 ] )).parse.should == Date.new(2014, 5, 23)
     end
   end
 
 
   context 'invalid dates' do 
-    it 'should create InvalidDate objects from the following invalid strings' do
-      test_values = {
-        ['29', '02', '2014']     => InvalidDate.new('29-02-2014'),
-        ['33', '01', '2014']     => InvalidDate.new('33-01-2014'),
-        ['31', 'APRIL', '2014']  => InvalidDate.new('31-APRIL-2014'),
-        ['15', 'avgust', '2014'] => InvalidDate.new('15-avgust-2014'),
-        ['3', '15', '2014']      => InvalidDate.new('3-15-2014'),
-        ['', '15', '2014']       => InvalidDate.new('-01-2014'),
-        ['3', '', '2014']        => InvalidDate.new('33--2014'),
-        ['3', '7', '']           => InvalidDate.new('33-7-')
-      }
+    it 'should reject 19th feb in a non leap year' do
+      DateParser.new(set_values(['29', '02', '2014'])).parse.should == InvalidDate.new('29-02-2014')
+    end
 
-      test_values.each do |dmy, expected_date|
-        values = set_values(dmy)
-        DateParser.new(values).parse.should == expected_date
-      end
+    it 'should reject 33rd in any year' do
+      DateParser.new(set_values(['29', '02', '2014'])).parse.should == InvalidDate.new('33-01-2014')
+    end
+
+    it 'should reject 31st in a 30-day month' do
+      DateParser.new(set_values(['31', 'APRIL', '2014'])).parse.should == InvalidDate.new('31-APRIL-2014')
+    end
+
+    it 'should reject unrecognised month names' do
+      DateParser.new(set_values(['15', 'avgust', '2014'])).parse.should == InvalidDate.new('15-avgust-2014')
+    end
+
+    it 'should reject month numbers > 12' do
+      DateParser.new(set_values(['3', '15', '2014'])).parse.should == InvalidDate.new('3-15-2014')
+    end
+
+     it 'should reject dates with missing days' do
+      DateParser.new(set_values(['', '15', '2014'])).parse.should == InvalidDate.new('-01-2014')
+    end
+
+    it 'should reject dates with missing months' do
+      DateParser.new(set_values(['3', '', '2014'])).parse.should == InvalidDate.new('33--2014')
+    end
+
+    it 'should reject dates with missing year' do
+      DateParser.new(set_values(['3', '7', ''])).parse.should == InvalidDate.new('3-7-')
     end
   end
+
+
+
 
   context 'all blank values' do
     it 'should return nil if all three values are nil' do

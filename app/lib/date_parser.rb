@@ -31,11 +31,12 @@ class DateParser
     @values.each do |value_hash|
       extract_value(value_hash)
     end
-
+    
     begin
       if @day.blank? && @month.blank? && @year.blank?
         @date = nil
       else
+        check_no_blanks
         normalize_month
         date_string = "#{@day}-#{@normalized_month}-#{@year}"
         @date = Date.parse(date_string)
@@ -63,6 +64,14 @@ class DateParser
       end
     end
   end
+
+  def check_no_blanks
+    raise if @day.blank?
+    raise if @month.blank?
+    raise if @year.blank?
+  end
+
+
 
   def valid_fixnum?(m)
     m.is_a?(Fixnum) && m > 0 && m < 13
