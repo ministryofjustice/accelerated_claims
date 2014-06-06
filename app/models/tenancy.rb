@@ -194,7 +194,8 @@ class Tenancy < BaseClass
       'applicable_statements_4' => applicable_statements_4,
       'applicable_statements_5' => applicable_statements_5,
       'applicable_statements_6' => applicable_statements_6,
-      'previous_tenancy_type' => previous_tenancy_type
+      'previous_tenancy_type' => previous_tenancy_type,
+      'assured_shorthold_tenancy_type' => assured_shorthold_tenancy_type
     }
 
     split_date(:demotion_order_date, hash)
