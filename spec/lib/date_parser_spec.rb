@@ -1,6 +1,4 @@
-require_relative '../spec_helper'
-require_relative '../../app/lib/date_parser'
-
+require 'spec_helper'
 
 describe DateParser do
 
