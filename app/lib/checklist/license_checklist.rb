@@ -14,17 +14,17 @@ class LicenseChecklist
     if @json['license_multiple_occupation'] == 'Yes'
       case @json['license_part3']
       when 'Yes'
-        myappend(part3_text)
+        add_note(part3_text)
       when 'No'
-        myappend(part2_text)
+        authority_and_date_blank? ? add_note(part2_text) : ""
       else
         full_text if other_options_blank?
       end
     end
   end
 
-  def myappend text
-    @json['required_documents'] = @json['required_documents'].concat text
+  def add_note text
+    @json['required_documents'].concat text
   end
 
   def part2_text
@@ -53,5 +53,12 @@ class LicenseChecklist
       !@json['part3_day'].present? &&
       !@json['part3_month'].present? &&
       !@json['part3_year'].present?
+  end
+
+  def authority_and_date_blank?
+    !@json['license_part2_authority'].present? &&
+      !@json['license_part2_day'].present? &&
+      !@json['license_part2_month'].present? &&
+      !@json['license_part2_year'].present?
   end
 end

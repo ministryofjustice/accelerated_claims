@@ -17,13 +17,35 @@ describe LicenseChecklist do
 
     context 'with HMO license' do
       context 'when section 2 is choosen' do
-        before { json['license_part3'] = 'No' }
+        let(:json) do
+          claim_formatted_data.merge({ 'required_documents' => '',
+                                       'license_part3' => 'No',
+                                       'license_part2_authority' => '',
+                                       'license_part2_day' => '',
+                                       'license_part2_month' => '',
+                                       'license_part2_year' => '' })
+        end
 
         it { expect(license).to eq section2 }
+
+        context 'when all the other fields are filled in' do
+          let(:json) do
+            claim_formatted_data.merge({ 'required_documents' => '',
+                                         'license_part2_authority' => 'Westeros',
+                                         'license_part2_date_day' => '01',
+                                         'license_part2_date_month' => '01',
+                                         'license_part2_date_year' => '2014' })
+          end
+
+          it 'should not return any text' do
+            expect(license).to be_blank
+          end
+        end
       end
 
       context 'when section 3 is choosen' do
-        before { json['license_part3'] = 'Yes' }
+        let(:json) { claim_formatted_data.merge({ 'required_documents' => '',
+                                                  'license_part3' => 'Yes' }) }
 
         it { expect(license).to eq section3 }
       end
