@@ -43,7 +43,6 @@ describe TenancyChecklist do
 - proof this notice was given - marked 'B1'\n\n"}
 
           it { expect(@documents.should).to eq full_text }
-          #it { puts full_text }
         end
 
         context 'optional section is not filled' do
