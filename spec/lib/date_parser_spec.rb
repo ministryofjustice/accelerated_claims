@@ -111,22 +111,3 @@ def set_values(dmy_array)
   [ {:part => 'dob(1i)', :value => dmy_array[2]}, {:part => 'dob(2i)', :value => dmy_array[1]}, {:part => 'dob(3i)', :value => dmy_array[0]} ]
 end
 
-
-
-
-
-
-
-
- #    it 'should not accept a date before 01 Jan 1989' do
- #      set_date(notice, '3', '7', '1988')
- #      notice.valid?
- #      notice.errors[:expiry_date].first.should == 'Incorrect date: you can only use this form with an assured shorthold tenancy (introduced 15 January 1989)'
- #    end
-
- #    it 'should not accept a date after today' do
- #      date = 2.days.from_now
- #      set_date(notice, date.day.to_s, date.month.to_s, date.year.to_s)
- #      notice.valid?
- #      notice.errors[:expiry_date].first.should == 'cannot be later than current date'
- #    end
