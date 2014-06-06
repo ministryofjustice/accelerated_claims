@@ -2,4 +2,4 @@
 
 AcceleratedClaims::Application.config.session_store :cache_store,
     key: '_accelerated_claims_session',
-    expire_after: 30.minutes
+    expire_after: 60.minutes
