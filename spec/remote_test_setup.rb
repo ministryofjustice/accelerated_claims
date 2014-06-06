@@ -1,9 +1,9 @@
 def remote_hosts
   {
   'dev' => 'civilclaims.local',
-  'demo'  => 'civilclaims.dsd.io',
-  'staging' => 'civilclaimsstaging.dsd.io',
-  'production' => 'alpha:mojcivilalphatest@civilclaims.service.dsd.io'
+  'demo'  => 'alpha:mojcivil@civilclaims.dsd.io',
+  'staging' => 'alpha:mojcivil@civilclaimsstaging.dsd.io',
+  'production' => 'civilclaims.service.dsd.io'
   }
 end
 
