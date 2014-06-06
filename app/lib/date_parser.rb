@@ -65,10 +65,9 @@ class DateParser
     end
   end
 
+  # raise if any of the fields are balnk - this will tigger an InvalidDate to be returned from parse()
   def check_no_blanks
-    raise if @day.blank?
-    raise if @month.blank?
-    raise if @year.blank?
+    [ @day, @month, @year ].each { |f| raise if f.blank? }
   end
 
 
@@ -79,7 +78,6 @@ class DateParser
 
   def valid_numeric_string?(m)
     m =~ /^[0-9]{1,2}$/  && m.to_i < 13
-    
   end
 
 
