@@ -1,3 +1,4 @@
+
 class BaseClass
   include ActiveModel::Model
   include ActiveModel::Serializers::JSON
@@ -5,8 +6,6 @@ class BaseClass
 
   after_validation :remove_not_included_in_list_error
 
-
-  @@valid_month_names = %w{ january jan february feb march mar april apr may june jun july jul august aug september sep october oct november nov december dec }
 
   def attributes
     instance_values
@@ -79,26 +78,8 @@ class BaseClass
   private
 
   def set_date field, value
-    values = value.sort_by {|a| a[:part] }.collect {|a| a[:value] }
-
-    if values.all?(&:present?)
-      day         = value[0][:value]
-      month       = value[1][:value]
-      year        = value[2][:value]
-      date_string = [day, month, year].join('-')
-
-      # This to cater for the fact that Date.parse will parse any invalid month name to june (Date.parse('23-xxxx-2014') => #<Date: 2014-06-15 ((2456824j,0s,0n),+0s,2299161j)>)
-      if !month.is_a?(Fixnum) && month !~ /^[0-9]{1,2}$/  && !@@valid_month_names.include?(month.downcase) 
-        date = InvalidDate.new( date_string )
-      else
-        date = begin
-                 Date.parse( date_string )
-               rescue
-                 InvalidDate.new( date_string )
-               end
-      end
-      send( "#{field}=", date )
-    end
+    date = DateParser.new(value).parse
+    send( "#{field}=", date )
   end
 
   def remove_not_included_in_list_error
