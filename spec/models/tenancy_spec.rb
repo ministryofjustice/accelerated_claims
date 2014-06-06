@@ -169,16 +169,37 @@ describe Tenancy do
     its(:demoted_tenancy?) { should be_false }
     its(:assured_tenancy?) { should be_true }
 
-    describe 'as_json' do
-      subject { assured_tenancy.as_json }
-      its(['demoted_tenancy']) { should == 'No'}
-      its(['start_date_day']) { should == '05' }
-      its(['start_date_month']) { should == '01' }
-      its(['start_date_year']) { should == '2010' }
-      its(['latest_agreement_date_day']) { should == '' }
-      its(['latest_agreement_date_month']) { should == '' }
-      its(['latest_agreement_date_year']) { should == '' }
+    context 'when there is only one tenancy agreement' do
+      describe 'as_json' do
+        subject { assured_tenancy.as_json }
+        its(['demoted_tenancy']) { should == 'No'}
+        its(['start_date_day']) { should == '05' }
+        its(['start_date_month']) { should == '01' }
+        its(['start_date_year']) { should == '2010' }
+        its(['latest_agreement_date_day']) { should == '' }
+        its(['latest_agreement_date_month']) { should == '' }
+        its(['latest_agreement_date_year']) { should == '' }
+        its(['assured_shorthold_tenancy_type']) { should == 'one' }
+      end
     end
+
+    context 'when there are multiple tenancy agreements' do
+      describe 'as_json' do
+        subject {
+          assured_tenancy({'assured_shorthold_tenancy_type' => 'multiple'}).as_json
+        }
+
+        its(['demoted_tenancy']) { should == 'No'}
+        its(['start_date_day']) { should == '05' }
+        its(['start_date_month']) { should == '01' }
+        its(['start_date_year']) { should == '2010' }
+        its(['latest_agreement_date_day']) { should == '' }
+        its(['latest_agreement_date_month']) { should == '' }
+        its(['latest_agreement_date_year']) { should == '' }
+        its(['assured_shorthold_tenancy_type']) { should == 'multiple' }
+      end
+    end
+
 
     context 'when previous_tenancy_type "secure"' do
       before { subject.previous_tenancy_type = 'secure' }
