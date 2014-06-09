@@ -5,7 +5,6 @@ class Feedback
 
   attr_accessor :text
   attr_accessor :email
-  attr_accessor :referrer
   attr_accessor :user_agent
 
   validates_presence_of :text

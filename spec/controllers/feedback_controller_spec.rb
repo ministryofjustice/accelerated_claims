@@ -13,7 +13,7 @@ describe FeedbackController do
     end
 
     def do_post(text='feedback')
-      post :create, feedback: { email: 'test@lol.biz.info', text: text, referrer: 'ref' }
+      post :create, feedback: { email: 'test@lol.biz.info', text: text }
     end
 
     it 'redirects to the homepage' do
