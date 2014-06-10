@@ -33,7 +33,7 @@ module AcceleratedClaims
       'X-XSS-Protection' => '1; mode=block',
       'Pragma' => 'no-cache',
       'Cache-Control' => 'no-cache, no-store, must-revalidate',
-      'Expires' => 0
+      'Expires' => '0'
     }
 
     config.relative_url_root = ENV['RAILS_RELATIVE_URL_ROOT'] || ''
