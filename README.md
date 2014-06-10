@@ -66,7 +66,8 @@ The ./accelerated_claims folder is copied into /srv/accelerated_claims (inside t
 When the code changes, you will still need to manually restart supervisor jobs inside the VM.
 
 ```
-vagrant ssh -c "sudo supervisorctl reload all"
+vagrant rsync
+vagrant ssh -c 'sudo service accelerated-claim-rails restart'
 ```
 
 Should do the trick.
@@ -81,7 +82,7 @@ Ensure you have installed all the gems from the 'test' group. (`bundle install -
 
 ### Synching Jouney Data
 
-The Journey Data for the feature specs is held externally in a spreadsheet at https://docs.google.com/a/digital.justice.gov.uk/spreadsheet/ccc?key=0Arsa0arziNdndHlwM2xJMVl5Z3pDdFVOYnVsRmZST1E&usp=drive_web#gid=0.  The contents of the data files ```spec/fixtures/scenario_1_data.rb``` to 
+The Journey Data for the feature specs is held externally in a spreadsheet at https://docs.google.com/a/digital.justice.gov.uk/spreadsheet/ccc?key=0Arsa0arziNdndHlwM2xJMVl5Z3pDdFVOYnVsRmZST1E&usp=drive_web#gid=0.  The contents of the data files ```spec/fixtures/scenario_1_data.rb``` to
 ```spec/fixtures/scenario_12_data.rb``` are generated from this spreadsheet with the ```rake fixtures:refresh``` task.
 
 Therefore, if the data in these files needs to change, update the spreadsheet and refresh - so not update the scenario data files directly.
@@ -140,6 +141,6 @@ Please remember to set the environment **SECRET_KEY_BASE** variable.
 
 Load testing is done through the tsung-wrapper repo.
 
-Tsung cannot cope with sending back Rails CSRF authenticity tokens, so the server has to be run without CSRF protection for loadtesting.  This is 
+Tsung cannot cope with sending back Rails CSRF authenticity tokens, so the server has to be run without CSRF protection for loadtesting.  This is
 acheived by setting an environment variable CC_NO_CSRF to any value.
 
