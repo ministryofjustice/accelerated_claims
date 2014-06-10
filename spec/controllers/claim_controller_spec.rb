@@ -7,6 +7,23 @@ describe ClaimController do
       expect(response).to render_template("new")
     end
 
+    describe 'HTTP response headers' do
+      subject { response }
+      its(['X-Frame-Options']) { should == 'DENY' }
+      its(['X-Content-Type-Options']) { should == 'nosniff' }
+      its(['X-XSS-Protection']) { should == '1; mode=block' }
+      its(['Pragma']) { should == 'no-cache' }
+      its(['Cache-Control']) { should == 'no-cache, no-store, must-revalidate' }
+      its(['Expires']) { should == 0 }
+    end
+
+    shared_examples 'session mantained' do
+      it 'should not clear session' do
+        controller.should_not_receive(:reset_session)
+        get :new
+      end
+    end
+
     context 'referrer is' do
       before do
         @controller.request.stub(:referrer).and_return("http://example.com#{referrer_path}")
@@ -14,29 +31,17 @@ describe ClaimController do
 
       context '/' do
         let(:referrer_path) { '/' }
-
-        it 'should not clear session' do
-          controller.should_not_receive(:reset_session)
-          get :new
-        end
+        it_behaves_like 'session mantained'
       end
 
       context '/confirmation' do
         let(:referrer_path) { '/confirmation' }
-
-        it 'should not clear session' do
-          controller.should_not_receive(:reset_session)
-          get :new
-        end
+        it_behaves_like 'session mantained'
       end
 
       context '' do
         let(:referrer_path) { '' }
-
-        it 'should not clear session' do
-          controller.should_not_receive(:reset_session)
-          get :new
-        end
+        it_behaves_like 'session mantained'
       end
 
       context 'is gov.uk landing page' do
