@@ -12,7 +12,7 @@ moj.Modules.animate = (function() {
 
       //vars
       animateFlag = false,
-      ms = 250,
+      ms = 450,
       mpos = {
         x: 0,
         y: 0
