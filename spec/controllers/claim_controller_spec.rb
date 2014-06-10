@@ -14,7 +14,7 @@ describe ClaimController do
       its(['X-XSS-Protection']) { should == '1; mode=block' }
       its(['Pragma']) { should == 'no-cache' }
       its(['Cache-Control']) { should == 'no-cache, no-store, must-revalidate' }
-      its(['Expires']) { should == 0 }
+      its(['Expires']) { should == '0' }
     end
 
     shared_examples 'session mantained' do
