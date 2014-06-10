@@ -27,10 +27,13 @@ module AcceleratedClaims
     # config.i18n.default_locale = :de
     config.i18n.enforce_available_locales = false
 
-    ActionDispatch::Response.default_headers = {
+    config.action_dispatch.default_headers = {
       'X-Frame-Options' => 'DENY',
       'X-Content-Type-Options' => 'nosniff',
-      'X-XSS-Protection' => '1; mode=block'
+      'X-XSS-Protection' => '1; mode=block',
+      'Pragma' => 'no-cache',
+      'Cache-Control' => 'no-cache, no-store, must-revalidate',
+      'Expires' => 0
     }
 
     config.relative_url_root = ENV['RAILS_RELATIVE_URL_ROOT'] || ''
