@@ -40,7 +40,7 @@ class ClaimController < ApplicationController
     @claim = Claim.new(session[:claim])
 
     if @claim.valid?
-      flatten = params[:flatten] == 'false' ? false : true
+      flatten = Rails.env.test? ? false : true
       pdf = PDFDocument.new(@claim.as_json, flatten).fill
 
       ActiveSupport::Notifications.instrument('send_file') do
