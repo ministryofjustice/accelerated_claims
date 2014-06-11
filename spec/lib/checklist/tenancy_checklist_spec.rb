@@ -32,7 +32,7 @@ describe TenancyChecklist do
       end
 
       context 'when there is more than 1 tenancy agreements' do
-        let(:text) { "- the first tenancy agreement marked - 'A'\n- the current tenancy agreement marked - 'A1'\n\n"}
+        let(:text) { "- the first tenancy agreement marked - 'A'\n\n- the current tenancy agreement marked - 'A1'\n\n"}
         let(:json) do
           claim_formatted_data.merge({ 'tenancy_previous_tenancy_type' => 'assured',
                                        'tenancy_assured_shorthold_tenancy_type' => 'multiple' })
@@ -54,7 +54,7 @@ describe TenancyChecklist do
                                          'tenancy_assured_shorthold_tenancy_notice_served_date_month' => '',
                                          'tenancy_assured_shorthold_tenancy_notice_served_date_year' => '' })
           end
-          let(:text) { "- the first tenancy agreement marked - 'A'\n- the current tenancy agreement marked - 'A1'\n\n" }
+          let(:text) { "- the first tenancy agreement marked - 'A'\n\n- the current tenancy agreement marked - 'A1'\n\n" }
 
           it { expect(@documents.should).to eq text }
         end
@@ -68,7 +68,7 @@ describe TenancyChecklist do
         data['tenancy_demoted_tenancy'] = 'Yes'
         data
       end
-      let(:text) { "- the most recent tenancy agreement - marked 'A'\n- the demotion order - marked 'B'\n\n" }
+      let(:text) { "- the most recent tenancy agreement - marked 'A'\n\n- the demotion order - marked 'B'\n\n" }
 
       it 'should have the appropriate text' do
         @documents.should eq text
