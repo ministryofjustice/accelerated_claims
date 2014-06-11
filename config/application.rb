@@ -32,7 +32,7 @@ module AcceleratedClaims
       'X-Content-Type-Options' => 'nosniff',
       'X-XSS-Protection' => '1; mode=block',
       'Pragma' => 'no-cache',
-      'Cache-Control' => 'no-cache, no-store, must-revalidate',
+      'Cache-Control' => 'no-cache, no-store, must-revalidate, private',
       'Expires' => '0'
     }
 
