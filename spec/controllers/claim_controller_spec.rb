@@ -13,7 +13,7 @@ describe ClaimController do
       its(['X-Content-Type-Options']) { should == 'nosniff' }
       its(['X-XSS-Protection']) { should == '1; mode=block' }
       its(['Pragma']) { should == 'no-cache' }
-      its(['Cache-Control']) { should == 'no-cache, no-store, must-revalidate' }
+      its(['Cache-Control']) { should == 'no-cache, no-store, must-revalidate, private' }
       its(['Expires']) { should == '0' }
     end
 
