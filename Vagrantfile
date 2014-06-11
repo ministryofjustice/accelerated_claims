@@ -12,7 +12,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "base"
   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
-  # you'll be wanting to add civilclaims.local to /etc/hosts 
+  # you'll be wanting to add civilclaims.local to /etc/hosts
   config.vm.network :private_network, ip: "192.168.33.10"
 
   config.vm.provider "virtualbox" do |vb|
@@ -20,7 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # https://www.vagrantup.com/blog/feature-preview-vagrant-1-5-rsync.html
-  config.vm.synced_folder ".", "/srv/accelerated_claims/accelerated_claims", type: "rsync"
+  config.vm.synced_folder ".", "/srv/accelerated_claims/accelerated_claims", type: "rsync", rsync__exclude: ['vendor/bundler','run_ac_front.sh']
 
   # mount salt required folders
   config.vm.synced_folder "../civil-claims-deploy/providers", "/srv/providers/"
