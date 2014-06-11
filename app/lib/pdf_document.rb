@@ -15,7 +15,7 @@ class PDFDocument
         template = File.join Rails.root, 'templates', 'form.pdf'
         result_pdf = Tempfile.new('accelerated_claim', '/tmp/')
         ActiveSupport::Notifications.instrument('fill_form.pdf') do
-          pdf = PdfForms.new(ENV['PDFTK'])
+          pdf = PdfForms.new(ENV['PDFTK'], :flatten => @flatten)
           pdf.fill_form template, result_pdf, @json
         end
       ensure
