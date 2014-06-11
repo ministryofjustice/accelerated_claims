@@ -10,10 +10,12 @@ class PageviewTracker
     textInput = $('input[type="text"][data-virtual-pageview]')
     inputs = $('input[data-virtual-pageview]')
     links = $('a[data-virtual-pageview]')
+    external_links = $('a[rel="external"]')
 
     @bind textInput, 'focusout', @onFocusOut
     @bind inputs, 'click', @onClick
     @bind links, 'click', @onClick
+    @bind external_links, 'click', @onClick
     @bindDynamicallyCreatedElements()
 
   bindDynamicallyCreatedElements: () ->
@@ -29,6 +31,7 @@ class PageviewTracker
 
   unbind: (url, event, handler) ->
     items = $('[data-virtual-pageview="' + url + '"]')
+    items = $('[href="' + url + '"]') if items.size() == 0
     _.each items, (item) ->
       selector = '#' + item.id
       $(document).off event, selector, handler
@@ -46,6 +49,7 @@ class PageviewTracker
     element = event.currentTarget
     if element.type != 'text'
       url = $(element).data('virtual-pageview')
+      url = $(element).attr('href') if !url
       root.dispatchPageView url
       @unbind url, 'click', @onClick
     return true
