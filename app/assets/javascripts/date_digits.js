@@ -1,8 +1,6 @@
 /*jslint browser: true, evil: false, plusplus: true, white: true, indent: 2 */
 /*global moj, $ */
 
-// Module to replace certain pieces of copy with alternatives or remove them entirely if JS is present
-
 moj.Modules.dateDigits = (function() {
   "use strict";
 
