@@ -10,6 +10,7 @@ describe 'PageviewTracker', ->
   beforeEach ->
     element = $('<body><form id="claimForm">' +
       '<a id="a_link" data-event-label="data event label" data-virtual-pageview="/clicked_pageview" href="/clicked_event">Link event text</a>' +
+      '<a id="external_link" rel="external" href="/external_url">External stuff</a>' +
       '<input data-virtual-pageview="/text" id="text_input" type="text" />' +
       '<input data-virtual-pageview="/radio" id="radio_input" type="radio" value="Yes" />' +
       '<input data-virtual-pageview="/radio" id="radio_input_no" type="radio" value="No" />' +
@@ -34,6 +35,22 @@ describe 'PageviewTracker', ->
         $('#a_link').trigger 'click'
         spyOn window, 'dispatchPageView'
         $('#a_link').trigger 'click'
+
+        expect(window.dispatchPageView).not.toHaveBeenCalled()
+
+  describe 'anchor link with rel=external', ->
+    describe 'on first click', ->
+      it 'dispatches pageview', ->
+        spyOn window, 'dispatchPageView'
+        $('#external_link').trigger 'click'
+
+        expect(window.dispatchPageView).toHaveBeenCalledWith('/external_url')
+
+    describe 'on second click', ->
+      it 'does not dispatch pageview', ->
+        $('#external_link').trigger 'click'
+        spyOn window, 'dispatchPageView'
+        $('#external_link').trigger 'click'
 
         expect(window.dispatchPageView).not.toHaveBeenCalled()
 
