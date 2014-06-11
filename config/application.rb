@@ -28,13 +28,13 @@ module AcceleratedClaims
     config.i18n.enforce_available_locales = false
 
     config.action_dispatch.default_headers = {
-      'X-Frame-Options' => 'DENY',
-      'X-Content-Type-Options' => 'nosniff',
-      'X-XSS-Protection' => '1; mode=block',
-      'Pragma' => 'no-cache',
-      'Cache-Control' => 'no-cache, no-store, must-revalidate, private',
-      'Expires' => '0'
-    }
+      'X-Frame-Options' => '',
+      'X-Content-Type-Options' => '',
+      'X-XSS-Protection' => '',
+      'Pragma' => '',
+      'Cache-Control' => '',
+      'Expires' => ''
+    } # let nginx set these headers
 
     config.relative_url_root = ENV['RAILS_RELATIVE_URL_ROOT'] || ''
 

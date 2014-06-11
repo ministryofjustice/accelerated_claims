@@ -7,14 +7,14 @@ describe ClaimController do
       expect(response).to render_template("new")
     end
 
-    describe 'HTTP response headers' do
+    describe 'HTTP response headers set to blank (we set values in nginx conf)' do
       subject { response }
-      its(['X-Frame-Options']) { should == 'DENY' }
-      its(['X-Content-Type-Options']) { should == 'nosniff' }
-      its(['X-XSS-Protection']) { should == '1; mode=block' }
-      its(['Pragma']) { should == 'no-cache' }
-      its(['Cache-Control']) { should == 'no-cache, no-store, must-revalidate, private' }
-      its(['Expires']) { should == '0' }
+      its(['X-Frame-Options']) { should == '' }
+      its(['X-Content-Type-Options']) { should == '' }
+      its(['X-XSS-Protection']) { should == '' }
+      its(['Pragma']) { should == '' }
+      its(['Cache-Control']) { should == '' }
+      its(['Expires']) { should == '' }
     end
 
     shared_examples 'session mantained' do
