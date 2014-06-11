@@ -9,7 +9,7 @@ function msg {
 
 
 msg "installing gems"
-bundle install --deployment --without development --path vendor/bundler --trust-policy=HighSecurity
+bundle install --deployment --without development --path vendor/bundler
 
 msg "running jasmine specs"
 RAILS_ENV=test bundle exec rake spec:javascript
