@@ -35,6 +35,22 @@ describe 'AnalyticsTracking', ->
 
       element.remove()
 
+  describe 'click on external link on page with no #claimForm', ->
+    it 'dispatches pageview', ->
+      element = $('<body>' +
+        '<a class="a_link" rel="external" href="/external_link">Link event text</a>' +
+        '</body>')
+
+      $(document.body).append(element)
+      new window.AnalyticsTracking($)
+
+      spyOn window, 'dispatchPageView'
+      $('.a_link').trigger 'click'
+
+      expect(window.dispatchPageView).toHaveBeenCalledWith('/external_link')
+
+      element.remove()
+
   describe 'onload of #claimForm', ->
     it 'dispatches event', ->
       element = $('<form id="claimForm"></form>')
