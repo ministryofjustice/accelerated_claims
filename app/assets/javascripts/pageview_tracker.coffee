@@ -11,12 +11,17 @@ class PageviewTracker
     inputs = $('input[data-virtual-pageview]')
     links = $('a[data-virtual-pageview]')
     external_links = $('a[rel="external"]')
+    @xx_link_counter = 0
 
     @bind textInput, 'focusout', @onFocusOut
     @bind inputs, 'click', @onClick
     @bind links, 'click', @onClick
     @bind external_links, 'click', @onClick
     @bindDynamicallyCreatedElements()
+
+  construct_xx_link: ->
+    @xx_link_counter++
+    "xx-link-" + @xx_link_counter
 
   bindDynamicallyCreatedElements: () ->
     $(document).on 'click', '#multiplePanelRadio_claimants_1', @onClick
@@ -26,6 +31,9 @@ class PageviewTracker
 
   bind: (elements, event, handler) ->
     _.each elements, (element) =>
+
+      if !element.id
+        $(element).attr('id', @construct_xx_link())
       selector = '#' + element.id
       $(document).on event, selector, handler
 
