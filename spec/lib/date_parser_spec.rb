@@ -102,6 +102,34 @@ describe DateParser do
       DateParser.new(values).parse.should be_nil
     end
   end
+
+
+  context 'translation of 2-digit years to 4-digit years' do
+
+    it 'should translate 68 to 2068 when run in 2014' do
+      Timecop.freeze(Date.new(2014, 5, 5)) do
+        Date.parse('1-jun-68').should == Date.new(2068, 6, 1)
+      end
+    end
+
+    it 'should translate 69 to 1969 when run in 2014' do
+      Timecop.freeze(Date.new(2014, 5, 5)) do
+        Date.parse('1-jun-69').should == Date.new(1969, 6, 1)
+      end
+    end
+
+
+    it 'should translate 68 to 2068 when run in 2028' do
+      Timecop.freeze(Date.new(2028, 5, 5)) do
+        Date.parse('1-jun-68').should == Date.new(2068, 6, 1)
+      end
+    end
+
+
+  end
+
+
+
 end
 
 

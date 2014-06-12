@@ -23,7 +23,7 @@ class TenancyChecklist
   end
 
   def multiple_assured_tenancy_text
-    @checklist = "- the first tenancy agreement marked - 'A'\n- the current tenancy agreement marked - 'A1'\n\n"
+    @checklist = "- the first tenancy agreement marked - 'A'\n\n- the current tenancy agreement marked - 'A1'\n\n"
   end
 
   def one_assured_tenancy_text
@@ -31,7 +31,7 @@ class TenancyChecklist
   end
 
   def demoted_tenancy_text
-    @checklist = "- the most recent tenancy agreement - marked 'A'\n- the demotion order - marked 'B'\n\n"
+    @checklist = "- the most recent tenancy agreement - marked 'A'\n\n- the demotion order - marked 'B'\n\n"
   end
 
   def optional_tenancy_section
