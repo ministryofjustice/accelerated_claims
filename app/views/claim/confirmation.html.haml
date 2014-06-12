@@ -1,22 +1,24 @@
+= render partial: 'shared/header_message'
+
 %section.confirmation
   .moj-panel
-    %h1 Your form is ready to print
-    = link_to 'View and print the form',
-        download_path,
-        class: 'button large chevron pdf-download',
-        target: '_blank',
-        id: 'download',
-        data: { 'event-label' => 'View and print completed form',
-        'virtual-pageview' => '/accelerated/pdf-download' }
-    %p
-      After you’ve printed the form, complete our
-      = link_to('satisfaction survey',
-          'https://www.gov.uk/done/accelerated-possession-eviction',
-          class: 'external',
-          rel: 'external',
+    .row
+      %p You now need to print the form and send it to court.
+
+    .row.rel
+      = link_to 'Print the form',
+          download_path,
+          class: 'button left large chevron pdf-download',
           target: '_blank',
-          id: 'done',
-          data: { 'event-label' => 'View GDS done page',
-          'virtual-pageview' => '/accelerated/satisfaction-survey' }) + '.'
-      %br/
-      Your feedback helps us improve the service.
+          id: 'download',
+          data: { 'event-label' => 'Print the form',
+          'virtual-pageview' => '/accelerated/pdf-download' }
+
+  %p
+    After you’ve submitted your claim, complete our
+    = link_to('satisfaction survey',
+        'https://www.gov.uk/done/accelerated-possession-eviction',
+        id: 'done',
+        data: { 'event-label' => 'View GDS done page',
+        'virtual-pageview' => '/accelerated/satisfaction-survey' }) + '.'
+    Your feedback helps us improve the service.
