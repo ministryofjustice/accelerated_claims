@@ -6,35 +6,32 @@ moj.Modules.sessionModal = (function() {
 
   var //functions
       init,
-      bindEvents,
       showModal,
       closeModal
       ;
 
   init = function() {
-    bindEvents();
+
   };
 
-  bindEvents = function() {
-    $( document ).on( 'click', 'a#extend', function( e ) {
-      e.preventDefault();
-
-      // do session extend here
-      moj.log( 'Session extended' );
-
-      closeModal();
-    } );
-  };
-
-  showModal = function() {
+  showModal = function( callback ) {
     var source = $( '#extend-session' ).html(),
         template = Handlebars.compile( source );
 
     $( 'body' ).append( template( {} ) );
+
+    $( '#session-modal' ).find( 'a#extend' ).on( 'click', function( e ) {
+      e.preventDefault();
+      if( callback ) {
+        callback();
+      }
+      closeModal();
+    } );
+
     $( '#session-modal' ).modal( {
       overlayCss:   {
         background:   '#000',
-        opacity:      .75
+        opacity:      0.75
       },
       containerCss:  {
         width:        '520px',
