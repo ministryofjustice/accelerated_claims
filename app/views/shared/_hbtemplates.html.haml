@@ -22,15 +22,11 @@
           {{text}}
       {{/each}}
 
-%script#title-dropdown(type='text/x-handlebars-template')
-  %select.title-dropdown.small(id='{{id}}' name='{{name}}')
-    %option(value='') &nbsp;
-    {{#each titles}}
-    %option(value='{{this}}') {{this}}
-    {{/each}}
-    %option(value='other') Other...
-
-%script#title-input(type='text/x-handlebars-template')
-  %input.smalltext(type='text' id='{{id}}' name='{{name}}')
+%script#extend-session(type='text/x-handlebars-template')
+  .modal#session-modal
+    %h2 Your session will expire in 15 minutes.
+    %p
+      Get more time to complete the form:
+      %a#extend(href='#') extend for 60 minutes
 
 
