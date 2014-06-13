@@ -6,14 +6,19 @@ class SessionTimeout
     @refreshSessionDelay = (sessionMinutes - warnMinutesBeforeEnd) * 60 * 1000
 
   startTimer: ->
-    @sessionEndId =           window.setTimeout( @endSession ,           @sessionEndDelay)
-    @refreshSessionDialogId = window.setTimeout( @refreshSessionDialog , @refreshSessionDelay)
+    @sessionTimeoutId = window.setTimeout( @endSession ,           @sessionEndDelay)
+    window.setTimeout( @refreshSessionDialog , @refreshSessionDelay)
 
   endSession: ->
     alert('end')
 
   refreshSessionDialog: ->
     alert('dialog')
+
+  refreshSession: ->
+    window.clearTimeout(@sessionTimeoutId);
+    @startTimer();
+
 
 root.SessionTimeout = SessionTimeout
 
