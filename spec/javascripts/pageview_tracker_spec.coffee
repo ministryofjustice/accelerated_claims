@@ -16,11 +16,13 @@ describe 'PageviewTracker', ->
       '<input data-virtual-pageview="/radio" id="radio_input_no" type="radio" value="No" />' +
       '</form></body>')
     $(document.body).append(element)
-    track = new window.PageviewTracker($)
+    track = new window.PageviewTracker( true )
 
   afterEach ->
     element.remove()
     element = null
+
+
 
   describe '"data-virtual-pageview" anchor link', ->
     describe 'on first click', ->
@@ -29,6 +31,7 @@ describe 'PageviewTracker', ->
         $('#a_link').trigger 'click'
 
         expect(window.dispatchPageView).toHaveBeenCalledWith('/clicked_pageview')
+        expect(window.dispatchPageView).toHaveBeenCalledWith('/accelerated/first-interaction')
 
     describe 'on second click', ->
       it 'does not dispatch pageview', ->
@@ -45,6 +48,7 @@ describe 'PageviewTracker', ->
         $('#external_link').trigger 'click'
 
         expect(window.dispatchPageView).toHaveBeenCalledWith('/external_url')
+        expect(window.dispatchPageView).toHaveBeenCalledWith('/accelerated/first-interaction')
 
     describe 'on second click', ->
       it 'does not dispatch pageview', ->
@@ -61,6 +65,7 @@ describe 'PageviewTracker', ->
         $('#radio_input').trigger 'click'
 
         expect(window.dispatchPageView).toHaveBeenCalledWith('/radio')
+        expect(window.dispatchPageView).toHaveBeenCalledWith('/accelerated/first-interaction')
 
     describe 'on second click', ->
       it 'does not dispatch pageview', ->

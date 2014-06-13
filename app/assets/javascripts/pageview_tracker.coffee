@@ -4,7 +4,7 @@ root.dispatchPageView = (url) ->
   ga 'send', 'pageview', url if typeof ga is 'function'
 
 class PageviewTracker
-  constructor: ($) ->
+  constructor: ( trigger_first_interaction ) ->
     @sentPageviews = new Object()
 
     textInput = $('input[type="text"][data-virtual-pageview]')
@@ -12,6 +12,7 @@ class PageviewTracker
     links = $('a[data-virtual-pageview]')
     external_links = $('a[rel="external"]')
     @xx_link_counter = 0
+    @first_interaction = trigger_first_interaction      # always false if first-interaction pageview not to be triggered
 
     @bind textInput, 'focusout', @onFocusOut
     @bind inputs, 'click', @onClick
@@ -22,6 +23,12 @@ class PageviewTracker
   construct_xx_link: ->
     @xx_link_counter++
     "xx-link-" + @xx_link_counter
+
+  record_first_interaction: ->
+    if @first_interaction
+      url = '/accelerated/first-interaction'
+      root.dispatchPageView url
+      @first_interaction = false
 
   bindDynamicallyCreatedElements: () ->
     $(document).on 'click', '#multiplePanelRadio_claimants_1', @onClick
@@ -47,6 +54,7 @@ class PageviewTracker
   onFocusOut: (event) =>
     element = event.currentTarget
     if element.value.length > 0
+      @record_first_interaction()
       element = event.currentTarget
       url = $(element).data('virtual-pageview')
       root.dispatchPageView url
@@ -56,6 +64,7 @@ class PageviewTracker
   onClick: (event) =>
     element = event.currentTarget
     if element.type != 'text'
+      @record_first_interaction()
       url = $(element).data('virtual-pageview')
       url = $(element).attr('href') if !url
       root.dispatchPageView url
