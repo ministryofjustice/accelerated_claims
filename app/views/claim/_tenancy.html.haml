@@ -3,8 +3,8 @@
     = form.radio_button_fieldset :tenancy_type,
         'What kind of tenancy agreement do you have with the defendant?',
         class: 'radio js-depend',
-        choice: {'Assured shorthold tenancy <span class="hint">(this is the most common form of tenancy)</span>' => 'assured',
-            'Demoted assured shorthold tenancy <span class="hint">(this is a tenancy agreement that has been ‘demoted’ by the court, for example because tenants behaved anti-socially or used the property for illegal activity)</span>' => 'demoted'},
+        choice: {'Assured shorthold tenancy <span class="hint">This is the most common form of tenancy</span>' => 'assured',
+            'Demoted assured shorthold tenancy <span class="hint">This is a tenancy agreement that has been ‘demoted’ by the court, for example because tenants behaved anti-socially or used the property for illegal activity</span>' => 'demoted'},
         data: { depend: 'tenancyType', 'virtual-pageview' => '/accelerated/tenancy-section' }
 
   .row.divider.hide.js-tenancyType.assured
