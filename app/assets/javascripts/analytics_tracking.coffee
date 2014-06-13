@@ -5,7 +5,8 @@ class AnalyticsTracking
     new root.EventTracker( $ )
 
     if @formWithOutErrors( $ )
-      new root.PageviewTracker( $ )
+      trigger_first_interaction = true
+      new root.PageviewTracker( trigger_first_interaction )
 
       if !@referrerIsSelf(document.referrer)
         @dispatchViewFormEvent()
@@ -14,7 +15,8 @@ class AnalyticsTracking
       _.each $('.error-link'), @dispatchValidationErrorEvent
 
     else
-      new root.PageviewTracker( $ )
+      trigger_first_interaction = false
+      new root.PageviewTracker( trigger_first_interaction )
 
 
   dispatchViewFormEvent: () ->
