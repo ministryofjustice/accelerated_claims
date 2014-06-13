@@ -14,19 +14,20 @@ moj.Modules.sessionModal = (function() {
 
   };
 
-  showModal = function( callback ) {
+  showModal = function( refreshSession ) {
     var source = $( '#extend-session' ).html(),
         template = Handlebars.compile( source );
 
     $( 'body' ).append( template( {} ) );
 
-    $( '#session-modal' ).find( 'a#extend' ).on( 'click', function( e ) {
-      e.preventDefault();
-      if( callback ) {
+    $("#session-modal").find("a#extend").on("click", (function(_this, callback) {
+      return function(e) {
+        e.preventDefault();
         callback();
-      }
-      closeModal();
-    } );
+        _this.closeModal();
+      };
+    })(this, refreshSession));
+
 
     $( '#session-modal' ).modal( {
       overlayCss:   {
