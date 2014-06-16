@@ -41,7 +41,6 @@ class ClaimController < ApplicationController
 
     if @claim.valid?
       flatten = Rails.env.test? || params[:flatten] == 'false' ? false : true
-      puts "++++++ DEBUG RAILS ENV #{Rails.env}  flatten: #{flatten.inspect}  param: #{params[:flatten].inspect} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
       pdf = PDFDocument.new(@claim.as_json, flatten).fill
 
       ActiveSupport::Notifications.instrument('send_file') do
