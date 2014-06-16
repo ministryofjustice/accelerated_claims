@@ -144,7 +144,12 @@ class Claim < BaseClass
   end
 
   def params_for attribute_name, claim_params
-    params = claim_params.key?(attribute_name) ? claim_params[attribute_name] : {}
+    begin
+      params = claim_params.key?(attribute_name) ? claim_params[attribute_name] : {}
+    rescue NoMethodError => err
+      raise NoMethodError.new(err.message + "attribute: #{attribute_name} #{claim_params.inspect}")
+    end
+
 
     case attribute_name
       when /claimant_one/
