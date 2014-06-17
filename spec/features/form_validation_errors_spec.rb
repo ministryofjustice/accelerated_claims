@@ -52,13 +52,17 @@ feature 'Filling in claim form' do
     choose('multiplePanelRadio_defendants_1')
     choose('defendant1address-yes')
 
+
     fill_in('claim_claimant_one_title', with: 'Major')
     fill_in('claim_claimant_one_full_name', with: 'Tom')
 
     click_button 'Complete form'
 
-    find_field('claim_claimant_one_title').value.should == 'Major'
-    find_field('claim_claimant_one_full_name').value.should == 'Tom'
+    unless remote_test?
+      find_field('claim_claimant_one_title').value.should == 'Major'
+      find_field('claim_claimant_one_full_name').value.should == 'Tom'
+    end
+    
   end
 
   def select_tenancy_start_date date
