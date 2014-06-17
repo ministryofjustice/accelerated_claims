@@ -4,6 +4,7 @@
   = form.radio_button_fieldset :multiple_occupation,
       'Do you have a HMO licence?',
       class: 'radio inline js-depend',
+      choice: { 'Yes'=>'Yes', 'No'=>'No', "I've applied for one" => 'applied' },
       data: { depend: 'hmo', 'virtual-pageview' => '/accelerated/licenses-section' }
 
   .sub-panel.hide.js-hmo.yes
