@@ -31,6 +31,7 @@ GEM
       rack
       thread_safe
     arel (4.0.2)
+    awesome_print (1.2.0)
     brakeman (2.5.0)
       erubis (~> 2.6)
       fastercsv (~> 1.5)
@@ -308,6 +309,7 @@ PLATFORMS
 
 DEPENDENCIES
   appsignal
+  awesome_print
   brakeman
   byebug
   capybara

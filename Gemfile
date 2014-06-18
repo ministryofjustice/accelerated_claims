@@ -57,6 +57,7 @@ group :development, :test do
   gem 'dotenv-rails'  # set environment variables via the filesystem
   gem 'launchy'
   gem 'guard-coffeescript'
+  gem 'awesome_print'
 end
 
 group :test do
