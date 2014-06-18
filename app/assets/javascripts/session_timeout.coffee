@@ -10,8 +10,23 @@ class SessionTimeout
     window.setTimeout( @refreshSessionDialog, @refreshSessionDelay )
 
   endSession: ->
-    alert('session expired')
-    window.setTimeout( (->window.location = '/heartbeat'), 500)
+    # alert('session expired')
+    $.ajax
+      type: "get"
+      url: "/expire_session?redirect=false"
+      success: (data, textStatus, jqXHR) ->
+        moj.log textStatus
+        document.location.href = "/expired"
+        return
+
+      error: (jqXHR, textStatus, errorThrown) ->
+        moj.log "error"
+        moj.log jqXHR
+        moj.log textStatus
+        moj.log errorThrown
+        return
+
+    # window.setTimeout( (->window.location = '/heartbeat'), 500)
 
   refreshSessionDialog: =>
     moj.Modules.sessionModal.showModal( @refreshSession )
@@ -19,7 +34,7 @@ class SessionTimeout
   refreshSession: =>
     window.clearTimeout(@sessionTimeoutId);
     $.get( '/heartbeat', ( =>
-      alert('heartbeat success!')
+      # alert('heartbeat success!')
       @startTimer()
     ) )
 
@@ -27,7 +42,7 @@ class SessionTimeout
 root.SessionTimeout = SessionTimeout
 
 jQuery ->
-  sessionMinutes = 4/60 # 60
-  warnMinutesBeforeEnd = 57/60 # 15
+  sessionMinutes = 0.2 # 60
+  warnMinutesBeforeEnd = 0.1 # 15
   timeout = new root.SessionTimeout(sessionMinutes, warnMinutesBeforeEnd)
   timeout.startTimer()

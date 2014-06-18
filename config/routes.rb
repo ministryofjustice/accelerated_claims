@@ -19,6 +19,7 @@ AcceleratedClaims::Application.routes.draw do
 
     get  '/cookies',        controller: :static, action: :cookies
     get  '/terms',          controller: :static, action: :terms
+    get  '/expired',        controller: :static, action: :expired
 
     get  '/heartbeat',      controller: :application, action: :heartbeat
     get  '/expire_session', controller: :application, action: :expire_session
