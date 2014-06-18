@@ -7,33 +7,40 @@ moj.Modules.sessionModal = (function() {
   var //functions
       init,
       showModal,
-      closeModal
+      closeModal,
+      timeString,
+      startCountdown,
+      cancelCountdown,
+      writeTime,
+
+      //vars
+      countdown
       ;
 
   init = function() {
 
   };
 
-  showModal = function( refreshSession ) {
+  showModal = function( refreshSession, sessionMinutes, warnBeforeEndMinutes ) {
     var source = $( '#extend-session' ).html(),
-        template = Handlebars.compile( source );
+        template = Handlebars.compile( source ),
+        sessionString,
+        remainingString;
 
-    $( 'body' ).append( template( {} ) );
+    sessionString = timeString( sessionMinutes );
+    remainingString = timeString( warnBeforeEndMinutes );
 
-    $("#session-modal").find("a#extend").on("click", (function(_this, callback) {
-      return function(e) {
-        e.preventDefault();
-        callback();
-        _this.closeModal();
-      };
-    })(this, refreshSession));
+    $( 'body' ).append( template( {
+      sessionString: sessionString,
+      remainingString: remainingString
+    } ) );
 
 
     $( '#session-modal' ).modal( {
       overlayCss:   {
-        background:   '#000',
-        opacity:      0.75
+        background:   '#000'
       },
+      opacity:      65,
       containerCss:  {
         width:        '520px',
         background:   '#fff',
@@ -43,10 +50,54 @@ moj.Modules.sessionModal = (function() {
       escClose:       true
     } );
 
+
+    $( '#session-modal' ).find( 'a#extend' ).on( 'click' , ( function( _this, callback ) {
+      return function( e ) {
+        e.preventDefault();
+        callback();
+        _this.closeModal();
+      };
+    } ( this, refreshSession ) ) );
+
+    startCountdown( warnBeforeEndMinutes );
   };
 
   closeModal = function() {
     $.modal.close();
+    $( '#session-modal' ).remove();
+    cancelCountdown();
+  };
+
+  timeString = function( t ) {
+    var m;
+    if( t >= 1 ) {
+      m = Math.ceil( t );
+      return m + ' minute' + ( m === 1 ? '' : 's' ) + '.';
+    }
+    return parseInt( t * 60, 10 ) + ' second' + ( ( t * 60 ) === 1 ? '' : 's' ) + '.';
+  };
+
+  startCountdown = function( remaining ) {
+    var interval = 1, // seconds
+        secondsRemaining = remaining * 60;
+
+    countdown = window.setInterval( function() {
+      if( secondsRemaining > 0 ) {
+        secondsRemaining -= interval;
+        writeTime( secondsRemaining / 60 );
+      } else {
+        cancelCountdown();
+      }
+    }, interval * 1000 );
+  };
+
+  cancelCountdown = function() {
+    window.clearInterval( countdown );
+    countdown = null;
+  };
+
+  writeTime = function( t ) {
+    $( '#timeRemaining' ).text( timeString( t ) );
   };
 
   // public
