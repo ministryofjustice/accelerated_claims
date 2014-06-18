@@ -6,7 +6,7 @@ feature 'nginx configuration', :remote => true do
 
   scenario 'http requests redirect to https' do
     visit '/'
-    expect(page.current_url).to eql 'https://civilclaims.dsd.io/accelerated-possession-eviction'
+    expect(page.current_url).to match /^https:\/\/.*\/accelerated-possession-eviction/
   end
 
   scenario '/ redirects to /accelerated-possession-eviction' do
