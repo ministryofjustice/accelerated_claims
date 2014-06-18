@@ -46,8 +46,13 @@ moj.Modules.sessionModal = (function() {
         background:   '#fff',
         padding:      '10px'
       },
-      overlayClose:   true,
-      escClose:       true
+      overlayClose:   false,
+      escClose:       false,
+      onShow: function() {
+        window.setTimeout( function() {
+          $('#session-modal').find('a#extend').focus();
+        }, 100 );
+      }
     } );
 
 
