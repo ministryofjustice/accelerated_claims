@@ -5,7 +5,7 @@ class License < BaseClass
   attr_accessor :issued_by
   attr_accessor :issued_date
 
-  validates :multiple_occupation, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
+  validates :multiple_occupation, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No', 'Applied'] }
 
   with_options if: :in_multiple_occupation? do |license|
     license.validates :issued_under_act_part, presence: { message: 'must be selected' }, inclusion: { in: ['Part2', 'Part3'] }
@@ -14,9 +14,21 @@ class License < BaseClass
     validates_with DateValidator, :fields => [:issued_date]
   end
 
+  with_options if: :hmo_licence_applied_for? do |license|
+    license.validates :issued_under_act_part, presence: { message: 'must be selected' }, inclusion: { in: ['Part2', 'Part3'] }
+    license.validates :issued_by, absence: { message: "Must be blank if HMO licence applied for" }
+    license.validates :issued_date, absence: { message: "Must be blank if HMO licence applied for" }
+  end
+
+
 
   def in_multiple_occupation?
     multiple_occupation.to_s[/Yes/] ? true : false
+  end
+
+
+  def hmo_licence_applied_for?
+    multiple_occupation.to_s[/Applied/] ? true : false
   end
 
   def as_json
@@ -33,7 +45,7 @@ class License < BaseClass
       "part3_year" => ''
     }
 
-    if in_multiple_occupation?
+    if in_multiple_occupation? || hmo_licence_applied_for?
       case issued_under_act_part
       when 'Part2'
         default_values.merge({

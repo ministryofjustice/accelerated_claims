@@ -13,6 +13,57 @@ describe License do
 
   subject { license }
 
+  context 'licence applied for' do
+    let(:multiple_occupation) { 'Applied' }
+    let(:issued_by) { '' }
+    let(:issued_date) { '' }
+
+    context 'no part 2 or part 3 selected' do 
+      let(:issued_under_act_part)     { '' }
+      it { should_not be_valid }
+    end
+
+
+    context 'and licensed under part 2 of act' do
+      let(:issued_under_act_part) { 'Part2' }
+      it { should be_valid }
+      its(:as_json) { should == {
+          "multiple_occupation" => 'Yes',
+          "part2_authority" =>  '',
+          "part2_day" => '',
+          "part2_month" => '',
+          "part2_year" => '',
+          "part3" => 'No',
+          "part3_authority" => '',
+          "part3_day" => '',
+          "part3_month" => '',
+          "part3_year" => ''
+        }
+      }
+    end
+
+    context 'and licensed under part 3 of act' do
+      let(:issued_under_act_part) { 'Part3' }
+      it { should be_valid }
+      its(:as_json) { should == {
+          "multiple_occupation" => 'No',
+          "part2_authority" =>  '',
+          "part2_day" => '',
+          "part2_month" => '',
+          "part2_year" => '',
+          "part3" => 'Yes',
+          "part3_authority" => '',
+          "part3_day" => '',
+          "part3_month" => '',
+          "part3_year" => ''
+        }
+      }
+    end
+
+
+  end
+
+
   context 'in multiple occupation' do
     let(:multiple_occupation) { 'Yes' }
     let(:issued_by) { 'Westminster City' }
