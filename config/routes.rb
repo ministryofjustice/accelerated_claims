@@ -12,15 +12,17 @@ AcceleratedClaims::Application.routes.draw do
   scope AcceleratedClaims::Application.config.relative_url_root || '/' do
     root 'claim#new'
 
-    get  '/',              controller: :claim, action: :new
-    post '/submission',    controller: :claim, action: :submission
-    get  '/confirmation',  controller: :claim, action: :confirmation
-    get  '/download',      controller: :claim, action: :download
+    get  '/',               controller: :claim, action: :new
+    post '/submission',     controller: :claim, action: :submission
+    get  '/confirmation',   controller: :claim, action: :confirmation
+    get  '/download',       controller: :claim, action: :download
 
-    get  '/cookies',       controller: :static, action: :cookies
-    get  '/terms',         controller: :static, action: :terms
+    get  '/cookies',        controller: :static, action: :cookies
+    get  '/terms',          controller: :static, action: :terms
+    get  '/expired',        controller: :static, action: :expired
 
-    get  '/heartbeat',     controller: :application, action: :heartbeat
+    get  '/heartbeat',      controller: :application, action: :heartbeat
+    post '/expire_session', controller: :application, action: :expire_session
 
     # zendesk
     resource :feedback,   only: [:new, :create], controller: 'feedback'
