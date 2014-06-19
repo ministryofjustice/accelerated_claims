@@ -22,7 +22,7 @@ AcceleratedClaims::Application.routes.draw do
     get  '/expired',        controller: :static, action: :expired
 
     get  '/heartbeat',      controller: :application, action: :heartbeat
-    get  '/expire_session', controller: :application, action: :expire_session
+    post '/expire_session', controller: :application, action: :expire_session
 
     # zendesk
     resource :feedback,   only: [:new, :create], controller: 'feedback'

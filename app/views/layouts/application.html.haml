@@ -10,7 +10,6 @@
 
 - content_for :javascripts do
   :erb
-    <script>document.body.className = document.body.className + ' env-<%= Rails.env %>';</script>
     <!--[if gte IE 7]><!--> <%= javascript_include_tag "application" %> <!--<![endif]-->
 
 - content_for :head do
