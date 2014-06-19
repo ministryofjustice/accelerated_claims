@@ -22,23 +22,6 @@ class License < BaseClass
   end
 
 
-  # def issued_under_act_part_yes
-  #   in_multiple_occupation?
-  # end
-
-  # def issued_under_act_part_yes=(value)
-  #   multiple_occupation = 'Yes'
-  # end
-
-  # def issued_under_act_part_applied
-  #   hmo_licence_applied_for?
-  # end
-
-  # def issued_under_act_part_applied=(value)
-  #   multiple_occupation = 'Applied'
-  # end
-
-
   def in_multiple_occupation?
     multiple_occupation.to_s[/Yes/] ? true : false
   end

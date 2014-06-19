@@ -282,7 +282,7 @@ class ClaimForm
 
     case hmo = get_data(prefix, 'multiple_occupation')
       when /Yes/
-        case part = get_data(prefix, 'issued_under_act_part')
+        case part = get_data(prefix, 'issued_under_act_part_yes')
           when /Part2/
             choose 'claim_license_issued_under_act_part_yes_part2'
           when /Part3/
@@ -293,6 +293,18 @@ class ClaimForm
         end
         fill_in_text_field(prefix, 'issued_by')
         fill_in_moj_date_fieldset prefix, 'issued_date'
+
+      when /Applied/
+        case part = get_data(prefix, 'issued_under_act_part_applied')
+          when /Part2/
+            choose 'claim_license_issued_under_act_part_applied_part2'
+          when /Part3/
+            choose 'claim_license_issued_under_act_part_applied_part3'
+          when nil
+          else
+            raise part
+          end
+
       when /No/
       when nil
       else
