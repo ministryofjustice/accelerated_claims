@@ -61,8 +61,11 @@ moj.Modules.sessionTimeout = (function() {
 
   endSession = function() {
     $.ajax( {
-      type:     'get',
-      url:      '/expire_session?redirect=false',
+      type:     'post',
+      url:      '/expire_session',
+      data:     {
+        redirect:   false
+      },
       success:  function( data, textStatus, jqXHR ) {
         moj.log( textStatus );
         document.location.href = '/expired';
