@@ -284,9 +284,9 @@ class ClaimForm
       when /Yes/
         case part = get_data(prefix, 'issued_under_act_part')
           when /Part2/
-            choose 'claim_license_issued_under_act_part_part2'
+            choose 'claim_license_issued_under_act_part_yes_part2'
           when /Part3/
-            choose 'claim_license_issued_under_act_part_part3'
+            choose 'claim_license_issued_under_act_part_yes_part3'
           when nil
           else
             raise part
