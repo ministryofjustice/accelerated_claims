@@ -7,7 +7,8 @@
 namespace :json do
 
   desc 'Create development environment version.json'
-  task :version do
+  task :version => :environment do
+    raise "Can only run this taks in development environment" unless Rails.env.development?
     require_relative 'rake_task_helpers/development_version_file_creator'
     RakeTaskHelper::DevelopmentVersionFileCreator.new.run
   end
