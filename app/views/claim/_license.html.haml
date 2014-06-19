@@ -4,12 +4,18 @@
   = form.radio_button_fieldset :multiple_occupation,
       'Do you have a HMO licence?',
       class: 'radio inline js-depend',
-      choice: { 'Yes'=>'Yes', 'No'=>'No', "I've applied for one" => 'applied' },
+      choice: { 'Yes'=>'Yes', 'No'=>'No', "I've applied for one" => 'Applied' },
       data: { depend: 'hmo', 'virtual-pageview' => '/accelerated/licenses-section' }
 
+  - choice = { 'Licence for properties that are <strong>3 or more storeys high</strong> and occupied by <strong>5 or more people</strong> (issued under part 2 of the Housing Act 2004)'.html_safe => 'Part2', 'Licence for properties that are <strong>within an area</strong> defined by a local council (issued under part 3 of the Housing act 2004)'.html_safe => 'Part3'}
+
   .sub-panel.hide.js-hmo.yes
-    = render partial: 'licence_details', locals: {:form => form, :hmo_licence => :yes }
+    = form.radio_button_fieldset :issued_under_act_part_yes, 'Which licence do you have?'.html_safe, class: 'radio', choice: choice
+    = form.text_field_row  :issued_by, label: 'Which local authority issued the licence?'
+    = form.moj_date_fieldset :issued_date, 'When was it issued?', class: 'date-picker'
 
   .sub-panel.hide.js-hmo.applied
-    = render partial: 'licence_details', locals: {:form => form, :hmo_licence => :applied }
+    = form.radio_button_fieldset :issued_under_act_part_applied, 'Which licence have you applied for?'.html_safe, class: 'radio', choice: choice
+    .row.information
+      %p You'll need to provide evidence of your licence application.
 
