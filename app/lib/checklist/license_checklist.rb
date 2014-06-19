@@ -30,20 +30,20 @@ class LicenseChecklist
 
   def part2_applied_for?
     @json['license_multiple_occupation'] == 'Yes' &&
-      !@json['license_part2_authority'].present? &&
-      !@json['license_part2_day'].present? &&
-      !@json['license_part2_month'].present? &&
-      !@json['license_part2_year'].present? &&
-      !@json['license_part_year'].present?
+      @json['license_part2_authority'].blank? &&
+      @json['license_part2_day'].blank? &&
+      @json['license_part2_month'].blank? &&
+      @json['license_part2_year'].blank? &&
+      @json['license_part2_year'].blank?
   end
 
 
   def part3_applied_for?
     @json['license_part3'] == 'Yes' && 
-      !@json['part3_authority'].present? &&
-      !@json['part3_day'].present? &&
-      !@json['part3_month'].present? &&
-      !@json['part3_year'].present?
+      @json['license_part3_authority'].blank? &&
+      @json['license_part3_day'].blank? &&
+      @json['license_part3_month'].blank? &&
+      @json['license_part3_year'].blank?
   end
 
 end
