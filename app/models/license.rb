@@ -21,6 +21,19 @@ class License < BaseClass
     license.validates :issued_date, absence: { message: "Must be blank if HMO licence applied for" }
   end
 
+  with_options if: :not_in_multiple_occupation? do |license|
+    license.validates :issued_by, absence: { message: "Must be blank if you replied No to 'Do you have an HMO licence'"}
+    license.validates :issued_date, absence: { message: "Must be blank if you replied No to 'Do you have an HMO licence'"}
+    license.validates :issued_under_act_part_applied, absence: { message: "Must be blank if you replied No to 'Do you have an HMO licence'"}
+    license.validates :issued_under_act_part_yes, absence: { message: "Must be blank if you replied No to 'Do you have an HMO licence'"}
+  end
+
+
+ 
+
+  def not_in_multiple_occupation?
+    multiple_occupation.to_s[/No/] ? true : false
+  end
 
   def in_multiple_occupation?
     multiple_occupation.to_s[/Yes/] ? true : false
