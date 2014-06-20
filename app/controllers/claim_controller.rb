@@ -6,8 +6,6 @@ class ClaimController < ApplicationController
     render 'landing'
   end
 
-  
-
   def new
     reset_session if referrer_is_landing_page?
 
@@ -54,10 +52,6 @@ class ClaimController < ApplicationController
   end
 
   def submission
-    puts "++++++ DEBUG SUBMISSION ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    require 'pp'
-    pp params[:claim]
-    
     session[:claim] = params['claim']
     @claim = Claim.new(params['claim'])
 
