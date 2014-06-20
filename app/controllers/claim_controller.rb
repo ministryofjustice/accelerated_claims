@@ -9,7 +9,7 @@ class ClaimController < ApplicationController
   def new
     reset_session if referrer_is_landing_page?
 
-    @page_title = 'Property possession'
+    @page_title = 'Make a claim to evict tenants: accelerated possession'
 
     @date_select_options = {
       order: [:day, :month, :year],
