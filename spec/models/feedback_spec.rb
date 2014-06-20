@@ -1,4 +1,4 @@
-describe Feedback do
+describe Feedback, :type => :model do
 
   let(:text) { 'feedback' }
   let(:feedback) { Feedback.new text: text, email: email}
@@ -7,7 +7,7 @@ describe Feedback do
   context 'with email' do
     let(:email) { 'test@example.com' }
 
-    it { should be_valid }
+    it { is_expected.to be_valid }
 
     its(:email_or_anonymous_placeholder) { should == email }
     its(:name_for_feedback) { should == 'Unknown' }
@@ -17,7 +17,7 @@ describe Feedback do
   context 'without email' do
     let(:email) { '' }
 
-    it { should be_valid }
+    it { is_expected.to be_valid }
 
     its(:email_or_anonymous_placeholder) { should == ENV['ANONYMOUS_PLACEHOLDER_EMAIL'] }
     its(:name_for_feedback) { should == 'anonymous feedback' }
@@ -27,14 +27,14 @@ describe Feedback do
   context 'with invalid email' do
     let(:email) { '@example.com' }
 
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
   context 'with test text' do
     let(:email) { 'test@example.com' }
     let(:text) { Feedback::TEST_TEXT }
 
-    it { should be_valid }
+    it { is_expected.to be_valid }
 
     its(:test?) { should be true }
   end

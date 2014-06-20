@@ -20,7 +20,7 @@ feature "submit claim" do
       end
       claim_form.submit
 
-      confirmation_page.is_displayed?.should be_truthy, claim_form.validation_error_text
+      expect(confirmation_page.is_displayed?).to be_truthy, claim_form.validation_error_text
 
       pdf_filename = confirmation_page.download_pdf
       pdf.load pdf_filename

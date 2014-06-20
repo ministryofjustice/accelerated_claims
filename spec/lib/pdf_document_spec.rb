@@ -11,9 +11,9 @@ describe PDFDocument do
       let(:json) { claim_formatted_data }
 
       it "should return a file path" do
-        @doc.should_receive(:use_strike_through_command)
+        expect(@doc).to receive(:use_strike_through_command)
         pdf = @doc.fill
-        pdf.path.should match '/tmp/accelerated_claim'
+        expect(pdf.path).to match '/tmp/accelerated_claim'
       end
     end
   end
@@ -29,12 +29,12 @@ describe PDFDocument do
       let(:json) { claim_formatted_data }
 
       it "should respond to .fill" do
-        @doc.should respond_to(:fill)
+        expect(@doc).to respond_to(:fill)
       end
 
       it "should return a file path" do
         pdf = @doc.fill
-        pdf.path.should match '/tmp/accelerated_claim'
+        expect(pdf.path).to match '/tmp/accelerated_claim'
       end
     end
 
@@ -48,7 +48,7 @@ describe PDFDocument do
       it "should produce 5 page PDF" do
         pdf = @doc.fill
         pages = %x[pdftk #{pdf.path} dump_data | awk '/NumberOfPages/ {print $2}']
-        pages.to_i.should eq 5
+        expect(pages.to_i).to eq 5
       end
     end
 
@@ -58,7 +58,7 @@ describe PDFDocument do
       it "should produce 6 page PDF" do
         pdf = @doc.fill
         pages = %x[pdftk #{pdf.path} dump_data | awk '/NumberOfPages/ {print $2}']
-        pages.to_i.should eq 6
+        expect(pages.to_i).to eq 6
       end
     end
   end
