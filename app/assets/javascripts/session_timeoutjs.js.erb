@@ -35,7 +35,7 @@ moj.Modules.sessionTimeout = (function() {
       } else if( quick === 'very' ) {
         sessionMinutes = 0.15;
         warnMinutesBeforeEnd = 0.1;
-      } else if( !isNaN( quick ) ) {
+      } else if( quick && !isNaN( quick ) ) {
         sessionMinutes = quick;
         warnMinutesBeforeEnd = sessionMinutes / 2;
       }
@@ -50,19 +50,24 @@ moj.Modules.sessionTimeout = (function() {
       timer = null;
     }
 
+    moj.log( 'Starting timer. Session will end in ' + sessionMinutes + ' minutes. (' + ( sessionMinutes * 60 ) + ' seconds)' );
+    moj.log( 'Warning will show in ' + ( sessionMinutes - warnMinutesBeforeEnd ) + ' minutes. (' + ( sessionMinutes - warnMinutesBeforeEnd ) * 60 + ' seconds)' );
+
     timer = window.setTimeout( function() {
       showPopup();
     }, ( sessionMinutes - warnMinutesBeforeEnd ) * minute );
   };
 
   showPopup = function() {
-    timer = window.setTimeout( function() {
-      endSession();
-    }, warnMinutesBeforeEnd * minute );
-
     moj.Modules.sessionModal.showModal( function() {
       refreshSession();
     }, sessionMinutes, warnMinutesBeforeEnd );
+
+    moj.log( 'Warning shown. Session will end in ' + warnMinutesBeforeEnd + ' minutes.' );
+
+    timer = window.setTimeout( function() {
+      endSession();
+    }, warnMinutesBeforeEnd * minute );
   };
 
   refreshSession = function() {
