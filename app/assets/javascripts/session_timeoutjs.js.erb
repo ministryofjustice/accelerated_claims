@@ -17,8 +17,10 @@ moj.Modules.sessionTimeout = (function() {
       warnMinutesBeforeEnd = sessionMinutes / 4,
       minute = 60 * 1000,
       quick = false,
+      baseProtocol = window.location.protocol,
+      baseDomain = window.location.host,
       baseUrl = '<%= Rails.configuration.relative_url_root %>',
-      basePath = ( baseUrl === '' ? '' : '/' + baseUrl )
+      basePath = baseProtocol + '//' + baseDomain + ( baseUrl === '' ? '' : '/' + baseUrl )
       ;
 
   init = function() {
