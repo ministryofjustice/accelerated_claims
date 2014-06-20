@@ -16,7 +16,9 @@ moj.Modules.sessionTimeout = (function() {
       sessionMinutes = 60,
       warnMinutesBeforeEnd = sessionMinutes / 4,
       minute = 60 * 1000,
-      quick = false
+      quick = false,
+      baseUrl = '<%= Rails.configuration.relative_url_root %>',
+      basePath = ( baseUrl === '' ? '' : '/' + baseUrl )
       ;
 
   init = function() {
@@ -53,7 +55,7 @@ moj.Modules.sessionTimeout = (function() {
   };
 
   refreshSession = function() {
-    $.get( '/heartbeat', function() {
+    $.get( basePath + '/heartbeat', function() {
       moj.Modules.sessionModal.closeModal();
       startTimer();
     } );
@@ -62,13 +64,13 @@ moj.Modules.sessionTimeout = (function() {
   endSession = function() {
     $.ajax( {
       type:     'post',
-      url:      '/expire_session',
+      url:      basePath + '/expire_session',
       data:     {
         redirect:   false
       },
       success:  function( data, textStatus, jqXHR ) {
         moj.log( textStatus );
-        document.location.href = '/expired';
+        document.location.href = basePath + '/expired';
       },
       error:    function( jqXHR, textStatus, errorThrown ) {
         moj.log( 'error' );
