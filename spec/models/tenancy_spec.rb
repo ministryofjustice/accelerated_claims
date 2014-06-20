@@ -50,8 +50,8 @@ describe Tenancy do
 
   shared_examples_for 'assured_shorthold_tenancy_type unset' do
     it { should_not be_valid }
-    its(:one_tenancy_agreement?) { should be_false }
-    its(:multiple_tenancy_agreements?) { should be_false }
+    its(:one_tenancy_agreement?) { should be false }
+    its(:multiple_tenancy_agreements?) { should be false }
 
     it "should have error message" do
       subject.valid?
@@ -68,8 +68,8 @@ describe Tenancy do
     subject { demoted_tenancy }
 
     it { should be_valid }
-    its(:demoted_tenancy?) { should be_true }
-    its(:assured_tenancy?) { should be_false }
+    its(:demoted_tenancy?) { should be true }
+    its(:assured_tenancy?) { should be false }
 
     context 'when assured_shorthold_tenancy_type "one"' do
       before { subject.assured_shorthold_tenancy_type = 'one' }
@@ -134,8 +134,8 @@ describe Tenancy do
     ['Blah', ''].each do |answer|
       subject { Tenancy.new(tenancy_type: answer) }
       it { should_not be_valid }
-      its(:demoted_tenancy?) { should be_false }
-      its(:assured_tenancy?) { should be_false }
+      its(:demoted_tenancy?) { should be false }
+      its(:assured_tenancy?) { should be false }
     end
 
     describe "when no value is provided" do
@@ -166,8 +166,8 @@ describe Tenancy do
     subject { assured_tenancy }
 
     it { should be_valid }
-    its(:demoted_tenancy?) { should be_false }
-    its(:assured_tenancy?) { should be_true }
+    its(:demoted_tenancy?) { should be false }
+    its(:assured_tenancy?) { should be true }
 
     context 'when there is only one tenancy agreement' do
       describe 'as_json' do
@@ -229,11 +229,11 @@ describe Tenancy do
       subject{ assured_tenancy(assured_shorthold_tenancy_type: 'one') }
       it { should be_valid }
 
-      its(:one_tenancy_agreement?) { should be_true }
-      its(:multiple_tenancy_agreements?) { should be_false }
+      its(:one_tenancy_agreement?) { should be true }
+      its(:multiple_tenancy_agreements?) { should be false }
       its(:start_date) { should == Date.parse("2010-01-05") }
       its(:latest_agreement_date) { should be_nil }
-      its(:only_start_date_present?) { should be_true }
+      its(:only_start_date_present?) { should be true }
 
       context 'and start date is blank' do
         subject { assured_tenancy(start_date: nil) }
@@ -355,9 +355,9 @@ describe Tenancy do
       end
 
       it { should be_valid }
-      its(:one_tenancy_agreement?) { should be_false }
-      its(:multiple_tenancy_agreements?) { should be_true }
-      its(:only_start_date_present?) { should be_false }
+      its(:one_tenancy_agreement?) { should be false }
+      its(:multiple_tenancy_agreements?) { should be true }
+      its(:only_start_date_present?) { should be false }
 
       describe "agreement_reissued_for_same_property" do
         let(:field) { :agreement_reissued_for_same_property }
@@ -393,7 +393,7 @@ describe Tenancy do
         end
 
         context 'but start date present' do
-          its(:only_start_date_present?) { should be_true }
+          its(:only_start_date_present?) { should be true }
         end
       end
 

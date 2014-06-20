@@ -11,7 +11,7 @@ describe Feedback do
 
     its(:email_or_anonymous_placeholder) { should == email }
     its(:name_for_feedback) { should == 'Unknown' }
-    its(:test?) { should be_false }
+    its(:test?) { should be false }
   end
 
   context 'without email' do
@@ -21,7 +21,7 @@ describe Feedback do
 
     its(:email_or_anonymous_placeholder) { should == ENV['ANONYMOUS_PLACEHOLDER_EMAIL'] }
     its(:name_for_feedback) { should == 'anonymous feedback' }
-    its(:test?) { should be_false }
+    its(:test?) { should be false }
   end
 
   context 'with invalid email' do
@@ -36,7 +36,7 @@ describe Feedback do
 
     it { should be_valid }
 
-    its(:test?) { should be_true }
+    its(:test?) { should be true }
   end
 
 end
