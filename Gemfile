@@ -47,7 +47,10 @@ group :production, :development do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '~> 2.0'
+  gem 'rspec-core', '2.99.0'
+  gem 'rspec-rails', '2.99.0'
+  gem 'rspec-mocks', '2.99.0'
+  gem 'rspec-its'
   gem 'jasmine', '~> 1.3.2'
   gem 'jasmine-rails'
   gem 'jasmine-jquery-rails', '~> 1.5.9'
