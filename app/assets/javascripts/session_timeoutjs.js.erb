@@ -29,6 +29,10 @@ moj.Modules.sessionTimeout = (function() {
       sessionMinutes = 2;
       warnMinutesBeforeEnd = 1.5;
     }
+    if( quick === 'very' ) {
+      sessionMinutes = 0.15;
+      warnMinutesBeforeEnd = 0.1;
+    }
 
     if( $( 'form#claimForm' ).length > 0 ) {
       startTimer();
