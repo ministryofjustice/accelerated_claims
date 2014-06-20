@@ -6,6 +6,8 @@ class Claim < BaseClass
 
   attr_accessor :form_state
 
+  attr_accessor :num_claimants
+
   def initialize(claim_params={})
     initialize_all_submodels(claim_params)
     @errors = ActiveModel::Errors.new(self)

@@ -32,6 +32,10 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def radio_button_fieldset attribute, legend, options={}
+    puts "++++++ DEBUG #{attribute} #{legend} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    puts "++++++ DEBUG options: #{options} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
+    
     virtual_pageview = options[:data] ? options[:data].delete('virtual-pageview') : nil
 
     set_class_and_id attribute, options
