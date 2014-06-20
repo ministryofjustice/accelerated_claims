@@ -8,9 +8,11 @@ class Claim < BaseClass
 
   attr_accessor :num_claimants
 
+
   def initialize(claim_params={})
     initialize_all_submodels(claim_params)
     @errors = ActiveModel::Errors.new(self)
+    @num_claimants = claim_params.key?(:num_claimants) ? claim_params[:num_claimants].to_i : nil
   end
 
   def as_json
