@@ -86,10 +86,10 @@ feature "moj date fieldset" do
  
  def expected_vanilla_moj_date_fieldset
   str = <<-EOHTML
-<fieldset aria-describedby="_0123456789abcdef" class="">
-  <span class="legend" id="_0123456789abcdef">
+<fieldset class="">
+  <legend>
     Date Notice Served<span class="hint block">For example,&nbsp;&nbsp;#{Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')}</span>
-  </span>
+  </legend>
   <div class="moj-date-day-div">
     <label for="claim_notice_date_served_3i">Day</label>
     <input  class="moj-date-day" 
@@ -125,10 +125,10 @@ end
 
 def expected_vanilla_moj_date_fieldset_with_specific_date
   str = <<-EOHTML
-<fieldset aria-describedby="_0123456789abcdef" class="">
-  <span class="legend" id="_0123456789abcdef">
+<fieldset class="">
+  <legend>
     Date Notice Served<span class="hint block">For example,&nbsp;&nbsp;05&nbsp;&nbsp;01&nbsp;&nbsp;2013</span>
-  </span>
+  </legend>
   <div class="moj-date-day-div">
     <label for="claim_notice_date_served_3i">Day</label>
     <input  class="moj-date-day" 
@@ -165,10 +165,10 @@ end
 
 def html_with_fieldset_classes
   str = <<-EOHTML
-<fieldset aria-describedby="_0123456789abcdef" class="date-picker conditional">
-  <span class="legend" id="_0123456789abcdef">
+<fieldset class="date-picker conditional">
+  <legend>
     Date Notice Served<span class="hint block">For example,&nbsp;&nbsp;#{Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')}</span>
-  </span>
+  </legend>
   <div class="moj-date-day-div">
     <label for="claim_notice_date_served_3i">Day</label>
     <input  class="moj-date-day" 
@@ -204,10 +204,10 @@ end
 
 def html_with_fieldset_classes_and_id
   str = <<-EOHTML
-<fieldset aria-describedby="claim_notice_date_served_error" class="date-picker conditional">
-  <span class="legend" id="claim_notice_date_served_error">
+<fieldset class="date-picker conditional" id="claim_notice_date_served_error">
+  <legend>
     Date Notice Served<span class="hint block">For example,&nbsp;&nbsp;#{Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')}</span>
-  </span>
+  </legend>
   <div class="moj-date-day-div">
     <label for="claim_notice_date_served_3i">Day</label>
     <input  class="moj-date-day" 
@@ -243,10 +243,10 @@ end
 
 def html_with_day_month_year_classes
   str = <<-EOHTML
-<fieldset aria-describedby="xxxxx" class="date-picker conditional">
-  <span class="legend" id="xxxxx">
+<fieldset class="date-picker conditional" id="xxxxx">
+  <legend>
     Date Notice Served<span class="hint block">For example,&nbsp;&nbsp;#{Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')}</span>
-  </span>
+  </legend>
   <div class="moj-date-day-div">
     <label for="claim_notice_date_served_3i">Day</label>
   <input  class="my-special-day mydate" 
@@ -282,10 +282,10 @@ end
 
 def html_with_other_options
     str = <<-EOHTML
-<fieldset aria-describedby="_0123456789abcdef" class="date-picker conditional">
-  <span class="legend" id="_0123456789abcdef">
+<fieldset class="date-picker conditional">
+  <legend>
     Date Notice Served<span class="hint block">For example,&nbsp;&nbsp;#{Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')}</span>
-  </span>
+  </legend>
   <div class="moj-date-day-div">
     <label for="claim_notice_date_served_3i">Day</label>
     <input  class="my-special-day mydate" 
