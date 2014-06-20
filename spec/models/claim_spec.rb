@@ -43,7 +43,7 @@ describe Claim do
       end
 
       it 'should set demoted tenancy boolean on tenancy' do
-        claim.tenancy.demoted_tenancy?.should be_false
+        claim.tenancy.demoted_tenancy?.should be false
       end
     end
 
@@ -101,7 +101,7 @@ describe Claim do
 
         context "and it's the only tenancy" do
           it 'should return the right JSON' do
-            pending 'should agreement_reissued_for_same_property be "NA"? - check with Kellie'
+            skip 'should agreement_reissued_for_same_property be "NA"? - check with Kellie'
             assert_hash_is_correct claim.as_json, desired_format
           end
         end
