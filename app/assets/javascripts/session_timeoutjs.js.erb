@@ -17,8 +17,10 @@ moj.Modules.sessionTimeout = (function() {
       warnMinutesBeforeEnd = sessionMinutes / 4,
       minute = 60 * 1000,
       quick = false,
+      baseProtocol = window.location.protocol,
+      baseDomain = window.location.host,
       baseUrl = '<%= Rails.configuration.relative_url_root %>',
-      basePath = ( baseUrl === '' ? '' : '/' + baseUrl )
+      basePath = baseProtocol + '//' + baseDomain + ( baseUrl === '' ? '' : '/' + baseUrl )
       ;
 
   init = function() {
@@ -26,6 +28,10 @@ moj.Modules.sessionTimeout = (function() {
     if( quick === 'true' ) {
       sessionMinutes = 2;
       warnMinutesBeforeEnd = 1.5;
+    }
+    if( quick === 'very' ) {
+      sessionMinutes = 0.15;
+      warnMinutesBeforeEnd = 0.1;
     }
 
     if( $( 'form#claimForm' ).length > 0 ) {
