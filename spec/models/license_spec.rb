@@ -1,4 +1,4 @@
-describe License do
+describe License, :type => :model do
 
   let(:license) do
     License.new({
@@ -20,7 +20,7 @@ describe License do
     let(:issued_under_act_part) { 'Part2' }
 
     context 'and licensed under part 2 of act' do
-      it { should be_valid }
+      it { is_expected.to be_valid }
       its(:as_json) { should == {
           "multiple_occupation" => 'Yes',
           "part2_authority" => issued_by,
@@ -38,7 +38,7 @@ describe License do
 
     context 'and licensed under part 3 of act' do
       let(:issued_under_act_part) { 'Part3' }
-      it { should be_valid }
+      it { is_expected.to be_valid }
       its(:as_json) { should == {
           "multiple_occupation" => 'No',
           "part2_authority" => '',
@@ -56,22 +56,22 @@ describe License do
 
     context 'and issued_under_act_part invalid' do
       let(:issued_under_act_part) { 'Part100' }
-      it { should_not be_valid }
+      it { is_expected.not_to be_valid }
     end
 
     context 'and issued_under_act_part blank' do
       let(:issued_under_act_part) { '' }
-      it { should_not be_valid }
+      it { is_expected.not_to be_valid }
     end
 
     context 'and issued_by blank' do
       let(:issued_by) { '' }
-      it { should_not be_valid }
+      it { is_expected.not_to be_valid }
     end
 
     context 'and issued_date blank' do
       let(:issued_date) { '' }
-      it { should_not be_valid }
+      it { is_expected.not_to be_valid }
     end
   end
 
@@ -81,7 +81,7 @@ describe License do
     let(:issued_by) { '' }
     let(:issued_under_act_part) { '' }
 
-    it { should be_valid }
+    it { is_expected.to be_valid }
 
     its(:as_json) { should == {
         "multiple_occupation" => 'No',
@@ -104,11 +104,11 @@ describe License do
     let(:issued_by) { '' }
     let(:issued_under_act_part) { '' }
 
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
 
     it 'should not have "not included in the list" error message' do
       license.valid?
-      license.errors.full_messages.should == ["Multiple occupation must be selected"]
+      expect(license.errors.full_messages).to eq(["Multiple occupation must be selected"])
     end
   end
 

@@ -1,4 +1,4 @@
-describe Claim do
+describe Claim, :type => :model do
 
   let(:claim) do
     Claim.new(data)
@@ -43,7 +43,7 @@ describe Claim do
       end
 
       it 'should set demoted tenancy boolean on tenancy' do
-        claim.tenancy.demoted_tenancy?.should be false
+        expect(claim.tenancy.demoted_tenancy?).to be false
       end
     end
 
@@ -235,11 +235,11 @@ describe Claim do
       end
 
       it 'should return the total cost' do
-        claim.as_json.should include "total_cost"
+        expect(claim.as_json).to include "total_cost"
       end
 
       it 'should match total fee' do
-        claim.as_json["total_cost"].should eq claim.as_json["fee_court_fee"]
+        expect(claim.as_json["total_cost"]).to eq claim.as_json["fee_court_fee"]
       end
     end
 

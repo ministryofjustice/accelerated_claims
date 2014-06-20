@@ -3,5 +3,5 @@ describe Checklist do
 
   subject { Checklist.new(json) }
 
-  it { should respond_to(:add) }
+  it { is_expected.to respond_to(:add) }
 end

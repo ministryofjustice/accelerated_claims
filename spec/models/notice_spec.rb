@@ -1,4 +1,4 @@
-describe Notice do
+describe Notice, :type => :model do
   let(:notice) do
     Notice.new(served_by_name: "Jim Bob",
                served_method: "by post",
@@ -26,64 +26,64 @@ describe Notice do
 
   describe "when given all valid values" do
     it "should be valid" do
-      notice.should be_valid
+      expect(notice).to be_valid
     end
   end
 
   describe "served_by_name" do
     it "should be required" do
       notice.served_by_name = ""
-      notice.should_not be_valid
+      expect(notice).not_to be_valid
     end
 
     it "should be up to 40 characters" do
       notice.served_by_name = "x" * 41
-      notice.should_not be_valid
+      expect(notice).not_to be_valid
     end
   end
 
   describe "served_method" do
     it "should be required" do
       notice.served_method = ""
-      notice.should_not be_valid
+      expect(notice).not_to be_valid
     end
 
     it "should be up to 40 characters" do
       notice.served_method = "x" * 41
-      notice.should_not be_valid
+      expect(notice).not_to be_valid
     end
   end
 
   describe "date served" do
     it "should be provided" do
       notice.date_served = ""
-      notice.should_not be_valid
+      expect(notice).not_to be_valid
     end
   end
 
   describe "expiry date" do
     it "should be provided" do
       notice.expiry_date = ""
-      notice.should_not be_valid
+      expect(notice).not_to be_valid
     end
   end
 
   context 'date_validation' do
     it 'should raise if the expiry date is same as served date' do
       notice.expiry_date = notice.date_served
-      notice.should_not be_valid
-      notice.errors["expiry_date"].should == ["must be later than the Date notice served "]
+      expect(notice).not_to be_valid
+      expect(notice.errors["expiry_date"]).to eq(["must be later than the Date notice served "])
     end
 
     it 'should raise if the expiry date is before the served date' do
       notice.expiry_date = notice.date_served - 10
-      notice.should_not be_valid
-      notice.errors["expiry_date"].should == ["must be later than the Date notice served "]
+      expect(notice).not_to be_valid
+      expect(notice.errors["expiry_date"]).to eq(["must be later than the Date notice served "])
     end
 
     it 'should not raise if the expiry date is after the served date' do
       notice.expiry_date = notice.date_served + 10
-      notice.should be_valid
+      expect(notice).to be_valid
     end
 
 

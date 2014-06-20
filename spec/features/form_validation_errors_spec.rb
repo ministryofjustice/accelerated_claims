@@ -21,7 +21,7 @@ feature 'Filling in claim form' do
 
   def check_focus_after_click link_text, selector
     click_link link_text
-    page.evaluate_script('document.activeElement.id').should == selector
+    expect(page.evaluate_script('document.activeElement.id')).to eq(selector)
   end
 
   scenario "submitting incomplete form", js: true do
@@ -59,8 +59,8 @@ feature 'Filling in claim form' do
     click_button 'Complete form'
 
     unless remote_test?
-      find_field('claim_claimant_one_title').value.should == 'Major'
-      find_field('claim_claimant_one_full_name').value.should == 'Tom'
+      expect(find_field('claim_claimant_one_title').value).to eq('Major')
+      expect(find_field('claim_claimant_one_full_name').value).to eq('Tom')
     end
     
   end
@@ -120,8 +120,8 @@ feature 'Filling in claim form' do
     expect(page).to_not have_content("it had been returned at the time notice was given")
 
     choose('claim_deposit_received_yes')
-    page.has_no_checked_field?('claim_deposit_as_money').should == true
-    page.has_no_checked_field?('claim_deposit_as_property').should == true
+    expect(page.has_no_checked_field?('claim_deposit_as_money')).to eq(true)
+    expect(page.has_no_checked_field?('claim_deposit_as_property')).to eq(true)
   end
 
 end
