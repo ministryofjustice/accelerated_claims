@@ -16,16 +16,17 @@
 
     = claim_form.radio_button_fieldset :num_claimants,
         'How many claimants are there?',
-        class: 'radio inline js-depend multiplePanelRadio',
-        data: { depend: 'num-claimants', 'virtual-pageview' => '/accelerated/claimants-section' }
+        class: 'radio inline js-depend',
+        choice: {'1 claimant'=>'1', '2 claimants'=>'2'},
+        data: { depend: 'numclaimants', 'virtual-pageview' => '/accelerated/claimants-section' }
     
-    .row.hide
+    .row.hide.js-numclaimants.1.js-numclaimants.2
       %h3 As the landlord, you’re known as the <strong>claimant</strong> in this case.
-    .sub-panel.claimant#claimant_one
+    .sub-panel.hide.js-numclaimants.1.js-numclaimants.2.claimant#claimant_one
       %h3.person First claimant
       = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_one}
     .row.divider
-    .sub-panel.claimant.same-address#claimant_two
+    .sub-panel.hide.js-numclaimants.2.claimant.same-address#claimant_two
       %h3.person
         Second claimant
         %span.hint.block.hide (optional)
