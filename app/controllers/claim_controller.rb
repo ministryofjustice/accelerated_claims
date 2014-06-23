@@ -33,7 +33,7 @@ class ClaimController < ApplicationController
       redirect_to_with_protocol(:new)
     end
 
-    @page_title = 'Property possession'
+    @page_title = 'Make a claim to evict tenants: accelerated possession'
   end
 
   def download
