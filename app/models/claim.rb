@@ -10,9 +10,9 @@ class Claim < BaseClass
 
 
   def initialize(claim_params={})
+    @num_claimants = claim_params.key?(:num_claimants) ? claim_params[:num_claimants].to_i : nil
     initialize_all_submodels(claim_params)
     @errors = ActiveModel::Errors.new(self)
-    @num_claimants = claim_params.key?(:num_claimants) ? claim_params[:num_claimants].to_i : nil
   end
 
   def as_json
@@ -48,7 +48,15 @@ class Claim < BaseClass
   def valid?
     @errors.clear
     validity = true
+    # validity = false unless claimants_valid?
     attributes_from_submodels.each do |instance_var, model|
+
+      if instance_var =~ /claimant_[one|two]/
+      end        
+        
+
+
+
       unless send(instance_var).valid?
         errors = send(instance_var).errors
         messages = errors.full_messages
@@ -153,13 +161,18 @@ class Claim < BaseClass
     rescue NoMethodError => err
       raise NoMethodError.new(err.message + "attribute: #{attribute_name} #{claim_params.inspect}")
     end
+    
 
 
     case attribute_name
       when /claimant_one/
-        params.merge!(validate_presence: true)
+        params.merge!(validate_presence: true, validate_absence: false)
       when /claimant_two/
-        params.merge!(validate_presence: false)
+        if @num_claimants == 1
+          params.merge!(validate_absence: true, validate_presence: false)
+        else
+          params.merge!(validate_presence: true)
+        end
       when /defendant_one/
         params.merge!(first_defendant: true)
       when /defendant_two/

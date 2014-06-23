@@ -1,21 +1,29 @@
 class Claimant < BaseClass
 
-  include Address
 
-  attr_accessor :validate_presence
+  include Address
+  include ActiveModel::Validations
+
+  attr_accessor :validate_presence, :validate_absence
 
   attr_accessor :title
   attr_accessor :full_name
 
-  with_options if: :validate_presence? do |claimant|
-    # claimant.validates :title,     presence: { message: 'must be entered' } # Organisations don't have titles
-    claimant.validates :full_name, presence: { message: 'must be entered' }
-    claimant.validates :street,    presence: { message: 'must be entered' }
-    claimant.validates :postcode,  presence: { message: 'must be entered' }
-  end
 
+  validates_with ContactValidator
   validates :title, length: { maximum: 8 }
   validates :full_name, length: { maximum: 40 }
+
+
+
+  def initialize(params)
+    super
+    unless params.include?(:validate_presence)
+      @validate_presence = true unless params[:validate_absence] == true
+    end
+  end
+  
+
 
   def as_json
     postcode1, postcode2 = split_postcode
@@ -26,8 +34,4 @@ class Claimant < BaseClass
     }
   end
 
-  private
-  def validate_presence?
-    validate_presence || [:title, :full_name, :street, :postcode].any? { |field| send(field).present? }
-  end
 end
