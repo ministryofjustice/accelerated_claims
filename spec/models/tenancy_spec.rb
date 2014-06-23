@@ -20,9 +20,7 @@ describe Tenancy, :type => :model do
       assured_shorthold_tenancy_type: 'one',
       agreement_reissued_for_same_property: nil,
       agreement_reissued_for_same_landlord_and_tenant: nil,
-      applicable_statements_1: 'Yes',
-      applicable_statements_2: 'Yes',
-      applicable_statements_3: 'Yes',
+      from_1997_option: 'Yes',
       applicable_statements_4: 'No',
       applicable_statements_5: 'No',
       applicable_statements_6: 'No'
@@ -39,9 +37,7 @@ describe Tenancy, :type => :model do
       tenancy_type: 'demoted',
       demotion_order_court: "Brighton County Court",
       previous_tenancy_type: "assured",
-      applicable_statements_1: 'No',
-      applicable_statements_2: 'No',
-      applicable_statements_3: 'No',
+      from_1997_option: 'No',
       applicable_statements_4: 'No',
       applicable_statements_5: 'No',
       applicable_statements_6: 'No'
@@ -269,20 +265,13 @@ describe Tenancy, :type => :model do
           start_date: Tenancy::APPLICABLE_FROM_DATE) }
 
         context 'and incorrect applicable statements selected' do
-          before do
-            subject.applicable_statements_1 = 'Yes'
-            subject.applicable_statements_2 = 'Yes'
-            subject.applicable_statements_3 = 'Yes'
-          end
+          before { subject.from_1997_option = 'Yes' }
 
           it { is_expected.not_to be_valid }
           it 'should have validation errors' do
             subject.valid?
-            ["Applicable statements 1 leave blank as you specified original tenancy agreement was made before 28 February 1997",
-             "Applicable statements 2 leave blank as you specified original tenancy agreement was made before 28 February 1997",
-             "Applicable statements 3 leave blank as you specified original tenancy agreement was made before 28 February 1997"].each do |msg|
-              expect(subject.errors.full_messages).to include msg
-            end
+            msg = "From 1997 option leave blank as you specified original tenancy agreement was made before 28 February 1997"
+            expect(subject.errors.full_messages).to include msg
           end
         end
       end
