@@ -21,9 +21,7 @@ describe Tenancy, :type => :model do
       agreement_reissued_for_same_property: nil,
       agreement_reissued_for_same_landlord_and_tenant: nil,
       from_1997_option: 'Yes',
-      applicable_statements_4: 'No',
-      applicable_statements_5: 'No',
-      applicable_statements_6: 'No'
+      upto_1997_option: 'No'
     }.merge(date_fields).merge(overrides)
     )
   end
@@ -38,9 +36,7 @@ describe Tenancy, :type => :model do
       demotion_order_court: "Brighton County Court",
       previous_tenancy_type: "assured",
       from_1997_option: 'No',
-      applicable_statements_4: 'No',
-      applicable_statements_5: 'No',
-      applicable_statements_6: 'No'
+      upto_1997_option: 'No'
     }.merge(date_fields).merge(overrides))
   end
 
@@ -281,20 +277,13 @@ describe Tenancy, :type => :model do
           start_date: Tenancy::RULES_CHANGE_DATE) }
 
         context 'and incorrect applicable statements selected' do
-          before do
-            subject.applicable_statements_4 = 'Yes'
-            subject.applicable_statements_5 = 'Yes'
-            subject.applicable_statements_6 = 'Yes'
-          end
+          before { subject.upto_1997_option = 'Yes' }
 
           it { is_expected.not_to be_valid }
           it 'should have validation errors' do
             subject.valid?
-            ["Applicable statements 4 leave blank as you specified original tenancy agreement was made on or after 28 February 1997",
-             "Applicable statements 5 leave blank as you specified original tenancy agreement was made on or after 28 February 1997",
-             "Applicable statements 6 leave blank as you specified original tenancy agreement was made on or after 28 February 1997"].each do |msg|
-              expect(subject.errors.full_messages).to include msg
-            end
+            msg = "Upto 1997 option leave blank as you specified original tenancy agreement was made on or after 28 February 1997"
+            expect(subject.errors.full_messages).to include msg
           end
         end
       end
