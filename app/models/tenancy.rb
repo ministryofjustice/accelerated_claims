@@ -48,11 +48,7 @@ class Tenancy < BaseClass
       :assured_shorthold_tenancy_notice_served_by,
       :assured_shorthold_tenancy_notice_served_date]
 
-  LATER_PERIOD_STATEMENTS = [:from_1997_option]
-
-  EARLIER_PERIOD_STATEMENTS = [:upto_1997_option]
-
-  STATEMENTS_FIELDS = LATER_PERIOD_STATEMENTS + EARLIER_PERIOD_STATEMENTS
+  STATEMENTS_FIELDS = [:from_1997_option, :upto_1997_option]
 
   with_options if: :demoted_tenancy? do |t|
     t.validates :demotion_order_date, presence: { message: 'must be selected' }
@@ -96,12 +92,12 @@ class Tenancy < BaseClass
   end
 
   with_options if: :in_first_rules_period? do |t|
-    t.validates *LATER_PERIOD_STATEMENTS,
+    t.validates :from_1997_option,
       inclusion: { in: ['No'], message: "leave blank as you specified original tenancy agreement was made before #{Tenancy::RULES_CHANGE_DATE.to_s(:printed)}" }
   end
 
   with_options if: :in_second_rules_period? do |t|
-    t.validates *EARLIER_PERIOD_STATEMENTS,
+    t.validates :upto_1997_option,
       inclusion: { in: ['No'], message: "leave blank as you specified original tenancy agreement was made on or after #{Tenancy::RULES_CHANGE_DATE.to_s(:printed)}" }
   end
 
