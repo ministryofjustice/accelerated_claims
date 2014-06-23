@@ -22,9 +22,7 @@ class Tenancy < BaseClass
   attr_accessor :demotion_order_court
   attr_accessor :previous_tenancy_type
 
-  attr_accessor :applicable_statements_1
-  attr_accessor :applicable_statements_2
-  attr_accessor :applicable_statements_3
+  attr_accessor :from_1997_option
   attr_accessor :applicable_statements_4
   attr_accessor :applicable_statements_5
   attr_accessor :applicable_statements_6
@@ -52,9 +50,7 @@ class Tenancy < BaseClass
       :assured_shorthold_tenancy_notice_served_by,
       :assured_shorthold_tenancy_notice_served_date]
 
-  LATER_PERIOD_STATEMENTS = [:applicable_statements_1,
-      :applicable_statements_2,
-      :applicable_statements_3]
+  LATER_PERIOD_STATEMENTS = [:from_1997_option]
 
   EARLIER_PERIOD_STATEMENTS = [:applicable_statements_4,
       :applicable_statements_5,
@@ -188,16 +184,13 @@ class Tenancy < BaseClass
       "latest_agreement_date_month" => month(latest_agreement_date),
       "latest_agreement_date_year" => year(latest_agreement_date),
       'demotion_order_court' => short_court_name,
-      'applicable_statements_1' => applicable_statements_1,
-      'applicable_statements_2' => applicable_statements_2,
-      'applicable_statements_3' => applicable_statements_3,
       'applicable_statements_4' => applicable_statements_4,
       'applicable_statements_5' => applicable_statements_5,
       'applicable_statements_6' => applicable_statements_6,
       'previous_tenancy_type' => previous_tenancy_type,
       'assured_shorthold_tenancy_type' => assured_shorthold_tenancy_type
     }
-
+    hash.merge!(from_1997)
     split_date(:demotion_order_date, hash)
     split_date(:assured_shorthold_tenancy_notice_served_date, hash)
     split_date(:original_assured_shorthold_tenancy_agreement_date, hash)
@@ -205,6 +198,14 @@ class Tenancy < BaseClass
   end
 
   private
+
+  def from_1997
+    {
+      'applicable_statements_1' => "#{from_1997_option}",
+      'applicable_statements_2' => "#{from_1997_option}",
+      'applicable_statements_3' => "#{from_1997_option}"
+    }
+  end
 
   def format_tenancy_type
     tenancy_type == "demoted" ? "Yes" : "No"
