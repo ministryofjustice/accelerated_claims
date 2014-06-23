@@ -1,4 +1,4 @@
-describe Property do
+describe Property, :type => :model do
   let(:property) do
     Property.new(street: "1 Aha Street\nLondon",
                  postcode: "SW1H 9AJ",
@@ -16,7 +16,7 @@ describe Property do
     end
 
     it "should produce formated output" do
-      property.as_json.should eq json_output
+      expect(property.as_json).to eq json_output
     end
   end
 
@@ -31,7 +31,7 @@ describe Property do
 
     describe "when given all valid values" do
       it "should be valid" do
-        property.should be_valid
+        expect(property).to be_valid
       end
     end
 
@@ -42,7 +42,7 @@ describe Property do
     describe "house" do
       it "when blank" do
         property.house = ""
-        property.should_not be_valid
+        expect(property).not_to be_valid
       end
     end
   end

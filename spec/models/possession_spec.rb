@@ -1,23 +1,23 @@
-describe Possession do
+describe Possession, :type => :model do
   let(:defendant) { Possession.new(hearing: 'Yes') }
 
   describe "when a hearing is provided" do
     it "should be valid" do
-      defendant.should be_valid
+      expect(defendant).to be_valid
     end
   end
 
   describe "when a hearing is not provided" do
     it "should be valid" do
       defendant.hearing = 'No'
-      defendant.should be_valid
+      expect(defendant).to be_valid
     end
   end
 
   describe "when the hearing is blank" do
     it "shouldn't be valid" do
       defendant.hearing = ""
-      defendant.should_not be_valid
+      expect(defendant).not_to be_valid
     end
   end
 

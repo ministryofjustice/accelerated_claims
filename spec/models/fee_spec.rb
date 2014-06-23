@@ -1,4 +1,4 @@
-describe Fee do
+describe Fee, :type => :model do
   let(:fee) { Fee.new(court_fee: court_fee) }
 
   subject { fee }
@@ -6,7 +6,7 @@ describe Fee do
   context "with blank court fee" do
     let(:court_fee) { "" }
 
-    it { should be_valid }
+    it { is_expected.to be_valid }
     its(:court_fee) { should == "280.00" }
 
     its(:as_json) { should == { "court_fee" => "280.00" } }
@@ -15,7 +15,7 @@ describe Fee do
   context "with a random court fee" do
     let(:court_fee) { 250 }
 
-    it { should be_valid }
+    it { is_expected.to be_valid }
     its(:court_fee) { should == "280.00" }
 
     its(:as_json) { should == { "court_fee" => "280.00" } }

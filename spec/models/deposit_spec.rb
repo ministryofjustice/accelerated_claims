@@ -1,4 +1,4 @@
-describe Deposit do
+describe Deposit, :type => :model do
 
   describe "when the deposit has not been received" do
     context "and information given date is populated" do
@@ -6,7 +6,7 @@ describe Deposit do
                                   information_given_date: Date.parse("2010-01-10")) }
       let(:error) { ["can't be provided if there is no deposit given"] }
 
-      it { should_not be_valid }
+      it { is_expected.not_to be_valid }
 
       it "should have an error message" do
         deposit.valid?
@@ -19,7 +19,7 @@ describe Deposit do
                                   ref_number: 'x123') }
       let(:error) { ["can't be provided if there is no deposit given"] }
 
-      it { should_not be_valid }
+      it { is_expected.not_to be_valid }
 
       it "should have an error message" do
         deposit.valid?
@@ -39,27 +39,27 @@ describe Deposit do
 
     describe "when given all valid values" do
       it "should be valid" do
-        deposit.should be_valid
+        expect(deposit).to be_valid
       end
     end
 
     describe "when money deposit value is blank" do
       it "shouldn't be valid" do
         deposit.received = ""
-        deposit.should_not be_valid
+        expect(deposit).not_to be_valid
       end
     end
 
     describe "when deposit's property is blank" do
       it "shouldn't be valid" do
         deposit.as_property = ""
-        deposit.should_not be_valid
+        expect(deposit).not_to be_valid
       end
     end
 
     describe 'as_json' do
       it 'should return correct json' do
-        deposit.as_json.should == {
+        expect(deposit.as_json).to eq({
           "as_property" => "No",
           "as_money" => "Yes",
           "information_given_date_day"=>"10",
@@ -67,7 +67,7 @@ describe Deposit do
           "information_given_date_year"=>"2010",
           "received" => "Yes",
           "ref_number" => 'x123'
-        }
+        })
       end
     end
   end
@@ -79,8 +79,8 @@ describe Deposit do
                             as_property: 'No',
                             as_money: 'No',
                             information_given_date: Date.parse("2010-01-10")) 
-      deposit.should_not be_valid
-      deposit.errors[:as_money].should == ["or As Property must be selected as the type of deposit"]
+      expect(deposit).not_to be_valid
+      expect(deposit.errors[:as_money]).to eq(["or As Property must be selected as the type of deposit"])
     end
 
     it 'should validate if both money and property are selected' do
@@ -89,7 +89,7 @@ describe Deposit do
                             as_property: 'Yes',
                             as_money: 'Yes',
                             information_given_date: Date.parse("2010-01-10")) 
-      deposit.should be_valid
+      expect(deposit).to be_valid
     end
   end
     

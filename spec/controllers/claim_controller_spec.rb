@@ -1,4 +1,4 @@
-describe ClaimController do
+describe ClaimController, :type => :controller do
   render_views
 
   describe "#new" do
@@ -19,14 +19,14 @@ describe ClaimController do
 
     shared_examples 'session mantained' do
       it 'should not clear session' do
-        controller.should_not_receive(:reset_session)
+        expect(controller).not_to receive(:reset_session)
         get :new
       end
     end
 
     context 'referrer is' do
       before do
-        @controller.request.stub(:referrer).and_return("http://example.com#{referrer_path}")
+        allow(@controller.request).to receive(:referrer).and_return("http://example.com#{referrer_path}")
       end
 
       context '/' do
@@ -46,12 +46,12 @@ describe ClaimController do
 
       context 'is gov.uk landing page' do
         before {
-          @controller.request.stub(:referrer).and_return('https://www.gov.uk/accelerated-possession-eviction')
+          allow(@controller.request).to receive(:referrer).and_return('https://www.gov.uk/accelerated-possession-eviction')
         }
         let(:referrer_path) { nil }
 
         it 'should clear session' do
-          controller.should_receive(:reset_session)
+          expect(controller).to receive(:reset_session)
           get :new
         end
       end
@@ -71,7 +71,7 @@ describe ClaimController do
     context 'with no claim data' do
       it 'should redirect to the claim form' do
         get :confirmation # no session
-        response.should redirect_to('/')
+        expect(response).to redirect_to('/')
       end
     end
 
@@ -81,7 +81,7 @@ describe ClaimController do
         data['claimant_one'].delete('full_name')
         @controller.session['claim'] = data
         get :confirmation
-        response.should redirect_to('/')
+        expect(response).to redirect_to('/')
       end
     end
   end
@@ -89,7 +89,7 @@ describe ClaimController do
   describe '#submission' do
     it 'should redirect to the confirmation page' do
       post :submission, claim: claim_post_data['claim']
-      response.should redirect_to('/confirmation')
+      expect(response).to redirect_to('/confirmation')
     end
   end
 
@@ -102,7 +102,7 @@ describe ClaimController do
 
         post :submission, claim: claim_post_data['claim']
         get :download
-        response.headers["Content-Type"].should eq "application/pdf"
+        expect(response.headers["Content-Type"]).to eq "application/pdf"
       end
     end
 
@@ -113,7 +113,7 @@ describe ClaimController do
 
         post :submission, claim: claim_post_data['claim']
         get :download, params: { 'flatten' => 'false' }
-        response.headers["Content-Type"].should eq "application/pdf"
+        expect(response.headers["Content-Type"]).to eq "application/pdf"
       end
     end
 
@@ -123,7 +123,7 @@ describe ClaimController do
         data['claimant_one'].delete('full_name')
         post :submission, claim: data
         get :download
-        response.should redirect_to('/')
+        expect(response).to redirect_to('/')
       end
     end
   end

@@ -6,7 +6,7 @@ describe DocumentCount do
       let(:count) { DocumentCount.new(json).add }
 
       it 'should add the number of documents to JSON' do
-        count["copy_number"].should eq 5
+        expect(count["copy_number"]).to eq 5
       end
     end
 
@@ -19,7 +19,7 @@ describe DocumentCount do
       let(:count) { DocumentCount.new(json).add }
 
       it 'should add the number of documents to JSON' do
-        count["copy_number"].should eq 4
+        expect(count["copy_number"]).to eq 4
       end
     end
 
@@ -32,7 +32,7 @@ describe DocumentCount do
       let(:count) { DocumentCount.new(json).add }
 
       it 'should add the number of documents to JSON' do
-        count["copy_number"].should eq 4
+        expect(count["copy_number"]).to eq 4
       end
     end
 
@@ -46,7 +46,7 @@ describe DocumentCount do
       let(:count) { DocumentCount.new(json).add }
 
       it 'should add the number of documents to JSON' do
-        count["copy_number"].should eq 3
+        expect(count["copy_number"]).to eq 3
       end
     end
   end
