@@ -49,6 +49,7 @@ end
 group :development, :test do
   gem 'rspec-rails', '3.0.1'
   gem 'rspec-its'
+  gem 'rspec-legacy_formatters'
   gem 'jasmine', '~> 1.3.2'
   gem 'jasmine-rails'
   gem 'jasmine-jquery-rails', '~> 1.5.9'
