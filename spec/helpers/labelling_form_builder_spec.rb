@@ -1,10 +1,10 @@
 
 require_relative '../mocks/mock_template'
 
-describe 'LabellingFormBuilder'  do
+describe 'LabellingFormBuilder', :type => :helper  do
 
   before(:each) do
-     SecureRandom.stub(:hex).with(20).and_return('0123456789abcdef')
+     allow(SecureRandom).to receive(:hex).with(20).and_return('0123456789abcdef')
   end
 
   let(:notice)      { Notice.new }
@@ -13,7 +13,7 @@ describe 'LabellingFormBuilder'  do
 
   describe '#text_field_row' do
     it 'should output regular text_field_row' do
-      form.text_field_row(:expiry_date).should == expected_text_field_html.chomp
+      expect(form.text_field_row(:expiry_date)).to eq(expected_text_field_html.chomp)
     end
   end
 

@@ -1,4 +1,4 @@
-describe Claimant do
+describe Claimant, :type => :model do
   let(:claimant) do
     Claimant.new(title: 'Mr',
                  full_name: "John Doe",
@@ -8,19 +8,19 @@ describe Claimant do
 
   subject { claimant }
 
-  it { should be_valid }
+  it { is_expected.to be_valid }
 
   context 'when validate_presence false' do
     before { claimant.validate_presence = false }
 
     context "and full_name is blank but other fields present" do
       before { claimant.full_name = "" }
-      it { should_not be_valid }
+      it { is_expected.not_to be_valid }
     end
 
     context "and all fields blank" do
       subject { Claimant.new(title: '', full_name: '', street: '', postcode: '') }
-      it { should be_valid }
+      it { is_expected.to be_valid }
     end
 
     include_examples 'address validation'

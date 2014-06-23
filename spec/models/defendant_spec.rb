@@ -1,4 +1,4 @@
-describe Defendant do
+describe Defendant, :type => :model do
   let(:defendant) do
     Defendant.new(title: "Mr",
                   full_name: "John Major",
@@ -8,7 +8,7 @@ describe Defendant do
 
   describe "when given all valid values" do
     it "should be valid" do
-      defendant.should be_valid
+      expect(defendant).to be_valid
     end
   end
 
@@ -28,29 +28,29 @@ describe Defendant do
           defendant.street = ""
           defendant.postcode = ""
         end
-        it { should be_valid }
+        it { is_expected.to be_valid }
       end
 
       context 'and address present' do
-        it { should_not be_valid }
+        it { is_expected.not_to be_valid }
       end
     end
 
     context 'only title blank' do
       before { defendant.title = "" }
-      it { should_not be_valid }
+      it { is_expected.not_to be_valid }
       it 'has error message' do
         subject.valid?
-        subject.errors.full_messages.should == ['Title must be entered']
+        expect(subject.errors.full_messages).to eq(['Title must be entered'])
       end
     end
 
     context 'only full_name blank' do
       before { defendant.full_name = "" }
-      it { should_not be_valid }
+      it { is_expected.not_to be_valid }
       it 'has error message' do
         subject.valid?
-        subject.errors.full_messages.should == ['Full name must be entered']
+        expect(subject.errors.full_messages).to eq(['Full name must be entered'])
       end
     end
 
@@ -76,7 +76,7 @@ describe Defendant do
         }
       end
       it "should generate the correct JSON" do
-        defendant.as_json.should eq desired_format
+        expect(defendant.as_json).to eq desired_format
       end
     end
 
@@ -84,7 +84,7 @@ describe Defendant do
       let(:defendant) { Defendant.new() }
 
       it "should generate a blank JSON" do
-        defendant.as_json.should eq Hash.new
+        expect(defendant.as_json).to eq Hash.new
       end
     end
   end
