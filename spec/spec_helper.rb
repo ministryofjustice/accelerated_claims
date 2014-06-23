@@ -31,7 +31,6 @@ RSpec.configure do |config|
   config.include ShowMeTheCookies, type: :feature
 
   config.infer_spec_type_from_file_location!
-  config.raise_errors_for_deprecations!
 end
 
 def diffmerge(actual, expected)
