@@ -261,5 +261,55 @@ describe Claim do
         expect(claim.as_json['defendant_one_postcode2']).to eql claim.as_json['property_postcode2']
       end
     end
+
+
+    context 'num_claimants is 1' do
+
+      it 'should be invalid when claimant 2 data is given' do
+        data = claim_post_data['claim'] 
+        data['num_claimants'] = 1
+        claim = Claim.new(data)
+        expect(claim).to_not be_valid
+        expect(claim.claimant_two.errors.messages[:full_name]).to eq ['must not be entered if number of claimants is 1']
+        expect(claim.claimant_two.errors.messages[:street]).to eq ['must not be entered if number of claimants is 1']
+        expect(claim.claimant_two.errors.messages[:postcode]).to eq ['must not be entered if number of claimants is 1']
+      end
+
+      it 'should be invalid when there is no claimant 1 data' do
+        data = claim_post_data['claim'] 
+        data['num_claimants'] = 1
+        data[:claimant_one] = { "title"=>"", "full_name"=>"", "street"=>"", "postcode"=>""} 
+        claim = Claim.new(data)
+        expect(claim).to_not be_valid
+        expect(claim.claimant_one.errors.messages[:full_name]).to eq ['must be entered']
+        expect(claim.claimant_one.errors.messages[:street]).to eq ['must be entered']
+        expect(claim.claimant_one.errors.messages[:postcode]).to eq ['must be entered']
+      end
+     
+      it 'should be valid if there is claimant 1 data and no claimant 2 data' do
+        data = claim_post_data['claim'] 
+        data['num_claimants'] = 1
+        data.delete(:claimant_two)
+        claim = Claim.new(data)
+        expect(claim).to be_valid
+      end
+
+      it 'should be valid if there is claimant one data and  claimant two data is all blank' do
+        data = claim_post_data['claim']
+        data['num_claimants'] = 1
+        data[:claimant_two] = { "title"=>"", "full_name"=>"", "street"=>"", "postcode"=>""} 
+        claim = Claim.new(data)
+        expect(claim).to be_valid
+      end
+    end
+    
+    context 'num_claimants is 2' do
+    end
+
+    context 'num_claimants is nil' do
+    end
+
+    context 'num_claimants is 3' do
+    end
   end
 end

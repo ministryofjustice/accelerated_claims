@@ -6,44 +6,69 @@ describe Claimant do
                  postcode: "SW1H9AJ")
   end
 
-  subject { claimant }
+  # subject { claimant }
 
-  it { should be_valid }
 
-  context 'when validate_presence false' do
-    before { claimant.validate_presence = false }
+  context 'validate_presence not set' do
 
-    context "and full_name is blank but other fields present" do
-      before { claimant.full_name = "" }
-      it { should_not be_valid }
+    it 'should set the validate_presence attribute to true if missing' do
+      expect(claimant.validate_presence).to be_true
     end
 
-    context "and all fields blank" do
-      subject { Claimant.new(title: '', full_name: '', street: '', postcode: '') }
-      it { should be_valid }
+    it 'should be valid if all attributes are set ' do
+      expect(claimant.validate_presence).to be_true
+      expect(claimant).to be_valid
     end
 
-    include_examples 'address validation'
+    it 'should not be valid if any of the attributes is missing' do
+      claimant.full_name = nil
+      expect(claimant).to_not be_valid
+      expect(claimant.errors.full_messages).to eq ['Full name must be entered']
+    end
   end
 
-  context 'when validate_presence true' do
-    before { claimant.validate_presence = true }
 
-    include_examples 'name validation'
-    include_examples 'address validation'
-    include_examples 'address presence validation'
-  end
 
-  describe "#as_json" do
-    let(:json_output) do
-      {
-        "address" => "Mr John Doe\nStreety Street\nLondon",
-        "postcode1" => "SW1H",
-        "postcode2" => "9AJ"
-      }
+
+  context 'validate_presence set to true' do
+    
+    before(:each)   { claimant.validate_presence = true }
+
+    it 'should be valid if all attributes are set' do
+      expect(claimant).to be_valid
     end
 
-    its(:as_json) { should == json_output }
+    it 'should not be valid if any of the attributes are missing' do
+      claimant.street = nil
+      expect(claimant).to_not be_valid
+      expect(claimant.errors.full_messages).to eq ['Street must be entered']
+    end
+
+    it 'should not be valid if any of the attributes are blank' do
+      claimant.postcode = ''
+      expect(claimant).to_not be_valid
+      expect(claimant.errors.full_messages).to eq ['Postcode must be entered']
+    end
   end
+
+
+  context 'validate_absence set to false' do
+
+    let(:empty_claimant)  {  Claimant.new( :validate_absence => true )  }
+
+    it 'should be valid if all fields are empty' do
+      expect(empty_claimant).to be_valid
+    end
+
+    it 'should not be valid if any of the attributes are entered' do
+      empty_claimant.street = 'Petty France'
+      expect(empty_claimant).to_not be_valid
+      expect(empty_claimant.errors.full_messages).to eq ['Street must not be entered if number of claimants is 1']
+    end
+  end
+ 
+
+
+
 
 end

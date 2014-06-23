@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 def claim_post_data
+  HashWithIndifferentAccess.new(
   { "claim" =>
-    { "claimant_one" =>
+    { "num_claimants" => 2,
+      "claimant_one" =>
       {
         "title" => "Mr",
         "full_name" => "John Smith",
@@ -126,6 +128,7 @@ def claim_post_data
       }
     }
   }
+  )
 end
 
 def demoted_claim_post_data
