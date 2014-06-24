@@ -264,10 +264,13 @@ describe Claim do
 
 
     context 'num_claimants is 1' do
+      let(:data) do
+        mydata = claim_post_data['claim'] 
+        mydata['num_claimants'] = 1
+        mydata
+      end
 
       it 'should be invalid when claimant 2 data is given' do
-        data = claim_post_data['claim'] 
-        data['num_claimants'] = 1
         claim = Claim.new(data)
         expect(claim).to_not be_valid
         expect(claim.claimant_two.errors.messages[:full_name]).to eq ['must not be entered if number of claimants is 1']
@@ -276,8 +279,6 @@ describe Claim do
       end
 
       it 'should be invalid when there is no claimant 1 data' do
-        data = claim_post_data['claim'] 
-        data['num_claimants'] = 1
         data[:claimant_one] = { "title"=>"", "full_name"=>"", "street"=>"", "postcode"=>""} 
         claim = Claim.new(data)
         expect(claim).to_not be_valid
@@ -287,16 +288,12 @@ describe Claim do
       end
      
       it 'should be valid if there is claimant 1 data and no claimant 2 data' do
-        data = claim_post_data['claim'] 
-        data['num_claimants'] = 1
         data.delete(:claimant_two)
         claim = Claim.new(data)
         expect(claim).to be_valid
       end
 
       it 'should be valid if there is claimant one data and  claimant two data is all blank' do
-        data = claim_post_data['claim']
-        data['num_claimants'] = 1
         data[:claimant_two] = { "title"=>"", "full_name"=>"", "street"=>"", "postcode"=>""} 
         claim = Claim.new(data)
         expect(claim).to be_valid
@@ -304,12 +301,64 @@ describe Claim do
     end
     
     context 'num_claimants is 2' do
+      let(:data)     { claim_post_data['claim']  }
+      let(:claim)    { Claim.new(data) }
+
+      it 'should be valid when both claimants details are present' do
+        expect(claim).to be_valid
+      end
+
+
+      it 'should not be valid when no details are present for claimant 2' do
+        data.delete(:claimant_two)
+        expect(claim).to_not be_valid
+        expect(claim.errors.full_messages).to eq [["claim_claimant_two_full_name_error", "Full name must be entered"], ["claim_claimant_two_street_error", "Street must be entered"], ["claim_claimant_two_postcode_error", "Postcode must be entered"]]
+      end
+
+      it 'should not be valid when the details for claimant 2 are blank' do
+        data["claimant_two"].each { |k, v| data["claimant_two"][k] = '' }
+        expect(claim).to_not be_valid
+        expect(claim.errors.full_messages).to eq [["claim_claimant_two_full_name_error", "Full name must be entered"], ["claim_claimant_two_street_error", "Street must be entered"], ["claim_claimant_two_postcode_error", "Postcode must be entered"]]
+      end
     end
 
-    context 'num_claimants is nil' do
+    context 'num_claimants is not specified' do
+
+      let(:data) do
+        mydata = claim_post_data['claim'] 
+        mydata.delete('num_claimants')
+        mydata
+      end
+
+      it 'should be valid if claimants one and two are present' do
+        expect(data[:num_claimants]).to be_nil
+        expect(claim).to be_valid
+      end
+
+      it 'should be valid if only claimant one is present' do
+        data.delete(:claimant_two)
+        expect(data[:num_claimants]).to be_nil
+        expect(claim).to be_valid
+      end
+
+      it 'should not be valid if only claimant two is present' do
+        data.delete(:claimant_one)
+        expect(data[:num_claimants]).to be_nil
+        expect(claim).to_not be_valid
+        expect(claim.errors.full_messages).to eq [["claim_claimant_one_full_name_error", "Full name must be entered"], ["claim_claimant_one_street_error", "Street must be entered"], ["claim_claimant_one_postcode_error", "Postcode must be entered"]]
+      end
+
     end
 
-    context 'num_claimants is 3' do
+    context 'invalid num claimants' do
+
+      let(:data)  { claim_post_data['claim'] }
+
+      it 'should not be valid if the num claimants is 3' do
+        data[:num_claimants] = 3
+        expect(claim).to_not be_valid
+        expect(claim.errors.full_messages).to eq ["Num claimants 3 is not a valid value"]
+      end
     end
   end
 end
