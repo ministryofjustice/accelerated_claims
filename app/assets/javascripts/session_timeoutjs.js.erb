@@ -19,7 +19,6 @@ moj.Modules.sessionTimeout = (function() {
       counter = null,
       minute = 60 * 1000,
       quick = false,
-      timeout = false,
       baseProtocol = window.location.protocol,
       baseDomain = window.location.host,
       baseUrl = '<%= Rails.configuration.relative_url_root %>',
@@ -27,10 +26,9 @@ moj.Modules.sessionTimeout = (function() {
       ;
 
   init = function() {
-    timeout = moj.Modules.tools.getQueryVar( 'timeout' );
     quick = moj.Modules.tools.getQueryVar( 'quick' );
 
-    if( timeout === 'true' && $( 'form#claimForm' ).length > 0 ) {
+    if( $( 'form#claimForm' ).length > 0 ) {
       if( quick === 'true' ) {
         sessionMinutes = 2;
         warnMinutesBeforeEnd = 1.5;
