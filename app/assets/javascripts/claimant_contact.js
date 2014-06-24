@@ -37,7 +37,7 @@ moj.Modules.claimantContact = (function() {
       toggleDetailsBlock( $( this ).closest( '.details' ) );
     } );
 
-    $( '[name="multiplePanelRadio_claimants"]' ).on( 'click', function() {
+    $( '[name="claim[num_claimants]"]' ).on( 'click', function() {
       showPanel();
     } );
   };
