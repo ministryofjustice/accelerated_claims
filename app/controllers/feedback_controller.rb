@@ -3,7 +3,7 @@ require 'zendesk_helper'
 class FeedbackController < ApplicationController
 
   def new
-    @page_title = 'Property repossession'
+    @page_title = 'Your feedback'
     @feedback ||= Feedback.new
   end
 

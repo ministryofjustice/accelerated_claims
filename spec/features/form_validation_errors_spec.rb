@@ -21,7 +21,7 @@ feature 'Filling in claim form' do
 
   def check_focus_after_click link_text, selector
     click_link link_text
-    page.evaluate_script('document.activeElement.id').should == selector
+    expect(page.evaluate_script('document.activeElement.id')).to eq(selector)
   end
 
   scenario "submitting incomplete form", js: true do
@@ -52,13 +52,17 @@ feature 'Filling in claim form' do
     choose('multiplePanelRadio_defendants_1')
     choose('defendant1address-yes')
 
+
     fill_in('claim_claimant_one_title', with: 'Major')
     fill_in('claim_claimant_one_full_name', with: 'Tom')
 
     click_button 'Complete form'
 
-    find_field('claim_claimant_one_title').value.should == 'Major'
-    find_field('claim_claimant_one_full_name').value.should == 'Tom'
+    unless remote_test?
+      expect(find_field('claim_claimant_one_title').value).to eq('Major')
+      expect(find_field('claim_claimant_one_full_name').value).to eq('Tom')
+    end
+    
   end
 
   def select_tenancy_start_date date
@@ -116,8 +120,8 @@ feature 'Filling in claim form' do
     expect(page).to_not have_content("it had been returned at the time notice was given")
 
     choose('claim_deposit_received_yes')
-    page.has_no_checked_field?('claim_deposit_as_money').should == true
-    page.has_no_checked_field?('claim_deposit_as_property').should == true
+    expect(page.has_no_checked_field?('claim_deposit_as_money')).to eq(true)
+    expect(page.has_no_checked_field?('claim_deposit_as_property')).to eq(true)
   end
 
 end

@@ -8,12 +8,12 @@ describe LicenseChecklist do
 
       it 'should add the section 2 text when section 2 is chosen' do
         formatted_data = LicenseChecklist.new(section_2_applied_for).add
-        formatted_data['required_documents'].should == section2
+        expect(formatted_data['required_documents']).to eq section2
       end
 
       it 'should add the section 3 text when section 3 chosen' do
         formatted_data = LicenseChecklist.new(section_3_applied_for).add
-        formatted_data['required_documents'].should == section3
+        expect(formatted_data['required_documents']).to eq section3
       end
     end
 
@@ -22,12 +22,12 @@ describe LicenseChecklist do
     context 'HMO licence held' do
       it 'should not add anything when section 2 is chosen' do
         formatted_data = LicenseChecklist.new(section_2_held).add
-        formatted_data['required_documents'].should be_empty
+        expect(formatted_data['required_documents']).to be_empty
       end
 
       it 'should not add anything when section 3 is chosen' do
         formatted_data = LicenseChecklist.new(section_3_held).add
-        formatted_data['required_documents'].should be_empty
+        expect(formatted_data['required_documents']).to be_empty
       end
     end
 
@@ -35,7 +35,7 @@ describe LicenseChecklist do
     context 'HMO licence no Applicable' do
       it 'should not add anything when section 2 is chosen' do
         formatted_data = LicenseChecklist.new(hmo_not_applicable).add
-        formatted_data['required_documents'].should be_empty
+        expect(formatted_data['required_documents']).to be_empty
       end
     end
 

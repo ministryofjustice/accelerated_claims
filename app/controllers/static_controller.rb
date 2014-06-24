@@ -3,6 +3,10 @@ class StaticController < ApplicationController
     @page_title = 'Cookies'
     render 'cookies'
   end
+  def expired
+    @page_title = 'Session expired'
+    render 'expired'
+  end
   def terms
     @page_title = 'Terms and conditions and privacy policy'
     render 'terms'

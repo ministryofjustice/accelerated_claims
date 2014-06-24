@@ -27,3 +27,6 @@ vagrant
 casper.rake
 config/initializers/newrelic.rb.bak
 config/environments/history.txt
+
+# dev version file
+/public/version.json
