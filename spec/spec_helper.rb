@@ -22,7 +22,6 @@ else
 end
 
 RSpec.configure do |config|
-  config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
   config.filter_run_excluding :remote unless remote_test?
@@ -31,15 +30,7 @@ RSpec.configure do |config|
   config.order = 'random'
   config.include ShowMeTheCookies, type: :feature
 
-  # config.before(:all) do
-    # $striker_pid = `java -jar scripts/strike2-0.1.0-standalone.jar & $!`
-    # puts "running: #{$striker_pid}"
-  # end
-#
-  # config.after(:all) do
-    # `trap "kill #{$striker_pid}" EXIT`
-    # puts "killed: #{$striker_pid}"
-  # end
+  config.infer_spec_type_from_file_location!
 end
 
 def diffmerge(actual, expected)

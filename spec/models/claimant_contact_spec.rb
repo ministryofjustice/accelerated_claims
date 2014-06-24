@@ -1,4 +1,4 @@
-describe ClaimantContact do
+describe ClaimantContact, :type => :model do
 
   def claimant_contact options={}
     params = claim_post_data['claim']['claimant_contact'].merge(options)
@@ -7,7 +7,7 @@ describe ClaimantContact do
 
   describe "when given all valid values" do
     it "should be valid" do
-      claimant_contact.should be_valid
+      expect(claimant_contact).to be_valid
     end
   end
 
@@ -15,13 +15,13 @@ describe ClaimantContact do
     context "when over 40 characters" do
       subject { claimant_contact('company_name' => ("x" * 41)) }
 
-      it { should_not be_valid }
+      it { is_expected.not_to be_valid }
     end
 
     context "when under 40 characters" do
       subject { claimant_contact('company_name' => ("x" * 40)) }
 
-      it { should be_valid }
+      it { is_expected.to be_valid }
     end
   end
 
@@ -50,7 +50,7 @@ describe ClaimantContact do
 
       subject { claimant_contact.as_json }
 
-      it { should eq json_output }
+      it { is_expected.to eq json_output }
     end
 
     context "when company name is supplied" do
@@ -68,7 +68,7 @@ describe ClaimantContact do
 
       subject { claimant_contact('company_name' => 'Cool company').as_json }
 
-      it { should eq json_output }
+      it { is_expected.to eq json_output }
     end
   end
 

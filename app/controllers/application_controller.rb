@@ -12,4 +12,17 @@ class ApplicationController < ActionController::Base
   def heartbeat
     render text: ''
   end
+
+
+
+  def expire_session
+    if session
+      reset_session
+      if params["redirect"] == 'false'
+        render text: ''
+      else
+        redirect_to root_path
+      end
+    end
+  end
 end
