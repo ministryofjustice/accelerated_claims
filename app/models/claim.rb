@@ -8,6 +8,8 @@ class Claim < BaseClass
 
   attr_accessor :num_claimants
 
+  @@valid_num_claimants = [nil, 1, 2]
+
 
   def initialize(claim_params={})
     @num_claimants = claim_params.key?(:num_claimants) ? claim_params[:num_claimants].to_i : nil
@@ -48,15 +50,8 @@ class Claim < BaseClass
   def valid?
     @errors.clear
     validity = true
-    # validity = false unless claimants_valid?
+    validity = false unless num_claimants_valid?
     attributes_from_submodels.each do |instance_var, model|
-
-      if instance_var =~ /claimant_[one|two]/
-      end        
-        
-
-
-
       unless send(instance_var).valid?
         errors = send(instance_var).errors
         messages = errors.full_messages
@@ -74,6 +69,16 @@ class Claim < BaseClass
   end
 
   private
+
+
+  def num_claimants_valid?
+    unless @@valid_num_claimants.include?(@num_claimants)
+      errors[:num_claimants] << "#{@num_claimants} is not a valid value" 
+      return false
+    end
+    true
+  end
+
 
   def populate_defendants_address_if_blank hash
     if defendant_one.present? && defendant_one.address_blank?
@@ -170,6 +175,8 @@ class Claim < BaseClass
       when /claimant_two/
         if @num_claimants == 1
           params.merge!(validate_absence: true, validate_presence: false)
+        elsif @num_claimants.nil?
+          params.merge!(validate_absence: false, validate_presence: false)
         else
           params.merge!(validate_presence: true)
         end

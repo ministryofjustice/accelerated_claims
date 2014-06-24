@@ -58,13 +58,23 @@ class ClaimForm
   end
 
   def select_number_of type
+    puts "++++++ DEBUG type #{type.inspect} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
+    case type
+    when :claimants
+      button_prefix = "claim_num"
+    when :defendants
+      button_prefix = "multiplePanelRadio"
+    end
+
+
     number = get_data('javascript', "number_of_#{type}").to_i
 
     case number
       when 1
-        choose("multiplePanelRadio_#{type}_1")
+        choose("#{button_prefix}_#{type}_1")
       when 2
-        choose("multiplePanelRadio_#{type}_2")
+        choose("#{button_prefix}_#{type}_2")
     end
 
     find("#claim_#{type.to_s.singularize}_one_title") # wait for selector to be shown
