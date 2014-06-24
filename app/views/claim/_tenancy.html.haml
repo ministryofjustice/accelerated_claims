@@ -45,27 +45,21 @@
           %p#read-statements= "If your original tenancy agreement (and any additional agreements) were made <strong>on or after #{(Tenancy::RULES_CHANGE_DATE).to_s(:printed)}</strong>, read the statements below and select all that apply:".html_safe
 
           %ol
-            %li{ id: form.id_for(:applicable_statements_1, 'as1').to_s }
-              = form.labelled_check_box :applicable_statements_1, 'You didn’t tell the defendant that the agreement was likely to change'
-            %li{ id: form.id_for(:applicable_statements_2, 'as2').to_s }
-              = form.labelled_check_box :applicable_statements_2, 'You have an assured shorthold tenancy agreement (with no exceptions)'.html_safe
-            %li{ id: form.id_for(:applicable_statements_3, 'as3').to_s }
-              = form.labelled_check_box :applicable_statements_3, 'The defendant is not living in the property as an agricultural worker in connection with their work (so Schedule 3, Housing Act 1988 does not apply) '.html_safe
+            %li You didn’t tell the defendant that the agreement was likely to change
+            %li You have an assured shorthold tenancy agreement (with no exceptions)
+            %li The defendant is not living in the property as an agricultural worker in connection with their work (so Schedule 3, Housing Act 1988 does not apply)
 
+            = form.labelled_check_box :from_1997_option, '<strong>Yes</strong>, all these statements apply'.html_safe
         .statements.hide.older
           %p.hide= "If your original tenancy agreement (and any additional agreements) were made between <strong>#{Tenancy::APPLICABLE_FROM_DATE.to_s(:printed)} and #{(Tenancy::RULES_CHANGE_DATE - 1).to_s(:printed)}</strong>, read the statements below and select all that apply:".html_safe
 
           %ol
-            %li{ id: form.id_for(:applicable_statements_4, 'as4').to_s }
-              = form.labelled_check_box :applicable_statements_4, 'The tenancy agreement was for 6 months (or more)'
-            %li.noticeStatement{ id: form.id_for(:applicable_statements_5, 'as5').to_s }
-              = form.labelled_check_box :applicable_statements_5, 'You told the defendant (in writing) that they’d have an assured shorthold tenancy before they moved in'
-
-              = form.text_field_row :assured_shorthold_tenancy_notice_served_by, label: 'Who told the defendant?', class: 'rel'
-              = form.moj_date_fieldset :assured_shorthold_tenancy_notice_served_date, 'When?', class: 'date-picker rel'
-
-            %li{ id: form.id_for(:applicable_statements_6, 'as6').to_s }
-              = form.labelled_check_box :applicable_statements_6, 'You couldn’t have ended the tenancy agreement in the first 6 months'
+            %li The tenancy agreement was for 6 months (or more)
+            %li You told the defendant (in writing) that they’d have an assured shorthold tenancy before they moved in
+            = form.text_field_row :assured_shorthold_tenancy_notice_served_by, label: 'Who told the defendant?', class: 'rel'
+            = form.moj_date_fieldset :assured_shorthold_tenancy_notice_served_date, 'When?', class: 'date-picker rel'
+            %li You couldn’t have ended the tenancy agreement in the first 6 months
+            = form.labelled_check_box :upto_1997_option, '<strong>Yes</strong>, all these statements apply'.html_safe
 
   .row.divider.hide.js-tenancyType.demoted
 
