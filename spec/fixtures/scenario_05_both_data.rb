@@ -4,6 +4,7 @@
     "Local authority evicting a demoted tenant",
     "1 claimant, 1 defendant, organisation litigant in person"
   ],
+  javascript: "BOTH",
   claim: {
     property: {
       street: "10a Pelham St\nWolverhampton",
@@ -84,7 +85,8 @@
     },
     license: {
       multiple_occupation: "No",
-      issued_under_act_part: nil,
+      issued_under_act_part_yes: nil,
+      issued_under_act_part_applied: nil,
       issued_by: nil,
       issued_date: nil
     },

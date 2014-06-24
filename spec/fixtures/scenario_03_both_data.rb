@@ -4,6 +4,7 @@
     "Solicitor acting on behalf of an elder gentleman. Tenants speak little English and communication has been poor.",
     "Solicitor for 1 claimant, 2 defendants living in the property"
   ],
+  javascript: "BOTH",
   claim: {
     property: {
       street: "280 Coventry Rd\nBirmingham ",
@@ -84,7 +85,8 @@
     },
     license: {
       multiple_occupation: "No",
-      issued_under_act_part: nil,
+      issued_under_act_part_yes: nil,
+      issued_under_act_part_applied: nil,
       issued_by: nil,
       issued_date: nil
     },

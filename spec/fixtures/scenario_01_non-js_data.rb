@@ -1,19 +1,20 @@
 {
-  title: "JOURNEY 8",
+  title: "JOURNEY 1",
   description: [
-    "Elder welsh lady, using a solictor to evict 2 young men on benefits",
-    "Solicitor for 1 claimant, 2 defendants living in the property"
+    "Husband and wife, renting a property through a rental agency",
+    "2 claimants living together, 2 defendants living in the property, rental agency"
   ],
+  javascript: "NON-JS",
   claim: {
     property: {
-      street: "Unit 11, Swansea Fforest Fach Park\nSwansea",
-      postcode: "SA5 4BB",
+      street: "87 Albion St\nLeeds ",
+      postcode: "LS1 6AG",
       house: "Yes"
     },
     javascript: {
-      number_of_claimants: "1",
+      number_of_claimants: "2",
       claimant_two_same_address: nil,
-      any_legal_costs: "Yes",
+      any_legal_costs: "No",
       separate_correspondence_address: "Yes",
       other_contact_details: "Yes",
       add_reference_number: "No",
@@ -22,28 +23,28 @@
       defendent_two_living_in_property: "Yes"
     },
     claimant_one: {
-      title: "Mrs",
-      full_name: "Meredith Williams",
-      street: "38 Pentrefelin St\nCarmarthen",
-      postcode: "SA31 1RJ"
+      title: "Mr ",
+      full_name: "Matthew Collier",
+      street: "2 Savins Mill Way\nLeeds",
+      postcode: "LS5 3RP"
     },
     claimant_two: {
-      title: nil,
-      full_name: nil,
-      street: nil,
-      postcode: nil
+      title: "Mrs",
+      full_name: "Violet Collier",
+      street: "2 Savins Mill Way\nLeeds",
+      postcode: "LS5 3RP"
     },
     legal_cost: {
-      legal_costs: "450"
+      legal_costs: nil
     },
     claimant_contact: {
-      title: "Mr",
-      full_name: "Dilan Lloyd",
-      company_name: "Beor Wilson Lloyd",
-      street: "12 Calvert Terrace\nSwansea",
-      postcode: "SA1 6AP",
-      email: "enquiries@bwl-law.co.uk",
-      phone: "1792655178",
+      title: "Mr ",
+      full_name: "Robert Linley",
+      company_name: "Linley & Simpson",
+      street: "16 Swinegate\nLeeds",
+      postcode: "LS1 4AG",
+      email: "robertlinley@linleyandsimpson.com",
+      phone: "0113 246 9295",
       fax: nil,
       dx_number: nil
     },
@@ -51,14 +52,14 @@
       reference_number: nil
     },
     defendant_one: {
-      title: "Mr",
-      full_name: "Gavin Morgan",
+      title: "Miss",
+      full_name: "Virginia Richardson",
       street: nil,
       postcode: nil
     },
     defendant_two: {
-      title: "Mr",
-      full_name: "Owen Harris",
+      title: "Miss",
+      full_name: "Maria Gonzalez",
       street: nil,
       postcode: nil
     },
@@ -66,7 +67,7 @@
       tenancy_type: "Assured",
       assured_shorthold_tenancy_type: "one",
       original_assured_shorthold_tenancy_agreement_date: nil,
-      start_date: "1999-04-08",
+      start_date: "2002-01-01",
       latest_agreement_date: nil,
       agreement_reissued_for_same_property: nil,
       agreement_reissued_for_same_landlord_and_tenant: nil,
@@ -77,30 +78,31 @@
       previous_tenancy_type: nil
     },
     notice: {
-      served_by_name: "Dilan Lloyd",
-      served_method: "By post",
-      date_served: "2013-12-13",
-      expiry_date: "2014-02-13"
+      served_by_name: "Robert Linley",
+      served_method: "In person",
+      date_served: "2014-01-13",
+      expiry_date: "2014-03-13"
     },
     license: {
       multiple_occupation: "No",
-      issued_under_act_part: nil,
+      issued_under_act_part_yes: nil,
+      issued_under_act_part_applied: nil,
       issued_by: nil,
       issued_date: nil
     },
     deposit: {
-      received: "No",
-      information_given_date: nil,
-      ref_number: nil,
-      as_money: "No",
-      as_property: "Yes"
+      received: "Yes",
+      information_given_date: "2002-01-15",
+      ref_number: "xtNHhYqYmL",
+      as_money: "Yes",
+      as_property: "No"
     },
     order: {
       possession: "Yes",
-      cost: "Yes"
+      cost: "No"
     },
     possession: {
-      hearing: "Yes"
+      hearing: "No"
     }
   }
 }

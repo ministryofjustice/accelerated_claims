@@ -4,6 +4,7 @@
     "Young professional submitting the claim on his own, multiple tenancy agreements, bought a new house with a tenant in there",
     "1 claimant, 1 defendant living in the property, multiple tenancy agreements, litigant in person"
   ],
+  javascript: "BOTH",
   claim: {
     property: {
       street: "64 Baxtergate\nWhitby",
@@ -84,7 +85,8 @@
     },
     license: {
       multiple_occupation: "No",
-      issued_under_act_part: nil,
+      issued_under_act_part_yes: nil,
+      issued_under_act_part_applied: nil,
       issued_by: nil,
       issued_date: nil
     },

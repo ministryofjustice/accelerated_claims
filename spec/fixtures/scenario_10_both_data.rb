@@ -4,6 +4,7 @@
     "Base Test 1",
     "2 claimants, not demoted tenancy"
   ],
+  javascript: "BOTH",
   claim: {
     property: {
       street: "Mucho Gracias Road\nLondon",
@@ -84,7 +85,8 @@
     },
     license: {
       multiple_occupation: "Yes",
-      issued_under_act_part: "Part2",
+      issued_under_act_part_yes: "Part2",
+      issued_under_act_part_applied: nil,
       issued_by: "Local LA",
       issued_date: "2014-02-02"
     },

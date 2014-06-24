@@ -1,35 +1,36 @@
 {
-  title: "JOURNEY 1",
+  title: "JOURNEY 7",
   description: [
-    "Husband and wife, renting a property through a rental agency",
-    "2 claimants living together, 2 defendants living in the property, rental agency"
+    "Young unmarried couple joint own property. Two tenants who were a couple but broke up and 1 has moved out. Both stopped paying rent",
+    "2 claimants, 2 defendants, 1 not living in the property, unknown forwarding address"
   ],
+  javascript: "JS",
   claim: {
     property: {
-      street: "87 Albion St\nLeeds ",
-      postcode: "LS1 6AG",
+      street: "45 St Martins Precinct Church St\nReading ",
+      postcode: "RG4 8BA",
       house: "Yes"
     },
     javascript: {
       number_of_claimants: "2",
       claimant_two_same_address: "Yes",
       any_legal_costs: "No",
-      separate_correspondence_address: "Yes",
-      other_contact_details: "Yes",
+      separate_correspondence_address: "No",
+      other_contact_details: "No",
       add_reference_number: "No",
       number_of_defendants: "2",
-      defendant_one_living_in_property: "Yes",
+      defendant_one_living_in_property: "No",
       defendent_two_living_in_property: "Yes"
     },
     claimant_one: {
-      title: "Mr ",
-      full_name: "Matthew Collier",
-      street: "2 Savins Mill Way\nLeeds",
-      postcode: "LS5 3RP"
+      title: "Mr",
+      full_name: "Frank Coleman",
+      street: "13 Princess Square\nBracknell",
+      postcode: "RG12 1LS"
     },
     claimant_two: {
-      title: "Mrs",
-      full_name: "Violet Collier",
+      title: "Miss",
+      full_name: "Heather Cox",
       street: nil,
       postcode: nil
     },
@@ -37,13 +38,13 @@
       legal_costs: nil
     },
     claimant_contact: {
-      title: "Mr ",
-      full_name: "Robert Linley",
-      company_name: "Linley & Simpson",
-      street: "16 Swinegate\nLeeds",
-      postcode: "LS1 4AG",
-      email: "robertlinley@linleyandsimpson.com",
-      phone: "0113 246 9295",
+      title: nil,
+      full_name: nil,
+      company_name: nil,
+      street: nil,
+      postcode: nil,
+      email: nil,
+      phone: nil,
       fax: nil,
       dx_number: nil
     },
@@ -51,14 +52,14 @@
       reference_number: nil
     },
     defendant_one: {
-      title: "Miss",
-      full_name: "Virginia Richardson",
-      street: nil,
-      postcode: nil
+      title: "Mr",
+      full_name: "Kenneth Butler",
+      street: "13 Market St, Bracknell",
+      postcode: "RG13 2JD"
     },
     defendant_two: {
-      title: "Miss",
-      full_name: "Maria Gonzalez",
+      title: "Ms",
+      full_name: "Donna Lee",
       street: nil,
       postcode: nil
     },
@@ -66,7 +67,7 @@
       tenancy_type: "Assured",
       assured_shorthold_tenancy_type: "one",
       original_assured_shorthold_tenancy_agreement_date: nil,
-      start_date: "2002-01-01",
+      start_date: "2012-09-16",
       latest_agreement_date: nil,
       agreement_reissued_for_same_property: nil,
       agreement_reissued_for_same_landlord_and_tenant: nil,
@@ -77,21 +78,22 @@
       previous_tenancy_type: nil
     },
     notice: {
-      served_by_name: "Robert Linley",
-      served_method: "In person",
-      date_served: "2014-01-13",
-      expiry_date: "2014-03-13"
+      served_by_name: "Heather Cox",
+      served_method: "By email",
+      date_served: "2013-09-30",
+      expiry_date: "2013-11-30"
     },
     license: {
       multiple_occupation: "No",
-      issued_under_act_part: nil,
+      issued_under_act_part_yes: nil,
+      issued_under_act_part_applied: nil,
       issued_by: nil,
       issued_date: nil
     },
     deposit: {
       received: "Yes",
-      information_given_date: "2002-01-15",
-      ref_number: "xtNHhYqYmL",
+      information_given_date: "2012-09-12",
+      ref_number: "BRMHyKbxX7",
       as_money: "Yes",
       as_property: "No"
     },
@@ -100,7 +102,7 @@
       cost: "No"
     },
     possession: {
-      hearing: "No"
+      hearing: "Yes"
     }
   }
 }

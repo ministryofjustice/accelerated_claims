@@ -58,8 +58,6 @@ class ClaimForm
   end
 
   def select_number_of type
-    puts "++++++ DEBUG type #{type.inspect} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    
     case type
     when :claimants
       button_prefix = "claim_num"
