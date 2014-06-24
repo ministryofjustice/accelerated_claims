@@ -1,16 +1,11 @@
 describe LicenseChecklist do
   describe '#add' do
-    # let(:json) do
-    #   data = claim_formatted_data
-    #   data['required_documents'] = ''
-    #   data
-    # end
-    # let(:license) { LicenseChecklist.new(json).add['required_documents'] }
-    let(:section2) { "- Evidence of your HMO license application issued under part 2 of the Housing Act 2004 - marked 'D'\n\n" }
-    let(:section3) { "- Evidence of your HMO license application issued under part 3 of the Housing Act 2004 - marked 'E'\n\n" }
-
 
     context 'HMO licence applied for' do 
+
+      let(:section2) { "- Evidence of your HMO license application issued under part 2 of the Housing Act 2004 - marked 'D'\n\n" }
+      let(:section3) { "- Evidence of your HMO license application issued under part 3 of the Housing Act 2004 - marked 'E'\n\n" }
+
       it 'should add the section 2 text when section 2 is chosen' do
         formatted_data = LicenseChecklist.new(section_2_applied_for).add
         formatted_data['required_documents'].should == section2

@@ -27,13 +27,11 @@ class LicenseChecklist
     "- Evidence of your HMO license application issued under part 3 of the Housing Act 2004 - marked 'E'\n\n"
   end
 
-
   def part2_applied_for?
     @json['license_multiple_occupation'] == 'Yes' &&
       @json['license_part2_authority'].blank? &&
       @json['license_part2_day'].blank? &&
       @json['license_part2_month'].blank? &&
-      @json['license_part2_year'].blank? &&
       @json['license_part2_year'].blank?
   end
 
