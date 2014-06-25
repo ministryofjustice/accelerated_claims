@@ -55,8 +55,8 @@ moj.Modules.sessionTimeout = (function() {
     }
     elapsedMinutes = 0
 
-    moj.log( 'Starting timer. Session will end in ' + sessionMinutes + ' minutes. (' + ( sessionMinutes * 60 ) + ' seconds)' );
-    moj.log( 'Warning will show in ' + ( sessionMinutes - warnMinutesBeforeEnd ) + ' minutes. (' + ( sessionMinutes - warnMinutesBeforeEnd ) * 60 + ' seconds)' );
+    // moj.log( 'Starting timer. Session will end in ' + sessionMinutes + ' minutes. (' + ( sessionMinutes * 60 ) + ' seconds)' );
+    // moj.log( 'Warning will show in ' + ( sessionMinutes - warnMinutesBeforeEnd ) + ' minutes. (' + ( sessionMinutes - warnMinutesBeforeEnd ) * 60 + ' seconds)' );
 
     timer = window.setTimeout( function() {
       showPopup();
