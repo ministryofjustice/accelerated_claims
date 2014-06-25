@@ -14,14 +14,15 @@
   %section
     %h2.section-header Claimants
 
-    = claim_form.radio_button_fieldset :num_claimants,
-        'How many claimants are there?',
-        class: 'radio inline js-depend',
-        choice: {'1 claimant'=>'1', '2 claimants'=>'2'},
-        data: { depend: 'numclaimants', 'virtual-pageview' => '/accelerated/claimants-section' }
+    .moj-panel.has-multiple#claimants(data-multiple="claimant" data-single="claimant" data-plural="claimants" data-caption="As the landlord, you're known as the <strong>claimant</strong> in this case.")
+
+      = claim_form.radio_button_fieldset :num_claimants,
+          'How many claimants are there?',
+          class: 'moj-panel has-mulitiple radio inline js-depend',
+          choice: {'1 claimant'=>'1', '2 claimants'=>'2'},
+          data: { depend: 'numclaimants', 'virtual-pageview' => '/accelerated/claimants-section' }
     
-    .row.hide.js-numclaimants.1.js-numclaimants.2
-      %h3 As the landlord, you’re known as the <strong>claimant</strong> in this case.
+    
     .sub-panel.hide.js-numclaimants.1.js-numclaimants.2.claimant#claimant_one
       %h3.person First claimant
       = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_one}
