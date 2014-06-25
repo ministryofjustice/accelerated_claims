@@ -36,11 +36,9 @@ end
 
 def load_expected_data(data_file)
   data_file =~ /.*scenario_([0-9]{2})_(both|js|non-js)_data/
-  dataset_number = $1.to_i
-
+  dataset_number = sprintf('%02d', $1.to_i)
   filename = "spec/fixtures/scenario_#{dataset_number}_results.rb"
   results = load_stringified_hash_from_file(filename)
-
 end
 
 def assert_hash_is_correct(generated_values, expected_values)
