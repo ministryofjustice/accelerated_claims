@@ -330,23 +330,11 @@ describe Claim, :type => :model do
         mydata
       end
 
-      it 'should be valid if claimants one and two are present' do
-        expect(data[:num_claimants]).to be_nil
-        expect(claim).to be_valid
-      end
-
-      it 'should be valid if only claimant one is present' do
-        data.delete(:claimant_two)
-        expect(data[:num_claimants]).to be_nil
-        expect(claim).to be_valid
-      end
-
-      it 'should not be valid if only claimant two is present' do
-        data.delete(:claimant_one)
+      it 'should not be valid' do
         expect(data[:num_claimants]).to be_nil
         expect(claim).to_not be_valid
-        expect(claim.errors.full_messages).to eq [["claim_claimant_one_full_name_error", "Full name must be entered"], ["claim_claimant_one_street_error", "Street must be entered"], ["claim_claimant_one_postcode_error", "Postcode must be entered"]]
       end
+
 
     end
 
@@ -357,7 +345,7 @@ describe Claim, :type => :model do
       it 'should not be valid if the num claimants is 3' do
         data[:num_claimants] = 3
         expect(claim).to_not be_valid
-        expect(claim.errors.full_messages).to eq ["Num claimants 3 is not a valid value"]
+        expect(claim.errors.full_messages).to eq ["Num claimants must be specified"]
       end
     end
   end

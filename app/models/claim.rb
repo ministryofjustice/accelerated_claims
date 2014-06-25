@@ -73,7 +73,8 @@ class Claim < BaseClass
 
   def num_claimants_valid?
     unless @@valid_num_claimants.include?(@num_claimants)
-      errors[:num_claimants] << "#{@num_claimants} is not a valid value" 
+      @errors[:base] << ['claim_num_claimants_error', 'Number of claimants must be entered']
+      errors[:num_claimants] << "must be specified" 
       return false
     end
     true
