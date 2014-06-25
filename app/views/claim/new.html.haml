@@ -18,7 +18,7 @@
 
       = claim_form.radio_button_fieldset :num_claimants,
           'How many claimants are there?',
-          class: 'moj-panel has-mulitiple radio inline js-depend',
+          class: 'has-multiple radio inline js-depend',
           choice: {'1 claimant'=>'1', '2 claimants'=>'2'},
           data: { depend: 'numclaimants', 'virtual-pageview' => '/accelerated/claimants-section' }
     
