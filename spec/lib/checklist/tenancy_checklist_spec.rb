@@ -14,7 +14,7 @@ describe TenancyChecklist do
           let(:full_text) { text.concat "- the notice stating defendants would have an assured shorthold tenancy agreement (given before they moved in) - marked 'B'
 - proof this notice was given - marked 'B1'\n\n"}
 
-          it { expect(@documents.should).to eq full_text }
+          it { expect(@documents).to eq full_text }
         end
 
         context 'optional section is not filled' do
@@ -27,7 +27,7 @@ describe TenancyChecklist do
             data
           end
 
-          it { expect(@documents.should).to eq text }
+          it { expect(@documents).to eq text }
         end
       end
 
@@ -42,7 +42,7 @@ describe TenancyChecklist do
           let(:full_text) { text.concat "- the notice stating defendants would have an assured shorthold tenancy agreement (given before they moved in) - marked 'B'
 - proof this notice was given - marked 'B1'\n\n"}
 
-          it { expect(@documents.should).to eq full_text }
+          it { expect(@documents).to eq full_text }
         end
 
         context 'optional section is not filled' do
@@ -56,7 +56,7 @@ describe TenancyChecklist do
           end
           let(:text) { "- the first tenancy agreement marked - 'A'\n\n- the current tenancy agreement marked - 'A1'\n\n" }
 
-          it { expect(@documents.should).to eq text }
+          it { expect(@documents).to eq text }
         end
 
       end
@@ -71,7 +71,7 @@ describe TenancyChecklist do
       let(:text) { "- the most recent tenancy agreement - marked 'A'\n\n- the demotion order - marked 'B'\n\n" }
 
       it 'should have the appropriate text' do
-        @documents.should eq text
+        expect(@documents).to eq text
       end
     end
   end

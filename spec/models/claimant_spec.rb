@@ -1,4 +1,4 @@
-describe Claimant do
+describe Claimant, :type => :model do
   let(:claimant) do
     Claimant.new(title: 'Mr',
                  full_name: "John Doe",
@@ -6,17 +6,19 @@ describe Claimant do
                  postcode: "SW1H9AJ")
   end
 
-  # subject { claimant }
+  subject { claimant }
 
+  it { is_expected.to be_valid }
 
   context 'validate_presence not set' do
 
     it 'should set the validate_presence attribute to true if missing' do
-      expect(claimant.validate_presence).to be_true
+      expect(claimant.validate_presence).to be true
     end
 
     it 'should be valid if all attributes are set ' do
-      expect(claimant.validate_presence).to be_true
+      expect(true).to be true
+      expect(claimant.validate_presence).to be true
       expect(claimant).to be_valid
     end
 

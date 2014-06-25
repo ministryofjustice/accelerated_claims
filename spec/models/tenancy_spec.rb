@@ -1,4 +1,4 @@
-describe Tenancy do
+describe Tenancy, :type => :model do
 
   def value attribute, default, overrides
     overrides.has_key?(attribute) ? overrides.delete(attribute) : default
@@ -49,27 +49,27 @@ describe Tenancy do
   end
 
   shared_examples_for 'assured_shorthold_tenancy_type unset' do
-    it { should_not be_valid }
-    its(:one_tenancy_agreement?) { should be_false }
-    its(:multiple_tenancy_agreements?) { should be_false }
+    it { is_expected.not_to be_valid }
+    its(:one_tenancy_agreement?) { should be false }
+    its(:multiple_tenancy_agreements?) { should be false }
 
     it "should have error message" do
       subject.valid?
-      subject.errors.full_messages.should include 'Assured shorthold tenancy type leave blank as you specified tenancy is demoted'
+      expect(subject.errors.full_messages).to include 'Assured shorthold tenancy type leave blank as you specified tenancy is demoted'
     end
 
     it "should set assured_shorthold_tenancy_type nil" do
       subject.valid?
-      subject.assured_shorthold_tenancy_type.should be_nil
+      expect(subject.assured_shorthold_tenancy_type).to be_nil
     end
   end
 
   context "when 'demoted'" do
     subject { demoted_tenancy }
 
-    it { should be_valid }
-    its(:demoted_tenancy?) { should be_true }
-    its(:assured_tenancy?) { should be_false }
+    it { is_expected.to be_valid }
+    its(:demoted_tenancy?) { should be true }
+    its(:assured_tenancy?) { should be false }
 
     context 'when assured_shorthold_tenancy_type "one"' do
       before { subject.assured_shorthold_tenancy_type = 'one' }
@@ -93,14 +93,14 @@ describe Tenancy do
 
     context 'and required fields are blank' do
       subject { demoted_tenancy(demotion_order_date: nil, demotion_order_court: nil, previous_tenancy_type: nil) }
-      it { should_not be_valid }
+      it { is_expected.not_to be_valid }
 
       it "should have error messages for each missing field" do
         subject.valid?
         ["Demotion order date must be selected",
         "Previous tenancy type must be selected",
         "Demotion order court must be provided"].each do |msg|
-          subject.errors.full_messages.should include msg
+          expect(subject.errors.full_messages).to include msg
         end
       end
     end
@@ -109,7 +109,7 @@ describe Tenancy do
       ['assured', 'secure'].each do |answer|
         subject.previous_tenancy_type = answer
         subject.valid?
-        subject.should be_valid
+        expect(subject).to be_valid
       end
     end
 
@@ -118,14 +118,14 @@ describe Tenancy do
   context "when 'demoted' and non-relevant fields are not blank" do
     subject { assured_tenancy(demoted_tenancy.attributes) }
 
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
 
     it "should have error messages for each non-relevant field" do
       subject.valid?
       ['Assured shorthold tenancy type leave blank as you specified tenancy is demoted',
        'Assured shorthold tenancy type leave blank as you specified tenancy is demoted',
        'Start date leave blank as you specified tenancy is demoted'].each do |msg|
-        subject.errors.full_messages.should include msg
+        expect(subject.errors.full_messages).to include msg
       end
     end
   end
@@ -133,9 +133,9 @@ describe Tenancy do
   context "when not 'demoted' or 'assured'" do
     ['Blah', ''].each do |answer|
       subject { Tenancy.new(tenancy_type: answer) }
-      it { should_not be_valid }
-      its(:demoted_tenancy?) { should be_false }
-      its(:assured_tenancy?) { should be_false }
+      it { is_expected.not_to be_valid }
+      its(:demoted_tenancy?) { should be false }
+      its(:assured_tenancy?) { should be false }
     end
 
     describe "when no value is provided" do
@@ -143,31 +143,31 @@ describe Tenancy do
       before { tenancy.valid? }
 
       it "should provide an error message" do
-        tenancy.errors.full_messages.should include "Tenancy type must be selected"
+        expect(tenancy.errors.full_messages).to include "Tenancy type must be selected"
       end
     end
   end
 
   shared_examples_for 'previous_tenancy_type unset' do
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
 
     it "should have error message" do
       subject.valid?
-      subject.errors.full_messages.should include 'Previous tenancy type leave blank as you specified tenancy is not demoted'
+      expect(subject.errors.full_messages).to include 'Previous tenancy type leave blank as you specified tenancy is not demoted'
     end
 
     it "should set previous_tenancy_type nil" do
       subject.valid?
-      subject.previous_tenancy_type.should be_nil
+      expect(subject.previous_tenancy_type).to be_nil
     end
   end
 
   context "when 'assured'" do
     subject { assured_tenancy }
 
-    it { should be_valid }
-    its(:demoted_tenancy?) { should be_false }
-    its(:assured_tenancy?) { should be_true }
+    it { is_expected.to be_valid }
+    its(:demoted_tenancy?) { should be false }
+    its(:assured_tenancy?) { should be true }
 
     context 'when there is only one tenancy agreement' do
       describe 'as_json' do
@@ -213,7 +213,7 @@ describe Tenancy do
 
     context "and start date is blank" do
       subject { assured_tenancy(start_date: nil) }
-      it { should_not be_valid }
+      it { is_expected.not_to be_valid }
     end
 
     context 'and assured_shorthold_tenancy_type is blank' do
@@ -221,23 +221,23 @@ describe Tenancy do
 
       it "should require assured tenancy type" do
         subject.valid?
-        subject.errors.full_messages.should include "Assured shorthold tenancy type must be selected"
+        expect(subject.errors.full_messages).to include "Assured shorthold tenancy type must be selected"
       end
     end
 
     context 'and single tenancy agreement' do
       subject{ assured_tenancy(assured_shorthold_tenancy_type: 'one') }
-      it { should be_valid }
+      it { is_expected.to be_valid }
 
-      its(:one_tenancy_agreement?) { should be_true }
-      its(:multiple_tenancy_agreements?) { should be_false }
+      its(:one_tenancy_agreement?) { should be true }
+      its(:multiple_tenancy_agreements?) { should be false }
       its(:start_date) { should == Date.parse("2010-01-05") }
       its(:latest_agreement_date) { should be_nil }
-      its(:only_start_date_present?) { should be_true }
+      its(:only_start_date_present?) { should be true }
 
       context 'and start date is blank' do
         subject { assured_tenancy(start_date: nil) }
-        it { should_not be_valid }
+        it { is_expected.not_to be_valid }
       end
 
       context "when start_date is incorrect" do
@@ -249,11 +249,11 @@ describe Tenancy do
                       "start_date(1i)"=>"2013")
         end
 
-        it { should_not be_valid }
+        it { is_expected.not_to be_valid }
 
         it 'should have invalid date error' do
           subject.valid?
-          subject.errors.full_messages.should == ["Start date is invalid date"]
+          expect(subject.errors.full_messages).to eq(["Start date is invalid date"])
         end
       end
 
@@ -275,13 +275,13 @@ describe Tenancy do
             subject.applicable_statements_3 = 'Yes'
           end
 
-          it { should_not be_valid }
+          it { is_expected.not_to be_valid }
           it 'should have validation errors' do
             subject.valid?
             ["Applicable statements 1 leave blank as you specified original tenancy agreement was made before 28 February 1997",
              "Applicable statements 2 leave blank as you specified original tenancy agreement was made before 28 February 1997",
              "Applicable statements 3 leave blank as you specified original tenancy agreement was made before 28 February 1997"].each do |msg|
-              subject.errors.full_messages.should include msg
+              expect(subject.errors.full_messages).to include msg
             end
           end
         end
@@ -298,13 +298,13 @@ describe Tenancy do
             subject.applicable_statements_6 = 'Yes'
           end
 
-          it { should_not be_valid }
+          it { is_expected.not_to be_valid }
           it 'should have validation errors' do
             subject.valid?
             ["Applicable statements 4 leave blank as you specified original tenancy agreement was made on or after 28 February 1997",
              "Applicable statements 5 leave blank as you specified original tenancy agreement was made on or after 28 February 1997",
              "Applicable statements 6 leave blank as you specified original tenancy agreement was made on or after 28 February 1997"].each do |msg|
-              subject.errors.full_messages.should include msg
+              expect(subject.errors.full_messages).to include msg
             end
           end
         end
@@ -315,14 +315,14 @@ describe Tenancy do
       it "should only accept 'Yes' & 'No'" do
         %w(Yes No).each do |answer|
           subject.send("#{field}=", answer)
-          subject.should be_valid
+          expect(subject).to be_valid
         end
       end
 
       it "should not accept answers other than 'Yes' & 'No'" do
         %w(maybe idontknow).each do |answer|
           subject.send("#{field}=", answer)
-          subject.should_not be_valid
+          expect(subject).not_to be_valid
         end
       end
     end
@@ -354,10 +354,10 @@ describe Tenancy do
         its(['original_assured_shorthold_tenancy_agreement_date_year']) { should eq '2009' }
       end
 
-      it { should be_valid }
-      its(:one_tenancy_agreement?) { should be_false }
-      its(:multiple_tenancy_agreements?) { should be_true }
-      its(:only_start_date_present?) { should be_false }
+      it { is_expected.to be_valid }
+      its(:one_tenancy_agreement?) { should be false }
+      its(:multiple_tenancy_agreements?) { should be true }
+      its(:only_start_date_present?) { should be false }
 
       describe "agreement_reissued_for_same_property" do
         let(:field) { :agreement_reissued_for_same_property }
@@ -371,29 +371,29 @@ describe Tenancy do
 
       context 'and start date is present' do
         let(:start_date) { Date.parse("2009-01-01") }
-        it { should_not be_valid }
+        it { is_expected.not_to be_valid }
         it 'should have error message' do
           subject.valid?
-          subject.errors.full_messages.should == ["Start date must be blank if more than one tenancy agreement"]
+          expect(subject.errors.full_messages).to eq(["Start date must be blank if more than one tenancy agreement"])
         end
       end
 
       context "when required fields blank" do
         subject { assured_tenancy(assured_shorthold_tenancy_type: 'multiple') }
 
-        it { subject.should_not be_valid }
+        it { expect(subject).not_to be_valid }
 
         it "should have error messages for each missing field" do
           subject.valid?
           ["Original assured shorthold tenancy agreement date must be selected",
           "Agreement reissued for same property must be selected",
           "Agreement reissued for same landlord and tenant must be selected"].each do |msg|
-            subject.errors.full_messages.should include msg
+            expect(subject.errors.full_messages).to include msg
           end
         end
 
         context 'but start date present' do
-          its(:only_start_date_present?) { should be_true }
+          its(:only_start_date_present?) { should be true }
         end
       end
 

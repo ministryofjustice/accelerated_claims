@@ -47,7 +47,9 @@ group :production, :development do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '~> 2.0'
+  gem 'rspec-rails', '3.0.1'
+  gem 'rspec-its'
+  gem 'rspec-legacy_formatters'
   gem 'jasmine', '~> 1.3.2'
   gem 'jasmine-rails'
   gem 'jasmine-jquery-rails', '~> 1.5.9'
@@ -57,6 +59,7 @@ group :development, :test do
   gem 'dotenv-rails'  # set environment variables via the filesystem
   gem 'launchy'
   gem 'guard-coffeescript'
+  gem 'awesome_print'
 end
 
 group :test do
