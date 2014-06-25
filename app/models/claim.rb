@@ -8,7 +8,7 @@ class Claim < BaseClass
 
   attr_accessor :num_claimants
 
-  @@valid_num_claimants = [nil, 1, 2]
+  @@valid_num_claimants = [1, 2]
 
 
   def initialize(claim_params={})
