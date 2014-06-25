@@ -45,7 +45,7 @@ end
 
 def assert_hash_is_correct(generated_values, expected_values)
   expected_values.each do |field, value|
-    "#{field}: #{generated_values[field]}".should == "#{field}: #{value}"
+    expect("#{field}: #{generated_values[field]}").to eq("#{field}: #{value}")
   end
 end
 

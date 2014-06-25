@@ -56,7 +56,7 @@ def claim_post_data
       "license" =>
       {
         'multiple_occupation' => 'Yes',
-        'issued_under_act_part' => 'Part2',
+        'issued_under_act_part_yes' => 'Part2',
         'issued_by' => 'Great authority'
       }.merge(
         form_date('issued_date', Date.parse('2014-02-02'))
