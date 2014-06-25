@@ -11,16 +11,8 @@
       postcode: "SA5 4BB",
       house: "Yes"
     },
-    javascript: {
-      number_of_claimants: "1",
-      claimant_two_same_address: nil,
-      any_legal_costs: "Yes",
-      separate_correspondence_address: "Yes",
-      other_contact_details: "Yes",
-      add_reference_number: "No",
-      number_of_defendants: "2",
-      defendant_one_living_in_property: "Yes",
-      defendent_two_living_in_property: "Yes"
+    claim: {
+      number_of_claimants: "1"
     },
     claimant_one: {
       title: "Mrs",
@@ -33,6 +25,16 @@
       full_name: nil,
       street: nil,
       postcode: nil
+    },
+    javascript: {
+      claimant_two_same_address: nil,
+      any_legal_costs: "Yes",
+      separate_correspondence_address: "Yes",
+      other_contact_details: "Yes",
+      add_reference_number: "No",
+      number_of_defendants: "2",
+      defendant_one_living_in_property: "Yes",
+      defendent_two_living_in_property: "Yes"
     },
     legal_cost: {
       legal_costs: "450"

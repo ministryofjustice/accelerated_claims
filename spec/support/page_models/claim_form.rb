@@ -8,6 +8,7 @@ class ClaimForm
   def complete_form
     @js_on = false
     fill_property_details
+    select_number_of :claimants
     fill_claimant_one
     fill_claimant_two
     fill_defendant_one
@@ -61,12 +62,14 @@ class ClaimForm
     case type
     when :claimants
       button_prefix = "claim_num"
+      model = "claim"
     when :defendants
       button_prefix = "multiplePanelRadio"
+      model = "javascript"
     end
 
 
-    number = get_data('javascript', "number_of_#{type}").to_i
+    number = get_data(model, "number_of_#{type}").to_i
 
     case number
       when 1

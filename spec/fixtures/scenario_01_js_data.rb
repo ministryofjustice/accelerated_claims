@@ -11,16 +11,8 @@
       postcode: "LS1 6AG",
       house: "Yes"
     },
-    javascript: {
-      number_of_claimants: "2",
-      claimant_two_same_address: "Yes",
-      any_legal_costs: "No",
-      separate_correspondence_address: "Yes",
-      other_contact_details: "Yes",
-      add_reference_number: "No",
-      number_of_defendants: "2",
-      defendant_one_living_in_property: "Yes",
-      defendent_two_living_in_property: "Yes"
+    claim: {
+      number_of_claimants: "2"
     },
     claimant_one: {
       title: "Mr ",
@@ -33,6 +25,16 @@
       full_name: "Violet Collier",
       street: nil,
       postcode: nil
+    },
+    javascript: {
+      claimant_two_same_address: "Yes",
+      any_legal_costs: "No",
+      separate_correspondence_address: "Yes",
+      other_contact_details: "Yes",
+      add_reference_number: "No",
+      number_of_defendants: "2",
+      defendant_one_living_in_property: "Yes",
+      defendent_two_living_in_property: "Yes"
     },
     legal_cost: {
       legal_costs: nil

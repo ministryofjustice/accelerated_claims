@@ -11,16 +11,8 @@
       postcode: "SW1H 9AJ",
       house: "Yes"
     },
-    javascript: {
-      number_of_claimants: "2",
-      claimant_two_same_address: "No",
-      any_legal_costs: "Yes",
-      separate_correspondence_address: "Yes",
-      other_contact_details: "Yes",
-      add_reference_number: "Yes",
-      number_of_defendants: "1",
-      defendant_one_living_in_property: "No",
-      defendent_two_living_in_property: nil
+    claim: {
+      number_of_claimants: "2"
     },
     claimant_one: {
       title: "Mr",
@@ -33,6 +25,16 @@
       full_name: "Jane Smith",
       street: "7 Main Street\nAlfreton",
       postcode: "SW1W 0LU"
+    },
+    javascript: {
+      claimant_two_same_address: "No",
+      any_legal_costs: "Yes",
+      separate_correspondence_address: "Yes",
+      other_contact_details: "Yes",
+      add_reference_number: "Yes",
+      number_of_defendants: "1",
+      defendant_one_living_in_property: "No",
+      defendent_two_living_in_property: nil
     },
     legal_cost: {
       legal_costs: "123.34"

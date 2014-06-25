@@ -11,16 +11,8 @@
       postcode: "SW1H 9AJ",
       house: "Yes"
     },
-    javascript: {
-      number_of_claimants: "1",
-      claimant_two_same_address: nil,
-      any_legal_costs: nil,
-      separate_correspondence_address: nil,
-      other_contact_details: nil,
-      add_reference_number: nil,
-      number_of_defendants: "1",
-      defendant_one_living_in_property: "No",
-      defendent_two_living_in_property: nil
+    claim: {
+      number_of_claimants: "1"
     },
     claimant_one: {
       title: "Mr",
@@ -33,6 +25,16 @@
       full_name: nil,
       street: nil,
       postcode: nil
+    },
+    javascript: {
+      claimant_two_same_address: nil,
+      any_legal_costs: nil,
+      separate_correspondence_address: nil,
+      other_contact_details: nil,
+      add_reference_number: nil,
+      number_of_defendants: "1",
+      defendant_one_living_in_property: "No",
+      defendent_two_living_in_property: nil
     },
     legal_cost: {
       legal_costs: nil

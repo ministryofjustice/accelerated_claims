@@ -11,16 +11,8 @@
       postcode: "RG4 8BA",
       house: "Yes"
     },
-    javascript: {
-      number_of_claimants: "2",
-      claimant_two_same_address: "Yes",
-      any_legal_costs: "No",
-      separate_correspondence_address: "No",
-      other_contact_details: "No",
-      add_reference_number: "No",
-      number_of_defendants: "2",
-      defendant_one_living_in_property: "No",
-      defendent_two_living_in_property: "Yes"
+    claim: {
+      number_of_claimants: "2"
     },
     claimant_one: {
       title: "Mr",
@@ -33,6 +25,16 @@
       full_name: "Heather Cox",
       street: nil,
       postcode: nil
+    },
+    javascript: {
+      claimant_two_same_address: "Yes",
+      any_legal_costs: "No",
+      separate_correspondence_address: "No",
+      other_contact_details: "No",
+      add_reference_number: "No",
+      number_of_defendants: "2",
+      defendant_one_living_in_property: "No",
+      defendent_two_living_in_property: "Yes"
     },
     legal_cost: {
       legal_costs: nil
