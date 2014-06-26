@@ -36,6 +36,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     salt.minion_key     = minion_config_dir + 'key'
     salt.minion_pub     = minion_config_dir + 'key.pub'
 
+
     salt.install_master = false
     salt.seed_master = {vagrant: salt.minion_pub}
 
@@ -43,6 +44,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     salt.bootstrap_options = "-D"
 
     salt.verbose = true
+    salt.install_type = 'git'
+    salt.install_args = 'v2014.1.4'
 
   end
 
