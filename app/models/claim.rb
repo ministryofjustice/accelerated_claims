@@ -11,13 +11,16 @@ class Claim < BaseClass
   attr_accessor :num_defendants
 
   @@valid_num_claimants     = [1, 2]
-  @@valid_num_dependants    = [1, 2]
+  @@valid_num_defendants    = [1, 2]
   @@ambiguous_instance_vars = ['claimant_one', 'claimaint_two', 'defendant_one', 'defendant_two']
 
 
 
   def initialize(claim_params={})
-    @num_claimants = claim_params.key?(:num_claimants) ? claim_params[:num_claimants].to_i : nil
+    @num_claimants  = claim_params.key?(:num_claimants) ? claim_params[:num_claimants].to_i : nil
+    @num_defendants = claim_params.key?(:num_defendants) ? claim_params[:num_defendants].to_i : nil
+
+    
     initialize_all_submodels(claim_params)
     @errors = ActiveModel::Errors.new(self)
   end
@@ -56,6 +59,7 @@ class Claim < BaseClass
     @errors.clear
     validity = true
     validity = false unless num_claimants_valid?
+    validaity = false unless num_defendants_valid?
     attributes_from_submodels.each do |instance_var, model|
       unless send(instance_var).valid?
         errors = send(instance_var).errors
@@ -86,6 +90,14 @@ class Claim < BaseClass
   def num_claimants_valid?
     unless @@valid_num_claimants.include?(@num_claimants)
       @errors[:base] << ['claim_num_claimants_error', 'Number of claimants must be entered']
+      return false
+    end
+    true
+  end
+
+  def num_defendants_valid?
+    unless @@valid_num_defendants.include?(@num_defendants)
+      @errors[:base] << ['claim_num_defendants_error', 'Number of defendants must be entered']
       return false
     end
     true
@@ -187,15 +199,17 @@ class Claim < BaseClass
       when /claimant_two/
         if @num_claimants == 1
           params.merge!(validate_absence: true, validate_presence: false)
-        elsif @num_claimants.nil?
-          params.merge!(validate_absence: false, validate_presence: false)
         else
           params.merge!(validate_presence: true)
         end
       when /defendant_one/
-        params.merge!(first_defendant: true)
+        params.merge!(validate_presence: true, validate_absence: false)
       when /defendant_two/
-        params.merge!(first_defendant: false)
+        if @num_defendants == 1
+          params.merge!(validate_absence: true, validate_presence: false)
+        else
+          params.merge!(validate_presence: true)
+        end
     end
 
     params
