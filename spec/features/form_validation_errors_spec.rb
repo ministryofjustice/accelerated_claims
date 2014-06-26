@@ -47,7 +47,7 @@ feature 'Filling in claim form' do
     check_focus_after_click 'Possession must be checked', 'claim_order_possession'
     check_focus_after_click 'Tenancy type must be selected', 'claim_tenancy_tenancy_type_assured'
 
-    choose('multiplePanelRadio_claimants_1')
+    choose('claim_num_claimants_1')
     choose('multiplePanelRadio_defendants_1')
     choose('multiplePanelRadio_defendants_1')
     choose('defendant1address-yes')

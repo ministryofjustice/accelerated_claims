@@ -10,6 +10,7 @@ class Claim < BaseClass
 
   @@valid_num_claimants = [1, 2]
 
+  @@ambiguous_instance_vars = ['claimant_one', 'claimaint_two', 'defendant_one', 'defendant_two']
 
   def initialize(claim_params={})
     @num_claimants = claim_params.key?(:num_claimants) ? claim_params[:num_claimants].to_i : nil
@@ -55,12 +56,11 @@ class Claim < BaseClass
       unless send(instance_var).valid?
         errors = send(instance_var).errors
         messages = errors.full_messages
-
         errors.each_with_index do |error, index|
           attribute = error.first
           key = "claim_#{instance_var}_#{attribute}_error"
           message = messages[index]
-          @errors[:base] << [key, message]
+          @errors[:base] << [ key, disambiguate_error_messages(instance_var, message) ]
         end
         validity = false
       end
@@ -69,6 +69,14 @@ class Claim < BaseClass
   end
 
   private
+
+
+  def disambiguate_error_messages(instance_var, message)
+    if @@ambiguous_instance_vars.include?(instance_var)
+      message = instance_var.titleize + ' ' + message
+    end
+    message
+  end
 
 
   def num_claimants_valid?
