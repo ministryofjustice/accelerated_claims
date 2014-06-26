@@ -345,7 +345,7 @@ describe Claim, :type => :model do
       it 'should not be valid if the num claimants is 3' do
         data[:num_claimants] = 3
         expect(claim).to_not be_valid
-        expect(claim.errors.full_messages).to eq ["Num claimants must be specified"]
+        expect(claim.errors.full_messages).to eq [["claim_num_claimants_error", "Number of claimants must be entered"]]
       end
     end
   end
