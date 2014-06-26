@@ -62,7 +62,8 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
   def error_for? attribute
     if @object.is_a?(Claim) 
-      @object.errors.messages.key?(:base) && !@object.errors.messages[:base].empty?
+      subkey = "claim_#{attribute}_error"
+      @object.errors.messages.key?(:base) && @object.errors.messages[:base].to_h.key?(subkey) && !@object.errors.messages[:base].to_h[subkey].empty?
     else
       @object.errors.messages.key?(attribute) && !@object.errors.messages[attribute].empty?
     end
@@ -79,13 +80,16 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     @template.surround(" <span class='error'>".html_safe, "</span>".html_safe) { message }
   end
 
+
   def error_id_for attribute
     "#{@object_name.tr('[]','_')}_#{attribute}_error".squeeze('_')
   end
 
+
   def id_for attribute, default=nil
     error_for?(attribute) ? error_id_for(attribute) : (default || '')
   end
+
 
   def labelled_check_box attribute, label, yes='Yes', no='No', options={}
     hidden_input = check_box_input_hidden attribute, options, yes, no
@@ -111,9 +115,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
   def label_for attribute, label
     label ||= attribute.to_s.humanize
-
     label = %Q|#{label} #{error_span(attribute)}| if error_for? attribute
-
     label.html_safe
   end
 
