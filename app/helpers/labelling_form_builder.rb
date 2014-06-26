@@ -61,11 +61,21 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def error_for? attribute
-    @object.errors.messages.key?(attribute) && !@object.errors.messages[attribute].empty?
+    if @object.is_a?(Claim) 
+      @object.errors.messages.key?(:base) && !@object.errors.messages[:base].empty?
+    else
+      @object.errors.messages.key?(attribute) && !@object.errors.messages[attribute].empty?
+    end
   end
 
   def error_span attribute
-    message = @object.errors.messages[attribute][0]
+    if @object.is_a?(Claim)
+      message_key = "claim_#{attribute}_error"
+      message_hash = @object.errors.messages[:base].to_h
+      message = @object.errors.messages[:base].to_h[message_key]
+    else
+      message = @object.errors.messages[attribute][0]
+    end
     @template.surround(" <span class='error'>".html_safe, "</span>".html_safe) { message }
   end
 
