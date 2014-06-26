@@ -8,9 +8,13 @@ class Claim < BaseClass
 
   attr_accessor :num_claimants
 
-  @@valid_num_claimants = [1, 2]
+  attr_accessor :num_defendants
 
+  @@valid_num_claimants     = [1, 2]
+  @@valid_num_dependants    = [1, 2]
   @@ambiguous_instance_vars = ['claimant_one', 'claimaint_two', 'defendant_one', 'defendant_two']
+
+
 
   def initialize(claim_params={})
     @num_claimants = claim_params.key?(:num_claimants) ? claim_params[:num_claimants].to_i : nil
