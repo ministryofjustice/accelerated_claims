@@ -53,7 +53,7 @@ moj.Modules.tools = (function() {
 
     s = s.toString();
     s = s.replace( /[\, ]/g, '' );
-    if ( s !== parseFloat( s ) ) {
+    if ( s != parseFloat( s ) ) {
       return 'not a number';
     }
     x = s.indexOf( '.' );
