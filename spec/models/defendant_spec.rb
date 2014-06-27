@@ -3,8 +3,17 @@ describe Defendant, :type => :model do
     Defendant.new(title: "Mr",
                   full_name: "John Major",
                   street: "Sesame Street\nLondon",
-                  postcode: "SW1X 2PT")
+                  postcode: "SW1X 2PT",
+                  property_address: 'no')
   end
+
+  let(:property_address_defendant) do
+    Defendant.new(title: "Mr",
+                  full_name: "John Major",
+                  property_address: 'yes')
+  end
+
+
 
   describe "when given all valid values" do
     it "should be valid" do
@@ -12,59 +21,158 @@ describe Defendant, :type => :model do
     end
   end
 
-  context 'when not first_defendant' do
-    before { defendant.first_defendant = false }
 
-    subject { defendant }
+  context 'validate_presence not set' do
 
-    context "name fields blank" do
-      before do
-        defendant.title = ""
-        defendant.full_name = ""
+    context 'property_address is no' do
+      it 'should set the validate_presence attribute to true if missing' do
+        expect(defendant.validate_presence).to be true
       end
 
-      context 'and address blank' do
-        before do
-          defendant.street = ""
-          defendant.postcode = ""
-        end
-        it { is_expected.to be_valid }
+      it 'should be valid if all attributes are set ' do
+        expect(defendant.validate_presence).to be true
+        expect(defendant).to be_valid
       end
 
-      context 'and address present' do
-        it { is_expected.not_to be_valid }
+      it 'should not be valid if full name is missing' do
+        defendant.full_name = nil
+        expect(defendant).to_not be_valid
+        expect(defendant.errors.full_messages).to eq ['Full name must be entered']
       end
-    end
 
-    context 'only title blank' do
-      before { defendant.title = "" }
-      it { is_expected.not_to be_valid }
-      it 'has error message' do
-        subject.valid?
-        expect(subject.errors.full_messages).to eq(['Title must be entered'])
+      it 'should not be valid if postcode is missing' do
+        defendant.postcode = nil
+        expect(defendant).to_not be_valid
+        expect(defendant.errors.full_messages).to eq ['Postcode must be entered']
       end
-    end
 
-    context 'only full_name blank' do
-      before { defendant.full_name = "" }
-      it { is_expected.not_to be_valid }
-      it 'has error message' do
-        subject.valid?
-        expect(subject.errors.full_messages).to eq(['Full name must be entered'])
+      it 'should not be valid if street is missing' do
+        defendant.street = nil
+        expect(defendant).to_not be_valid
+        expect(defendant.errors.full_messages).to eq ['Street must be entered']
       end
     end
 
-    include_examples 'address validation'
+
+    context 'property_address is yes' do
+      it 'should be valid if all attributes except street and postcode are set ' do
+        expect(property_address_defendant.validate_presence).to be true
+        expect(property_address_defendant.street).to be_nil
+        expect(property_address_defendant.postcode).to be_nil
+        expect(property_address_defendant).to be_valid
+      end
+
+      it 'should be invalid if full name is missing' do
+        property_address_defendant.full_name = nil
+        expect(property_address_defendant).to_not be_valid
+        expect(property_address_defendant.errors.full_messages).to eq ['Full name must be entered']
+      end
+
+      it 'should be invalid if title is missing' do
+        property_address_defendant.title = nil
+        expect(property_address_defendant).to_not be_valid
+        expect(property_address_defendant.errors.full_messages).to eq ['Title must be entered']
+      end
+    end
   end
 
-  context 'when first_defendant true' do
-    before { defendant.first_defendant = true }
 
-    subject { defendant }
+  context 'validate_presence set to true' do
 
-    include_examples 'name validation'
-    include_examples 'address validation'
+    context 'property_address is no' do
+      
+      before(:each) { defendant.validate_presence = true }
+
+      it 'should set the validate_presence attribute to true if missing' do
+        expect(defendant.validate_presence).to be true
+      end
+
+      it 'should be valid if all attributes are set ' do
+        expect(defendant.validate_presence).to be true
+        expect(defendant).to be_valid
+      end
+
+      it 'should not be valid if full name is missing' do
+        defendant.full_name = nil
+        expect(defendant).to_not be_valid
+        expect(defendant.errors.full_messages).to eq ['Full name must be entered']
+      end
+
+      it 'should not be valid if postcode is missing' do
+        defendant.postcode = nil
+        expect(defendant).to_not be_valid
+        expect(defendant.errors.full_messages).to eq ['Postcode must be entered']
+      end
+
+      it 'should not be valid if street is missing' do
+        defendant.street = nil
+        expect(defendant).to_not be_valid
+        expect(defendant.errors.full_messages).to eq ['Street must be entered']
+      end
+    end
+
+
+    context 'property_address is yes' do
+
+      before(:each) { property_address_defendant.validate_presence = true }
+
+      it 'should be valid if all attributes except street and postcode are set ' do
+        expect(property_address_defendant.validate_presence).to be true
+        expect(property_address_defendant.street).to be_nil
+        expect(property_address_defendant.postcode).to be_nil
+        expect(property_address_defendant).to be_valid
+      end
+
+      it 'should be invalid if full name is missing' do
+        property_address_defendant.full_name = nil
+        expect(property_address_defendant).to_not be_valid
+        expect(property_address_defendant.errors.full_messages).to eq ['Full name must be entered']
+      end
+
+      it 'should be invalid if title is missing' do
+        property_address_defendant.title = nil
+        expect(property_address_defendant).to_not be_valid
+        expect(property_address_defendant.errors.full_messages).to eq ['Title must be entered']
+      end
+    end
   end
+
+
+  context 'validate_abscence set to true' do
+    let(:nil_defendant)  { Defendant.new(:validate_presence => false, :validate_absence => true) }
+
+    it 'should be valid if all fields are empty' do
+      [:title, :full_name, :street, :postcode, :property_address].each do |field|
+        expect(nil_defendant.send(field)).to be_nil
+      end
+      expect(nil_defendant).to be_valid
+    end
+
+    it 'should be invalid if title is present' do
+      nil_defendant.title = 'Mr'
+      expect(nil_defendant).to_not be_valid
+    end
+
+    it 'should be invalid if full_name is present' do
+      nil_defendant.full_name = 'Stephen Richards'
+      expect(nil_defendant).to_not be_valid
+    end
+
+    it 'should be invalid if street is present' do
+      nil_defendant.street = 'London Road'
+      expect(nil_defendant).to_not be_valid
+    end
+
+    it 'should be invalid if postcode is present' do
+      nil_defendant.postcode = 'SW10 9LB'
+      expect(nil_defendant).to_not be_valid
+    end
+
+  end
+
+
+
+
 
   describe "#as_json" do
     context "when the model is not blank" do

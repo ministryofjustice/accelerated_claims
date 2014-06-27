@@ -13,6 +13,7 @@ class ContactValidator < ActiveModel::Validator
     fields = [ :full_name ]
     fields << :title if record.is_a?(Defendant)
     fields += [:street, :postcode] unless record.is_a?(Defendant) && record.property_address == 'yes'
+    
     fields.each do |field|
       record.errors[field] << "must be entered" if record.send(field).blank?
     end

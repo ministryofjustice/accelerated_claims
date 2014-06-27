@@ -1,17 +1,21 @@
 class Defendant < BaseClass
 
   @do_partial_address_completion_validation = true
-  include Address
+  # include Address
 
   attr_accessor :validate_presence, :validate_absence
 
   attr_accessor :title
   attr_accessor :full_name
+  attr_accessor :street
+  attr_accessor :postcode
   attr_accessor :property_address
 
   validates :title, length: { maximum: 8 }
   validates :full_name, length: { maximum: 40 }
+  validates :property_address, inclusion:  { in: [nil, 'yes', 'no'], message: "%(value) is not a valid value for 'Same address as property'"  }
 
+  
   validates_with ContactValidator
  
 
@@ -37,6 +41,10 @@ class Defendant < BaseClass
   end
 
   def present?
-    !(title.blank? && full_name.blank?)
+    if property_address == 'yes'
+      (title.present? && full_name.present?)
+    else
+      (title.present? && full_name.present? && street.present? && postcode.present?)
+    end
   end
 end
