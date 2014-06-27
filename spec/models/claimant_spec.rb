@@ -17,7 +17,6 @@ describe Claimant, :type => :model do
     end
 
     it 'should be valid if all attributes are set ' do
-      expect(true).to be true
       expect(claimant.validate_presence).to be true
       expect(claimant).to be_valid
     end
