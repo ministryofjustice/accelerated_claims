@@ -1,7 +1,6 @@
 class Defendant < BaseClass
 
   @do_partial_address_completion_validation = true
-  # include Address
 
   attr_accessor :validate_presence, :validate_absence
 
@@ -41,10 +40,15 @@ class Defendant < BaseClass
   end
 
   def present?
-    if property_address == 'yes'
-      (title.present? && full_name.present?)
+    if property_address == 'no'
+      (title.present? && full_name.present? && !address_blank?)
     else
-      (title.present? && full_name.present? && street.present? && postcode.present?)
+      (title.present? && full_name.present?)
     end
+  end
+
+
+  def address_blank?
+    (street.blank? && postcode.blank?)
   end
 end

@@ -12,7 +12,7 @@ class Claim < BaseClass
 
   @@valid_num_claimants     = [1, 2]
   @@valid_num_defendants    = [1, 2]
-  @@ambiguous_instance_vars = ['claimant_one', 'claimaint_two', 'defendant_one', 'defendant_two']
+  @@ambiguous_instance_vars = ['claimant_one', 'claimant_two', 'defendant_one', 'defendant_two']
 
 
 
@@ -20,7 +20,6 @@ class Claim < BaseClass
     @num_claimants  = claim_params.key?(:num_claimants) ? claim_params[:num_claimants].to_i : nil
     @num_defendants = claim_params.key?(:num_defendants) ? claim_params[:num_defendants].to_i : nil
 
-    
     initialize_all_submodels(claim_params)
     @errors = ActiveModel::Errors.new(self)
   end

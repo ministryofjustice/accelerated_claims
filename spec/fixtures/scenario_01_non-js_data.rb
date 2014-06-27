@@ -12,7 +12,8 @@
       house: "Yes"
     },
     claim: {
-      number_of_claimants: "2"
+      number_of_claimants: "2",
+      number_of_defendants: "2"
     },
     claimant_one: {
       title: "Mr ",
@@ -27,14 +28,13 @@
       postcode: "LS5 3RP"
     },
     javascript: {
-      claimant_two_same_address: nil,
+      claimant_two_same_address: "No",
       any_legal_costs: "No",
       separate_correspondence_address: "Yes",
       other_contact_details: "Yes",
       add_reference_number: "No",
-      number_of_defendants: "2",
       defendant_one_living_in_property: "Yes",
-      defendent_two_living_in_property: "Yes"
+      defendant_two_living_in_property: "Yes"
     },
     legal_cost: {
       legal_costs: nil

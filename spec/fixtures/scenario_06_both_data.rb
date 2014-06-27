@@ -12,7 +12,8 @@
       house: "Yes"
     },
     claim: {
-      number_of_claimants: "1"
+      number_of_claimants: "1",
+      number_of_defendants: "1"
     },
     claimant_one: {
       title: nil,
@@ -32,9 +33,8 @@
       separate_correspondence_address: "No",
       other_contact_details: "Yes",
       add_reference_number: "Yes",
-      number_of_defendants: "1",
       defendant_one_living_in_property: "Yes",
-      defendent_two_living_in_property: nil
+      defendant_two_living_in_property: nil
     },
     legal_cost: {
       legal_costs: nil

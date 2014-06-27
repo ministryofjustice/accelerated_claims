@@ -12,7 +12,8 @@
       house: "No"
     },
     claim: {
-      number_of_claimants: "1"
+      number_of_claimants: "1",
+      number_of_defendants: "1"
     },
     claimant_one: {
       title: "Mr",
@@ -32,9 +33,8 @@
       separate_correspondence_address: "Yes",
       other_contact_details: "Yes",
       add_reference_number: "No",
-      number_of_defendants: "1",
       defendant_one_living_in_property: "Yes",
-      defendent_two_living_in_property: nil
+      defendant_two_living_in_property: nil
     },
     legal_cost: {
       legal_costs: nil
