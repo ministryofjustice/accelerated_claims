@@ -250,7 +250,7 @@ describe Claim, :type => :model do
         hash['defendant_two'] = hash['defendant_two'].except('street', 'postcode')
         hash
       end
-      it "dependant one should render with the property's address" do
+      it "defendant one should render with the property's address" do
         expect(claim.as_json['defendant_one_address']).to include claim.as_json['property_address']
         expect(claim.as_json['defendant_one_postcode1']).to eql claim.as_json['property_postcode1']
         expect(claim.as_json['defendant_one_postcode2']).to eql claim.as_json['property_postcode2']
@@ -312,13 +312,13 @@ describe Claim, :type => :model do
       it 'should not be valid when no details are present for claimant 2' do
         data.delete(:claimant_two)
         expect(claim).to_not be_valid
-        expect(claim.errors.full_messages).to eq [["claim_claimant_two_full_name_error", "Full name must be entered"], ["claim_claimant_two_street_error", "Street must be entered"], ["claim_claimant_two_postcode_error", "Postcode must be entered"]]
+        expect(claim.errors.full_messages).to eq [["claim_claimant_two_full_name_error", "Claimant Two Full name must be entered"], ["claim_claimant_two_street_error", "Claimant Two Street must be entered"], ["claim_claimant_two_postcode_error", "Claimant Two Postcode must be entered"]]
       end
 
       it 'should not be valid when the details for claimant 2 are blank' do
         data["claimant_two"].each { |k, v| data["claimant_two"][k] = '' }
         expect(claim).to_not be_valid
-        expect(claim.errors.full_messages).to eq [["claim_claimant_two_full_name_error", "Full name must be entered"], ["claim_claimant_two_street_error", "Street must be entered"], ["claim_claimant_two_postcode_error", "Postcode must be entered"]]
+        expect(claim.errors.full_messages).to eq [["claim_claimant_two_full_name_error", "Claimant Two Full name must be entered"], ["claim_claimant_two_street_error", "Claimant Two Street must be entered"], ["claim_claimant_two_postcode_error", "Claimant Two Postcode must be entered"]]
       end
     end
 

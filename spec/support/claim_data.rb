@@ -77,6 +77,7 @@ def claim_post_data
         "possession" => 'Yes',
         "cost" => 'No'
       },
+      "num_defendants" => '2',
       "defendant_one"=>
       {
         "title" => "Mr",
