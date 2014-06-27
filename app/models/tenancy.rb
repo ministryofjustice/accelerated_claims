@@ -22,12 +22,8 @@ class Tenancy < BaseClass
   attr_accessor :demotion_order_court
   attr_accessor :previous_tenancy_type
 
-  attr_accessor :applicable_statements_1
-  attr_accessor :applicable_statements_2
-  attr_accessor :applicable_statements_3
-  attr_accessor :applicable_statements_4
-  attr_accessor :applicable_statements_5
-  attr_accessor :applicable_statements_6
+  attr_accessor :from_1997_option
+  attr_accessor :upto_1997_option
 
   # with_options if: :latest_agreement_date, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] } do |tenancy|
   #   tenancy.validates :agreement_reissued_for_same_property
@@ -52,15 +48,7 @@ class Tenancy < BaseClass
       :assured_shorthold_tenancy_notice_served_by,
       :assured_shorthold_tenancy_notice_served_date]
 
-  LATER_PERIOD_STATEMENTS = [:applicable_statements_1,
-      :applicable_statements_2,
-      :applicable_statements_3]
-
-  EARLIER_PERIOD_STATEMENTS = [:applicable_statements_4,
-      :applicable_statements_5,
-      :applicable_statements_6]
-
-  STATEMENTS_FIELDS = LATER_PERIOD_STATEMENTS + EARLIER_PERIOD_STATEMENTS
+  STATEMENTS_FIELDS = [:from_1997_option, :upto_1997_option]
 
   with_options if: :demoted_tenancy? do |t|
     t.validates :demotion_order_date, presence: { message: 'must be selected' }
@@ -104,12 +92,12 @@ class Tenancy < BaseClass
   end
 
   with_options if: :in_first_rules_period? do |t|
-    t.validates *LATER_PERIOD_STATEMENTS,
+    t.validates :from_1997_option,
       inclusion: { in: ['No'], message: "leave blank as you specified original tenancy agreement was made before #{Tenancy::RULES_CHANGE_DATE.to_s(:printed)}" }
   end
 
   with_options if: :in_second_rules_period? do |t|
-    t.validates *EARLIER_PERIOD_STATEMENTS,
+    t.validates :upto_1997_option,
       inclusion: { in: ['No'], message: "leave blank as you specified original tenancy agreement was made on or after #{Tenancy::RULES_CHANGE_DATE.to_s(:printed)}" }
   end
 
@@ -188,16 +176,10 @@ class Tenancy < BaseClass
       "latest_agreement_date_month" => month(latest_agreement_date),
       "latest_agreement_date_year" => year(latest_agreement_date),
       'demotion_order_court' => short_court_name,
-      'applicable_statements_1' => applicable_statements_1,
-      'applicable_statements_2' => applicable_statements_2,
-      'applicable_statements_3' => applicable_statements_3,
-      'applicable_statements_4' => applicable_statements_4,
-      'applicable_statements_5' => applicable_statements_5,
-      'applicable_statements_6' => applicable_statements_6,
       'previous_tenancy_type' => previous_tenancy_type,
       'assured_shorthold_tenancy_type' => assured_shorthold_tenancy_type
     }
-
+    hash.merge!(applicable_statements)
     split_date(:demotion_order_date, hash)
     split_date(:assured_shorthold_tenancy_notice_served_date, hash)
     split_date(:original_assured_shorthold_tenancy_agreement_date, hash)
@@ -205,6 +187,17 @@ class Tenancy < BaseClass
   end
 
   private
+
+  def applicable_statements
+    {
+      'applicable_statements_1' => "#{from_1997_option}",
+      'applicable_statements_2' => "#{from_1997_option}",
+      'applicable_statements_3' => "#{from_1997_option}",
+      'applicable_statements_4' => "#{upto_1997_option}",
+      'applicable_statements_5' => "#{upto_1997_option}",
+      'applicable_statements_6' => "#{upto_1997_option}"
+    }
+  end
 
   def format_tenancy_type
     tenancy_type == "demoted" ? "Yes" : "No"

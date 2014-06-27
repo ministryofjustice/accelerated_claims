@@ -5,10 +5,7 @@
 
 @mixin highlight-row
   width: auto
-  padding: 15px
-  margin:
-    left: 90px
-    right: 90px
+  padding: 15px !important
 
   @include media(mobile)
     margin:
@@ -238,12 +235,6 @@ fieldset.plain
 
   &.important
     background-color: $yellow-25
-
-  &.highlight
-    background-color: $light-blue-25
-    border:
-      top: 1px solid $light-blue-50
-      bottom: 1px solid $light-blue-50
 
   &.error
     background-color: $errorbgcolour
@@ -528,6 +519,10 @@ fieldset.plain
       @include highlight-row
       background-color: $white
 
+    &.information
+      @include highlight-row
+      background-color: $grey-3
+
     &.warning, &.information, &.highlight
       p, ul, ol
         width: auto
@@ -537,10 +532,13 @@ fieldset.plain
       li
         margin: 5px 0
 
-    .statements
+    &.statements
       clear: both
       float: left
-      ol
+      margin-top: 0
+      + .statements
+        margin-top: 30px
+      ul, ol
         margin:
           top: 0
           bottom: 0
@@ -550,16 +548,9 @@ fieldset.plain
           left: 30px
           right: 30px
       li
-        list-style-type: none
         margin-bottom: 15px
         clear: both
         float: left
-
-        input[type="checkbox"]
-          width: 20px
-          position: absolute
-          margin-left: -30px
-          margin-top: 5px
 
         &.noticeStatement
           .row, fieldset
@@ -570,6 +561,18 @@ fieldset.plain
 
             .row
               padding-left: 0
+
+      input[type="checkbox"]
+        width: 20px
+        position: absolute
+        margin-left: -22px
+        margin-top: 5px
+
+      .confirmation
+        label
+          padding-left: 20px
+          display: block
+          float: none
 
 
 .js-enabled

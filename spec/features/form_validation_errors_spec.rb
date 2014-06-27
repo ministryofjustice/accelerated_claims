@@ -90,7 +90,7 @@ feature 'Filling in claim form' do
     choose('claim_tenancy_assured_shorthold_tenancy_type_one')
     select_tenancy_start_date Tenancy::APPLICABLE_FROM_DATE
 
-    expect(page).to have_content("Read the statements below and select all that apply:")
+    expect(page).to have_content("Carefully read the statements below:")
     expect(page).to_not have_content("You didn’t tell the defendant that the agreement was likely to change")
     expect(page).to have_content("The tenancy agreement was for 6 months (or more)")
   end
