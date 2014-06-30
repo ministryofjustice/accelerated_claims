@@ -78,9 +78,9 @@ describe Deposit, :type => :model do
                             ref_number: 'x123',
                             as_property: 'No',
                             as_money: 'No',
-                            information_given_date: Date.parse("2010-01-10")) 
+                            information_given_date: Date.parse("2010-01-10"))
       expect(deposit).not_to be_valid
-      expect(deposit.errors[:as_money]).to eq(["or As Property must be selected as the type of deposit"])
+      expect(deposit.errors[:deposit_type]).to eq(['must be selected'])
     end
 
     it 'should validate if both money and property are selected' do

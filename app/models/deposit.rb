@@ -13,7 +13,7 @@ class Deposit < BaseClass
 
   attr_accessor :as_money
   validates :as_money, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
-  
+
   validate :money_or_property_must_be_selected_if_received
 
 
@@ -36,7 +36,7 @@ class Deposit < BaseClass
   def money_or_property_must_be_selected_if_received
     if received && received == 'Yes'
       if as_money == 'No' && as_property == 'No'
-        errors[:as_money] = "or As Property must be selected as the type of deposit"
+        errors[:deposit_type] = 'must be selected'
       end
     end
   end
