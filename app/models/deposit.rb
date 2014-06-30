@@ -25,6 +25,10 @@ class Deposit < BaseClass
     deposit.validates :ref_number, absence: { message: err }
   end
 
+  with_options if: -> deposit { deposit.received == 'Yes' && deposit.as_money == 'Yes'} do |deposit|
+    deposit.validates :ref_number, presence: true
+  end
+
   def as_json
     json = super
     json = split_date :information_given_date, json

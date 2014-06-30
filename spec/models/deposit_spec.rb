@@ -57,6 +57,13 @@ describe Deposit, :type => :model do
       end
     end
 
+    describe 'when deposit as money is given' do
+      it "shouldn't be valid if ref_number is blank" do
+        deposit.ref_number = ""
+        expect(deposit).not_to be_valid
+      end
+    end
+
     describe 'as_json' do
       it 'should return correct json' do
         expect(deposit.as_json).to eq({
