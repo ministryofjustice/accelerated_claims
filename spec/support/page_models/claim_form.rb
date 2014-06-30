@@ -223,11 +223,11 @@ class ClaimForm
     complete_details_of_person('claimant_two', complete_address: fill_in_address)
   end
 
-  def fill_defendant_one(options)
+  def fill_defendant_one(options = {})
     complete_details_of_person('defendant_one', options)
   end
 
-  def fill_defendant_two(options)
+  def fill_defendant_two(options = {})
     complete_details_of_person('defendant_two', options)
   end
 
