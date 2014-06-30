@@ -5,10 +5,12 @@
       class: 'radio inline js-depend',
       data: { depend: 'deposit', 'virtual-pageview' => '/accelerated/deposit-section' }
 
-  %fieldset.hide.js-deposit.yes.radio.js-depend{ id: 'deposit_type_fieldset' }
-    %h3
+  %fieldset.hide.js-deposit.yes.radio.js-depend{ class: (form.error_for?(:deposit_type) ? 'error' : ''), id: (form.error_for?(:deposit_type) ? form.error_id_for(:deposit_type) : 'deposit_type_fieldset') }
+    %legend
       %span.nonjs(data-jsalt='What') If <strong>yes</strong>, what
       kind of deposit?
+      - if form.error_for?(:deposit_type)
+        %span.error must be answered
     .options
       - form.row :as_money do
         = form.labelled_check_box :as_money, 'A money deposit <span class="hint block">For example cash or cheque</span>'.html_safe, 'Yes', 'No', data: {depend: 'depositTypeMoney'}
