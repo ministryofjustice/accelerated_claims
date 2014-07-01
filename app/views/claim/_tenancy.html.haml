@@ -14,8 +14,8 @@
 
     = form.radio_button_fieldset :assured_shorthold_tenancy_type,
         'How many tenancy agreements have you had with the defendant?',
-        class: 'radio inline js-depend',
-        choice: {'1 tenancy agreement' => 'one', 'More than 1 tenancy agreement' => 'multiple'},
+        class: 'radio js-depend',
+        choice: {'1 tenancy agreement' => 'one', 'More than 1 tenancy agreement' => 'multiple', 'Not applicable' => 'n/a'},
         data: { depend: 'tenancyNumber' }
 
 
@@ -34,9 +34,9 @@
 
         = form.moj_date_fieldset :latest_agreement_date, 'Date of the most recent tenancy agreement', class: 'date-picker rel conditional latest'
 
-        = form.radio_button_fieldset :agreement_reissued_for_same_property, 'Is the tenancy agreement for the same property?', class: 'radio inline'
+        = form.radio_button_fieldset :agreement_reissued_for_same_property, 'Is the tenancy agreement for the same property?', class: 'radio inline', choice: {'Yes' => 'Yes', 'No' => 'No', 'Not applicable' => 'n/a'}
 
-        = form.radio_button_fieldset :agreement_reissued_for_same_landlord_and_tenant, 'Is the tenancy agreement between the same landlord and tenant?', class: 'radio inline rel'
+        = form.radio_button_fieldset :agreement_reissued_for_same_landlord_and_tenant, 'Is the tenancy agreement between the same landlord and tenant?', class: 'radio inline rel', choice: {'Yes' => 'Yes', 'No' => 'No', 'Not applicable' => 'n/a'}
 
       .sub-panel.inset.hide.js-conditionals
 
@@ -74,4 +74,4 @@
     .sub-panel.inset
       = form.moj_date_fieldset  :demotion_order_date, 'Date of demotion order', class: 'date-picker'
       = form.text_field_row :demotion_order_court, label: 'Court where demotion order was made'
-      = form.radio_button_fieldset :previous_tenancy_type, 'What kind of <a href="https://www.gov.uk/private-renting-tenancy-agreements/tenancy-types" class="external" rel="external" target="_blank">tenancy agreement</a> did the defendant have before it was demoted?', class: 'radio inline', choice: {'Assured' => Tenancy::ASSURED, 'Secure' => Tenancy::SECURE }
+      = form.radio_button_fieldset :previous_tenancy_type, 'What kind of <a href="https://www.gov.uk/private-renting-tenancy-agreements/tenancy-types" class="external" rel="external" target="_blank">tenancy agreement</a> did the defendant have before it was demoted?', class: 'radio inline', choice: {'Assured' => Tenancy::ASSURED, 'Secure' => Tenancy::SECURE, 'Not applicable' => 'n/a' }
