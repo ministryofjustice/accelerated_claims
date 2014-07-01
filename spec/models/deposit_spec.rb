@@ -64,6 +64,25 @@ describe Deposit, :type => :model do
       end
     end
 
+    describe 'when the deposit has been given' do
+      context 'but only as property' do
+        before do
+          deposit.as_property = 'Yes'
+          deposit.as_money = 'No'
+        end
+
+        it 'should not be valid' do
+          expect(deposit).not_to be_valid
+        end
+
+        it 'should have an error message' do
+          deposit.valid?
+          err = 'must be provided only if money deposit taken'
+          expect(deposit.errors[:ref_number]).to eq([err])
+        end
+      end
+    end
+
     describe 'as_json' do
       it 'should return correct json' do
         expect(deposit.as_json).to eq({
