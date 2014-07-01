@@ -24,4 +24,9 @@ AcceleratedClaims::Application.configure do
 
   # in memory cache store
   config.cache_store = :memory_store
+
+
+  # or if we want to use redis in development .....
+  # config.cache_store = :redis_store, ('redis://localhost:6379/1')
+
 end
