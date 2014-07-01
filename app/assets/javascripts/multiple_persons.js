@@ -42,6 +42,8 @@ moj.Modules.multiplePersons = (function() {
       for( x = 0; x < $multiples.length; x++ ) {
         $panel = $multiples.eq( x );
         showMultiples( $panel, null, 0 );
+
+        moj.Modules.jsState.registerField( $( '[name="claim[num_' + $panel.attr( 'id' ) + ']"]' ) );
       }
     }
   };

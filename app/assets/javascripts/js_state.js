@@ -189,7 +189,7 @@ moj.Modules.jsState = (function() {
 
   setRadio = function( obj ) {
     if( obj.value !== 'unchecked' ) {
-      $( '[name="' + obj.name + '"][value="' + obj.value + '"]' ).trigger( 'click' ).trigger( 'blur' );
+      $( '[name="' + obj.name + '"][value="' + obj.value + '"]' ).trigger( 'click' ).trigger( 'change' ).trigger( 'blur' );
     }
   };
 
