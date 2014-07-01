@@ -42,7 +42,7 @@ describe RedisSweeper do
 
 
     it 'should not delete keys that cannot be deserialized into ActiveSupport::Cache::Entry objects' do
-      Timecop.freeze(Time.new(2014, 7, 1, 11, 55, 0)) do
+      Timecop.freeze(Time.new(2014, 7, 1, 11, 55, 0, '+00:00')) do
         key_1     = "_session_id:42892fa90e04376438a6a5de78f31bae"
         data_1    = 'serialized_data_for_real_session'
         session_1 = double ActiveSupport::Cache::Entry
@@ -53,7 +53,7 @@ describe RedisSweeper do
         session_2 = String.new
 
         expect(Rails.logger).to receive(:info).with('[RedisSweeper] Number of session records in database: 2')
-        expect(Rails.logger).to receive(:info).with("[RedisSweeper] deleting session #{key_1} which expired at 2014-07-01 10:54:00")
+        expect(Rails.logger).to receive(:info).with("[RedisSweeper] deleting session #{key_1} which expired at 2014-07-01 11:54:00")
         expect(Rails.logger).to receive(:info).with('[RedisSweeper] 1 sessions deleted')
         expect(Rails.logger).to receive(:error).with('[RedisSweeper] 1 errors encountered:')
         expect(Rails.logger).to receive(:error).with("[RedisSweeper]    Deserialized object for key #{key_2} is an unexpected class: String")
@@ -75,7 +75,7 @@ describe RedisSweeper do
 
 
     it 'should not delete keys where the session is an ActiveSupport::Cache::Entry object by the expires at time cannot be calculated' do
-      Timecop.freeze(Time.new(2014, 7, 1, 11, 55, 0)) do
+      Timecop.freeze(Time.new(2014, 7, 1, 11, 55, 0, '+00:00')) do
         key_1     = "_session_id:42892fa90e04376438a6a5de78f31bae"
         data_1    = 'serialized_data_for_real_session'
         session_1 = double ActiveSupport::Cache::Entry
@@ -87,7 +87,7 @@ describe RedisSweeper do
         expiry_2  = nil
 
         expect(Rails.logger).to receive(:info).with('[RedisSweeper] Number of session records in database: 2')
-        expect(Rails.logger).to receive(:info).with("[RedisSweeper] deleting session #{key_1} which expired at 2014-07-01 10:54:00")
+        expect(Rails.logger).to receive(:info).with("[RedisSweeper] deleting session #{key_1} which expired at 2014-07-01 11:54:00")
         expect(Rails.logger).to receive(:info).with('[RedisSweeper] 1 sessions deleted')
         expect(Rails.logger).to receive(:error).with('[RedisSweeper] 1 errors encountered:')
         expect(Rails.logger).to receive(:error).with("[RedisSweeper]    NoMethodError when processing key #{key_2}: undefined method `<' for nil:NilClass")
