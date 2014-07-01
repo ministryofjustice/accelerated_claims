@@ -91,7 +91,7 @@ moj.Modules.jsState = (function() {
     if( (section_errors.length > 0) && section_hidden ) {
       var caption = $(section_id).find('.jsVal').eq( 0 ).addClass('error').find( '.caption' );
 
-      var text = 'Question "' + caption.text() + '" not answered';
+      var text = 'Question "' + caption.text() + '" must be answered';
       var ul = $('.error-summary').eq(0).find('ul').eq(0);
       $("<li><a class='error-link' data-id='" + section_id + "' href='" + section_id + "'>" + text + "</a></li>").prependTo(ul);
 
