@@ -58,7 +58,7 @@ class Claim < BaseClass
     @errors.clear
     validity = true
     validity = false unless num_claimants_valid?
-    validaity = false unless num_defendants_valid?
+    validity = false unless num_defendants_valid?
     attributes_from_submodels.each do |instance_var, model|
       unless send(instance_var).valid?
         errors = send(instance_var).errors
