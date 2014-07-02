@@ -11,9 +11,6 @@ def form_date field, date
 end
 
 def load_stringified_hash_from_file(filename)
-  
-  # path = File.expand_path(File.join(__FILE__, '..', '..', 'fixtures'))
-  # contents = IO.read(File.join(path, filename))
   contents = IO.read(filename)
   data = recursively_stringify_keys(eval contents)
   data
