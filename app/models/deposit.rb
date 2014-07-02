@@ -13,7 +13,7 @@ class Deposit < BaseClass
 
   attr_accessor :as_money
   validates :as_money, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
-  
+
   validate :money_or_property_must_be_selected_if_received
 
 
@@ -23,6 +23,14 @@ class Deposit < BaseClass
     err = 'can\'t be provided if there is no deposit given'
     deposit.validates :information_given_date, absence: { message: err }
     deposit.validates :ref_number, absence: { message: err }
+  end
+
+  with_options if: -> deposit { deposit.received == 'Yes' && deposit.as_money == 'Yes'} do |deposit|
+    deposit.validates :ref_number, presence: true
+  end
+
+  with_options if: -> deposit { deposit.received == 'Yes' && deposit.as_money == 'No'} do |deposit|
+    deposit.validates :ref_number, absence: { message: 'must be provided only if money deposit taken' }
   end
 
   def as_json
@@ -36,7 +44,7 @@ class Deposit < BaseClass
   def money_or_property_must_be_selected_if_received
     if received && received == 'Yes'
       if as_money == 'No' && as_property == 'No'
-        errors[:as_money] = "or As Property must be selected as the type of deposit"
+        errors[:deposit_type] = 'must be selected'
       end
     end
   end

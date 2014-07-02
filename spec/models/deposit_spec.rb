@@ -57,6 +57,32 @@ describe Deposit, :type => :model do
       end
     end
 
+    describe 'when deposit as money is given' do
+      it "shouldn't be valid if ref_number is blank" do
+        deposit.ref_number = ""
+        expect(deposit).not_to be_valid
+      end
+    end
+
+    describe 'when the deposit has been given' do
+      context 'but only as property' do
+        before do
+          deposit.as_property = 'Yes'
+          deposit.as_money = 'No'
+        end
+
+        it 'should not be valid' do
+          expect(deposit).not_to be_valid
+        end
+
+        it 'should have an error message' do
+          deposit.valid?
+          err = 'must be provided only if money deposit taken'
+          expect(deposit.errors[:ref_number]).to eq([err])
+        end
+      end
+    end
+
     describe 'as_json' do
       it 'should return correct json' do
         expect(deposit.as_json).to eq({
@@ -78,9 +104,9 @@ describe Deposit, :type => :model do
                             ref_number: 'x123',
                             as_property: 'No',
                             as_money: 'No',
-                            information_given_date: Date.parse("2010-01-10")) 
+                            information_given_date: Date.parse("2010-01-10"))
       expect(deposit).not_to be_valid
-      expect(deposit.errors[:as_money]).to eq(["or As Property must be selected as the type of deposit"])
+      expect(deposit.errors[:deposit_type]).to eq(['must be selected'])
     end
 
     it 'should validate if both money and property are selected' do
