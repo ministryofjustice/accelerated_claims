@@ -67,9 +67,5 @@ describe Claimant, :type => :model do
       expect(empty_claimant.errors.full_messages).to eq ['Street must not be entered if number of claimants is 1']
     end
   end
- 
-
-
-
 
 end
