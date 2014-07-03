@@ -7,7 +7,7 @@
       choice: { 'Yes'=>'Yes', 'No'=>'No', "I've applied for one" => 'Applied' },
       data: { depend: 'hmo', 'virtual-pageview' => '/accelerated/licenses-section' }
 
-  - choice = { 'Licence for properties that are <strong>3 or more storeys high</strong> and occupied by <strong>5 or more people</strong> (issued under part 2 of the Housing Act 2004)'.html_safe => 'Part2', 'Licence for properties that are <strong>within an area</strong> defined by a local council (issued under part 3 of the Housing act 2004)'.html_safe => 'Part3'}
+  - choice = { 'Licence for properties that are <strong>3 or more storeys high</strong> and occupied by <strong>5 or more people</strong> (issued under part 2 of the Housing Act 2004)'.html_safe => 'Part2', 'Licence for properties that are <strong>within an area</strong> defined by a local council (issued under part 3 of the Housing act 2004)'.html_safe => 'Part3', 'Not applicable' => '' }
 
   .sub-panel.hide.js-hmo.yes
     = form.radio_button_fieldset :issued_under_act_part_yes, '<span class="nonjs" data-jsalt="Which"><strong>If yes</strong>, which</span> licence do you have?'.html_safe, class: 'radio', choice: choice
