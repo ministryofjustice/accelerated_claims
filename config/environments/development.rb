@@ -26,7 +26,10 @@ AcceleratedClaims::Application.configure do
   config.cache_store = :memory_store
 
 
-  # or if we want to use redis in development .....
+  # or if we want to use redis in development, comment out the line above
+  # and uncomment the line below, and modify config/initialisers/session_store.rb to treat dev the
+  # same as production.
+  #
   # config.cache_store = :redis_store, ('redis://localhost:6379/1')
 
 end
