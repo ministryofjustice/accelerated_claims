@@ -1,12 +1,6 @@
 # Be sure to restart your server when you modify this file.
 
-
-if Rails.env.development?
-  AcceleratedClaims::Application.config.session_store :cache_store,
-  expire_after: 60.minutes
-
-else
-
+if Rails.env.production?
   AcceleratedClaims::Application.config.session_store :redis_store,
       key: '_accelerated_claims_session',
       :servers =>{
@@ -15,6 +9,8 @@ else
         :db        => 1
       },
       expires_in: 60.minutes
-
+else
+  AcceleratedClaims::Application.config.session_store :cache_store,
+  expire_after: 60.minutes
 end
 
