@@ -13,10 +13,9 @@ moj.Modules.sessionTimeout = (function() {
 
       //vars
       timer = null,
-      sessionMinutes = 60,
-      warnMinutesBeforeEnd = sessionMinutes / 4,
+      sessionMinutes = 55,
+      warnMinutesBeforeEnd = 15,
       elapsedMinutes,
-      counter = null,
       minute = 60 * 1000,
       quick = false,
       baseProtocol = window.location.protocol,
@@ -49,23 +48,10 @@ moj.Modules.sessionTimeout = (function() {
       window.clearTimeout( timer );
       timer = null;
     }
-    if( counter ) {
-      window.clearInterval( counter );
-      counter = null;
-    }
-    elapsedMinutes = 0
-
-    moj.log( 'Starting timer. Session will end in ' + sessionMinutes + ' minutes. (' + ( sessionMinutes * 60 ) + ' seconds)' );
-    moj.log( 'Warning will show in ' + ( sessionMinutes - warnMinutesBeforeEnd ) + ' minutes. (' + ( sessionMinutes - warnMinutesBeforeEnd ) * 60 + ' seconds)' );
 
     timer = window.setTimeout( function() {
       showPopup();
     }, ( sessionMinutes - warnMinutesBeforeEnd ) * minute );
-
-    counter = window.setInterval( function() {
-      elapsedMinutes++;
-      moj.log( elapsedMinutes + ' minute' + ( elapsedMinutes === 1 ? '' : 's' ) + ' elapsed' );
-    }, minute );
   };
 
   showPopup = function() {
@@ -73,15 +59,12 @@ moj.Modules.sessionTimeout = (function() {
       refreshSession();
     }, sessionMinutes, warnMinutesBeforeEnd );
 
-    moj.log( 'Warning shown. Session will end in ' + warnMinutesBeforeEnd + ' minutes.' );
-
     timer = window.setTimeout( function() {
       endSession();
     }, warnMinutesBeforeEnd * minute );
   };
 
   refreshSession = function() {
-    moj.log( 'Refreshing session' );
     $.get( basePath + '/heartbeat', function() {
       moj.Modules.sessionModal.closeModal();
       startTimer();
@@ -89,7 +72,6 @@ moj.Modules.sessionTimeout = (function() {
   };
 
   endSession = function() {
-    moj.log( 'Ending session' );
     $.ajax( {
       type:     'post',
       url:      basePath + '/expire_session',
