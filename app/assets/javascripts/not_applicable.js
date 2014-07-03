@@ -20,7 +20,7 @@ moj.Modules.notApplicable = (function() {
   };
 
   cacheEls = function() {
-    $naRadios = $( '[value=""]' );
+    $naRadios = $( '[type="radio"][value=""]' );
   };
 
   hideRadios = function() {
