@@ -1,4 +1,4 @@
-describe ContactController, :type => :controller do
+describe UserCallbackController, :type => :controller do
 
   describe "#new" do
     it "should render the new feedback form" do

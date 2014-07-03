@@ -1,7 +1,7 @@
-describe Contact, :type => :model do
+describe UserCallback, :type => :model do
 
   let(:contact) do
-    Contact.new(data)
+    UserCallback.new(data)
   end
 
   describe '.name' do

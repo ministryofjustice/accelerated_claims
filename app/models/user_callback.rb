@@ -1,4 +1,4 @@
-class Contact
+class UserCallback
   include ActiveModel::Model
 
   attr_accessor :name, :phone, :description
