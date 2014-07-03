@@ -26,6 +26,6 @@ AcceleratedClaims::Application.routes.draw do
 
     # zendesk
     resource :feedback,     only: [:new, :create], controller: 'feedback'
-    resource :contact,      only: [:new], controller: :contact
+    resource :callback, only: [:new], controller: :user_callback
   end
 end
