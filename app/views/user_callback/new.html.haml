@@ -1,3 +1,20 @@
 %header.page-header.group
   %h1
-    Contact us
+    Request for callback
+
+%header.content-header
+  %p If you'd like us to get back to you, please leave your details below. We'll only use this to reply to your message.
+  %p
+    %strong Please don't include any sensitive personal information (For example bank details, address etc.)
+
+= form_for @user_callback, url: user_callback_path, html: { novalidate: 'novalidate' }, builder: LabellingFormBuilder do |f|
+  %section
+    .moj-panel
+      = f.text_field_row :name, label: 'Name'
+      .row
+      = f.text_field_row :phone, label: 'Telephone number', class: 'rel'
+      = f.text_area_row :description, label: 'Details'
+
+  %section
+    .action-buttons.cf
+      = f.submit 'Send', :class => 'button button-primary large chevron left', :id => 'submit-button'
