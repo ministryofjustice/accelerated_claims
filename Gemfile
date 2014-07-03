@@ -36,9 +36,9 @@ gem 'zendesk_api'
 gem 'mail'
 
 gem 'faraday'
+gem 'redis-rails'
 
 group :production do
-  gem 'redis-rails'
   gem 'appsignal'
 end
 
