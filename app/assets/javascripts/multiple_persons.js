@@ -28,7 +28,7 @@ moj.Modules.multiplePersons = (function() {
   };
 
   bindEvents = function() {
-    $( document ).on( 'change', '.multiplePanelRadio', function() {
+    $( document ).on( 'change', '.has-multiple [type="radio"]', function() {
       var $this = $( this );
       showMultiples( $this.closest( '.has-multiple' ), $this, $this.val() );
     } );
@@ -36,44 +36,14 @@ moj.Modules.multiplePersons = (function() {
 
   setupMultiples = function() {
     var x,
-        y,
-        $panel,
-        childItemClass,
-        $childItems,
-        childItemsArray,
-        source,
-        template,
-        context;
+        $panel;
 
     if( $multiples.length > 0 ) {
-      source = $( '#multiple-radio' ).html();
-      template = Handlebars.compile( source );
-
       for( x = 0; x < $multiples.length; x++ ) {
-        childItemsArray = [];
         $panel = $multiples.eq( x );
-        childItemClass = $panel.data( 'multiple' );
-        $childItems = $panel.find( '.' + childItemClass );
-
-        for( y = 0; y < $childItems.length; y++ ) {
-          childItemsArray[ childItemsArray.length ] = {
-            val:    y + 1,
-            text:   ( y + 1 ) + ' ' + ( y === 0 ? $panel.data( 'single' ) : $panel.data( 'plural' ) ),
-            group:  $panel.attr( 'id' )
-          };
-        }
-
-        context = {
-          id:       $panel.attr( 'id' ),
-          caption:  $panel.data( 'caption' ),
-          items:    childItemsArray
-        };
-
-        $panel.prepend( template( context ) );
-
         showMultiples( $panel, null, 0 );
 
-        moj.Modules.jsState.registerField( $( '[name="multiplePanelRadio_' + $panel.attr( 'id' ) + '"]' ) );
+        moj.Modules.jsState.registerField( $( '[name="claim[num_' + $panel.attr( 'id' ) + ']"]' ) );
       }
     }
   };

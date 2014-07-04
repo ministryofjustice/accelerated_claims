@@ -31,7 +31,7 @@ moj.Modules.jsValidate = (function() {
   cacheEls = function() {
     $form = $( 'form#claimForm' ).eq( 0 );
     $submitButton = $( '#submit', $form );
-    $numClaimants = $( '[name="multiplePanelRadio_claimants"]', $form );
+    $numClaimants = $( '[name="claim[num_claimants]"]', $form );
     $secondClaimantAddressSameAsFirst = $( '[name="claimant2address"]', $form );
 
     $firstClaimantAddress = $( '[name="claim[claimant_one][street]"]', $form );

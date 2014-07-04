@@ -7,9 +7,9 @@ feature "submit claim" do
      WebMock.disable_net_connect!(:allow => "127.0.0.1")
   end
 
-  def run_scenario index, options={}
-    data = load_fixture_data(index)
-    expected_data = load_expected_data(index)
+  def run_scenario data_file, options={}
+    data = load_fixture_data(data_file)
+    expected_data = load_expected_data(data_file)
 
     AppModel.new(data).exec do
       homepage.visit
@@ -33,26 +33,29 @@ feature "submit claim" do
     end
   end
 
-  Dir.glob('spec/fixtures/scenario_*_data.rb') do |item|
-    index = item[/scenario_(\d+)_data/,1].to_i
-
-    data = load_fixture_data(index)
+  Dir.glob('spec/fixtures/scenario_03*_data.rb') do |data_file|
+    data = load_fixture_data(data_file)
     title = data['title']
     description = data['description']
 
     unless remote_test?
+      unless data['javascript'] == 'JS'
+        
+        eval(%Q|
+          scenario "#{title}: #{description.first} (#{description.last})" do
+            run_scenario '#{data_file}', js: false
+          end
+        |)
+      end
+    end
+
+    unless data['javascript'] == 'NON-JS'
       eval(%Q|
-        scenario "#{title}: #{description.first} (#{description.last})" do
-          run_scenario #{index}, js: false
+        scenario "#{title} with JS: #{description.first} (#{description.last})", js: true do
+          run_scenario '#{data_file}', js: true
         end
       |)
     end
-
-    eval(%Q|
-      scenario "#{title} with JS: #{description.first} (#{description.last})", js: true do
-        run_scenario #{index}, js: true
-      end
-    |)
   end
 
 end

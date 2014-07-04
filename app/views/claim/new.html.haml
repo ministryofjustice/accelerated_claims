@@ -2,7 +2,7 @@
 = render partial: 'shared/flash'
 = render partial: 'shared/error_messages'
 
-= form_for :claim, url: submission_path, :html => { :method => :post, :id => 'claimForm' } do |claim_form|
+= form_for @claim, url: submission_path, :html => { :method => :post, :id => 'claimForm' }, builder: LabellingFormBuilder do |claim_form|
 
   = claim_form.hidden_field(:form_state, id: 'js-state')
 
@@ -13,34 +13,46 @@
 
   %section
     %h2.section-header Claimants
-    .moj-panel.has-multiple#claimants(data-multiple="claimant" data-single="claimant" data-plural="claimants" data-caption="As the landlord, you’re known as the <strong>claimant</strong> in this case. <br><br>How many claimants are there?")
-      .row.hide
-        %h3 As the landlord, you’re known as the <strong>claimant</strong> in this case.
-      .sub-panel.claimant#claimant_one
+
+    .moj-panel.has-multiple#claimants(data-multiple="claimant" data-single="claimant" data-plural="claimants" data-caption="As the landlord, you're known as the <strong>claimant</strong> in this case.")
+
+      = claim_form.radio_button_fieldset :num_claimants,
+          'How many claimants are there?',
+          class: 'radio inline',
+          choice: {'1 claimant'=>'1', '2 claimants'=>'2'},
+          data: { depend: 'numclaimants', 'virtual-pageview' => '/accelerated/claimants-section' }
+    
+    
+      .sub-panel.hide.js-numclaimants.1.js-numclaimants.2.claimant#claimant_one
         %h3.person First claimant
         = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_one}
       .row.divider
-      .sub-panel.claimant.same-address#claimant_two
+      .sub-panel.hide.js-numclaimants.2.claimant.same-address#claimant_two
         %h3.person
           Second claimant
           %span.hint.block.hide (optional)
         = render partial: 'claimant', object: @claim.claimant_two, locals: { claim_form: claim_form, claimant_field: :claimant_two}
       .row.divider
+
       = render partial: 'claimant_contact', object: @claim.claimant_contact, locals: { claim_form: claim_form, claimant_field: :claimant_contact}
 
 
   %section
     %h2.section-header Defendants
-    .moj-panel.has-multiple#defendants(data-multiple="defendant" data-single="defendant" data-plural="defendants" data-caption="Your tenants are known as <strong>defendants</strong> in this case. <br><br>How many defendants are there?")
-      .row.hide
-        %h3 Your tenants are known as <strong>defendants</strong> in this case.
-      .sub-panel.defendant#defendant_one
+    .moj-panel.has-multiple#defendants(data-multiple="defendant" data-single="defendant" data-plural="defendants" data-caption="Your tenants are known as <strong>defendants</strong> in this case.")
+
+      = claim_form.radio_button_fieldset :num_defendants,
+          'How many defendants are there?',
+          class: 'radio inline',
+          choice: {'1 defendant'=>'1', '2 defendants'=>'2'},
+          data: { depend: 'numdefendants', 'virtual-pageview' => '/accelerated/dependants-section' }
+
+      .sub-panel.hide.js-numdefendants.1.js-numdefendants.2.defendant#defendant_one
         %h3.person First defendant
         = render partial: 'defendant', object: @claim.defendant_one, locals: { claim_form: claim_form, defendant_field: :defendant_one}
 
       .row.divider
-
-      .sub-panel.rel.defendant#defendant_two
+      .sub-panel.hide.js-numdefendants.2.defendant#defendant_two
         %h3.person
           Second defendant
           %span.hint.block.hide (optional)

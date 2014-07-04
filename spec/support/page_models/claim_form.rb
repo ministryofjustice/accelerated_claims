@@ -8,8 +8,10 @@ class ClaimForm
   def complete_form
     @js_on = false
     fill_property_details
+    select_number_of :claimants
     fill_claimant_one
     fill_claimant_two
+    select_number_of :defendants
     fill_defendant_one
     fill_defendant_two
     fill_claimant_contact
@@ -37,11 +39,11 @@ class ClaimForm
 
     number_of_defendants = select_number_of :defendants
 
-    choose_defendant_living_in_property 'one',1
-    fill_defendant_one
+    address_to_be_completed = choose_defendant_living_in_property 'one',1           # selects the defendent living in property yes/no button according to the data
+    fill_defendant_one complete_address: address_to_be_completed
     if number_of_defendants == 2
-      choose_defendant_living_in_property 'two',2
-      fill_defendant_two
+      address_to_be_completed = choose_defendant_living_in_property 'two', 2
+      fill_defendant_two complete_address: address_to_be_completed
     end
 
     fill_claimant_contact_with_js
@@ -58,13 +60,23 @@ class ClaimForm
   end
 
   def select_number_of type
-    number = get_data('javascript', "number_of_#{type}").to_i
+    case type
+    when :claimants
+      button_prefix = "claim_num"
+      model = "claim"
+    when :defendants
+      button_prefix =  "claim_num"
+      model = "claim"
+    end
+
+
+    number = get_data(model, "number_of_#{type}").to_i
 
     case number
       when 1
-        choose("multiplePanelRadio_#{type}_1")
+        choose("#{button_prefix}_#{type}_1")
       when 2
-        choose("multiplePanelRadio_#{type}_2")
+        choose("#{button_prefix}_#{type}_2")
     end
 
     find("#claim_#{type.to_s.singularize}_one_title") # wait for selector to be shown
@@ -82,12 +94,15 @@ class ClaimForm
   end
 
   def choose_defendant_living_in_property count, index
-    case get_data('javascript', "choose_defendant_#{count}_living_in_property")
+    case get_data('javascript', "defendant_#{count}_living_in_property")
     when 'Yes'
       choose("defendant#{index}address-yes")
+      address_to_be_completed = false
     else
       choose("defendant#{index}address-no")
+      address_to_be_completed = true
     end
+    address_to_be_completed
   end
 
   def fill_claimant_contact_with_js
@@ -204,17 +219,16 @@ class ClaimForm
   end
 
   def fill_claimant_two
-    complete_address = (get_data('javascript', 'claimant_two_same_address') != 'Yes')
-
-    complete_details_of_person('claimant_two', complete_address: complete_address)
+    fill_in_address = get_data('javascript', 'claimant_two_same_address') == 'Yes' ? false : true
+    complete_details_of_person('claimant_two', complete_address: fill_in_address)
   end
 
-  def fill_defendant_one
-    complete_details_of_person('defendant_one')
+  def fill_defendant_one(options = {})
+    complete_details_of_person('defendant_one', options)
   end
 
-  def fill_defendant_two
-    complete_details_of_person('defendant_two')
+  def fill_defendant_two(options = {})
+    complete_details_of_person('defendant_two', options)
   end
 
   def fill_tenancy

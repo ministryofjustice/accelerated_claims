@@ -1,33 +1,30 @@
 class Defendant < BaseClass
 
   @do_partial_address_completion_validation = true
-  include Address
 
-  attr_accessor :first_defendant
+  attr_accessor :validate_presence, :validate_absence
 
   attr_accessor :title
   attr_accessor :full_name
+  attr_accessor :street
+  attr_accessor :postcode
+  attr_accessor :property_address
 
   validates :title, length: { maximum: 8 }
   validates :full_name, length: { maximum: 40 }
+  validates :property_address, inclusion:  { in: [nil, 'yes', 'no'], message: "%(value) is not a valid value for 'Same address as property'"  }
 
-  with_options if: :first_defendant do |defendant|
-    defendant.validates :title, presence: { message: 'must be entered' }
-    defendant.validates :full_name, presence: { message: 'must be entered' }
+  
+  validates_with ContactValidator
+ 
+
+  def initialize(params = {})
+    super
+    unless params.include?(:validate_presence)
+      @validate_presence = true unless params[:validate_absence] == true
+    end
   end
 
-  with_options if: -> d { !d.first_defendant && d.title.present? } do |defendant|
-    defendant.validates :full_name, presence: { message: 'must be entered' }
-  end
-
-  with_options if: -> d { !d.first_defendant && d.full_name.present? } do |defendant|
-    defendant.validates :title, presence: { message: 'must be entered' }
-  end
-
-  with_options if: -> d { !d.first_defendant && (d.street.present? || d.postcode.present?) && (d.title.blank? && d.full_name.blank?) } do |defendant|
-    defendant.validates :title, presence: { message: 'must be entered' }
-    defendant.validates :full_name, presence: { message: 'must be entered' }
-  end
 
   def as_json
     if present?
@@ -43,6 +40,15 @@ class Defendant < BaseClass
   end
 
   def present?
-    !(title.blank? && full_name.blank?)
+    if property_address == 'no'
+      (title.present? && full_name.present? && !address_blank?)
+    else
+      (title.present? && full_name.present?)
+    end
+  end
+
+
+  def address_blank?
+    (street.blank? && postcode.blank?)
   end
 end

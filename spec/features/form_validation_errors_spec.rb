@@ -28,10 +28,10 @@ feature 'Filling in claim form' do
     visit '/'
     click_button 'Complete form'
 
-    expect(page).to have_content('Question "As the landlord, you’re known as the claimant in this case. How many claimants are there?" not answered')
+    expect(page).to have_content('Number of claimants must be entered')
 
-    check_focus_after_click 'Question "As the landlord, you’re known as the claimant in this case. How many claimants are there?" not answered', 'multiplePanelRadio_claimants_1'
-    check_focus_after_click 'Question "Your tenants are known as defendants in this case. How many defendants are there?" not answered', 'multiplePanelRadio_defendants_1'
+    check_focus_after_click 'Number of claimants must be entered', 'claim_num_claimants_1'
+    check_focus_after_click 'Number of defendants must be entered', 'claim_num_defendants_1'
 
     check_focus_after_click 'House must be selected', 'claim_property_house_yes'
     check_focus_after_click 'Street must be entered', 'claim_property_street'
@@ -47,9 +47,8 @@ feature 'Filling in claim form' do
     check_focus_after_click 'Possession must be checked', 'claim_order_possession'
     check_focus_after_click 'Tenancy type must be selected', 'claim_tenancy_tenancy_type_assured'
 
-    choose('multiplePanelRadio_claimants_1')
-    choose('multiplePanelRadio_defendants_1')
-    choose('multiplePanelRadio_defendants_1')
+    choose('claim_num_claimants_1')
+    choose('claim_num_defendants_1')
     choose('defendant1address-yes')
 
 
