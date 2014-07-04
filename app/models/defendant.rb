@@ -9,6 +9,7 @@ class Defendant < BaseClass
   attr_accessor :street
   attr_accessor :postcode
   attr_accessor :property_address
+  attr_accessor :inhabit_property
 
   validates :title, length: { maximum: 8 }
   validates :full_name, length: { maximum: 40 }
