@@ -1,3 +1,5 @@
+require 'valid_email'
+
 class ClaimantContact < BaseClass
 
   @do_partial_address_completion_validation = true
@@ -16,7 +18,7 @@ class ClaimantContact < BaseClass
   validates :company_name, length: { maximum: 40 }
   validates :full_name, length: { maximum: 40 }
 
-  validates :email, length: { maximum: 40 }
+  validates :email, email: {message: "address is not valid"}
   validates :phone, length: { maximum: 40 }
   validates :fax, length: { maximum: 40 }
   validates :dx_number, length: { maximum: 40 }

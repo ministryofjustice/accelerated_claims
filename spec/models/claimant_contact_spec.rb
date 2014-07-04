@@ -25,6 +25,54 @@ describe ClaimantContact, :type => :model do
     end
   end
 
+
+
+  context 'email_validation' do
+    
+    it 'should not validate eamil addresses with no @ sign' do
+      params = claim_post_data['claim']['claimant_contact'].merge('email' => 'joe.blow.example.com')
+      claimant_contact = ClaimantContact.new(params) 
+      puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+      pp claimant_contact
+      expect(claimant_contact).not_to be_valid
+      pp claimant_contact.errors.full_messages
+      expect(claimant_contact.errors.full_messages.include?('Email address is not valid')).to be true
+    end
+
+
+    it 'should not validate eamil addresses with space' do
+      params = claim_post_data['claim']['claimant_contact'].merge('email' => 'joe blow@example.com')
+      claimant_contact = ClaimantContact.new(params) 
+      expect(claimant_contact).not_to be_valid
+      expect(claimant_contact.errors.full_messages.include?('Email address is not valid')).to be true
+    end
+
+    it 'should not validate eamil addresses with no tld' do
+      params = claim_post_data['claim']['claimant_contact'].merge('email' => 'joe blow@examplecom')
+      claimant_contact = ClaimantContact.new(params) 
+      expect(claimant_contact).not_to be_valid
+      expect(claimant_contact.errors.full_messages.include?('Email address is not valid')).to be true
+    end
+
+    it 'should not validate email addresses with two @' do
+      params = claim_post_data['claim']['claimant_contact'].merge('email' => 'joe@blow@examplecom')
+      claimant_contact = ClaimantContact.new(params) 
+      expect(claimant_contact).not_to be_valid
+      expect(claimant_contact.errors.full_messages.include?('Email address is not valid')).to be true
+     end
+
+
+     it 'should not validate email addresses with colons' do
+      params = claim_post_data['claim']['claimant_contact'].merge('email' => 'joe:blow@examplecom')
+      claimant_contact = ClaimantContact.new(params) 
+      expect(claimant_contact).not_to be_valid
+      expect(claimant_contact.errors.full_messages.include?('Email address is not valid')).to be true
+     end
+
+  end
+
+
+
   subject { claimant_contact }
   include_examples 'address validation'
 
