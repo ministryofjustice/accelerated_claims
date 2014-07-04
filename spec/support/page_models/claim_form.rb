@@ -96,10 +96,10 @@ class ClaimForm
   def choose_defendant_living_in_property count, index
     case get_data('javascript', "defendant_#{count}_living_in_property")
     when 'Yes'
-      choose("defendant#{index}address-yes")
+      choose("claim_defendant_#{count}_inhabit_property_yes")
       address_to_be_completed = false
     else
-      choose("defendant#{index}address-no")
+      choose("claim_defendant_#{count}_inhabit_property_no")
       address_to_be_completed = true
     end
     address_to_be_completed

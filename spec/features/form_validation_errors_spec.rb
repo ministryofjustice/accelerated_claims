@@ -49,7 +49,7 @@ feature 'Filling in claim form' do
 
     choose('claim_num_claimants_1')
     choose('claim_num_defendants_1')
-    choose('defendant1address-yes')
+    choose('claim_defendant_one_inhabit_property_yes')
 
 
     fill_in('claim_claimant_one_title', with: 'Major')
