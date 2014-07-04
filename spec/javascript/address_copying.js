@@ -20,8 +20,8 @@ casper.wait(500, function() {
   });
 
   this.click( '#claimant2address-yes' );
-  this.click( '#defendant1address-yes' );
-  this.click( '#defendant2address-yes' );
+  this.click( '#claim_defendant_one_inhabit_property_yes' );
+  this.click( '#claim_defendant_two_inhabit_property_yes' );
 
   this.click( '#fakeSubmit' );
 
