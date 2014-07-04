@@ -6,7 +6,20 @@ class Claim < BaseClass
 
   attr_accessor :form_state
 
+  attr_accessor :num_claimants
+
+  attr_accessor :num_defendants
+
+  @@valid_num_claimants     = [1, 2]
+  @@valid_num_defendants    = [1, 2]
+  @@ambiguous_instance_vars = ['claimant_one', 'claimant_two', 'defendant_one', 'defendant_two']
+
+
+
   def initialize(claim_params={})
+    @num_claimants  = claim_params.key?(:num_claimants) ? claim_params[:num_claimants].to_i : nil
+    @num_defendants = claim_params.key?(:num_defendants) ? claim_params[:num_defendants].to_i : nil
+
     initialize_all_submodels(claim_params)
     @errors = ActiveModel::Errors.new(self)
   end
@@ -44,16 +57,17 @@ class Claim < BaseClass
   def valid?
     @errors.clear
     validity = true
+    validity = false unless num_claimants_valid?
+    validity = false unless num_defendants_valid?
     attributes_from_submodels.each do |instance_var, model|
       unless send(instance_var).valid?
         errors = send(instance_var).errors
         messages = errors.full_messages
-
         errors.each_with_index do |error, index|
           attribute = error.first
           key = "claim_#{instance_var}_#{attribute}_error"
           message = messages[index]
-          @errors[:base] << [key, message]
+          @errors[:base] << [ key, disambiguate_error_messages(instance_var, message) ]
         end
         validity = false
       end
@@ -62,6 +76,32 @@ class Claim < BaseClass
   end
 
   private
+
+
+  def disambiguate_error_messages(instance_var, message)
+    if @@ambiguous_instance_vars.include?(instance_var)
+      message = instance_var.titleize + ' ' + message
+    end
+    message
+  end
+
+
+  def num_claimants_valid?
+    unless @@valid_num_claimants.include?(@num_claimants)
+      @errors[:base] << ['claim_num_claimants_error', 'Number of claimants must be entered']
+      return false
+    end
+    true
+  end
+
+  def num_defendants_valid?
+    unless @@valid_num_defendants.include?(@num_defendants)
+      @errors[:base] << ['claim_num_defendants_error', 'Number of defendants must be entered']
+      return false
+    end
+    true
+  end
+
 
   def populate_defendants_address_if_blank hash
     if defendant_one.present? && defendant_one.address_blank?
@@ -149,17 +189,26 @@ class Claim < BaseClass
     rescue NoMethodError => err
       raise NoMethodError.new(err.message + "attribute: #{attribute_name} #{claim_params.inspect}")
     end
+    
 
 
     case attribute_name
       when /claimant_one/
-        params.merge!(validate_presence: true)
+        params.merge!(validate_presence: true, validate_absence: false)
       when /claimant_two/
-        params.merge!(validate_presence: false)
+        if @num_claimants == 1
+          params.merge!(validate_absence: true, validate_presence: false)
+        else
+          params.merge!(validate_presence: true)
+        end
       when /defendant_one/
-        params.merge!(first_defendant: true)
+        params.merge!(validate_presence: true, validate_absence: false)
       when /defendant_two/
-        params.merge!(first_defendant: false)
+        if @num_defendants == 1
+          params.merge!(validate_absence: true, validate_presence: false)
+        else
+          params.merge!(validate_presence: true)
+        end
     end
 
     params

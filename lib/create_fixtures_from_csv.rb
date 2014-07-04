@@ -18,7 +18,7 @@ class DataScenarioGenerator
 
   def writeToFile
     @scenario_data.each_with_index do |data, index|
-      file = File.join(Rails.root, "spec", "fixtures", "scenario_#{index + 1}_data.rb")
+      file = extract_filename(data)
       puts "Writing #{file}"
       File.open(file,'w') do |f|
         data = JSON.pretty_generate(data)
@@ -28,6 +28,13 @@ class DataScenarioGenerator
         f.write data
       end
     end
+  end
+
+  def extract_filename(data)
+    data[:title] =~ /^JOURNEY ([0-9]+)/
+    journey_number = sprintf('%02d', $1.to_i)
+    js_type = data[:javascript].downcase
+    File.join(Rails.root, "spec", "fixtures", "scenario_#{journey_number}_#{js_type}_data.rb")
   end
 
   def sanitizeValue(model, attribute, value)
@@ -62,6 +69,7 @@ class DataScenarioGenerator
     scenario = {
       title: @rows[0][index],
       description: [@rows[1][index], @rows[2][index]],
+      javascript: @rows[3][index],
       claim: {}
     }
     col = index + @column_containing_first_journey - 1

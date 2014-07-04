@@ -1,40 +1,43 @@
 {
-  title: "JOURNEY 14",
+  title: "JOURNEY 9",
   description: [
-    "HMO part 3 licence applied for",
-    "1 claimant 1 defendant, no selection on most options with HMO part 3 licence applied for"
+    "Two mates living apart joint own a property, tenant is now living at a mates house and the property is abandoned",
+    "2 claimants, 1 defendant, not living in the property, known forwarding address"
   ],
+  javascript: "BOTH",
   claim: {
     property: {
       street: "107 Addiscombe Rd\nCroydon",
       postcode: "CR0 6SG",
       house: "Yes"
     },
-    javascript: {
-      number_of_claimants: "1",
-      claimant_two_same_address: nil,
-      any_legal_costs: "Yes",
-      separate_correspondence_address: "No",
-      other_contact_details: "Yes",
-      add_reference_number: "No",
-      number_of_defendants: "1",
-      defendant_one_living_in_property: "No",
-      defendent_two_living_in_property: nil
+    claim: {
+      number_of_claimants: "2",
+      number_of_defendants: "1"
     },
     claimant_one: {
       title: "Mr",
-      full_name: "John Smith",
-      street: "2 Brown St\nCwmbran",
-      postcode: "SW1W 0LU"
+      full_name: "James Cox",
+      street: "104 Burbage Rd\nLondon",
+      postcode: "SE24 9HE"
     },
     claimant_two: {
-      title: nil,
-      full_name: nil,
-      street: nil,
-      postcode: nil
+      title: "Mr",
+      full_name: "Adam Howard",
+      street: "108 Landor Rd\nLondon",
+      postcode: "SW9 9NU"
+    },
+    javascript: {
+      claimant_two_same_address: "No",
+      any_legal_costs: "No",
+      separate_correspondence_address: "No",
+      other_contact_details: "Yes",
+      add_reference_number: "No",
+      defendant_one_living_in_property: "No",
+      defendant_two_living_in_property: nil
     },
     legal_cost: {
-      legal_costs: "332.45"
+      legal_costs: nil
     },
     claimant_contact: {
       title: nil,
@@ -83,16 +86,16 @@
       expiry_date: "2013-11-08"
     },
     license: {
-      multiple_occupation: "Applied",
+      multiple_occupation: "No",
       issued_under_act_part_yes: nil,
-      issued_under_act_part_applied: "Part3",
+      issued_under_act_part_applied: nil,
       issued_by: nil,
       issued_date: nil
     },
     deposit: {
       received: "Yes",
       information_given_date: "2010-12-19",
-      ref_number: "TD1234",
+      ref_number: "gEpngBa8cW",
       as_money: "Yes",
       as_property: "No"
     },

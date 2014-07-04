@@ -4,22 +4,16 @@
     "Middle aged professional with large portfolio including a student house needs to kick out a difficult tenant",
     "1 claimant, 1 defendant living in the property, part of a house, litigant in person"
   ],
+  javascript: "NON-JS",
   claim: {
     property: {
       street: "94 East St\nBristol",
       postcode: "BS3 4EY",
       house: "No"
     },
-    javascript: {
+    claim: {
       number_of_claimants: "1",
-      claimant_two_same_address: nil,
-      any_legal_costs: "No",
-      separate_correspondence_address: "Yes",
-      other_contact_details: "Yes",
-      add_reference_number: "No",
-      number_of_defendants: "1",
-      defendant_one_living_in_property: "Yes",
-      defendent_two_living_in_property: nil
+      number_of_defendants: "1"
     },
     claimant_one: {
       title: "Mr",
@@ -32,6 +26,15 @@
       full_name: nil,
       street: nil,
       postcode: nil
+    },
+    javascript: {
+      claimant_two_same_address: nil,
+      any_legal_costs: "No",
+      separate_correspondence_address: "Yes",
+      other_contact_details: "Yes",
+      add_reference_number: "No",
+      defendant_one_living_in_property: nil,
+      defendant_two_living_in_property: nil
     },
     legal_cost: {
       legal_costs: nil
@@ -53,8 +56,8 @@
     defendant_one: {
       title: "Mr",
       full_name: "Andre Drake",
-      street: nil,
-      postcode: nil
+      street: "94 East St\nBristol",
+      postcode: "BS3 4EY"
     },
     defendant_two: {
       title: nil,

@@ -1,40 +1,43 @@
 {
-  title: "JOURNEY 7",
+  title: "JOURNEY 14",
   description: [
-    "Young unmarried couple joint own property. Two tenants who were a couple but broke up and 1 has moved out. Both stopped paying rent",
-    "2 claimants, 2 defendants, 1 not living in the property, unknown forwarding address"
+    "HMO part 3 licence applied for",
+    "1 claimant 1 defendant, no selection on most options with HMO part 3 licence applied for"
   ],
+  javascript: "BOTH",
   claim: {
     property: {
-      street: "45 St Martins Precinct Church St\nReading ",
-      postcode: "RG4 8BA",
+      street: "107 Addiscombe Rd\nCroydon",
+      postcode: "CR0 6SG",
       house: "Yes"
     },
-    javascript: {
-      number_of_claimants: "2",
-      claimant_two_same_address: "Yes",
-      any_legal_costs: "No",
-      separate_correspondence_address: "No",
-      other_contact_details: "No",
-      add_reference_number: "No",
-      number_of_defendants: "2",
-      defendant_one_living_in_property: "No",
-      defendent_two_living_in_property: "Yes"
+    claim: {
+      number_of_claimants: "1",
+      number_of_defendants: "1"
     },
     claimant_one: {
       title: "Mr",
-      full_name: "Frank Coleman",
-      street: "13 Princess Square\nBracknell",
-      postcode: "RG12 1LS"
+      full_name: "John Smith",
+      street: "2 Brown St\nCwmbran",
+      postcode: "SW1W 0LU"
     },
     claimant_two: {
-      title: "Miss",
-      full_name: "Heather Cox",
+      title: nil,
+      full_name: nil,
       street: nil,
       postcode: nil
     },
+    javascript: {
+      claimant_two_same_address: nil,
+      any_legal_costs: "Yes",
+      separate_correspondence_address: "No",
+      other_contact_details: "Yes",
+      add_reference_number: "No",
+      defendant_one_living_in_property: "No",
+      defendant_two_living_in_property: nil
+    },
     legal_cost: {
-      legal_costs: nil
+      legal_costs: "332.45"
     },
     claimant_contact: {
       title: nil,
@@ -42,7 +45,7 @@
       company_name: nil,
       street: nil,
       postcode: nil,
-      email: nil,
+      email: "Adamhoward@gmail.com",
       phone: nil,
       fax: nil,
       dx_number: nil
@@ -52,13 +55,13 @@
     },
     defendant_one: {
       title: "Mr",
-      full_name: "Kenneth Butler",
-      street: "13 Market St, Bracknell",
-      postcode: "RG13 2JD"
+      full_name: "Malcom Greene",
+      street: "23c Ecclesbourne Rd\nThornton Heath, London",
+      postcode: "CR7 7BN"
     },
     defendant_two: {
-      title: "Ms",
-      full_name: "Donna Lee",
+      title: nil,
+      full_name: nil,
       street: nil,
       postcode: nil
     },
@@ -66,7 +69,7 @@
       tenancy_type: "Assured",
       assured_shorthold_tenancy_type: "one",
       original_assured_shorthold_tenancy_agreement_date: nil,
-      start_date: "2012-09-16",
+      start_date: "2010-12-20",
       latest_agreement_date: nil,
       agreement_reissued_for_same_property: nil,
       agreement_reissued_for_same_landlord_and_tenant: nil,
@@ -77,28 +80,28 @@
       previous_tenancy_type: nil
     },
     notice: {
-      served_by_name: "Heather Cox",
-      served_method: "By email",
-      date_served: "2013-09-30",
-      expiry_date: "2013-11-30"
+      served_by_name: "Royal mail",
+      served_method: "By post",
+      date_served: "2013-09-08",
+      expiry_date: "2013-11-08"
     },
     license: {
-      multiple_occupation: "No",
+      multiple_occupation: "Applied",
       issued_under_act_part_yes: nil,
-      issued_under_act_part_applied: nil,
+      issued_under_act_part_applied: "Part3",
       issued_by: nil,
       issued_date: nil
     },
     deposit: {
       received: "Yes",
-      information_given_date: "2012-09-12",
-      ref_number: "BRMHyKbxX7",
+      information_given_date: "2010-12-19",
+      ref_number: "TD1234",
       as_money: "Yes",
       as_property: "No"
     },
     order: {
       possession: "Yes",
-      cost: "No"
+      cost: "Yes"
     },
     possession: {
       hearing: "Yes"

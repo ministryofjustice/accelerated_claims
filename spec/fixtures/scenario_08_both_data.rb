@@ -1,31 +1,25 @@
 {
-  title: "JOURNEY 12",
+  title: "JOURNEY 8",
   description: [
-    "Base test 3",
-    "1 claimant 1 defendant, no selection on most options"
+    "Elder welsh lady, using a solictor to evict 2 young men on benefits",
+    "Solicitor for 1 claimant, 2 defendants living in the property"
   ],
+  javascript: "BOTH",
   claim: {
     property: {
-      street: "Mucho Gracias Road\nLondon",
-      postcode: "SW1H 9AJ",
+      street: "Unit 11, Swansea Fforest Fach Park\nSwansea",
+      postcode: "SA5 4BB",
       house: "Yes"
     },
-    javascript: {
+    claim: {
       number_of_claimants: "1",
-      claimant_two_same_address: nil,
-      any_legal_costs: nil,
-      separate_correspondence_address: nil,
-      other_contact_details: nil,
-      add_reference_number: nil,
-      number_of_defendants: "1",
-      defendant_one_living_in_property: "No",
-      defendent_two_living_in_property: nil
+      number_of_defendants: "2"
     },
     claimant_one: {
-      title: "Mr",
-      full_name: "John Smith",
-      street: "2 Brown St\nCwmbran",
-      postcode: "SW1W 0LU"
+      title: "Mrs",
+      full_name: "Meredith Williams",
+      street: "38 Pentrefelin St\nCarmarthen",
+      postcode: "SA31 1RJ"
     },
     claimant_two: {
       title: nil,
@@ -33,17 +27,26 @@
       street: nil,
       postcode: nil
     },
+    javascript: {
+      claimant_two_same_address: nil,
+      any_legal_costs: "Yes",
+      separate_correspondence_address: "Yes",
+      other_contact_details: "Yes",
+      add_reference_number: "No",
+      defendant_one_living_in_property: "Yes",
+      defendant_two_living_in_property: "Yes"
+    },
     legal_cost: {
-      legal_costs: nil
+      legal_costs: "450"
     },
     claimant_contact: {
-      title: nil,
-      full_name: nil,
-      company_name: nil,
-      street: nil,
-      postcode: nil,
-      email: nil,
-      phone: nil,
+      title: "Mr",
+      full_name: "Dilan Lloyd",
+      company_name: "Beor Wilson Lloyd",
+      street: "12 Calvert Terrace\nSwansea",
+      postcode: "SA1 6AP",
+      email: "enquiries@bwl-law.co.uk",
+      phone: "1792655178",
       fax: nil,
       dx_number: nil
     },
@@ -52,13 +55,13 @@
     },
     defendant_one: {
       title: "Mr",
-      full_name: "John Kapur",
-      street: "Endof Road\nLondon",
-      postcode: "SW1X 2PT"
+      full_name: "Gavin Morgan",
+      street: nil,
+      postcode: nil
     },
     defendant_two: {
-      title: nil,
-      full_name: nil,
+      title: "Mr",
+      full_name: "Owen Harris",
       street: nil,
       postcode: nil
     },
@@ -66,7 +69,7 @@
       tenancy_type: "Assured",
       assured_shorthold_tenancy_type: "one",
       original_assured_shorthold_tenancy_agreement_date: nil,
-      start_date: "2010-01-01",
+      start_date: "1999-04-08",
       latest_agreement_date: nil,
       agreement_reissued_for_same_property: nil,
       agreement_reissued_for_same_landlord_and_tenant: nil,
@@ -77,10 +80,10 @@
       previous_tenancy_type: nil
     },
     notice: {
-      served_by_name: "Somebody",
+      served_by_name: "Dilan Lloyd",
       served_method: "By post",
-      date_served: "2014-02-02",
-      expiry_date: "2014-02-03"
+      date_served: "2013-12-13",
+      expiry_date: "2014-02-13"
     },
     license: {
       multiple_occupation: "No",
@@ -94,14 +97,14 @@
       information_given_date: nil,
       ref_number: nil,
       as_money: "No",
-      as_property: "No"
+      as_property: "Yes"
     },
     order: {
       possession: "Yes",
-      cost: "No"
+      cost: "Yes"
     },
     possession: {
-      hearing: "No"
+      hearing: "Yes"
     }
   }
 }

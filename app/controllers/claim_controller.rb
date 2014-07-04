@@ -53,6 +53,7 @@ class ClaimController < ApplicationController
 
   def submission
     session[:claim] = params['claim']
+    move_defendant_address_params_into_model
     @claim = Claim.new(params['claim'])
 
     unless @claim.valid?
@@ -63,6 +64,17 @@ class ClaimController < ApplicationController
   end
 
   private
+
+  def move_defendant_address_params_into_model
+    nums = { '1' => 'one', '2' => 'two' }
+    nums.each do |n, n_as_str|
+      key = "defendant#{n}address"
+      if params.key?(key)
+        params['claim']["defendant_#{n_as_str}"]['property_address'] = params[key]
+      end
+    end
+  end
+
 
   def delete_all_pdfs
     FileUtils.rm Dir.glob('/tmp/*pdf')

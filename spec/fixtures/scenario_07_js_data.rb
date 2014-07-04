@@ -1,37 +1,40 @@
 {
-  title: "JOURNEY 6",
+  title: "JOURNEY 7",
   description: [
-    "Housing association evicting a tenant",
-    "1 organisation claimant, 1 defendant"
+    "Young unmarried couple joint own property. Two tenants who were a couple but broke up and 1 has moved out. Both stopped paying rent",
+    "2 claimants, 2 defendants, 1 not living in the property, unknown forwarding address"
   ],
+  javascript: "JS",
   claim: {
     property: {
-      street: "78 Town Close Road\nNorwich",
-      postcode: "NR1 3HP",
+      street: "45 St Martins Precinct Church St\nReading ",
+      postcode: "RG4 8BA",
       house: "Yes"
     },
-    javascript: {
-      number_of_claimants: "1",
-      claimant_two_same_address: nil,
-      any_legal_costs: "No",
-      separate_correspondence_address: "No",
-      other_contact_details: "Yes",
-      add_reference_number: "Yes",
-      number_of_defendants: "1",
-      defendant_one_living_in_property: "Yes",
-      defendent_two_living_in_property: nil
+    claim: {
+      number_of_claimants: "2",
+      number_of_defendants: "2"
     },
     claimant_one: {
-      title: nil,
-      full_name: "Affinity Sutton",
-      street: "Maple House, 157-159 Masons Hall\nLondon",
-      postcode: "BR2 9HY"
+      title: "Mr",
+      full_name: "Frank Coleman",
+      street: "13 Princess Square\nBracknell",
+      postcode: "RG12 1LS"
     },
     claimant_two: {
-      title: nil,
-      full_name: nil,
+      title: "Miss",
+      full_name: "Heather Cox",
       street: nil,
       postcode: nil
+    },
+    javascript: {
+      claimant_two_same_address: "Yes",
+      any_legal_costs: "No",
+      separate_correspondence_address: "No",
+      other_contact_details: "No",
+      add_reference_number: "No",
+      defendant_one_living_in_property: "No",
+      defendant_two_living_in_property: "Yes"
     },
     legal_cost: {
       legal_costs: nil
@@ -42,23 +45,23 @@
       company_name: nil,
       street: nil,
       postcode: nil,
-      email: "amyturner@affinitysutton.co.uk",
-      phone: "3001005392",
+      email: nil,
+      phone: nil,
       fax: nil,
       dx_number: nil
     },
     reference_number: {
-      reference_number: "T003900DF07"
+      reference_number: nil
     },
     defendant_one: {
-      title: "Ms",
-      full_name: "Linette Barlow",
-      street: nil,
-      postcode: nil
+      title: "Mr",
+      full_name: "Kenneth Butler",
+      street: "13 Market St, Bracknell",
+      postcode: "RG13 2JD"
     },
     defendant_two: {
-      title: nil,
-      full_name: nil,
+      title: "Ms",
+      full_name: "Donna Lee",
       street: nil,
       postcode: nil
     },
@@ -66,7 +69,7 @@
       tenancy_type: "Assured",
       assured_shorthold_tenancy_type: "one",
       original_assured_shorthold_tenancy_agreement_date: nil,
-      start_date: "2011-10-02",
+      start_date: "2012-09-16",
       latest_agreement_date: nil,
       agreement_reissued_for_same_property: nil,
       agreement_reissued_for_same_landlord_and_tenant: nil,
@@ -77,10 +80,10 @@
       previous_tenancy_type: nil
     },
     notice: {
-      served_by_name: "Amy Turner",
-      served_method: "By post",
-      date_served: "2014-01-04",
-      expiry_date: "2014-03-04"
+      served_by_name: "Heather Cox",
+      served_method: "By email",
+      date_served: "2013-09-30",
+      expiry_date: "2013-11-30"
     },
     license: {
       multiple_occupation: "No",
@@ -91,14 +94,14 @@
     },
     deposit: {
       received: "Yes",
-      information_given_date: "2011-09-04",
-      ref_number: "FJXWTYE5XZ",
+      information_given_date: "2012-09-12",
+      ref_number: "BRMHyKbxX7",
       as_money: "Yes",
       as_property: "No"
     },
     order: {
       possession: "Yes",
-      cost: "Yes"
+      cost: "No"
     },
     possession: {
       hearing: "Yes"

@@ -4,22 +4,16 @@
     "Husband and wife, renting a property through a rental agency",
     "2 claimants living together, 2 defendants living in the property, rental agency"
   ],
+  javascript: "JS",
   claim: {
     property: {
       street: "87 Albion St\nLeeds ",
       postcode: "LS1 6AG",
       house: "Yes"
     },
-    javascript: {
+    claim: {
       number_of_claimants: "2",
-      claimant_two_same_address: "Yes",
-      any_legal_costs: "No",
-      separate_correspondence_address: "Yes",
-      other_contact_details: "Yes",
-      add_reference_number: "No",
-      number_of_defendants: "2",
-      defendant_one_living_in_property: "Yes",
-      defendent_two_living_in_property: "Yes"
+      number_of_defendants: "2"
     },
     claimant_one: {
       title: "Mr ",
@@ -32,6 +26,15 @@
       full_name: "Violet Collier",
       street: nil,
       postcode: nil
+    },
+    javascript: {
+      claimant_two_same_address: "Yes",
+      any_legal_costs: "No",
+      separate_correspondence_address: "Yes",
+      other_contact_details: "Yes",
+      add_reference_number: "No",
+      defendant_one_living_in_property: "Yes",
+      defendant_two_living_in_property: "Yes"
     },
     legal_cost: {
       legal_costs: nil

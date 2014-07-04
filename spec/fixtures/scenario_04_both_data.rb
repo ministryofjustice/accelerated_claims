@@ -4,22 +4,16 @@
     "Young professional submitting the claim on his own, multiple tenancy agreements, bought a new house with a tenant in there",
     "1 claimant, 1 defendant living in the property, multiple tenancy agreements, litigant in person"
   ],
+  javascript: "BOTH",
   claim: {
     property: {
       street: "64 Baxtergate\nWhitby",
       postcode: "YO21 1BL",
       house: "Yes"
     },
-    javascript: {
+    claim: {
       number_of_claimants: "1",
-      claimant_two_same_address: nil,
-      any_legal_costs: "No",
-      separate_correspondence_address: "No",
-      other_contact_details: "Yes",
-      add_reference_number: "No",
-      number_of_defendants: "1",
-      defendant_one_living_in_property: "Yes",
-      defendent_two_living_in_property: nil
+      number_of_defendants: "1"
     },
     claimant_one: {
       title: "Miss",
@@ -32,6 +26,15 @@
       full_name: nil,
       street: nil,
       postcode: nil
+    },
+    javascript: {
+      claimant_two_same_address: nil,
+      any_legal_costs: "No",
+      separate_correspondence_address: "No",
+      other_contact_details: "Yes",
+      add_reference_number: "No",
+      defendant_one_living_in_property: "Yes",
+      defendant_two_living_in_property: nil
     },
     legal_cost: {
       legal_costs: nil
