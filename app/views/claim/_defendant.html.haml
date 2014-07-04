@@ -3,13 +3,13 @@
   = form.text_field_row :full_name, class: 'rel'
 
 
-  = form.radio_button_fieldset :inhabit_property,
+  = form.radio_button_fieldset :inhabits_property,
           'Does the defendant live in the property?',
           class: 'radio inline',
           choice: {'Yes'=>'yes', 'No'=>'no'},
           data: { depend: 'inhabitproperty' }
 
-  .sub-panel.extra.address.hide.js-inhabitproperty.no
+  .sub-panel.hide.js-inhabitproperty.no.extra.address
     .row
       Defendant’s address if they’re <strong>not</strong> living in the property
     = form.text_area_row  :street,   label: 'Full address', class: 'rel street'
