@@ -18,7 +18,6 @@ class ClaimantContact < BaseClass
   validates :title, length: { maximum: 8 }
   validates :company_name, length: { maximum: 40 }
   validates :full_name, length: { maximum: 40 }
-  
   validates :email, email: true, if: ->(f) { f.email.present? }
   validates :phone, length: { maximum: 40 }
   validates :fax, length: { maximum: 40 }
