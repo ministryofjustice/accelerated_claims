@@ -294,9 +294,6 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
-    valid_email (0.0.5)
-      activemodel
-      mail
     validates_timeliness (3.0.14)
       timeliness (~> 0.3.6)
     webmock (1.18.0)
@@ -359,7 +356,6 @@ DEPENDENCIES
   uk_postcode (= 1.0.0)
   underscore-rails
   unicorn
-  valid_email
   validates_timeliness (~> 3.0)
   webmock
   zendesk_api
