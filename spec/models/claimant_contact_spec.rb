@@ -32,11 +32,8 @@ describe ClaimantContact, :type => :model do
     it 'should not validate eamil addresses with no @ sign' do
       params = claim_post_data['claim']['claimant_contact'].merge('email' => 'joe.blow.example.com')
       claimant_contact = ClaimantContact.new(params) 
-      puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-      pp claimant_contact
       expect(claimant_contact).not_to be_valid
-      pp claimant_contact.errors.full_messages
-      expect(claimant_contact.errors.full_messages.include?('Email address is not valid')).to be true
+      expect(claimant_contact.errors.full_messages.include?('Email is not a valid address')).to be true
     end
 
 
@@ -44,30 +41,36 @@ describe ClaimantContact, :type => :model do
       params = claim_post_data['claim']['claimant_contact'].merge('email' => 'joe blow@example.com')
       claimant_contact = ClaimantContact.new(params) 
       expect(claimant_contact).not_to be_valid
-      expect(claimant_contact.errors.full_messages.include?('Email address is not valid')).to be true
+      expect(claimant_contact.errors.full_messages.include?('Email is not a valid address')).to be true
     end
 
     it 'should not validate eamil addresses with no tld' do
       params = claim_post_data['claim']['claimant_contact'].merge('email' => 'joe blow@examplecom')
       claimant_contact = ClaimantContact.new(params) 
       expect(claimant_contact).not_to be_valid
-      expect(claimant_contact.errors.full_messages.include?('Email address is not valid')).to be true
+      expect(claimant_contact.errors.full_messages.include?('Email is not a valid address')).to be true
     end
 
     it 'should not validate email addresses with two @' do
       params = claim_post_data['claim']['claimant_contact'].merge('email' => 'joe@blow@examplecom')
       claimant_contact = ClaimantContact.new(params) 
       expect(claimant_contact).not_to be_valid
-      expect(claimant_contact.errors.full_messages.include?('Email address is not valid')).to be true
-     end
+      expect(claimant_contact.errors.full_messages.include?('Email is not a valid address')).to be true
+    end
 
 
-     it 'should not validate email addresses with colons' do
+    it 'should not validate email addresses with colons' do
       params = claim_post_data['claim']['claimant_contact'].merge('email' => 'joe:blow@examplecom')
       claimant_contact = ClaimantContact.new(params) 
       expect(claimant_contact).not_to be_valid
-      expect(claimant_contact.errors.full_messages.include?('Email address is not valid')).to be true
-     end
+      expect(claimant_contact.errors.full_messages.include?('Email is not a valid address')).to be true
+    end
+
+    it 'should be valid if there is no email address present' do
+      params = claim_post_data['claim']['claimant_contact'].merge('email' => '')
+      claimant_contact = ClaimantContact.new(params) 
+      expect(claimant_contact).to be_valid
+    end
 
   end
 

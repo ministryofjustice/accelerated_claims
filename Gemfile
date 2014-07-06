@@ -37,7 +37,6 @@ gem 'mail'
 
 gem 'faraday'
 gem 'redis-rails'
-gem 'valid_email'
 
 group :production do
   gem 'appsignal'

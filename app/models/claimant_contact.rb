@@ -1,4 +1,5 @@
-require 'valid_email'
+
+require 'email_validator'
 
 class ClaimantContact < BaseClass
 
@@ -17,8 +18,8 @@ class ClaimantContact < BaseClass
   validates :title, length: { maximum: 8 }
   validates :company_name, length: { maximum: 40 }
   validates :full_name, length: { maximum: 40 }
-
-  validates :email, email: {message: "address is not valid"}
+  
+  validates :email, email: true, if: ->(f) { f.email.present? }
   validates :phone, length: { maximum: 40 }
   validates :fax, length: { maximum: 40 }
   validates :dx_number, length: { maximum: 40 }
