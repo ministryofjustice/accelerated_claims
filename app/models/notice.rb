@@ -30,7 +30,7 @@ end
 
 def expiry_date_must_be_after_served_date
   if date_served.is_a?(Date) && expiry_date.is_a?(Date)
-    unless expiry_date > date_served
+    if expiry_date < (date_served + 2.months - 1.day)
       errors.add(:expiry_date, "must be later than the Date notice served ")
     end
   end
