@@ -31,7 +31,7 @@ end
 def expiry_date_must_be_after_served_date
   if date_served.is_a?(Date) && expiry_date.is_a?(Date)
     if expiry_date < (date_served + 2.months - 1.day)
-      errors.add(:expiry_date, "must be later than the Date notice served ")
+      errors.add(:expiry_date, "must be at least 2 months later than the Date notice served in order to use the accelerated procedure.")
     end
   end
 end
