@@ -82,6 +82,7 @@ def claim_post_data
       {
         "title" => "Mr",
         "full_name" => "John Major",
+        "inhabits_property" => "no",
         "street" => "Sesame Street\nLondon",
         "postcode" => "SW1X 2PT"
       },
@@ -89,6 +90,7 @@ def claim_post_data
       {
         "title" => "Ms",
         "full_name" => "Jane Major",
+        "inhabits_property" => "no",
         "street" => "Sesame Street\nLondon",
         "postcode" => "SW1X 2PT"
       },

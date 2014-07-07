@@ -1,5 +1,5 @@
 {
-  title: "JOURNEY 2",
+  title: "JOURNEY 2-JS",
   description: [
     "Middle aged professional with large portfolio including a student house needs to kick out a difficult tenant",
     "1 claimant, 1 defendant living in the property, part of a house, litigant in person"
@@ -32,9 +32,7 @@
       any_legal_costs: "No",
       separate_correspondence_address: "Yes",
       other_contact_details: "Yes",
-      add_reference_number: "No",
-      defendant_one_living_in_property: "Yes",
-      defendant_two_living_in_property: nil
+      add_reference_number: "No"
     },
     legal_cost: {
       legal_costs: nil
@@ -56,12 +54,14 @@
     defendant_one: {
       title: "Mr",
       full_name: "Andre Drake",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_two: {
       title: nil,
       full_name: nil,
+      inhabits_property: nil,
       street: nil,
       postcode: nil
     },

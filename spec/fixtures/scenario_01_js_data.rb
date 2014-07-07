@@ -1,5 +1,5 @@
 {
-  title: "JOURNEY 1",
+  title: "JOURNEY 1-JS",
   description: [
     "Husband and wife, renting a property through a rental agency",
     "2 claimants living together, 2 defendants living in the property, rental agency"
@@ -32,9 +32,7 @@
       any_legal_costs: "No",
       separate_correspondence_address: "Yes",
       other_contact_details: "Yes",
-      add_reference_number: "No",
-      defendant_one_living_in_property: "Yes",
-      defendant_two_living_in_property: "Yes"
+      add_reference_number: "No"
     },
     legal_cost: {
       legal_costs: nil
@@ -56,12 +54,14 @@
     defendant_one: {
       title: "Miss",
       full_name: "Virginia Richardson",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_two: {
       title: "Miss",
       full_name: "Maria Gonzalez",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },

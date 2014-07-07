@@ -32,9 +32,7 @@
       any_legal_costs: nil,
       separate_correspondence_address: nil,
       other_contact_details: nil,
-      add_reference_number: nil,
-      defendant_one_living_in_property: "No",
-      defendant_two_living_in_property: nil
+      add_reference_number: nil
     },
     legal_cost: {
       legal_costs: nil
@@ -56,12 +54,14 @@
     defendant_one: {
       title: "Mr",
       full_name: "John Kapur",
+      inhabits_property: "No",
       street: "Endof Road\nLondon",
       postcode: "SW1X 2PT"
     },
     defendant_two: {
       title: nil,
       full_name: nil,
+      inhabits_property: nil,
       street: nil,
       postcode: nil
     },
@@ -83,7 +83,7 @@
       served_by_name: "Somebody",
       served_method: "By post",
       date_served: "2014-02-02",
-      expiry_date: "2014-02-03"
+      expiry_date: "2014-04-03"
     },
     license: {
       multiple_occupation: "No",

@@ -18,12 +18,12 @@
 
       = claim_form.radio_button_fieldset :num_claimants,
           'How many claimants are there?',
-          class: 'radio inline',
+          class: 'radio inline multiple',
           choice: {'1 claimant'=>'1', '2 claimants'=>'2'},
           data: { depend: 'numclaimants', 'virtual-pageview' => '/accelerated/claimants-section' }
     
     
-      .sub-panel.hide.js-numclaimants.1.js-numclaimants.2.claimant#claimant_one
+      .sub-panel.hide.js-numclaimants.1.2.claimant#claimant_one
         %h3.person First claimant
         = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_one}
       .row.divider
@@ -43,11 +43,11 @@
 
       = claim_form.radio_button_fieldset :num_defendants,
           'How many defendants are there?',
-          class: 'radio inline',
+          class: 'radio inline multiple',
           choice: {'1 defendant'=>'1', '2 defendants'=>'2'},
           data: { depend: 'numdefendants', 'virtual-pageview' => '/accelerated/dependants-section' }
 
-      .sub-panel.hide.js-numdefendants.1.js-numdefendants.2.defendant#defendant_one
+      .sub-panel.hide.js-numdefendants.1.2.defendant#defendant_one
         %h3.person First defendant
         = render partial: 'defendant', object: @claim.defendant_one, locals: { claim_form: claim_form, defendant_field: :defendant_one}
 

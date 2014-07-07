@@ -1,5 +1,5 @@
 {
-  title: "JOURNEY 3",
+  title: "JOURNEY 3-NJS",
   description: [
     "Solicitor acting on behalf of an elder gentleman. Tenants speak little English and communication has been poor.",
     "Solicitor for 1 claimant, 2 defendants living in the property"
@@ -32,9 +32,7 @@
       any_legal_costs: "Yes",
       separate_correspondence_address: "Yes",
       other_contact_details: "Yes",
-      add_reference_number: "No",
-      defendant_one_living_in_property: nil,
-      defendant_two_living_in_property: nil
+      add_reference_number: "No"
     },
     legal_cost: {
       legal_costs: "600"
@@ -56,12 +54,14 @@
     defendant_one: {
       title: "Miss",
       full_name: "Annice Abreu",
+      inhabits_property: "Yes",
       street: "280 Coventry Rd\nBirmingham ",
       postcode: "B10 0XA"
     },
     defendant_two: {
       title: "Mr",
       full_name: "Dumisani Afolayan",
+      inhabits_property: "Yes",
       street: "280 Coventry Rd\nBirmingham ",
       postcode: "B10 0XA"
     },
