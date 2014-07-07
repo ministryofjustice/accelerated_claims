@@ -50,7 +50,7 @@ def claim_post_data
         "date_served(2i)" => "2",
         "date_served(1i)" => "2014",
         "expiry_date(3i)" => "3",
-        "expiry_date(2i)" => "2",
+        "expiry_date(2i)" => "4",
         "expiry_date(1i)" => "2014",
       },
       "license" =>
@@ -174,7 +174,7 @@ def claim_formatted_data
     "notice_date_served_month" => "02",
     "notice_date_served_year" => "2014",
     "notice_expiry_date_day" => "03",
-    "notice_expiry_date_month" => "02",
+    "notice_expiry_date_month" => "04",
     "notice_expiry_date_year" => "2014",
     "notice_served_by" => "Somebody, In person",
     "order_cost" => 'No',
