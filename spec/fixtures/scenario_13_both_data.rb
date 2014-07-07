@@ -32,9 +32,7 @@
       any_legal_costs: "Yes",
       separate_correspondence_address: "No",
       other_contact_details: "Yes",
-      add_reference_number: "No",
-      defendant_one_living_in_property: "No",
-      defendant_two_living_in_property: nil
+      add_reference_number: "No"
     },
     legal_cost: {
       legal_costs: "332.45"
@@ -56,12 +54,14 @@
     defendant_one: {
       title: "Mr",
       full_name: "Malcom Greene",
+      inhabits_property: "No",
       street: "23c Ecclesbourne Rd\nThornton Heath, London",
       postcode: "CR7 7BN"
     },
     defendant_two: {
       title: nil,
       full_name: nil,
+      inhabits_property: nil,
       street: nil,
       postcode: nil
     },

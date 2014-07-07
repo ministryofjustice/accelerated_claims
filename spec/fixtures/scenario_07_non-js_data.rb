@@ -32,9 +32,7 @@
       any_legal_costs: "No",
       separate_correspondence_address: "No",
       other_contact_details: "No",
-      add_reference_number: "No",
-      defendant_one_living_in_property: "No",
-      defendant_two_living_in_property: "Yes"
+      add_reference_number: "No"
     },
     legal_cost: {
       legal_costs: nil
@@ -56,12 +54,14 @@
     defendant_one: {
       title: "Mr",
       full_name: "Kenneth Butler",
+      inhabits_property: "No",
       street: "13 Market St, Bracknell",
       postcode: "RG13 2JD"
     },
     defendant_two: {
       title: "Ms",
       full_name: "Donna Lee",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },

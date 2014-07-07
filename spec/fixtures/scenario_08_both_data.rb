@@ -32,9 +32,7 @@
       any_legal_costs: "Yes",
       separate_correspondence_address: "Yes",
       other_contact_details: "Yes",
-      add_reference_number: "No",
-      defendant_one_living_in_property: "Yes",
-      defendant_two_living_in_property: "Yes"
+      add_reference_number: "No"
     },
     legal_cost: {
       legal_costs: "450"
@@ -56,12 +54,14 @@
     defendant_one: {
       title: "Mr",
       full_name: "Gavin Morgan",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_two: {
       title: "Mr",
       full_name: "Owen Harris",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },

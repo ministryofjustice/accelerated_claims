@@ -32,9 +32,7 @@
       any_legal_costs: "Yes",
       separate_correspondence_address: "Yes",
       other_contact_details: "Yes",
-      add_reference_number: "Yes",
-      defendant_one_living_in_property: "No",
-      defendant_two_living_in_property: nil
+      add_reference_number: "Yes"
     },
     legal_cost: {
       legal_costs: "123.34"
@@ -56,12 +54,14 @@
     defendant_one: {
       title: "Mr",
       full_name: "John Kapur",
+      inhabits_property: "No",
       street: "Endof Road\nLondon",
       postcode: "SW1X 2PT"
     },
     defendant_two: {
       title: nil,
       full_name: nil,
+      inhabits_property: nil,
       street: nil,
       postcode: nil
     },

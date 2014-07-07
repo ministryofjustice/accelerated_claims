@@ -32,9 +32,7 @@
       any_legal_costs: "No",
       separate_correspondence_address: "Yes",
       other_contact_details: "Yes",
-      add_reference_number: "No",
-      defendant_one_living_in_property: nil,
-      defendant_two_living_in_property: nil
+      add_reference_number: "No"
     },
     legal_cost: {
       legal_costs: nil
@@ -56,12 +54,14 @@
     defendant_one: {
       title: "Mr",
       full_name: "Andre Drake",
+      inhabits_property: nil,
       street: "94 East St\nBristol",
       postcode: "BS3 4EY"
     },
     defendant_two: {
       title: nil,
       full_name: nil,
+      inhabits_property: nil,
       street: nil,
       postcode: nil
     },
