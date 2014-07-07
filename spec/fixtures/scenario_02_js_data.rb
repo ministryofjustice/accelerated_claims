@@ -1,5 +1,5 @@
 {
-  title: "JOURNEY 2",
+  title: "JOURNEY 2-JS",
   description: [
     "Middle aged professional with large portfolio including a student house needs to kick out a difficult tenant",
     "1 claimant, 1 defendant living in the property, part of a house, litigant in person"

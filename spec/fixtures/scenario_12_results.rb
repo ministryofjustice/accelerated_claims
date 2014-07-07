@@ -38,7 +38,7 @@
   notice_date_served_year: "2014",
   notice_served_by: "Somebody, By post",
   notice_expiry_date_day: "03",
-  notice_expiry_date_month: "02",
+  notice_expiry_date_month: "04",
   notice_expiry_date_year: "2014",
   license_multiple_occupation: "No",
   license_part2_authority: nil,

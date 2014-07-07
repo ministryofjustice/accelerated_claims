@@ -62,8 +62,8 @@
       title: "Ms",
       full_name: "Donna Lee",
       inhabits_property: "Yes",
-      street: nil,
-      postcode: nil
+      street: "45 St Martins Precinct Church St\nReading ",
+      postcode: "RG4 8BA"
     },
     tenancy: {
       tenancy_type: "Assured",

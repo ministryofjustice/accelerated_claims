@@ -83,7 +83,7 @@
       served_by_name: "Somebody",
       served_method: "In person",
       date_served: "2014-02-02",
-      expiry_date: "2014-02-03"
+      expiry_date: "2014-04-03"
     },
     license: {
       multiple_occupation: "Yes",

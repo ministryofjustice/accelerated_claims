@@ -1,5 +1,5 @@
 {
-  title: "JOURNEY 3",
+  title: "JOURNEY 3-JS",
   description: [
     "Solicitor acting on behalf of an elder gentleman. Tenants speak little English and communication has been poor.",
     "Solicitor for 1 claimant, 2 defendants living in the property"

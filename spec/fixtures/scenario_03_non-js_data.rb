@@ -1,5 +1,5 @@
 {
-  title: "JOURNEY 3",
+  title: "JOURNEY 3-NJS",
   description: [
     "Solicitor acting on behalf of an elder gentleman. Tenants speak little English and communication has been poor.",
     "Solicitor for 1 claimant, 2 defendants living in the property"
@@ -53,7 +53,7 @@
     },
     defendant_one: {
       title: "Miss",
-      full_name: "Annice Abreu_XXXXXXXXXXXXXXXXXXXXX",
+      full_name: "Annice Abreu",
       inhabits_property: "Yes",
       street: "280 Coventry Rd\nBirmingham ",
       postcode: "B10 0XA"

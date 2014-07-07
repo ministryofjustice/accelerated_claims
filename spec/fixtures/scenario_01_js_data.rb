@@ -1,5 +1,5 @@
 {
-  title: "JOURNEY 1",
+  title: "JOURNEY 1-JS",
   description: [
     "Husband and wife, renting a property through a rental agency",
     "2 claimants living together, 2 defendants living in the property, rental agency"

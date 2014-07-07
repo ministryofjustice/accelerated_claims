@@ -1,5 +1,5 @@
 {
-  title: "JOURNEY 1",
+  title: "JOURNEY 1-NJS",
   description: [
     "Husband and wife, renting a property through a rental agency",
     "2 claimants living together, 2 defendants living in the property, rental agency"
@@ -55,8 +55,8 @@
       title: "Miss",
       full_name: "Virginia Richardson",
       inhabits_property: "Yes",
-      street: nil,
-      postcode: nil
+      street: "87 Albion St\nLeeds ",
+      postcode: "LS1 6AG"
     },
     defendant_two: {
       title: "Miss",
