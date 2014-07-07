@@ -52,9 +52,6 @@ class ClaimController < ApplicationController
   end
 
   def submission
-    puts "++++++ DEBUG SUBMISSION CLAIM CONTROLLER ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    pp params
-    
     session[:claim] = params['claim']
     move_defendant_address_params_into_model
     @claim = Claim.new(params['claim'])
