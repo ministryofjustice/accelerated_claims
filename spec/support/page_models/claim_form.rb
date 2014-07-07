@@ -94,12 +94,13 @@ class ClaimForm
   end
 
   def choose_defendant_living_in_property count, index
-    case get_data('javascript', "defendant_#{count}_living_in_property")
+    defendant = "defendant_#{count}"
+    case get_data(defendant, "inhabits_property")
     when 'Yes'
-      choose("claim_defendant_#{count}_inhabit_property_yes")
+      choose("claim_defendant_#{count}_inhabits_property_yes")
       address_to_be_completed = false
     else
-      choose("claim_defendant_#{count}_inhabit_property_no")
+      choose("claim_defendant_#{count}_inhabits_property_no")
       address_to_be_completed = true
     end
     address_to_be_completed
@@ -224,12 +225,27 @@ class ClaimForm
   end
 
   def fill_defendant_one(options = {})
-    complete_details_of_person('defendant_one', options)
+    puts "++++++ DEBUG remove commented out stuff ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
+    fill_in_defendant('one')
+
   end
 
   def fill_defendant_two(options = {})
-    complete_details_of_person('defendant_two', options)
+    puts "++++++ DEBUG remove commented out stuff ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    fill_in_defendant('two')
   end
+
+  def fill_in_defendant(defendant_number)
+    defendant = "defendant_#{defendant_number}"
+    fill_in_text_field(defendant, 'title')
+    fill_in_text_field(defendant, 'full_name')
+    fill_in_text_field(defendant, 'inhabits_property')
+    fill_in_text_field(defendant, 'street')
+    fill_in_text_field(defendant, 'postcode')
+  end
+
+
 
   def fill_tenancy
     prefix = 'tenancy'
