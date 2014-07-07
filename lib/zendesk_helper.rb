@@ -13,16 +13,12 @@ module ZendeskHelper
 
   def self.callback_request(request, client=ZENDESK_CLIENT)
     if Rails.env.production? || Rails.env.development?
-      # TODO: this needs to be done properly
-      # I don't know what do custom fields stand for and I don't have
-      # access to Zendesk instance we use to look it up!
-      # ZendeskAPI::Ticket.create!(client, description: request.description,
-      #   requester: { email: 'no-reply@fake-email.fakery', name: request.name },
-      #   custom_fields: [
-      #    {id: '23730083', value: ''},
-      #    {id: '23757677', value: 'civil_claims_accelerated'},
-      #    # {id: '23791776', value: feedback.user_agent}
-      #  ])
+      ZendeskAPI::Ticket.create!(client, description: request.description,
+        requester: { email: 'call-me@no-email.none', name: request.name },
+        custom_fields: [
+         { id: '23757677', value: 'civil_claims_accelerated' },
+         { id: '24018396', value: request.phone }
+       ])
     end
   end
 end
