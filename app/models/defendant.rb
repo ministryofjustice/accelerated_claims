@@ -20,8 +20,6 @@ class Defendant < BaseClass
   
   validates_with ContactValidator
 
-
-
   def initialize(params = {})
     super
     unless params.include?(:validate_presence)
