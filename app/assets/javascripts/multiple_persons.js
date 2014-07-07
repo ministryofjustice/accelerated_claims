@@ -28,7 +28,7 @@ moj.Modules.multiplePersons = (function() {
   };
 
   bindEvents = function() {
-    $( document ).on( 'change', '.has-multiple [type="radio"]', function() {
+    $( document ).on( 'change', '.has-multiple .multiple [type="radio"]', function() {
       var $this = $( this );
       showMultiples( $this.closest( '.has-multiple' ), $this, $this.val() );
     } );

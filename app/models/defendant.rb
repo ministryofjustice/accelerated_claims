@@ -9,14 +9,16 @@ class Defendant < BaseClass
   attr_accessor :street
   attr_accessor :postcode
   attr_accessor :property_address
+  attr_accessor :inhabits_property
 
   validates :title, length: { maximum: 8 }
   validates :full_name, length: { maximum: 40 }
-  validates :property_address, inclusion:  { in: [nil, 'yes', 'no'], message: "%(value) is not a valid value for 'Same address as property'"  }
 
+  with_options if: -> defendant { defendant.validate_presence == true} do |defendant|
+    defendant.validates :inhabits_property, inclusion:  { in: ['yes', 'no'], message: "Question (Does the defendant live in the property?) must be answered"  }
+  end
   
   validates_with ContactValidator
- 
 
   def initialize(params = {})
     super
@@ -40,7 +42,7 @@ class Defendant < BaseClass
   end
 
   def present?
-    if property_address == 'no'
+    if inhabits_property == 'no'
       (title.present? && full_name.present? && !address_blank?)
     else
       (title.present? && full_name.present?)

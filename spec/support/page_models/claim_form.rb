@@ -12,8 +12,8 @@ class ClaimForm
     fill_claimant_one
     fill_claimant_two
     select_number_of :defendants
-    fill_defendant_one
-    fill_defendant_two
+    fill_defendant_one complete_address: true
+    fill_defendant_two complete_address: true
     fill_claimant_contact
     fill_tenancy
     fill_notice
@@ -38,7 +38,6 @@ class ClaimForm
     end
 
     number_of_defendants = select_number_of :defendants
-
     address_to_be_completed = choose_defendant_living_in_property 'one',1           # selects the defendent living in property yes/no button according to the data
     fill_defendant_one complete_address: address_to_be_completed
     if number_of_defendants == 2
@@ -69,20 +68,17 @@ class ClaimForm
       model = "claim"
     end
 
-
     number = get_data(model, "number_of_#{type}").to_i
-
     case number
       when 1
         choose("#{button_prefix}_#{type}_1")
       when 2
         choose("#{button_prefix}_#{type}_2")
     end
-
     find("#claim_#{type.to_s.singularize}_one_title") # wait for selector to be shown
-
     number
   end
+
 
   def choose_claimant_two_address_the_same
     case get_data('javascript','claimant_two_same_address')
@@ -94,12 +90,13 @@ class ClaimForm
   end
 
   def choose_defendant_living_in_property count, index
-    case get_data('javascript', "defendant_#{count}_living_in_property")
+    defendant = "defendant_#{count}"
+    case get_data(defendant, "inhabits_property")
     when 'Yes'
-      choose("defendant#{index}address-yes")
+      choose("claim_defendant_#{count}_inhabits_property_yes")
       address_to_be_completed = false
     else
-      choose("defendant#{index}address-no")
+      choose("claim_defendant_#{count}_inhabits_property_no")
       address_to_be_completed = true
     end
     address_to_be_completed
@@ -224,12 +221,25 @@ class ClaimForm
   end
 
   def fill_defendant_one(options = {})
-    complete_details_of_person('defendant_one', options)
+    fill_in_defendant('one', options)
   end
 
   def fill_defendant_two(options = {})
-    complete_details_of_person('defendant_two', options)
+    fill_in_defendant('two', options)
   end
+
+  def fill_in_defendant(defendant_number, options)
+    defendant = "defendant_#{defendant_number}"
+    fill_in_text_field(defendant, 'title')
+    fill_in_text_field(defendant, 'full_name')
+    choose_radio defendant, 'inhabits_property'
+    if options[:complete_address] == true
+      fill_in_text_field(defendant, 'street')
+      fill_in_text_field(defendant, 'postcode')
+    end
+  end
+
+
 
   def fill_tenancy
     prefix = 'tenancy'
