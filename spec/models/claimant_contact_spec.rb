@@ -66,6 +66,12 @@ describe ClaimantContact, :type => :model do
       expect(claimant_contact.errors.full_messages.include?('Email is not a valid address')).to be true
     end
 
+    it 'should accept domain anmes with multiple periods' do
+      params = claim_post_data['claim']['claimant_contact'].merge('email' => 'joe.blow@example.best.practivce.gov.uk')
+      claimant_contact = ClaimantContact.new(params) 
+      expect(claimant_contact).to be_valid
+    end
+
 
     it 'should not validate email addresses with colons' do
       params = claim_post_data['claim']['claimant_contact'].merge('email' => 'joe:blow@examplecom')
