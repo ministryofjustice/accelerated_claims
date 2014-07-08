@@ -59,6 +59,14 @@ describe ClaimantContact, :type => :model do
     end
 
 
+    it 'should not accept domain names without a tld' do
+      params = claim_post_data['claim']['claimant_contact'].merge('email' => 'joe.blow@examplecom')
+      claimant_contact = ClaimantContact.new(params) 
+      expect(claimant_contact).not_to be_valid
+      expect(claimant_contact.errors.full_messages.include?('Email is not a valid address')).to be true
+    end
+
+
     it 'should not validate email addresses with colons' do
       params = claim_post_data['claim']['claimant_contact'].merge('email' => 'joe:blow@examplecom')
       claimant_contact = ClaimantContact.new(params) 
