@@ -12,7 +12,7 @@
     %p We’ll only use your details to call you back. Don’t include any personal information, for example address or date of birth.
 
 
-= form_for @user_callback, url: user_callback_path, html: { novalidate: 'novalidate' }, builder: LabellingFormBuilder do |f|
+= form_for @user_callback, url: user_callback_request_path, html: { novalidate: 'novalidate' }, builder: LabellingFormBuilder do |f|
   %section
     .moj-panel
       = f.text_field_row :name, label: 'Name'

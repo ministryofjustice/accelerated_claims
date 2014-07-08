@@ -2,7 +2,7 @@ feature 'Callback request' do
 
   context 'with phone number' do
     scenario 'request feedback successfully' do
-      visit '/user_callback/new'
+      visit '/ask-for-technical-help'
 
       fill_in 'Name', with: 'Bob'
       fill_in 'Telephone number', with: '02077778888'
@@ -16,7 +16,7 @@ feature 'Callback request' do
 
   context 'without phone number' do
     scenario 'request feedback successfully' do
-      visit '/user_callback/new'
+      visit '/ask-for-technical-help'
 
       fill_in 'Name', with: 'Bob'
       fill_in 'Telephone number', with: ''
