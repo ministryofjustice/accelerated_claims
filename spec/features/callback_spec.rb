@@ -10,7 +10,7 @@ feature 'Callback request' do
 
       click_button 'Send'
 
-      expect(page).to have_content('Thank you, we\'ll call you.')
+      expect(page).to have_content('Thank you, your request for callback has been submitted.')
     end
   end
 
