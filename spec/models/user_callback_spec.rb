@@ -56,6 +56,34 @@ describe UserCallback, :type => :model do
         expect(contact).to be_valid
       end
     end
+
+    context 'it should allow whitespace' do
+      let(:data) do
+        {
+          name: 'Ninja Slick',
+          phone: '020 1234',
+          description: 'I need things'
+        }
+      end
+
+      it 'should be valid' do
+        expect(contact).to be_valid
+      end
+    end
+
+    context 'it should allow hyphens' do
+      let(:data) do
+        {
+          name: 'Ninja Slick',
+          phone: '020 -1234',
+          description: 'I need things'
+        }
+      end
+
+      it 'should be valid' do
+        expect(contact).to be_valid
+      end
+    end
   end
 
   describe '.describe' do
