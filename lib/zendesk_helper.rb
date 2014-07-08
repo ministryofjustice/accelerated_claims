@@ -13,10 +13,10 @@ module ZendeskHelper
 
   def self.callback_request(request, client=ZENDESK_CLIENT)
     if Rails.env.production? || Rails.env.development?
-      msg = "This user has requested assistance, please call back on: "
-      ZendeskAPI::Ticket.create!(client, description: "#{msg} #{request.phone}\n\n\n#{request.description}",
-        requester: { email: 'call-me@no-email.none', name: request.name },
-        custom_fields: [
+      msg = " has requested assistance, please call them back on: "
+      ZendeskAPI::Ticket.create!(client, description: "#{request.name} #{msg} #{request.phone}\n\n\n#{request.description}",
+         requester: { email: 'phone-me@no-email.none', name: 'Civil Claims AD' },
+         custom_fields: [
          { id: '23757677', value: 'civil_claims_accelerated' },
          { id: '24018396', value: request.phone }
        ])
