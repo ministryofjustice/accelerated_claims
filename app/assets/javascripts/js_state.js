@@ -19,7 +19,6 @@ moj.Modules.jsState = (function() {
       setText,
       setScroll,
       focusRadios,
-      validate_hidden_section_selection,
       bindEvents,
       findInput,
 
@@ -36,9 +35,6 @@ moj.Modules.jsState = (function() {
     checkState();
     focusRadios();
     moj.Modules.tenancyModule.checkDates();
-
-    validate_hidden_section_selection(/defendant_one/, "defendant_one", '#defendants');
-    validate_hidden_section_selection(/claimant_one/, "claimant_one", '#claimants');
 
     bindEvents();
 
@@ -77,33 +73,6 @@ moj.Modules.jsState = (function() {
     }
 
     return input;
-  }
-
-  validate_hidden_section_selection = function(error_regex, panel_id, section_id) {
-    var errors = _.toArray($("div[id*=error]"));
-    var section_errors = _.filter( errors, function(d) {
-        return !!$(d).attr('id').match(error_regex);
-      }
-    );
-
-    var section_hidden = $.hidden[panel_id];
-
-    if( (section_errors.length > 0) && section_hidden ) {
-      var caption = $(section_id).find('.jsVal').eq( 0 ).addClass('error').find( '.caption' );
-
-      var text = 'Question "' + caption.text() + '" must be answered';
-      var ul = $('.error-summary').eq(0).find('ul').eq(0);
-      $("<li><a class='error-link' data-id='" + section_id + "' href='" + section_id + "'>" + text + "</a></li>").prependTo(ul);
-
-      caption.eq( 0 ).append( '<span class="error">Must be answered</span>' );
-
-      _.each(section_errors, function(e) {
-          var id = $(e).attr('id');
-          var li = $('a[href="#' + id + '"]').parent();
-          li.remove();
-      })
-    }
-
   };
 
   cacheEls = function() {
