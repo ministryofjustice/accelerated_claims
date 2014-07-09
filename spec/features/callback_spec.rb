@@ -6,11 +6,11 @@ feature 'Callback request' do
 
       fill_in 'Name', with: 'Bob'
       fill_in 'Telephone number', with: '02077778888'
-      fill_in 'Details', with: 'Call me please, this internet thing is not for me!'
+      fill_in "Describe what you'd like to talk about", with: 'Call me please, this internet thing is not for me!'
 
       click_button 'Send'
 
-      expect(page).to have_content('Thank you, your request for callback has been submitted.')
+      expect(page).to have_content('Thank you we will call you back within 24 hours between 9am and 5pm.')
     end
   end
 
@@ -20,7 +20,7 @@ feature 'Callback request' do
 
       fill_in 'Name', with: 'Bob'
       fill_in 'Telephone number', with: ''
-      fill_in 'Details', with: 'Call me please, this internet thing is not for me!'
+      fill_in "Describe what you'd like to talk about", with: 'Call me please, this internet thing is not for me!'
 
       click_button 'Send'
 
