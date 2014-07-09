@@ -27,6 +27,8 @@ moj.Modules.sessionModal = (function() {
         sessionString,
         remainingString;
 
+    moj.log("showModal");
+
     sessionString = timeString( sessionMinutes );
     remainingString = timeString( warnBeforeEndMinutes );
 
