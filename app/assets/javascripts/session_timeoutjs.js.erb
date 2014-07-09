@@ -27,10 +27,7 @@ moj.Modules.sessionTimeout = (function() {
   init = function() {
     quick = moj.Modules.tools.getQueryVar( 'quick' );
 
-    moj.log("xxxxx " + $( 'div#activateModalSessionTimer' ).length);
-
     if( $( 'div#activateModalSessionTimer' ).length > 0 ) {
-      moj.log("found activateModalSessionTimer");
       if( quick === 'true' ) {
         sessionMinutes = 2;
         warnMinutesBeforeEnd = 1.5;
@@ -48,28 +45,22 @@ moj.Modules.sessionTimeout = (function() {
 
   startTimer = function() {
     if( timer ) {
-      moj.log("starting Timer");
       window.clearTimeout( timer );
       timer = null;
     }
 
     timer = window.setTimeout( function() {
-      moj.log("showing Popup");
       showPopup();
-      moj.log("popup shown");
     }, ( sessionMinutes - warnMinutesBeforeEnd ) * minute );
   };
 
   showPopup = function() {
-    moj.log("showPopup function" + sessionMinutes + ":" + warnMinutesBeforeEnd);
     moj.Modules.sessionModal.showModal( function() {
       refreshSession();
     }, sessionMinutes, warnMinutesBeforeEnd );
-    moj.log("setTimer again");
     timer = window.setTimeout( function() {
       endSession();
     }, warnMinutesBeforeEnd * minute );
-    moj.log("end of show pupup function");
   };
 
   refreshSession = function() {
