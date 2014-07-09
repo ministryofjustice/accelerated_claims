@@ -1,5 +1,7 @@
 = render partial: 'shared/header_message'
 
+#activateModalSessionTimer
+
 %section.confirmation
   .moj-panel
     .row
@@ -24,3 +26,10 @@
         data: { 'event-label' => 'View GDS done page',
         'virtual-pageview' => '/accelerated/satisfaction-survey' }) + '.'
     Your feedback helps us improve the service.
+
+
+
+
+/ handlebars templates
+
+= render :partial => 'shared/hbtemplates'
