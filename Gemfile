@@ -29,7 +29,7 @@ gem 'unicorn'
 # Gov.uk styles
 gem 'govuk_frontend_toolkit', '0.43.2'
 # MOJ styles
-gem 'moj_template', '0.14.0'
+gem 'moj_template', '0.11.1'
 
 # required for feedback form
 gem 'zendesk_api'
