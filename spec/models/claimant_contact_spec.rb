@@ -89,9 +89,107 @@ describe ClaimantContact, :type => :model do
   end
 
 
+  context 'validate postcode' do
+    it 'should be invalid if postcode is too short' do
+      params = claim_post_data['claim']['claimant_contact'].merge(:postcode => 'sw10')
+      cc = ClaimantContact.new(params)
+      expect(cc).not_to be_valid
+      expect(cc.errors.full_messages).to eq( [ 'Postcode not full postcode' ] )
+    end
+
+    it 'should invalid if postcode not valid postcode' do
+      params = claim_post_data['claim']['claimant_contact'].merge(:postcode => 'sw109733')
+      cc = ClaimantContact.new(params)
+      expect(cc).not_to be_valid
+      expect(cc.errors.full_messages).to eq( [ "Postcode not valid postcode" ] )
+    end
+  end
+
+
+  context 'incomplete alternative address' do
+    it 'should be valid if no fields are present' do
+      cc = ClaimantContact.new
+      expect(cc.valid?).to be true
+    end
+
+    it 'should be valid if all fields present' do
+      params = claim_post_data['claim']['claimant_contact']
+      cc = ClaimantContact.new(params)
+      expect(cc).to be_valid
+    end
+
+    context 'partial title and full name' do
+      it 'should not be valid if name is specified without title' do
+        params = claim_post_data['claim']['claimant_contact'].merge(:title => '')
+        cc = ClaimantContact.new(params)
+        expect(cc).not_to be_valid 
+        expect(cc.errors.full_messages).to eq( [ "Title must be present if full_name has been entered" ] )
+      end
+
+      it 'should not be valid if title is specified without full name' do
+        params = claim_post_data['claim']['claimant_contact'].merge(:full_name => '')
+        cc = ClaimantContact.new(params)
+        expect(cc).not_to be_valid 
+        expect(cc.errors.full_messages).to eq( [ "Full name must be present if title has been entered" ] )
+      end
+    end
+
+    context 'company specified' do
+      it 'should be valid without title and full name' do
+        params = claim_post_data['claim']['claimant_contact'].merge(:title => '', :full_name => '')
+        cc = ClaimantContact.new(params)
+        expect(cc).to be_valid 
+      end
+    end
+
+
+    context 'missing name and company' do
+      it 'should not be valid if the address is present and there is no name or company' do
+        params = claim_post_data['claim']['claimant_contact'].merge(:title => '', :full_name => '', :company_name => '')
+        cc = ClaimantContact.new(params)
+        expect(cc).not_to be_valid 
+        expect(cc.errors.full_messages).to eq( [ 
+                "Street cannot be entered if no company or title and full name have been entered", 
+                 "Postcode cannot be entered if no company or title and full name have been entered"
+          ] )
+      end
+    end
+
+    context 'missing or partial address' do
+      it 'should not be valid if street  and postcode is missing' do
+        params = claim_post_data['claim']['claimant_contact'].merge(:street => '', :postcode => '')
+        cc = ClaimantContact.new(params)
+        expect(cc).not_to be_valid 
+        expect(cc.errors.full_messages).to eq( [ 
+                  "Street must be present if name and/or company has been specified",
+                  "Postcode must be present if name and/or company has been specified"
+           ] )
+      end
+
+
+      it 'should not be valid if street is missing' do
+        params = claim_post_data['claim']['claimant_contact'].merge(:street => '')
+        cc = ClaimantContact.new(params)
+        expect(cc).not_to be_valid 
+        expect(cc.errors.full_messages).to eq( ["Street must be entered", "Street must be present if name and/or company has been specified"] )
+      end
+
+      it 'should not be valid if postcode is missing' do
+        params = claim_post_data['claim']['claimant_contact'].merge(:postcode => '')
+        cc = ClaimantContact.new(params)
+        expect(cc).not_to be_valid 
+        expect(cc.errors.full_messages).to eq( ["Postcode must be entered", "Postcode must be present if name and/or company has been specified"] )
+      end
+    end
+
+
+
+
+  end
+
+
 
   subject { claimant_contact }
-  include_examples 'address validation'
 
   describe "#as_json" do
     context "when company name isn't supplied" do
