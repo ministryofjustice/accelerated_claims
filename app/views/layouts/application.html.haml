@@ -25,7 +25,7 @@
 
 - content_for :proposition_links do
   %ul#proposition-links
-    %li= link_to 'Technical help', ask_for_technical_help_path
+    %li= link_to 'Technical help', technical_help_path
     %li= link_to 'Feedback', Rails.configuration.feedback_url
 
 = render template: "layouts/moj_template"
