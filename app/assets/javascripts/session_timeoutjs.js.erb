@@ -27,7 +27,7 @@ moj.Modules.sessionTimeout = (function() {
   init = function() {
     quick = moj.Modules.tools.getQueryVar( 'quick' );
 
-    if( $( 'form#claimForm' ).length > 0 ) {
+    if( $( 'div#activateModalSessionTimer' ).length > 0 ) {
       if( quick === 'true' ) {
         sessionMinutes = 2;
         warnMinutesBeforeEnd = 1.5;
@@ -58,7 +58,6 @@ moj.Modules.sessionTimeout = (function() {
     moj.Modules.sessionModal.showModal( function() {
       refreshSession();
     }, sessionMinutes, warnMinutesBeforeEnd );
-
     timer = window.setTimeout( function() {
       endSession();
     }, warnMinutesBeforeEnd * minute );
