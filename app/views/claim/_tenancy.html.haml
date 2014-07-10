@@ -49,8 +49,11 @@
             %li You have an assured shorthold tenancy agreement (with no exceptions)
             %li The defendant is not living in the property as an agricultural worker in connection with their work (so Schedule 3, Housing Act 1988 does not apply)
 
+
           .row.information.confirmation
-            = form.labelled_check_box :from_1997_option, '<strong>Yes</strong>, all these statements apply'.html_safe
+            -# %fieldset{ class: (form.error_for?(:form_1997_option) ? 'error' : ''), id: form.id_for(:from_1997_option) }
+            %fieldset{ class: (form.error_for?(:form_1997_option) ? 'ninja' : 'error'), id: form.id_for(:from_1997_option) }
+              = form.labelled_check_box :from_1997_option, '<strong>Yes</strong>, all these statements apply'.html_safe
 
         .row.statements.hide.older
           %p.hide= "If your original tenancy agreement (and any additional agreements) were made between <strong>#{Tenancy::APPLICABLE_FROM_DATE.to_s(:printed)} and #{(Tenancy::RULES_CHANGE_DATE - 1).to_s(:printed)}</strong>, read the statements below and select all that apply:".html_safe
