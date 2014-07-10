@@ -201,7 +201,8 @@ moj.Modules.tools = (function() {
   };
 
   isValidDate = function ( str ) {
-    var d = new Date( str );
+    var split = str.split( '-' ),
+        d = new Date( split[0], split[1]-1, split[2] );
 
     if ( Object.prototype.toString.call( d ) !== "[object Date]" ) {
       return false;
