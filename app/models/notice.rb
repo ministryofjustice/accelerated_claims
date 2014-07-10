@@ -1,16 +1,16 @@
 class Notice < BaseClass
 
   attr_accessor :served_by_name
-  validates :served_by_name, presence: { message: 'must be entered' }, length: { maximum: 40 }
+  validates :served_by_name, presence: { message: 'Enter the name of the person who gave the notice' }, length: { maximum: 40 }
 
   attr_accessor :served_method
-  validates :served_method, presence: { message: 'must be entered' }, length: { maximum: 40 }
+  validates :served_method, presence: { message: 'You must say how the notice was given' }, length: { maximum: 40 }
 
   attr_accessor :date_served
-  validates :date_served, presence: { message: 'must be entered' }
+  validates :date_served, presence: { message: 'Enter the date notice was served' }
 
   attr_accessor :expiry_date
-  validates :expiry_date, presence: { message: 'must be entered' }
+  validates :expiry_date, presence: { message: 'Enter the date notice ended' }
 
   validates_with DateValidator, :fields => [:date_served, :expiry_date]
 

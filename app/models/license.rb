@@ -6,11 +6,11 @@ class License < BaseClass
   attr_accessor :issued_by
   attr_accessor :issued_date
 
-  validates :multiple_occupation, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No', 'Applied'] }
+  validates :multiple_occupation, presence: { message: 'You must say whether or not you have an HMO licence' }, inclusion: { in: ['Yes', 'No', 'Applied'] }
 
   with_options if: :in_multiple_occupation? do |license|
-    license.validates :issued_under_act_part_yes, presence: { message: 'must be selected' }, inclusion: { in: ['Part2', 'Part3'] }
-    license.validates :issued_by, presence: { message: "can't be blank" }, length: { maximum: 70 }
+    license.validates :issued_under_act_part_yes, presence: { message: 'Choose which kind of HMO licence you have' }, inclusion: { in: ['Part2', 'Part3'] }
+    license.validates :issued_by, presence: { message: "Enter the local authority that issued the HMO licence" }, length: { maximum: 70 }
     license.validates :issued_date, presence: { message: "can't be blank" }
     validates_with DateValidator, :fields => [:issued_date]
   end
