@@ -1,7 +1,7 @@
 class Deposit < BaseClass
 
   attr_accessor :received
-  validates :received, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
+  validates :received, presence: { message: 'You must say whether the defendant paid a deposit' }, inclusion: { in: ['Yes', 'No'] }
 
   attr_accessor :information_given_date
 
@@ -9,7 +9,6 @@ class Deposit < BaseClass
   validates :ref_number, length: { maximum: 20 }
 
   attr_accessor :as_property
-  validates :as_property, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
 
   attr_accessor :as_money
   validates :as_money, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
@@ -44,7 +43,7 @@ class Deposit < BaseClass
   def money_or_property_must_be_selected_if_received
     if received && received == 'Yes'
       if as_money == 'No' && as_property == 'No'
-        errors[:deposit_type] = 'must be selected'
+        errors[:deposit_type] = 'You must say what kind of deposit the defendant paid'
       end
     end
   end

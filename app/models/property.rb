@@ -1,14 +1,33 @@
 require 'uk_postcode'
 
+
+
+class PropertyError
+
+
+  def self.full_address_error
+    'Enter the full address'
+  end
+
+
+  def self.postcode_error
+    'Enter the postcode'
+  end
+
+end
+
+
+
+
 class Property < BaseClass
 
   include Address
 
-  validates :street, presence: { message: 'must be entered' }
-  validates :postcode, presence: { message: 'must be entered' }
+  validates :street, presence: { message: PropertyError.full_address_error }
+  validates :postcode, presence: { message: 'Enter the postcode' }
 
   attr_accessor :house
-  validates :house, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
+  validates :house, presence: { message: 'Please select what kind of property it is' }, inclusion: { in: ['Yes', 'No'] }
 
   def as_json
     postcode1, postcode2 = split_postcode
@@ -20,4 +39,7 @@ class Property < BaseClass
     }
   end
 
+ 
+ 
 end
+
