@@ -1,9 +1,10 @@
 - if @errors
   %section.flash.error-summary
     %h2#error-heading You need to fix the errors on this page before continuing.
+
     %p See highlighted errors below.
 
     %ul
-      - @errors.full_messages.each do |field, message|
+      - @claim.error_messages.each do |field, message|
         %li
           = link_to message, "##{field}", class: 'error-link', data: { id: "##{field}" }
