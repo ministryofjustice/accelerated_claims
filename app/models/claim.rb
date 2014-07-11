@@ -3,11 +3,9 @@ class Claim < BaseClass
   include ActiveSupport::Inflector
 
   attr_accessor :errors
-
+  attr_accessor :error_messages
   attr_accessor :form_state
-
   attr_accessor :num_claimants
-
   attr_accessor :num_defendants
 
   @@valid_num_claimants     = [1, 2]
@@ -55,6 +53,8 @@ class Claim < BaseClass
   end
 
   def valid?
+    puts "++++++ DEBUG VALID? ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
     @errors.clear
     validity = true
     validity = false unless num_claimants_valid?
@@ -73,7 +73,12 @@ class Claim < BaseClass
         validity = false
       end
     end
-    @errors = ErrorMessageSequencer.new.sequence(@errors)
+
+
+    @error_messages = ErrorMessageSequencer.new.sequence(@errors)
+    puts "++++++ DEBUG @error_messages  ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    pp @error_messages 
+    
     validity
   end
 
