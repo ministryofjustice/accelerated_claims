@@ -22,7 +22,8 @@ class ErrorMessageSequencer
       'claim_defendant_two_street_error'            => 380,
       'claim_defendant_two_postcode_error'          => 390,
       'claim_tenancy_tenancy_type_error'            => 410,
-      'claim_deposit_as_money_error'                => 510,
+      'claim_deposit_received_error'                => 510,
+      'claim_deposit_as_money_error'                => 520,
       'claim_license_multiple_occupation_error'     => 610,
       'claim_notice_served_method_error'            => 730,
       'claim_notice_served_by_name_error'           => 740,
@@ -36,7 +37,7 @@ class ErrorMessageSequencer
 
   # errors is an array of two-element arrays.  The first element in the array is the key, e.g. 'claim_property_house_error', and this is what we use to determine the order.
   def sequence(errors)
-    errors.sort! { |a, b| sequence_value(a) <=> sequence_value(b) }
+    x = errors[:base].sort { |a, b| sequence_value(a) <=> sequence_value(b) }
   end
 
   private

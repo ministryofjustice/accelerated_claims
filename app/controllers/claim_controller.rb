@@ -52,12 +52,18 @@ class ClaimController < ApplicationController
   end
 
   def submission
+    puts "++++++ DEBUG SUBMISSION ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
     session[:claim] = params['claim']
     move_defendant_address_params_into_model
     @claim = Claim.new(params['claim'])
 
     unless @claim.valid?
+      puts "++++++ DEBUG CLAIM NOT VALIE ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+      pp @claim.error_messages
+      
       redirect_to_with_protocol :new
+
     else
       redirect_to_with_protocol :confirmation
     end
