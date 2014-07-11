@@ -17,17 +17,10 @@ class Defendant < BaseClass
 
   validates :title, length: { maximum: 8 }
   validates :full_name, length: { maximum: 40 }
-  validate :inhabits_property_has_been_set
   
   validates_with ContactValidator
 
-  def inhabits_property_has_been_set
-    if validate_presence == true
-      unless %w{ yes no }.include?(inhabits_property)
-        errors[:inhabits_property] << inhabits_property_missing_message
-      end
-    end
-  end
+  
 
 
   def initialize(params = {})
@@ -66,29 +59,6 @@ class Defendant < BaseClass
     (street.blank? && postcode.blank?)
   end
 
-  def title_missing_message
-    "Enter #{subject_description} title"
-  end
-
-
-  def full_name_missing_message
-    "Enter #{subject_description} full name"
-  end
-
-  def full_address_missing_message
-    "Enter #{subject_description} full address"
-  end
-
-  def postcode_missing_message
-    "Enter #{subject_description} postcode"
-  end
-
-  def inhabits_property_missing_message
-    "You must say whether #{subject_description} lives in the property"
-  end
-
-
-
 
 
   def subject_description
@@ -98,7 +68,7 @@ class Defendant < BaseClass
       if defendant_num == :defendant_one
         "defendant 1's"
       else
-        "defencant 2's"
+        "defendant 2's"
       end
     end
   end

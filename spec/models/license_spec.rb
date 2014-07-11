@@ -178,7 +178,7 @@ describe License, :type => :model do
 
     it 'should not have "not included in the list" error message' do
       license.valid?
-      expect(license.errors.full_messages).to eq(["Multiple occupation must be selected"])
+      expect(license.errors[:multiple_occupation]).to eq(["You must say whether or not you have an HMO licence"])
     end
   end
 

@@ -9,13 +9,13 @@ feature 'Filling in claim form' do
     scenario "submitting incomplete form", js: false do
       visit '/'
       click_button 'Complete form'
-      expect(page).to have_content("Street must be entered")
+      expect(page).to have_content("Enter the full address")
 
-      expect(page).to have_content("Served by name must be entered")
+      expect(page).to have_content("Enter the name of the person who gave the notice")
 
-      expect(page).to have_content("Served method must be entered")
+      expect(page).to have_content("You must say how the notice was given")
 
-      expect(page).to have_content("House must be selected")
+      expect(page).to have_content("Please select what kind of property it is")
     end
   end
 
@@ -28,24 +28,24 @@ feature 'Filling in claim form' do
     visit '/'
     click_button 'Complete form'
 
-    expect(page).to have_content('Number of claimants must be entered')
+    expect(page).to have_content('Please say how many claimants there are')
 
-    check_focus_after_click 'Number of claimants must be entered', 'claim_num_claimants_1'
-    check_focus_after_click 'Number of defendants must be entered', 'claim_num_defendants_1'
+    check_focus_after_click 'Please say how many claimants there are', 'claim_num_claimants_1'
+    check_focus_after_click 'Please say how many defendants there are', 'claim_num_defendants_1'
 
-    check_focus_after_click 'House must be selected', 'claim_property_house_yes'
-    check_focus_after_click 'Street must be entered', 'claim_property_street'
-    check_focus_after_click 'Postcode must be entered', 'claim_property_postcode'
+    check_focus_after_click 'Please select what kind of property it is', 'claim_property_house_yes'
+    check_focus_after_click 'Enter the full address', 'claim_property_street'
+    check_focus_after_click 'Enter the postcode', 'claim_property_postcode'
 
-    check_focus_after_click 'Served by name must be entered', 'claim_notice_served_by_name'
-    check_focus_after_click 'Served method must be entered', 'claim_notice_served_method'
-    check_focus_after_click 'Date served must be entered', 'claim_notice_date_served_3i'
-    check_focus_after_click 'Expiry date must be entered', 'claim_notice_expiry_date_3i'
-    check_focus_after_click 'Multiple occupation must be selected', 'claim_license_multiple_occupation_yes'
-    check_focus_after_click 'Received must be selected', 'claim_deposit_received_yes'
-    check_focus_after_click 'Hearing must be selected', 'claim_possession_hearing_no'
-    check_focus_after_click 'Possession must be checked', 'claim_order_possession'
-    check_focus_after_click 'Tenancy type must be selected', 'claim_tenancy_tenancy_type_assured'
+    check_focus_after_click 'Enter the name of the person who gave the notice', 'claim_notice_served_by_name'
+    check_focus_after_click 'You must say how the notice was given', 'claim_notice_served_method'
+    check_focus_after_click 'Enter the date notice was served', 'claim_notice_date_served_3i'
+    check_focus_after_click 'Enter the date notice ended', 'claim_notice_expiry_date_3i'
+    check_focus_after_click 'You must say whether or not you have an HMO licence', 'claim_license_multiple_occupation_yes'
+    check_focus_after_click 'You must say whether the defendant paid a deposit', 'claim_deposit_received_yes'
+    check_focus_after_click 'You must choose whether you wish to attend the possible court hearing', 'claim_possession_hearing_no'
+    check_focus_after_click 'Please tick to confirm that you want to repossess the property', 'claim_order_possession'
+    check_focus_after_click 'You must say what kind of tenancy agreement you have', 'claim_tenancy_tenancy_type_assured'
 
     choose('claim_num_claimants_1')
     choose('claim_num_defendants_1')

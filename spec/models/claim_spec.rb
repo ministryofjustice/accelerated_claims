@@ -284,9 +284,9 @@ describe Claim, :type => :model do
         data[:claimant_one] = { "title"=>"", "full_name"=>"", "street"=>"", "postcode"=>""} 
         claim = Claim.new(data)
         expect(claim).to_not be_valid
-        expect(claim.claimant_one.errors.messages[:full_name]).to eq ['must be entered']
-        expect(claim.claimant_one.errors.messages[:street]).to eq ['must be entered']
-        expect(claim.claimant_one.errors.messages[:postcode]).to eq ['must be entered']
+        expect(claim.claimant_one.errors.messages[:full_name]).to eq ["Enter the claimant's full name"]
+        expect(claim.claimant_one.errors.messages[:street]).to eq ["Enter the claimant's full address"]
+        expect(claim.claimant_one.errors.messages[:postcode]).to eq ["Enter the claimant's postcode"]
       end
      
       it 'should be valid if there is claimant 1 data and no claimant 2 data' do
@@ -315,9 +315,9 @@ describe Claim, :type => :model do
         data.delete(:claimant_two)
         expect(claim).to_not be_valid
         expect(claim.errors.full_messages).to eq [
-          ["claim_claimant_two_full_name_error", "Claimant Two Full name must be entered"], 
-          ["claim_claimant_two_street_error", "Claimant Two Street must be entered"], 
-          ["claim_claimant_two_postcode_error", "Claimant Two Postcode must be entered"]
+          ["claim_claimant_two_full_name_error", "Enter claimant 2's full name"], 
+          ["claim_claimant_two_street_error", "Enter claimant 2's full address"], 
+          ["claim_claimant_two_postcode_error", "Enter claimant 2's postcode"]
         ]
       end
 
@@ -325,9 +325,9 @@ describe Claim, :type => :model do
         data["claimant_two"].each { |k, v| data["claimant_two"][k] = '' }
         expect(claim).to_not be_valid
         expect(claim.errors.full_messages).to eq [
-            ["claim_claimant_two_full_name_error", "Claimant Two Full name must be entered"], 
-            ["claim_claimant_two_street_error", "Claimant Two Street must be entered"], 
-            ["claim_claimant_two_postcode_error", "Claimant Two Postcode must be entered"]
+            ["claim_claimant_two_full_name_error", "Enter claimant 2's full name"], 
+            ["claim_claimant_two_street_error", "Enter claimant 2's full address"], 
+            ["claim_claimant_two_postcode_error", "Enter claimant 2's postcode"]
           ]
       end
     end
@@ -355,7 +355,7 @@ describe Claim, :type => :model do
       it 'should not be valid if the num claimants is 3' do
         data[:num_claimants] = 3
         expect(claim).to_not be_valid
-        expect(claim.errors.full_messages).to eq [["claim_num_claimants_error", "Number of claimants must be entered"]]
+        expect(claim.errors.full_messages).to eq [["claim_num_claimants_error", "Please say how many claimants there are"]]
       end
     end
   end

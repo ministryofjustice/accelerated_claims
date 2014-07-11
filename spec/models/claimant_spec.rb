@@ -24,7 +24,7 @@ describe Claimant, :type => :model do
     it 'should not be valid if any of the attributes is missing' do
       claimant.full_name = nil
       expect(claimant).to_not be_valid
-      expect(claimant.errors.full_messages).to eq ['Full name must be entered']
+      expect(claimant.errors[:full_name]).to eq [ "Enter the claimant's full name" ]
     end
   end
 
@@ -42,13 +42,13 @@ describe Claimant, :type => :model do
     it 'should not be valid if any of the attributes are missing' do
       claimant.street = nil
       expect(claimant).to_not be_valid
-      expect(claimant.errors.full_messages).to eq ['Street must be entered']
+      expect(claimant.errors[:street]).to eq ["Enter the claimant's full address"]
     end
 
     it 'should not be valid if any of the attributes are blank' do
       claimant.postcode = ''
       expect(claimant).to_not be_valid
-      expect(claimant.errors.full_messages).to eq ['Postcode must be entered']
+      expect(claimant.errors[:postcode]).to eq ["Enter the claimant's postcode"]
     end
   end
 

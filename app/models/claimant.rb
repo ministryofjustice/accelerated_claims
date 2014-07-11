@@ -41,18 +41,6 @@ class Claimant < BaseClass
   end
 
 
-  def full_name_missing_message
-    "Enter #{subject_description} full name"
-  end
-
-  def full_address_missing_message
-    "Enter #{subject_description} full address"
-  end
-
-  def postcode_missing_message
-    "Enter #{subject_description} postcode"
-  end
-
 
   def subject_description
     if @num_claimants == 1

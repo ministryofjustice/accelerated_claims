@@ -135,7 +135,7 @@ describe Tenancy, :type => :model do
       before { tenancy.valid? }
 
       it "should provide an error message" do
-        expect(tenancy.errors.full_messages).to include "Tenancy type must be selected"
+        expect(tenancy.errors[:tenancy_type]).to eq [ "You must say what kind of tenancy agreement you have" ]
       end
     end
   end
@@ -213,7 +213,7 @@ describe Tenancy, :type => :model do
 
       it "should require assured tenancy type" do
         subject.valid?
-        expect(subject.errors.full_messages).to include "Assured shorthold tenancy type must be selected"
+        expect(subject.errors[:assured_shorthold_tenancy_type]).to eq [ "You must say how many tenancy agreements you’ve had" ]
       end
     end
 

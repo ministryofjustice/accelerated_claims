@@ -35,7 +35,7 @@ shared_examples 'address validation' do
     it 'is invalid' do
       subject.postcode = nil
       expect(subject).not_to be_valid
-      expect(subject.errors.full_messages).to eq(["Postcode must be entered"])
+      expect(subject.errors[:postcode]).to eq( [ "Enter the postcode"] )
     end
   end
 
@@ -43,7 +43,7 @@ shared_examples 'address validation' do
     it 'is invalid' do
       subject.street = nil
       expect(subject).not_to be_valid
-      expect(subject.errors.full_messages).to eq(["Street must be entered"])
+      expect(subject.errors[:street]).to eq( [ "Enter the full address"] )
     end
   end
 end
