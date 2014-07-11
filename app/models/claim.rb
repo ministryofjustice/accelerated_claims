@@ -53,8 +53,6 @@ class Claim < BaseClass
   end
 
   def valid?
-    puts "++++++ DEBUG VALID? ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    
     @errors.clear
     validity = true
     validity = false unless num_claimants_valid?
@@ -73,12 +71,7 @@ class Claim < BaseClass
         validity = false
       end
     end
-
-
     @error_messages = ErrorMessageSequencer.new.sequence(@errors)
-    puts "++++++ DEBUG @error_messages  ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    pp @error_messages 
-    
     validity
   end
 

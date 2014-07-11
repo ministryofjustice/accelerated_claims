@@ -37,7 +37,7 @@ class ErrorMessageSequencer
 
   # errors is an array of two-element arrays.  The first element in the array is the key, e.g. 'claim_property_house_error', and this is what we use to determine the order.
   def sequence(errors)
-    x = errors[:base].sort { |a, b| sequence_value(a) <=> sequence_value(b) }
+    errors[:base].sort { |a, b| sequence_value(a) <=> sequence_value(b) }
   end
 
   private
