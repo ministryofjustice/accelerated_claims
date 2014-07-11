@@ -73,7 +73,7 @@ class Claim < BaseClass
         validity = false
       end
     end
-    
+    @errors = ErrorMessageSequencer.new.sequence(@errors)
     validity
   end
 
