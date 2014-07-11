@@ -1,6 +1,6 @@
 = claim_form.fields_for notice, builder: LabellingFormBuilder do |form|
   .row
-    = 'You need to tell us about how you gave the defendant notice to leave the property'.html_safe
+    = 'You need to tell us about how you gave the defendant notice to leave the property.'.html_safe
 
   = form.text_field_row  :served_by_name, label: 'Full name of the person who gave the notice', data: { 'virtual-pageview' => '/accelerated/notice_section' }
   = form.text_field_row  :served_method, label: 'How was the notice given? <span class="hint block">For example, in person</span>'
