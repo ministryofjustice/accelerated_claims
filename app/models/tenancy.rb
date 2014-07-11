@@ -7,7 +7,7 @@ class Tenancy < BaseClass
   RULES_CHANGE_DATE = Date.parse('1997-02-28') # 28 February 1997
 
   attr_accessor :tenancy_type
-  validates :tenancy_type, presence: { message: 'must be selected' }, inclusion: { in: ['demoted', 'assured'] }
+  validates :tenancy_type, presence: { message: 'You must say what kind of tenancy agreement you have' }, inclusion: { in: ['demoted', 'assured'] }
 
   attr_accessor :assured_shorthold_tenancy_type
   attr_accessor :start_date
@@ -63,7 +63,7 @@ class Tenancy < BaseClass
   end
 
   with_options if: :assured_tenancy? do |t|
-    t.validates :assured_shorthold_tenancy_type, presence: { message: 'must be selected' }, inclusion: { in: ['one', 'multiple'] }
+    t.validates :assured_shorthold_tenancy_type, presence: { message: 'You must say how many tenancy agreements you’ve had' }, inclusion: { in: ['one', 'multiple'] }
     t.validates :assured_shorthold_tenancy_notice_served_by, length: { maximum: 70 }
 
     t.validates *DEMOTED_FIELDS,
@@ -71,7 +71,7 @@ class Tenancy < BaseClass
   end
 
   with_options if: :one_tenancy_agreement? do |t|
-    t.validates :start_date, presence: { message: 'must be selected' }
+    t.validates :start_date, presence: { message: 'You must say when the tenancy agreement started ' }
     t.validates_with DateValidator, fields: [:start_date]
 
     t.validates *MULTIPLE_TENANCY_FIELDS,

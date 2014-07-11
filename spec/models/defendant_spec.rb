@@ -37,19 +37,19 @@ describe Defendant, :type => :model do
       it 'should not be valid if full name is missing' do
         defendant.full_name = nil
         expect(defendant).to_not be_valid
-        expect(defendant.errors.full_messages).to eq ['Full name must be entered']
+        expect(defendant.errors[:full_name]).to eq ["Enter defendant 2's full name"]
       end
 
       it 'should not be valid if postcode is missing' do
         defendant.postcode = nil
         expect(defendant).to_not be_valid
-        expect(defendant.errors.full_messages).to eq ['Postcode must be entered']
+        
       end
 
       it 'should not be valid if street is missing' do
         defendant.street = nil
         expect(defendant).to_not be_valid
-        expect(defendant.errors.full_messages).to eq ['Street must be entered']
+        expect(defendant.errors[:street]).to eq ["Enter defendant 2's full address"]
       end
     end
 
@@ -65,13 +65,13 @@ describe Defendant, :type => :model do
       it 'should be invalid if full name is missing' do
         property_inhabiting_defendant.full_name = nil
         expect(property_inhabiting_defendant).to_not be_valid
-        expect(property_inhabiting_defendant.errors.full_messages).to eq ['Full name must be entered']
+        expect(property_inhabiting_defendant.errors[:full_name]).to eq ["Enter defendant 2's full name"]
       end
 
       it 'should be invalid if title is missing' do
         property_inhabiting_defendant.title = nil
         expect(property_inhabiting_defendant).to_not be_valid
-        expect(property_inhabiting_defendant.errors.full_messages).to eq ['Title must be entered']
+        expect(property_inhabiting_defendant.errors[:title]).to eq ["Enter defendant 2's title"]
       end
     end
   end
@@ -95,19 +95,19 @@ describe Defendant, :type => :model do
       it 'should not be valid if full name is missing' do
         defendant.full_name = nil
         expect(defendant).to_not be_valid
-        expect(defendant.errors.full_messages).to eq ['Full name must be entered']
+        expect(defendant.errors[:full_name]).to eq ["Enter defendant 2's full name"]
       end
 
       it 'should not be valid if postcode is missing' do
         defendant.postcode = nil
         expect(defendant).to_not be_valid
-        expect(defendant.errors.full_messages).to eq ['Postcode must be entered']
+        expect(defendant.errors[:postcode]).to eq ["Enter defendant 2's postcode"]
       end
 
       it 'should not be valid if street is missing' do
         defendant.street = nil
         expect(defendant).to_not be_valid
-        expect(defendant.errors.full_messages).to eq ['Street must be entered']
+        expect(defendant.errors[:street]).to eq ["Enter defendant 2's full address"]
       end
     end
 
@@ -126,13 +126,13 @@ describe Defendant, :type => :model do
       it 'should be invalid if full name is missing' do
         property_inhabiting_defendant.full_name = nil
         expect(property_inhabiting_defendant).to_not be_valid
-        expect(property_inhabiting_defendant.errors.full_messages).to eq ['Full name must be entered']
+        expect(property_inhabiting_defendant.errors[:full_name]).to eq ["Enter defendant 2's full name"]
       end
 
       it 'should be invalid if title is missing' do
         property_inhabiting_defendant.title = nil
         expect(property_inhabiting_defendant).to_not be_valid
-        expect(property_inhabiting_defendant.errors.full_messages).to eq ['Title must be entered']
+        expect(property_inhabiting_defendant.errors[:title]).to eq ["Enter defendant 2's title"]
       end
     end
   end
