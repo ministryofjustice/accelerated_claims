@@ -11,6 +11,9 @@ class ErrorMessageSequencer
       'claim_claimant_two_full_name_error'          => 250,
       'claim_claimant_two_street_error'             => 260,
       'claim_claimant_two_postcode_error'           => 270,
+      'claim_claimant_contact_email_error'          => 280,
+      'claim_claimant_contact_full_name_error'      => 285,
+      'claim_claimant_contact_postcode_error'       => 290,
       'claim_num_defendants_error'                  => 310,
       'claim_defendant_one_title_error'             => 320,
       'claim_defendant_one_full_name_error'         => 330,
@@ -51,9 +54,7 @@ class ErrorMessageSequencer
         break
       end
     end
-    if result == 999
-      error_message << " >>>>>>>>> #{error_key} <<<<<<<"
-    end
+    Rails.logger.warn "No error message sequencing for #{error_key}" if result == 999
     result
   end
 
