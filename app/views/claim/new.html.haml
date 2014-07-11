@@ -18,13 +18,16 @@
 
     .moj-panel.has-multiple#claimants(data-multiple="claimant" data-single="claimant" data-plural="claimants" data-caption="As the landlord, you're known as the <strong>claimant</strong> in this case.")
 
+      .row
+        As the landlord, you’re known as the claimant in this case.
+
       = claim_form.radio_button_fieldset :num_claimants,
-          'How many claimants are there?',
+          'How many claimants are there?'.html_safe,
           class: 'radio inline multiple',
           choice: {'1 claimant'=>'1', '2 claimants'=>'2'},
           data: { depend: 'numclaimants', 'virtual-pageview' => '/accelerated/claimants-section' }
-    
-    
+
+
       .sub-panel.hide.js-numclaimants.1.2.claimant#claimant_one
         %h3.person First claimant
         = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_one}
@@ -42,6 +45,9 @@
   %section
     %h2.section-header Defendants
     .moj-panel.has-multiple#defendants(data-multiple="defendant" data-single="defendant" data-plural="defendants" data-caption="Your tenants are known as <strong>defendants</strong> in this case.")
+
+      .row
+        Your tenants are known as defendants in this case.
 
       = claim_form.radio_button_fieldset :num_defendants,
           'How many defendants are there?',
@@ -96,7 +102,6 @@
   %section
     %p
       = link_to 'Terms and conditions and privacy policy', :terms, class: 't-n-c'
-
 
 / handlebars templates
 
