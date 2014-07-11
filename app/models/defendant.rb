@@ -1,3 +1,5 @@
+
+
 class Defendant < BaseClass
 
   @do_partial_address_completion_validation = true
@@ -10,22 +12,25 @@ class Defendant < BaseClass
   attr_accessor :postcode
   attr_accessor :property_address
   attr_accessor :inhabits_property
+  attr_accessor :num_defendants
+  attr_accessor :defendant_num
 
   validates :title, length: { maximum: 8 }
   validates :full_name, length: { maximum: 40 }
-
-  with_options if: -> defendant { defendant.validate_presence == true} do |defendant|
-    defendant.validates :inhabits_property, inclusion:  { in: ['yes', 'no'], message: "Question (Does the defendant live in the property?) must be answered"  }
-  end
   
   validates_with ContactValidator
+
+  
+
 
   def initialize(params = {})
     super
     unless params.include?(:validate_presence)
       @validate_presence = true unless params[:validate_absence] == true
     end
+    @num_defendants = @num_defendants.nil? ? 1 : @num_defendants.to_i
   end
+
 
 
   def as_json
@@ -53,4 +58,19 @@ class Defendant < BaseClass
   def address_blank?
     (street.blank? && postcode.blank?)
   end
+
+
+
+  def subject_description
+    if @num_claimants == 1
+      "the defendant's"
+    else 
+      if defendant_num == :defendant_one
+        "defendant 1's"
+      else
+        "defendant 2's"
+      end
+    end
+  end
+
 end

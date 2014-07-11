@@ -1,50 +1,38 @@
 class Deposit < BaseClass
 
   attr_accessor :received
-  validates :received, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
-
-  attr_accessor :information_given_date
+  validates :received, presence: { message: 'You must say whether the defendant paid a deposit' }, inclusion: { in: ['Yes', 'No'] }
 
   attr_accessor :ref_number
   validates :ref_number, length: { maximum: 20 }
 
   attr_accessor :as_property
-  validates :as_property, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
 
   attr_accessor :as_money
-  validates :as_money, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
 
   validate :money_or_property_must_be_selected_if_received
 
 
-  validates_with DateValidator, :fields => [:information_given_date]
-
   with_options if: -> deposit { deposit.received == 'No'} do |deposit|
-    err = 'can\'t be provided if there is no deposit given'
-    deposit.validates :information_given_date, absence: { message: err }
-    deposit.validates :ref_number, absence: { message: err }
+    deposit.validates :ref_number, absence: { message: 'You should not give a deposit scheme reference number if no deposit was given' }
   end
 
   with_options if: -> deposit { deposit.received == 'Yes' && deposit.as_money == 'Yes'} do |deposit|
-    deposit.validates :ref_number, presence: true
+    deposit.validates :ref_number, presence: { message: 'Enter the tenancy deposit scheme reference number' }
   end
 
   with_options if: -> deposit { deposit.received == 'Yes' && deposit.as_money == 'No'} do |deposit|
-    deposit.validates :ref_number, absence: { message: 'must be provided only if money deposit taken' }
+    deposit.validates :ref_number, absence: { message: 'You should not give a deposti scheme reference number if the deposit was given as property' }
   end
 
-  def as_json
-    json = super
-    json = split_date :information_given_date, json
-    json
-  end
+
 
   private
 
   def money_or_property_must_be_selected_if_received
     if received && received == 'Yes'
       if as_money == 'No' && as_property == 'No'
-        errors[:deposit_type] = 'must be selected'
+        errors[:as_money] << 'You must say what kind of deposit the defendant paid'
       end
     end
   end

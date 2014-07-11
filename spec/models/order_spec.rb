@@ -13,8 +13,8 @@ describe Order, :type => :model do
     let(:possession) { 'No' }
     it { is_expected.not_to be_valid }
     it 'should have error message' do
-      order.valid?
-      expect(order.errors.full_messages).to eq(['Possession must be checked'])
+      expect(order).not_to be_valid
+      expect(order.errors[:possession]).to eq [ "Please tick to confirm that you want to repossess the property" ]
     end
   end
 
