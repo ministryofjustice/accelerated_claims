@@ -75,6 +75,7 @@ class Claim < BaseClass
         validity = false
       end
     end
+    
     validity
   end
 
