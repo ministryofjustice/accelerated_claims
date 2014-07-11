@@ -5,6 +5,6 @@
     %p See highlighted errors below.
 
     %ul
-      - @errors.full_messages.each do |field, message|
+      - @claim.error_messages.each do |field, message|
         %li
           = link_to message, "##{field}", class: 'error-link', data: { id: "##{field}" }

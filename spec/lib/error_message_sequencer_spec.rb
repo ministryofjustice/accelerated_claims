@@ -8,8 +8,10 @@ describe ErrorMessageSequencer do
 
   describe '#sequence' do
     it 'should sort the keys in the expected order' do
-      sorted_errors = ErrorMessageSequencer.new.sequence(errors)
-      expect(sorted_errors).to eq expected_sorted_errors
+      errors = double 'ActiveRecord::Errors'
+      expect(errors).to receive(:[]).with(:base).and_return(base_errors)
+      sorted_error_messages = ErrorMessageSequencer.new.sequence(errors)
+      expect(sorted_error_messages).to eq expected_sorted_errors
     end
 
   end
@@ -18,7 +20,7 @@ end
 
 
 
-def errors
+def base_errors
   [
     ["claim_num_claimants_error",                     "Please say how many claimants there are"],
     ["claim_property_street_error",                   "Enter the full address"],
