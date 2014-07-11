@@ -63,12 +63,10 @@ class Claim < BaseClass
 
       unless send(instance_var).valid?
         errors = send(instance_var).errors
-        # messages = errors.full_messages
         errors.each_with_index do |error, index|
 
           attribute = error.first
           key = "claim_#{instance_var}_#{attribute}_error"
-          # message = messages[index]
           @errors[:base] << [ key, error.last ]
         end
         
@@ -80,14 +78,6 @@ class Claim < BaseClass
   end
 
   private
-
-
-  # def disambiguate_error_messages(instance_var, message)
-  #   if @@ambiguous_instance_vars.include?(instance_var)
-  #     message = instance_var.titleize + ' ' + message
-  #   end
-  #   message
-  # end
 
 
   def num_claimants_valid?
