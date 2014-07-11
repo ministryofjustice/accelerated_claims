@@ -3,7 +3,7 @@ def remote_hosts
   'dev' => 'civilclaims.local',
   'demo'  => 'civilclaims.dsd.io',
   'staging' => 'civil:mojcivil@civilclaimsstaging.dsd.io',
-  'production' => 'civilclaims.service.dsd.io'
+  'production' => 'civilclaims.service.gov.uk'
   }
 end
 
