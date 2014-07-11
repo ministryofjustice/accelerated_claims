@@ -69,16 +69,4 @@ class ContactValidator < ActiveModel::Validator
     end
     result
   end
-
-
 end
-
-
-
-
-
-
-
-
-  
-

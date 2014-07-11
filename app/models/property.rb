@@ -1,22 +1,15 @@
 require 'uk_postcode'
 
-
-
 class PropertyError
-
 
   def self.full_address_error
     'Enter the full address'
   end
 
-
   def self.postcode_error
     'Enter the postcode'
   end
-
 end
-
-
 
 
 class Property < BaseClass
@@ -38,8 +31,4 @@ class Property < BaseClass
       "house" => house
     }
   end
-
- 
- 
 end
-
