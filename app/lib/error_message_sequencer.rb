@@ -12,6 +12,7 @@ class ErrorMessageSequencer
       'claim_claimant_two_street_error'             => 260,
       'claim_claimant_two_postcode_error'           => 270,
       'claim_claimant_contact_email_error'          => 280,
+      'claim_claimant_contact_phone_error'          => 282,
       'claim_claimant_contact_full_name_error'      => 285,
       'claim_claimant_contact_postcode_error'       => 290,
       'claim_num_defendants_error'                  => 310,
