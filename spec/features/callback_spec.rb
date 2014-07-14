@@ -10,7 +10,7 @@ feature 'Callback request' do
 
       click_button 'Send'
 
-      expect(page).to have_content('Thank you we will call you back within 24 hours between 9am and 5pm.')
+      expect(page).to have_content('Thank you we will call you back during the next working day between 9am and 5pm.')
     end
   end
 
