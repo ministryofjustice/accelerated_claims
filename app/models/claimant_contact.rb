@@ -22,7 +22,7 @@ class ClaimantContact < BaseClass
   validates :company_name, length: { maximum: 40 }
   validates :full_name, length: { maximum: 40 }
   validates :email, email: true, if: ->(f) { f.email.present? }
-  validates :phone, length: { maximum: 40 }
+  validates :phone, format: { with: /[0-9\s]{9,15}/,  message: "Enter a valid claimant telephone number", allow_blank: true }
   validates :fax, length: { maximum: 40 }
   validates :dx_number, length: { maximum: 40 }
 
