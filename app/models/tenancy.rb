@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Tenancy < BaseClass
 
   ASSURED = 'assured'
@@ -93,7 +94,7 @@ class Tenancy < BaseClass
 
   with_options if: :in_first_rules_period? do |t|
     t.validates :from_1997_option,
-      inclusion: { in: ['No'], message: "leave blank as you specified original tenancy agreement was made before #{Tenancy::RULES_CHANGE_DATE.to_s(:printed)}" }
+      inclusion: { in: ['No'], message: "Leave blank as you specified original tenancy agreement was made before #{Tenancy::RULES_CHANGE_DATE.to_s(:printed)}" }
   end
 
   with_options if: :in_second_rules_period? do |t|
