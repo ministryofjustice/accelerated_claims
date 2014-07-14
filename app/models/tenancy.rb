@@ -51,10 +51,10 @@ class Tenancy < BaseClass
   STATEMENTS_FIELDS = [:from_1997_option, :upto_1997_option]
 
   with_options if: :demoted_tenancy? do |t|
-    t.validates :demotion_order_date, presence: { message: 'must be selected' }
+    t.validates :demotion_order_date, presence: { message: 'Enter the date of the tenancy demotion order' }
     t.validates_with DateValidator, fields: [:demotion_order_date]
-    t.validates :demotion_order_court, presence: { message: 'must be provided' }, length: { maximum: 40 }
-    t.validates :previous_tenancy_type, presence: { message: 'must be selected' }, inclusion: { in: ['assured', 'secure'] }
+    t.validates :demotion_order_court, presence: { message: 'Enter the name of the court that demoted the tenancy' }, length: { maximum: 40 }
+    t.validates :previous_tenancy_type, presence: { message: 'Select the type of tenancy agreement before it was demoted' }, inclusion: { in: ['assured', 'secure'] }
 
     t.validates *(ASSURED_TENANCY_FIELDS + ONE_TENANCY_FIELDS + MULTIPLE_TENANCY_FIELDS),
       absence: { message: 'leave blank as you specified tenancy is demoted' }
