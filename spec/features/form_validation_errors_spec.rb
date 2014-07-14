@@ -44,7 +44,7 @@ feature 'Filling in claim form' do
     check_focus_after_click 'You must say whether or not you have an HMO licence', 'claim_license_multiple_occupation_yes'
     check_focus_after_click 'You must say whether the defendant paid a deposit', 'claim_deposit_received_yes'
     check_focus_after_click 'You must choose whether you wish to attend the possible court hearing', 'claim_possession_hearing_no'
-    check_focus_after_click 'Please tick to confirm that you want to repossess the property', 'claim_order_possession'
+    check_focus_after_click 'Please tick to confirm that you want to repossess the property', 'claim_order_possession_error'
     check_focus_after_click 'You must say what kind of tenancy agreement you have', 'claim_tenancy_tenancy_type_assured'
 
     choose('claim_num_claimants_1')

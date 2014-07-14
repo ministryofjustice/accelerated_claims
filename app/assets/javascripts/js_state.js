@@ -157,7 +157,7 @@ moj.Modules.jsState = (function() {
   };
 
   setRadio = function( obj ) {
-    if( obj.value !== 'unchecked' ) {
+    if( obj.value && obj.value !== '' && obj.value !== 'unchecked' ) {
       $( '[name="' + obj.name + '"][value="' + obj.value + '"]' ).trigger( 'click' ).trigger( 'change' ).trigger( 'blur' );
     }
   };
