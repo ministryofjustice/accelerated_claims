@@ -92,6 +92,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
 
   def labelled_check_box attribute, label, yes='Yes', no='No', options={}
+    set_class_and_id attribute, options
     hidden_input = check_box_input_hidden attribute, options, yes, no
 
     labeled_input = label(attribute) do
