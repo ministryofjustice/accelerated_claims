@@ -186,17 +186,29 @@ class Claim < BaseClass
 
     case attribute_name
       when /claimant_one/
-        params.merge!(validate_presence: true, validate_absence: false, num_claimants: claim_params[:num_claimants], claimant_num: :claimant_one)
+        if @num_claimants.nil?
+          params.merge!(validate_presence: false, validate_absence: false, num_claimants: nil, claimant_num: :claimant_one)  
+        else
+          params.merge!(validate_presence: true, validate_absence: false, num_claimants: claim_params[:num_claimants], claimant_num: :claimant_one)
+        end
       when /claimant_two/
-        if @num_claimants == 1
+        if @num_claimants.nil?
+          params.merge!(validate_absence: false, validate_presence: false, num_claimants: nil, claimant_num: :claimant_two)
+        elsif @num_claimants == 1
           params.merge!(validate_absence: true, validate_presence: false)
         else
           params.merge!(validate_presence: true, num_claimants: '2', claimant_num: :claimant_two)
         end
       when /defendant_one/
-        params.merge!(validate_presence: true, validate_absence: false, num_defendants: claim_params[:num_defendants], defendant_num: :defendant_one)
+        if @num_defendants.nil?
+          params.merge!(validate_presence: false, validate_absence: false, num_defendants: nil, defendant_num: :defendant_one)  
+        else
+          params.merge!(validate_presence: true, validate_absence: false, num_defendants: claim_params[:num_defendants], defendant_num: :defendant_one)
+        end
       when /defendant_two/
-        if @num_defendants == 1
+        if @num_defendants.nil?
+          params.merge!(validate_absence: false, validate_presence: false)
+        elsif @num_defendants == 1
           params.merge!(validate_absence: true, validate_presence: false)
         else
           params.merge!(validate_presence: true, num_defendants: '2', defendant_num: :claimant_two)
