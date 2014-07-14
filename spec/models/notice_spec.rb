@@ -72,13 +72,13 @@ describe Notice, :type => :model do
     it 'should raise if the expiry date is same as served date' do
       notice.expiry_date = notice.date_served
       expect(notice).not_to be_valid
-      expect(notice.errors["expiry_date"]).to eq(["must be at least 2 months later than the Date notice served in order to use the accelerated procedure."])
+      expect(notice.errors["expiry_date"]).to eq(["The date notice ended must be at least 2 months after the date notice served"])
     end
 
     it 'should raise if the expiry date is before the served date' do
       notice.expiry_date = notice.date_served - 10
       expect(notice).not_to be_valid
-      expect(notice.errors["expiry_date"]).to eq(["must be at least 2 months later than the Date notice served in order to use the accelerated procedure."])
+      expect(notice.errors["expiry_date"]).to eq(["The date notice ended must be at least 2 months after the date notice served"])
     end
 
     it 'should not raise if the expiry date is exactly 2 months after the served date' do
@@ -98,7 +98,7 @@ describe Notice, :type => :model do
       notice.date_served = Date.new(2014, 4, 4)
       notice.expiry_date = Date.new(2014, 6, 2)
       expect(notice).not_to be_valid
-      expect(notice.errors["expiry_date"]).to eq(["must be at least 2 months later than the Date notice served in order to use the accelerated procedure."])
+      expect(notice.errors["expiry_date"]).to eq(["The date notice ended must be at least 2 months after the date notice served"])
     end
 
   end
