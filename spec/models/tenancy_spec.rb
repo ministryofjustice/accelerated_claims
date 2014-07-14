@@ -264,8 +264,8 @@ describe Tenancy, :type => :model do
           it { is_expected.not_to be_valid }
           it 'should have validation errors' do
             subject.valid?
-            msg = "From 1997 option leave blank as you specified original tenancy agreement was made before 28 February 1997"
-            expect(subject.errors.full_messages).to include msg
+            msg = 'Leave blank as you specified original tenancy agreement was made before 28 February 1997'
+            expect(subject.errors[:from_1997_option]).to include msg
           end
         end
       end

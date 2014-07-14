@@ -66,4 +66,3 @@ class ErrorMessageSequencer
   end
 
 end
-
