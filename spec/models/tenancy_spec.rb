@@ -88,12 +88,10 @@ describe Tenancy, :type => :model do
       it { is_expected.not_to be_valid }
 
       it "should have error messages for each missing field" do
-        subject.valid?
-        ["Demotion order date must be selected",
-        "Previous tenancy type must be selected",
-        "Demotion order court must be provided"].each do |msg|
-          expect(subject.errors.full_messages).to include msg
-        end
+        expect(subject).not_to be_valid
+        expect(subject.errors[:demotion_order_date]).to eq ['Enter the date of the tenancy demotion order']
+        expect(subject.errors[:previous_tenancy_type]).to eq ['Select the type of tenancy agreement before it was demoted']
+        expect(subject.errors[:demotion_order_court]).to eq ['Enter the name of the court that demoted the tenancy']
       end
     end
 
