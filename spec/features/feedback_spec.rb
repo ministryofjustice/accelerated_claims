@@ -14,7 +14,7 @@ feature 'Providing feedback' do
 
       click_button 'Send'
 
-      expect(page).to have_content('is not a valid address')
+      expect(page).to have_content('Enter a valid email address')
       fill_in 'Your email address', with: 'test@example.com'
 
       click_button 'Send'
