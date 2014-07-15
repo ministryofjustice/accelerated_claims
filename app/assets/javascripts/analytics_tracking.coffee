@@ -1,17 +1,18 @@
 root = exports ? this
 
 class AnalyticsTracking
-  constructor: ($) ->
+  constructor: () ->
     new root.EventTracker( $ )
 
-    if @formWithOutErrors( $ )
+    if @formWithOutErrors()
       trigger_first_interaction = true
       new root.PageviewTracker( trigger_first_interaction )
 
       if !@referrerIsSelf(document.referrer)
         @dispatchViewFormEvent()
 
-    else if @formWithErrors( $ )
+    else if @formWithErrors()
+      root.dispatchPageView '/accelerated/validation-error'
       _.each $('.error-link'), @dispatchValidationErrorEvent
 
     else
@@ -27,10 +28,10 @@ class AnalyticsTracking
     category += '_error' unless category.match(/_error$/)
     root.dispatchTrackingEvent(category, 'Accelerated form error', $(element).text() )
 
-  formWithOutErrors: ($) ->
+  formWithOutErrors: () ->
     ( $('#claimForm').length > 0 ) && ( $('.error-summary').length == 0 )
 
-  formWithErrors: ($) ->
+  formWithErrors: () ->
     ( $('#claimForm').length > 0 ) && ( $('.error-summary').length > 0 )
 
   referrerIsSelf: (referrer) ->
