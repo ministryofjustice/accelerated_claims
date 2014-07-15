@@ -19,8 +19,7 @@
     .moj-panel.has-multiple#claimants(data-multiple="claimant" data-single="claimant" data-plural="claimants" data-caption="As the landlord, you're known as the <strong>claimant</strong> in this case.")
 
       .row
-        As the landlord, you’re known as the claimant in this case.
-
+        As the landlord, you’re known as the <b>claimant</b> in this case.
       = claim_form.radio_button_fieldset :num_claimants,
           'How many claimants are there?'.html_safe,
           class: 'radio inline multiple',
@@ -47,7 +46,7 @@
     .moj-panel.has-multiple#defendants(data-multiple="defendant" data-single="defendant" data-plural="defendants" data-caption="Your tenants are known as <strong>defendants</strong> in this case.")
 
       .row
-        Your tenants are known as defendants in this case.
+        Your tenants are known as <b>defendants</b> in this case.
 
       = claim_form.radio_button_fieldset :num_defendants,
           'How many defendants are there?',
