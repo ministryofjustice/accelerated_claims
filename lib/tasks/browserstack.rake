@@ -2,7 +2,7 @@ namespace :browserstack do
   desc 'list browsers for browserstack'
   task :browsers do
     YAML.load_file('config/browsers.json').each_with_index do |b, i|
-      puts "#{i}. #{b.values.join(' ')}"
+      puts "#{i + 1}. #{b.values.join(' ')}"
     end
   end
 
@@ -23,7 +23,11 @@ namespace :browserstack do
         # We're in a subprocess here - set the environment variable BS_BROWSER to the desired browser configuration.
         ENV['BS_BROWSER'] = browser.to_json
 
-        test_label = ['os', 'os_version', 'browser', 'browser_version'].map { |k| browser[k] }.join('_')
+        if browser['browserName']
+          test_label = ['browserName', 'device'].map { |k| browser[k].gsub(' ','-') }.join('_').downcase
+        else
+          test_label = ['os', 'os_version', 'browser', 'browser_version'].map { |k| browser[k].gsub(' ','-') }.join('_').downcase
+        end
 
         puts "testing: #{test_label}"
 
