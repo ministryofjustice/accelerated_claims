@@ -7,8 +7,8 @@
   javascript: "NON-JS",
   claim: {
     property: {
-      street: "94 East St\nBristol",
-      postcode: "BS3 4EY",
+      street: "94 East St\nAnyville",
+      postcode: "SW1X 9ZZ",
       house: "No"
     },
     claim: {
@@ -17,9 +17,9 @@
     },
     claimant_one: {
       title: "Mr",
-      full_name: "Jay Schneider",
-      street: "26 Heath St\nLondon",
-      postcode: "NW3 6TE"
+      full_name: "Mark Ateer",
+      street: "26 Heath St\nAnytown",
+      postcode: "RG99 1XX"
     },
     claimant_two: {
       title: nil,
@@ -39,12 +39,12 @@
     },
     claimant_contact: {
       title: "Mr",
-      full_name: "Jay Schneider",
-      company_name: "Schneider & Sons",
-      street: "PO Box 1655, 9 Russell Square\nLondon",
-      postcode: "WC1B 5EQ",
-      email: "jayschneider@gmail.com",
-      phone: "7985473222",
+      full_name: "Mark Ateer",
+      company_name: "Mark Ateer Marketing Co. Ltd.",
+      street: "PO Box 1655, 9 Invention Square\nAnytown",
+      postcode: "WC88 1AA",
+      email: "markateer@zzmail.com",
+      phone: "01734 123456",
       fax: nil,
       dx_number: nil
     },
@@ -53,10 +53,10 @@
     },
     defendant_one: {
       title: "Mr",
-      full_name: "Andre Drake",
+      full_name: "Chris P. Bacon",
       inhabits_property: "Yes",
-      street: "94 East St\nBristol",
-      postcode: "BS3 4EY"
+      street: "94 East St\nAnyville",
+      postcode: "SW1X 9ZZ"
     },
     defendant_two: {
       title: nil,
@@ -73,14 +73,14 @@
       latest_agreement_date: nil,
       agreement_reissued_for_same_property: nil,
       agreement_reissued_for_same_landlord_and_tenant: nil,
-      assured_shorthold_tenancy_notice_served_by: "Jay Schneider",
+      assured_shorthold_tenancy_notice_served_by: "Mark Ateer",
       assured_shorthold_tenancy_notice_served_date: "2010-05-24",
       demotion_order_date: nil,
       demotion_order_court: nil,
       previous_tenancy_type: nil
     },
     notice: {
-      served_by_name: "Jay Schneider",
+      served_by_name: "Mark Ateer",
       served_method: "By post",
       date_served: "2014-01-04",
       expiry_date: "2014-03-04"
@@ -89,7 +89,7 @@
       multiple_occupation: "Yes",
       issued_under_act_part_yes: "Part2",
       issued_under_act_part_applied: nil,
-      issued_by: "Bristol City Council",
+      issued_by: "Anyville City Council",
       issued_date: "2010-06-15"
     },
     deposit: {
