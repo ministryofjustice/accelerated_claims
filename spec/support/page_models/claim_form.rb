@@ -167,7 +167,11 @@ class ClaimForm
 
   def check_box(prefix, key)
     if(get_data(prefix, key).downcase == 'yes')
-      check("claim_#{prefix}_#{key}")
+      begin
+        check("claim_#{prefix}_#{key}")
+      rescue Capybara::ElementNotFound
+        check("claim_#{prefix}_#{key}", visible: false)
+      end
     end
   end
 
