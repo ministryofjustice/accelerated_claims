@@ -3,6 +3,7 @@ require 'zendesk_helper'
 class UserCallbackController < ApplicationController
 
   def new
+    @page_title = 'Make a claim to evict tenants - ask for technical help'
     @user_callback = UserCallback.new
   end
 
