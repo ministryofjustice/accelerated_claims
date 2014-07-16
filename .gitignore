@@ -32,5 +32,3 @@ config/environments/history.txt
 /public/version.json
 
 
-# spec/fixtures (looks like real data)
-spec/fixtures/*
