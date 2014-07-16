@@ -7,8 +7,8 @@
   javascript: "JS",
   claim: {
     property: {
-      street: "45 St Martins Precinct Church St\nReading ",
-      postcode: "RG4 8BA",
+      street: "45 St Mary's Precinct Church St\nRiteing ",
+      postcode: "RT4 8BA",
       house: "Yes"
     },
     claim: {
@@ -17,13 +17,13 @@
     },
     claimant_one: {
       title: "Mr",
-      full_name: "Frank Coleman",
-      street: "13 Princess Square\nBracknell",
-      postcode: "RG12 1LS"
+      full_name: "Francis Coker",
+      street: "13 Princess Square\nMilton",
+      postcode: "RT12 1LS"
     },
     claimant_two: {
       title: "Miss",
-      full_name: "Heather Cox",
+      full_name: "Heather Heath",
       street: nil,
       postcode: nil
     },
@@ -53,14 +53,14 @@
     },
     defendant_one: {
       title: "Mr",
-      full_name: "Kenneth Butler",
+      full_name: "Jeevesthe Butler",
       inhabits_property: "No",
-      street: "13 Market St, Bracknell",
-      postcode: "RG13 2JD"
+      street: "13 Market St, Milton",
+      postcode: "RT13 2JD"
     },
     defendant_two: {
       title: "Ms",
-      full_name: "Donna Lee",
+      full_name: "Donna Summer",
       inhabits_property: "Yes",
       street: nil,
       postcode: nil
@@ -80,7 +80,7 @@
       previous_tenancy_type: nil
     },
     notice: {
-      served_by_name: "Heather Cox",
+      served_by_name: "Heather Heath",
       served_method: "By email",
       date_served: "2013-09-30",
       expiry_date: "2013-11-30"

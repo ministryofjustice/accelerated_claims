@@ -7,8 +7,8 @@
   javascript: "BOTH",
   claim: {
     property: {
-      street: "Unit 11, Swansea Fforest Fach Park\nSwansea",
-      postcode: "SA5 4BB",
+      street: "Unit 11,\nWelsh Wood Park,\nGooselake",
+      postcode: "GO5 4BB",
       house: "Yes"
     },
     claim: {
@@ -17,9 +17,9 @@
     },
     claimant_one: {
       title: "Mrs",
-      full_name: "Meredith Williams",
-      street: "38 Pentrefelin St\nCarmarthen",
-      postcode: "SA31 1RJ"
+      full_name: "Shirley Williams",
+      street: "38 Llanwrchgog St\nCaedffyn",
+      postcode: "GO31 1RJ"
     },
     claimant_two: {
       title: nil,
@@ -39,12 +39,12 @@
     },
     claimant_contact: {
       title: "Mr",
-      full_name: "Dilan Lloyd",
-      company_name: "Beor Wilson Lloyd",
-      street: "12 Calvert Terrace\nSwansea",
-      postcode: "SA1 6AP",
-      email: "enquiries@bwl-law.co.uk",
-      phone: "1792655178",
+      full_name: "Dilan Abbott",
+      company_name: "Taff, Jones and Evans",
+      street: "12 Kit Terrace\nGooselake",
+      postcode: "GO1 6AP",
+      email: "enquiries@taffjonesevans-law.co.uk",
+      phone: "17988776655",
       fax: nil,
       dx_number: nil
     },
@@ -53,14 +53,14 @@
     },
     defendant_one: {
       title: "Mr",
-      full_name: "Gavin Morgan",
+      full_name: "Organ Morgan",
       inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_two: {
       title: "Mr",
-      full_name: "Owen Harris",
+      full_name: "Owen Alott",
       inhabits_property: "Yes",
       street: nil,
       postcode: nil
@@ -80,7 +80,7 @@
       previous_tenancy_type: nil
     },
     notice: {
-      served_by_name: "Dilan Lloyd",
+      served_by_name: "Dilan Abbott",
       served_method: "By post",
       date_served: "2013-12-13",
       expiry_date: "2014-02-13"

@@ -7,8 +7,8 @@
   javascript: "BOTH",
   claim: {
     property: {
-      street: "107 Addiscombe Rd\nCroydon",
-      postcode: "CR0 6SG",
+      street: "107 Addison Valley Rd\nWalford",
+      postcode: "WL0 6SG",
       house: "Yes"
     },
     claim: {
@@ -17,15 +17,15 @@
     },
     claimant_one: {
       title: "Mr",
-      full_name: "James Cox",
-      street: "104 Burbage Rd\nLondon",
-      postcode: "SE24 9HE"
+      full_name: "Willie Cox",
+      street: "104 Babbage Rd\nLondonville",
+      postcode: "SB24 9HE"
     },
     claimant_two: {
       title: "Mr",
-      full_name: "Adam Howard",
-      street: "108 Landor Rd\nLondon",
-      postcode: "SW9 9NU"
+      full_name: "Adam Ant",
+      street: "108 Rodnal Rd\nLondonville",
+      postcode: "FX9 9NU"
     },
     javascript: {
       claimant_two_same_address: "No",
@@ -43,7 +43,7 @@
       company_name: nil,
       street: nil,
       postcode: nil,
-      email: "Adamhoward@gmail.com",
+      email: "adam.ant@superdupermail.com",
       phone: nil,
       fax: nil,
       dx_number: nil
@@ -53,10 +53,10 @@
     },
     defendant_one: {
       title: "Mr",
-      full_name: "Malcom Greene",
+      full_name: "Malcom Mauve",
       inhabits_property: "No",
-      street: "23c Ecclesbourne Rd\nThornton Heath, London",
-      postcode: "CR7 7BN"
+      street: "23c Piccalilly Rd\nTeds Heath, Londonville",
+      postcode: "EY7 7BN"
     },
     defendant_two: {
       title: nil,
