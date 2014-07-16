@@ -18,14 +18,14 @@
     claimant_one: {
       title: "Mr",
       full_name: "John Smith",
-      street: "2 Brown St\nCwmbran",
-      postcode: "SW1W 0LU"
+      street: "2 Brown St\nBwlchllydd",
+      postcode: "FX1W 0LU"
     },
     claimant_two: {
       title: "Ms",
       full_name: "Jane Smith",
       street: "7 Main Street\nAlfreton",
-      postcode: "SW1W 0LU"
+      postcode: "FX1W 0LU"
     },
     javascript: {
       claimant_two_same_address: "No",
@@ -41,8 +41,8 @@
       title: "Mr",
       full_name: "Jim Brown",
       company_name: nil,
-      street: "3 Smith Street\nWinsum",
-      postcode: "SW1W 0LU",
+      street: "3 Smith Street\nBwlchllydd",
+      postcode: "FX1W 0LU",
       email: "jim@example.com",
       phone: "020 000 000",
       fax: "020 000 000",
@@ -56,7 +56,7 @@
       full_name: "John Kapur",
       inhabits_property: "No",
       street: "Endof Road\nLondon",
-      postcode: "SW1X 2PT"
+      postcode: "FX1X 2PT"
     },
     defendant_two: {
       title: nil,
