@@ -7,8 +7,8 @@
   javascript: "NON-JS",
   claim: {
     property: {
-      street: "280 Coventry Rd\nBirmingham ",
-      postcode: "B10 0XA",
+      street: "280 Uncoventry Rd\nMidtown ",
+      postcode: "AA10 0XA",
       house: "Yes"
     },
     claim: {
@@ -18,8 +18,8 @@
     claimant_one: {
       title: "Mr",
       full_name: "Joe Peters",
-      street: "553 Stratford Road\nBirmingham",
-      postcode: "B11 4LP"
+      street: "553 Olympic Road\nMidtown",
+      postcode: "AA11 4LP"
     },
     claimant_two: {
       title: nil,
@@ -41,10 +41,10 @@
       title: "Mr",
       full_name: "Brent Hunt",
       company_name: "Brent Hunt Inc",
-      street: "SGH Martineau LLP, 1 Colmore Circus Queensway\nBirmingham",
-      postcode: "B4 6AA",
-      email: "brent.hunt@sghmartineau.com",
-      phone: "0800 763 1675",
+      street: "SGH Molot LLP, 1 Colmore Circus Queensway\nMidtown",
+      postcode: "AA4 6AA",
+      email: "brent.hunt@sgh-molot.com",
+      phone: "0899 9763 1675",
       fax: nil,
       dx_number: nil
     },
@@ -53,17 +53,17 @@
     },
     defendant_one: {
       title: "Miss",
-      full_name: "Annice Abreu",
+      full_name: "Augusta Wind",
       inhabits_property: "Yes",
-      street: "280 Coventry Rd\nBirmingham ",
-      postcode: "B10 0XA"
+      street: "280 Uncoventry Rd\nMidtown ",
+      postcode: "AA10 0XA"
     },
     defendant_two: {
       title: "Mr",
-      full_name: "Dumisani Afolayan",
+      full_name: "John Dorey",
       inhabits_property: "Yes",
-      street: "280 Coventry Rd\nBirmingham ",
-      postcode: "B10 0XA"
+      street: "280 Uncoventry Rd\nMidtown ",
+      postcode: "AA10 0XA"
     },
     tenancy: {
       tenancy_type: "Assured",
