@@ -18,8 +18,8 @@
     claimant_one: {
       title: "Mr",
       full_name: "John Smith",
-      street: "2 Brown St\nCwmbran",
-      postcode: "SW1W 0LU"
+      street: "2 Brown St\nBwlchllydd",
+      postcode: "FX1W 0LU"
     },
     claimant_two: {
       title: nil,

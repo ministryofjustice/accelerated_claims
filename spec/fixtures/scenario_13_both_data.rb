@@ -7,8 +7,8 @@
   javascript: "BOTH",
   claim: {
     property: {
-      street: "107 Addiscombe Rd\nCroydon",
-      postcode: "CR0 6SG",
+      street: "107 Addison Valley Rd\nWalford",
+      postcode: "WL0 6SG",
       house: "Yes"
     },
     claim: {
@@ -18,8 +18,8 @@
     claimant_one: {
       title: "Mr",
       full_name: "John Smith",
-      street: "2 Brown St\nCwmbran",
-      postcode: "SW1W 0LU"
+      street: "2 Brown St\nBwlchllydd",
+      postcode: "FX1W 0LU"
     },
     claimant_two: {
       title: nil,
@@ -43,7 +43,7 @@
       company_name: nil,
       street: nil,
       postcode: nil,
-      email: "Adamhoward@gmail.com",
+      email: "jim@example.com",
       phone: nil,
       fax: nil,
       dx_number: nil
@@ -53,10 +53,10 @@
     },
     defendant_one: {
       title: "Mr",
-      full_name: "Malcom Greene",
+      full_name: "Malcom Mauve",
       inhabits_property: "No",
-      street: "23c Ecclesbourne Rd\nThornton Heath, London",
-      postcode: "CR7 7BN"
+      street: "23c Piccalilly Rd\nTeds Heath, Londonville",
+      postcode: "EY7 7BN"
     },
     defendant_two: {
       title: nil,

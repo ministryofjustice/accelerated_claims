@@ -1,8 +1,8 @@
 {
   Button94: nil,
   Button95: nil,
-  claimant_one_address: "Mr John Smith\n2 Brown St\nCwmbran",
-  claimant_one_postcode1: "SW1W",
+  claimant_one_address: "Mr John Smith\n2 Brown St\nBwlchllydd",
+  claimant_one_postcode1: "FX1W",
   claimant_one_postcode2: "0LU",
   claimant_two_address: nil,
   claimant_two_postcode1: nil,
