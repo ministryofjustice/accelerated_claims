@@ -7,8 +7,8 @@
   javascript: "BOTH",
   claim: {
     property: {
-      street: "78 Town Close Road\nNorwich",
-      postcode: "NR1 3HP",
+      street: "78 City Close Road\nSouthwich",
+      postcode: "SH1 3HP",
       house: "Yes"
     },
     claim: {
@@ -17,9 +17,9 @@
     },
     claimant_one: {
       title: nil,
-      full_name: "Affinity Sutton",
-      street: "Maple House, 157-159 Masons Hall\nLondon",
-      postcode: "BR2 9HY"
+      full_name: "Infinity Southwich",
+      street: "Redleaf House, 157-159 Masonic Hall\nSouthwich",
+      postcode: "SH2 9HY"
     },
     claimant_two: {
       title: nil,
@@ -43,7 +43,7 @@
       company_name: nil,
       street: nil,
       postcode: nil,
-      email: "amyturner@affinitysutton.co.uk",
+      email: "amyturtle@infinitysouthwich.co.uk",
       phone: "3001005392",
       fax: nil,
       dx_number: nil
@@ -80,7 +80,7 @@
       previous_tenancy_type: nil
     },
     notice: {
-      served_by_name: "Amy Turner",
+      served_by_name: "Amy Turtle",
       served_method: "By post",
       date_served: "2014-01-04",
       expiry_date: "2014-03-04"
