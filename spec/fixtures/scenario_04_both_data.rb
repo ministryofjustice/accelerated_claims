@@ -7,8 +7,8 @@
   javascript: "BOTH",
   claim: {
     property: {
-      street: "64 Baxtergate\nWhitby",
-      postcode: "YO21 1BL",
+      street: "64 Baxtergate\nBlacktown",
+      postcode: "YY21 1BL",
       house: "Yes"
     },
     claim: {
@@ -18,8 +18,8 @@
     claimant_one: {
       title: "Miss",
       full_name: "Sarah Rogers",
-      street: "7 Byland Rd\nWhitby",
-      postcode: "YO21 1JH"
+      street: "7 Bysea Rd\nBlacktown",
+      postcode: "YY21 1JH"
     },
     claimant_two: {
       title: nil,
@@ -43,8 +43,8 @@
       company_name: nil,
       street: nil,
       postcode: nil,
-      email: "serogers@yahoo.co.uk",
-      phone: "7456389234",
+      email: "serogers@yippee.co.uk",
+      phone: "79123456789",
       fax: nil,
       dx_number: nil
     },
