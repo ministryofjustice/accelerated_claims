@@ -7,8 +7,8 @@
   javascript: "NON-JS",
   claim: {
     property: {
-      street: "87 Albion St\nLeeds ",
-      postcode: "LS1 6AG",
+      street: "23 Mock St\nAnytown ",
+      postcode: "RG99 1XX",
       house: "Yes"
     },
     claim: {
@@ -17,18 +17,18 @@
     },
     claimant_one: {
       title: "Mr ",
-      full_name: "Matthew Collier",
-      street: "2 Savins Mill Way\nLeeds",
-      postcode: "LS5 3RP"
+      full_name: "Joe Blow",
+      street: "9 Made-up Lane\nAnytown",
+      postcode: "RG88 1ZZ"
     },
     claimant_two: {
       title: "Mrs",
-      full_name: "Violet Collier",
-      street: "2 Savins Mill Way\nLeeds",
-      postcode: "LS5 3RP"
+      full_name: "Jane Doe",
+      street: "9 Made-up Lane\nAnytown",
+      postcode: "RG88 1ZZ"
     },
     javascript: {
-      claimant_two_same_address: "No",
+      claimant_two_same_address: "Yes",
       any_legal_costs: "No",
       separate_correspondence_address: "Yes",
       other_contact_details: "Yes",
@@ -39,12 +39,12 @@
     },
     claimant_contact: {
       title: "Mr ",
-      full_name: "Robert Linley",
-      company_name: "Linley & Simpson",
-      street: "16 Swinegate\nLeeds",
-      postcode: "LS1 4AG",
-      email: "robertlinley@linleyandsimpson.com",
-      phone: "0113 246 9295",
+      full_name: "John Doe",
+      company_name: "Sue, Grabbit and Run",
+      street: "16 Invented Avenue\nAnytown",
+      postcode: "RG77 8SS",
+      email: "johndoe@suegrabbitandrun.org.eu",
+      phone: "01734 123 456",
       fax: nil,
       dx_number: nil
     },
@@ -53,14 +53,14 @@
     },
     defendant_one: {
       title: "Miss",
-      full_name: "Virginia Richardson",
+      full_name: "Ann Chovey",
       inhabits_property: "Yes",
-      street: "87 Albion St\nLeeds ",
-      postcode: "LS1 6AG"
+      street: "23 Mock St\nAnytown ",
+      postcode: "RG99 1XX"
     },
     defendant_two: {
       title: "Miss",
-      full_name: "Maria Gonzalez",
+      full_name: "Barb Akew",
       inhabits_property: "Yes",
       street: nil,
       postcode: nil
@@ -80,7 +80,7 @@
       previous_tenancy_type: nil
     },
     notice: {
-      served_by_name: "Robert Linley",
+      served_by_name: "John Doe",
       served_method: "In person",
       date_served: "2014-01-13",
       expiry_date: "2014-03-13"
