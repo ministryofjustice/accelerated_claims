@@ -61,7 +61,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def error_for? attribute
-    if @object.is_a?(Claim) 
+    if @object.is_a?(Claim)
       subkey = "claim_#{attribute}_error"
       @object.errors.messages.key?(:base) && @object.errors.messages[:base].to_h.key?(subkey) && !@object.errors.messages[:base].to_h[subkey].empty?
     else
@@ -102,6 +102,8 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     list = [hidden_input, labeled_input]
 
     if error_for?(attribute)
+      id = error_id_for(attribute)
+      labeled_input.sub!(%Q[for="#{id.sub('_error','')}"], %Q[for="#{id}"])
       list << error_span(attribute)
     end
 

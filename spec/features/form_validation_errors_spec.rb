@@ -30,6 +30,9 @@ feature 'Filling in claim form' do
 
     expect(page).to have_content('Please say how many claimants there are')
 
+    expect(page).to have_selector('input#claim_order_possession_error')
+    expect(page).to have_selector(:xpath, '//label[@for="claim_order_possession_error"]')
+
     check_focus_after_click 'Please say how many claimants there are', 'claim_num_claimants_1'
     check_focus_after_click 'Please say how many defendants there are', 'claim_num_defendants_1'
 
@@ -61,7 +64,7 @@ feature 'Filling in claim form' do
       expect(find_field('claim_claimant_one_title').value).to eq('Major')
       expect(find_field('claim_claimant_one_full_name').value).to eq('Tom')
     end
-    
+
   end
 
   def select_tenancy_start_date date

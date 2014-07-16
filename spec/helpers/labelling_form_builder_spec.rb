@@ -40,18 +40,10 @@ describe 'LabellingFormBuilder', :type => :helper  do
 
 end
 
-
-
 def expected_text_field_html
   str = <<-EOHTML
 <div class='row'><label for="notice_expiry_date">Expiry date</label>
 <input id="notice_expiry_date" name="notice[expiry_date]" type="text" /></div>
 EOHTML
 end
-
-
-
-
-
-
 

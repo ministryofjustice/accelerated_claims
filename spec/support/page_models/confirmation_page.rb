@@ -13,6 +13,9 @@ class ConfirmationPage
   end
 
   def assert_rendered_pdf(expected_data)
+    expected_url = remote_test? ? "/accelerated-possession-eviction#{@url}" : @url
+    expect(Capybara.current_path).to eql expected_url
+
     filename = download_pdf
 
     data_from_rendered_pdf = values_from_pdf(filename)
@@ -23,18 +26,19 @@ class ConfirmationPage
 
   def download_pdf
     pdf_filename = ''
+
     begin
       pdf_filename = capybara_download_pdf
     rescue Capybara::NotSupportedByDriverError, RSpec::Expectations::ExpectationNotMetError
       pdf_filename = curl_download_pdf
     end
+
     pdf_filename
   end
 
 private
+
   def capybara_download_pdf
-    expected_url = remote_test? ? "/accelerated#{@url}" : @url
-    expect(Capybara.current_path).to eql expected_url
     click_link 'Print the form'
     assert_pdf_content_type(page.response_headers)
 
