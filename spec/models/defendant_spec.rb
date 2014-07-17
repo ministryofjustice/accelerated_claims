@@ -22,6 +22,22 @@ describe Defendant, :type => :model do
   end
 
 
+  context 'validate inhabits property' do
+    let(:invalid_defendant)  { Defendant.new(title: "Mr", full_name: "John Major", street: "Sesame Street\nLondon",  postcode: "SW1X 2PT") }
+
+    it 'should raise error if inhabits property not set' do
+      expect(invalid_defendant).not_to be_valid
+      expect(invalid_defendant.errors[:inhabits_property]).to eq( [ 'Please select whether or not the defendent lives in the property' ] )
+    end
+
+    it 'should raise error if values are not Yes, no' do
+      invalid_defendant.inhabits_property = 'perhaps'
+      expect(invalid_defendant).not_to be_valid
+      expect(invalid_defendant.errors[:inhabits_property]).to eq( [ 'Please select whether or not the defendent lives in the property' ] )
+    end
+  end
+
+
   context 'validate_presence not set' do
 
     context 'property_address is no' do

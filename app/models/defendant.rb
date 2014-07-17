@@ -17,7 +17,16 @@ class Defendant < BaseClass
 
   validates :title, length: { maximum: 8 }
   validates :full_name, length: { maximum: 40 }
-  
+
+  with_options if: :validate_presence? do |record|
+    record.validates :inhabits_property, inclusion: { in: ['yes', 'no'], message: "Please select whether or not the defendent lives in the property" }
+  end
+
+  with_options if: :validate_absence? do |record|
+    record.validates :inhabits_property, inclusion: { in: [nil], message: "Please select whether or not the defendent lives in the property" }
+  end
+
+
   validates_with ContactValidator
 
   
@@ -29,6 +38,14 @@ class Defendant < BaseClass
       @validate_presence = true unless params[:validate_absence] == true
     end
     @num_defendants = @num_defendants.nil? ? 1 : @num_defendants.to_i
+  end
+
+  def validate_presence?
+    self.validate_presence == true
+  end
+
+  def validate_absence?
+    self.validate_absence == true
   end
 
 
