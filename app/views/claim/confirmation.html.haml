@@ -15,6 +15,10 @@
           id: 'download',
           data: { 'event-label' => 'Print the form',
           'virtual-pageview' => '/accelerated/pdf-download' }
+      = link_to 'Submitted data',
+          data_path,
+          class: 'hidden',
+          id: 'data'
 
   %p
     After you’ve submitted your claim, complete our
