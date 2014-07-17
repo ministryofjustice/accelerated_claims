@@ -15,7 +15,7 @@ msg "running jasmine specs"
 RAILS_ENV=test bundle exec rake spec:javascript
 
 msg "setting up CI & running the specs"
-RAILS_ENV=test bundle exec rake ci:setup:rspec spec
+RAILS_ENV=test COVERAGE=1 bundle exec rake ci:setup:rspec spec
 
 msg "running brakeman"
 export LANG=en_GB.UTF-8 # leave this for brakeman
