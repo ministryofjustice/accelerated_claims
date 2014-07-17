@@ -94,7 +94,6 @@
     },
     deposit: {
       received: "Yes",
-      information_given_date: "2010-12-19",
       ref_number: "TD1234",
       as_money: "Yes",
       as_property: "No"

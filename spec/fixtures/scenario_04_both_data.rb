@@ -94,7 +94,6 @@
     },
     deposit: {
       received: "Yes",
-      information_given_date: "2004-03-01",
       ref_number: "dKqeU2rK7s",
       as_money: "Yes",
       as_property: "No"
