@@ -17,10 +17,22 @@ class Defendant < BaseClass
 
   validates :title, length: { maximum: 8 }
   validates :full_name, length: { maximum: 40 }
-  
+
+  validate :num_defendants_is_valid
   validates_with ContactValidator
 
   
+  def num_defendants_is_valid
+    if validate_presence?
+      unless %w{ yes no }.include?(inhabits_property)
+        errors[:inhabits_property] << "Please select whether or not #{subject_description} lives in the property"
+      end
+    elsif validate_absence?
+      unless inhabits_property.nil?
+        errors[:inhabits_property] << "Please select whether or not #{subject_description} lives in the property"
+      end
+    end
+  end
 
 
   def initialize(params = {})
@@ -29,6 +41,14 @@ class Defendant < BaseClass
       @validate_presence = true unless params[:validate_absence] == true
     end
     @num_defendants = @num_defendants.nil? ? 1 : @num_defendants.to_i
+  end
+
+  def validate_presence?
+    self.validate_presence == true
+  end
+
+  def validate_absence?
+    self.validate_absence == true
   end
 
 
@@ -63,12 +83,12 @@ class Defendant < BaseClass
 
   def subject_description
     if @num_claimants == 1
-      "the defendant's"
+      "the defendant"
     else 
       if defendant_num == :defendant_one
-        "defendant 1's"
+        "defendant 1"
       else
-        "defendant 2's"
+        "defendant 2"
       end
     end
   end

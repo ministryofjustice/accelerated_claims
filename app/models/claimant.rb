@@ -40,12 +40,12 @@ class Claimant < BaseClass
 
   def subject_description
     if @num_claimants == 1
-      "the claimant's"
+      "the claimant"
     else
       if @claimant_num == :claimant_one
-        "claimant 1's"
+        "claimant 1"
       else
-        "claimant 2's"
+        "claimant 2"
       end
     end
   end
