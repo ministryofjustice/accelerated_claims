@@ -32,3 +32,6 @@ config/environments/history.txt
 /public/version.json
 
 
+# coverage files
+coverage
+coverage/*

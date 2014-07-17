@@ -1,3 +1,11 @@
+if ENV['COVERAGE'] == '1'
+  require 'simplecov'
+  SimpleCov.start
+end
+
+
+
+
 ENV["RAILS_ENV"] ||= 'test'
 ENV["PDFTK"] ||= `which pdftk`.strip
 ENV["ANONYMOUS_PLACEHOLDER_EMAIL"] ||= 'anon@example.com'
