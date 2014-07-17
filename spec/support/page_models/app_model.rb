@@ -7,7 +7,7 @@ class AppModel
   def initialize(data)
     @homepage = HomePage.new
     @claim_form = ClaimForm.new(data)
-    @confirmation_page = ConfirmationPage.new(data)
+    @confirmation_page = ConfirmationPage.new
     @pdf = PdfModel.new
   end
 
