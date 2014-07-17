@@ -38,19 +38,19 @@ class ContactValidator < ActiveModel::Validator
 
 
   def title_missing_message(record)
-    "Enter #{record.subject_description} title"
+    "Enter #{record.subject_description}'s title"
   end
 
   def full_name_missing_message(record) 
-    "Enter #{record.subject_description} full name"
+    "Enter #{record.subject_description}'s full name"
   end
 
   def full_address_missing_message(record) 
-    "Enter #{record.subject_description} full address"
+    "Enter #{record.subject_description}'s full address"
   end
 
   def postcode_missing_message(record) 
-    "Enter #{record.subject_description} postcode"
+    "Enter #{record.subject_description}'s postcode"
   end
 
 

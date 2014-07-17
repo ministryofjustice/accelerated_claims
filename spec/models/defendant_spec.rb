@@ -27,13 +27,13 @@ describe Defendant, :type => :model do
 
     it 'should raise error if inhabits property not set' do
       expect(invalid_defendant).not_to be_valid
-      expect(invalid_defendant.errors[:inhabits_property]).to eq( [ 'Please select whether or not the defendent lives in the property' ] )
+      expect(invalid_defendant.errors[:inhabits_property]).to eq( [ 'Please select whether or not defendant 2 lives in the property' ] )
     end
 
     it 'should raise error if values are not Yes, no' do
       invalid_defendant.inhabits_property = 'perhaps'
       expect(invalid_defendant).not_to be_valid
-      expect(invalid_defendant.errors[:inhabits_property]).to eq( [ 'Please select whether or not the defendent lives in the property' ] )
+      expect(invalid_defendant.errors[:inhabits_property]).to eq( [ 'Please select whether or not defendant 2 lives in the property' ] )
     end
   end
 
