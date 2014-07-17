@@ -94,7 +94,6 @@
     },
     deposit: {
       received: "No",
-      information_given_date: nil,
       ref_number: nil,
       as_money: "No",
       as_property: "No"
