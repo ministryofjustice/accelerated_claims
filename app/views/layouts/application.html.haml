@@ -10,8 +10,7 @@
 
 - content_for :javascripts do
   :erb
-    <!--[if gte IE 7]><!--> <%= javascript_include_tag "application" %><script>document.body.className += ' js-enabled';</script> <!--<![endif]-->
-    <!--[if lte IE 6]> <script>document.body.className = document.body.className.replace('js-enabled','');</script> <![endif]-->
+    <!--[if gte IE 7]><!--> <%= javascript_include_tag "application" %> <!--<![endif]-->
 
 - content_for :head do
   = csrf_meta_tag
