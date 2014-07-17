@@ -1,4 +1,7 @@
 class PDFDocument
+
+  attr_reader :json
+
   def initialize(json, flatten=true)
     @json = json
     @flatten = flatten

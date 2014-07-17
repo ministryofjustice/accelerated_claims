@@ -55,7 +55,8 @@ class ClaimController < ApplicationController
     @claim = Claim.new(session[:claim])
 
     if @claim.valid?
-      render json: @claim.as_json
+      pdf = PDFDocument.new(@claim.as_json)
+      render json: pdf.json
     else
       redirect_to_with_protocol :new
     end
