@@ -1,5 +1,4 @@
 class ClaimController < ApplicationController
- # after_filter :delete_all_pdfs, only: :submission
 
   def landing
     @page_title = 'Make a claim to evict tenants: accelerated possession'
@@ -51,6 +50,18 @@ class ClaimController < ApplicationController
     end
   end
 
+  # Returns JSON formatted data which is passed for PDF generation.
+  def data
+    @claim = Claim.new(session[:claim])
+
+    if @claim.valid?
+      pdf = PDFDocument.new(@claim.as_json)
+      render json: pdf.json
+    else
+      redirect_to_with_protocol :new
+    end
+  end
+
   def submission
     session[:claim] = params['claim']
     move_defendant_address_params_into_model
@@ -74,7 +85,6 @@ class ClaimController < ApplicationController
       end
     end
   end
-
 
   def delete_all_pdfs
     FileUtils.rm Dir.glob('/tmp/*pdf')

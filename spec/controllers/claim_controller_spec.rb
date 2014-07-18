@@ -127,4 +127,36 @@ describe ClaimController, :type => :controller do
       end
     end
   end
+
+  describe 'GET data' do
+
+    context 'with valid claim data' do
+      it "should return json" do
+        stub_request(:post, "http://localhost:4000/").
+        to_return(:status => 200, :body => "", :headers => {})
+
+        post :submission, claim: claim_post_data['claim']
+        get :data
+        expect(response.headers['Content-Type']).to include 'application/json'
+
+        json = JSON.parse response.body
+
+        claim_formatted_data.each do |field, value|
+          value = "" if value.nil?
+          value = nil if field[/tenancy_previous_tenancy_type/]
+          expect(json).to include( field => value )
+        end
+      end
+    end
+
+    context 'with invalid claim data' do
+      it 'should redirect to the claim form' do
+        data = claim_post_data['claim']
+        data['claimant_one'].delete('full_name')
+        post :submission, claim: data
+        get :data
+        expect(response).to redirect_to('/')
+      end
+    end
+  end
 end

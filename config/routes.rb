@@ -16,6 +16,7 @@ AcceleratedClaims::Application.routes.draw do
     post '/submission',     controller: :claim, action: :submission
     get  '/confirmation',   controller: :claim, action: :confirmation
     get  '/download',       controller: :claim, action: :download
+    get  '/data',           controller: :claim, action: :data
 
     get  '/cookies',        controller: :static, action: :cookies
     get  '/terms',          controller: :static, action: :terms

@@ -3,17 +3,12 @@ class ConfirmationPage
   include ShowMeTheCookies
   include RSpec::Matchers
 
-  def initialize(data)
-    #@data = data['claim']
-    @url = '/confirmation'
-  end
-
   def is_displayed?
     page.has_text?('After you’ve submitted your claim, complete our satisfaction survey')
   end
 
   def assert_rendered_pdf(expected_data)
-    expected_url = remote_test? ? "/accelerated-possession-eviction#{@url}" : @url
+    expected_url = remote_test? ? '/accelerated-possession-eviction/confirmation' : '/confirmation'
     expect(Capybara.current_path).to eql expected_url
 
     filename = download_pdf
