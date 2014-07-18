@@ -9,9 +9,11 @@ feature 'nginx configuration', :remote => true do
     expect(page.current_url).to match /^https:\/\/.*\/accelerated-possession-eviction/
   end
 
-  scenario '/ redirects to /accelerated-possession-eviction' do
-    base_url = Capybara.app_host.sub('http:', 'https:').sub('/accelerated-possession-eviction','/')
-    visit base_url
-    expect(page.current_url).to eql 'https://www.gov.uk/accelerated-possession-eviction'
+  if ENV['env'] == 'production' || ENV['env'] == 'staging'
+    scenario '/ redirects to /accelerated-possession-eviction' do
+      base_url = Capybara.app_host.sub('http:', 'https:').sub('/accelerated-possession-eviction','/')
+      visit base_url
+      expect(page.current_url).to eql 'https://www.gov.uk/accelerated-possession-eviction'
+    end
   end
 end
