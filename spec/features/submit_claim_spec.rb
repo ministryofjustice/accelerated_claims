@@ -20,13 +20,25 @@ feature "submit claim" do
 
       expect(confirmation_page.is_displayed?).to be_truthy, claim_form.validation_error_text
 
-      pdf_filename = confirmation_page.download_pdf
-      pdf.load pdf_filename
-      if(ENV.key? 'save_pdf')
-        File.rename(pdf_filename, "spec/fixtures/pdfs/scenario_#{index}.pdf")
-        pdf.write_hash_to_file("spec/fixtures/scenario_#{index}_results.rb")
+      if Capybara.default_driver == :browserstack
+        click_link('data', visible: false)
+
+        json = JSON.parse(page.body)
+
+        expected_data.each do |field, value|
+          generated = json[field].to_s.gsub("\r\n","\n").strip
+          expect("#{field}: #{generated}").to eq("#{field}: #{value}")
+        end
+
       else
-        pdf.assert_pdf_is_correct(expected_data)
+        pdf_filename = confirmation_page.download_pdf
+        pdf.load pdf_filename
+        if(ENV.key? 'save_pdf')
+          File.rename(pdf_filename, "spec/fixtures/pdfs/scenario_#{index}.pdf")
+          pdf.write_hash_to_file("spec/fixtures/scenario_#{index}_results.rb")
+        else
+          pdf.assert_pdf_is_correct(expected_data)
+        end
       end
     end
   end
@@ -34,11 +46,11 @@ feature "submit claim" do
   Dir.glob('spec/fixtures/scenario_*_data.rb') do |data_file|
     data = load_fixture_data(data_file)
     title = data['title']
-    description = data['description'] 
+    description = data['description']
 
     unless remote_test?
       unless data['javascript'] == 'JS'
-        
+
         eval(%Q|
           scenario "#{title}: #{description.first} (#{description.last})" do
             run_scenario '#{data_file}', js: false
