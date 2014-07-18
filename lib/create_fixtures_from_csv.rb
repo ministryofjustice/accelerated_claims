@@ -12,6 +12,7 @@ require 'curb'
 class DataScenarioGenerator
   def initialize(csv_filename)
     @rows = CSV.read(csv_filename)
+    @rows.shift      # remove first row (test data disclaimer)
     @column_containing_first_journey = 3
     @scenario_data = buildDataHash
   end
