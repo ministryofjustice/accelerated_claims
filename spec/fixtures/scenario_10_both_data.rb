@@ -8,7 +8,7 @@
   claim: {
     property: {
       street: "Mucho Gracias Road\nLondon",
-      postcode: "SW1H 9AJ",
+      postcode: "EY1H 9AJ",
       house: "Yes"
     },
     claim: {

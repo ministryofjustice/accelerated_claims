@@ -44,7 +44,7 @@
       street: "12 Kit Terrace\nGooselake",
       postcode: "GO1 6AP",
       email: "enquiries@taffjonesevans-law.co.uk",
-      phone: "17988776655",
+      phone: "01632 960945",
       fax: nil,
       dx_number: nil
     },

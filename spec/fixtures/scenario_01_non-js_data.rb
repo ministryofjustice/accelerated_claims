@@ -8,7 +8,7 @@
   claim: {
     property: {
       street: "23 Mock St\nAnytown ",
-      postcode: "RG99 1XX",
+      postcode: "EY99 1XX",
       house: "Yes"
     },
     claim: {
@@ -19,13 +19,13 @@
       title: "Mr ",
       full_name: "Joe Blow",
       street: "9 Made-up Lane\nAnytown",
-      postcode: "RG88 1ZZ"
+      postcode: "EY88 1ZZ"
     },
     claimant_two: {
       title: "Mrs",
       full_name: "Jane Doe",
       street: "9 Made-up Lane\nAnytown",
-      postcode: "RG88 1ZZ"
+      postcode: "EY88 1ZZ"
     },
     javascript: {
       claimant_two_same_address: "Yes",
@@ -42,9 +42,9 @@
       full_name: "John Doe",
       company_name: "Sue, Grabbit and Run",
       street: "16 Invented Avenue\nAnytown",
-      postcode: "RG77 8SS",
+      postcode: "EY77 8SS",
       email: "johndoe@suegrabbitandrun.org.eu",
-      phone: "01734 123 456",
+      phone: "01632 960123",
       fax: nil,
       dx_number: nil
     },
@@ -56,7 +56,7 @@
       full_name: "Ann Chovey",
       inhabits_property: "Yes",
       street: "23 Mock St\nAnytown ",
-      postcode: "RG99 1XX"
+      postcode: "EY99 1XX"
     },
     defendant_two: {
       title: "Miss",

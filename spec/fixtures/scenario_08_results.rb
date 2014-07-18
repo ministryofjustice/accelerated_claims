@@ -78,7 +78,7 @@
   claimant_contact_email: "enquiries@taffjonesevans-law.co.uk",
   claimant_contact_postcode1: "GO1",
   claimant_contact_postcode2: "6AP",
-  claimant_contact_phone: "17988776655",
+  claimant_contact_phone: "01632 960945",
   ClaimServedOnDate: nil,
   ClaimPostedToDefendantOnDateYear: nil,
   ClaimPostedToDefendantOnDateDay: nil,

@@ -17,7 +17,7 @@
     },
     claimant_one: {
       title: "Miss",
-      full_name: "Sarah Rogers",
+      full_name: "Teri Dactyl",
       street: "7 Bysea Rd\nBlacktown",
       postcode: "YY21 1JH"
     },
@@ -43,8 +43,8 @@
       company_name: nil,
       street: nil,
       postcode: nil,
-      email: "serogers@yippee.co.uk",
-      phone: "79123456789",
+      email: "terridactyl@yippee.co.uk",
+      phone: "020 7946 0912",
       fax: nil,
       dx_number: nil
     },
@@ -53,7 +53,7 @@
     },
     defendant_one: {
       title: "Mr",
-      full_name: "Mark Davis",
+      full_name: "Frank Furter",
       inhabits_property: "Yes",
       street: nil,
       postcode: nil

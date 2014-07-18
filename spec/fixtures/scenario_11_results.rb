@@ -17,7 +17,7 @@
   IssueDateMonth: nil,
   IssueDateYear: nil,
   property_address: "Mucho Gracias Road\nLondon",
-  property_postcode1: "SW1H",
+  property_postcode1: "EY1H",
   property_postcode2: "9AJ",
   tenancy_demoted_tenancy: "Yes",
   property_house: "Yes",
@@ -83,10 +83,10 @@
   order_cost: "Yes",
   defendant_one_address: "Mr John Kapur\nEndof Road\nLondon",
   defendant_one_postcode2: "2PT",
-  defendant_one_postcode1: "SW1X",
+  defendant_one_postcode1: "EY1X",
   tenancy_demotion_order_date_day: "01",
   tenancy_demotion_order_date_month: "01",
   tenancy_demotion_order_date_year: "2010",
-  tenancy_demotion_order_court: "Brighton",
+  tenancy_demotion_order_court: "Anytown",
   copy_number: 4
 }

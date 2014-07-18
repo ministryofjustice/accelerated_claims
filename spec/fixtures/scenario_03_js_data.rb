@@ -39,12 +39,12 @@
     },
     claimant_contact: {
       title: "Mr",
-      full_name: "Brent Hunt",
-      company_name: "Brent Hunt Inc",
-      street: "SGH Molot LLP, 1 Colmore Circus Queensway\nMidtown",
+      full_name: "Patty O'Furniture",
+      company_name: "SGH Molot LLP",
+      street: "1 Colmore Circus Queensway\nMidtown",
       postcode: "AA4 6AA",
-      email: "brent.hunt@sgh-molot.com",
-      phone: "0899 9763 1675",
+      email: "patty.ofurniture@sgh-molot.com",
+      phone: "0118 496 0982",
       fax: nil,
       dx_number: nil
     },
@@ -80,7 +80,7 @@
       previous_tenancy_type: nil
     },
     notice: {
-      served_by_name: "Brent Hunt",
+      served_by_name: "Patty O'Furniture",
       served_method: "By post",
       date_served: "2013-09-30",
       expiry_date: "2013-11-30"

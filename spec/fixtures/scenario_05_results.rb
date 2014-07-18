@@ -68,7 +68,7 @@
   claimant_contact_fax: nil,
   claimant_contact_dx_number: nil,
   claimant_contact_email: nil,
-  claimant_contact_phone: "19876543210",
+  claimant_contact_phone: "020 7946 0978",
   ClaimServedOnDate: nil,
   ClaimPostedToDefendantOnDateDay: nil,
   ClaimPostedToDefendantOnDateMonth: nil,

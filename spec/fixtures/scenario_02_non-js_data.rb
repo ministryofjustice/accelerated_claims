@@ -8,7 +8,7 @@
   claim: {
     property: {
       street: "94 East St\nAnyville",
-      postcode: "SW1X 9ZZ",
+      postcode: "FX1X 9ZZ",
       house: "No"
     },
     claim: {
@@ -19,7 +19,7 @@
       title: "Mr",
       full_name: "Mark Ateer",
       street: "26 Heath St\nAnytown",
-      postcode: "RG99 1XX"
+      postcode: "FX9 1XX"
     },
     claimant_two: {
       title: nil,
@@ -42,9 +42,9 @@
       full_name: "Mark Ateer",
       company_name: "Mark Ateer Marketing Co. Ltd.",
       street: "PO Box 1655, 9 Invention Square\nAnytown",
-      postcode: "WC88 1AA",
+      postcode: "FX88 1AA",
       email: "markateer@zzmail.com",
-      phone: "01734 123456",
+      phone: "01632 960987",
       fax: nil,
       dx_number: nil
     },
@@ -56,7 +56,7 @@
       full_name: "Chris P. Bacon",
       inhabits_property: "Yes",
       street: "94 East St\nAnyville",
-      postcode: "SW1X 9ZZ"
+      postcode: "FX1X 9ZZ"
     },
     defendant_two: {
       title: nil,

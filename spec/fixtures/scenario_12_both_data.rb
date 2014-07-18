@@ -8,7 +8,7 @@
   claim: {
     property: {
       street: "Mucho Gracias Road\nLondon",
-      postcode: "SW1H 9AJ",
+      postcode: "EY1H 9AJ",
       house: "Yes"
     },
     claim: {
@@ -56,7 +56,7 @@
       full_name: "John Kapur",
       inhabits_property: "No",
       street: "Endof Road\nLondon",
-      postcode: "SW1X 2PT"
+      postcode: "EY1X 2PT"
     },
     defendant_two: {
       title: nil,

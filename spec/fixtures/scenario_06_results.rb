@@ -81,7 +81,7 @@
   NameOfCourt: nil,
   ClaimNumber: nil,
   order_cost: "Yes",
-  defendant_one_address: "Ms Linette Barlow\n78 City Close Road\nSouthwich",
+  defendant_one_address: "Ms I.C. Yew\n78 City Close Road\nSouthwich",
   defendant_one_postcode2: "3HP",
   defendant_one_postcode1: "SH1",
   tenancy_demotion_order_date_day: nil,

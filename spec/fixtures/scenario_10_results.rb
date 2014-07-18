@@ -17,7 +17,7 @@
   IssueDateMonth: nil,
   IssueDateYear: nil,
   property_address: "Mucho Gracias Road\nLondon",
-  property_postcode1: "SW1H",
+  property_postcode1: "EY1H",
   property_postcode2: "9AJ",
   tenancy_demoted_tenancy: "No",
   property_house: "Yes",
