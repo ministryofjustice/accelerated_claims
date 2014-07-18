@@ -8,7 +8,7 @@
   claim: {
     property: {
       street: "Mucho Gracias Road\nLondon",
-      postcode: "SW1H 9AJ",
+      postcode: "EY1H 9AJ",
       house: "Yes"
     },
     claim: {
@@ -56,7 +56,7 @@
       full_name: "John Kapur",
       inhabits_property: "No",
       street: "Endof Road\nLondon",
-      postcode: "SW1X 2PT"
+      postcode: "EY1X 2PT"
     },
     defendant_two: {
       title: nil,
@@ -76,7 +76,7 @@
       assured_shorthold_tenancy_notice_served_by: nil,
       assured_shorthold_tenancy_notice_served_date: nil,
       demotion_order_date: "2010-01-01",
-      demotion_order_court: "Brighton County Court",
+      demotion_order_court: "Anytown County Court",
       previous_tenancy_type: "assured"
     },
     notice: {

@@ -53,7 +53,7 @@
     },
     defendant_one: {
       title: "Ms",
-      full_name: "Linette Barlow",
+      full_name: "I.C. Yew",
       inhabits_property: "Yes",
       street: nil,
       postcode: nil
