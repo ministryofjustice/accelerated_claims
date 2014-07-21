@@ -24,7 +24,7 @@ feature "submit claim" do
       if Capybara.default_driver == :browserstack
         find('a#data').click
 
-        body = page.body.split('">').last.split('</pre>').first
+        body = page.body.split('">').last.split('<pre>').last.split('</pre>').first
         json = JSON.parse(body)
 
         expected_data.each do |field, value|
