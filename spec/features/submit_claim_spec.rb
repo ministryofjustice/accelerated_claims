@@ -10,7 +10,8 @@ feature "submit claim" do
     expected_data = load_expected_data(data_file)
 
     AppModel.new(data).exec do
-      homepage.visit
+      visit '?test=true'
+
       if options[:js]
         claim_form.complete_form_with_javascript
       else
@@ -21,9 +22,10 @@ feature "submit claim" do
       expect(confirmation_page.is_displayed?).to be_truthy, claim_form.validation_error_text
 
       if Capybara.default_driver == :browserstack
-        click_link('data', visible: false)
+        find('a#data').click
 
-        json = JSON.parse(page.body)
+        body = page.body.split('">').last.split('</pre>').first
+        json = JSON.parse(body)
 
         expected_data.each do |field, value|
           generated = json[field].to_s.gsub("\r\n","\n").strip
@@ -43,7 +45,7 @@ feature "submit claim" do
     end
   end
 
-  Dir.glob('spec/fixtures/scenario_*_data.rb') do |data_file|
+  Dir.glob('spec/fixtures/scenario_01*_data.rb') do |data_file|
     data = load_fixture_data(data_file)
     title = data['title']
     description = data['description']
