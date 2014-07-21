@@ -7,6 +7,7 @@ class ClaimController < ApplicationController
 
   def new
     reset_session if referrer_is_landing_page?
+    session[:test] = params[:test]
 
     @page_title = 'Make a claim to evict tenants: accelerated possession'
 
