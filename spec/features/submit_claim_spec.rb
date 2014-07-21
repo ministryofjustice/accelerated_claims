@@ -45,7 +45,7 @@ feature "submit claim" do
     end
   end
 
-  Dir.glob('spec/fixtures/scenario_01*_data.rb') do |data_file|
+  Dir.glob('spec/fixtures/scenario_*_data.rb') do |data_file|
     data = load_fixture_data(data_file)
     title = data['title']
     description = data['description']
