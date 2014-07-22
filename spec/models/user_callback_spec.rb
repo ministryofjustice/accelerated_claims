@@ -115,4 +115,19 @@ describe UserCallback, :type => :model do
       end
     end
   end
+
+  context 'with test data' do
+    let(:data) do
+      {
+        name: 'Bob',
+        phone: '020 7946 0708',
+        description: 'Show me things'
+      }
+    end
+
+
+    it 'should be true' do
+      expect(contact.test?).to eq true
+    end
+  end
 end
