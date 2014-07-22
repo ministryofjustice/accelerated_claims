@@ -103,7 +103,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
     if error_for?(attribute)
       id = error_id_for(attribute)
-      labeled_input.sub!(%Q[for="#{id.sub('_error','')}"], %Q[for="#{id}"])
+      labeled_input.sub!(%Q[id="#{id}"], %Q[id="#{id.sub('_error','')}"])
       list << error_span(attribute)
     end
 
