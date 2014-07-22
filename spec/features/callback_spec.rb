@@ -4,9 +4,9 @@ feature 'Callback request' do
     scenario 'request feedback successfully' do
       visit '/ask-for-technical-help'
 
-      fill_in 'Name', with: 'Bob'
-      fill_in 'Telephone number', with: '02077778888'
-      fill_in "Describe what you'd like to talk about", with: 'Call me please, this internet thing is not for me!'
+      fill_in 'Name', with: UserCallback::NAME
+      fill_in 'Telephone number', with: UserCallback::PHONE
+      fill_in "Describe what you'd like to talk about", with: UserCallback::DESCRIPTION
 
       click_button 'Send'
 
@@ -18,9 +18,9 @@ feature 'Callback request' do
     scenario 'request feedback successfully' do
       visit '/ask-for-technical-help'
 
-      fill_in 'Name', with: 'Bob'
+      fill_in 'Name', with: UserCallback::NAME
       fill_in 'Telephone number', with: ''
-      fill_in "Describe what you'd like to talk about", with: 'Call me please, this internet thing is not for me!'
+      fill_in "Describe what you'd like to talk about", with: UserCallback::DESCRIPTION
 
       click_button 'Send'
 

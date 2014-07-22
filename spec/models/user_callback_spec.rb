@@ -119,9 +119,9 @@ describe UserCallback, :type => :model do
   context 'with test data' do
     let(:data) do
       {
-        name: 'Bob',
-        phone: '020 7946 0708',
-        description: 'Show me things'
+        name: UserCallback::NAME,
+        phone: UserCallback::PHONE,
+        description: UserCallback::DESCRIPTION
       }
     end
 
