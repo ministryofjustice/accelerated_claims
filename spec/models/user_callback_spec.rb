@@ -115,4 +115,19 @@ describe UserCallback, :type => :model do
       end
     end
   end
+
+  context 'with test data' do
+    let(:data) do
+      {
+        name: UserCallback::NAME,
+        phone: UserCallback::PHONE,
+        description: UserCallback::DESCRIPTION
+      }
+    end
+
+
+    it 'should be true' do
+      expect(contact.test?).to eq true
+    end
+  end
 end

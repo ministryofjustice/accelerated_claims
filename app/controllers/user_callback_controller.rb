@@ -11,7 +11,7 @@ class UserCallbackController < ApplicationController
     @user_callback = UserCallback.new(user_callback_params)
 
     if @user_callback.valid?
-      ZendeskHelper.callback_request(@user_callback)
+      ZendeskHelper.callback_request(@user_callback) unless @user_callback.test?
       msg = 'Thank you we will call you back during the next working day between 9am and 5pm.'
       redirect_to root_path, notice: msg, protocol: (Rails.env.production? ? 'https' : 'http')
     else
