@@ -95,6 +95,7 @@
     deposit: {
       received: "Yes",
       ref_number: "X1,234",
+      information_given_date: "2010-01-01",
       as_money: "Yes",
       as_property: "Yes"
     },
