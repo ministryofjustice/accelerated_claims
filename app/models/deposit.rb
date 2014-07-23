@@ -14,17 +14,19 @@ class Deposit < BaseClass
 
   validate :money_or_property_must_be_selected_if_received
 
-
   with_options if: -> deposit { deposit.received == 'No'} do |deposit|
     deposit.validates :ref_number, absence: { message: 'You should not give a deposit scheme reference number if no deposit was given' }
+    deposit.validates :information_given_date, absence: { message: 'You should not give an information given date if no deposit was given' }
   end
 
   with_options if: -> deposit { deposit.received == 'Yes' && deposit.as_money == 'Yes'} do |deposit|
     deposit.validates :ref_number, presence: { message: 'Enter the tenancy deposit scheme reference number' }
+    deposit.validates :information_given_date, presence: { message: 'Enter the tenancy deposit information given date' }
   end
 
   with_options if: -> deposit { deposit.received == 'Yes' && deposit.as_money == 'No'} do |deposit|
-    deposit.validates :ref_number, absence: { message: 'You should not give a deposti scheme reference number if the deposit was given as property' }
+    deposit.validates :ref_number, absence: { message: 'You should not give a deposit scheme reference number if the deposit was given as property' }
+    deposit.validates :information_given_date, absence: { message: 'You should not give an information given date if the deposit was given as property' }
   end
 
   def as_json
