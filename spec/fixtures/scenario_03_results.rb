@@ -62,6 +62,7 @@
   license_part3_year: nil,
   deposit_received: "Yes",
   deposit_ref_number: "U527VwvpAZ",
+  deposit_information_given_date: "2004-02-29",
   deposit_as_property: "No",
   possession_hearing: "Yes",
   order_possession: "Yes",

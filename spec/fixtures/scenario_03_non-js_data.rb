@@ -95,6 +95,7 @@
     deposit: {
       received: "Yes",
       ref_number: "U527VwvpAZ",
+      information_given_date: "2004-02-29",
       as_money: "Yes",
       as_property: "No"
     },

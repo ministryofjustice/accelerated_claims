@@ -51,6 +51,7 @@
   license_part3_month: nil,
   license_part3_year: nil,
   deposit_ref_number: "aCpRBZaWPz",
+  deposit_information_given_date: "1997-02-27",
   deposit_received: "Yes",
   deposit_as_property: "No",
   possession_hearing: "Yes",

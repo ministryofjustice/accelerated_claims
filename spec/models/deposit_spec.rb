@@ -1,7 +1,7 @@
 describe Deposit, :type => :model do
 
   describe "when the deposit has not been received" do
-    
+
     context "and reference number is populated" do
       let(:deposit) { Deposit.new(received: 'No',
                                   ref_number: 'x123') }
@@ -18,10 +18,11 @@ describe Deposit, :type => :model do
   context "when the deposit has been received" do
     let(:deposit) { Deposit.new(received: 'Yes',
                                 ref_number: 'x123',
+                                information_given_date: Date.parse("2010-01-10"),
                                 as_property: 'No',
                                 as_money: 'Yes') }
 
-   
+
 
     describe "when given all valid values" do
       it "should be valid" do
@@ -77,6 +78,9 @@ describe Deposit, :type => :model do
           "as_property" => "No",
           "as_money" => "Yes",
           "received" => "Yes",
+          "information_given_date_day" => "10",
+          "information_given_date_month" => "01",
+          "information_given_date_year" => "2010",
           "ref_number" => 'x123'
         })
       end
@@ -97,9 +101,9 @@ describe Deposit, :type => :model do
       deposit = Deposit.new(received: 'Yes',
                             ref_number: 'x123',
                             as_property: 'Yes',
-                            as_money: 'Yes') 
+                            as_money: 'Yes')
       expect(deposit).to be_valid
     end
   end
-    
+
 end

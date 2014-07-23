@@ -23,10 +23,14 @@
       %span.nonjs(data-jsalt='You') If you took a money deposit you
       need to be sure that:
     %ul
-      %li= 'you kept the deposit in a government-backed deposit protection scheme and met the scheme’s requirements'.html_safe
-      %li= 'you gave the defendant all the information about the deposit scheme that landlords must provide'.html_safe
-
+      %li
+        = 'you kept the deposit in a government-backed deposit protection scheme and met the scheme’s requirements'.html_safe
     = form.text_field_row  :ref_number, label: 'Enter the tenancy deposit scheme reference number', class: 'rel hide js-depositTypeMoney yes'
+
+    %ul
+      %li
+        = 'you gave the defendant all the information about the deposit scheme that landlords must provide'.html_safe
+    = form.moj_date_fieldset :information_given_date, 'Enter the date this information was given', class: 'row rel hide js-depositTypeMoney yes'
 
   .row.property-deposit-type.hide.js-depositTypeProperty.yes
     %h4.strong

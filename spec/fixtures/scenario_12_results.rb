@@ -51,6 +51,7 @@
   license_part3_month: nil,
   license_part3_year: nil,
   deposit_ref_number: nil,
+  deposit_information_given_date: nil,
   deposit_received: "No",
   deposit_as_property: "No",
   possession_hearing: "No",

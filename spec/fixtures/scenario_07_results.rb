@@ -62,6 +62,7 @@
   license_part3_year: nil,
   deposit_received: "Yes",
   deposit_ref_number: "BRMHyKbxX7",
+  deposit_information_given_date: "2012-09-16",
   deposit_as_property: "No",
   possession_hearing: "Yes",
   order_possession: "Yes",

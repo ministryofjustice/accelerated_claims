@@ -3,6 +3,8 @@ class Deposit < BaseClass
   attr_accessor :received
   validates :received, presence: { message: 'You must say whether the defendant paid a deposit' }, inclusion: { in: ['Yes', 'No'] }
 
+  attr_accessor :information_given_date
+
   attr_accessor :ref_number
   validates :ref_number, length: { maximum: 20 }
 
@@ -25,7 +27,11 @@ class Deposit < BaseClass
     deposit.validates :ref_number, absence: { message: 'You should not give a deposti scheme reference number if the deposit was given as property' }
   end
 
-
+  def as_json
+    json = super
+    json = split_date :information_given_date, json
+    json
+  end
 
   private
 

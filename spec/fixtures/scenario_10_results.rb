@@ -51,6 +51,7 @@
   license_part3_month: nil,
   license_part3_year: nil,
   deposit_ref_number: "X1234",
+  deposit_information_given_date: "1995-01-01",
   deposit_received: "Yes",
   deposit_as_property: "Yes",
   possession_hearing: "Yes",
