@@ -21,7 +21,7 @@ class Deposit < BaseClass
 
   with_options if: -> deposit { deposit.received == 'Yes' && deposit.as_money == 'Yes'} do |deposit|
     deposit.validates :ref_number, presence: { message: 'Enter the tenancy deposit scheme reference number' }
-    deposit.validates :information_given_date, presence: { message: 'Enter the tenancy deposit information given date' }
+    deposit.validates :information_given_date, presence: { message: 'Enter the date you gave the defendant this information' }
   end
 
   with_options if: -> deposit { deposit.received == 'Yes' && deposit.as_money == 'No'} do |deposit|
