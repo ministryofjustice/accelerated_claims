@@ -348,7 +348,8 @@ class ClaimForm
       check_box(prefix, 'as_property') if get_data(prefix, 'as_property') == 'Yes'
       if get_data(prefix, 'as_money') == 'Yes'
         check_box(prefix, 'as_money') if get_data(prefix, 'as_money') == 'Yes'
-        fill_in_text_field(prefix, 'ref_number')
+        fill_in_text_field prefix, 'ref_number'
+        fill_in_moj_date_fieldset prefix, 'information_given_date'
       end
     end
   end

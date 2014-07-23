@@ -65,6 +65,9 @@ def claim_post_data
       {
         "received" => 'Yes',
         "ref_number" => "X1234",
+        "information_given_date(3i)" => "1",
+        "information_given_date(2i)" => "2",
+        "information_given_date(1i)" => "2010",
         "as_property" => 'Yes',
         "as_money" => 'Yes'
       },
@@ -194,9 +197,9 @@ def claim_formatted_data
     "deposit_as_property" => 'Yes',
     "deposit_received" => 'Yes',
     "deposit_ref_number" => "X1234",
-    "deposit_information_given_date_day" => "",
-    "deposit_information_given_date_month" => "",
-    "deposit_information_given_date_year" => "",
+    'deposit_information_given_date_day' => '01',
+    'deposit_information_given_date_month' => '02',
+    'deposit_information_given_date_year' => '2010',
     'tenancy_demoted_tenancy' => 'No',
     "tenancy_demotion_order_date_day" => nil,
     "tenancy_demotion_order_date_month" => nil,
