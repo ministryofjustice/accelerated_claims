@@ -11,8 +11,7 @@ describe TenancyChecklist do
         context 'optional section is filled' do
           let(:json) { claim_formatted_data }
 
-          let(:full_text) { text.concat "- the notice stating defendants would have an assured shorthold tenancy agreement (given before they moved in) - marked 'B'
-- proof this notice was given - marked 'B1'\n\n"}
+          let(:full_text) { text.concat "- notice given to the defendant before they moved in - marked 'B'\n\n- proof the notice was served - marked 'B1'\n\n"}
 
           it { expect(@documents).to eq full_text }
         end
@@ -39,8 +38,7 @@ describe TenancyChecklist do
         end
 
         context 'optional section is filled' do
-          let(:full_text) { text.concat "- the notice stating defendants would have an assured shorthold tenancy agreement (given before they moved in) - marked 'B'
-- proof this notice was given - marked 'B1'\n\n"}
+          let(:full_text) { text.concat "- notice given to the defendant before they moved in - marked 'B'\n\n- proof the notice was served - marked 'B1'\n\n"}
 
           it { expect(@documents).to eq full_text }
         end

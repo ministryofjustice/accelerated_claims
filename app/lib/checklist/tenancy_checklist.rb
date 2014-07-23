@@ -45,7 +45,7 @@ class TenancyChecklist
   end
 
   def optional_text
-    @checklist.concat "- the notice stating defendants would have an assured shorthold tenancy agreement (given before they moved in) - marked 'B'
-- proof this notice was given - marked 'B1'\n\n"
+    @checklist.concat "- notice given to the defendant before they moved in - marked 'B'\n
+- proof the notice was served - marked 'B1'\n\n"
   end
 end
