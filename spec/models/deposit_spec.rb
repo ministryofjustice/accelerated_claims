@@ -78,11 +78,30 @@ describe Deposit, :type => :model do
     end
 
     describe 'as_json' do
-      it 'should return correct json' do
+      context 'when no deposit is received' do
+        it 'should return correct json' do
+          expect(deposit.as_json).to eq({
+            "as_property" => "No",
+            "as_money" => "Yes",
+            "received" => "Yes",
+            "received_cert" => "Yes",
+            "information_given_date_day" => "10",
+            "information_given_date_month" => "01",
+            "information_given_date_year" => "2010",
+            "ref_number" => 'x123'
+          })
+        end
+      end
+    end
+
+    context 'when no deposit is received' do
+      it 'should not have received_cert' do
+        deposit.received = 'No'
         expect(deposit.as_json).to eq({
           "as_property" => "No",
           "as_money" => "Yes",
-          "received" => "Yes",
+          "received" => "No",
+          "received_cert" => "No",
           "information_given_date_day" => "10",
           "information_given_date_month" => "01",
           "information_given_date_year" => "2010",

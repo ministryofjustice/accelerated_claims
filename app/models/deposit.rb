@@ -32,6 +32,7 @@ class Deposit < BaseClass
   def as_json
     json = super
     json = split_date :information_given_date, json
+    json['received_cert'] = json['received']
     json
   end
 
