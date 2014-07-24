@@ -94,6 +94,7 @@
     },
     deposit: {
       received: "Yes",
+      received_cert: "Yes",
       ref_number: "FJXWTYE5XZ",
       information_given_date: "2011-10-02",
       as_money: "Yes",

@@ -94,6 +94,7 @@
     },
     deposit: {
       received: "No",
+      received_cert: nil,
       ref_number: nil,
       information_given_date: nil,
       as_money: "No",

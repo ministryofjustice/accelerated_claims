@@ -61,6 +61,7 @@
   license_part3_month: nil,
   license_part3_year: nil,
   deposit_received: "No",
+  deposit_received_cert: nil,
   deposit_ref_number: nil,
   deposit_information_given_date_day: nil,
   deposit_information_given_date_month: nil,

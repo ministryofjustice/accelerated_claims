@@ -55,6 +55,7 @@
   deposit_information_given_date_month: nil,
   deposit_information_given_date_year: nil,
   deposit_received: "No",
+  deposit_received_cert: nil,
   deposit_as_property: "No",
   possession_hearing: "No",
   order_possession: "Yes",

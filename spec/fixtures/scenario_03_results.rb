@@ -61,6 +61,7 @@
   license_part3_month: nil,
   license_part3_year: nil,
   deposit_received: "Yes",
+  deposit_received_cert: "Yes",
   deposit_ref_number: "U527VwvpAZ",
   deposit_information_given_date_day: "29",
   deposit_information_given_date_month: "02",

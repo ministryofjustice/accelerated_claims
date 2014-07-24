@@ -55,6 +55,7 @@
   deposit_information_given_date_month: "01",
   deposit_information_given_date_year: "2010",
   deposit_received: "Yes",
+  deposit_received_cert: "Yes",
   deposit_as_property: "Yes",
   possession_hearing: "Yes",
   order_possession: "Yes",
