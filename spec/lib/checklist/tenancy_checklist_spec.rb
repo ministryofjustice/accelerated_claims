@@ -6,7 +6,7 @@ describe TenancyChecklist do
 
     describe 'Assured shorthold tenancy' do
       context 'when there is only 1 tenancy agreement' do
-        let(:text) { "- the tenancy agreement marked 'A'\n\n" }
+        let(:text) { "- the tenancy agreement - marked 'A'\n\n" }
 
         context 'optional section is filled' do
           let(:json) { claim_formatted_data }
