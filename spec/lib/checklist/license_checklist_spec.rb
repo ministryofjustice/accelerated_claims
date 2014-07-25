@@ -3,8 +3,8 @@ describe LicenseChecklist do
 
     context 'HMO licence applied for' do 
 
-      let(:section2) { "- evidence of your HMO licence application - marked 'D' [if issued under part 2 of the Housing Act 2004]\n\n" }
-      let(:section3) { "- evidence of your HMO licence application - marked 'E' [if issued under part 3 of the Housing Act 2004]\n\n" }
+      let(:section2) { "- evidence of your HMO licence application - marked 'D'\n\n" }
+      let(:section3) { "- evidence of your HMO licence application - marked 'E'\n\n" }
 
       it 'should add the section 2 text when section 2 is chosen' do
         formatted_data = LicenseChecklist.new(section_2_applied_for).add

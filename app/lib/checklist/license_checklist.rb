@@ -20,11 +20,11 @@ class LicenseChecklist
   end
 
   def part2_text
-    "- evidence of your HMO licence application - marked 'D' [if issued under part 2 of the Housing Act 2004]\n\n"
+    "- evidence of your HMO licence application - marked 'D'\n\n"
   end
 
   def part3_text
-    "- evidence of your HMO licence application - marked 'E' [if issued under part 3 of the Housing Act 2004]\n\n"
+    "- evidence of your HMO licence application - marked 'E'\n\n"
   end
 
   def part2_applied_for?

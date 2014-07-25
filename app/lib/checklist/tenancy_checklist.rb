@@ -27,7 +27,7 @@ class TenancyChecklist
   end
 
   def one_assured_tenancy_text
-    @checklist = "- the tenancy agreement marked 'A'\n\n"
+    @checklist = "- the tenancy agreement - marked 'A'\n\n"
   end
 
   def demoted_tenancy_text
