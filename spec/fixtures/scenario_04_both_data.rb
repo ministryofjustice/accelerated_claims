@@ -94,7 +94,9 @@
     },
     deposit: {
       received: "Yes",
+      received_cert: "Yes",
       ref_number: "dKqeU2rK7s",
+      information_given_date: "2004-03-12",
       as_money: "Yes",
       as_property: "No"
     },
