@@ -32,7 +32,7 @@ class Deposit < BaseClass
   def as_json
     json = super
     json = split_date :information_given_date, json
-    json['received_cert'] = json['received']
+    json['received_cert'] = (received? ? 'Yes' : '')
     json
   end
 
@@ -44,5 +44,9 @@ class Deposit < BaseClass
         errors[:as_money] << 'You must say what kind of deposit the defendant paid'
       end
     end
+  end
+
+  def received?
+    received == 'Yes'
   end
 end
