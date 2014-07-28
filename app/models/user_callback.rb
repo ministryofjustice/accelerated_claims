@@ -19,6 +19,6 @@ class UserCallback
   private
 
   def phone_number_format
-    phone.gsub(' ', '').match(/[-]?\d+/)
+    errors.add(phone, 'invalid number format provided') if phone.gsub(/(-| )/, '').match(/\D/)
   end
 end
