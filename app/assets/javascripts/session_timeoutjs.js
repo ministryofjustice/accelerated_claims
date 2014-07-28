@@ -20,7 +20,7 @@ moj.Modules.sessionTimeout = (function() {
       quick = false,
       baseProtocol = window.location.protocol,
       baseDomain = window.location.host,
-      baseUrl = '<%= Rails.configuration.relative_url_root %>',
+      baseUrl = moj.Modules.relativeUrlRoot,
       basePath = baseProtocol + '//' + baseDomain + ( baseUrl === '' ? '' : '/' + baseUrl )
       ;
 
