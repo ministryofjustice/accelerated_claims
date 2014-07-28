@@ -1,5 +1,38 @@
 describe PDFDocument do
 
+  describe 'template form' do
+    def field_state_options state, file='./templates/form.pdf'
+      fields = `pdftk #{file} dump_data_fields`
+      fields.strip.split('---').each_with_object({}) do |fieldset, hash|
+        field = fieldset[/FieldName: ([^\s]+)/,1]
+        state_option = fieldset[/FieldStateOption: (#{state})/i,1]
+        if field.present? && state_option.present?
+          hash[field] = state_option
+        end
+      end
+    end
+
+    def check_field_state_options_capitalization state
+      field_state_options(state).each do |field, value|
+        if value != state
+          fail "expected #{field} FieldStateOption: #{state}, got FieldStateOption: #{value}"
+        end
+      end
+    end
+
+    it 'all "No" field state options correctly capitalised' do
+      check_field_state_options_capitalization 'No'
+    end
+
+    it 'all "Yes" field state options correctly capitalised' do
+      check_field_state_options_capitalization 'Yes'
+    end
+
+    it 'all "NA" field state options correctly capitalised' do
+      check_field_state_options_capitalization 'NA'
+    end
+  end
+
   context 'connnection refused to strike through service' do
     before do
       @doc = PDFDocument.new(json)
