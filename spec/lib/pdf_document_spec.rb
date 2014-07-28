@@ -1,9 +1,12 @@
 describe PDFDocument do
 
   describe 'template form' do
-    def field_state_options state, file='./templates/form.pdf'
-      fields = `pdftk #{file} dump_data_fields`
-      fields.strip.split('---').each_with_object({}) do |fieldset, hash|
+    before(:all) do
+      @fields = `pdftk ./templates/form.pdf dump_data_fields`
+    end
+
+    def field_state_options state
+      @fields.strip.split('---').each_with_object({}) do |fieldset, hash|
         field = fieldset[/FieldName: ([^\s]+)/,1]
         state_option = fieldset[/FieldStateOption: (#{state})/i,1]
         if field.present? && state_option.present?
@@ -12,10 +15,10 @@ describe PDFDocument do
       end
     end
 
-    def check_field_state_options_capitalization state
-      field_state_options(state).each do |field, value|
-        if value != state
-          fail "expected #{field} FieldStateOption: #{state}, got FieldStateOption: #{value}"
+    def check_field_state_options_capitalization expected_state_value
+      field_state_options(expected_state_value).each do |field, state_value|
+        if state_value != expected_state_value
+          fail "expected #{field} FieldStateOption: #{expected_state_value}, got FieldStateOption: #{state_value}"
         end
       end
     end
