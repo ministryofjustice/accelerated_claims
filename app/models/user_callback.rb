@@ -7,7 +7,11 @@ class UserCallback
   PHONE = '020 7946 0708'
   DESCRIPTION = 'Show me things'
 
-  validates :name, :phone, :description, presence: true
+  @@phone_err_message = 'Please enter a valid phone number.'
+
+  validates :name, presence: { message: 'Please enter a valid name.' }
+  validates :phone, presence: { message: @@phone_err_message }
+  validates :description, presence: { message: "Please describe what you'd like to talk about." }
   validate :phone_number_format
 
   def test?
@@ -19,6 +23,6 @@ class UserCallback
   private
 
   def phone_number_format
-    errors.add(phone, 'invalid number format provided') if phone.gsub(/(-| )/, '').match(/\D/)
+    errors.add(:phone, @@phone_err_message) if phone.gsub(/(-| )/, '').match(/\D/)
   end
 end
