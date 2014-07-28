@@ -84,6 +84,20 @@ describe UserCallback, :type => :model do
         expect(contact).to be_valid
       end
     end
+
+    context 'it should not allow non-numeric characters' do
+      let(:data) do
+        {
+          name: 'Ninja Slick',
+          phone: 'ABC',
+          description: 'Foo'
+        }
+      end
+
+      it 'should not be valid without a description' do
+        expect(contact).not_to be_valid
+      end
+    end
   end
 
   describe '.describe' do

@@ -19,7 +19,7 @@ module ZendeskHelper
         requester: { email: 'phone-me@no-email.none', name: 'Civil Claims AD' },
         custom_fields: [
           { id: '23757677', value: 'civil_claims_accelerated_callback' },
-          { id: '24018396', value: request.phone }
+          { id: '24041286', value: request.phone }
         ])
     end
   end

@@ -24,7 +24,7 @@ feature 'Callback request' do
 
       click_button 'Send'
 
-      expect(page).to have_content('can\'t be blank')
+      expect(page).to have_content('Please enter a valid phone number.')
     end
   end
 end
