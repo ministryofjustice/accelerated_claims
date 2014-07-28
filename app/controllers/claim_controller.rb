@@ -1,3 +1,5 @@
+require 'appsignal'
+
 class ClaimController < ApplicationController
 
   def new
@@ -32,17 +34,24 @@ class ClaimController < ApplicationController
   end
 
   def download
-    @claim = Claim.new(session[:claim])
-
-    if @claim.valid?
-      flatten = Rails.env.test? || params[:flatten] == 'false' ? false : true
-      pdf = PDFDocument.new(@claim.as_json, flatten).fill
-
-      ActiveSupport::Notifications.instrument('send_file') do
-        send_file(pdf.path, filename: "accelerated-claim.pdf", disposition: "inline", type: "application/pdf")
-      end
+    if session[:claim].nil?
+      msg = "User attepmted to download PDF from an expired session - redirected to #{expired_path}"
+      Rails.logger.warn msg
+      Appsignal.add_exception(RuntimeError.new(msg)) if Rails.env.production?
+      redirect_to expired_path
     else
-      redirect_to_with_protocol :new
+      @claim = Claim.new(session[:claim])
+
+      if @claim.valid?
+        flatten = Rails.env.test? || params[:flatten] == 'false' ? false : true
+        pdf = PDFDocument.new(@claim.as_json, flatten).fill
+
+        ActiveSupport::Notifications.instrument('send_file') do
+          send_file(pdf.path, filename: "accelerated-claim.pdf", disposition: "inline", type: "application/pdf")
+        end
+      else
+        redirect_to_with_protocol :new
+      end
     end
   end
 
