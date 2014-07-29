@@ -1,7 +1,18 @@
 describe Feedback, :type => :model do
 
-  let(:text) { 'feedback' }
-  let(:feedback) { Feedback.new text: text, email: email}
+  let(:difficulty_feedback) { 'It was difficult' }
+  let(:improvement_feedback) { 'But no improvement needed' }
+  let(:satisfaction_feedback) { 'Dissatisfied' }
+  let(:help_feedback) { 'No, I filled in this form myself' }
+
+  let(:feedback) do
+    Feedback.new difficulty_feedback: difficulty_feedback,
+        improvement_feedback: improvement_feedback,
+        satisfaction_feedback: satisfaction_feedback,
+        help_feedback: help_feedback,
+        email: email
+  end
+
   let(:subject) { feedback }
 
   context 'with email' do
@@ -12,6 +23,14 @@ describe Feedback, :type => :model do
     its(:email_or_anonymous_placeholder) { should == email }
     its(:name_for_feedback) { should == 'Unknown' }
     its(:test?) { should be false }
+
+    its(:text) { should == "difficulty_feedback: It was difficult
+
+improvement_feedback: But no improvement needed
+
+satisfaction_feedback: Dissatisfied
+
+help_feedback: No, I filled in this form myself"}
   end
 
   context 'without email' do
@@ -32,7 +51,7 @@ describe Feedback, :type => :model do
 
   context 'with test text' do
     let(:email) { 'test@example.com' }
-    let(:text) { Feedback::TEST_TEXT }
+    let(:difficulty_feedback) { Feedback::TEST_TEXT }
 
     it { is_expected.to be_valid }
 

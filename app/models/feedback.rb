@@ -3,11 +3,14 @@ require 'email_validator'
 class Feedback
   include ActiveModel::Model
 
-  attr_accessor :text
+  attr_accessor :difficulty_feedback
+  attr_accessor :improvement_feedback
+  attr_accessor :satisfaction_feedback
+  attr_accessor :help_feedback
+
   attr_accessor :email
   attr_accessor :user_agent
 
-  validates_presence_of :text
   validates :email, email: true, if: ->(f) { f.email.present? }
 
   TEST_TEXT = 'test text'
@@ -29,6 +32,15 @@ class Feedback
   end
 
   def test?
-    text == TEST_TEXT
+    difficulty_feedback == TEST_TEXT
+  end
+
+  def text
+    [:difficulty_feedback,
+    :improvement_feedback,
+    :satisfaction_feedback,
+    :help_feedback].map do |field|
+      "#{field}: #{send(field)}"
+    end.join("\n\n")
   end
 end
