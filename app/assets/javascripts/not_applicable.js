@@ -27,7 +27,7 @@ moj.Modules.notApplicable = (function() {
     var $this;
     $naRadios.each( function() {
       $this = $( this );
-      $this.add( $this.parent( 'label' ) ).hide();
+      $this.add( $this.parent( 'label' ) ).remove();
     } );
   };
 
