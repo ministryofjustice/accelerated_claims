@@ -13,7 +13,11 @@ describe FeedbackController, :type => :controller do
     end
 
     def do_post(text='feedback')
-      post :create, feedback: { email: 'test@lol.biz.info', text: text }
+      post :create, feedback: { email: 'test@lol.biz.info',
+          difficulty_feedback: text,
+          improvement_feedback: 'y',
+          satisfaction_feedback: 'z',
+          help_feedback: 'a' }
     end
 
     it 'redirects to the homepage' do

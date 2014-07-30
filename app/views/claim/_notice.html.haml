@@ -5,6 +5,5 @@
   = form.text_field_row  :served_by_name, label: 'Full name of the person who gave the notice', data: { 'virtual-pageview' => '/accelerated/notice_section' }
   = form.text_field_row  :served_method, label: 'How was the notice given? <span class="hint block">For example, in person</span>'
 
-
   = form.moj_date_fieldset :date_served, 'Date notice served', { class: 'date-picker' }, 9.weeks.ago
   = form.moj_date_fieldset :expiry_date, 'Date notice ended', { class: 'date-picker' }, 1.week.ago
