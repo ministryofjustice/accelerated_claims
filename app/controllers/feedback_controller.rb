@@ -11,8 +11,13 @@ class FeedbackController < ApplicationController
     @feedback = Feedback.new(feedback_params)
 
     if @feedback.valid?
-      ZendeskHelper.send_to_zendesk(@feedback) unless @feedback.test?
-      redirect_to root_path, notice: 'Thanks for your feedback.', protocol: (Rails.env.production? ? 'https' : 'http')
+      begin
+        ZendeskHelper.send_to_zendesk(@feedback) unless @feedback.test?
+        redirect_to root_path, notice: 'Thanks for your feedback.', protocol: (Rails.env.production? ? 'https' : 'http')
+      rescue ZendeskAPI::Error::NetworkError
+        flash[:error] = 'Problems sending your feedback. Please try again later.'
+        render :new
+      end
     else
       render :new
     end
