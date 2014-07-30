@@ -6,7 +6,10 @@ class Claim < BaseClass
   attr_accessor :error_messages
   attr_accessor :form_state
   attr_accessor :num_claimants
+  attr_accessor :claimant_type
   attr_accessor :num_defendants
+
+  validates :claimant_type, inclusion: { in: %w{ individual organization } }
 
   @@valid_num_claimants     = [1, 2]
   @@valid_num_defendants    = [1, 2]
@@ -21,6 +24,7 @@ class Claim < BaseClass
     initialize_all_submodels(claim_params)
     @errors = ActiveModel::Errors.new(self)
   end
+
 
   def as_json
     json_in = {}
@@ -187,17 +191,17 @@ class Claim < BaseClass
     case attribute_name
       when /claimant_one/
         if @num_claimants.nil?
-          params.merge!(validate_presence: false, validate_absence: false, num_claimants: nil, claimant_num: :claimant_one)  
+          params.merge!(validate_presence: false, validate_absence: false, num_claimants: nil, claimant_num: :claimant_one, claimant_type: claimant_type)  
         else
-          params.merge!(validate_presence: true, validate_absence: false, num_claimants: claim_params[:num_claimants], claimant_num: :claimant_one)
+          params.merge!(validate_presence: true, validate_absence: false, num_claimants: claim_params[:num_claimants], claimant_num: :claimant_one, claimant_type: claimant_type)
         end
       when /claimant_two/
         if @num_claimants.nil?
-          params.merge!(validate_absence: false, validate_presence: false, num_claimants: nil, claimant_num: :claimant_two)
+          params.merge!(validate_absence: false, validate_presence: false, num_claimants: nil, claimant_num: :claimant_two, claimant_type: claimant_type)
         elsif @num_claimants == 1
-          params.merge!(validate_absence: true, validate_presence: false)
+          params.merge!(validate_absence: true, validate_presence: false, claimant_type: claimant_type)
         else
-          params.merge!(validate_presence: true, num_claimants: '2', claimant_num: :claimant_two)
+          params.merge!(validate_presence: true, num_claimants: '2', claimant_num: :claimant_two, claimant_type: claimant_type)
         end
       when /defendant_one/
         if @num_defendants.nil?
@@ -217,4 +221,5 @@ class Claim < BaseClass
 
     params
   end
+
 end

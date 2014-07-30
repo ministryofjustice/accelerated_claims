@@ -9,9 +9,17 @@ class Claimant < BaseClass
   attr_accessor :claimant_num
   attr_accessor :title
   attr_accessor :full_name
+  attr_accessor :organization_name  
+  attr_accessor :claimant_type
 
 
   validates_with ContactValidator
+
+  with_options if: -> claimant { claimant.validate_absence != true } do |claimant|
+    # claimant.validates :claimant_type, presence: { message: 'You must say what kind of claimant you are' }, inclusion: { in: [ 'individual', 'organization' ], message: 'You must specify a valid kind of claimant' }
+    claimant.validates :claimant_type, inclusion: { in: [ 'individual', 'organization' ], message: 'You must specify a valid kind of claimant' }
+  end
+
   validates :title, length: { maximum: 8 }
   validates :full_name, length: { maximum: 40 }
 

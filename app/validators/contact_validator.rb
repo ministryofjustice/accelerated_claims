@@ -10,11 +10,12 @@ class ContactValidator < ActiveModel::Validator
   private
 
   def validate_is_present(record)
-    
     record.errors[:title] << title_missing_message(record) if record.is_a?(Defendant) && record.title.blank?
+    record.errors[:title] << title_missing_message(record) if is_individual_claimant?(record) && record.title.blank?
+    record.errors[:organization_name] << "You must enter a company name or local authority name" if is_organization_claimant?(record) && record.organization_name.blank?
 
     if record.full_name.blank?
-      record.errors[:full_name] << full_name_missing_message(record)
+      record.errors[:full_name] << full_name_missing_message(record) unless is_organization_claimant?(record)
     end
     validate_address(record) if record.is_a?(Claimant)
     if record.is_a?(Defendant) && record.inhabits_property == 'no'
@@ -57,6 +58,15 @@ class ContactValidator < ActiveModel::Validator
   def inhabits_property_missing_message
     "You must say whether #{record.subject_description} lives in the property"
   end
+
+  def is_individual_claimant?(record)
+    record.is_a?(Claimant)  && record.claimant_type == 'individual'
+  end
+
+  def is_organization_claimant?(record)
+    record.is_a?(Claimant)  && record.claimant_type == 'organization'
+  end    
+
 
 
   def inhabits_property_has_been_set(record)
