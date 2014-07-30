@@ -9,10 +9,17 @@ class Feedback
   attr_accessor :help_feedback
   attr_accessor :other_help
 
+  validates :difficulty_feedback, length: { maximum: 5000 }
+  validates :improvement_feedback, length: { maximum: 5000 }
+  validates :satisfaction_feedback, length: { maximum: 35 }
+  validates :help_feedback, length: { maximum: 75 }
+  validates :other_help, length: { maximum: 5000 }
+
   attr_accessor :email
   attr_accessor :user_agent
 
   validates :email, email: true, if: ->(f) { f.email.present? }
+  validates :email, length: { maximum: 500 }
 
   TEST_TEXT = 'test text'
 
