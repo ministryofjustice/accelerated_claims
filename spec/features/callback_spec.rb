@@ -53,9 +53,9 @@ feature 'Callback request' do
 
       fill_in_the_form_correctly
 
-      expect(page).not_to have_content('Thank you we will call you back during the next working day between 9am and 5pm.')
+      expect(page).to have_content('Thank you we will call you back during the next working day between 9am and 5pm.')
 
-      expect(current_path).to eq '/feedback/new'
+      expect(current_path).to eq '/'
     end
 
     scenario 'go back to technical help page' do
@@ -67,7 +67,7 @@ feature 'Callback request' do
 
       expect(page).to have_content('Thank you we will call you back during the next working day between 9am and 5pm.')
 
-      expect(current_path).to eq '/ask-for-technical-help'
+      expect(current_path).to eq '/'
     end
   end
 end
