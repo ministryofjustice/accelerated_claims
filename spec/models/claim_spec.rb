@@ -315,6 +315,7 @@ describe Claim, :type => :model do
         data.delete(:claimant_two)
         expect(claim).to_not be_valid
         expect(claim.errors.full_messages).to eq [
+          ["claim_claimant_two_title_error", "Enter claimant 2's title"],
           ["claim_claimant_two_full_name_error", "Enter claimant 2's full name"], 
           ["claim_claimant_two_street_error", "Enter claimant 2's full address"], 
           ["claim_claimant_two_postcode_error", "Enter claimant 2's postcode"]
@@ -325,6 +326,7 @@ describe Claim, :type => :model do
         data["claimant_two"].each { |k, v| data["claimant_two"][k] = '' }
         expect(claim).to_not be_valid
         expect(claim.errors.full_messages).to eq [
+            ["claim_claimant_two_title_error", "Enter claimant 2's title"],
             ["claim_claimant_two_full_name_error", "Enter claimant 2's full name"], 
             ["claim_claimant_two_street_error", "Enter claimant 2's full address"], 
             ["claim_claimant_two_postcode_error", "Enter claimant 2's postcode"]
