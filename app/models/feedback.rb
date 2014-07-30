@@ -7,6 +7,7 @@ class Feedback
   attr_accessor :improvement_feedback
   attr_accessor :satisfaction_feedback
   attr_accessor :help_feedback
+  attr_accessor :other_help
 
   attr_accessor :email
   attr_accessor :user_agent
@@ -39,7 +40,8 @@ class Feedback
     [:difficulty_feedback,
     :improvement_feedback,
     :satisfaction_feedback,
-    :help_feedback].map do |field|
+    :help_feedback,
+    :other_help].map do |field|
       "#{field}: #{send(field)}"
     end.join("\n\n")
   end

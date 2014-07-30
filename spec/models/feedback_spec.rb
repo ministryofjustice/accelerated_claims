@@ -4,12 +4,14 @@ describe Feedback, :type => :model do
   let(:improvement_feedback) { 'But no improvement needed' }
   let(:satisfaction_feedback) { 'Dissatisfied' }
   let(:help_feedback) { 'No, I filled in this form myself' }
+  let(:other_help) { 'Searched for court address' }
 
   let(:feedback) do
     Feedback.new difficulty_feedback: difficulty_feedback,
         improvement_feedback: improvement_feedback,
         satisfaction_feedback: satisfaction_feedback,
         help_feedback: help_feedback,
+        other_help: other_help,
         email: email
   end
 
@@ -30,7 +32,9 @@ improvement_feedback: But no improvement needed
 
 satisfaction_feedback: Dissatisfied
 
-help_feedback: No, I filled in this form myself"}
+help_feedback: No, I filled in this form myself
+
+other_help: Searched for court address"}
   end
 
   context 'without email' do

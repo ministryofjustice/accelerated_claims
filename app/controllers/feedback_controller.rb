@@ -24,6 +24,7 @@ class FeedbackController < ApplicationController
       :improvement_feedback,
       :satisfaction_feedback,
       :help_feedback,
+      :other_help,
       :email, :user_agent)
   end
 end
