@@ -3,8 +3,10 @@ require 'zendesk_helper'
 class UserCallbackController < ApplicationController
 
   def new
+    session[:return_to] = request.referer
     @page_title = 'Make a claim to evict tenants - ask for technical help'
     @user_callback = UserCallback.new
+    Rails.logger.info "==============> the user came from #{session[:return_to]}"
   end
 
   def create
@@ -13,7 +15,8 @@ class UserCallbackController < ApplicationController
     if @user_callback.valid?
       ZendeskHelper.callback_request(@user_callback) unless @user_callback.test?
       msg = 'Thank you we will call you back during the next working day between 9am and 5pm.'
-      redirect_to root_path, notice: msg, protocol: (Rails.env.production? ? 'https' : 'http')
+      destination = session[:return_to] || '/'
+      redirect_to destination, notice: msg, protocol: (Rails.env.production? ? 'https' : 'http')
     else
       render :new
     end
