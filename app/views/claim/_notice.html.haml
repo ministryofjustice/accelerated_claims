@@ -1,10 +1,20 @@
 = claim_form.fields_for notice, builder: LabellingFormBuilder do |form|
-  .row
-    = 'You need to tell us about how you gave the defendant notice to leave the property.'.html_safe
+  .sub-panel.js-only
+    = form.radio_button_fieldset :notice_served,
+      'Did you give notice to the defendant to leave the property?',
+      class: 'radio inline js-depend',
+      data: { depend: 'notice' }
 
-  = form.text_field_row  :served_by_name, label: 'Full name of the person who gave the notice', data: { 'virtual-pageview' => '/accelerated/notice_section' }
-  = form.text_field_row  :served_method, label: 'How was the notice given? <span class="hint block">For example, in person</span>'
+  .hide.js-notice.yes
+    = form.text_field_row  :served_by_name, label: 'Full name of the person who gave the notice', data: { 'virtual-pageview' => '/accelerated/notice_section' }
+    = form.text_field_row  :served_method, label: 'How was the notice given? <span class="hint block">For example, in person</span>'
 
+    = form.moj_date_fieldset :date_served, 'Date notice served', { class: 'date-picker' }, 9.weeks.ago
+    = form.moj_date_fieldset :expiry_date, 'Date notice ended', { class: 'date-picker' }, 1.week.ago
 
-  = form.moj_date_fieldset :date_served, 'Date notice served', { class: 'date-picker' }, 9.weeks.ago
-  = form.moj_date_fieldset :expiry_date, 'Date notice ended', { class: 'date-picker' }, 1.week.ago
+.js-only
+  %section.hide.js-notice.no.flash.error-summary
+    %h2#error-heading You cannot continue with this claim
+    %p
+      You must have told your tenants to move out in writing with at least 2 months
+      notice in order to evict a tenant using accelerated possession.

@@ -66,14 +66,14 @@
         = render partial: 'defendant', object: @claim.defendant_two, locals: { claim_form: claim_form, defendant_field: :defendant_two}
 
   %section
+    %h2.section-header Notice
+    .moj-panel#notice-module
+      = render partial: 'notice', object: @claim.notice, locals: { claim_form: claim_form }
+
+  %section
     %h2.section-header Tenancy agreement
     .moj-panel
       = render partial: 'tenancy', object: @claim.tenancy, locals: { claim_form: claim_form }
-
-  %section
-    %h2.section-header Notice
-    .moj-panel
-      = render partial: 'notice', object: @claim.notice, locals: { claim_form: claim_form }
 
   %section
     %h2.section-header Licences
