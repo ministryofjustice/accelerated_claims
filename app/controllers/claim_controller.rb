@@ -30,8 +30,6 @@ class ClaimController < ApplicationController
       redirect_to_with_protocol(:new)
     end
 
-    session[:return_to] = confirmation_path
-
     @page_title = 'Make a claim to evict tenants: accelerated possession'
   end
 

@@ -66,11 +66,6 @@ describe ClaimController, :type => :controller do
         get :confirmation
         expect(response).to render_template("confirmation")
       end
-
-      it 'should have return_to location set' do
-        get :confirmation
-        expect(@controller.session['return_to']).to eq confirmation_path
-      end
     end
 
     context 'with no claim data' do
