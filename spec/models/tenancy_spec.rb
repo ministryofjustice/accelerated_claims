@@ -171,6 +171,29 @@ describe Tenancy, :type => :model do
         its(['latest_agreement_date_year']) { should == '' }
         its(['assured_shorthold_tenancy_type']) { should == 'one' }
       end
+
+      describe 'should have one applicable statement' do
+        it 'should be valid with from_1997_option set' do
+          expect(assured_tenancy).to be_valid
+        end
+
+        it 'should be valid with upto_1997_option set' do
+          tenancy = assured_tenancy(from_1997_option: 'No',
+                                    upto_1997_option: 'Yes',
+                                    start_date: Date.parse('1997-01-01'))
+          expect(tenancy).to be_valid
+        end
+
+        it 'should not be valid with both options set' do
+          tenancy = assured_tenancy(from_1997_option: 'Yes', upto_1997_option: 'Yes')
+          expect(tenancy).not_to be_valid
+        end
+
+        it 'should not be valid with both options not set' do
+          tenancy = assured_tenancy(from_1997_option: 'No', upto_1997_option: 'No')
+          expect(tenancy).not_to be_valid
+        end
+      end
     end
 
     context 'when there are multiple tenancy agreements' do
@@ -188,6 +211,9 @@ describe Tenancy, :type => :model do
         its(['latest_agreement_date_year']) { should == '' }
         its(['assured_shorthold_tenancy_type']) { should == 'multiple' }
       end
+
+      it 'should have one or both appicable statements'
+
     end
 
 
