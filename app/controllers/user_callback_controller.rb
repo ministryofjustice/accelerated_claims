@@ -17,7 +17,7 @@ class UserCallbackController < ApplicationController
       protocol = (Rails.env.production? ? 'https' : 'http')
       msg = 'Thank you we will call you back during the next working day between 9am and 5pm.'
 
-      redirect_to (session[:return_to] || '/'), notice: msg, protocol: protocol
+      redirect_to (session[:return_to] || root_path), notice: msg, protocol: protocol
     else
       render :new
     end
