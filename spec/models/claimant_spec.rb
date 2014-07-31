@@ -93,7 +93,7 @@ describe Claimant, :type => :model do
     it 'should not be valid if organization name is missing' do
       org.organization_name = nil
       expect(org).not_to be_valid
-      expect(org.errors[:organization_name]).to eq ["You must enter a company name or local authority name"]
+      expect(org.errors[:organization_name]).to eq ["Enter the claimant's company name or local authority name"]
     end
 
     it 'should not be valid if street is missing' do
@@ -141,6 +141,29 @@ describe Claimant, :type => :model do
 
   end
 
+
+  context 'address validation' do
+    let(:claimant)  { Claimant.new(title: 'Mr', full_name: "John Doe", street: "Streety Street\nLondon", postcode: "SW1H9AJ", claimant_type: 'individual') }
+
+    it 'should not validate if postcode is incomplete' do
+      claimant.postcode = 'SW10'
+      expect(claimant).not_to be_valid
+      expect(claimant.errors[:postcode]).to eq ["not full postcode"]
+    end    
+
+    it 'should not validate if postcode is invalid' do
+      claimant.postcode = 'SW10XX 5FF'
+      expect(claimant).not_to be_valid
+      expect(claimant.errors[:postcode]).to eq ["is too long (maximum is 8 characters)", "not valid postcode"]
+    end
+
+    it 'should not validate if street is too long' do
+      claimant.street = "x" * 72
+      expect(claimant).not_to be_valid
+      expect(claimant.errors[:street]).to eq ["is too long (maximum is 70 characters)"]
+    end
+
+  end
 
 
 end

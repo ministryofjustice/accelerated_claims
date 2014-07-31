@@ -9,7 +9,6 @@ class Claim < BaseClass
   attr_accessor :claimant_type
   attr_accessor :num_defendants
 
-  validates :claimant_type, inclusion: { in: %w{ individual organization } }
 
   @@valid_num_claimants     = [1, 2]
   @@valid_num_defendants    = [1, 2]
