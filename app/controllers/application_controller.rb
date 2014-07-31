@@ -28,6 +28,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  protected
+
+  def referrer_is_feedback_form?
+    request.referrer.to_s[/#{feedback_path}|#{technical_help_path}/]
+  end
+
   private
 
   def protocol

@@ -3,7 +3,7 @@ require 'zendesk_helper'
 class FeedbackController < ApplicationController
 
   def new
-    session[:return_to] = request.referrer unless request.referrer.to_s[/#{feedback_path}|#{technical_help_path}/]
+    session[:return_to] = request.referrer unless referrer_is_feedback_form?
     @page_title = 'Your feedback'
     @feedback ||= Feedback.new
   end
