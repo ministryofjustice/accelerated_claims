@@ -28,8 +28,8 @@ class UserCallbackController < ApplicationController
     params.require(:user_callback).permit(:name, :phone, :description)
   end
 
-  def set_destination_from session
-    destination = session || '/'
+  def set_destination_from return_to
+    destination = return_to || '/'
     destination = '/' if destination.match("#{feedback_path}|#{technical_help_path}")
     destination
   end
