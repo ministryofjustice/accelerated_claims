@@ -37,11 +37,7 @@ addErrorToNoticeSection = (errorLocation) ->
     $('#notice-module legend').first().append('<span class="error">' + message + '</span>')
     $(errorLocation).html('<a class="error-link" data-id="#claim_notice_notice_served_error" href="#claim_notice_notice_served_error">' + message + '</a>')
 
-removeNoticeWarning = ->
-  $('#notice-caution').remove()
-
 jQuery ->
-  removeNoticeWarning()
   if noticeServedNotCompleted() || noticeNotServed()
     errorLocation = removeNoticeErrorLinks()
     addErrorToNoticeSection(errorLocation)
