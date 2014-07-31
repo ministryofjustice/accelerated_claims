@@ -1,7 +1,8 @@
+- notice_caution = 'You must have given your tenants 2 months notice (in writing) to leave the property in order to make an accelerated possession claim.'
+
+
 .row#notice-caution
-  %p
-    You must have given your tenants 2 months notice (in writing) to leave the
-    property in order to make an accelerated possession claim.
+  %p= notice_caution
 
 = claim_form.fields_for notice, builder: LabellingFormBuilder do |form|
   .sub-panel.js-only
@@ -20,6 +21,5 @@
 .js-only
   %section.hide.js-notice.no.flash.error-summary
     %h2#error-heading You cannot continue with this claim
-    %p
-      You must have given your tenants 2 months notice (in writing) to leave
-      the property in order to make an accelerated possession claim.
+    %p= notice_caution
+
