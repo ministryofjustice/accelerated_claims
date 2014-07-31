@@ -1,7 +1,12 @@
+.row#notice-caution
+  %p
+    You must have given your tenants 2 months notice (in writing) to leave the
+    property in order to make an accelerated possession claim.
+
 = claim_form.fields_for notice, builder: LabellingFormBuilder do |form|
   .sub-panel.js-only
     = form.radio_button_fieldset :notice_served,
-      'Did you give notice to the defendant to leave the property?',
+      'Was the defendant given notice to leave the property?',
       class: 'radio inline js-depend',
       data: { depend: 'notice' }
 
@@ -16,5 +21,5 @@
   %section.hide.js-notice.no.flash.error-summary
     %h2#error-heading You cannot continue with this claim
     %p
-      You must have told your tenants to move out in writing with at least 2 months
-      notice in order to evict a tenant using accelerated possession.
+      You must have given your tenants 2 months notice (in writing) to leave
+      the property in order to make an accelerated possession claim.
