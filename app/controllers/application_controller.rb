@@ -6,14 +6,16 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_to_with_protocol action, options={}
-    redirect_to url_for( options.merge(action: action, protocol: (Rails.env.production? ? 'https' : 'http') ) )
+    redirect_to url_for( options.merge(action: action, protocol: protocol) )
+  end
+
+  def return_to options={}
+    redirect_to (session[:return_to] || root_path), options.merge( protocol: protocol )
   end
 
   def heartbeat
     render text: ''
   end
-
-
 
   def expire_session
     if session
@@ -25,4 +27,11 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+
+  private
+
+  def protocol
+    (Rails.env.production? ? 'https' : 'http')
+  end
+
 end
