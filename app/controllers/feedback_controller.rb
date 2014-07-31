@@ -3,6 +3,7 @@ require 'zendesk_helper'
 class FeedbackController < ApplicationController
 
   def new
+    session[:return_to] = request.referrer unless referrer_is_feedback_form?
     @page_title = 'Your feedback'
     @feedback ||= Feedback.new
   end
@@ -13,7 +14,8 @@ class FeedbackController < ApplicationController
     if @feedback.valid?
       begin
         ZendeskHelper.send_to_zendesk(@feedback) unless @feedback.test?
-        redirect_to root_path, notice: 'Thanks for your feedback.', protocol: (Rails.env.production? ? 'https' : 'http')
+
+        return_to notice: 'Thanks for your feedback.'
       rescue ZendeskAPI::Error::NetworkError
         flash[:error] = 'Problems sending your feedback. Please try again later.'
         render :new
