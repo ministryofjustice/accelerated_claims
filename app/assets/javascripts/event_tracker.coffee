@@ -4,13 +4,13 @@ root.dispatchTrackingEvent = (category, action, label) ->
   ga 'send', 'event', category, action, label if typeof ga is 'function'
 
 class EventTracker
-  constructor: ($) ->
-    @bind $('[data-event-label]'), 'click', @onClick
+  constructor: ->
+    @bind $('[data-event-label]'), @onClick
 
-  bind: (elements, event, handler) ->
+  bind: (elements, handler) ->
     _.each elements, (element) =>
       selector = '#' + element.id
-      $('body').on event, selector, handler
+      $('body').on 'click', selector, handler
 
   unbind: (element) ->
     selector = '#' + element.id

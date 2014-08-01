@@ -17,7 +17,7 @@ describe 'EventTracker', ->
 
   describe 'click on "data-event-label" element', ->
     it "dispatches analytics event", ->
-      track = new window.EventTracker($)
+      track = new window.EventTracker()
       spyOn window, 'dispatchTrackingEvent'
       $('[data-event-label]').trigger 'click'
 
@@ -25,7 +25,7 @@ describe 'EventTracker', ->
 
   describe 'second click on "data-event-label" element', ->
     it "dispatches analytics event", ->
-      track = new window.EventTracker($)
+      track = new window.EventTracker()
       $('[data-event-label]').trigger 'click'
       spyOn window, 'dispatchTrackingEvent'
 

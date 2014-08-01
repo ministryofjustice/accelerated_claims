@@ -2,7 +2,7 @@ root = exports ? this
 
 class AnalyticsTracking
   constructor: () ->
-    new root.EventTracker( $ )
+    new root.EventTracker()
 
     if @formWithOutErrors()
       trigger_first_interaction = true
