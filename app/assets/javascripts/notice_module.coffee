@@ -42,6 +42,7 @@ addErrorToNoticeSection = (errorLocation) ->
 
 jQuery ->
   removeSecondPageviewTrigger()
+
   if noticeServedNotCompleted() || noticeNotServed()
     errorLocation = removeNoticeErrorLinks()
     addErrorToNoticeSection(errorLocation)
