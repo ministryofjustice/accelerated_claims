@@ -11,7 +11,7 @@
       class: 'radio inline js-depend',
       data: { depend: 'notice', 'virtual-pageview' => '/accelerated/notice_section' }
 
-  .hide.js-notice.yes
+  .sub-panel.hide.js-notice.yes
     = form.text_field_row  :served_by_name,
       label: 'Full name of the person who gave the notice',
       data: { 'virtual-pageview' => '/accelerated/notice_section' }
@@ -22,7 +22,7 @@
     = form.moj_date_fieldset :date_served, 'Date notice served', { class: 'date-picker' }, 9.weeks.ago
     = form.moj_date_fieldset :expiry_date, 'Date notice ended', { class: 'date-picker' }, 1.week.ago
 
-.js-only
+.sub-panel.js-only
   %section.hide.js-notice.no.flash.error-summary
     %h2#error-heading You cannot continue with this claim
     %p= notice_caution
