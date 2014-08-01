@@ -36,11 +36,7 @@ class Claimant < BaseClass
     if validate_absence?
       validate_are_blank(:title, :full_name, :organization_name, :claimant_type, :street, :postcode)
     else
-      if claimant_type.nil?
-        errors.add(:claimant_type, "You must specify a valid kind of claimant")
-      else
-        validate_fields_are_present
-      end
+      validate_fields_are_present
     end
   end
 
@@ -106,8 +102,6 @@ class Claimant < BaseClass
       validate_organization_fields_are_present
     when 'individual'
       validate_individual_fields_are_present
-    else 
-      errors.add(:claimant_type, "You must specify a valid kind of claimant")
     end
   end
 

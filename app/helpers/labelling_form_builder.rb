@@ -116,6 +116,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     options[:id] = id_for(attribute) unless id_for(attribute).blank?
   end
 
+
   def label_for attribute, label
     label ||= attribute.to_s.humanize
     label = %Q|#{label} #{error_span(attribute)}| if error_for? attribute
@@ -210,14 +211,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
     [ label, value ].join("\n").html_safe
   end
-
-  # def label_for attribute, label
-  #   label ||= attribute.to_s.humanize
-
-  #   label = %Q|#{label} #{error_span(attribute)}| if error_for? attribute
-
-  #   label.html_safe
-  # end
 
 
   def max_length attribute

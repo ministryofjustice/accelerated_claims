@@ -70,23 +70,6 @@ describe Claimant, :type => :model do
   end
 
 
-  context 'validate claimant_type' do
-
-    it 'should not be valid if no claimant type is specified' do
-      my_claimant = Claimant.new(title: 'Mr', full_name: "John Doe", street: "Streety Street\nLondon", postcode: "SW1H9AJ")
-      expect(my_claimant).not_to be_valid
-      expect(my_claimant.errors[:claimant_type]).to eq [ "You must specify a valid kind of claimant" ]
-    end
-
-    it 'should not be valid if an unknown claimant type is specified' do
-      my_claimant = Claimant.new(title: 'Mr', full_name: "John Doe", street: "Streety Street\nLondon", postcode: "SW1H9AJ", claimant_type: 'evil landlord')
-      expect(my_claimant).not_to be_valid
-      expect(my_claimant.errors[:claimant_type]).to eq [ "You must specify a valid kind of claimant" ]
-    end
-  end
-
-
-
   context 'mandatory fields for organizations are present' do
     let(:org) { Claimant.new(organization_name: 'Anytown Council Housing Departement', street: "Streety Street\nLondon", postcode: "SW1H9AJ", claimant_type: 'organization') }
 

@@ -292,6 +292,7 @@ describe Claim, :type => :model do
       it 'should be valid if there is claimant 1 data and no claimant 2 data' do
         data.delete(:claimant_two)
         claim = Claim.new(data)
+        puts claim.errors.full_messages
         expect(claim).to be_valid
       end
 
@@ -331,6 +332,41 @@ describe Claim, :type => :model do
             ["claim_claimant_two_street_error", "Enter claimant 2's full address"], 
             ["claim_claimant_two_postcode_error", "Enter claimant 2's postcode"]
           ]
+      end
+    end
+
+
+    context 'claimant_type_validation' do
+      let(:data) {
+        mydata = claim_post_data['claim'] 
+        mydata['num_claimants'] = 1
+        mydata.delete('claimant_two')
+        mydata
+      }
+
+      it 'should be valid if claimant type is individual' do
+        data['claimant_type'] = 'individual'
+        expect(Claim.new(data)).to be_valid
+      end
+
+      it 'should be valid if claimant type is organization' do
+        data['claimant_type'] = 'organization'
+        data['claimant_one']['organization_name'] = 'AA Homes Ltd'
+        expect(Claim.new(data)).to be_valid
+      end
+
+      it 'should not be valid if the claimant type is missing' do
+        data.delete('claimant_type')
+        claim = Claim.new(data)
+        expect(claim).not_to be_valid
+        expect(claim.errors[:base]).to eq [["claim_claimant_type_error", "You must specify the kind of claimant"]]
+      end
+
+      it 'should not be valid if the claimant type is unknown' do
+        data['claimant_type'] = 'XXXXXXXX'
+        claim = Claim.new(data)
+        expect(claim).not_to be_valid
+        expect(claim.errors[:base]).to eq [["claim_claimant_type_error", "You must specify a valid kind of claimant"]]
       end
     end
 

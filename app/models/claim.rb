@@ -1,4 +1,4 @@
-class Claim < BaseClass
+  class Claim < BaseClass
 
   include ActiveSupport::Inflector
 
@@ -13,6 +13,7 @@ class Claim < BaseClass
   @@valid_num_claimants     = [1, 2]
   @@valid_num_defendants    = [1, 2]
   @@ambiguous_instance_vars = ['claimant_one', 'claimant_two', 'defendant_one', 'defendant_two']
+  @@valid_claimant_types    = %w{ organization individual }
 
 
 
@@ -59,14 +60,13 @@ class Claim < BaseClass
   def valid?
     @errors.clear
     validity = true
-    validity = false unless num_claimants_valid?
+    validity = false unless claimant_type_valid?
+    validity = false unless num_claimants_valid? 
     validity = false unless num_defendants_valid?
     attributes_from_submodels.each do |instance_var, model|
-
       unless send(instance_var).valid?
         errors = send(instance_var).errors
         errors.each_with_index do |error, index|
-
           attribute = error.first
           key = "claim_#{instance_var}_#{attribute}_error"
           @errors[:base] << [ key, error.last ]
@@ -81,11 +81,28 @@ class Claim < BaseClass
 
   private
 
+ 
+  def claimant_type_valid?
+    result = true
+    if @claimant_type.nil?
+      @errors[:base] << ['claim_claimant_type_error', 'You must specify the kind of claimant']
+      result = false
+    else
+      unless @@valid_claimant_types.include?(@claimant_type)
+        @errors[:base] << ['claim_claimant_type_error', 'You must specify a valid kind of claimant']
+        result = false
+      end
+    end
+    result
+  end
+
 
   def num_claimants_valid?
-    unless @@valid_num_claimants.include?(@num_claimants)
-      @errors[:base] << ['claim_num_claimants_error', 'Please say how many claimants there are']
-      return false
+    if @claimant_type.present?
+      unless @@valid_num_claimants.include?(@num_claimants)
+        @errors[:base] << ['claim_num_claimants_error', 'Please say how many claimants there are']
+        return false
+      end
     end
     true
   end
@@ -197,9 +214,9 @@ class Claim < BaseClass
         end
       when /claimant_two/
         if @num_claimants.nil?
-          params.merge!(validate_absence: false, validate_presence: false, num_claimants: nil, claimant_num: :claimant_two, claimant_type: claimant_type)
+          params.merge!(validate_absence: false, validate_presence: false, num_claimants: nil, claimant_num: :claimant_two)
         elsif @num_claimants == 1
-          params.merge!(validate_absence: true, validate_presence: false, claimant_type: claimant_type)
+          params.merge!(validate_absence: true, validate_presence: false)
         else
           params.merge!(validate_presence: true, num_claimants: '2', claimant_num: :claimant_two, claimant_type: claimant_type)
         end

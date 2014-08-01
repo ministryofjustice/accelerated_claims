@@ -4,6 +4,7 @@ class ErrorMessageSequencer
       'claim_property_house_error'                    => 100,
       'claim_property_street_error'                   => 120,
       'claim_property_postcode_error'                 => 140,
+      'claim_claimant_type_error'                     => 205,
       'claim_num_claimants_error'                     => 210,
       'claim_claimant_one_full_name_error'            => 220,
       'claim_claimant_one_street_error'               => 230,
