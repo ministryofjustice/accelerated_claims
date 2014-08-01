@@ -4,7 +4,8 @@ root.dispatchTrackingEvent = (category, action, label) ->
   ga 'send', 'event', category, action, label if typeof ga is 'function'
 
 class EventTracker
-  constructor: (selector, event_action=null, event_label=null) ->
+  constructor: (selector, event_category=null, event_action=null, event_label=null) ->
+    @category = event_category
     @action = event_action
     @label = event_label
     @bind $(selector), @onClick
@@ -20,7 +21,7 @@ class EventTracker
 
   onClick: (event) =>
     element = event.currentTarget
-    category = element['href'].replace(/https?:\/\/[^\/]+/i, '')
+    category = @category || element['href'].replace(/https?:\/\/[^\/]+/i, '')
     action = @action || element.text
     label = @label || $(element).data('event-label')
 

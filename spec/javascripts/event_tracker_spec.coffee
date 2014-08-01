@@ -25,11 +25,11 @@ describe 'EventTracker', ->
 
   describe 'click on "data-event-label" element with overrides', ->
     it "dispatches analytics event with overriden action/label", ->
-      track = new window.EventTracker('[data-event-label]', 'new action', 'new label')
+      track = new window.EventTracker('[data-event-label]', 'new category', 'new action', 'new label')
       spyOn window, 'dispatchTrackingEvent'
       $('[data-event-label]').trigger 'click'
 
-      expect(window.dispatchTrackingEvent).toHaveBeenCalledWith(jasmine.any(String), 'new action', 'new label')
+      expect(window.dispatchTrackingEvent).toHaveBeenCalledWith('new category', 'new action', 'new label')
 
   describe 'second click on "data-event-label" element', ->
     it "does not dispatch analytics event", ->

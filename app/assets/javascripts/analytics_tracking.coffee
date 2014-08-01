@@ -3,7 +3,7 @@ root = exports ? this
 class AnalyticsTracking
   constructor: ->
     new root.EventTracker('[data-event-label]')
-    new root.EventTracker('#claim_notice_notice_served_no', 'Accelerated form error', 'You must have given your tenants 2 months notice')
+    new root.EventTracker('#claim_notice_notice_served_no', '/accelerated-possession-eviction/#claim_notice_notice_served_no', 'Accelerated form error', 'You must have given your tenants 2 months notice')
 
     if @formWithOutErrors()
       trigger_first_interaction = true
