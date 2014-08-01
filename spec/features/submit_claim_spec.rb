@@ -1,6 +1,6 @@
 feature "submit claim" do
 
-  pending 'submit claim being skipped until tests rewritten for claimant type' do
+  # pending 'submit claim being skipped until tests rewritten for claimant type' do
 
     before do
       stub_request(:post, "http://localhost:4000/").to_return(:status => 200, :body => "", :headers => {})
@@ -47,7 +47,7 @@ feature "submit claim" do
       end
     end
 
-    Dir.glob('spec/fixtures/scenario_*_data.rb') do |data_file|
+    Dir.glob('spec/fixtures/scenario_05*_data.rb') do |data_file|
       data = load_fixture_data(data_file)
       title = data['title']
       description = data['description']
@@ -63,13 +63,13 @@ feature "submit claim" do
         end
       end
 
-      unless data['javascript'] == 'NON-JS'
-        eval(%Q|
-          scenario "#{title} with JS: #{description.first} (#{description.last})", js: true do
-            run_scenario '#{data_file}', js: true
-          end
-        |)
-      end
+      # unless data['javascript'] == 'NON-JS'
+      #   eval(%Q|
+      #     scenario "#{title} with JS: #{description.first} (#{description.last})", js: true do
+      #       run_scenario '#{data_file}', js: true
+      #     end
+      #   |)
+      # end
     end
- end
+ # end
 end

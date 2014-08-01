@@ -8,9 +8,16 @@ class ClaimForm
   def complete_form
     @js_on = false
     fill_property_details
-    select_number_of :claimants
-    fill_claimant_one
-    fill_claimant_two
+    claimant_type = select_claimant_type
+    if claimant_type == 'individual'
+      puts "++++++ DEBUG individual ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+      select_number_of :claimants
+      fill_claimant_one
+      fill_claimant_two
+    else
+      puts "++++++ DEBUG organizational ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+      fill_organizational_claimant
+    end
     select_number_of :defendants
     fill_defendant_one complete_address: true
     fill_defendant_two complete_address: true
@@ -28,13 +35,18 @@ class ClaimForm
 
   def complete_form_with_javascript
     @js_on = true
+    claimant_type = select_claimant_type
     fill_property_details
-    number_of_claimants = select_number_of :claimants
 
-    fill_claimant_one
-    if number_of_claimants == 2
-      choose_claimant_two_address_the_same
-      fill_claimant_two
+    if claimant_type == 'individual'
+      number_of_claimants = select_number_of :claimants
+      fill_claimant_one
+      if number_of_claimants == 2
+        choose_claimant_two_address_the_same
+        fill_claimant_two
+      end
+    else
+      fill_organizational_claimant
     end
 
     number_of_defendants = select_number_of :defendants
@@ -191,6 +203,13 @@ class ClaimForm
   end
 
 
+  def fill_organizational_claimant
+    fill_in_text_field('claimant_one', 'organization_name')
+    fill_in_text_field('claimant_one', 'street')
+    fill_in_text_field('claimant_one', 'postcode')
+  end
+
+
 
   def complete_details_of_person(prefix, options={})
     options = { complete_address: true }.merge(options)
@@ -205,6 +224,12 @@ class ClaimForm
       fill_in("claim_claimant_two_street", with: get_data('claimant_one', 'street'))
       fill_in("claim_claimant_two_postcode", with: get_data('claimant_one', 'postcode'))
     end
+  end
+
+  def select_claimant_type
+    claimant_type = get_data('claim', 'claimant_type')
+    choose "claim_claimant_type_#{claimant_type}"
+    claimant_type
   end
 
   def fill_property_details

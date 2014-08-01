@@ -359,7 +359,7 @@ describe Claim, :type => :model do
         data.delete('claimant_type')
         claim = Claim.new(data)
         expect(claim).not_to be_valid
-        expect(claim.errors[:base]).to eq [["claim_claimant_type_error", "You must specify the kind of claimant"]]
+        expect(claim.errors[:base]).to eq [["claim_claimant_type_error", "Please select what kind of claimant you are"]]
       end
 
       it 'should not be valid if the claimant type is unknown' do

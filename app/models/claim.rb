@@ -85,7 +85,7 @@
   def claimant_type_valid?
     result = true
     if @claimant_type.nil?
-      @errors[:base] << ['claim_claimant_type_error', 'You must specify the kind of claimant']
+      @errors[:base] << ['claim_claimant_type_error', 'Please select what kind of claimant you are']
       result = false
     else
       unless @@valid_claimant_types.include?(@claimant_type)

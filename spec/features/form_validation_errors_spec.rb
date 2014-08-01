@@ -28,7 +28,7 @@ feature 'Filling in claim form' do
     visit '/'
     click_button 'Complete form'
 
-    expect(page).to have_content('You must specify the kind of claimant')
+    expect(page).to have_content('Please select what kind of claimant you are')
 
     expect(page).to have_selector('input#claim_order_possession')
     expect(page).to have_selector(:xpath, '//label[@for="claim_order_possession"]')

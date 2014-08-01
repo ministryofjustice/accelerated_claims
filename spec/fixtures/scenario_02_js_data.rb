@@ -12,6 +12,7 @@
       house: "No"
     },
     claim: {
+      claimant_type: "individual",
       number_of_claimants: "1",
       number_of_defendants: "1"
     },

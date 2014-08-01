@@ -12,6 +12,7 @@
       house: "Yes"
     },
     claim: {
+      claimant_type: "organization",
       number_of_claimants: "1",
       number_of_defendants: "1"
     },
