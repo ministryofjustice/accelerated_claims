@@ -30,10 +30,10 @@ class AnalyticsTracking
     root.dispatchTrackingEvent(category, 'Accelerated form error', $(element).text() )
 
   formWithOutErrors: () ->
-    ( $('#claimForm').length > 0 ) && ( $('.error-summary').length == 0 )
+    ( $('#claimForm').length > 0 ) && ( $('#form_errors').length == 0 )
 
   formWithErrors: () ->
-    ( $('#claimForm').length > 0 ) && ( $('.error-summary').length > 0 )
+    ( $('#claimForm').length > 0 ) && ( $('#form_errors').length > 0 )
 
   referrerIsSelf: (referrer) ->
     if referrer?
