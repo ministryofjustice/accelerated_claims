@@ -26,6 +26,7 @@ class ClaimController < ApplicationController
 
   def confirmation
     claim = session[:claim]
+
     if claim.nil? || !Claim.new(claim).valid?
       redirect_to_with_protocol(:new)
     end

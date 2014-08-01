@@ -34,6 +34,20 @@ class ApplicationController < ActionController::Base
     request.referrer.to_s[/#{feedback_path}|#{technical_help_path}/]
   end
 
+  def send_to_zendesk item, request_type, success_message
+    if item.valid?
+      begin
+        ZendeskHelper.send(request_type, item) unless item.test?
+        return_to notice: success_message
+      rescue ZendeskAPI::Error::NetworkError
+        flash[:error] = 'There were problems sending your feedback. Please try again later.'
+        render :new
+      end
+    else
+      render :new
+    end
+  end
+
   private
 
   def protocol
