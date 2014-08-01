@@ -9,6 +9,9 @@ noticeServedNotCompleted = ->
 noticeNotServed = ->
   $('#claim_notice_notice_served_no').is(":checked")
 
+removeSecondPageviewTrigger = ->
+  $('#claim_notice_served_by_name').removeAttr('data-virtual-pageview')
+
 removeNoticeErrorLinks = ->
   errors = $('.error-link[data-id^="#claim_notice_"]')
   errorLocation = if errors.size() > 0
@@ -38,6 +41,7 @@ addErrorToNoticeSection = (errorLocation) ->
     $(errorLocation).html('<a class="error-link" data-id="#claim_notice_notice_served_error" href="#claim_notice_notice_served_error">' + message + '</a>')
 
 jQuery ->
+  removeSecondPageviewTrigger()
   if noticeServedNotCompleted() || noticeNotServed()
     errorLocation = removeNoticeErrorLinks()
     addErrorToNoticeSection(errorLocation)
