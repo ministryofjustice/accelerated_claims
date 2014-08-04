@@ -80,6 +80,11 @@ class ClaimController < ApplicationController
     end
   end
 
+  def raise_exception
+    session[:special_values] = "session variable"
+    raise "This exception has been deliberately raised"
+  end
+
   private
 
   def move_defendant_address_params_into_model
