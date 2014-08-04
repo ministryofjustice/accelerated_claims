@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+
+  around_filter :clear_session_before_raising_to_app_signal
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null session instead.
   if ENV['CC_NO_CSRF'].nil?
@@ -29,6 +32,15 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  def clear_session_before_raising_to_app_signal
+    begin
+      yield
+    rescue => err
+      reset_session
+      raise err
+    end
+  end
 
   def referrer_is_feedback_form?
     request.referrer.to_s[/#{feedback_path}|#{technical_help_path}/]
