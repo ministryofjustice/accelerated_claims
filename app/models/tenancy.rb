@@ -77,6 +77,7 @@ class Tenancy < BaseClass
 
     t.validates *MULTIPLE_TENANCY_FIELDS,
       absence: { message: 'must be blank if one tenancy agreement'}
+    t.validate :single_tenancy_options
   end
 
   with_options if: :multiple_tenancy_agreements? do |t|
@@ -217,6 +218,14 @@ class Tenancy < BaseClass
   def remove_previous_tenancy_radio_selection_if_not_demoted
     if assured_tenancy? && !errors.blank?
       self.previous_tenancy_type = nil
+    end
+  end
+
+  def single_tenancy_options
+    if from_1997_option == 'No' && upto_1997_option == 'No'
+      message = 'You must specify one applicable option'
+      errors[:from_1997_option] << message
+      errors[:upto_1997_option] << message
     end
   end
 end
