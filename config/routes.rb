@@ -17,6 +17,7 @@ AcceleratedClaims::Application.routes.draw do
     get  '/confirmation',   controller: :claim, action: :confirmation
     get  '/download',       controller: :claim, action: :download
     get  '/data',           controller: :claim, action: :data
+    get  '/raise_exception',controller: :claim, action: :raise_exception
 
     get  '/cookies',        controller: :static, action: :cookies
     get  '/terms',          controller: :static, action: :terms
@@ -24,6 +25,7 @@ AcceleratedClaims::Application.routes.draw do
 
     get  '/heartbeat',      controller: :application, action: :heartbeat
     post '/expire_session', controller: :application, action: :expire_session
+
 
     # zendesk
     resource :feedback,     only: [:new, :create], controller: 'feedback'
