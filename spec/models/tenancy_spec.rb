@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 describe Tenancy, :type => :model do
 
   def value attribute, default, overrides
@@ -212,8 +213,35 @@ describe Tenancy, :type => :model do
         its(['assured_shorthold_tenancy_type']) { should == 'multiple' }
       end
 
-      it 'should have one or both appicable statements'
+      context 'applicable statements' do
+        describe 'when they are both not picked' do
+          it 'should be invalid' do
+            tenancy = assured_tenancy(from_1997_option: 'No',
+                                      upto_1997_option: 'No',
+                                      start_date: Date.parse('1998-01-01'))
+            expect(tenancy).not_to be_valid
+          end
+        end
 
+        describe 'when they are both picked' do
+          it 'should be valid' do
+            tenancy = assured_tenancy(from_1997_option: 'Yes',
+                                      upto_1997_option: 'Yes',
+                                      start_date: Date.parse('1998-01-01'))
+            expect(tenancy).not_to be_valid
+          end
+        end
+
+        describe 'when one is picked' do
+          it 'should be valid' do
+            tenancy = assured_tenancy(from_1997_option: 'Yes',
+                                      upto_1997_option: 'No',
+                                      start_date: Date.parse('1998-01-01'))
+            expect(tenancy).to be_valid
+          end
+        end
+
+      end
     end
 
 
