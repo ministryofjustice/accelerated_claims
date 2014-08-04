@@ -10,8 +10,16 @@ class UserCallbackController < ApplicationController
 
   def create
     @user_callback = UserCallback.new(user_callback_params)
-    success_message = 'Thank you we will call you back during the next working day between 9am and 5pm.'
-    send_to_zendesk @user_callback, :callback_request, success_message
+
+    if @user_callback.valid?
+      ZendeskHelper.callback_request(@user_callback) unless @user_callback.test?
+
+      message = 'Thank you we will call you back during the next working day between 9am and 5pm.'
+
+      return_to notice: message
+    else
+      render :new
+    end
   end
 
   private

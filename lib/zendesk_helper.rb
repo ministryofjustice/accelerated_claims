@@ -1,13 +1,8 @@
 module ZendeskHelper
-
-  def self.send_feedback(feedback, client=ZENDESK_CLIENT)
+  def self.send_to_zendesk(feedback, client=ZENDESK_CLIENT)
     if Rails.env.production? || Rails.env.development?
-      ZendeskAPI::Ticket.create!(client,
-        description: feedback.text,
-        requester: {
-          email: feedback.email_or_anonymous_placeholder,
-          name: feedback.name_for_feedback
-        },
+      ZendeskAPI::Ticket.create!(client, description: feedback.text,
+        requester: { email: feedback.email_or_anonymous_placeholder, name: feedback.name_for_feedback  },
         custom_fields: [
          {id: '23730083', value: ''},
          {id: '23757677', value: 'civil_claims_accelerated'},

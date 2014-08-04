@@ -9,7 +9,7 @@ describe FeedbackController, :type => :controller do
 
   describe '#create' do
     before do
-      allow(ZendeskHelper).to receive(:send_feedback).once
+      allow(ZendeskHelper).to receive(:send_to_zendesk).once
     end
 
     let(:text) { 'feedback' }
@@ -30,14 +30,14 @@ describe FeedbackController, :type => :controller do
     include_examples 'redirect after form submission'
 
     it 'sends feedback to zendesk' do
-      expect(ZendeskHelper).to receive(:send_feedback).once
+      expect(ZendeskHelper).to receive(:send_to_zendesk).once
       do_post
     end
 
     context 'with test text' do
       let(:text) { Feedback::TEST_TEXT }
       it 'does not send feedback' do
-        expect(ZendeskHelper).not_to receive(:send_feedback)
+        expect(ZendeskHelper).not_to receive(:send_to_zendesk)
         do_post
       end
     end
