@@ -18,6 +18,8 @@ AcceleratedClaims::Application.routes.draw do
     get  '/download',       controller: :claim, action: :download
     get  '/data',           controller: :claim, action: :data
 
+    get  '/help',           controller: :static, action: :help
+    get  '/accessibility',  controller: :static, action: :accessibility
     get  '/cookies',        controller: :static, action: :cookies
     get  '/terms',          controller: :static, action: :terms
     get  '/expired',        controller: :static, action: :expired

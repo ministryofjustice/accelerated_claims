@@ -1,41 +1,47 @@
 %header.page-header.group
 
-  %h1 Cookies
+  %ul.breadcrumb
+    %li #{link_to 'Home', '..'}
+    %li #{link_to 'Help', 'help'}
+
+  %h1
+    %span Help
+    Cookies
 
 .container
 
-  %p This site puts small files (known as ‘cookies’) onto your computer to collect information about how you browse the site.
+  %p GOV.UK puts small files (known as 'cookies') onto your computer to collect information about how you browse the site.
 
   %p Cookies are used to:
 
   %ul
     %li measure how you use the website so it can be updated and improved based on your needs
-    %li remember the notifications you’ve seen so that we don’t show them to you again
+    %li remember the notifications you've seen so that we don't show them to you again
 
   %p
-    %em GOV.UK cookies aren’t used to identify you personally.
+    %em GOV.UK cookies aren't used to identify you personally.
 
-  %p You’ll normally see a message on the site before we store a cookie on your computer.
+  %p You'll normally see a message on the site before we store a cookie on your computer.
 
-  %p Find out more about #{link_to 'How to manage cookies', 'http://www.aboutcookies.org/', :class => 'external', :rel => 'external'}.
+  %p Find out more about #{link_to 'how to manage cookies', 'http://www.aboutcookies.org/', :class => 'external', :rel => 'external'}.
 
-  %h2 How cookies are used
+  %h2 How cookies are used on GOV.UK
 
-  %h3 Measuring website usage
+  %h3 Measuring website usage (Google Analytics)
 
-  We use Google Analytics to collect information about how you use the ‘Make a claim to evict tenants: accelerated possession’ service
+  We use Google Analytics software to collect information about how you use GOV.UK. We do this to help make sure the site is meeting the needs of its users and to help us make improvements.
 
-  %p Google Analytics stores information about the pages you visit on GOV.UK:
+  %p Google Analytics stores information about:
 
   %ul
-    %li how long you spend on each page
+    %li the pages you visit on GOV.UK - how long you spend on each GOV.UK page
     %li how you got to the site
-    %li what you click on while you’re visiting the site.
+    %li what you click on while you're visiting the site.
 
   %p
-    %em We don’t collect or store your personal information (For example your name or address) so this information can’t be used to identify who you are.
+    %em We don't collect or store your personal information so this information can't be used to identify who you are. For more information visit our #{link_to 'Privacy policy', 'privacy'}.
 
-  %p We don’t allow Google to use or share our analytics data.
+  %p We don't allow Google to use or share our analytics data.
 
   %p Google Analytics sets the following cookies:
 
@@ -66,14 +72,38 @@
           %code _utmz
         %td This provides information about how you reached the site (For example from another website or a search engine)
         %td 6 months
-
+      %tr
+        %td
+          %code ga_nextpage_params
+        %td This stores data to be sent to Google on the next page you request
+        %td when you close your browser
+      %tr
+        %td
+          %code GDS_successEvents and GDS_analyticsTokens
+        %td These help us identify how you use GOV.UK so we can make the site better
+        %td 4 months
+      %tr
+        %td
+          %code _accelerated_claims_session
+        %td
+          Data entered in the form is stored on the server for however long you stay on the page. This can be up to 60 minutes, with the option to extend for another 60 minutes if you need to.
+          %br
+          After you have downloaded the completed PDF form, this is deleted from our servers.
+        %td 60 mins
+      %tr
+        %td
+          %code _ga
+        %td
+          This is a google analytics cookie that helps us understand how the service is being used in detail. Your data is anonymised.
+          %br
+          It is used to store a randomly generated number to uniquely identify this session to GA, and is included on all requests after it has been generated.
+        %td 2 years
 
   %p You can #{link_to 'opt out of Google Analytics cookies','https://tools.google.com/dlpage/gaoptout', :class => 'external', :rel => 'external'}.
 
-
   %h2 Our introductory message
 
-  %p You may see a pop-up welcome message when you first visit GOV.UK. We’ll store a cookie so that your computer knows you’ve seen it and knows not to show it again.
+  %p You may see a pop-up welcome message when you first visit GOV.UK. We'll store a cookie so that your computer knows you've seen it and knows not to show it again.
 
   %table.border
     %thead
@@ -81,6 +111,7 @@
         %th Name
         %th Purpose
         %th Expires
+    %tbody
       %tr
         %td
           %code seen_cookie_message
@@ -89,7 +120,7 @@
 
   %h2 Your progress when using the service
 
-  %p When you use the ‘Make a claim to evict tenants: accelerated possession’ service, we’ll set a cookie to remember your progress through the forms. These cookies don’t store your personal data and are deleted once you’ve completed the transaction.
+  %p When you use the 'Make a claim to evict tenants: accelerated possession' service, we'll set a cookie to remember your progress through the forms. These cookies don't store your personal data and are deleted once you've completed the transaction.
 
   %table.border
     %thead
@@ -97,6 +128,7 @@
         %th Name
         %th Purpose
         %th Expires
+    %tbody
       %tr
         %td
           %code _accelerated_claims_session
@@ -104,4 +136,19 @@
         %td At the end of the session
 
 
+  %h2 Our user satisfaction survey
 
+  %p We select some users to take part in a user-satisfaction survey. If you choose to take part, or dismiss the survey, we'll save a cookie that lets us know that you've seen the message so that we don't show it to you again.
+
+  %table.border
+    %thead
+      %tr
+        %th Name
+        %th Purpose
+        %th Expires
+    %tbody
+      %tr
+        %td
+          %code govuk_takenUserSatisfactionSurvey
+        %td Saves a message to remember if you've taken the survey or dismissed it
+        %td 4 months

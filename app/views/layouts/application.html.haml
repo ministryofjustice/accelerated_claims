@@ -24,4 +24,11 @@
     %li= link_to 'Technical help', technical_help_path
     %li= link_to 'Feedback', Rails.configuration.feedback_url
 
+- content_for :footer_app_links do
+  %ul
+    %li= link_to 'Help', 'help'
+    %li= link_to 'Cookies', 'cookies'
+    %li= link_to 'Contact', 'http://www.gov.uk/contact'
+    %li= link_to 'Cymraeg', 'http://www.gov.uk/cymraeg'
+
 = render template: "layouts/moj_template"
