@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+
+  around_filter :clear_session_before_raising_to_app_signal
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null session instead.
   if ENV['CC_NO_CSRF'].nil?
@@ -30,22 +33,17 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def referrer_is_feedback_form?
-    request.referrer.to_s[/#{feedback_path}|#{technical_help_path}/]
+  def clear_session_before_raising_to_app_signal
+    begin
+      yield
+    rescue => err
+      reset_session if Rails.env.production?
+      raise err
+    end
   end
 
-  def send_to_zendesk item, request_type, success_message
-    if item.valid?
-      begin
-        ZendeskHelper.send(request_type, item) unless item.test?
-        return_to notice: success_message
-      rescue ZendeskAPI::Error::NetworkError
-        flash[:error] = 'There were problems sending your feedback. Please try again later.'
-        render :new
-      end
-    else
-      render :new
-    end
+  def referrer_is_feedback_form?
+    request.referrer.to_s[/#{feedback_path}|#{technical_help_path}/]
   end
 
   private
