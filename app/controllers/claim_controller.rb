@@ -26,6 +26,7 @@ class ClaimController < ApplicationController
 
   def confirmation
     claim = session[:claim]
+
     if claim.nil? || !Claim.new(claim).valid?
       redirect_to_with_protocol(:new)
     end
@@ -77,6 +78,11 @@ class ClaimController < ApplicationController
     else
       redirect_to_with_protocol :confirmation
     end
+  end
+
+  def raise_exception
+    session[:special_values] = "session variable"
+    raise "This exception has been deliberately raised"
   end
 
   private
