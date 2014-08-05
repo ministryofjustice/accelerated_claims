@@ -1,4 +1,6 @@
 class StaticController < ApplicationController
+  protect_from_forgery except: :expired
+
   def help
     @page_title = 'Help'
     render 'help'
