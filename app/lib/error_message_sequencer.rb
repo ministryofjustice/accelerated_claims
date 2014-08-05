@@ -32,6 +32,7 @@ class ErrorMessageSequencer
       'claim_deposit_received_error'                  => 510,
       'claim_deposit_as_money_error'                  => 520,
       'claim_license_multiple_occupation_error'       => 610,
+      'claim_license_issued_under_act_part_applied_error' => 615,
       'claim_license_issued_by_error'                 => 620,
       'claim_license_issued_under_act_part_yes_error' => 630,
       'claim_licesnse_issued_date_error'              => 640,
