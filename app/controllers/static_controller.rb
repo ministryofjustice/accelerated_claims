@@ -1,4 +1,7 @@
 class StaticController < ApplicationController
+
+  protect_from_forgery except: :expired
+
   def cookies
     @page_title = 'Cookies'
     render 'cookies'
