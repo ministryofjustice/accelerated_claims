@@ -1,7 +1,14 @@
 class StaticController < ApplicationController
-
   protect_from_forgery except: :expired
 
+  def help
+    @page_title = 'Help'
+    render 'help'
+  end
+  def accessibility
+    @page_title = 'Accessibility'
+    render 'accessibility'
+  end
   def cookies
     @page_title = 'Cookies'
     render 'cookies'
