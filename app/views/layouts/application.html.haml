@@ -26,9 +26,7 @@
 
 - content_for :footer_app_links do
   %ul
-    %li= link_to 'Help', 'help'
-    %li= link_to 'Cookies', 'cookies'
-    %li= link_to 'Contact', 'http://www.gov.uk/contact'
-    %li= link_to 'Cymraeg', 'http://www.gov.uk/cymraeg'
+    %li= link_to 'Help', :help
+    %li= link_to 'Cookies', :cookies
 
 = render template: "layouts/moj_template"

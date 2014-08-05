@@ -19,11 +19,11 @@ AcceleratedClaims::Application.routes.draw do
     get  '/data',           controller: :claim, action: :data
     get  '/raise_exception',controller: :claim, action: :raise_exception
 
-    get  '/help',           controller: :static, action: :help
-    get  '/accessibility',  controller: :static, action: :accessibility
-    get  '/cookies',        controller: :static, action: :cookies
-    get  '/terms',          controller: :static, action: :terms
-    get  '/expired',        controller: :static, action: :expired
+    get  "#{Rails.application.config.relative_url_root}/help",           controller: :static, action: :help, as: :help
+    get  "#{Rails.application.config.relative_url_root}/accessibility",  controller: :static, action: :accessibility, as: :accessibility
+    get  "#{Rails.application.config.relative_url_root}/cookies",        controller: :static, action: :cookies, as: :cookies
+    get  "#{Rails.application.config.relative_url_root}/terms",          controller: :static, action: :terms, as: :terms
+    get  "#{Rails.application.config.relative_url_root}/expired",        controller: :static, action: :expired, as: :expired
 
     get  '/heartbeat',      controller: :application, action: :heartbeat
     post '/expire_session', controller: :application, action: :expire_session
