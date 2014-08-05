@@ -91,6 +91,7 @@ class Tenancy < BaseClass
 
     t.validates *ONE_TENANCY_FIELDS,
       absence: { message: "must be blank if more than one tenancy agreement" }
+    t.validate :tenancy_applicable_options
   end
 
   with_options if: :in_first_rules_period? do |t|
@@ -226,6 +227,16 @@ class Tenancy < BaseClass
       message = 'You must specify one applicable option'
       errors[:from_1997_option] << message
       errors[:upto_1997_option] << message
+    end
+  end
+
+  def tenancy_applicable_options
+    if from_1997_option == 'No' && upto_1997_option == 'No'
+      unless (original_assured_shorthold_tenancy_agreement_date < Tenancy::RULES_CHANGE_DATE)
+        message = 'You must specify one applicable option'
+        errors[:from_1997_option] << message
+        errors[:upto_1997_option] << message
+      end
     end
   end
 end
