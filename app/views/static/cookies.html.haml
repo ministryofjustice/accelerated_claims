@@ -39,7 +39,7 @@
     %li what you click on while you're visiting the site.
 
   %p
-    %em We don't collect or store your personal information so this information can't be used to identify who you are. For more information visit our #{link_to 'Privacy policy', 'privacy'}.
+    %em We don't collect or store your personal information so this information can't be used to identify who you are. For more information visit our #{link_to 'Privacy policy', :terms}.
 
   %p We don't allow Google to use or share our analytics data.
 
@@ -95,8 +95,6 @@
           %code _ga
         %td
           This is a google analytics cookie that helps us understand how the service is being used in detail. Your data is anonymised.
-          %br
-          It is used to store a randomly generated number to uniquely identify this session to GA, and is included on all requests after it has been generated.
         %td 2 years
 
   %p You can #{link_to 'opt out of Google Analytics cookies','https://tools.google.com/dlpage/gaoptout', :class => 'external', :rel => 'external'}.
