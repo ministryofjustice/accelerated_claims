@@ -3,12 +3,23 @@ require 'email_validator'
 class Feedback
   include ActiveModel::Model
 
-  attr_accessor :text
+  attr_accessor :difficulty_feedback
+  attr_accessor :improvement_feedback
+  attr_accessor :satisfaction_feedback
+  attr_accessor :help_feedback
+  attr_accessor :other_help
+
+  validates :difficulty_feedback, length: { maximum: 5000 }
+  validates :improvement_feedback, length: { maximum: 5000 }
+  validates :satisfaction_feedback, length: { maximum: 35 }
+  validates :help_feedback, length: { maximum: 75 }
+  validates :other_help, length: { maximum: 5000 }
+
   attr_accessor :email
   attr_accessor :user_agent
 
-  validates_presence_of :text
   validates :email, email: true, if: ->(f) { f.email.present? }
+  validates :email, length: { maximum: 500 }
 
   TEST_TEXT = 'test text'
 
@@ -29,6 +40,16 @@ class Feedback
   end
 
   def test?
-    text == TEST_TEXT
+    difficulty_feedback == TEST_TEXT
+  end
+
+  def text
+    [:difficulty_feedback,
+    :improvement_feedback,
+    :satisfaction_feedback,
+    :help_feedback,
+    :other_help].map do |field|
+      "#{field}: #{send(field)}"
+    end.join("\n\n")
   end
 end

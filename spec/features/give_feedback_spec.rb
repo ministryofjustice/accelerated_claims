@@ -9,7 +9,7 @@ feature 'Providing feedback' do
       visit '/'
       click_link 'your feedback'
 
-      fill_in 'Your comments', with: comments_text
+      fill_in 'Did you have any difficulty with this service?', with: comments_text
       fill_in 'Your email address', with: '@bad_address'
 
       click_button 'Send'
@@ -28,7 +28,7 @@ feature 'Providing feedback' do
       visit '/'
       click_link 'your feedback'
 
-      fill_in 'Your comments', with: comments_text
+      fill_in 'Did you have any difficulty with this service?', with: comments_text
       fill_in 'Your email address', with: ''
 
       click_button 'Send'

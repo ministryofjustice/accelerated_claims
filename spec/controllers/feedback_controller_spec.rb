@@ -9,27 +9,36 @@ describe FeedbackController, :type => :controller do
 
   describe '#create' do
     before do
-      allow(ZendeskHelper).to receive(:send_to_zendesk).once
+      allow(ZendeskHelper).to receive(:send_feedback).once
     end
 
-    def do_post(text='feedback')
-      post :create, feedback: { email: 'test@lol.biz.info', text: text }
+    let(:text) { 'feedback' }
+    let(:model) { :feedback }
+
+    let(:form_params) do
+      { email: 'test@lol.biz.info',
+          difficulty_feedback: text,
+          improvement_feedback: 'y',
+          satisfaction_feedback: 'z',
+          help_feedback: 'a' }
     end
 
-    it 'redirects to the homepage' do
-      do_post
-      expect(response).to redirect_to root_path
+    def do_post
+      post :create, feedback: form_params
     end
+
+    include_examples 'redirect after form submission'
 
     it 'sends feedback to zendesk' do
-      expect(ZendeskHelper).to receive(:send_to_zendesk).once
+      expect(ZendeskHelper).to receive(:send_feedback).once
       do_post
     end
 
     context 'with test text' do
+      let(:text) { Feedback::TEST_TEXT }
       it 'does not send feedback' do
-        expect(ZendeskHelper).not_to receive(:send_to_zendesk)
-        do_post Feedback::TEST_TEXT
+        expect(ZendeskHelper).not_to receive(:send_feedback)
+        do_post
       end
     end
 

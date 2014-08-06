@@ -7,6 +7,8 @@
   %p
     %strong Please note: we cannot offer legal advice.
 
+    = render partial: 'shared/flash'
+
     - unless @user_callback.errors.messages.blank?
       %section.flash.error-summary
         %h2#error-heading You need to fix the errors on this page before continuing.

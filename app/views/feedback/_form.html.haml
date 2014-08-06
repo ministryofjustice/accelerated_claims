@@ -1,20 +1,43 @@
-%header.content-header
-  %p Use this form to report a problem or suggest improvements to the service.
-  %p
-    %strong Please don't include any sensitive personal information (For example bank details, address etc.)
 
 = form_for @feedback, url: feedback_path, html: { novalidate: 'novalidate' }, builder: LabellingFormBuilder do |f|
   %input{name: 'feedback[user_agent]', type: 'hidden', value: request.headers['HTTP_USER_AGENT']}
 
   %section
-    .moj-panel
-      = f.text_area_row :text, label: 'Your comments'
+    = f.text_area_row :difficulty_feedback, label: 'Did you have any difficulty with this service?'
 
-      .row
-        Do you want a reply? If you'd like us to get back to you, please leave your details below. We'll only use this to reply to your message.
+    = f.text_area_row :improvement_feedback, label: 'Do you have any ideas for how it could be improved?'
+    .row
+      %p
+        Please don't include any personal or financial details
+        %br
+        %span.hint For example, your National Insurance or credit card numbers.
 
+    = f.radio_button_fieldset :satisfaction_feedback,
+      'Overall, how did you feel about the service you received today?',
+      class: 'radio',
+      choice: { 'Very satisfied' => 'Very satisfied',
+        'Satisfied' => 'Satisfied',
+        'Neither satisfied or dissatisfied' => 'Neither satisfied or dissatisfied',
+        'Dissatisfied' => 'Dissatisfied',
+        'Very dissatisfied' => 'Very dissatisfied'}
+
+    = f.radio_button_fieldset :help_feedback,
+      'Did you have any help filling in this form?',
+      class: 'radio',
+      choice: { 'No, I filled in this form myself' => 'No, I filled in this form myself',
+        'I have difficulty using computers so someone filled in this form for me' => 'I have difficulty using computers so someone filled in this form for me',
+        'I used an accessibility tool such as a screen reader' => 'I used an accessibility tool such as a screen reader',
+        'I had some other kind of help - please specify' => 'I had some other kind of help'}
+    = f.text_field :other_help
+
+    .row
+      %h2 Tell us what you think of new designs
+      Please enter your email address if you're interested in taking part in our user testing and giving feedback on some new designs. We won't use your email address for anything else.
+
+    .row
       = f.text_field_row :email, label: 'Your email address', class: 'rel'
 
   %section
-    .action-buttons.cf
-      = f.submit 'Send', :class => 'button button-primary large chevron left', :id => 'submit-button'
+    .row
+      .action-buttons.cf
+        = f.submit 'Send feedback', class: 'button button-primary large chevron left', id: 'submit-button'
