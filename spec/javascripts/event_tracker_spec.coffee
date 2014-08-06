@@ -17,15 +17,23 @@ describe 'EventTracker', ->
 
   describe 'click on "data-event-label" element', ->
     it "dispatches analytics event", ->
-      track = new window.EventTracker($)
+      track = new window.EventTracker('[data-event-label]')
       spyOn window, 'dispatchTrackingEvent'
       $('[data-event-label]').trigger 'click'
 
       expect(window.dispatchTrackingEvent).toHaveBeenCalledWith(jasmine.any(String), 'Link event text', 'data event label')
 
+  describe 'click on "data-event-label" element with overrides', ->
+    it "dispatches analytics event with overriden action/label", ->
+      track = new window.EventTracker('[data-event-label]', 'new category', 'new action', 'new label')
+      spyOn window, 'dispatchTrackingEvent'
+      $('[data-event-label]').trigger 'click'
+
+      expect(window.dispatchTrackingEvent).toHaveBeenCalledWith('new category', 'new action', 'new label')
+
   describe 'second click on "data-event-label" element', ->
-    it "dispatches analytics event", ->
-      track = new window.EventTracker($)
+    it "does not dispatch analytics event", ->
+      track = new window.EventTracker('[data-event-label]')
       $('[data-event-label]').trigger 'click'
       spyOn window, 'dispatchTrackingEvent'
 

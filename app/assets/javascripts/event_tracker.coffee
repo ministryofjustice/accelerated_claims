@@ -4,13 +4,16 @@ root.dispatchTrackingEvent = (category, action, label) ->
   ga 'send', 'event', category, action, label if typeof ga is 'function'
 
 class EventTracker
-  constructor: ($) ->
-    @bind $('[data-event-label]'), 'click', @onClick
+  constructor: (selector, event_category=null, event_action=null, event_label=null) ->
+    @category = event_category
+    @action = event_action
+    @label = event_label
+    @bind $(selector), @onClick
 
-  bind: (elements, event, handler) ->
+  bind: (elements, handler) ->
     _.each elements, (element) =>
       selector = '#' + element.id
-      $('body').on event, selector, handler
+      $('body').on 'click', selector, handler
 
   unbind: (element) ->
     selector = '#' + element.id
@@ -18,9 +21,9 @@ class EventTracker
 
   onClick: (event) =>
     element = event.currentTarget
-    category = element['href'].replace(/https?:\/\/[^\/]+/i, '')
-    action = element.text
-    label = $(element).data('event-label')
+    category = @category || element['href'].replace(/https?:\/\/[^\/]+/i, '')
+    action = @action || element.text
+    label = @label || $(element).data('event-label')
 
     root.dispatchTrackingEvent(category, action, label)
     @unbind element
