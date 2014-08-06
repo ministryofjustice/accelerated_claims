@@ -18,6 +18,7 @@
     },
     claimant_one: {
       title: "Mr",
+      organization_name: nil,
       full_name: "Francis Coker",
       street: "13 Princess Square\nMilton",
       postcode: "RT12 1LS"

@@ -10,12 +10,10 @@ class ClaimForm
     fill_property_details
     claimant_type = select_claimant_type
     if claimant_type == 'individual'
-      puts "++++++ DEBUG individual ++++++ #{__FILE__}::#{__LINE__} ++++\n"
       select_number_of :claimants
       fill_claimant_one
       fill_claimant_two
     else
-      puts "++++++ DEBUG organizational ++++++ #{__FILE__}::#{__LINE__} ++++\n"
       fill_organizational_claimant
     end
     select_number_of :defendants
@@ -46,7 +44,7 @@ class ClaimForm
         fill_claimant_two
       end
     else
-      fill_organizational_claimant
+      fill_organizational_claimant 
     end
 
     number_of_defendants = select_number_of :defendants
@@ -57,7 +55,7 @@ class ClaimForm
       fill_defendant_two complete_address: address_to_be_completed
     end
 
-    fill_claimant_contact_with_js
+    fill_claimant_contact_with_js 
 
     fill_tenancy
     fill_notice_with_js

@@ -18,6 +18,7 @@
     },
     claimant_one: {
       title: "Mrs",
+      organization_name: nil,
       full_name: "Shirley Williams",
       street: "38 Llanwrchgog St\nCaedffyn",
       postcode: "GO31 1RJ"

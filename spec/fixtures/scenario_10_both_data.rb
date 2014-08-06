@@ -18,6 +18,7 @@
     },
     claimant_one: {
       title: "Mr",
+      organization_name: nil,
       full_name: "John Smith",
       street: "2 Brown St\nBwlchllydd",
       postcode: "FX1W 0LU"

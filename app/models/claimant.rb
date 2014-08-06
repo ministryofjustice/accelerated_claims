@@ -53,8 +53,9 @@ class Claimant < BaseClass
 
   def as_json
     postcode1, postcode2 = split_postcode
+    address = @claimant_type == 'organization' ? "#{organization_name}\n#{street}" : "#{title} #{full_name}\n#{street}"
     {
-      "address" => "#{title} #{full_name}\n#{street}",
+      "address" => address,
       "postcode1" => "#{postcode1}",
       "postcode2" => "#{postcode2}"
     }

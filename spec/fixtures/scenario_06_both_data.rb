@@ -18,7 +18,8 @@
     },
     claimant_one: {
       title: nil,
-      full_name: "Infinity Southwich",
+      organization_name: "Infinity Southwich",
+      full_name: nil,
       street: "Redleaf House, 157-159 Masonic Hall\nSouthwich",
       postcode: "SH2 9HY"
     },

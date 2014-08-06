@@ -18,6 +18,7 @@
     },
     claimant_one: {
       title: "Miss",
+      organization_name: nil,
       full_name: "Teri Dactyl",
       street: "7 Bysea Rd\nBlacktown",
       postcode: "YY21 1JH"

@@ -18,9 +18,13 @@
 
 
   def initialize(claim_params={})
-    @num_claimants  = claim_params.key?(:num_claimants) ? claim_params[:num_claimants].to_i : nil
-    @num_defendants = claim_params.key?(:num_defendants) ? claim_params[:num_defendants].to_i : nil
     @claimant_type  = claim_params.key?(:claimant_type) ? claim_params[:claimant_type] : nil
+    if @claimant_type == 'organization'
+      @num_claimants = 1
+    else
+      @num_claimants  = claim_params.key?(:num_claimants) ? claim_params[:num_claimants].to_i : nil
+    end
+    @num_defendants = claim_params.key?(:num_defendants) ? claim_params[:num_defendants].to_i : nil
 
     initialize_all_submodels(claim_params)
     @errors = ActiveModel::Errors.new(self)

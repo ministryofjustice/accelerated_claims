@@ -47,7 +47,11 @@ feature "submit claim" do
       end
     end
 
-    Dir.glob('spec/fixtures/scenario_05*_data.rb') do |data_file|
+    Dir.glob('spec/fixtures/scenario_*_data.rb') do |data_file|
+      if data_file =~ /05/ || data_file =~ /06/
+        puts "++++++ DEBUG skipping scenario #{data_file} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+        next
+      end
       data = load_fixture_data(data_file)
       title = data['title']
       description = data['description']
@@ -63,13 +67,13 @@ feature "submit claim" do
         end
       end
 
-      # unless data['javascript'] == 'NON-JS'
-      #   eval(%Q|
-      #     scenario "#{title} with JS: #{description.first} (#{description.last})", js: true do
-      #       run_scenario '#{data_file}', js: true
-      #     end
-      #   |)
-      # end
+      unless data['javascript'] == 'NON-JS'
+        eval(%Q|
+          scenario "#{title} with JS: #{description.first} (#{description.last})", js: true do
+            run_scenario '#{data_file}', js: true
+          end
+        |)
+      end
     end
  # end
 end

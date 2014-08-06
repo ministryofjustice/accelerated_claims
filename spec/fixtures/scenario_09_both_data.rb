@@ -18,6 +18,7 @@
     },
     claimant_one: {
       title: "Mr",
+      organization_name: nil,
       full_name: "Willie Cox",
       street: "104 Babbage Rd\nLondonville",
       postcode: "SB24 9HE"

@@ -18,6 +18,7 @@
     },
     claimant_one: {
       title: "Mr",
+      organization_name: nil,
       full_name: "Mark Ateer",
       street: "26 Heath St\nAnytown",
       postcode: "FX9 1XX"

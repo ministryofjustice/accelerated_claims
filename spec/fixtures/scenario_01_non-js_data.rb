@@ -18,6 +18,7 @@
     },
     claimant_one: {
       title: "Mr ",
+      organization_name: nil,
       full_name: "Joe Blow",
       street: "9 Made-up Lane\nAnytown",
       postcode: "EY88 1ZZ"
