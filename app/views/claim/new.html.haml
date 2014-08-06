@@ -37,7 +37,6 @@
       .sub-panel.hide.js-numclaimants.1.2.claimant.js-claimanttype.organization#claimant_one
         %h3.person.hide.js-claimanttype.individual First claimant
         = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_one}
-        = render partial: 'reference_number', object: @claim.reference_number, locals: { claim_form: claim_form }
         .row.divider
       .sub-panel.hide.js-claimanttype.inidvidual.js-numclaimants.2.claimant.same-address#claimant_two
         %h3.person
