@@ -42,7 +42,7 @@ moj.Modules.sessionModal = (function() {
       },
       opacity:      65,
       containerCss:  {
-        width:        '520px',
+        width:        '530px',
         background:   '#fff',
         padding:      '10px'
       },

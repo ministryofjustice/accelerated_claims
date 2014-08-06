@@ -15,7 +15,6 @@ moj.Modules.showHide = (function() {
       radios,
       cbs
       ;
-
   init = function() {
     cacheEls();
     bindEvents();

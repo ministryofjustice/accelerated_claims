@@ -60,7 +60,7 @@ class ClaimForm
     fill_claimant_contact_with_js
 
     fill_tenancy
-    fill_notice
+    fill_notice_with_js
     fill_licences
     fill_deposit
     fill_postponement
@@ -318,6 +318,15 @@ class ClaimForm
     if Tenancy.in_first_rules_period? start_date
       fill_in_text_field prefix, 'assured_shorthold_tenancy_notice_served_by'
       fill_in_moj_date_fieldset prefix, 'assured_shorthold_tenancy_notice_served_date'
+    end
+  end
+
+  def fill_notice_with_js
+    if get_data('notice', 'served_by_name').nil?
+      fill_notice
+    else
+      choose 'claim_notice_notice_served_yes'
+      fill_notice
     end
   end
 

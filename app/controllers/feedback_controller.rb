@@ -11,18 +11,8 @@ class FeedbackController < ApplicationController
   def create
     @feedback = Feedback.new(feedback_params)
 
-    if @feedback.valid?
-      begin
-        ZendeskHelper.send_to_zendesk(@feedback) unless @feedback.test?
-
-        return_to notice: 'Thanks for your feedback.'
-      rescue ZendeskAPI::Error::NetworkError
-        flash[:error] = 'Problems sending your feedback. Please try again later.'
-        render :new
-      end
-    else
-      render :new
-    end
+    success_message = 'Thanks for your feedback.'
+    send_to_zendesk @feedback, :send_feedback, success_message
   end
 
   private

@@ -1,5 +1,3 @@
-require 'appsignal'
-
 class ClaimController < ApplicationController
 
   def new
@@ -26,6 +24,7 @@ class ClaimController < ApplicationController
 
   def confirmation
     claim = session[:claim]
+
     if claim.nil? || !Claim.new(claim).valid?
       redirect_to_with_protocol(:new)
     end
@@ -37,7 +36,6 @@ class ClaimController < ApplicationController
     if session[:claim].nil?
       msg = "User attepmted to download PDF from an expired session - redirected to #{expired_path}"
       Rails.logger.warn msg
-      Appsignal.add_exception(RuntimeError.new(msg)) if Rails.env.production?
       redirect_to expired_path
     else
       @claim = Claim.new(session[:claim])
@@ -77,6 +75,11 @@ class ClaimController < ApplicationController
     else
       redirect_to_with_protocol :confirmation
     end
+  end
+
+  def raise_exception
+    session[:special_values] = "session variable"
+    raise "This exception has been deliberately raised"
   end
 
   private

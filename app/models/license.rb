@@ -16,7 +16,7 @@ class License < BaseClass
   end
 
   with_options if: :hmo_licence_applied_for? do |license|
-    license.validates :issued_under_act_part_applied, presence: { message: 'must be selected' }, inclusion: { in: ['Part2', 'Part3'] }
+    license.validates :issued_under_act_part_applied, presence: { message: 'You must select the type of HMO licence that you have applied for' }, inclusion: { in: ['Part2', 'Part3'] }
     license.validates :issued_by, absence: { message: "Must be blank if HMO licence applied for" }
     license.validates :issued_date, absence: { message: "Must be blank if HMO licence applied for" }
   end
