@@ -64,7 +64,7 @@ describe 'AnalyticsTracking', ->
   describe 'onload of #claimForm with .error-summary', ->
 
     it 'does not dispatch event if no .error-links', ->
-      element = $('<form id="claimForm"><div class="error-summary" /></form>')
+      element = $('<form id="claimForm"><div id="form_errors" class="error-summary" /></form>')
       $(document.body).append(element)
 
       spyOn window, 'dispatchTrackingEvent'
@@ -73,7 +73,7 @@ describe 'AnalyticsTracking', ->
       element.remove()
 
     it 'dispatches pageview', ->
-      element = $('<form id="claimForm"><div class="error-summary" /></form>')
+      element = $('<form id="claimForm"><div id="form_errors" class="error-summary" /></form>')
       $(document.body).append(element)
 
       spyOn window, 'dispatchPageView'
@@ -82,7 +82,7 @@ describe 'AnalyticsTracking', ->
       element.remove()
 
     it 'dispatches event per .error-link', ->
-      element = $('<form id="claimForm"><div class="error-summary">' +
+      element = $('<form id="claimForm"><div id="form_errors" class="error-summary">' +
         '<a class="error-link" data-id="#claimants" href="#claimants">Question "As the landlord, you’re known as the claimant in this case. How many claimants are there?" not answered</a>' +
         '<a class="error-link" data-id="#claim_property_street_error" href="#claim_property_street_error">Street must be entered</a>' +
         '</div></form>')
