@@ -38,9 +38,7 @@ gem 'mail'
 gem 'faraday'
 gem 'redis-rails'
 
-group :production do
-  gem 'appsignal'
-end
+
 
 group :production, :development do
 #  gem 'newrelic_rpm'
