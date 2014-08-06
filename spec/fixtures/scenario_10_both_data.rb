@@ -51,7 +51,7 @@
       dx_number: "DX 123"
     },
     reference_number: {
-      reference_number: "my-ref-123"
+      reference_number: nil
     },
     defendant_one: {
       title: "Mr",

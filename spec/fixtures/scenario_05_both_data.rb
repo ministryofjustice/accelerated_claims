@@ -19,7 +19,7 @@
     claimant_one: {
       title: nil,
       organization_name: "Yammerton City Council",
-      full_name: "Yammerton City Council",
+      full_name: nil,
       street: "Civic Centre, St. Peter's Square\nYammerton",
       postcode: "AV1 1SH"
     },

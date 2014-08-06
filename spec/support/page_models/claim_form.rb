@@ -65,7 +65,7 @@ class ClaimForm
     check_order_possession_and_cost
     fill_court_fee
     fill_legal_costs
-    fill_reference_number
+    fill_reference_number_with_js 
   end
 
   def select_number_of type
@@ -143,7 +143,15 @@ class ClaimForm
   end
 
   def fill_reference_number
-    fill_in_text_field('reference_number', 'reference_number')
+    fill_in_text_field_if_present('reference_number', 'reference_number')
+  end
+
+
+  def fill_reference_number_with_js
+    unless get_data('reference_number', 'reference_number').blank?
+      find('#reference-number').click
+      fill_reference_number
+    end
   end
 
   def submit
@@ -159,6 +167,12 @@ class ClaimForm
 
   def fill_in_text_field(prefix, key)
     fill_in("claim_#{prefix}_#{key}", with: get_data(prefix, key))
+  end
+
+  def fill_in_text_field_if_present(prefix, key)
+    unless get_data(prefix, key).blank?
+      fill_in_text_field(prefix, key)
+    end
   end
 
   def get_data prefix, key
