@@ -1,5 +1,3 @@
-require 'appsignal'
-
 class ClaimController < ApplicationController
 
   def new
@@ -38,7 +36,6 @@ class ClaimController < ApplicationController
     if session[:claim].nil?
       msg = "User attepmted to download PDF from an expired session - redirected to #{expired_path}"
       Rails.logger.warn msg
-      Appsignal.add_exception(RuntimeError.new(msg)) if Rails.env.production?
       redirect_to expired_path
     else
       @claim = Claim.new(session[:claim])
