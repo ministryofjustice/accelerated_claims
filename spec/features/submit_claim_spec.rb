@@ -48,10 +48,6 @@ feature "submit claim" do
     end
 
     Dir.glob('spec/fixtures/scenario_*_data.rb') do |data_file|
-      if data_file =~ /05/ || data_file =~ /06/
-        puts "++++++ DEBUG skipping scenario #{data_file} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-        next
-      end
       data = load_fixture_data(data_file)
       title = data['title']
       description = data['description']
