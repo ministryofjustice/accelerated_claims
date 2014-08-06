@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null session instead.
   if ENV['CC_NO_CSRF'].nil?
-    protect_from_forgery with: :exception
+    protect_from_forgery with: :exception, except: :expire_session
   end
 
   def redirect_to_with_protocol action, options={}
