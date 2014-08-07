@@ -79,7 +79,9 @@
       assured_shorthold_tenancy_notice_served_date: nil,
       demotion_order_date: nil,
       demotion_order_court: nil,
-      previous_tenancy_type: nil
+      previous_tenancy_type: nil,
+      from_1997_option: 'Yes',
+      # upto_1997_option: 'Yes'
     },
     notice: {
       served_by_name: "Royal mail",

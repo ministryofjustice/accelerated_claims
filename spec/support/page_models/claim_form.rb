@@ -44,7 +44,7 @@ class ClaimForm
         fill_claimant_two
       end
     else
-      fill_organizational_claimant 
+      fill_organizational_claimant
     end
 
     number_of_defendants = select_number_of :defendants
@@ -55,7 +55,7 @@ class ClaimForm
       fill_defendant_two complete_address: address_to_be_completed
     end
 
-    fill_claimant_contact_with_js 
+    fill_claimant_contact_with_js
 
     fill_tenancy
     fill_notice_with_js
@@ -65,7 +65,7 @@ class ClaimForm
     check_order_possession_and_cost
     fill_court_fee
     fill_legal_costs
-    fill_reference_number_with_js 
+    fill_reference_number_with_js
   end
 
   def select_number_of type
@@ -316,6 +316,8 @@ class ClaimForm
       fill_in_text_field prefix, 'assured_shorthold_tenancy_notice_served_by'
       fill_in_moj_date_fieldset prefix, 'assured_shorthold_tenancy_notice_served_date'
     end
+    check_box(prefix, 'upto_1997_option') if get_data(prefix, 'upto_1997_option') == 'Yes'
+    check_box(prefix, 'from_1997_option') if get_data(prefix, 'from_1997_option') == 'Yes'
   end
 
   def fill_multiple_tenancy
@@ -323,6 +325,7 @@ class ClaimForm
     choose_radio  prefix,'agreement_reissued_for_same_property'
     choose_radio  prefix, 'agreement_reissued_for_same_landlord_and_tenant'
     fill_in_moj_date_fieldset   prefix, 'original_assured_shorthold_tenancy_agreement_date'
+    fill_in_moj_date_fieldset prefix, 'latest_agreement_date'
     fill_in_moj_date_fieldset prefix, 'latest_agreement_date'
 
     start_date = Date.parse(get_data(prefix, 'original_assured_shorthold_tenancy_agreement_date'))

@@ -189,6 +189,11 @@ class Tenancy < BaseClass
     hash
   end
 
+  def initialize params
+    puts "~~~~" + params.inspect
+    super
+  end
+
   private
 
   def applicable_statements
@@ -224,7 +229,7 @@ class Tenancy < BaseClass
 
   def single_tenancy_options
     if from_1997_option == 'No' && upto_1997_option == 'No'
-      message = 'You must specify one applicable option'
+      message = 'You must specify one applicable option1'
       errors[:from_1997_option] << message
       errors[:upto_1997_option] << message
     end
@@ -233,7 +238,7 @@ class Tenancy < BaseClass
   def tenancy_applicable_options
     if from_1997_option == 'No' && upto_1997_option == 'No'
       unless (original_assured_shorthold_tenancy_agreement_date < Tenancy::RULES_CHANGE_DATE)
-        message = 'You must specify one applicable option'
+        message = 'You must specify one applicable option2'
         errors[:from_1997_option] << message
         errors[:upto_1997_option] << message
       end

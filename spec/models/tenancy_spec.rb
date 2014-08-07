@@ -215,56 +215,85 @@ describe Tenancy, :type => :model do
 
       context 'applicable statements' do
         describe 'when they are both not picked' do
+          let(:tenancy) do
+            assured_tenancy(from_1997_option: 'No',
+                            upto_1997_option: 'No',
+                            start_date: Date.parse('1998-01-01'))
+          end
+
           it 'should be invalid' do
-            # TODO: fix
-            tenancy = assured_tenancy(from_1997_option: 'No',
-                                      upto_1997_option: 'No',
-                                      start_date: Date.parse('1998-01-01'))
             expect(tenancy).not_to be_valid
           end
         end
 
         describe 'when they are both picked' do
+          let(:tenancy) do
+            assured_tenancy(assured_shorthold_tenancy_type: 'multiple',
+                            from_1997_option: 'Yes',
+                            upto_1997_option: 'Yes',
+                            original_assured_shorthold_tenancy_agreement_date: Date.parse('1998-01-01'),
+                            latest_agreement_date: Date.parse('2013-01-01'),
+                            agreement_reissued_for_same_property: 'Yes',
+                            agreement_reissued_for_same_landlord_and_tenant: 'Yes',
+                            start_date: '')
+          end
+
           it 'should be valid' do
-            # TODO: fix
-            tenancy = assured_tenancy(from_1997_option: 'Yes',
-                                      upto_1997_option: 'Yes',
-                                      start_date: Date.parse('1998-01-01'))
             expect(tenancy).not_to be_valid
           end
         end
 
         describe 'when one is picked' do
+          let(:tenancy) do
+            assured_tenancy(assured_shorthold_tenancy_type: 'multiple',
+                            from_1997_option: 'Yes',
+                            upto_1997_option: 'No',
+                            original_assured_shorthold_tenancy_agreement_date: Date.parse('1998-01-01'),
+                            latest_agreement_date: Date.parse('2013-01-01'),
+                            agreement_reissued_for_same_property: 'Yes',
+                            agreement_reissued_for_same_landlord_and_tenant: 'Yes',
+                            start_date: '')
+          end
+
           it 'should be valid' do
-            # TODO: fix
-            tenancy = assured_tenancy(from_1997_option: 'Yes',
-                                      upto_1997_option: 'No',
-                                      start_date: Date.parse('1998-01-01'))
             expect(tenancy).to be_valid
           end
 
           context 'and the start date is before RULES_CHANGE_DATE' do
+            let(:tenancy) do
+              assured_tenancy(assured_shorthold_tenancy_type: 'multiple',
+                              from_1997_option: 'Yes',
+                              upto_1997_option: 'No',
+                              original_assured_shorthold_tenancy_agreement_date: Date.parse('1998-01-01'),
+                              latest_agreement_date: Date.parse('2013-01-01'),
+                              agreement_reissued_for_same_property: 'Yes',
+                              agreement_reissued_for_same_landlord_and_tenant: 'Yes',
+                              start_date: Date.parse('1998-01-01'))
+            end
+
             it 'should be valid' do
-              # TODO: fix
-              tenancy = assured_tenancy(from_1997_option: 'Yes',
-                                        upto_1997_option: 'No',
-                                        start_date: Date.parse('1997-01-01'))
               expect(tenancy).not_to be_valid
             end
           end
         end
 
         describe 'when none are picked' do
+          let(:tenancy) do
+            assured_tenancy(assured_shorthold_tenancy_type: 'multiple',
+                            from_1997_option: 'No',
+                            upto_1997_option: 'No',
+                            original_assured_shorthold_tenancy_agreement_date: Date.parse('1998-01-01'),
+                            latest_agreement_date: Date.parse('2013-01-01'),
+                            agreement_reissued_for_same_property: 'Yes',
+                            agreement_reissued_for_same_landlord_and_tenant: 'Yes')
+          end
+
           it 'should not be valid' do
-            # TODO: fix
-            tenancy = assured_tenancy(from_1997_option: 'No',
-                                      upto_1997_option: 'No',
-                                      original_assured_shorthold_tenancy_agreement_date: Date.parse('1998-01-01'))
             expect(tenancy).not_to be_valid
           end
 
           context 'and the start date is before RULES_CHANGE_DATE' do
-            subject do
+            let(:tenancy) do
               assured_tenancy(assured_shorthold_tenancy_type: 'multiple',
                               from_1997_option: 'No',
                               upto_1997_option: 'No',
@@ -276,7 +305,7 @@ describe Tenancy, :type => :model do
             end
 
             it 'should be valid' do
-              expect(subject).to be_valid
+              expect(tenancy).to be_valid
             end
           end
         end
