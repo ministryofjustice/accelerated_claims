@@ -10,8 +10,11 @@
       = form.text_field_row :dx_number, label: 'DX number', class: 'rel dx_number'
     .row
       If you want us to send correspondence about the case to a different address, enter it here.
-      %span.hint.block
+      %span.hint.block.hide.js-claimanttype.individual
         eg a legal representative's address (Optional)
+      %span.hint.block.hide.js-claimanttype.organization
+        eg a legal representative or managing agent's address (Optional)
+
     .sub-panel.details
       .row.js-only
         %a.caption#correspondence-address{ href: '#correspondence-address' }
