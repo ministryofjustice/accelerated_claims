@@ -12,11 +12,13 @@
       house: "Yes"
     },
     claim: {
+      claimant_type: "individual",
       number_of_claimants: "1",
       number_of_defendants: "2"
     },
     claimant_one: {
       title: "Mr",
+      organization_name: nil,
       full_name: "Joe Peters",
       street: "553 Olympic Road\nMidtown",
       postcode: "AA11 4LP"

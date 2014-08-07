@@ -12,12 +12,14 @@
       house: "Yes"
     },
     claim: {
+      claimant_type: "organization",
       number_of_claimants: "1",
       number_of_defendants: "1"
     },
     claimant_one: {
       title: nil,
-      full_name: "Yammerton City Council",
+      organization_name: "Yammerton City Council",
+      full_name: nil,
       street: "Civic Centre, St. Peter's Square\nYammerton",
       postcode: "AV1 1SH"
     },

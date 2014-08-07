@@ -211,14 +211,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     [ label, value ].join("\n").html_safe
   end
 
-  # def label_for attribute, label
-  #   label ||= attribute.to_s.humanize
-
-  #   label = %Q|#{label} #{error_span(attribute)}| if error_for? attribute
-
-  #   label.html_safe
-  # end
-
 
   def max_length attribute
     if validator = validators(attribute).detect{|x| x.is_a?(ActiveModel::Validations::LengthValidator)}

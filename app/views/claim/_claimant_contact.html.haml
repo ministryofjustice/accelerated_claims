@@ -1,5 +1,5 @@
 = claim_form.fields_for claimant_field, claimant_contact, builder: LabellingFormBuilder do |form|
-  .sub-panel.claimant-solicitor
+  .sub-panel.claimant-solicitor.js-claimanttype.individual.organization
     .sub-panel.details
       .row.js-only
         %a.caption#contact-details{ href: '#contact-details' }
@@ -21,3 +21,9 @@
       = form.text_field_row :company_name,  class: 'rel company_name'
       = form.text_area_row  :street,   label: 'Street address', class: 'rel street'
       = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'
+
+    .sub-panel.details.js-claimanttype.organization
+      .row.js-only
+        %a.caption#reference-number{ href: '#reference-number' }
+          = 'Add a reference number'.html_safe
+      = render partial: 'reference_number', object: @claim.reference_number, locals: { claim_form: claim_form }

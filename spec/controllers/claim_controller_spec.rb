@@ -99,7 +99,6 @@ describe ClaimController, :type => :controller do
       it "should return a PDF" do
         stub_request(:post, "http://localhost:4000/").
         to_return(:status => 200, :body => "", :headers => {})
-
         post :submission, claim: claim_post_data['claim']
         get :download
         expect(response.headers["Content-Type"]).to eq "application/pdf"

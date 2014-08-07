@@ -20,23 +20,30 @@
 
       .row
         As the landlord, you’re known as the <b>claimant</b> in this case.
+
+      = claim_form.radio_button_fieldset :claimant_type,
+        'What kind of claimant are you?'.html_safe,
+        class: 'radio js-depend',
+        choice: {'A private landlord (individual)' => 'individual', 'A private landlord (company), a local authority or a housing association' => 'organization'},
+        data: { depend: 'claimanttype', 'virtual-pageview' => '/accelerated/claimants-section' }
+
       = claim_form.radio_button_fieldset :num_claimants,
           'How many claimants are there?'.html_safe,
-          class: 'radio inline multiple',
+          class: 'hide js-claimanttype individual radio inline multiple',
           choice: {'1 claimant'=>'1', '2 claimants'=>'2'},
-          data: { depend: 'numclaimants', 'virtual-pageview' => '/accelerated/claimants-section' }
+          data: { depend: 'numclaimants' }
 
 
-      .sub-panel.hide.js-numclaimants.1.2.claimant#claimant_one
-        %h3.person First claimant
+      .sub-panel.hide.js-numclaimants.1.2.claimant.js-claimanttype.organization#claimant_one
+        %h3.person.hide.js-claimanttype.individual First claimant
         = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_one}
-      .row.divider
-      .sub-panel.hide.js-numclaimants.2.claimant.same-address#claimant_two
+        .row.divider
+      .sub-panel.hide.js-claimanttype.inidvidual.js-numclaimants.2.claimant.same-address#claimant_two
         %h3.person
           Second claimant
           %span.hint.block.hide (optional)
         = render partial: 'claimant', object: @claim.claimant_two, locals: { claim_form: claim_form, claimant_field: :claimant_two}
-      .row.divider
+        .row.divider
 
       = render partial: 'claimant_contact', object: @claim.claimant_contact, locals: { claim_form: claim_form, claimant_field: :claimant_contact}
 
@@ -92,7 +99,6 @@
       = render partial: 'possession', object: @claim.possession, locals: { claim_form: claim_form }
       = render partial: 'fee', object: @claim.fee, locals: { claim_form: claim_form }
       = render partial: 'legal_cost', object: @claim.legal_cost, locals: { claim_form: claim_form }
-      = render partial: 'reference_number', object: @claim.reference_number, locals: { claim_form: claim_form }
 
   %section
     .action-buttons.cf

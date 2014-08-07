@@ -6,21 +6,30 @@ class Claim < BaseClass
   attr_accessor :error_messages
   attr_accessor :form_state
   attr_accessor :num_claimants
+  attr_accessor :claimant_type
   attr_accessor :num_defendants
+
 
   @@valid_num_claimants     = [1, 2]
   @@valid_num_defendants    = [1, 2]
   @@ambiguous_instance_vars = ['claimant_one', 'claimant_two', 'defendant_one', 'defendant_two']
+  @@valid_claimant_types    = %w{ organization individual }
 
 
 
   def initialize(claim_params={})
-    @num_claimants  = claim_params.key?(:num_claimants) ? claim_params[:num_claimants].to_i : nil
+    @claimant_type  = claim_params.key?(:claimant_type) ? claim_params[:claimant_type] : nil
+    if @claimant_type == 'organization'
+      @num_claimants = 1
+    else
+      @num_claimants  = claim_params.key?(:num_claimants) ? claim_params[:num_claimants].to_i : nil
+    end
     @num_defendants = claim_params.key?(:num_defendants) ? claim_params[:num_defendants].to_i : nil
 
     initialize_all_submodels(claim_params)
     @errors = ActiveModel::Errors.new(self)
   end
+
 
   def as_json
     json_in = {}
@@ -55,14 +64,13 @@ class Claim < BaseClass
   def valid?
     @errors.clear
     validity = true
-    validity = false unless num_claimants_valid?
+    validity = false unless claimant_type_valid?
+    validity = false unless num_claimants_valid? 
     validity = false unless num_defendants_valid?
     attributes_from_submodels.each do |instance_var, model|
-
       unless send(instance_var).valid?
         errors = send(instance_var).errors
         errors.each_with_index do |error, index|
-
           attribute = error.first
           key = "claim_#{instance_var}_#{attribute}_error"
           @errors[:base] << [ key, error.last ]
@@ -77,11 +85,28 @@ class Claim < BaseClass
 
   private
 
+ 
+  def claimant_type_valid?
+    result = true
+    if @claimant_type.nil?
+      @errors[:base] << ['claim_claimant_type_error', 'Please select what kind of claimant you are']
+      result = false
+    else
+      unless @@valid_claimant_types.include?(@claimant_type)
+        @errors[:base] << ['claim_claimant_type_error', 'You must specify a valid kind of claimant']
+        result = false
+      end
+    end
+    result
+  end
+
 
   def num_claimants_valid?
-    unless @@valid_num_claimants.include?(@num_claimants)
-      @errors[:base] << ['claim_num_claimants_error', 'Please say how many claimants there are']
-      return false
+    if @claimant_type.present?
+      unless @@valid_num_claimants.include?(@num_claimants)
+        @errors[:base] << ['claim_num_claimants_error', 'Please say how many claimants there are']
+        return false
+      end
     end
     true
   end
@@ -187,9 +212,9 @@ class Claim < BaseClass
     case attribute_name
       when /claimant_one/
         if @num_claimants.nil?
-          params.merge!(validate_presence: false, validate_absence: false, num_claimants: nil, claimant_num: :claimant_one)  
+          params.merge!(validate_presence: false, validate_absence: false, num_claimants: nil, claimant_num: :claimant_one, claimant_type: claimant_type)  
         else
-          params.merge!(validate_presence: true, validate_absence: false, num_claimants: claim_params[:num_claimants], claimant_num: :claimant_one)
+          params.merge!(validate_presence: true, validate_absence: false, num_claimants: claim_params[:num_claimants], claimant_num: :claimant_one, claimant_type: claimant_type)
         end
       when /claimant_two/
         if @num_claimants.nil?
@@ -197,7 +222,7 @@ class Claim < BaseClass
         elsif @num_claimants == 1
           params.merge!(validate_absence: true, validate_presence: false)
         else
-          params.merge!(validate_presence: true, num_claimants: '2', claimant_num: :claimant_two)
+          params.merge!(validate_presence: true, num_claimants: '2', claimant_num: :claimant_two, claimant_type: claimant_type)
         end
       when /defendant_one/
         if @num_defendants.nil?
@@ -217,4 +242,5 @@ class Claim < BaseClass
 
     params
   end
+
 end

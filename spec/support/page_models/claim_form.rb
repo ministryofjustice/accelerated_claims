@@ -8,9 +8,14 @@ class ClaimForm
   def complete_form
     @js_on = false
     fill_property_details
-    select_number_of :claimants
-    fill_claimant_one
-    fill_claimant_two
+    claimant_type = select_claimant_type
+    if claimant_type == 'individual'
+      select_number_of :claimants
+      fill_claimant_one
+      fill_claimant_two
+    else
+      fill_organizational_claimant
+    end
     select_number_of :defendants
     fill_defendant_one complete_address: true
     fill_defendant_two complete_address: true
@@ -28,13 +33,18 @@ class ClaimForm
 
   def complete_form_with_javascript
     @js_on = true
+    claimant_type = select_claimant_type
     fill_property_details
-    number_of_claimants = select_number_of :claimants
 
-    fill_claimant_one
-    if number_of_claimants == 2
-      choose_claimant_two_address_the_same
-      fill_claimant_two
+    if claimant_type == 'individual'
+      number_of_claimants = select_number_of :claimants
+      fill_claimant_one
+      if number_of_claimants == 2
+        choose_claimant_two_address_the_same
+        fill_claimant_two
+      end
+    else
+      fill_organizational_claimant 
     end
 
     number_of_defendants = select_number_of :defendants
@@ -45,7 +55,7 @@ class ClaimForm
       fill_defendant_two complete_address: address_to_be_completed
     end
 
-    fill_claimant_contact_with_js
+    fill_claimant_contact_with_js 
 
     fill_tenancy
     fill_notice_with_js
@@ -55,7 +65,7 @@ class ClaimForm
     check_order_possession_and_cost
     fill_court_fee
     fill_legal_costs
-    fill_reference_number
+    fill_reference_number_with_js 
   end
 
   def select_number_of type
@@ -133,7 +143,15 @@ class ClaimForm
   end
 
   def fill_reference_number
-    fill_in_text_field('reference_number', 'reference_number')
+    fill_in_text_field_if_present('reference_number', 'reference_number')
+  end
+
+
+  def fill_reference_number_with_js
+    unless get_data('reference_number', 'reference_number').blank?
+      find('#reference-number').click
+      fill_reference_number
+    end
   end
 
   def submit
@@ -149,6 +167,12 @@ class ClaimForm
 
   def fill_in_text_field(prefix, key)
     fill_in("claim_#{prefix}_#{key}", with: get_data(prefix, key))
+  end
+
+  def fill_in_text_field_if_present(prefix, key)
+    unless get_data(prefix, key).blank?
+      fill_in_text_field(prefix, key)
+    end
   end
 
   def get_data prefix, key
@@ -191,6 +215,13 @@ class ClaimForm
   end
 
 
+  def fill_organizational_claimant
+    fill_in_text_field('claimant_one', 'organization_name')
+    fill_in_text_field('claimant_one', 'street')
+    fill_in_text_field('claimant_one', 'postcode')
+  end
+
+
 
   def complete_details_of_person(prefix, options={})
     options = { complete_address: true }.merge(options)
@@ -205,6 +236,12 @@ class ClaimForm
       fill_in("claim_claimant_two_street", with: get_data('claimant_one', 'street'))
       fill_in("claim_claimant_two_postcode", with: get_data('claimant_one', 'postcode'))
     end
+  end
+
+  def select_claimant_type
+    claimant_type = get_data('claim', 'claimant_type')
+    choose "claim_claimant_type_#{claimant_type}"
+    claimant_type
   end
 
   def fill_property_details

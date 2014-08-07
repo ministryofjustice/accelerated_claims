@@ -12,11 +12,13 @@
       house: "No"
     },
     claim: {
+      claimant_type: "individual",
       number_of_claimants: "1",
       number_of_defendants: "1"
     },
     claimant_one: {
       title: "Mr",
+      organization_name: nil,
       full_name: "Mark Ateer",
       street: "26 Heath St\nAnytown",
       postcode: "FX9 1XX"

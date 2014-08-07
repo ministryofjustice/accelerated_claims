@@ -3,7 +3,8 @@ describe Claimant, :type => :model do
     Claimant.new(title: 'Mr',
                  full_name: "John Doe",
                  street: "Streety Street\nLondon",
-                 postcode: "SW1H9AJ")
+                 postcode: "SW1H9AJ",
+                 claimant_type: 'individual')
   end
 
   subject { claimant }
@@ -28,7 +29,7 @@ describe Claimant, :type => :model do
     end
   end
 
-
+  
 
 
   context 'validate_presence set to true' do
@@ -67,5 +68,85 @@ describe Claimant, :type => :model do
       expect(empty_claimant.errors.full_messages).to eq ['Street must not be entered if number of claimants is 1']
     end
   end
+
+
+  context 'mandatory fields for organizations are present' do
+    let(:org) { Claimant.new(organization_name: 'Anytown Council Housing Departement', street: "Streety Street\nLondon", postcode: "SW1H9AJ", claimant_type: 'organization') }
+
+    it 'should not be valid if organization name is missing' do
+      org.organization_name = nil
+      expect(org).not_to be_valid
+      expect(org.errors[:organization_name]).to eq ["Enter the claimant's company name or local authority name"]
+    end
+
+    it 'should not be valid if street is missing' do
+      org.street = nil
+      expect(org).not_to be_valid
+      expect(org.errors[:street]).to eq ["Enter the claimant's full address"]
+    end
+
+
+    it 'should not be valid if the postcocde is missing' do
+      org.postcode = nil
+      expect(org).not_to be_valid
+      expect(org.errors[:postcode]).to eq ["Enter the claimant's postcode"]
+    end
+
+    it 'should be valid if all fields are entered' do
+      expect(org).to be_valid
+    end
+  end
+
+  context 'mandatory fields for individuals are present' do
+    let(:indiv) { Claimant.new(title: 'Mr', full_name: "John Doe", street: "Streety Street\nLondon", postcode: "SW1H9AJ", claimant_type: 'individual') }
+
+    it 'should be valid if all required fields are present' do
+      expect(indiv).to be_valid
+    end
+
+    it 'should not be valid if full name is missing' do
+      indiv.full_name = nil
+      expect(indiv).not_to be_valid
+      expect(indiv.errors[:full_name]).to eq ["Enter the claimant's full name"]
+    end
+
+    it 'should not be valid if full name is missing' do
+      indiv.street = nil
+      expect(indiv).not_to be_valid
+      expect(indiv.errors[:street]).to eq ["Enter the claimant's full address"]
+    end
+
+    it 'should not be valid if postcode is missing' do
+      indiv.postcode = nil
+      expect(indiv).not_to be_valid
+      expect(indiv.errors[:postcode]).to eq ["Enter the claimant's postcode"]
+    end
+
+  end
+
+
+  context 'address validation' do
+    let(:claimant)  { Claimant.new(title: 'Mr', full_name: "John Doe", street: "Streety Street\nLondon", postcode: "SW1H9AJ", claimant_type: 'individual') }
+
+    it 'should not validate if postcode is incomplete' do
+      claimant.postcode = 'SW10'
+      expect(claimant).not_to be_valid
+      expect(claimant.errors[:postcode]).to eq ["not full postcode"]
+    end    
+
+    it 'should not validate if postcode is invalid' do
+      claimant.postcode = 'SW10XX 5FF'
+      expect(claimant).not_to be_valid
+      expect(claimant.errors[:postcode]).to eq ["is too long (maximum is 8 characters)", "not valid postcode"]
+    end
+
+    it 'should not validate if street is too long' do
+      claimant.street = "x" * 72
+      expect(claimant).not_to be_valid
+      expect(claimant.errors[:street]).to eq ["is too long (maximum is 70 characters)"]
+    end
+
+  end
+
 
 end

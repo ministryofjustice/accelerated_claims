@@ -12,11 +12,13 @@
       house: "Yes"
     },
     claim: {
+      claimant_type: "individual",
       number_of_claimants: "1",
       number_of_defendants: "2"
     },
     claimant_one: {
       title: "Mrs",
+      organization_name: nil,
       full_name: "Shirley Williams",
       street: "38 Llanwrchgog St\nCaedffyn",
       postcode: "GO31 1RJ"

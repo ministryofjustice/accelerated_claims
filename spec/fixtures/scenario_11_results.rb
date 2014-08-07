@@ -68,7 +68,7 @@
   claimant_contact_address: "Mr Jim Brown\n3 Smith Street\nBwlchllydd",
   claimant_contact_postcode1: "FX1W",
   claimant_contact_postcode2: "0LU",
-  claimant_contact_reference_number: "my-ref-123",
+  claimant_contact_reference_number: nil,
   claimant_contact_fax: "020 000 000",
   claimant_contact_dx_number: "DX 123",
   claimant_contact_email: "jim@example.com",

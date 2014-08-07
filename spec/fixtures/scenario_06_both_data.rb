@@ -12,12 +12,14 @@
       house: "Yes"
     },
     claim: {
+      claimant_type: "organization",
       number_of_claimants: "1",
       number_of_defendants: "1"
     },
     claimant_one: {
       title: nil,
-      full_name: "Infinity Southwich",
+      organization_name: "Infinity Southwich",
+      full_name: nil,
       street: "Redleaf House, 157-159 Masonic Hall\nSouthwich",
       postcode: "SH2 9HY"
     },

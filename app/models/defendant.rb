@@ -2,6 +2,8 @@
 
 class Defendant < BaseClass
 
+  include Address
+
   @do_partial_address_completion_validation = true
 
   attr_accessor :validate_presence, :validate_absence
@@ -19,7 +21,9 @@ class Defendant < BaseClass
   validates :full_name, length: { maximum: 40 }
 
   validate :num_defendants_is_valid
-  validates_with ContactValidator
+  validate :validate_defendant_state
+
+
 
   
   def num_defendants_is_valid
@@ -31,6 +35,18 @@ class Defendant < BaseClass
       unless inhabits_property.nil?
         errors[:inhabits_property] << "Please select whether or not #{subject_description} lives in the property"
       end
+    end
+  end
+
+
+
+
+  # main validation for claimant state
+  def validate_defendant_state
+    if validate_absence?
+      validate_are_blank(:title, :full_name, :street, :postcode)
+    else
+      validate_fields_are_present
     end
   end
 
@@ -90,6 +106,42 @@ class Defendant < BaseClass
       else
         "defendant 2"
       end
+    end
+  end
+
+
+  private
+
+  def display_name(field_name)
+    case field_name
+    when :street
+      "full address"
+    when :organization_name
+      "company name or local authority name"
+    else
+      field_name.to_s.gsub('_', ' ')
+    end
+  end
+
+  def validate_are_blank(*fields)
+    fields.each do |field|
+      errors.add(field, "must not be entered if number of defendants is 1") unless self.send(field).blank?
+    end
+  end
+
+
+  def validate_fields_are_present
+    if self.inhabits_property == 'yes'
+      validate_are_present(:title, :full_name)
+    else
+      validate_are_present(:title, :full_name, :street, :postcode)
+    end
+  end
+
+
+  def validate_are_present(*fields)
+    fields.each do |field|
+      errors.add(field, "Enter #{subject_description}'s #{display_name(field)}") if self.send(field).blank?
     end
   end
 

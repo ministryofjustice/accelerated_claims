@@ -12,11 +12,13 @@
       house: "Yes"
     },
     claim: {
+      claimant_type: "individual",
       number_of_claimants: "2",
       number_of_defendants: "1"
     },
     claimant_one: {
       title: "Mr",
+      organization_name: nil,
       full_name: "John Smith",
       street: "2 Brown St\nBwlchllydd",
       postcode: "FX1W 0LU"
@@ -49,7 +51,7 @@
       dx_number: "DX 123"
     },
     reference_number: {
-      reference_number: "my-ref-123"
+      reference_number: nil
     },
     defendant_one: {
       title: "Mr",

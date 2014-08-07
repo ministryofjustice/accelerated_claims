@@ -28,6 +28,24 @@ feature 'Filling in claim form' do
     visit '/'
     click_button 'Complete form'
 
+    expect(page).to have_content('Please select what kind of claimant you are')
+
+    expect(page).to have_selector('input#claim_order_possession')
+    expect(page).to have_selector(:xpath, '//label[@for="claim_order_possession"]')
+
+    check_focus_after_click 'You must say whether the defendant paid a deposit', 'claim_deposit_received_yes'
+    check_focus_after_click 'You must choose whether you wish to attend the possible court hearing', 'claim_possession_hearing_no'
+    check_focus_after_click 'Please tick to confirm that you want to repossess the property', 'claim_order_possession'
+    check_focus_after_click 'You must say what kind of tenancy agreement you have', 'claim_tenancy_tenancy_type_assured'
+
+    click_button 'Complete form'
+  end
+
+  scenario "submitting form with only claimant type selected", js: true do
+    visit '/'
+    choose('claim_claimant_type_individual')
+    click_button 'Complete form'
+
     expect(page).to have_content('Please say how many claimants there are')
 
     expect(page).to have_selector('input#claim_order_possession')
@@ -77,6 +95,8 @@ feature 'Filling in claim form' do
     check_focus_after_click 'You must say whether or not you gave notice to the defendant', 'claim_notice_notice_served_yes'
 
   end
+
+
 
   def select_tenancy_start_date date
     day = date.day.to_s

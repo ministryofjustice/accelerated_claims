@@ -12,11 +12,13 @@
       house: "Yes"
     },
     claim: {
+      claimant_type: "individual",
       number_of_claimants: "1",
       number_of_defendants: "1"
     },
     claimant_one: {
       title: "Mr",
+      organization_name: nil,
       full_name: "John Smith",
       street: "2 Brown St\nBwlchllydd",
       postcode: "FX1W 0LU"
