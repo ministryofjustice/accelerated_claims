@@ -71,10 +71,8 @@ class ClaimController < ApplicationController
     @claim = Claim.new(params['claim'])
 
     unless @claim.valid?
-      puts 'CLAIM IS VALID'
       redirect_to_with_protocol :new
     else
-      puts 'CLAIM IS NOT VALID'
       redirect_to_with_protocol :confirmation
     end
   end

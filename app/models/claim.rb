@@ -80,11 +80,9 @@ class Claim < BaseClass
         validity = false
       end
     end
-    puts 'A' * 80
-    pp @errors.full_messages
-    puts 'A' * 80
+    # puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    # pp @errors.full_messages
     @error_messages = ErrorMessageSequencer.new.sequence(@errors)
-    pp @error_messages
     validity
   end
 
@@ -197,12 +195,7 @@ class Claim < BaseClass
 
   def init_submodel(claim_params, attribute_name, model)
     sub_params = params_for(attribute_name, claim_params)
-
-    puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n
-model: #{model}, params: #{sub_params.inspect}"
-
     instance_variable_set("@#{attribute_name}", model.constantize.new(sub_params))
-
     self.class.send( :define_method, attribute_name.to_sym) {
       instance_variable_get "@#{attribute_name}"
     }

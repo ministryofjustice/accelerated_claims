@@ -189,11 +189,6 @@ class Tenancy < BaseClass
     hash
   end
 
-  def initialize params
-    puts "~~~~" + params.inspect
-    super
-  end
-
   private
 
   def applicable_statements

@@ -8,11 +8,7 @@ feature "submit claim" do
     end
 
   def run_scenario data_file, options={}
-      puts "data_file: #{data_file}"
       data = load_fixture_data(data_file)
-      puts '+' * 100
-      pp data
-      puts '+' * 100
       expected_data = load_expected_data(data_file)
 
       AppModel.new(data).exec do
@@ -51,7 +47,7 @@ feature "submit claim" do
       end
     end
 
-    Dir.glob('spec/fixtures/scenario_13*_data.rb') do |data_file|
+    Dir.glob('spec/fixtures/scenario_*_data.rb') do |data_file|
       data = load_fixture_data(data_file)
       title = data['title']
       description = data['description']
