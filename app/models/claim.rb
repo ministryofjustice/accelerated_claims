@@ -1,4 +1,4 @@
-  class Claim < BaseClass
+class Claim < BaseClass
 
   include ActiveSupport::Inflector
 
