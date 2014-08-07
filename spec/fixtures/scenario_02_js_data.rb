@@ -70,7 +70,7 @@
     tenancy: {
       tenancy_type: "Assured",
       assured_shorthold_tenancy_type: "one",
-      original_assured_shorthold_tenancy_agreement_date: "",
+      original_assured_shorthold_tenancy_agreement_date: nil,
       start_date: "1997-02-27",
       latest_agreement_date: nil,
       agreement_reissued_for_same_property: nil,
@@ -80,8 +80,8 @@
       demotion_order_date: nil,
       demotion_order_court: nil,
       previous_tenancy_type: nil,
-      from_1997_option: 'Yes',
-      upto_1997_option: 'Yes'
+      upto_1997_option: "Yes",
+      from_1997_option: nil
     },
     notice: {
       served_by_name: "Mark Ateer",

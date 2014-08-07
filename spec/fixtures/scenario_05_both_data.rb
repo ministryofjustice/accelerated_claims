@@ -79,7 +79,9 @@
       assured_shorthold_tenancy_notice_served_date: nil,
       demotion_order_date: "2013-04-20",
       demotion_order_court: "Yammerton District Court",
-      previous_tenancy_type: "secure"
+      previous_tenancy_type: "secure",
+      upto_1997_option: "No",
+      from_1997_option: "Yes"
     },
     notice: {
       served_by_name: "Wendy Lesser",

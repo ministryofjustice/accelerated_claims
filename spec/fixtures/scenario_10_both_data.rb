@@ -79,7 +79,9 @@
       assured_shorthold_tenancy_notice_served_date: "2013-12-01",
       demotion_order_date: nil,
       demotion_order_court: nil,
-      previous_tenancy_type: nil
+      previous_tenancy_type: nil,
+      upto_1997_option: "No",
+      from_1997_option: nil
     },
     notice: {
       served_by_name: "Somebody",

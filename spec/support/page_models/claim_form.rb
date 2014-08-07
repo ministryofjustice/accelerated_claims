@@ -194,6 +194,8 @@ class ClaimForm
       begin
         check("claim_#{prefix}_#{key}")
       rescue Capybara::ElementNotFound
+        puts "++++++ DEBUG claim_#{prefix}_#{key} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+        
         check("claim_#{prefix}_#{key}", visible: false)
       end
     end
@@ -329,6 +331,8 @@ class ClaimForm
     fill_in_moj_date_fieldset prefix, 'latest_agreement_date'
 
     start_date = Date.parse(get_data(prefix, 'original_assured_shorthold_tenancy_agreement_date'))
+    check_box(prefix, 'upto_1997_option') if get_data(prefix, 'upto_1997_option') == 'Yes'
+    check_box(prefix, 'from_1997_option') if get_data(prefix, 'from_1997_option') == 'Yes'
 
     if Tenancy.in_first_rules_period? start_date
       fill_in_text_field prefix, 'assured_shorthold_tenancy_notice_served_by'
