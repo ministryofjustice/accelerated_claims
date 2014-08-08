@@ -195,7 +195,7 @@ class ClaimForm
         check("claim_#{prefix}_#{key}")
       rescue Capybara::ElementNotFound
         puts "++++++ DEBUG claim_#{prefix}_#{key} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-        
+
         check("claim_#{prefix}_#{key}", visible: false)
       end
     end
@@ -318,8 +318,8 @@ class ClaimForm
       fill_in_text_field prefix, 'assured_shorthold_tenancy_notice_served_by'
       fill_in_moj_date_fieldset prefix, 'assured_shorthold_tenancy_notice_served_date'
     end
-    check_box(prefix, 'upto_1997_option') if get_data(prefix, 'upto_1997_option') == 'Yes'
-    check_box(prefix, 'from_1997_option') if get_data(prefix, 'from_1997_option') == 'Yes'
+    check_box(prefix, 'confirmed_first_rules_period_applicable_statements') if get_data(prefix, 'confirmed_first_rules_period_applicable_statements') == 'Yes'
+    check_box(prefix, 'confirmed_second_rules_period_applicable_statements') if get_data(prefix, 'confirmed_second_rules_period_applicable_statements') == 'Yes'
   end
 
   def fill_multiple_tenancy
@@ -331,8 +331,8 @@ class ClaimForm
     fill_in_moj_date_fieldset prefix, 'latest_agreement_date'
 
     start_date = Date.parse(get_data(prefix, 'original_assured_shorthold_tenancy_agreement_date'))
-    check_box(prefix, 'upto_1997_option') if get_data(prefix, 'upto_1997_option') == 'Yes'
-    check_box(prefix, 'from_1997_option') if get_data(prefix, 'from_1997_option') == 'Yes'
+    check_box(prefix, 'confirmed_first_rules_period_applicable_statements') if get_data(prefix, 'confirmed_first_rules_period_applicable_statements') == 'Yes'
+    check_box(prefix, 'confirmed_second_rules_period_applicable_statements') if get_data(prefix, 'confirmed_second_rules_period_applicable_statements') == 'Yes'
 
     if Tenancy.in_first_rules_period? start_date
       fill_in_text_field prefix, 'assured_shorthold_tenancy_notice_served_by'

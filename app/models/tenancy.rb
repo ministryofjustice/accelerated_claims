@@ -23,8 +23,8 @@ class Tenancy < BaseClass
   attr_accessor :demotion_order_court
   attr_accessor :previous_tenancy_type
 
-  attr_accessor :from_1997_option
-  attr_accessor :upto_1997_option
+  attr_accessor :confirmed_second_rules_period_applicable_statements
+  attr_accessor :confirmed_first_rules_period_applicable_statements
 
   after_validation :remove_shorthold_tenancies_radio_selection_if_demoted
   after_validation :remove_previous_tenancy_radio_selection_if_not_demoted
@@ -44,7 +44,7 @@ class Tenancy < BaseClass
       :assured_shorthold_tenancy_notice_served_by,
       :assured_shorthold_tenancy_notice_served_date]
 
-  STATEMENTS_FIELDS = [:from_1997_option, :upto_1997_option]
+  STATEMENTS_FIELDS = [:confirmed_second_rules_period_applicable_statements, :confirmed_first_rules_period_applicable_statements]
 
   with_options if: :demoted_tenancy? do |t|
     t.validates :demotion_order_date, presence: { message: 'Enter the date of the tenancy demotion order' }
@@ -86,16 +86,17 @@ class Tenancy < BaseClass
 
     t.validates *ONE_TENANCY_FIELDS,
       absence: { message: "must be blank if more than one tenancy agreement" }
+
     t.validate :tenancy_applicable_options
   end
 
   with_options if: :in_first_rules_period? do |t|
-    t.validates :from_1997_option,
+    t.validates :confirmed_second_rules_period_applicable_statements,
       inclusion: { in: ['No'], message: "Leave blank as you specified original tenancy agreement was made before #{Tenancy::RULES_CHANGE_DATE.to_s(:printed)}" }
   end
 
   with_options if: :in_second_rules_period? do |t|
-    t.validates :upto_1997_option,
+    t.validates :confirmed_first_rules_period_applicable_statements,
       inclusion: { in: ['No'], message: "leave blank as you specified original tenancy agreement was made on or after #{Tenancy::RULES_CHANGE_DATE.to_s(:printed)}" }
   end
 
@@ -188,12 +189,12 @@ class Tenancy < BaseClass
 
   def applicable_statements
     {
-      'applicable_statements_1' => "#{from_1997_option}",
-      'applicable_statements_2' => "#{from_1997_option}",
-      'applicable_statements_3' => "#{from_1997_option}",
-      'applicable_statements_4' => "#{upto_1997_option}",
-      'applicable_statements_5' => "#{upto_1997_option}",
-      'applicable_statements_6' => "#{upto_1997_option}"
+      'applicable_statements_1' => "#{confirmed_second_rules_period_applicable_statements}",
+      'applicable_statements_2' => "#{confirmed_second_rules_period_applicable_statements}",
+      'applicable_statements_3' => "#{confirmed_second_rules_period_applicable_statements}",
+      'applicable_statements_4' => "#{confirmed_first_rules_period_applicable_statements}",
+      'applicable_statements_5' => "#{confirmed_first_rules_period_applicable_statements}",
+      'applicable_statements_6' => "#{confirmed_first_rules_period_applicable_statements}"
     }
   end
 
@@ -220,8 +221,8 @@ class Tenancy < BaseClass
   def single_tenancy_options
     if applicable_statements_not_confirmed?
       message = 'Please read the statements and tick if they apply'
-      errors[:from_1997_option] << message
-      errors[:upto_1997_option] << message
+      errors[:confirmed_second_rules_period_applicable_statements] << message
+      errors[:confirmed_first_rules_period_applicable_statements] << message
     end
   end
 
@@ -229,13 +230,13 @@ class Tenancy < BaseClass
     if applicable_statements_not_confirmed?
       unless (original_assured_shorthold_tenancy_agreement_date < Tenancy::RULES_CHANGE_DATE)
         message = 'Please read the statements and tick if they apply'
-        errors[:from_1997_option] << message
-        errors[:upto_1997_option] << message
+        errors[:confirmed_second_rules_period_applicable_statements] << message
+        errors[:confirmed_first_rules_period_applicable_statements] << message
       end
     end
   end
 
   def applicable_statements_not_confirmed?
-    from_1997_option == 'No' && upto_1997_option == 'No'
+    confirmed_second_rules_period_applicable_statements == 'No' && confirmed_first_rules_period_applicable_statements == 'No'
   end
 end

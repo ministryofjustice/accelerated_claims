@@ -80,8 +80,8 @@
       demotion_order_date: nil,
       demotion_order_court: nil,
       previous_tenancy_type: nil,
-      upto_1997_option: "No",
-      from_1997_option: "Yes"
+      confirmed_first_rules_period_applicable_statements: "No",
+      confirmed_second_rules_period_applicable_statements: "Yes"
     },
     notice: {
       served_by_name: "Heather Heath",

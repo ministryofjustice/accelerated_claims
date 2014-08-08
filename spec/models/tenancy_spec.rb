@@ -21,8 +21,8 @@ describe Tenancy, :type => :model do
       assured_shorthold_tenancy_type: 'one',
       agreement_reissued_for_same_property: nil,
       agreement_reissued_for_same_landlord_and_tenant: nil,
-      from_1997_option: 'Yes',
-      upto_1997_option: 'No'
+      confirmed_second_rules_period_applicable_statements: 'Yes',
+      confirmed_first_rules_period_applicable_statements: 'No'
     }.merge(date_fields).merge(overrides)
     )
   end
@@ -36,8 +36,8 @@ describe Tenancy, :type => :model do
       tenancy_type: 'demoted',
       demotion_order_court: "Brighton County Court",
       previous_tenancy_type: "assured",
-      from_1997_option: 'No',
-      upto_1997_option: 'No'
+      confirmed_second_rules_period_applicable_statements: 'No',
+      confirmed_first_rules_period_applicable_statements: 'No'
     }.merge(date_fields).merge(overrides))
   end
 
@@ -136,6 +136,11 @@ describe Tenancy, :type => :model do
       it "should provide an error message" do
         expect(tenancy.errors[:tenancy_type]).to eq [ "You must say what kind of tenancy agreement you have" ]
       end
+
+      it 'should not have applicable statement errors' do
+        expect(tenancy.errors[:confirmed_second_rules_period_applicable_statements]).to eq []
+        expect(tenancy.errors[:confirmed_first_rules_period_applicable_statements]).to eq []
+      end
     end
   end
 
@@ -174,24 +179,24 @@ describe Tenancy, :type => :model do
       end
 
       describe 'should have one applicable statement' do
-        it 'should be valid with from_1997_option set' do
+        it 'should be valid with confirmed_second_rules_period_applicable_statements set' do
           expect(assured_tenancy).to be_valid
         end
 
-        it 'should be valid with upto_1997_option set' do
-          tenancy = assured_tenancy(from_1997_option: 'No',
-                                    upto_1997_option: 'Yes',
+        it 'should be valid with confirmed_first_rules_period_applicable_statements set' do
+          tenancy = assured_tenancy(confirmed_second_rules_period_applicable_statements: 'No',
+                                    confirmed_first_rules_period_applicable_statements: 'Yes',
                                     start_date: Date.parse('1997-01-01'))
           expect(tenancy).to be_valid
         end
 
         it 'should not be valid with both options set' do
-          tenancy = assured_tenancy(from_1997_option: 'Yes', upto_1997_option: 'Yes')
+          tenancy = assured_tenancy(confirmed_second_rules_period_applicable_statements: 'Yes', confirmed_first_rules_period_applicable_statements: 'Yes')
           expect(tenancy).not_to be_valid
         end
 
         it 'should not be valid with both options not set' do
-          tenancy = assured_tenancy(from_1997_option: 'No', upto_1997_option: 'No')
+          tenancy = assured_tenancy(confirmed_second_rules_period_applicable_statements: 'No', confirmed_first_rules_period_applicable_statements: 'No')
           expect(tenancy).not_to be_valid
         end
       end
@@ -216,8 +221,8 @@ describe Tenancy, :type => :model do
       context 'applicable statements' do
         describe 'when they are both not picked' do
           let(:tenancy) do
-            assured_tenancy(from_1997_option: 'No',
-                            upto_1997_option: 'No',
+            assured_tenancy(confirmed_second_rules_period_applicable_statements: 'No',
+                            confirmed_first_rules_period_applicable_statements: 'No',
                             start_date: Date.parse('1998-01-01'))
           end
 
@@ -229,8 +234,8 @@ describe Tenancy, :type => :model do
         describe 'when they are both picked' do
           let(:tenancy) do
             assured_tenancy(assured_shorthold_tenancy_type: 'multiple',
-                            from_1997_option: 'Yes',
-                            upto_1997_option: 'Yes',
+                            confirmed_second_rules_period_applicable_statements: 'Yes',
+                            confirmed_first_rules_period_applicable_statements: 'Yes',
                             original_assured_shorthold_tenancy_agreement_date: Date.parse('1998-01-01'),
                             latest_agreement_date: Date.parse('2013-01-01'),
                             agreement_reissued_for_same_property: 'Yes',
@@ -246,8 +251,8 @@ describe Tenancy, :type => :model do
         describe 'when one is picked' do
           let(:tenancy) do
             assured_tenancy(assured_shorthold_tenancy_type: 'multiple',
-                            from_1997_option: 'Yes',
-                            upto_1997_option: 'No',
+                            confirmed_second_rules_period_applicable_statements: 'Yes',
+                            confirmed_first_rules_period_applicable_statements: 'No',
                             original_assured_shorthold_tenancy_agreement_date: Date.parse('1998-01-01'),
                             latest_agreement_date: Date.parse('2013-01-01'),
                             agreement_reissued_for_same_property: 'Yes',
@@ -262,8 +267,8 @@ describe Tenancy, :type => :model do
           context 'and the start date is before RULES_CHANGE_DATE' do
             let(:tenancy) do
               assured_tenancy(assured_shorthold_tenancy_type: 'multiple',
-                              from_1997_option: 'Yes',
-                              upto_1997_option: 'No',
+                              confirmed_second_rules_period_applicable_statements: 'Yes',
+                              confirmed_first_rules_period_applicable_statements: 'No',
                               original_assured_shorthold_tenancy_agreement_date: Date.parse('1998-01-01'),
                               latest_agreement_date: Date.parse('2013-01-01'),
                               agreement_reissued_for_same_property: 'Yes',
@@ -280,8 +285,8 @@ describe Tenancy, :type => :model do
         describe 'when none are picked' do
           let(:tenancy) do
             assured_tenancy(assured_shorthold_tenancy_type: 'multiple',
-                            from_1997_option: 'No',
-                            upto_1997_option: 'No',
+                            confirmed_second_rules_period_applicable_statements: 'No',
+                            confirmed_first_rules_period_applicable_statements: 'No',
                             original_assured_shorthold_tenancy_agreement_date: Date.parse('1998-01-01'),
                             latest_agreement_date: Date.parse('2013-01-01'),
                             agreement_reissued_for_same_property: 'Yes',
@@ -295,8 +300,8 @@ describe Tenancy, :type => :model do
           context 'and the start date is before RULES_CHANGE_DATE' do
             let(:tenancy) do
               assured_tenancy(assured_shorthold_tenancy_type: 'multiple',
-                              from_1997_option: 'No',
-                              upto_1997_option: 'No',
+                              confirmed_second_rules_period_applicable_statements: 'No',
+                              confirmed_first_rules_period_applicable_statements: 'No',
                               original_assured_shorthold_tenancy_agreement_date: Date.parse('1997-01-01'),
                               latest_agreement_date: Date.parse('2013-01-01'),
                               agreement_reissued_for_same_property: 'Yes',
@@ -382,13 +387,13 @@ describe Tenancy, :type => :model do
           start_date: Tenancy::APPLICABLE_FROM_DATE) }
 
         context 'and incorrect applicable statements selected' do
-          before { subject.from_1997_option = 'Yes' }
+          before { subject.confirmed_second_rules_period_applicable_statements = 'Yes' }
 
           it { is_expected.not_to be_valid }
           it 'should have validation errors' do
             subject.valid?
             msg = 'Leave blank as you specified original tenancy agreement was made before 28 February 1997'
-            expect(subject.errors[:from_1997_option]).to include msg
+            expect(subject.errors[:confirmed_second_rules_period_applicable_statements]).to include msg
           end
         end
       end
@@ -398,7 +403,7 @@ describe Tenancy, :type => :model do
           start_date: Tenancy::RULES_CHANGE_DATE) }
 
         context 'and incorrect applicable statements selected' do
-          before { subject.upto_1997_option = 'Yes' }
+          before { subject.confirmed_first_rules_period_applicable_statements = 'Yes' }
 
           it { is_expected.not_to be_valid }
           it 'should have validation errors' do

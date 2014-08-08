@@ -80,8 +80,8 @@
       demotion_order_date: "2010-01-01",
       demotion_order_court: "Anytown County Court",
       previous_tenancy_type: "assured",
-      upto_1997_option: "No",
-      from_1997_option: "Yes"
+      confirmed_first_rules_period_applicable_statements: "No",
+      confirmed_second_rules_period_applicable_statements: "Yes"
     },
     notice: {
       served_by_name: "Somebody",

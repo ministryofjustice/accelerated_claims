@@ -80,8 +80,8 @@
       demotion_order_date: "2013-04-20",
       demotion_order_court: "Yammerton District Court",
       previous_tenancy_type: "secure",
-      upto_1997_option: "No",
-      from_1997_option: "Yes"
+      confirmed_first_rules_period_applicable_statements: "No",
+      confirmed_second_rules_period_applicable_statements: "Yes"
     },
     notice: {
       served_by_name: "Wendy Lesser",
