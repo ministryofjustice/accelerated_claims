@@ -33,16 +33,16 @@ moj.Modules.showHide = (function() {
   };
 
   bindEvents = function() {
-    $( radios ).on( 'click', function( e ) {
-      chooseOption( $( e.target ) );
-    } );
-
-    $( cbs ).on( 'click', function( e ) {
-      cbClick( $( e.target ) );
-    } );
+    $(document).on('multiplePersons:update', function(e, $element){
+      chooseOption($element);
+    });
   };
 
   chooseOption = function( $el ) {
+    if($el.length>1){
+      $el = $el.filter(':checked');
+    }
+
     var clickValue = $el.val().toLowerCase(),
         dependGroup = $el.closest( '.js-depend' ).data( 'depend' ),
         $groupEls = $( '.js-' + dependGroup );

@@ -4,85 +4,90 @@
 moj.Modules.multiplePersons = (function() {
   "use strict";
 
-  var //functions
-      init,
-      cacheEls,
-      bindEvents,
-      setupMultiples,
-      showMultiples,
+  //functions
+  var
+    init,
+    cacheEls,
+    bindEvents,
+    destroyAll,
+    createClaimantBlocks,
+    createClaimantBlock,
+    updateClaimantBlocks,
+    htmlTemplate,
 
-      //elements
-      $multiples
-      ;
+    //elements
+    $claimants,
+    $numberOfClaimants,
+    $claimantBlocks,
+    $claimantTypeRadio,
+
+    //other
+    maxClaimants = 4;
 
   init = function() {
-    $.hidden = new Object();
     cacheEls();
     bindEvents();
-
-    setupMultiples();
   };
 
   cacheEls = function() {
-    $multiples = $( '.has-multiple' );
+    $claimants = $('.claimants');
+    $numberOfClaimants = $('#claim_num_claimants');
+    $claimantBlocks = $claimants.find('.claimant[data-claimant]');
+    htmlTemplate = $('.claimant-template').html();
+    $claimantTypeRadio = $('.radio[data-depend=claimanttype] input');
   };
 
   bindEvents = function() {
-    $( document ).on( 'change', '.has-multiple .multiple [type="radio"]', function() {
-      var $this = $( this );
-      showMultiples( $this.closest( '.has-multiple' ), $this, $this.val() );
-    } );
+    $numberOfClaimants.keyup(function() {
+      createClaimantBlocks(parseInt($(this).val(), 10));
+    });
+
+    $claimantTypeRadio.change(function() {
+      updateClaimantBlocks($(this));
+    });
   };
 
-  setupMultiples = function() {
-    var x,
-        $panel;
+  createClaimantBlocks = function(numberOfBlocks) {
+    destroyAll();
 
-    if( $multiples.length > 0 ) {
-      for( x = 0; x < $multiples.length; x++ ) {
-        $panel = $multiples.eq( x );
-        showMultiples( $panel, null, 0 );
+    if(isNaN(numberOfBlocks)){ return; }
 
-        moj.Modules.jsState.registerField( $( '[name="claim[num_' + $panel.attr( 'id' ) + ']"]' ) );
-      }
+    if(numberOfBlocks > maxClaimants){
+      numberOfBlocks = maxClaimants;
     }
+
+    for(var a=1;a<=numberOfBlocks;a++){
+      createClaimantBlock(a);
+    }
+
+    $claimantBlocks = $claimants.find('.claimant[data-claimant]');
+
+    if($claimantBlocks.length===1){
+      $claimantBlocks.find('h3').hide();
+    }
+
+    $(document).trigger('multiplePersons:update', [$claimantTypeRadio]);
   };
 
-  showMultiples = function( $panel, $srcEl, shownum ) {
-    var x,
-        section,
-        show = shownum || 0,
-        childItemClass = $panel.data( 'multiple' ),
-        $childItems = $panel.find( '.' + childItemClass );
+  createClaimantBlock = function(blockNumber) {
+    var template = Handlebars.compile(htmlTemplate);
+    var html = template({id: blockNumber, number: blockNumber});
+    $(html).appendTo($claimants);
+  };
 
-    for( x = 0; x < $childItems.length; x++ ) {
-      section = $childItems.eq( x );
-      if( ( x + 1 ) > show ) {
-        moj.Modules.animate.showhide( section.prev( '.divider' ), $srcEl, 'hide' );
-        moj.Modules.animate.showhide( section, $srcEl, 'hide' );
-        $.hidden[ section.attr('id') ] = true;
-      } else {
-        moj.Modules.animate.showhide( section.prev( '.divider' ), $srcEl, 'show' );
-        moj.Modules.animate.showhide( section, $srcEl, 'show' );
-        $.hidden[ section.attr('id') ] = false;
-      }
-    }
+  destroyAll = function() {
+    $claimantBlocks.remove();
+  };
 
-    if( show > 1 ) {
-      moj.Modules.animate.showhide( $childItems.find( '.person' ), $srcEl, 'show', function() {
-        $childItems.find( '.person' ).next( '.row' ).removeClass( 'nomargin' );
-      } );
-    } else {
-      moj.Modules.animate.showhide( $childItems.find( '.person' ), $srcEl, 'hide', function() {
-        $childItems.find( '.person' ).next( '.row' ).addClass( 'nomargin' );
-      } );
-    }
+  updateClaimantBlocks = function($input) {
+    $numberOfClaimants.val('');
+    createClaimantBlocks($input.val()==='organization' ? 1 : 0);
   };
 
   // public
-
   return {
-    init: init
+    init: init,
+    createClaimantBlocks: createClaimantBlocks
   };
 
 }());

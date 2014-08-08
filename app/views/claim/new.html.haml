@@ -27,23 +27,43 @@
         choice: {'A private landlord (individual)' => 'individual', 'A private landlord (company), a local authority or a housing association' => 'organization'},
         data: { depend: 'claimanttype', 'virtual-pageview' => '/accelerated/claimants-section' }
 
-      = claim_form.radio_button_fieldset :num_claimants,
-          'How many claimants are there?'.html_safe,
-          class: 'hide js-claimanttype individual radio inline multiple',
-          choice: {'1 claimant'=>'1', '2 claimants'=>'2'},
-          data: { depend: 'numclaimants' }
+      = claim_form.text_field_row :num_claimants,
+        class: 'num-of-claimants js-claimanttype individual',
+        label: 'Number of claimants'
 
+      .claimants
+        .sub-panel.claimant{ 'data-claimant'=>1 }
+          .row.divider
+          .row
+            %h3 Claimant 1
+          = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_1}
 
-      .sub-panel.hide.js-numclaimants.1.2.claimant.js-claimanttype.organization#claimant_one
-        %h3.person.hide.js-claimanttype.individual First claimant
-        = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_one}
-        .row.divider
-      .sub-panel.hide.js-claimanttype.inidvidual.js-numclaimants.2.claimant.same-address#claimant_two
-        %h3.person
-          Second claimant
-          %span.hint.block.hide (optional)
-        = render partial: 'claimant', object: @claim.claimant_two, locals: { claim_form: claim_form, claimant_field: :claimant_two}
-        .row.divider
+        .sub-panel.claimant{ 'data-claimant'=>2 }
+          .row.divider
+          .row
+            %h3 Claimant 2
+          = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_2}
+
+        .sub-panel.claimant{ 'data-claimant'=>3 }
+          .row.divider
+          .row
+            %h3 Claimant 3
+          = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_3}
+
+        .sub-panel.claimant{ 'data-claimant'=>4 }
+          .row.divider
+          .row
+            %h3 Claimant 4
+          = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_4}
+
+      .row.divider
+
+      .claimant-template
+        .sub-panel.claimant{ 'data-claimant'=>'{{id}}' }
+          .row.divider
+          .row
+            %h3 Claimant {{number}}
+          = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_one}
 
       = render partial: 'claimant_contact', object: @claim.claimant_contact, locals: { claim_form: claim_form, claimant_field: :claimant_contact}
 
