@@ -14,6 +14,7 @@ moj.Modules.multiplePersons = (function() {
     createClaimantBlock,
     updateClaimantBlocks,
     htmlTemplate,
+    idFix,
 
     //elements
     $claimants,
@@ -32,7 +33,7 @@ moj.Modules.multiplePersons = (function() {
   cacheEls = function() {
     $claimants = $('.claimants');
     $numberOfClaimants = $('#claim_num_claimants');
-    $claimantBlocks = $claimants.find('.claimant[data-claimant]');
+    $claimantBlocks = $claimants.find('.claimant');
     htmlTemplate = $('.claimant-template').html();
     $claimantTypeRadio = $('.radio[data-depend=claimanttype] input');
   };
@@ -60,7 +61,7 @@ moj.Modules.multiplePersons = (function() {
       createClaimantBlock(a);
     }
 
-    $claimantBlocks = $claimants.find('.claimant[data-claimant]');
+    $claimantBlocks = $claimants.find('.claimant');
 
     if($claimantBlocks.length===1){
       $claimantBlocks.find('h3').hide();
@@ -72,7 +73,24 @@ moj.Modules.multiplePersons = (function() {
   createClaimantBlock = function(blockNumber) {
     var template = Handlebars.compile(htmlTemplate);
     var html = template({id: blockNumber, number: blockNumber});
-    $(html).appendTo($claimants);
+    var $block = $(html);
+    $block.appendTo($claimants);
+    idFix($block, blockNumber);
+  };
+
+  /**
+   * There seems to be a bug in labelling form builder: when you specify an id for a text field
+   * (using text_field_row), the "for" attribute on its label doesn't correspond to that ID.
+   * The following is a temporary fix until the issue is resolved.
+   */
+  idFix = function($block, blockNumber){
+    $block.find('input').each(function(){
+      $(this).attr('id', $(this).attr('id').replace('__id__', blockNumber));
+    });
+
+    $block.find('label').each(function(){
+      $(this).attr('for', $(this).attr('for').replace('__id__', blockNumber));
+    });
   };
 
   destroyAll = function() {
