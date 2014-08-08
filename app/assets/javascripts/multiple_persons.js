@@ -1,7 +1,6 @@
 /*jslint browser: true, evil: false, plusplus: true, white: true, indent: 2 */
-/*global moj, $, Handlebars */
 
-moj.Modules.multiplePersons = (function() {
+moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
   "use strict";
 
   //functions
@@ -28,6 +27,7 @@ moj.Modules.multiplePersons = (function() {
   init = function() {
     cacheEls();
     bindEvents();
+    destroyAll();
   };
 
   cacheEls = function() {
@@ -108,4 +108,4 @@ moj.Modules.multiplePersons = (function() {
     createClaimantBlocks: createClaimantBlocks
   };
 
-}());
+}(window.moj, window.$, window.Handlebars));

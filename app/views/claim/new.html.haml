@@ -28,8 +28,9 @@
         data: { depend: 'claimanttype', 'virtual-pageview' => '/accelerated/claimants-section' }
 
       = claim_form.text_field_row :num_claimants,
-        class: 'num-of-claimants js-claimanttype individual',
-        label: 'Number of claimants'
+        class: 'num-of-persons js-claimanttype individual',
+        input_class: 'smalltext',
+        label: 'How many claimants are there?'
 
       .claimants
         .sub-panel.claimant.static
@@ -41,19 +42,25 @@
         .sub-panel.claimant.individual.static
           .row.divider
           .row
-            %h3 Claimant 2
+            %h3
+              Claimant 2
+              %span.hint.hide.js-claimanttype (optional)
           = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_2}
 
         .sub-panel.claimant.individual.static
           .row.divider
           .row
-            %h3 Claimant 3
+            %h3
+              Claimant 3
+              %span.hint.hide.js-claimanttype (optional)
           = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_3}
 
         .sub-panel.claimant.individual.static
           .row.divider
           .row
-            %h3 Claimant 4
+            %h3
+              Claimant 4
+              %span.hint.hide.js-claimanttype (optional)
           = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_4}
 
       .row.divider
