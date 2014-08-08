@@ -26,11 +26,6 @@ class Tenancy < BaseClass
   attr_accessor :from_1997_option
   attr_accessor :upto_1997_option
 
-  # with_options if: :latest_agreement_date, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] } do |tenancy|
-  #   tenancy.validates :agreement_reissued_for_same_property
-  #   tenancy.validates :agreement_reissued_for_same_landlord_and_tenant
-  # end
-
   after_validation :remove_shorthold_tenancies_radio_selection_if_demoted
   after_validation :remove_previous_tenancy_radio_selection_if_not_demoted
 
@@ -223,20 +218,24 @@ class Tenancy < BaseClass
   end
 
   def single_tenancy_options
-    if from_1997_option == 'No' && upto_1997_option == 'No'
-      message = 'You must specify one applicable option1'
+    if applicable_statements_not_confirmed?
+      message = 'Please read the statements and tick if they apply'
       errors[:from_1997_option] << message
       errors[:upto_1997_option] << message
     end
   end
 
   def tenancy_applicable_options
-    if from_1997_option == 'No' && upto_1997_option == 'No'
+    if applicable_statements_not_confirmed?
       unless (original_assured_shorthold_tenancy_agreement_date < Tenancy::RULES_CHANGE_DATE)
-        message = 'You must specify one applicable option2'
+        message = 'Please read the statements and tick if they apply'
         errors[:from_1997_option] << message
         errors[:upto_1997_option] << message
       end
     end
+  end
+
+  def applicable_statements_not_confirmed?
+    from_1997_option == 'No' && upto_1997_option == 'No'
   end
 end
