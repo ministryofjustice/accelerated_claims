@@ -80,8 +80,7 @@ class Claim < BaseClass
         validity = false
       end
     end
-    # puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    # pp @errors.full_messages
+
     @error_messages = ErrorMessageSequencer.new.sequence(@errors)
     validity
   end
