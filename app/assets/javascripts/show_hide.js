@@ -36,6 +36,13 @@ moj.Modules.showHide = (function() {
     $(document).on('multiplePersons:update', function(e, $element){
       chooseOption($element);
     });
+
+    $( radios ).on( 'change', function( e ) {
+      chooseOption( $( e.target ) );
+    } );
+    $( cbs ).on( 'change', function( e ) {
+      cbClick( $( e.target ) );
+    } );
   };
 
   chooseOption = function( $el ) {
