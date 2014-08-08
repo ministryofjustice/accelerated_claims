@@ -63,7 +63,7 @@
           .row.divider
           .row
             %h3 Claimant {{number}}
-          = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_one}
+          = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: 'claimant_{{id}}'}
 
       = render partial: 'claimant_contact', object: @claim.claimant_contact, locals: { claim_form: claim_form, claimant_field: :claimant_contact}
 
