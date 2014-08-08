@@ -36,25 +36,25 @@
           .row.divider
           .row
             %h3 Claimant 1
-          = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_1}
+          = render partial: 'claimant', object: @claim.claimant_1, locals: { claim_form: claim_form, claimant_field: :claimant_1}
 
         .sub-panel.claimant
           .row.divider
           .row
             %h3 Claimant 2
-          = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_2}
+          = render partial: 'claimant', object: @claim.claimant_2, locals: { claim_form: claim_form, claimant_field: :claimant_2}
 
         .sub-panel.claimant
           .row.divider
           .row
             %h3 Claimant 3
-          = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_3}
+          = render partial: 'claimant', object: @claim.claimant_3, locals: { claim_form: claim_form, claimant_field: :claimant_3}
 
         .sub-panel.claimant
           .row.divider
           .row
             %h3 Claimant 4
-          = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_4}
+          = render partial: 'claimant', object: @claim.claimant_4, locals: { claim_form: claim_form, claimant_field: :claimant_4}
 
       .row.divider
 
@@ -63,7 +63,7 @@
           .row.divider
           .row
             %h3 Claimant {{number}}
-          = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: 'claimant_{{id}}'}
+          = render partial: 'claimant', object: @claim.claimant_1, locals: { claim_form: claim_form, claimant_field: 'claimant_{{id}}'}
 
       = render partial: 'claimant_contact', object: @claim.claimant_contact, locals: { claim_form: claim_form, claimant_field: :claimant_contact}
 

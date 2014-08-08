@@ -2,15 +2,16 @@ class Claim < BaseClass
 
   include ActiveSupport::Inflector
 
-  attr_accessor :errors
-  attr_accessor :error_messages
-  attr_accessor :form_state
-  attr_accessor :num_claimants
-  attr_accessor :claimant_type
-  attr_accessor :num_defendants
+  attr_accessor :errors,
+                :error_messages,
+                :claimants,
+                :form_state,
+                :num_claimants,
+                :claimant_type,
+                :num_defendants
 
 
-  @@max_num_claimants       = 2
+  @@max_num_claimants       = 4
   @@valid_num_defendants    = [1, 2]
   @@ambiguous_instance_vars = ['claimant_one', 'claimant_two', 'defendant_one', 'defendant_two']
   @@valid_claimant_types    = %w{ organization individual }
@@ -18,17 +19,35 @@ class Claim < BaseClass
 
 
   def initialize(claim_params={})
-    @claimant_type  = claim_params.key?(:claimant_type) ? claim_params[:claimant_type] : nil
+    @claimant_type  = claim_params.key?(:claimant_type) ? claim_params[:claimant_type] : 1
     if @claimant_type == 'organization'
       @num_claimants = 1
     else
-      @num_claimants  = claim_params.key?(:num_claimants) ? claim_params[:num_claimants].to_i : nil
+      @num_claimants  = claim_params.key?(:num_claimants) ? claim_params[:num_claimants].to_i : 1
     end
-    @num_defendants = claim_params.key?(:num_defendants) ? claim_params[:num_defendants].to_i : nil
-
+    @num_defendants = claim_params.key?(:num_defendants) ? claim_params[:num_defendants].to_i : 1
     initialize_all_submodels(claim_params)
     @errors = ActiveModel::Errors.new(self)
+  puts "++++++ DEBUG PP CLAIM ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+  pp self
+  puts "++++++ DEBUG CLAIMANT 1 ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+  pp @claimant_1
+  
+  
   end
+
+
+  def method_missing(meth, *args)
+    meth_string = meth.to_s
+    if meth_string =~ /^claimant_(\d)\=$/
+      claimants.put($1.to_i, *args)
+    elsif meth_string =~ /^claimant_(\d)$/
+      claimants.get($1.to_i)
+    else
+      super(meth, *args)
+    end
+  end
+
 
 
   def as_json
@@ -103,14 +122,16 @@ class Claim < BaseClass
 
   def num_claimants_valid?
     if @claimant_type.present?
+      result = true
       if @num_claimants.nil? || @num_claimants == 0
         @errors[:base] << ['claim_num_claimants_error', 'Please say how many claimants there are']
+        result = false
       elsif @num_claimants > @@max_num_claimants
-        @errors[:base] << ['claim_num_claimants_error', 'The maximum number of claimants is 4']
-        return false
+        @errors[:base] << ['claim_num_claimants_error', 'If there are more than 4 claimants in this case, you’ll need to complete your accelerated possession claim on the N5b form (LINK: http://hmctsformfinder.justice.gov.uk/HMCTS/GetForm.do?court_forms_id=618)']
+        result = false
       end
     end
-    true
+    result
   end
 
   def num_defendants_valid?
@@ -173,12 +194,14 @@ class Claim < BaseClass
   end
 
   def doubled_submodels
-    %w(Claimant Defendant)
+    %w(Defendant)
   end
+
 
   def attributes_from_submodels
     attributes = {}
     singular_submodels.each { |model| attributes[model.underscore] = model }
+  
     doubled_submodels.each do |model|
       %w(one two).each { |n| attributes["#{model.underscore}_#{n}"] = model }
     end
@@ -189,8 +212,11 @@ class Claim < BaseClass
     attributes_from_submodels.each do |attribute_name, model|
       init_submodel(claim_params, attribute_name, model)
     end
+    @claimants = ClaimantCollection.new(@num_claimants, claim_params)
     self.form_state = claim_params['form_state'] if claim_params['form_state'].present?
   end
+
+
 
   def init_submodel(claim_params, attribute_name, model)
     sub_params = params_for(attribute_name, claim_params)

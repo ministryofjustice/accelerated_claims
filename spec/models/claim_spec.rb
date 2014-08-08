@@ -382,7 +382,35 @@ describe Claim, :type => :model do
         expect(data[:num_claimants]).to be_nil
         expect(claim).to_not be_valid
       end
+    end
 
+    context 'method missing' do
+
+      let(:claim)       { Claim.new }
+
+      it 'should delegate to claimants.get(2) for :claimant_2' do
+        claimants = double ClaimantCollection
+
+        allow(claim).to receive(:claimants).and_return(claimants)
+        expect(claimants).to receive(:get).with(2)
+
+        claim.claimant_2
+      end
+
+      it 'should delegate to claimants.put(2, params) for :claimant_2=(params)' do
+        claimants = double ClaimantCollection
+
+        allow(claim).to receive(:claimants).and_return(claimants)
+        expect(claimants).to receive(:put).with(2, 'claimant_object')
+
+        claim.claimant_2= 'claimant_object'
+      end
+
+      it 'should raise method missing errors for unknown methods' do
+        expect {
+          claim.unknown_meth('abc', 3, :sym)
+        }.to raise_error NoMethodError, /undefined method `unknown_meth' for/
+      end
 
     end
 
@@ -406,6 +434,12 @@ describe Claim, :type => :model do
         data.delete(:num_claimants)
         expect(claim).to_not be_valid
         expect(claim.errors.full_messages).to eq [["claim_num_claimants_error", "Please say how many claimants there are"]]
+      end
+
+      it 'should not be valid if greater than 4' do
+        data[:num_claimants] = '4'
+        expect(claim).to_not be_valid
+        expect(claim.errors.full_messages).to eq [["claim_num_claimants_error", "If there are more than 4 claimants in this case, you’ll need to complete your accelerated possession claim on the N5b form (LINK: http://hmctsformfinder.justice.gov.uk/HMCTS/GetForm.do?court_forms_id=618)"]]
       end
     end
   end
