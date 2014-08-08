@@ -1,6 +1,6 @@
 = claim_form.fields_for claimant_field, claimant, builder: LabellingFormBuilder do |form|
   = form.text_field_row :title,    class: 'title hide js-claimanttype individual', input_class: 'smalltext'
-  = form.text_field_row :full_name, class: 'rel hide js-claimanttype individual', id: 'claim_claimant_{{id}}'
+  = form.text_field_row :full_name, class: 'rel hide js-claimanttype individual', id: 'claim_claimant_{{id}}_full_name'
   .row.hide.js-claimanttype OR
   = form.text_field_row :organization_name, label: 'Company or local authority name', class: 'rel hide js-claimanttype organization'
   .sub-panel.rel.address
