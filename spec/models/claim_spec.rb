@@ -390,8 +390,20 @@ describe Claim, :type => :model do
 
       let(:data)  { claim_post_data['claim'] }
 
-      it 'should not be valid if the num claimants is 3' do
-        data[:num_claimants] = 3
+      it 'should not be valid if the num claimants is 0' do
+        data[:num_claimants] = 0
+        expect(claim).to_not be_valid
+        expect(claim.errors.full_messages).to eq [["claim_num_claimants_error", "Please say how many claimants there are"]]
+      end
+
+      it 'should not be valid if the num claimants is blank' do
+        data[:num_claimants] = ''
+        expect(claim).to_not be_valid
+        expect(claim.errors.full_messages).to eq [["claim_num_claimants_error", "Please say how many claimants there are"]]
+      end
+
+      it 'should not be valid if the num claimants is nil' do
+        data.delete(:num_claimants)
         expect(claim).to_not be_valid
         expect(claim.errors.full_messages).to eq [["claim_num_claimants_error", "Please say how many claimants there are"]]
       end

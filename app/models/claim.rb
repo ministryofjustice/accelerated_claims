@@ -10,7 +10,7 @@ class Claim < BaseClass
   attr_accessor :num_defendants
 
 
-  @@valid_num_claimants     = [1, 2]
+  @@max_num_claimants       = 2
   @@valid_num_defendants    = [1, 2]
   @@ambiguous_instance_vars = ['claimant_one', 'claimant_two', 'defendant_one', 'defendant_two']
   @@valid_claimant_types    = %w{ organization individual }
@@ -103,8 +103,10 @@ class Claim < BaseClass
 
   def num_claimants_valid?
     if @claimant_type.present?
-      unless @@valid_num_claimants.include?(@num_claimants)
+      if @num_claimants.nil? || @num_claimants == 0
         @errors[:base] << ['claim_num_claimants_error', 'Please say how many claimants there are']
+      elsif @num_claimants > @@max_num_claimants
+        @errors[:base] << ['claim_num_claimants_error', 'The maximum number of claimants is 4']
         return false
       end
     end
