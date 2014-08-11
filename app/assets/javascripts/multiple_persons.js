@@ -14,12 +14,15 @@ moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
     updateClaimantBlocks,
     htmlTemplate,
     idFix,
+    updateClaimantSolicitorVisibility,
+    getRadioValue,
 
     //elements
     $claimants,
     $numberOfClaimants,
     $claimantBlocks,
     $claimantTypeRadio,
+    $claimantSolicitor,
 
     //other
     maxClaimants = 4;
@@ -31,20 +34,23 @@ moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
   };
 
   cacheEls = function() {
+    htmlTemplate = $('.claimant-template').html();
     $claimants = $('.claimants');
     $numberOfClaimants = $('#claim_num_claimants');
     $claimantBlocks = $claimants.find('.claimant');
-    htmlTemplate = $('.claimant-template').html();
-    $claimantTypeRadio = $('.radio[data-depend=claimanttype] input');
+    $claimantTypeRadio = $('[name=claim\\[claimant_type\\]]');
+    $claimantSolicitor = $('.claimant-solicitor');
   };
 
   bindEvents = function() {
     $numberOfClaimants.keyup(function() {
       createClaimantBlocks(parseInt($(this).val(), 10));
+      updateClaimantSolicitorVisibility();
     });
 
     $claimantTypeRadio.change(function() {
-      updateClaimantBlocks($(this));
+      updateClaimantBlocks();
+      updateClaimantSolicitorVisibility();
     });
   };
 
@@ -97,9 +103,19 @@ moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
     $claimantBlocks.remove();
   };
 
-  updateClaimantBlocks = function($input) {
-    $numberOfClaimants.val('');
-    createClaimantBlocks($input.val()==='organization' ? 1 : 0);
+  updateClaimantSolicitorVisibility = function(){
+    var claimantType = getRadioValue($claimantTypeRadio);
+    var isSetNumberOfClaimants = !!$numberOfClaimants.val();
+
+    $claimantSolicitor.toggle(claimantType==='organization' || claimantType==='individual' && isSetNumberOfClaimants);
+  };
+
+  getRadioValue = function($radio){
+    return $radio.filter(':checked').val();
+  };
+
+  updateClaimantBlocks = function() {
+    createClaimantBlocks(getRadioValue($claimantTypeRadio)==='organization' ? 1 : 0);
   };
 
   // public
