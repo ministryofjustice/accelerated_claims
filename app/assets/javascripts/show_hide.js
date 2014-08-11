@@ -33,11 +33,11 @@ moj.Modules.showHide = (function() {
   };
 
   bindEvents = function() {
-    $( radios ).on( 'click', function( e ) {
+    $( radios ).on( 'change', function( e ) {
       chooseOption( $( e.target ) );
     } );
 
-    $( cbs ).on( 'click', function( e ) {
+    $( cbs ).on( 'change', function( e ) {
       cbClick( $( e.target ) );
     } );
   };
