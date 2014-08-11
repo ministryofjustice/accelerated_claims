@@ -64,6 +64,8 @@ class Tenancy < BaseClass
 
     t.validates *DEMOTED_FIELDS,
       absence: { message: 'leave blank as you specified tenancy is not demoted' }
+
+    t.validate :validate_applicable_statements_confirmed
   end
 
   with_options if: :one_tenancy_agreement? do |t|
@@ -72,7 +74,6 @@ class Tenancy < BaseClass
 
     t.validates *MULTIPLE_TENANCY_FIELDS,
       absence: { message: 'must be blank if one tenancy agreement'}
-    t.validate :single_tenancy_options
   end
 
   with_options if: :multiple_tenancy_agreements? do |t|
@@ -86,13 +87,11 @@ class Tenancy < BaseClass
 
     t.validates *ONE_TENANCY_FIELDS,
       absence: { message: "must be blank if more than one tenancy agreement" }
-
-    t.validate :tenancy_applicable_options
   end
 
   with_options if: :in_first_rules_period? do |t|
     t.validates :confirmed_second_rules_period_applicable_statements,
-      inclusion: { in: ['No'], message: "Leave blank as you specified original tenancy agreement was made before #{Tenancy::RULES_CHANGE_DATE.to_s(:printed)}" }
+      inclusion: { in: ['No'], message: "leave blank as you specified original tenancy agreement was made before #{Tenancy::RULES_CHANGE_DATE.to_s(:printed)}" }
   end
 
   with_options if: :in_second_rules_period? do |t|
@@ -218,25 +217,20 @@ class Tenancy < BaseClass
     end
   end
 
-  def single_tenancy_options
+  def validate_applicable_statements_confirmed
     if applicable_statements_not_confirmed?
       message = 'Please read the statements and tick if they apply'
-      errors[:confirmed_second_rules_period_applicable_statements] << message
-      errors[:confirmed_first_rules_period_applicable_statements] << message
-    end
-  end
-
-  def tenancy_applicable_options
-    if applicable_statements_not_confirmed?
-      unless (original_assured_shorthold_tenancy_agreement_date < Tenancy::RULES_CHANGE_DATE)
-        message = 'Please read the statements and tick if they apply'
-        errors[:confirmed_second_rules_period_applicable_statements] << message
-        errors[:confirmed_first_rules_period_applicable_statements] << message
+      if in_first_rules_period?
+        errors.add(:confirmed_first_rules_period_applicable_statements, message)
+      elsif in_second_rules_period?
+        errors.add(:confirmed_second_rules_period_applicable_statements, message)
       end
     end
   end
 
   def applicable_statements_not_confirmed?
-    confirmed_second_rules_period_applicable_statements == 'No' && confirmed_first_rules_period_applicable_statements == 'No'
+    confirmed_second_rules_period_applicable_statements == 'No' &&
+      confirmed_first_rules_period_applicable_statements == 'No'
   end
+
 end
