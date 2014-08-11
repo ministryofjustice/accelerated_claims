@@ -18,10 +18,16 @@ describe Claim, :type => :model do
     let(:data) { {} }
 
     it 'should have submodels' do
-      %w(property claimant_one claimant_two notice license deposit
-         fee possession order defendant_one defendant_two).each do |attr|
+      %w(property notice license deposit fee possession order defendant_one defendant_two).each do |attr|
         expect(claim).to respond_to attr
       end
+    end
+
+    it 'should respond to magic methods claimant_n' do
+      expect{
+        claim.claimant_1
+        claim.claimant_2
+      }.not_to raise_error
     end
   end
 
@@ -273,11 +279,13 @@ describe Claim, :type => :model do
       end
 
       it 'should be invalid when claimant 2 data is given' do
+        puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+        pp data
         claim = Claim.new(data)
         expect(claim).to_not be_valid
-        expect(claim.claimant_two.errors.messages[:full_name]).to eq ['must not be entered if number of claimants is 1']
-        expect(claim.claimant_two.errors.messages[:street]).to eq ['must not be entered if number of claimants is 1']
-        expect(claim.claimant_two.errors.messages[:postcode]).to eq ['must not be entered if number of claimants is 1']
+        expect(claim.claimant_2.errors.messages[:full_name]).to eq ['must not be entered if number of claimants is 1']
+        expect(claim.claimant_2.errors.messages[:street]).to eq ['must not be entered if number of claimants is 1']
+        expect(claim.claimant_2.errors.messages[:postcode]).to eq ['must not be entered if number of claimants is 1']
       end
 
       it 'should be invalid when there is no claimant 1 data' do

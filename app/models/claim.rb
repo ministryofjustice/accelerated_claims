@@ -23,26 +23,20 @@ class Claim < BaseClass
     if @claimant_type == 'organization'
       @num_claimants = 1
     else
-      @num_claimants  = claim_params.key?(:num_claimants) ? claim_params[:num_claimants].to_i : 1
+      @num_claimants  = claim_params.key?(:num_claimants) ? claim_params[:num_claimants].to_i : 0
     end
     @num_defendants = claim_params.key?(:num_defendants) ? claim_params[:num_defendants].to_i : 1
     initialize_all_submodels(claim_params)
     @errors = ActiveModel::Errors.new(self)
-  puts "++++++ DEBUG PP CLAIM ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-  pp self
-  puts "++++++ DEBUG CLAIMANT 1 ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-  pp @claimant_1
-  
-  
   end
 
 
   def method_missing(meth, *args)
     meth_string = meth.to_s
     if meth_string =~ /^claimant_(\d)\=$/
-      claimants.put($1.to_i, *args)
+      claimants[$1.to_i] = *args
     elsif meth_string =~ /^claimant_(\d)$/
-      claimants.get($1.to_i)
+      claimants[$1.to_i]
     else
       super(meth, *args)
     end
@@ -56,6 +50,7 @@ class Claim < BaseClass
       submodel_data = instance_variable_get("@#{attribute}").as_json
       json_in[attribute] = submodel_data
     end
+    json_in.merge!(@claimants.as_json)
 
     json_out = {}
     json_in.each do |attribute, submodel_data|

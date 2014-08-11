@@ -3,6 +3,7 @@ class Claimant < BaseClass
 
   include Address
   include ActiveModel::Validations
+  include Comparable
 
   attr_accessor :validate_presence, :validate_absence
   attr_accessor :num_claimants
@@ -29,6 +30,14 @@ class Claimant < BaseClass
     @num_claimants = @num_claimants.nil? ? 1 : @num_claimants.to_i
   end
   
+
+  def ==(other)
+    return false if instance_variables.size != other.instance_variables.size
+    instance_variables.each do |ivar|
+      return false unless instance_variable_get(ivar) == other.instance_variable_get(ivar)
+    end
+    
+  end
 
 
   # main validation for claimant state

@@ -30,6 +30,28 @@ describe Claimant, :type => :model do
   end
 
   
+  context 'equality comparison' do
+
+    it 'should be true if two new objects are compared with one another' do
+      c1 = Claimant.new
+      c2 = Claimant.new
+      expect(c1).to eq c2
+    end
+
+    it 'should be true for two claimants with the same values' do
+      c1 = Claimant.new( { "title" => "Mrs", "full_name" => "Maggie Thatcher", "street" => "10 Downing Street St\nLondon", "postcode" => "SW1W 0LU"} )
+      c2 = Claimant.new( { "title" => "Mrs", "full_name" => "Maggie Thatcher", "street" => "10 Downing Street St\nLondon", "postcode" => "SW1W 0LU"} )
+      expect(c1).to eq c2
+    end
+
+    it 'should be false if any of the instance variables are different' do
+      c1 = Claimant.new( { "title" => "Mrs", "full_name" => "Maggie Thatcher", "street" => "10 Downing Street St\nLondon", "postcode" => "SW1W 0LU"} )
+      c2 = Claimant.new( { "title" => "XXX", "full_name" => "Maggie Thatcher", "street" => "10 Downing Street St\nLondon", "postcode" => "SW1W 0LU"} )
+      expect(c1).not_to eq c2
+    end
+  
+  end
+
 
 
   context 'validate_presence set to true' do
