@@ -7,4 +7,5 @@
     %ul
       - @claim.error_messages.each do |field, message|
         %li
-          = link_to message, "##{field}", class: 'error-link', data: { id: "##{field}" }
+          - link = field[/claim_tenancy_confirmed_(first|second)_rules_period_applicable_statements/] ? 'read-statements' : field
+          = link_to message, "##{link}", class: 'error-link', data: { id: "##{field}" }

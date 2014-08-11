@@ -50,7 +50,7 @@
             %li The defendant is not living in the property as an agricultural worker in connection with their work (so Schedule 3, Housing Act 1988 does not apply)
 
 
-          .row.information.confirmation{ class: (form.error_for?(:confirmed_second_rules_period_applicable_statements) ? 'error' : ''), id: (form.error_for?(:confirmed_second_rules_period_applicable_statements) ? form.error_id_for(:confirmed_second_rules_period_applicable_statements) : 'deposit_type_fieldset') }
+          .row.information.confirmation{ class: (form.error_for?(:confirmed_second_rules_period_applicable_statements) ? 'error' : ''), id: (form.error_for?(:confirmed_second_rules_period_applicable_statements) ? form.error_id_for(:confirmed_second_rules_period_applicable_statements) : '') }
             - if form.error_for?(:confirmed_second_rules_period_applicable_statements)
               %span{ id: form.error_id_for(:confirmed_second_rules_period_applicable_statements) }
             = form.labelled_check_box :confirmed_second_rules_period_applicable_statements, '<strong>Yes</strong>, all these statements apply'.html_safe
@@ -66,7 +66,9 @@
               = form.moj_date_fieldset :assured_shorthold_tenancy_notice_served_date, 'When?', class: 'date-picker rel'
             %li You couldn’t have ended the tenancy agreement in the first 6 months
 
-          .row.information.confirmation
+          .row.information.confirmation{ class: (form.error_for?(:confirmed_first_rules_period_applicable_statements) ? 'error' : ''), id: (form.error_for?(:confirmed_first_rules_period_applicable_statements) ? form.error_id_for(:confirmed_first_rules_period_applicable_statements) : '') }
+            - if form.error_for?(:confirmed_first_rules_period_applicable_statements)
+              %span{ id: form.error_id_for(:confirmed_first_rules_period_applicable_statements) }
             = form.labelled_check_box :confirmed_first_rules_period_applicable_statements, '<strong>Yes</strong>, all these statements apply'.html_safe
 
   .row.divider.hide.js-tenancyType.demoted
