@@ -32,8 +32,13 @@ moj.Modules.multiplePersons = (function() {
   bindEvents = function() {
     $( document ).on( 'change', '.has-multiple .multiple [type="radio"]', function() {
       var $this = $( this );
-      showMultiples( $this.closest( '.has-multiple' ), $this, $this.val() );
-    } );
+      showMultiples($this.closest( '.has-multiple' ), $this, $this.val());
+    });
+
+    $('[name=claim\\[claimant_type\\]]').on('change', function(){
+      var $checked = $('[name=claim\\[num_claimants\\]]:checked');
+      showMultiples($(this).closest('.has-multiple'), $checked, $checked.val());
+    });
   };
 
   setupMultiples = function() {
