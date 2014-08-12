@@ -84,10 +84,11 @@ moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
    */
   updateClaimantBlocks = function() {
     var numberOfBlocks;
+    var landlordType = moj.Modules.tools.getRadioVal($claimantTypeRadio);
 
     hideAll();
 
-    numberOfBlocks = moj.Modules.tools.getRadioVal($claimantTypeRadio)==='organization' ? 1 : parseInt($numberOfClaimants.val(), 10);
+    numberOfBlocks = landlordType==='organization' ? 1 : parseInt($numberOfClaimants.val(), 10);
 
     if(isNaN(numberOfBlocks)){
       return;
