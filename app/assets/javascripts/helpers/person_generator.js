@@ -27,9 +27,13 @@ moj.Helpers.personGenerator = (function(moj, $, Handlebars){
     /** Creates a single person block
      */
     createPersonBlock: function(blockNumber){
-      var template = Handlebars.compile(this.template);
-      var html = template({id: blockNumber, number: blockNumber});
-      var $block = $(html);
+      var template = Handlebars.compile(this.template),
+        html = template({id: blockNumber, number: blockNumber}),
+        $block = $(html);
+
+      if(blockNumber>1){
+        $block.addClass('same-address');
+      }
 
       $block.appendTo(this.$personsContainer);
       this.idFix($block, blockNumber);
