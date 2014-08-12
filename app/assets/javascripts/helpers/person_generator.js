@@ -26,17 +26,17 @@ moj.Helpers.personGenerator = (function(moj, $, Handlebars){
 
     /** Creates a single person block
      */
-    createPersonBlock: function(blockNumber){
+    createPersonBlock: function(personNumber){
       var template = Handlebars.compile(this.template),
-        html = template({id: blockNumber, number: blockNumber}),
+        html = template({id: personNumber, number: personNumber}),
         $block = $(html);
 
-      if(blockNumber>1){
+      if(personNumber>1){
         $block.addClass('same-address');
       }
 
+      this.idFix($block, personNumber);
       $block.appendTo(this.$personsContainer);
-      this.idFix($block, blockNumber);
     },
 
     /**
@@ -46,7 +46,7 @@ moj.Helpers.personGenerator = (function(moj, $, Handlebars){
      * Then we can use handlebars {{id}} and we can delete this function below.
      */
     idFix: function($block, blockNumber){
-      $block.find('input').each(function(){
+      $block.find('input, textarea').each(function(){
         $(this).attr('id', $(this).attr('id').replace('__id__', blockNumber));
       });
 
