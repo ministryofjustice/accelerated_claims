@@ -8,14 +8,12 @@ moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
     init,
     cacheEls,
     bindEvents,
-    destroyAll,
     createClaimantBlocks,
     createClaimantBlock,
     updateClaimantBlocks,
     htmlTemplate,
     idFix,
-    updateClaimantSolicitorVisibility,
-    getRadioValue,
+    destroyAll,
 
     //elements
     $claimants,
@@ -25,6 +23,7 @@ moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
     $claimantSolicitor,
 
     //other
+    claimantData,
     maxClaimants = 4;
 
   init = function() {
@@ -38,19 +37,19 @@ moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
     $claimants = $('.claimants');
     $numberOfClaimants = $('#claim_num_claimants');
     $claimantBlocks = $claimants.find('.claimant');
-    $claimantTypeRadio = $('[name=claim\\[claimant_type\\]]');
+    $claimantTypeRadio = $('[name="claim[claimant_type]"]');
     $claimantSolicitor = $('.claimant-solicitor');
   };
 
   bindEvents = function() {
     $numberOfClaimants.keyup(function() {
       createClaimantBlocks(parseInt($(this).val(), 10));
-      updateClaimantSolicitorVisibility();
+      moj.Modules.claimantContact.updateClaimantSolicitorVisibility();
     });
 
     $claimantTypeRadio.change(function() {
       updateClaimantBlocks();
-      updateClaimantSolicitorVisibility();
+      moj.Modules.claimantContact.updateClaimantSolicitorVisibility();
     });
   };
 
@@ -84,10 +83,15 @@ moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
     idFix($block, blockNumber);
   };
 
+  updateClaimantBlocks = function() {
+    createClaimantBlocks(moj.Modules.tools.getRadioVal($claimantTypeRadio)==='organization' ? 1 : $numberOfClaimants.val());
+  };
+
   /**
    * There seems to be a bug in labelling form builder: when you specify an id for a text field
    * (using text_field_row), the "for" attribute on its label doesn't correspond to that ID.
-   * The following is a temporary fix until the issue is resolved.
+   * The following is a temporary fix until the issue with the form builder is resolved.
+   * Then we can use handlebars {{id}} and we can delete this function below.
    */
   idFix = function($block, blockNumber){
     $block.find('input').each(function(){
@@ -99,23 +103,8 @@ moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
     });
   };
 
-  destroyAll = function() {
+  destroyAll = function(){
     $claimantBlocks.remove();
-  };
-
-  updateClaimantSolicitorVisibility = function(){
-    var claimantType = getRadioValue($claimantTypeRadio);
-    var isSetNumberOfClaimants = !!$numberOfClaimants.val();
-
-    $claimantSolicitor.toggle(claimantType==='organization' || claimantType==='individual' && isSetNumberOfClaimants);
-  };
-
-  getRadioValue = function($radio){
-    return $radio.filter(':checked').val();
-  };
-
-  updateClaimantBlocks = function() {
-    createClaimantBlocks(getRadioValue($claimantTypeRadio)==='organization' ? 1 : 0);
   };
 
   // public
