@@ -99,12 +99,11 @@ class Tenancy < BaseClass
       inclusion: { in: ['No'], message: "leave blank as you specified original tenancy agreement was made on or after #{Tenancy::RULES_CHANGE_DATE.to_s(:printed)}" }
   end
 
-  with_options if: -> tenancy { tenancy.assured_shorthold_tenancy_notice_served_date.present? } do |t|
-    t.validates :assured_shorthold_tenancy_notice_served_by, presence: { message: 'must be completed' }
-  end
-
-  with_options if: -> tenancy { tenancy.assured_shorthold_tenancy_notice_served_by.present? } do |t|
-    t.validates :assured_shorthold_tenancy_notice_served_date, presence: { message: 'must be entered' }
+  with_options if: :confirmed_first_rules_period_applicable_statements? do |t|
+    t.validates :assured_shorthold_tenancy_notice_served_by,
+      presence: { message: 'You must say who told the defendant about their tenancy agreement' }
+    t.validates :assured_shorthold_tenancy_notice_served_date,
+      presence: { message: 'You must say when the defendant was told about their tenancy agreement' }
   end
 
   def self.in_first_rules_period? date
@@ -231,6 +230,10 @@ class Tenancy < BaseClass
   def applicable_statements_not_confirmed?
     confirmed_second_rules_period_applicable_statements == 'No' &&
       confirmed_first_rules_period_applicable_statements == 'No'
+  end
+
+  def confirmed_first_rules_period_applicable_statements?
+    confirmed_first_rules_period_applicable_statements == 'Yes'
   end
 
 end
