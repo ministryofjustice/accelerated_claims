@@ -267,7 +267,7 @@ describe Claim, :type => :model do
 
     context 'num_claimants is 1' do
       let(:data) do
-        mydata = claim_post_data['claim'] 
+        mydata = claim_post_data['claim']
         mydata['num_claimants'] = 1
         mydata
       end
@@ -281,14 +281,14 @@ describe Claim, :type => :model do
       end
 
       it 'should be invalid when there is no claimant 1 data' do
-        data[:claimant_one] = { "title"=>"", "full_name"=>"", "street"=>"", "postcode"=>""} 
+        data[:claimant_one] = { "title"=>"", "full_name"=>"", "street"=>"", "postcode"=>""}
         claim = Claim.new(data)
         expect(claim).to_not be_valid
         expect(claim.claimant_one.errors.messages[:full_name]).to eq ["Enter the claimant's full name"]
         expect(claim.claimant_one.errors.messages[:street]).to eq ["Enter the claimant's full address"]
         expect(claim.claimant_one.errors.messages[:postcode]).to eq ["Enter the claimant's postcode"]
       end
-     
+
       it 'should be valid if there is claimant 1 data and no claimant 2 data' do
         data.delete(:claimant_two)
         claim = Claim.new(data)
@@ -297,12 +297,12 @@ describe Claim, :type => :model do
       end
 
       it 'should be valid if there is claimant one data and  claimant two data is all blank' do
-        data[:claimant_two] = { "title"=>"", "full_name"=>"", "street"=>"", "postcode"=>""} 
+        data[:claimant_two] = { "title"=>"", "full_name"=>"", "street"=>"", "postcode"=>""}
         claim = Claim.new(data)
         expect(claim).to be_valid
       end
     end
-    
+
     context 'num_claimants is 2' do
       let(:data)     { claim_post_data['claim']  }
       let(:claim)    { Claim.new(data) }
@@ -317,8 +317,8 @@ describe Claim, :type => :model do
         expect(claim).to_not be_valid
         expect(claim.errors.full_messages).to eq [
           ["claim_claimant_two_title_error", "Enter claimant 2's title"],
-          ["claim_claimant_two_full_name_error", "Enter claimant 2's full name"], 
-          ["claim_claimant_two_street_error", "Enter claimant 2's full address"], 
+          ["claim_claimant_two_full_name_error", "Enter claimant 2's full name"],
+          ["claim_claimant_two_street_error", "Enter claimant 2's full address"],
           ["claim_claimant_two_postcode_error", "Enter claimant 2's postcode"]
         ]
       end
@@ -328,8 +328,8 @@ describe Claim, :type => :model do
         expect(claim).to_not be_valid
         expect(claim.errors.full_messages).to eq [
             ["claim_claimant_two_title_error", "Enter claimant 2's title"],
-            ["claim_claimant_two_full_name_error", "Enter claimant 2's full name"], 
-            ["claim_claimant_two_street_error", "Enter claimant 2's full address"], 
+            ["claim_claimant_two_full_name_error", "Enter claimant 2's full name"],
+            ["claim_claimant_two_street_error", "Enter claimant 2's full address"],
             ["claim_claimant_two_postcode_error", "Enter claimant 2's postcode"]
           ]
       end
@@ -338,7 +338,7 @@ describe Claim, :type => :model do
 
     context 'claimant_type_validation' do
       let(:data) {
-        mydata = claim_post_data['claim'] 
+        mydata = claim_post_data['claim']
         mydata['num_claimants'] = 1
         mydata.delete('claimant_two')
         mydata
@@ -373,7 +373,7 @@ describe Claim, :type => :model do
     context 'num_claimants is not specified' do
 
       let(:data) do
-        mydata = claim_post_data['claim'] 
+        mydata = claim_post_data['claim']
         mydata.delete('num_claimants')
         mydata
       end

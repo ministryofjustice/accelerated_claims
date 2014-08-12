@@ -8,4 +8,7 @@
       - @claim.error_messages.each do |field, message|
         %li
           - link = field[/claim_tenancy_confirmed_(first|second)_rules_period_applicable_statements/] ? 'read-statements' : field
+          - binding.pry if field == 'claim_claimant_number_of_claimants_error'
+          - link = field[/claim_claimant_number_of_claimants_error/] ? 'claim_num_claimants_error' : field
+          - link = field[/claim_defendant_number_of_defendants_error/] ? 'claim_num_defendants_error' : field
           = link_to message, "##{link}", class: 'error-link', data: { id: "##{field}" }

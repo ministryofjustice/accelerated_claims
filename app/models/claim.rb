@@ -106,7 +106,7 @@ class Claim < BaseClass
   def num_claimants_valid?
     if @claimant_type.present?
       unless @@valid_num_claimants.include?(@num_claimants)
-        @errors[:base] << ['claim_num_claimants_error', 'Please say how many claimants there are']
+        @errors[:base] << ['claim_claimant_number_of_claimants_error', 'Please say how many claimants there are']
         return false
       end
     end
@@ -115,7 +115,7 @@ class Claim < BaseClass
 
   def num_defendants_valid?
     unless @@valid_num_defendants.include?(@num_defendants)
-      @errors[:base] << ['claim_num_defendants_error', 'Please say how many defendants there are']
+      @errors[:base] << ['claim_defendant_number_of_defendants_error', 'Please say how many defendants there are']
       return false
     end
     true

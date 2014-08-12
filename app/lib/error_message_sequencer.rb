@@ -1,80 +1,144 @@
 class ErrorMessageSequencer
 
-  @@ordered_keys = {
-      'claim_property_house_error'                    => 100,
-      'claim_property_street_error'                   => 120,
-      'claim_property_postcode_error'                 => 140,
-      'claim_claimant_type_error'                     => 205,
+  SECTION_ORDER = [
+    'claim_property',
+    'claim_claimant',
+    'claim_defendant',
+    'claim_notice',
+    'claim_tenancy',
+    'claim_deposit',
+    'claim_license',
+    'claim_order',
+    'claim_possession'
+  ]
 
-      'claim_num_claimants_error'                     => 210,
-      'claim_claimant_one_full_name_error'            => 220,
-      'claim_claimant_one_street_error'               => 230,
-      'claim_claimant_one_postcode_error'             => 240,
-      'claim_claimant_two_full_name_error'            => 250,
-      'claim_claimant_two_street_error'               => 260,
-      'claim_claimant_two_postcode_error'             => 270,
-      'claim_claimant_contact_email_error'            => 280,
-      'claim_claimant_contact_phone_error'            => 282,
-      'claim_claimant_contact_full_name_error'        => 285,
-      'claim_claimant_contact_postcode_error'         => 290,
+  FIELD_ORDER = {
+    'claim_property' => [
+      'claim_property_house_error',
+      'claim_property_street_error',
+      'claim_property_postcode_error'
+    ],
 
-      'claim_num_defendants_error'                    => 310,
-      'claim_defendant_one_title_error'               => 320,
-      'claim_defendant_one_full_name_error'           => 330,
-      'claim_defendant_one_inhabits_property_error'   => 332,
-      'claim_defendant_one_street_error'              => 340,
-      'claim_defendant_one_postcode_error'            => 350,
-      'claim_defendant_two_title_error'               => 360,
-      'claim_defendant_two_full_name_error'           => 370,
-      'claim_defendant_two_street_error'              => 380,
-      'claim_defendant_two_postcode_error'            => 390,
+    'claim_claimant' => [
+      'claim_claimant_type_error',
+      'claim_claimant_number_of_claimants_error',
+      'claim_claimant_one_full_name_error',
+      'claim_claimant_one_street_error',
+      'claim_claimant_one_postcode_error',
+      'claim_claimant_two_full_name_error',
+      'claim_claimant_two_street_error',
+      'claim_claimant_two_postcode_error',
+      'claim_claimant_contact_email_error',
+      'claim_claimant_contact_phone_error',
+      'claim_claimant_contact_full_name_error',
+      'claim_claimant_contact_postcode_error',
+    ],
 
-      'claim_notice_served_method_error'              => 392,
-      'claim_notice_served_by_name_error'             => 394,
-      'claim_notice_served_method_error'              => 396,
-      'claim_notice_date_served_error'                => 398,
-      'claim_notice_expiry_date_error'                => 400,
+    'claim_defendant' => [
+      'claim_defendant_number_of_defendants_error',
+      'claim_defendant_one_title_error',
+      'claim_defendant_one_full_name_error',
+      'claim_defendant_one_inhabits_property_error',
+      'claim_defendant_one_street_error',
+      'claim_defendant_one_postcode_error',
+      'claim_defendant_two_title_error',
+      'claim_defendant_two_full_name_error',
+      'claim_defendant_two_street_error',
+      'claim_defendant_two_postcode_error',
+    ],
 
-      'claim_tenancy_tenancy_type_error'              => 410,
-      'claim_tenancy_confirmed_first_rules_period_applicable_statements_error' => 411,
-      'claim_tenancy_confirmed_second_rules_period_applicable_statements_error' => 412,
-      'claim_tenancy_demotion_order_date_error'       => 450,
-      'claim_tenancy_demotion_order_court_error'      => 455,
-      'claim_tenancy_previous_tenancy_type_error'     => 450,
+    'claim_notice' => [
+      'claim_notice_served_by_name_error',
+      'claim_notice_served_method_error',
+      'claim_notice_date_served_error',
+      'claim_notice_expiry_date_error',
+    ],
 
-      'claim_deposit_received_error'                  => 510,
-      'claim_deposit_as_money_error'                  => 520,
+    'claim_tenancy' => [
+      'claim_tenancy_tenancy_type_error',
+      'claim_tenancy_confirmed_first_rules_period_applicable_statements_error',
+      'claim_tenancy_confirmed_second_rules_period_applicable_statements_error',
+      'claim_tenancy_demotion_order_date_error',
+      'claim_tenancy_demotion_order_court_error',
+      'claim_tenancy_previous_tenancy_type_error',
+    ],
 
-      'claim_license_multiple_occupation_error'       => 610,
-      'claim_license_issued_under_act_part_applied_error' => 615,
-      'claim_license_issued_by_error'                 => 620,
-      'claim_license_issued_under_act_part_yes_error' => 630,
-      'claim_licesnse_issued_date_error'              => 640,
+    'claim_deposit' => [
+      'claim_deposit_received_error',
+      'claim_deposit_as_money_error',
+    ],
 
-      'claim_order_possession_error'                  => 810,
+    'claim_license' => [
+      'claim_license_multiple_occupation_error',
+      'claim_license_issued_under_act_part_applied_error',
+      'claim_license_issued_by_error',
+      'claim_license_issued_under_act_part_yes_error',
+      'claim_license_issued_date_error',
+    ],
 
-      'claim_possession_hearing_error'                => 820
+    'claim_order' => [
+      'claim_order_possession_error',
+    ],
+
+    'claim_possession' => [
+      'claim_possession_hearing_error',
+    ]
   }
 
-
-  # errors is an array of two-element arrays.  The first element in the array is the key, e.g. 'claim_property_house_error', and this is what we use to determine the order.
+  # errors is an array of two-element arrays.
+  # The first element in the array is the key, e.g. 'claim_property_house_error'
+  # this is what we use to determine the order.
   def sequence(errors)
-    errors[:base].sort { |a, b| sequence_value(a) <=> sequence_value(b) }
+    errors = errors[:base]
+    sorted = errors.sort { |a, b| comparison_number(a, b) }
+    sorted.each do |pair|
+      pair[0] = 'claim_num_claimants_error'  if pair[0] =='claim_claimant_number_of_claimants_error'
+      pair[0] = 'claim_num_defendants_error' if pair[0] =='claim_defendant_number_of_defendants_error'
+    end
+    sorted
   end
 
   private
 
-  def sequence_value(error_message_pair)
-    error_key, error_message = error_message_pair
-    result = 999
-    @@ordered_keys.keys.each do | ordered_key |
-      if error_key == ordered_key
-        result = @@ordered_keys[ordered_key]
-        break
-      end
+  def comparison_number error1, error2
+    section1 = error1[0].split('_')[0..1].join('_')
+    section2 = error2[0].split('_')[0..1].join('_')
+
+    comparison = compare SECTION_ORDER.index(section1), SECTION_ORDER.index(section2)
+
+    case comparison
+    when 0
+      compare_fields(section1, error1[0], error2[0])
+    else
+      comparison
     end
-    Rails.logger.warn "No error message sequencing for #{error_key}" if result == 999
-    result
+  end
+
+  def compare_fields section, error1, error2
+    if section = FIELD_ORDER[section]
+      index1 = section.index(error1)
+      index2 = section.index(error2)
+      comparison = compare(index1, index2)
+      comparison
+    else
+      -1
+    end
+  end
+
+  def compare index1, index2
+    if index1.present? && index2.present?
+      if index1 == index2
+        0
+      else
+        (index2 - index1 > 0) ? -1 : 1
+      end
+    elsif index1
+      -1
+    elsif index2
+      1
+    else
+      0
+    end
   end
 
 end
