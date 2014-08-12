@@ -53,6 +53,8 @@ moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
     });
   };
 
+  /** Creates all claimant blocks
+   */
   createClaimantBlocks = function() {
     var a;
 
@@ -62,9 +64,13 @@ moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
       createClaimantBlock(a);
     }
 
-    $claimantBlocks = $claimants.find('.claimant');
+    $claimantBlocks = $claimants.find('.claimant'); //update the cached claimant blocks
     $claimantBlocks.hide();
   };
+
+  /** Creates a single claimant block
+   * @param {Number} blockNumber The number of block
+   */
 
   createClaimantBlock = function(blockNumber) {
     var template = Handlebars.compile(htmlTemplate);
@@ -75,6 +81,8 @@ moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
     idFix($block, blockNumber);
   };
 
+  /** Updates the visibility of claimant blocks to correspond to the number of claimants entered and the landlord type
+   */
   updateClaimantBlocks = function() {
     var numberOfBlocks;
 
@@ -113,6 +121,8 @@ moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
     });
   };
 
+  /** Hides all claimant blocks
+   */
   hideAll = function(){
     $claimantBlocks.hide();
   };
