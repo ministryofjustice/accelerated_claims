@@ -279,8 +279,6 @@ describe Claim, :type => :model do
       end
 
       it 'should be invalid when claimant 2 data is given' do
-        puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-        pp data
         claim = Claim.new(data)
         expect(claim).to_not be_valid
         expect(claim.claimant_2.errors.messages[:full_name]).to eq ['must not be entered if number of claimants is 1']
@@ -289,12 +287,12 @@ describe Claim, :type => :model do
       end
 
       it 'should be invalid when there is no claimant 1 data' do
-        data[:claimant_one] = { "title"=>"", "full_name"=>"", "street"=>"", "postcode"=>""} 
+        data[:claimant_1] = { "title"=>"", "full_name"=>"", "street"=>"", "postcode"=>"", 'claimant_type' => 'individual'} 
         claim = Claim.new(data)
         expect(claim).to_not be_valid
-        expect(claim.claimant_one.errors.messages[:full_name]).to eq ["Enter the claimant's full name"]
-        expect(claim.claimant_one.errors.messages[:street]).to eq ["Enter the claimant's full address"]
-        expect(claim.claimant_one.errors.messages[:postcode]).to eq ["Enter the claimant's postcode"]
+        expect(claim.claimant_1.errors.messages[:full_name]).to eq ["Enter the claimant's full name"]
+        expect(claim.claimant_1.errors.messages[:street]).to eq ["Enter the claimant's full address"]
+        expect(claim.claimant_1.errors.messages[:postcode]).to eq ["Enter the claimant's postcode"]
       end
      
       it 'should be valid if there is claimant 1 data and no claimant 2 data' do
@@ -321,13 +319,13 @@ describe Claim, :type => :model do
 
 
       it 'should not be valid when no details are present for claimant 2' do
-        data.delete(:claimant_two)
+        data.delete(:claimant_2)
         expect(claim).to_not be_valid
         expect(claim.errors.full_messages).to eq [
-          ["claim_claimant_two_title_error", "Enter claimant 2's title"],
-          ["claim_claimant_two_full_name_error", "Enter claimant 2's full name"], 
-          ["claim_claimant_two_street_error", "Enter claimant 2's full address"], 
-          ["claim_claimant_two_postcode_error", "Enter claimant 2's postcode"]
+          ["claim_claimant_2_title_error", "Enter claimant 2's title"],
+          ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"], 
+          ["claim_claimant_2_street_error", "Enter claimant 2's full address"], 
+          ["claim_claimant_2_postcode_error", "Enter claimant 2's postcode"]
         ]
       end
 
@@ -359,7 +357,7 @@ describe Claim, :type => :model do
 
       it 'should be valid if claimant type is organization' do
         data['claimant_type'] = 'organization'
-        data['claimant_one']['organization_name'] = 'AA Homes Ltd'
+        data['claimant_1']['organization_name'] = 'AA Homes Ltd'
         expect(Claim.new(data)).to be_valid
       end
 
@@ -400,7 +398,7 @@ describe Claim, :type => :model do
         claimants = double ClaimantCollection
 
         allow(claim).to receive(:claimants).and_return(claimants)
-        expect(claimants).to receive(:get).with(2)
+        expect(claimants).to receive(:[]).with(2)
 
         claim.claimant_2
       end
@@ -409,9 +407,9 @@ describe Claim, :type => :model do
         claimants = double ClaimantCollection
 
         allow(claim).to receive(:claimants).and_return(claimants)
-        expect(claimants).to receive(:put).with(2, 'claimant_object')
+        expect(claimants).to receive(:[]=).with(2, 'claimant_object')
 
-        claim.claimant_2= 'claimant_object'
+        claim.claimant_2 = 'claimant_object'
       end
 
       it 'should raise method missing errors for unknown methods' do
@@ -445,7 +443,7 @@ describe Claim, :type => :model do
       end
 
       it 'should not be valid if greater than 4' do
-        data[:num_claimants] = '4'
+        data[:num_claimants] = '5'
         expect(claim).to_not be_valid
         expect(claim.errors.full_messages).to eq [["claim_num_claimants_error", "If there are more than 4 claimants in this case, you’ll need to complete your accelerated possession claim on the N5b form (LINK: http://hmctsformfinder.justice.gov.uk/HMCTS/GetForm.do?court_forms_id=618)"]]
       end

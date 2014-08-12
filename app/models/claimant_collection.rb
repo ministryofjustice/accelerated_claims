@@ -1,12 +1,14 @@
 
-class ClaimantCollection
+class ClaimantCollection < BaseClass
 
 
   @@max_claimants = 4
 
-  def initialize(num_claimants, claim_params)
-    @num_claimants = num_claimants
+  def initialize(claim_params)
+    @errors = ActiveModel::Errors.new(self)
+    @num_claimants = claim_params['num_claimants'] || 0
     @claimants = {}
+    @claimant_type = claim_params['claimant_type']
     populate_claimants(claim_params)
   end
 
@@ -44,6 +46,18 @@ class ClaimantCollection
   end
 
 
+  def valid?
+    @claimants.each do |index, claimant| 
+      unless claimant.valid?
+        claimant.errors.each do |field, msg|
+          @errors.add("claimant_#{index}_#{field}".to_sym, msg)
+        end
+      end
+    end
+    @errors.empty? ? true : false
+  end
+
+
   private
 
   def populate_claimants(claim_params)
@@ -64,15 +78,15 @@ class ClaimantCollection
 
   def populate_claimant(index, claim_params)
     claimant_params = claim_params["claimant_#{index}"]
+    claimant_params = {} if claimant_params.nil?
+    claimant_params['claimant_type'] = @claimant_type
+    claimant_params['claimant_num'] = index
     if index > @num_claimants
-      unless claimant_params.nil?
-        claimant_params['validate_absence'] = true
-        @claimants[index] = Claimant.new(claimant_params)
-      end
+      claimant_params['validate_absence'] = true 
     else
-      raise ArgumentError.new "Unable to find claimant_#{index} in the params" if claimant_params.nil?
-      @claimants[index] = Claimant.new(claimant_params)
+      claimant_params['validate_validate_presence'] = true 
     end
+    @claimants[index] = Claimant.new(claimant_params)
   end
   
 

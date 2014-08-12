@@ -76,6 +76,16 @@ describe Claimant, :type => :model do
   end
 
 
+  context 'ccc' do
+    it 'should not validate if validate presence true but attrs are blank' do
+      claimant = Claimant.new(validate_presence: true, full_name: '', num_claimants: 1, postcode: '', street: '', title: '')
+      pp claimant
+      puts claimant.valid?
+      puts claimant.errors.full_messages
+    end
+  end
+
+
   context 'validate_absence set to false' do
 
     let(:empty_claimant)  {  Claimant.new( :validate_absence => true )  }

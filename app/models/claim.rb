@@ -13,13 +13,18 @@ class Claim < BaseClass
 
   @@max_num_claimants       = 4
   @@valid_num_defendants    = [1, 2]
-  @@ambiguous_instance_vars = ['claimant_one', 'claimant_two', 'defendant_one', 'defendant_two']
+
+  ################ TODO    REMOVE THIS #######################
+  # @@ambiguous_instance_vars = ['claimant_one', 'claimant_two', 'defendant_one', 'defendant_two']
   @@valid_claimant_types    = %w{ organization individual }
 
 
 
   def initialize(claim_params={})
-    @claimant_type  = claim_params.key?(:claimant_type) ? claim_params[:claimant_type] : 1
+    puts "++++++ DEBUG CLAIM PARAMS ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    pp claim_params
+    
+    @claimant_type  = claim_params.key?(:claimant_type) ? claim_params[:claimant_type] : nil
     if @claimant_type == 'organization'
       @num_claimants = 1
     else
@@ -34,7 +39,7 @@ class Claim < BaseClass
   def method_missing(meth, *args)
     meth_string = meth.to_s
     if meth_string =~ /^claimant_(\d)\=$/
-      claimants[$1.to_i] = *args
+      claimants[$1.to_i] = args.first
     elsif meth_string =~ /^claimant_(\d)$/
       claimants[$1.to_i]
     else
@@ -46,7 +51,7 @@ class Claim < BaseClass
 
   def as_json
     json_in = {}
-    attributes_from_submodels.each do |attribute, model|
+    attributes_for_submodels.each do |attribute, model|
       submodel_data = instance_variable_get("@#{attribute}").as_json
       json_in[attribute] = submodel_data
     end
@@ -81,7 +86,12 @@ class Claim < BaseClass
     validity = false unless claimant_type_valid?
     validity = false unless num_claimants_valid? 
     validity = false unless num_defendants_valid?
-    attributes_from_submodels.each do |instance_var, model|
+
+
+
+    ############## TODO   ############ DRY UP THESE TWO SECTIONS BELOW ###############
+    
+    attributes_for_submodels.each do |instance_var, model|
       unless send(instance_var).valid?
         errors = send(instance_var).errors
         errors.each_with_index do |error, index|
@@ -89,15 +99,37 @@ class Claim < BaseClass
           key = "claim_#{instance_var}_#{attribute}_error"
           @errors[:base] << [ key, error.last ]
         end
-        
         validity = false
       end
     end
+
+    attributes_for_submodel_collections.each do |instance_var, model|
+      unless skip_collection_validation_for?(instance_var)
+        unless send(instance_var).valid?
+          errors = send(instance_var).errors
+          errors.each_with_index do |error, index|
+            attribute = error.first
+            key = "claim_#{attribute}_error"
+            @errors[:base] << [ key, error.last ]
+          end
+          validity = false
+        end
+      end
+    end
+
+
     @error_messages = ErrorMessageSequencer.new.sequence(@errors)
     validity
   end
 
   private
+
+
+  # Calls num_claimants_valid? or num_defendants_valid? (when implemented) to see if it is worth validating the claimants or defendants collection
+  def skip_collection_validation_for?(instance_var)
+    method = validation_dependencies_for_submodel_collections[instance_var]
+    send(method)
+  end
 
  
   def claimant_type_valid?
@@ -115,18 +147,23 @@ class Claim < BaseClass
   end
 
 
+############# TODO  TIDY THIS UP _ MEMOIZING RESULT OF NUM CLKAIMANTS
+
   def num_claimants_valid?
-    if @claimant_type.present?
-      result = true
-      if @num_claimants.nil? || @num_claimants == 0
-        @errors[:base] << ['claim_num_claimants_error', 'Please say how many claimants there are']
-        result = false
-      elsif @num_claimants > @@max_num_claimants
-        @errors[:base] << ['claim_num_claimants_error', 'If there are more than 4 claimants in this case, you’ll need to complete your accelerated possession claim on the N5b form (LINK: http://hmctsformfinder.justice.gov.uk/HMCTS/GetForm.do?court_forms_id=618)']
-        result = false
+    if @num_claimants_valid_result.nil?
+      @num_claimants_valid_result = false
+      if @claimant_type.present?
+        @num_claimants_valid_result = true
+        if @num_claimants.nil? || @num_claimants == 0
+          @errors[:base] << ['claim_num_claimants_error', 'Please say how many claimants there are']
+          @num_claimants_valid_result = false
+        elsif @num_claimants > @@max_num_claimants
+          @errors[:base] << ['claim_num_claimants_error', 'If there are more than 4 claimants in this case, you’ll need to complete your accelerated possession claim on the N5b form (LINK: http://hmctsformfinder.justice.gov.uk/HMCTS/GetForm.do?court_forms_id=618)']
+          @num_claimants_valid_result = false
+        end
       end
     end
-    result
+    @num_claimants_valid_result
   end
 
   def num_defendants_valid?
@@ -192,8 +229,22 @@ class Claim < BaseClass
     %w(Defendant)
   end
 
+  def attributes_for_submodel_collections
+    { 'claimants' => 'ClaimantCollection' }
+  end
 
-  def attributes_from_submodels
+
+  def validation_dependencies_for_submodel_collections
+    { 'claimants' => :num_claimants_valid? }
+  end
+
+
+  def attributes_for_submodels_and_collections
+    attributes_for_submodels.merge attributes_for_submodel_collections
+  end
+
+
+  def attributes_for_submodels
     attributes = {}
     singular_submodels.each { |model| attributes[model.underscore] = model }
   
@@ -204,10 +255,13 @@ class Claim < BaseClass
   end
 
   def initialize_all_submodels(claim_params)
-    attributes_from_submodels.each do |attribute_name, model|
+    attributes_for_submodels.each do |attribute_name, model|
       init_submodel(claim_params, attribute_name, model)
     end
-    @claimants = ClaimantCollection.new(@num_claimants, claim_params)
+    attributes_for_submodel_collections.each do |attribute, model|
+      initialize_submodel_collection(attribute, model, claim_params)
+    end
+   
     self.form_state = claim_params['form_state'] if claim_params['form_state'].present?
   end
 
@@ -215,13 +269,19 @@ class Claim < BaseClass
 
   def init_submodel(claim_params, attribute_name, model)
     sub_params = params_for(attribute_name, claim_params)
-
     instance_variable_set("@#{attribute_name}", model.constantize.new(sub_params))
 
     self.class.send( :define_method, attribute_name.to_sym) {
       instance_variable_get "@#{attribute_name}"
     }
   end
+
+
+  def initialize_submodel_collection(attribute, model, claim_params)
+    instance_variable_set("@#{attribute}", model.constantize.new(claim_params))
+  end
+
+
 
   def params_for attribute_name, claim_params
     begin

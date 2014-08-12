@@ -20,14 +20,13 @@ class Claimant < BaseClass
   validates :full_name, length: { maximum: 40 }
 
 
-
-
   def initialize(params = {})
     super
     unless params.include?(:validate_presence)
       @validate_presence = true unless params[:validate_absence] == true
     end
     @num_claimants = @num_claimants.nil? ? 1 : @num_claimants.to_i
+    @claimant_type = params['claimant_type']
   end
   
 
@@ -43,7 +42,7 @@ class Claimant < BaseClass
   # main validation for claimant state
   def validate_claimant_state
     if validate_absence?
-      validate_are_blank(:title, :full_name, :organization_name, :claimant_type, :street, :postcode)
+      validate_are_blank(:title, :full_name, :organization_name, :street, :postcode)
     else
       validate_fields_are_present
     end
@@ -73,15 +72,7 @@ class Claimant < BaseClass
 
 
   def subject_description
-    if @num_claimants == 1
-      "the claimant"
-    else
-      if @claimant_num == :claimant_one
-        "claimant 1"
-      else
-        "claimant 2"
-      end
-    end
+    "claimant #{@claimant_num}"
   end
 
 
@@ -107,11 +98,13 @@ class Claimant < BaseClass
 
 
   def validate_fields_are_present
-    case claimant_type
+    case @claimant_type
     when 'organization'
       validate_organization_fields_are_present
     when 'individual'
       validate_individual_fields_are_present
+    else
+      raise "Unable to instantiate a claimant with no claimant type specified"
     end
   end
 
