@@ -13,7 +13,7 @@ moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
     updateClaimantBlocks,
     htmlTemplate,
     idFix,
-    destroyAll,
+    hideAll,
 
     //elements
     $claimants,
@@ -29,7 +29,7 @@ moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
   init = function() {
     cacheEls();
     bindEvents();
-    destroyAll();
+    createClaimantBlocks();
   };
 
   cacheEls = function() {
@@ -42,8 +42,8 @@ moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
   };
 
   bindEvents = function() {
-    $numberOfClaimants.keyup(function() {
-      createClaimantBlocks(parseInt($(this).val(), 10));
+    $numberOfClaimants.on('keyup blur', function() {
+      updateClaimantBlocks();
       moj.Modules.claimantContact.updateClaimantSolicitorVisibility();
     });
 
@@ -53,38 +53,48 @@ moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
     });
   };
 
-  createClaimantBlocks = function(numberOfBlocks) {
-    destroyAll();
+  createClaimantBlocks = function() {
+    var a;
 
-    if(isNaN(numberOfBlocks)){ return; }
+    $claimantBlocks.remove(); //destroy all existing blocks (they're only used for non-js)
 
-    if(numberOfBlocks > maxClaimants){
-      numberOfBlocks = maxClaimants;
-    }
-
-    for(var a=1;a<=numberOfBlocks;a++){
+    for(a=1;a<=maxClaimants;a++){
       createClaimantBlock(a);
     }
 
     $claimantBlocks = $claimants.find('.claimant');
-
-    if($claimantBlocks.length===1){
-      $claimantBlocks.find('h3').hide();
-    }
-
-    $(document).trigger('multiplePersons:update', [$claimantTypeRadio]);
+    $claimantBlocks.hide();
   };
 
   createClaimantBlock = function(blockNumber) {
     var template = Handlebars.compile(htmlTemplate);
     var html = template({id: blockNumber, number: blockNumber});
     var $block = $(html);
+
     $block.appendTo($claimants);
     idFix($block, blockNumber);
   };
 
   updateClaimantBlocks = function() {
-    createClaimantBlocks(moj.Modules.tools.getRadioVal($claimantTypeRadio)==='organization' ? 1 : $numberOfClaimants.val());
+    var numberOfBlocks;
+
+    hideAll();
+
+    numberOfBlocks = moj.Modules.tools.getRadioVal($claimantTypeRadio)==='organization' ? 1 : parseInt($numberOfClaimants.val(), 10);
+
+    if(isNaN(numberOfBlocks)){
+      return;
+    }
+
+    if(numberOfBlocks > maxClaimants){
+      numberOfBlocks = maxClaimants;
+    }
+
+    $claimantBlocks.filter(':lt('+numberOfBlocks+')').show();
+
+    $claimantBlocks.eq(0).find('h3').toggle(numberOfBlocks!==1);
+
+    $(document).trigger('multiplePersons:update', [$claimantTypeRadio]);
   };
 
   /**
@@ -103,14 +113,13 @@ moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
     });
   };
 
-  destroyAll = function(){
-    $claimantBlocks.remove();
+  hideAll = function(){
+    $claimantBlocks.hide();
   };
 
   // public
   return {
-    init: init,
-    createClaimantBlocks: createClaimantBlocks
+    init: init
   };
 
 }(window.moj, window.$, window.Handlebars));
