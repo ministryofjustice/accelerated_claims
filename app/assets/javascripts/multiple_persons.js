@@ -30,10 +30,24 @@ moj.Modules.multiplePersons = (function() {
   };
 
   bindEvents = function() {
+    //type of claimant
+    $('[name=claim\\[claimant_type\\]]').on('change', function(){
+      var claimantType = $(this).val();
+      var $checked = $('[name=claim\\[num_claimants\\]]:checked');
+
+      if(claimantType==='individual'){
+        showMultiples($(this).closest('.has-multiple'), $checked, $checked.val());
+      }
+      else{
+        showMultiples($(this).closest('.has-multiple'), $checked, 1);
+      }
+    });
+
+    //number of claimants
     $( document ).on( 'change', '.has-multiple .multiple [type="radio"]', function() {
       var $this = $( this );
-      showMultiples( $this.closest( '.has-multiple' ), $this, $this.val() );
-    } );
+      showMultiples($this.closest( '.has-multiple' ), $this, $this.val());
+    });
   };
 
   setupMultiples = function() {
