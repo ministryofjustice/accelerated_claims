@@ -3,15 +3,14 @@
 moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
   "use strict";
 
-  //functions
   var
+    //functions
     init,
     cacheEls,
     bindEvents,
     createClaimantBlocks,
     createClaimantBlock,
     updateClaimantBlocks,
-    htmlTemplate,
     idFix,
     hideAll,
 
@@ -20,11 +19,12 @@ moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
     $numberOfClaimants,
     $claimantBlocks,
     $claimantTypeRadio,
-    $claimantSolicitor,
 
     //other
-    claimantData,
-    maxClaimants = 4;
+    htmlTemplate,
+    config = {
+      maxClaimants: 4
+    };
 
   init = function() {
     cacheEls();
@@ -38,7 +38,6 @@ moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
     $numberOfClaimants = $('#claim_num_claimants');
     $claimantBlocks = $claimants.find('.claimant');
     $claimantTypeRadio = $('[name="claim[claimant_type]"]');
-    $claimantSolicitor = $('.claimant-solicitor');
   };
 
   bindEvents = function() {
@@ -60,7 +59,7 @@ moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
 
     $claimantBlocks.remove(); //destroy all existing blocks (they're only used for non-js)
 
-    for(a=1;a<=maxClaimants;a++){
+    for(a=1; a<=config.maxClaimants; a++){
       createClaimantBlock(a);
     }
 
@@ -94,8 +93,8 @@ moj.Modules.multiplePersons = (function(moj, $, Handlebars) {
       return;
     }
 
-    if(numberOfBlocks > maxClaimants){
-      numberOfBlocks = maxClaimants;
+    if(numberOfBlocks > config.maxClaimants){
+      numberOfBlocks = config.maxClaimants;
     }
 
     $claimantBlocks.filter(':lt('+numberOfBlocks+')').show();
