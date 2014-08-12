@@ -32,8 +32,15 @@ moj.Modules.multiplePersons = (function() {
   bindEvents = function() {
     //type of claimant
     $('[name=claim\\[claimant_type\\]]').on('change', function(){
+      var claimantType = $(this).val();
       var $checked = $('[name=claim\\[num_claimants\\]]:checked');
-      showMultiples($(this).closest('.has-multiple'), $checked, $checked.val());
+
+      if(claimantType==='individual'){
+        showMultiples($(this).closest('.has-multiple'), $checked, $checked.val());
+      }
+      else{
+        showMultiples($(this).closest('.has-multiple'), $checked, 1);
+      }
     });
 
     //number of claimants
