@@ -47,8 +47,25 @@ module TenancyHelper
         @tenancy.confirmed_second_rules_period_applicable_statements = 'No'
       end
 
-      it 'is valid' do
-        expect(@tenancy).to be_valid
+      it 'is invalid' do
+        expect(@tenancy).to_not be_valid
+      end
+
+      it 'has appropriate error message' do
+        @tenancy.valid?
+        expect(@tenancy.errors[:assured_shorthold_tenancy_notice_served_by]).to eq ['You must say who told the defendant about their tenancy agreement']
+        expect(@tenancy.errors[:assured_shorthold_tenancy_notice_served_date]).to eq ['You must say when the defendant was told about their tenancy agreement']
+      end
+
+      context 'and agreement fields completed' do
+        before do
+          @tenancy.assured_shorthold_tenancy_notice_served_by = 'Smith'
+          @tenancy.assured_shorthold_tenancy_notice_served_date = '2013-09-09'
+        end
+
+        it 'is valid' do
+          expect(@tenancy).to be_valid
+        end
       end
     end
 
