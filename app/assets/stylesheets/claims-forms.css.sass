@@ -104,6 +104,10 @@ fieldset, legend
     &.hide
       .js-enabled &
         display: none
+    &.js-only
+      display: none
+      .js-enabled &
+        display: block
 
 select, option, legend
   color: $black
