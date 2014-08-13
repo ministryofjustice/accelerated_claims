@@ -4,7 +4,6 @@ describe ClaimantCollection do
 
   describe '.new' do
     it 'should instantiate a collection with the correct number of claimants' do
-      # cc = ClaimantCollection.new(3, claim_params)
       expect(cc).to be_instance_of ClaimantCollection
       expect(cc.size).to eq 3
     end
@@ -104,7 +103,19 @@ describe ClaimantCollection do
     it 'should produce a json representation of the contacts' do
       expect(cc.as_json).to eq expected_json(cc)
     end
+  end
 
+
+
+  context 'instantiating with an empty array' do
+    it 'should intantiate a collection of 4 empty objects' do
+      cc = ClaimantCollection.new( HashWithIndifferentAccess.new )
+      expect(cc.size).to eq 0
+      expect(cc[1]).to eq Claimant.new
+      expect(cc[2]).to eq Claimant.new
+      expect(cc[3]).to eq Claimant.new
+      expect(cc[4]).to eq Claimant.new
+    end
   end
 
 end

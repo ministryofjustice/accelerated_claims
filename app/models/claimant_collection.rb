@@ -62,7 +62,7 @@ class ClaimantCollection < BaseClass
 
   def populate_claimants(claim_params)
     if claim_params.nil? || claim_params.empty?
-      @claimants[1] = Claimant.new
+      (1..@@max_claimants).each { |i|  @claimants[i] = Claimant.new }
     else
       (1..@@max_claimants).each { | i | populate_claimant(i, claim_params) }
     end

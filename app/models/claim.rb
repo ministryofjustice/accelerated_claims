@@ -14,7 +14,6 @@ class Claim < BaseClass
   @@max_num_claimants       = 4
   @@valid_num_defendants    = [1, 2]
 
-  ################ TODO    REMOVE THIS #######################
   # @@ambiguous_instance_vars = ['claimant_one', 'claimant_two', 'defendant_one', 'defendant_two']
   @@valid_claimant_types    = %w{ organization individual }
 
@@ -28,6 +27,11 @@ class Claim < BaseClass
       @num_claimants  = claim_params.key?(:num_claimants) ? claim_params[:num_claimants].to_i : 0
     end
     @num_defendants = claim_params.key?(:num_defendants) ? claim_params[:num_defendants].to_i : 1
+
+    puts "++++++ DEBUG CLAIM>NU_CLAIMANTS ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    pp @num_claimants
+    
+
     initialize_all_submodels(claim_params)
     @errors = ActiveModel::Errors.new(self)
   end

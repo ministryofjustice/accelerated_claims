@@ -13,6 +13,12 @@ class ClaimController < ApplicationController
       start_year: Date.today.year,
       end_year: Tenancy::APPLICABLE_FROM_DATE.year
     }
+    if session && session[:claim]
+      puts "++++++ DEBUG claim controller new session[:claim][:num_claimants]   #{session[:claim][:num_claimants]}  ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+      puts "++++++ DEBUG claim controller new session[:claim]['num_claimants']  #{session[:claim]['num_claimants']}  ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    end
+
+
     if(data = session[:claim])
       @claim = Claim.new(data)
 
@@ -20,6 +26,8 @@ class ClaimController < ApplicationController
     else
       @claim = Claim.new
     end
+    puts "++++++ DEBUG end of ClaimController.new  claim.num_claimants #{@claim.num_claimants.inspect} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
   end
 
   def confirmation

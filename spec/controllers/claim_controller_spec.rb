@@ -2,7 +2,7 @@ describe ClaimController, :type => :controller do
   render_views
 
   describe "#new" do
-    pending it "should render the new claim form" do
+    it "should render the new claim form" do
       get :new
       expect(response).to render_template("new")
     end
@@ -18,7 +18,7 @@ describe ClaimController, :type => :controller do
     end
 
     shared_examples 'session mantained' do
-      pending it 'should not clear session' do
+      it 'should not clear session' do
         expect(controller).not_to receive(:reset_session)
         get :new
       end
@@ -50,7 +50,7 @@ describe ClaimController, :type => :controller do
         }
         let(:referrer_path) { nil }
 
-        pending it 'should clear session' do
+        it 'should clear session' do
           expect(controller).to receive(:reset_session)
           get :new
         end
