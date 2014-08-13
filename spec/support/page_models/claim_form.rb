@@ -194,8 +194,6 @@ class ClaimForm
       begin
         check("claim_#{prefix}_#{key}")
       rescue Capybara::ElementNotFound
-        puts "++++++ DEBUG claim_#{prefix}_#{key} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-
         check("claim_#{prefix}_#{key}", visible: false)
       end
     end
