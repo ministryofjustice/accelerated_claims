@@ -93,7 +93,7 @@ class ErrorMessageSequencer
   # this is what we use to determine the order.
   def sequence(errors)
     errors = errors[:base]
-    sorted = errors.sort { |a, b| comparison_number(a, b) }
+    sorted = errors.sort { |a, b| comparison_number(a[0], b[0]) }
     sorted.each do |pair|
       pair[0] = 'claim_num_claimants_error'  if pair[0] =='claim_claimant_number_of_claimants_error'
       pair[0] = 'claim_num_defendants_error' if pair[0] =='claim_defendant_number_of_defendants_error'
@@ -103,18 +103,26 @@ class ErrorMessageSequencer
 
   private
 
+  # e.g. returns 'claim_defendant' if given 'claim_defendant_one_title_error'
+  def section_prefix error
+    error.split('_')[0..1].join('_')
+  end
+
   def comparison_number error1, error2
-    section1 = error1[0].split('_')[0..1].join('_')
-    section2 = error2[0].split('_')[0..1].join('_')
+    section1 = section_prefix error1
+    section2 = section_prefix error2
 
-    comparison = compare SECTION_ORDER.index(section1), SECTION_ORDER.index(section2)
+    section_comparison = compare SECTION_ORDER.index(section1), SECTION_ORDER.index(section2)
 
-    case comparison
-    when 0
-      compare_fields(section1, error1[0], error2[0])
+    if same_section?(section_comparison)
+      compare_fields(section1, error1, error2)
     else
-      comparison
+      section_comparison
     end
+  end
+
+  def same_section? section_comparison
+    section_comparison == 0
   end
 
   def compare_fields section, error1, error2
