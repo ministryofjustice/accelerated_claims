@@ -128,8 +128,8 @@ feature 'Filling in claim form' do
     click_button 'Complete form'
     check_focus_after_click 'Please read the statements and tick if they apply', 'claim_tenancy_confirmed_first_rules_period_applicable_statements'
 
-    expect(page).to_not have_content('You must say who told the defendant about their tenancy agreement')
-    expect(page).to_not have_content('You must say when the defendant was told about their tenancy agreement')
+    check_focus_after_click 'You must say who told the defendant about their tenancy agreement', 'claim_tenancy_assured_shorthold_tenancy_notice_served_by'
+    check_focus_after_click 'You must say when the defendant was told about their tenancy agreement', 'claim_tenancy_assured_shorthold_tenancy_notice_served_date_3i'
 
     check('claim_tenancy_confirmed_first_rules_period_applicable_statements')
     click_button 'Complete form'
