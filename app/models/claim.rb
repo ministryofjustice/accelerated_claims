@@ -65,8 +65,9 @@ class Claim < BaseClass
     @errors.clear
     validity = true
     validity = false unless claimant_type_valid?
-    validity = false unless num_claimants_valid? 
+    validity = false unless num_claimants_valid?
     validity = false unless num_defendants_valid?
+
     attributes_from_submodels.each do |instance_var, model|
       unless send(instance_var).valid?
         errors = send(instance_var).errors
@@ -75,17 +76,18 @@ class Claim < BaseClass
           key = "claim_#{instance_var}_#{attribute}_error"
           @errors[:base] << [ key, error.last ]
         end
-        
+
         validity = false
       end
     end
+
     @error_messages = ErrorMessageSequencer.new.sequence(@errors)
     validity
   end
 
   private
 
- 
+
   def claimant_type_valid?
     result = true
     if @claimant_type.nil?
@@ -104,7 +106,7 @@ class Claim < BaseClass
   def num_claimants_valid?
     if @claimant_type.present?
       unless @@valid_num_claimants.include?(@num_claimants)
-        @errors[:base] << ['claim_num_claimants_error', 'Please say how many claimants there are']
+        @errors[:base] << ['claim_claimant_number_of_claimants_error', 'Please say how many claimants there are']
         return false
       end
     end
@@ -113,7 +115,7 @@ class Claim < BaseClass
 
   def num_defendants_valid?
     unless @@valid_num_defendants.include?(@num_defendants)
-      @errors[:base] << ['claim_num_defendants_error', 'Please say how many defendants there are']
+      @errors[:base] << ['claim_defendant_number_of_defendants_error', 'Please say how many defendants there are']
       return false
     end
     true
@@ -192,9 +194,7 @@ class Claim < BaseClass
 
   def init_submodel(claim_params, attribute_name, model)
     sub_params = params_for(attribute_name, claim_params)
-
     instance_variable_set("@#{attribute_name}", model.constantize.new(sub_params))
-
     self.class.send( :define_method, attribute_name.to_sym) {
       instance_variable_get "@#{attribute_name}"
     }
@@ -206,13 +206,13 @@ class Claim < BaseClass
     rescue NoMethodError => err
       raise NoMethodError.new(err.message + "attribute: #{attribute_name} #{claim_params.inspect}")
     end
-    
+
 
 
     case attribute_name
       when /claimant_one/
         if @num_claimants.nil?
-          params.merge!(validate_presence: false, validate_absence: false, num_claimants: nil, claimant_num: :claimant_one, claimant_type: claimant_type)  
+          params.merge!(validate_presence: false, validate_absence: false, num_claimants: nil, claimant_num: :claimant_one, claimant_type: claimant_type)
         else
           params.merge!(validate_presence: true, validate_absence: false, num_claimants: claim_params[:num_claimants], claimant_num: :claimant_one, claimant_type: claimant_type)
         end
@@ -226,7 +226,7 @@ class Claim < BaseClass
         end
       when /defendant_one/
         if @num_defendants.nil?
-          params.merge!(validate_presence: false, validate_absence: false, num_defendants: nil, defendant_num: :defendant_one)  
+          params.merge!(validate_presence: false, validate_absence: false, num_defendants: nil, defendant_num: :defendant_one)
         else
           params.merge!(validate_presence: true, validate_absence: false, num_defendants: claim_params[:num_defendants], defendant_num: :defendant_one)
         end

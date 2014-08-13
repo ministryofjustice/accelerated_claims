@@ -7,7 +7,7 @@ feature "submit claim" do
       WebMock.disable_net_connect!(:allow => "127.0.0.1")
     end
 
-    def run_scenario data_file, options={}
+  def run_scenario data_file, options={}
       data = load_fixture_data(data_file)
       expected_data = load_expected_data(data_file)
 
@@ -54,7 +54,6 @@ feature "submit claim" do
 
       unless remote_test?
         unless data['javascript'] == 'JS'
-
           eval(%Q|
             scenario "#{title}: #{description.first} (#{description.last})" do
               run_scenario '#{data_file}', js: false
@@ -71,5 +70,4 @@ feature "submit claim" do
         |)
       end
     end
- # end
-end
+  end

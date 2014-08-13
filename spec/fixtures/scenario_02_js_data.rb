@@ -79,7 +79,9 @@
       assured_shorthold_tenancy_notice_served_date: "2010-05-24",
       demotion_order_date: nil,
       demotion_order_court: nil,
-      previous_tenancy_type: nil
+      previous_tenancy_type: nil,
+      confirmed_first_rules_period_applicable_statements: "Yes",
+      confirmed_second_rules_period_applicable_statements: nil
     },
     notice: {
       served_by_name: "Mark Ateer",

@@ -93,10 +93,7 @@ feature 'Filling in claim form' do
     click_button 'Complete form'
 
     check_focus_after_click 'You must say whether or not you gave notice to the defendant', 'claim_notice_notice_served_yes'
-
   end
-
-
 
   def select_tenancy_start_date date
     day = date.day.to_s
@@ -108,7 +105,7 @@ feature 'Filling in claim form' do
     fill_in("claim_tenancy_start_date_1i", with: year)
   end
 
-  scenario 'tenancy start_date before 15 January 1989', js: true do
+  scenario 'tenancy starting before first rules period', js: true do
     visit '/'
     choose('claim_tenancy_tenancy_type_assured')
     choose('claim_tenancy_assured_shorthold_tenancy_type_one')
@@ -118,18 +115,30 @@ feature 'Filling in claim form' do
     expect(page).to_not have_content("The tenancy agreement was for 6 months (or more)")
   end
 
-  scenario 'tenancy start_date between 15 January 1989 and 27 February 1997', js: true do
+  scenario 'tenancy starting in first rules period', js: true do
     visit '/'
     choose('claim_tenancy_tenancy_type_assured')
     choose('claim_tenancy_assured_shorthold_tenancy_type_one')
     select_tenancy_start_date Tenancy::APPLICABLE_FROM_DATE
 
-    expect(page).to have_content("Carefully read the statements below:")
     expect(page).to_not have_content("You didn’t tell the defendant that the agreement was likely to change")
     expect(page).to have_content("The tenancy agreement was for 6 months (or more)")
+
+    expect(page).to have_content("Carefully read the statements below:")
+    click_button 'Complete form'
+    check_focus_after_click 'Please read the statements and tick if they apply', 'claim_tenancy_confirmed_first_rules_period_applicable_statements'
+
+    check_focus_after_click 'You must say who told the defendant about their tenancy agreement', 'claim_tenancy_assured_shorthold_tenancy_notice_served_by'
+    check_focus_after_click 'You must say when the defendant was told about their tenancy agreement', 'claim_tenancy_assured_shorthold_tenancy_notice_served_date_3i'
+
+    check('claim_tenancy_confirmed_first_rules_period_applicable_statements')
+    click_button 'Complete form'
+
+    check_focus_after_click 'You must say who told the defendant about their tenancy agreement', 'claim_tenancy_assured_shorthold_tenancy_notice_served_by'
+    check_focus_after_click 'You must say when the defendant was told about their tenancy agreement', 'claim_tenancy_assured_shorthold_tenancy_notice_served_date_3i'
   end
 
-  scenario 'tenancy start_date on or after 28 February 1997', js: true do
+  scenario 'tenancy starting in second rules period', js: true do
     visit '/'
     choose('claim_tenancy_tenancy_type_assured')
     choose('claim_tenancy_assured_shorthold_tenancy_type_one')
@@ -137,6 +146,10 @@ feature 'Filling in claim form' do
 
     expect(page).to_not have_content("The tenancy agreement was for 6 months (or more)")
     expect(page).to have_content("You didn’t tell the defendant that the agreement was likely to change")
+
+    expect(page).to have_content("Carefully read the statements below:")
+    click_button 'Complete form'
+    check_focus_after_click 'Please read the statements and tick if they apply', 'claim_tenancy_confirmed_second_rules_period_applicable_statements'
   end
 
   scenario 'user checks deposit checkboxes then changes mind to no deposit', js: true do

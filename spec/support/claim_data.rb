@@ -122,8 +122,8 @@ def claim_post_data
         "assured_shorthold_tenancy_notice_served_date(3i)" => "1",
         "assured_shorthold_tenancy_notice_served_date(2i)" => "12",
         "assured_shorthold_tenancy_notice_served_date(1i)" => "2013",
-        "from_1997_option" => 'Yes',
-        "upto_1997_option" => 'No'
+        "confirmed_second_rules_period_applicable_statements" => 'Yes',
+        "confirmed_first_rules_period_applicable_statements" => 'No'
       },
       "fee" =>
       {

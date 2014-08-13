@@ -7,4 +7,5 @@
     %ul
       - @claim.error_messages.each do |field, message|
         %li
-          = link_to message, "##{field}", class: 'error-link', data: { id: "##{field}" }
+          - link = link_reference_for_error(field)
+          = link_to message, "##{link}", class: 'error-link', data: { id: "##{field}" }

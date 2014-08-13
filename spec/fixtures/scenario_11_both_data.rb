@@ -79,7 +79,9 @@
       assured_shorthold_tenancy_notice_served_date: nil,
       demotion_order_date: "2010-01-01",
       demotion_order_court: "Anytown County Court",
-      previous_tenancy_type: "assured"
+      previous_tenancy_type: "assured",
+      confirmed_first_rules_period_applicable_statements: nil,
+      confirmed_second_rules_period_applicable_statements: nil
     },
     notice: {
       served_by_name: "Somebody",

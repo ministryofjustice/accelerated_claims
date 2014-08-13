@@ -50,10 +50,9 @@
             %li The defendant is not living in the property as an agricultural worker in connection with their work (so Schedule 3, Housing Act 1988 does not apply)
 
 
-          .row.information.confirmation{ class: (form.error_for?(:from_1997_option) ? 'error' : ''), id: (form.error_for?(:from_1997_option) ? form.error_id_for(:from_1997_option) : 'deposit_type_fieldset') }
-            - if form.error_for?(:from_1997_option)
-              %span{ id: form.error_id_for(:from_1997_option) }
-            = form.labelled_check_box :from_1997_option, '<strong>Yes</strong>, all these statements apply'.html_safe
+        %fieldset.statements.hide.current.radio{ id: (form.error_for?(:confirmed_second_rules_period_applicable_statements) ? form.error_id_for(:confirmed_second_rules_period_applicable_statements) : '') }
+          - form.row :confirmed_second_rules_period_applicable_statements do
+            = form.labelled_check_box :confirmed_second_rules_period_applicable_statements, '<strong>Yes</strong>, all these statements apply'.html_safe
 
         .row.statements.hide.older
           %p.hide= "If your original tenancy agreement (and any additional agreements) were made between <strong>#{Tenancy::APPLICABLE_FROM_DATE.to_s(:printed)} and #{(Tenancy::RULES_CHANGE_DATE - 1).to_s(:printed)}</strong>, read the statements below and select all that apply:".html_safe
@@ -66,8 +65,9 @@
               = form.moj_date_fieldset :assured_shorthold_tenancy_notice_served_date, 'When?', class: 'date-picker rel'
             %li You couldn’t have ended the tenancy agreement in the first 6 months
 
-          .row.information.confirmation
-            = form.labelled_check_box :upto_1997_option, '<strong>Yes</strong>, all these statements apply'.html_safe
+        %fieldset.statements.hide.older.radio{ id: (form.error_for?(:confirmed_first_rules_period_applicable_statements) ? form.error_id_for(:confirmed_first_rules_period_applicable_statements) : '') }
+          - form.row :confirmed_first_rules_period_applicable_statements do
+            = form.labelled_check_box :confirmed_first_rules_period_applicable_statements, '<strong>Yes</strong>, all these statements apply'.html_safe
 
   .row.divider.hide.js-tenancyType.demoted
 
