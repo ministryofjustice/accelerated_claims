@@ -6,7 +6,7 @@ class ClaimantCollection < BaseClass
 
   def initialize(claim_params)
     @errors = ActiveModel::Errors.new(self)
-    @num_claimants = claim_params['num_claimants'] || 0
+    @num_claimants = claim_params['num_claimants'].to_i || 0
     @claimants = {}
     @claimant_type = claim_params['claimant_type']
     populate_claimants(claim_params)
@@ -39,8 +39,8 @@ class ClaimantCollection < BaseClass
 
   def as_json
     hash = {}
-    @claimants.each do |index, claimant|
-      hash["claimant_#{index}"] = claimant
+    (1 .. @num_claimants).each do |index|
+      hash["claimant_#{index}"] = @claimants[index]
     end
     hash.as_json
   end
@@ -78,13 +78,14 @@ class ClaimantCollection < BaseClass
 
   def populate_claimant(index, claim_params)
     claimant_params = claim_params["claimant_#{index}"]
-    claimant_params = {} if claimant_params.nil?
+    claimant_params = ActiveSupport::HashWithIndifferentAccess.new if claimant_params.nil?
     claimant_params['claimant_type'] = @claimant_type
     claimant_params['claimant_num'] = index
     if index > @num_claimants
       claimant_params['validate_absence'] = true 
+      claimant_params['validate_presence'] = false
     else
-      claimant_params['validate_validate_presence'] = true 
+      claimant_params['validate_presence'] = true 
     end
     @claimants[index] = Claimant.new(claimant_params)
   end

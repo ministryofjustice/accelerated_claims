@@ -35,7 +35,10 @@ class Claimant < BaseClass
     instance_variables.each do |ivar|
       return false unless instance_variable_get(ivar) == other.instance_variable_get(ivar)
     end
-    
+  end
+
+  def empty?
+    title.blank? && full_name.blank? && organization_name.blank? && street.blank? && postcode.blank?
   end
 
 

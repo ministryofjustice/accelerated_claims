@@ -1,6 +1,6 @@
 describe ClaimantCollection do
 
-  let(:cc)        { ClaimantCollection.new(3, claim_params) }
+  let(:cc)        { ClaimantCollection.new(claim_params) }
 
   describe '.new' do
     it 'should instantiate a collection with the correct number of claimants' do
@@ -10,23 +10,37 @@ describe ClaimantCollection do
     end
 
     it 'should fail if the number of claimants in the params is less than the number given in the initializer' do
-      expect {
-        ClaimantCollection.new(4, claim_params)
-      }.to raise_error ArgumentError, 'Unable to find claimant_4 in the params'
+        params = claim_params
+        params[:num_claimants] = 4
+        cc2 = ClaimantCollection.new(params)
+        expect(cc2).not_to be_valid
+        expected_errors = [
+              "Claimant 4 title Enter claimant 4's title",
+              "Claimant 4 full name Enter claimant 4's full name",
+              "Claimant 4 street Enter claimant 4's full address",
+              "Claimant 4 postcode Enter claimant 4's postcode"
+            ]
+        expect(cc2.errors.full_messages).to eq expected_errors
     end
 
-    it 'should return size of one with 1 empty claimant if instantiated with empty params' do
-      cc2 = ClaimantCollection.new(1, {})
-      expect(cc2.size).to eq 1
-      expect(cc2[1]).to eq Claimant.new
+    it 'should return size of zero with 1 empty claimant if instantiated with empty params' do
+      cc2 = ClaimantCollection.new({})
+      expect(cc2.size).to eq 0
     end
 
-    it 'should insert claimant with validate absence = true if more thatn the num_claimants' do
-      claim_params['num_claimants'] = 2
-      cc2 = ClaimantCollection.new(2, claim_params)
+    it 'should insert claimant with validate absence = true if more than the num_claimants' do
+      params = claim_params
+      params['num_claimants'] = 2
+      cc2 = ClaimantCollection.new(params)
       valid_claimant = cc2[1]
       expect(valid_claimant.validate_absence?).to be false
       expect(valid_claimant.valid?).to be true
+
+      valid_claimant = cc2[2]
+      expect(valid_claimant.validate_absence?).to be false
+      expect(valid_claimant.valid?).to be true
+      
+
       invalid_claimant = cc2[3]
       expect(invalid_claimant.validate_absence?).to be true
       expect(invalid_claimant.valid?).to be false
@@ -50,8 +64,9 @@ describe ClaimantCollection do
     end
   
 
-    it 'should return nil if the index is higher than the number of claimants' do
-      expect(cc[4]).to be_nil
+    it 'should return empty claimant if the index is higher than the number of claimants' do
+      claimant = cc[4]
+      expect(claimant.empty?).to be true
     end
   end
 

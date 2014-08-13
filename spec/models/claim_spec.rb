@@ -290,20 +290,19 @@ describe Claim, :type => :model do
         data[:claimant_1] = { "title"=>"", "full_name"=>"", "street"=>"", "postcode"=>"", 'claimant_type' => 'individual'} 
         claim = Claim.new(data)
         expect(claim).to_not be_valid
-        expect(claim.claimant_1.errors.messages[:full_name]).to eq ["Enter the claimant's full name"]
-        expect(claim.claimant_1.errors.messages[:street]).to eq ["Enter the claimant's full address"]
-        expect(claim.claimant_1.errors.messages[:postcode]).to eq ["Enter the claimant's postcode"]
+        expect(claim.claimant_1.errors.messages[:full_name]).to eq ["Enter claimant 1's full name"]
+        expect(claim.claimant_1.errors.messages[:street]).to eq ["Enter claimant 1's full address"]
+        expect(claim.claimant_1.errors.messages[:postcode]).to eq ["Enter claimant 1's postcode"]
       end
      
       it 'should be valid if there is claimant 1 data and no claimant 2 data' do
-        data.delete(:claimant_two)
+        data.delete(:claimant_2)
         claim = Claim.new(data)
-        puts claim.errors.full_messages
         expect(claim).to be_valid
       end
 
       it 'should be valid if there is claimant one data and  claimant two data is all blank' do
-        data[:claimant_two] = { "title"=>"", "full_name"=>"", "street"=>"", "postcode"=>""} 
+        data[:claimant_2] = { "title"=>"", "full_name"=>"", "street"=>"", "postcode"=>""} 
         claim = Claim.new(data)
         expect(claim).to be_valid
       end
@@ -330,13 +329,13 @@ describe Claim, :type => :model do
       end
 
       it 'should not be valid when the details for claimant 2 are blank' do
-        data["claimant_two"].each { |k, v| data["claimant_two"][k] = '' }
+        data["claimant_2"].each { |k, v| data["claimant_2"][k] = '' }
         expect(claim).to_not be_valid
         expect(claim.errors.full_messages).to eq [
-            ["claim_claimant_two_title_error", "Enter claimant 2's title"],
-            ["claim_claimant_two_full_name_error", "Enter claimant 2's full name"], 
-            ["claim_claimant_two_street_error", "Enter claimant 2's full address"], 
-            ["claim_claimant_two_postcode_error", "Enter claimant 2's postcode"]
+            ["claim_claimant_2_title_error", "Enter claimant 2's title"],
+            ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"], 
+            ["claim_claimant_2_street_error", "Enter claimant 2's full address"], 
+            ["claim_claimant_2_postcode_error", "Enter claimant 2's postcode"]
           ]
       end
     end
@@ -352,10 +351,12 @@ describe Claim, :type => :model do
 
       it 'should be valid if claimant type is individual' do
         data['claimant_type'] = 'individual'
+        data.delete('claimant_2')
         expect(Claim.new(data)).to be_valid
       end
 
       it 'should be valid if claimant type is organization' do
+        data.delete('claimant_2')
         data['claimant_type'] = 'organization'
         data['claimant_1']['organization_name'] = 'AA Homes Ltd'
         expect(Claim.new(data)).to be_valid

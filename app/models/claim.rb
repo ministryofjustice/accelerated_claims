@@ -21,9 +21,6 @@ class Claim < BaseClass
 
 
   def initialize(claim_params={})
-    puts "++++++ DEBUG CLAIM PARAMS ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    pp claim_params
-    
     @claimant_type  = claim_params.key?(:claimant_type) ? claim_params[:claimant_type] : nil
     if @claimant_type == 'organization'
       @num_claimants = 1
@@ -104,7 +101,7 @@ class Claim < BaseClass
     end
 
     attributes_for_submodel_collections.each do |instance_var, model|
-      unless skip_collection_validation_for?(instance_var)
+      if perform_collection_validation_for?(instance_var)
         unless send(instance_var).valid?
           errors = send(instance_var).errors
           errors.each_with_index do |error, index|
@@ -125,25 +122,28 @@ class Claim < BaseClass
   private
 
 
-  # Calls num_claimants_valid? or num_defendants_valid? (when implemented) to see if it is worth validating the claimants or defendants collection
-  def skip_collection_validation_for?(instance_var)
+  # Calls the method defined for this instance_var to determine whether the claim object is in a state where it is worth 
+  # validating the instance variable.
+  def perform_collection_validation_for?(instance_var)
     method = validation_dependencies_for_submodel_collections[instance_var]
     send(method)
   end
 
  
   def claimant_type_valid?
-    result = true
-    if @claimant_type.nil?
-      @errors[:base] << ['claim_claimant_type_error', 'Please select what kind of claimant you are']
-      result = false
-    else
-      unless @@valid_claimant_types.include?(@claimant_type)
-        @errors[:base] << ['claim_claimant_type_error', 'You must specify a valid kind of claimant']
-        result = false
+    if @claimant_type_valid_result.nil?
+      @claimant_type_valid_result = true
+      if @claimant_type.nil?
+        @errors[:base] << ['claim_claimant_type_error', 'Please select what kind of claimant you are']
+        @claimant_type_valid_result = false
+      else
+        unless @@valid_claimant_types.include?(@claimant_type)
+          @errors[:base] << ['claim_claimant_type_error', 'You must specify a valid kind of claimant']
+          @claimant_type_valid_result = false
+        end
       end
     end
-    result
+    @claimant_type_valid_result
   end
 
 
@@ -235,7 +235,12 @@ class Claim < BaseClass
 
 
   def validation_dependencies_for_submodel_collections
-    { 'claimants' => :num_claimants_valid? }
+    { 'claimants' => :validate_claimants? }
+  end
+
+
+  def validate_claimants?
+    claimant_type_valid? && num_claimants_valid?
   end
 
 
