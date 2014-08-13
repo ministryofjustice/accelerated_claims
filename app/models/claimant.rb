@@ -15,7 +15,7 @@ class Claimant < BaseClass
 
 
   validate :validate_claimant_state
-
+  validates :claimant_num, presence: { message: 'Claimant number not specified' }, allow_nil: false
   validates :title, length: { maximum: 8 }
   validates :full_name, length: { maximum: 40 }
 
