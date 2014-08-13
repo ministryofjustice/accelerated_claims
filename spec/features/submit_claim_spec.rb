@@ -1,6 +1,6 @@
 feature "submit claim" do
 
-  # pending 'submit claim being skipped until tests rewritten for claimant type' do
+  pending 'submit claim being skipped until tests rewritten for claimant type' do
 
     before do
       stub_request(:post, "http://localhost:4000/").to_return(:status => 200, :body => "", :headers => {})
@@ -71,5 +71,5 @@ feature "submit claim" do
         |)
       end
     end
- # end
+ end                                  # end of pending loop
 end

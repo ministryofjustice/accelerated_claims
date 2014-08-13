@@ -51,7 +51,7 @@ feature 'Filling in claim form' do
     expect(page).to have_selector('input#claim_order_possession')
     expect(page).to have_selector(:xpath, '//label[@for="claim_order_possession"]')
 
-    check_focus_after_click 'Please say how many claimants there are', 'claim_num_claimants_1'
+    check_focus_after_click 'Please say how many claimants there are', 'claim_num_claimants'
     check_focus_after_click 'Please say how many defendants there are', 'claim_num_defendants_1'
 
     check_focus_after_click 'Please select what kind of property it is', 'claim_property_house_yes'
