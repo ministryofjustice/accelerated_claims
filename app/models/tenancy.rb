@@ -89,12 +89,12 @@ class Tenancy < BaseClass
       absence: { message: "must be blank if more than one tenancy agreement" }
   end
 
-  with_options if: :in_first_rules_period? do |t|
+  with_options if: :only_in_first_rules_period? do |t|
     t.validates :confirmed_second_rules_period_applicable_statements,
       inclusion: { in: ['No'], message: "leave blank as you specified original tenancy agreement was made before #{Tenancy::RULES_CHANGE_DATE.to_s(:printed)}" }
   end
 
-  with_options if: :in_second_rules_period? do |t|
+  with_options if: :only_in_second_rules_period? do |t|
     t.validates :confirmed_first_rules_period_applicable_statements,
       inclusion: { in: ['No'], message: "leave blank as you specified original tenancy agreement was made on or after #{Tenancy::RULES_CHANGE_DATE.to_s(:printed)}" }
   end
@@ -132,6 +132,26 @@ class Tenancy < BaseClass
     else
       false
     end
+  end
+
+  def only_in_first_rules_period?
+    in_first_rules_period? && !in_both_rules_periods?
+  end
+
+  def only_in_second_rules_period?
+    in_second_rules_period? && !in_both_rules_periods?
+  end
+
+  def in_both_rules_periods?
+    if multiple_tenancy_agreements?
+      in_first_rules_period? && latest_agreement_in_second_rules_period?
+    else
+      false
+    end
+  end
+
+  def latest_agreement_in_second_rules_period?
+    latest_agreement_date >= Tenancy::RULES_CHANGE_DATE
   end
 
   def only_start_date_present?
@@ -217,8 +237,16 @@ class Tenancy < BaseClass
   end
 
   def validate_applicable_statements_confirmed
-    if applicable_statements_not_confirmed?
-      message = 'Please read the statements and tick if they apply'
+    message = 'Please read the statements and tick if they apply'
+
+    if in_both_rules_periods?
+      if confirmed_first_rules_period_applicable_statements == 'No'
+        errors.add(:confirmed_first_rules_period_applicable_statements, message)
+      end
+      if confirmed_second_rules_period_applicable_statements == 'No'
+        errors.add(:confirmed_second_rules_period_applicable_statements, message)
+      end
+    elsif applicable_statements_not_confirmed?
       if in_first_rules_period?
         errors.add(:confirmed_first_rules_period_applicable_statements, message)
       elsif in_second_rules_period?

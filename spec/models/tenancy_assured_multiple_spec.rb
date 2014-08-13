@@ -15,10 +15,24 @@ describe Tenancy, :type => :model do
 
     context 'starting in 1st rules period' do
       before do
-        @tenancy.original_assured_shorthold_tenancy_agreement_date = Tenancy::RULES_CHANGE_DATE - 1
+        @tenancy.original_assured_shorthold_tenancy_agreement_date = Tenancy::RULES_CHANGE_DATE - 365
       end
 
-      include_examples 'confirm 1st rules period applicable statements'
+      context 'and latest agreement starting in 1st rules period' do
+        before do
+          @tenancy.latest_agreement_date = Tenancy::RULES_CHANGE_DATE - 1
+        end
+
+        include_examples 'confirm 1st rules period applicable statements'
+      end
+
+      context 'and latest agreement starting in 2nd rules period' do
+        before do
+          @tenancy.latest_agreement_date = Tenancy::RULES_CHANGE_DATE
+        end
+
+        include_examples 'confirm both rules periods applicable statements'
+      end
     end
 
     context 'starting in 2nd rules period' do
@@ -26,7 +40,7 @@ describe Tenancy, :type => :model do
         @tenancy.original_assured_shorthold_tenancy_agreement_date = Tenancy::RULES_CHANGE_DATE
       end
 
-      include_examples 'confirm 2nd rules period applicable statements'
+      include_examples 'confirm only 2nd rules period applicable statements'
     end
   end
 

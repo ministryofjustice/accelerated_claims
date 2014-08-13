@@ -40,6 +40,29 @@ module TenancyHelper
     }.merge(date_fields).merge(overrides))
   end
 
+  shared_examples_for 'check tenancy information given fields' do
+    it 'is invalid' do
+      expect(@tenancy).to_not be_valid
+    end
+
+    it 'has appropriate error message' do
+      @tenancy.valid?
+      expect(@tenancy.errors[:assured_shorthold_tenancy_notice_served_by]).to eq ['You must say who told the defendant about their tenancy agreement']
+      expect(@tenancy.errors[:assured_shorthold_tenancy_notice_served_date]).to eq ['You must say when the defendant was told about their tenancy agreement']
+    end
+
+    context 'and agreement fields completed' do
+      before do
+        @tenancy.assured_shorthold_tenancy_notice_served_by = 'Smith'
+        @tenancy.assured_shorthold_tenancy_notice_served_date = '2013-09-09'
+      end
+
+      it 'is valid' do
+        expect(@tenancy).to be_valid
+      end
+    end
+  end
+
   shared_examples_for 'confirm 1st rules period applicable statements' do
     context 'and 1st rules period applicable statements are confirmed' do
       before do
@@ -47,26 +70,7 @@ module TenancyHelper
         @tenancy.confirmed_second_rules_period_applicable_statements = 'No'
       end
 
-      it 'is invalid' do
-        expect(@tenancy).to_not be_valid
-      end
-
-      it 'has appropriate error message' do
-        @tenancy.valid?
-        expect(@tenancy.errors[:assured_shorthold_tenancy_notice_served_by]).to eq ['You must say who told the defendant about their tenancy agreement']
-        expect(@tenancy.errors[:assured_shorthold_tenancy_notice_served_date]).to eq ['You must say when the defendant was told about their tenancy agreement']
-      end
-
-      context 'and agreement fields completed' do
-        before do
-          @tenancy.assured_shorthold_tenancy_notice_served_by = 'Smith'
-          @tenancy.assured_shorthold_tenancy_notice_served_date = '2013-09-09'
-        end
-
-        it 'is valid' do
-          expect(@tenancy).to be_valid
-        end
-      end
+      include_examples 'check tenancy information given fields'
     end
 
     context 'and 1st rules period applicable statements are not confirmed' do
@@ -104,7 +108,7 @@ module TenancyHelper
     end
   end
 
-  shared_examples_for 'confirm 2nd rules period applicable statements' do
+  shared_examples_for 'confirm only 2nd rules period applicable statements' do
     context 'and 2nd rules period applicable statements are confirmed' do
       before do
         @tenancy.confirmed_first_rules_period_applicable_statements = 'No'
@@ -148,6 +152,70 @@ module TenancyHelper
         expect(@tenancy.errors[:confirmed_first_rules_period_applicable_statements]).to eq ['leave blank as you specified original tenancy agreement was made on or after 28 February 1997']
         expect(@tenancy.errors[:confirmed_second_rules_period_applicable_statements]).to eq []
       end
+    end
+
+  end
+
+
+  shared_examples_for 'confirm both rules periods applicable statements' do
+    context 'and only 1st rules period applicable statements are confirmed' do
+      before do
+        @tenancy.confirmed_first_rules_period_applicable_statements = 'Yes'
+        @tenancy.confirmed_second_rules_period_applicable_statements = 'No'
+      end
+
+      it 'is invalid' do
+        expect(@tenancy).not_to be_valid
+      end
+
+      it 'has appropriate error message' do
+        @tenancy.valid?
+        expect(@tenancy.errors[:confirmed_first_rules_period_applicable_statements]).to eq []
+        expect(@tenancy.errors[:confirmed_second_rules_period_applicable_statements]).to eq ['Please read the statements and tick if they apply']
+      end
+    end
+
+    context 'and only 2nd rules period applicable statements are confirmed' do
+      before do
+        @tenancy.confirmed_first_rules_period_applicable_statements = 'No'
+        @tenancy.confirmed_second_rules_period_applicable_statements = 'Yes'
+      end
+
+      it 'is invalid' do
+        expect(@tenancy).not_to be_valid
+      end
+
+      it 'has appropriate error message' do
+        @tenancy.valid?
+        expect(@tenancy.errors[:confirmed_first_rules_period_applicable_statements]).to eq ['Please read the statements and tick if they apply']
+        expect(@tenancy.errors[:confirmed_second_rules_period_applicable_statements]).to eq []
+      end
+    end
+
+    context 'and 2nd rules period applicable statements are not confirmed' do
+      before do
+        @tenancy.confirmed_first_rules_period_applicable_statements = 'No'
+        @tenancy.confirmed_second_rules_period_applicable_statements = 'No'
+      end
+
+      it 'is invalid' do
+        expect(@tenancy).not_to be_valid
+      end
+
+      it 'has appropriate error message' do
+        @tenancy.valid?
+        expect(@tenancy.errors[:confirmed_first_rules_period_applicable_statements]).to eq ['Please read the statements and tick if they apply']
+        expect(@tenancy.errors[:confirmed_second_rules_period_applicable_statements]).to eq ['Please read the statements and tick if they apply']
+      end
+    end
+
+    context 'and both rules periods applicable statements are confirmed' do
+      before do
+        @tenancy.confirmed_first_rules_period_applicable_statements = 'Yes'
+        @tenancy.confirmed_second_rules_period_applicable_statements = 'Yes'
+      end
+
+      include_examples 'check tenancy information given fields'
     end
 
   end

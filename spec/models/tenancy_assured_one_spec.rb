@@ -18,7 +18,7 @@ describe Tenancy, :type => :model do
       context 'starting in 2nd rules period' do
         before { @tenancy.start_date = Tenancy::RULES_CHANGE_DATE }
 
-        include_examples 'confirm 2nd rules period applicable statements'
+        include_examples 'confirm only 2nd rules period applicable statements'
       end
     end
   end
