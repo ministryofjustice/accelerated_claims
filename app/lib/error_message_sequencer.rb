@@ -56,14 +56,14 @@ class ErrorMessageSequencer
 
     'claim_tenancy' => [
       'claim_tenancy_tenancy_type_error',
+      'claim_tenancy_assured_shorthold_tenancy_notice_served_by_error',
+      'claim_tenancy_assured_shorthold_tenancy_notice_served_date_error',
       'claim_tenancy_confirmed_first_rules_period_applicable_statements_error',
       'claim_tenancy_confirmed_second_rules_period_applicable_statements_error',
       'claim_tenancy_demotion_order_date_error',
       'claim_tenancy_demotion_order_court_error',
       'claim_tenancy_previous_tenancy_type_error',
       'claim_tenancy_start_date_error',
-      'claim_tenancy_assured_shorthold_tenancy_notice_served_by_error',
-      'claim_tenancy_assured_shorthold_tenancy_notice_served_date_error',
     ],
 
     'claim_deposit' => [

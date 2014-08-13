@@ -87,6 +87,8 @@ module TenancyHelper
         @tenancy.valid?
         expect(@tenancy.errors[:confirmed_first_rules_period_applicable_statements]).to eq ['Please read the statements and tick if they apply']
         expect(@tenancy.errors[:confirmed_second_rules_period_applicable_statements]).to eq []
+        expect(@tenancy.errors[:assured_shorthold_tenancy_notice_served_by]).to eq ['You must say who told the defendant about their tenancy agreement']
+        expect(@tenancy.errors[:assured_shorthold_tenancy_notice_served_date]).to eq ['You must say when the defendant was told about their tenancy agreement']
       end
     end
 
