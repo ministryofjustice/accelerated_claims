@@ -141,6 +141,10 @@ GEM
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
+    logstash-event (1.1.5)
+    logstasher (0.5.3)
+      logstash-event (~> 1.1.0)
+      request_store
     lumberjack (1.0.7)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -210,6 +214,7 @@ GEM
       redis-store (~> 1.1.0)
     redis-store (1.1.4)
       redis (>= 2.2)
+    request_store (1.0.8)
     rspec (3.0.0)
       rspec-core (~> 3.0.0)
       rspec-expectations (~> 3.0.0)
@@ -341,6 +346,7 @@ DEPENDENCIES
   jasmine-rails
   jquery-rails
   launchy
+  logstasher
   mail
   moj_template (= 0.14.3)
   parallel
