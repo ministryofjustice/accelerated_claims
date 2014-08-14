@@ -90,30 +90,43 @@ class PDFDocument
     end
   end
 
+  FIRST_3A_LINES = [
+    { x0: 42, x1: 515, y: 327+57 },
+    { x0: 42, x1: 120, y: 315+56 }
+  ]
+  FIRST_3B_LINES = [
+    { x0: 42, x1: 505, y: 299+57 }
+  ]
+  FIRST_3C_LINES = [
+    { x0: 42, x1: 515, y: 282+57 },
+    { x0: 42, x1: 100, y: 270+55 }
+  ]
+  SECOND_3A_LINES = [
+    { x0: 42, x1: 420, y: 215+52 }
+  ]
+  SECOND_3B_LINES = [
+    { x0: 42, x1: 465, y: 198+51 }
+  ]
+  SECOND_3C_3D_LINES = [
+    { x0: 42, x1: 505, y: 180+49 },
+    { x0: 42, x1: 470, y: 160+50 },
+    { x0: 42, x1: 475, y: 123+48 }
+  ]
+
   def strike_out_paths index
     case index
     when 1
-      [
-        { x0: 42, x1: 515, y: 327+57 },
-        { x0: 42, x1: 120, y: 315+56 }
-      ]
+      FIRST_3A_LINES
     when 2
-      [ { x0: 42, x1: 505, y: 299+57 } ]
+      FIRST_3B_LINES
     when 3
-      [
-        { x0: 42, x1: 515, y: 282+57 },
-        { x0: 42, x1: 100, y: 270+55 }
-      ]
+      FIRST_3C_LINES
     when 4
-      [ { x0: 42, x1: 420, y: 215+52 } ]
+      SECOND_3A_LINES
     when 5
-      [ { x0: 42, x1: 465, y: 198+51 } ]
+      SECOND_3B_LINES
     when 6
-      [
-        { x0: 42, x1: 505, y: 180+49 },
-        { x0: 42, x1: 470, y: 160+50 },
-        { x0: 42, x1: 475, y: 123+48 }
-      ]
+      SECOND_3C_3D_LINES
     end
   end
 
