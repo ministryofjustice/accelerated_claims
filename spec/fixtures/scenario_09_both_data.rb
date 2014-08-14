@@ -31,7 +31,9 @@
       postcode: "FX9 9NU"
     },
     javascript: {
-      claimant_two_same_address: nil,
+      claimant_2_same_address: "No",
+      claimant_3_same_address: nil,
+      claimant_4_same_address: nil,
       any_legal_costs: "No",
       separate_correspondence_address: "No",
       other_contact_details: "Yes",

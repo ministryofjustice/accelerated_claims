@@ -31,7 +31,9 @@
       postcode: "FX1W 0LU"
     },
     javascript: {
-      claimant_two_same_address: nil,
+      claimant_2_same_address: "No",
+      claimant_3_same_address: nil,
+      claimant_4_same_address: nil,
       any_legal_costs: "Yes",
       separate_correspondence_address: "Yes",
       other_contact_details: "Yes",

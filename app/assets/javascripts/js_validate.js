@@ -34,10 +34,10 @@ moj.Modules.jsValidate = (function() {
     $numClaimants = $( '[name="claim[num_claimants]"]', $form );
     $secondClaimantAddressSameAsFirst = $( '[name="claimant2address"]', $form );
 
-    $firstClaimantAddress = $( '[name="claim[claimant_one][street]"]', $form );
-    $secondClaimantAddress = $( '[name="claim[claimant_two][street]"]', $form );
-    $firstClaimantPostcode = $( '[name="claim[claimant_one][postcode]"]', $form );
-    $secondClaimantPostcode = $( '[name="claim[claimant_two][postcode]"]', $form );
+    $firstClaimantAddress = $( '[name="claim[claimant_1][street]"]', $form );
+    $secondClaimantAddress = $( '[name="claim[claimant_2][street]"]', $form );
+    $firstClaimantPostcode = $( '[name="claim[claimant_1][postcode]"]', $form );
+    $secondClaimantPostcode = $( '[name="claim[claimant_2][postcode]"]', $form );
   };
 
   bindEvents = function() {
@@ -50,7 +50,7 @@ moj.Modules.jsValidate = (function() {
   checkData = function() {
     if( moj.Modules.tools.getRadioVal( $numClaimants ).toString() === '2' ) {
       if( moj.Modules.tools.getRadioVal( $secondClaimantAddressSameAsFirst ) === 'yes' ) {
-        $( '#claimant_two .address' ).show();
+        $( '#claimant_2 .address' ).show();
         $secondClaimantAddress.val( $firstClaimantAddress.val() );
         $secondClaimantPostcode.val( $firstClaimantPostcode.val() );
       }

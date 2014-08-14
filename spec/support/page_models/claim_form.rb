@@ -3,6 +3,7 @@ class ClaimForm
 
   def initialize(data)
     @data = data
+    pp @data
   end
 
   def complete_form
@@ -10,9 +11,9 @@ class ClaimForm
     fill_property_details
     claimant_type = select_claimant_type
     if claimant_type == 'individual'
-      select_number_of :claimants
-      fill_claimant_one
-      fill_claimant_two
+      select_number_of_claimants
+      fill_claimant_1
+      fill_claimant_2
     else
       fill_organizational_claimant
     end
@@ -37,11 +38,17 @@ class ClaimForm
     fill_property_details
 
     if claimant_type == 'individual'
-      number_of_claimants = select_number_of :claimants
-      fill_claimant_one
-      if number_of_claimants == 2
+      puts "++++++ DEBUG individaul ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+      
+      number_of_claimants = select_number_of_claimants
+      puts "++++++ DEBUG number_of_claimants #{number_of_claimants.inspect} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+      
+      fill_claimant_1
+      if number_of_claimants == '2'
+        puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+        
         choose_claimant_two_address_the_same
-        fill_claimant_two
+        fill_claimant_2
       end
     else
       fill_organizational_claimant 
@@ -68,7 +75,20 @@ class ClaimForm
     fill_reference_number_with_js 
   end
 
+  def select_number_of_claimants
+    num_claimants = get_data('claim', 'number_of_claimants')
+    puts "++++++ DEBUG num_claimants #{num_claimants} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
+    fill_in "How many claimants are there?", with: num_claimants
+    num_claimants
+  end
+
+
+
+
+
   def select_number_of type
+   
     case type
     when :claimants
       button_prefix = "claim_num"
@@ -90,11 +110,16 @@ class ClaimForm
   end
 
 
+
   def choose_claimant_two_address_the_same
-    case get_data('javascript','claimant_two_same_address')
+    case get_data('javascript','claimant_2_same_address')
     when 'Yes'
+      puts "++++++ DEBUG same address ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+      
       choose('claimant2address-yes')
     else
+      puts "++++++ DEBUG not same address ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+      
       choose('claimant2address-no')
     end
   end
@@ -224,7 +249,13 @@ class ClaimForm
 
 
   def complete_details_of_person(prefix, options={})
+    puts "++++++ DEBUG complete details of person prefix: #{prefix}  options: #{options.inspect} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
     options = { complete_address: true }.merge(options)
+
+    puts "++++++ DEBUG fill_in_text_field prefix: #{prefix} 'title' ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
+
     fill_in_text_field(prefix, 'title')
     fill_in_text_field(prefix, 'full_name')
 
@@ -232,9 +263,9 @@ class ClaimForm
       fill_in_text_field(prefix, 'street')
       fill_in_text_field(prefix, 'postcode')
 
-    elsif !@js_on && (prefix == 'claimant_two') && get_data('javascript', 'claimant_two_same_address').to_s[/Yes/]
-      fill_in("claim_claimant_two_street", with: get_data('claimant_one', 'street'))
-      fill_in("claim_claimant_two_postcode", with: get_data('claimant_one', 'postcode'))
+    elsif !@js_on && (prefix == 'claimant_2') && get_data('javascript', 'claimant_2_same_address').to_s[/Yes/]
+      fill_in("claim_claimant_2_street", with: get_data('claimant_1', 'street'))
+      fill_in("claim_claimant_2_postcode", with: get_data('claimant_1', 'postcode'))
     end
   end
 
@@ -252,13 +283,17 @@ class ClaimForm
     choose_radio(prefix, 'house')
   end
 
-  def fill_claimant_one
-    complete_details_of_person('claimant_one')
+  def fill_claimant_1
+    puts "++++++ DEBUG filling claimant 1 ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
+    complete_details_of_person('claimant_1')
   end
 
-  def fill_claimant_two
-    fill_in_address = get_data('javascript', 'claimant_two_same_address') == 'Yes' ? false : true
-    complete_details_of_person('claimant_two', complete_address: fill_in_address)
+  def fill_claimant_2
+    puts "++++++ DEBUG filling claimant 2 ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
+    fill_in_address = get_data('javascript', 'claimant_2_same_address') == 'Yes' ? false : true
+    complete_details_of_person('claimant_2', complete_address: fill_in_address)
   end
 
   def fill_defendant_one(options = {})

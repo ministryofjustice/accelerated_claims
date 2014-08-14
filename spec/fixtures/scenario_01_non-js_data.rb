@@ -24,14 +24,16 @@
       postcode: "EY88 1ZZ"
     },
     claimant_2: {
-      title: "Mrs",
+      title: "Mrs-XXXXXXXXXX",
       organization_name: nil,
       full_name: "Jane Doe",
       street: "9 Made-up Lane\nAnytown",
       postcode: "EY88 1ZZ"
     },
     javascript: {
-      claimant_two_same_address: nil,
+      claimant_2_same_address: "Yes",
+      claimant_3_same_address: nil,
+      claimant_4_same_address: nil,
       any_legal_costs: "No",
       separate_correspondence_address: "Yes",
       other_contact_details: "Yes",
