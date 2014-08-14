@@ -22,9 +22,13 @@ moj.Modules.dateDigits = (function() {
     if( v.toString().length === 2 && !isNaN( parseInt( v, 10 ) ) ) {
       c = ( parseInt( v, 10 ) > 68 ? '19' : '20');
       $el.val( c + v );
-      
+
       if( $el.closest( 'fieldset' ).hasClass( 'conditional' ) ) {
         moj.Modules.tenancyModule.checkDates();
+        window.setTimeout( function(){
+          $el.focus(); // keeps focus on year field when two digit expansion occurs - fixes tabbing issue
+        }, 1 );
+
       }
     }
   };
