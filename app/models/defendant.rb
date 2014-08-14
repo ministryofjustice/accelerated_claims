@@ -37,7 +37,7 @@ class Defendant < BaseClass
   def validate_defendant_state
     if validate_absence?
       validate_are_blank(:title, :full_name, :street, :postcode)
-    else
+    elsif validate_presence?
       validate_fields_are_present
     end
   end

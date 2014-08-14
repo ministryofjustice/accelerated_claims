@@ -47,6 +47,8 @@ feature 'Filling in claim form' do
     click_button 'Complete form'
 
     expect(page).to have_content('Please say how many claimants there are')
+    expect(page).to_not have_content("Enter defendant 1's full name")
+    expect(page).to_not have_content("Enter the claimant's full name")
 
     expect(page).to have_selector('input#claim_order_possession')
     expect(page).to have_selector(:xpath, '//label[@for="claim_order_possession"]')

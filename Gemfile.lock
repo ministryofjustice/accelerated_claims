@@ -352,6 +352,7 @@ DEPENDENCIES
   parallel
   pdf-forms (= 0.5.5)
   poltergeist
+  pry
   quiet_assets
   rails (= 4.1.4)
   redis-rails
