@@ -9,7 +9,7 @@ class Claimant < BaseClass
   attr_accessor :claimant_num
   attr_accessor :title
   attr_accessor :full_name
-  attr_accessor :organization_name  
+  attr_accessor :organization_name
   attr_accessor :claimant_type
 
 
@@ -28,14 +28,14 @@ class Claimant < BaseClass
     end
     @num_claimants = @num_claimants.nil? ? 1 : @num_claimants.to_i
   end
-  
+
 
 
   # main validation for claimant state
   def validate_claimant_state
     if validate_absence?
       validate_are_blank(:title, :full_name, :organization_name, :claimant_type, :street, :postcode)
-    else
+    elsif validate_presence?
       validate_fields_are_present
     end
   end

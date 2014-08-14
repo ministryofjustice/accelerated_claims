@@ -3,7 +3,7 @@ require_relative '../../app/lib/error_message_sequencer'
 
 describe ErrorMessageSequencer do
 
-  let(:claim_claimant_number_of_claimants_error) { ['claim_claimant_number_of_claimants_error',                     'msg']}
+  let(:claim_claimant_number_of_claimants_error) { ['claim_claimant_number_of_claimants_error', 'msg']}
   let(:claim_property_street_error)         { ['claim_property_street_error',                   'msg']}
   let(:claim_property_postcode_error)       { ['claim_property_postcode_error',                 'msg']}
   let(:claim_property_house_error)          { ['claim_property_house_error',                    'msg']}
