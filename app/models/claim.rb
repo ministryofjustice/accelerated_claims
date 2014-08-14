@@ -84,41 +84,41 @@ class Claim < BaseClass
     validity = false unless num_defendants_valid?
 
 
-
-    ############## TODO   ############ DRY UP THESE TWO SECTIONS BELOW ###############
-    
     attributes_for_submodels.each do |instance_var, model|
-      unless send(instance_var).valid?
-        errors = send(instance_var).errors
-        errors.each_with_index do |error, index|
-          attribute = error.first
-          key = "claim_#{instance_var}_#{attribute}_error"
-          @errors[:base] << [ key, error.last ]
-        end
-        validity = false
-      end
+      result = transfer_errors_from_submodel_to_base(instance_var, model, collection: false) 
+      validity = false if result == false
     end
 
     attributes_for_submodel_collections.each do |instance_var, model|
-      if perform_collection_validation_for?(instance_var)
-        unless send(instance_var).valid?
-          errors = send(instance_var).errors
-          errors.each_with_index do |error, index|
-            attribute = error.first
-            key = "claim_#{attribute}_error"
-            @errors[:base] << [ key, error.last ]
-          end
-          validity = false
-        end
-      end
+      result = transfer_errors_from_submodel_to_base(instance_var, model, collection: true)
+      validity = false if result == false
     end
-
 
     @error_messages = ErrorMessageSequencer.new.sequence(@errors)
     validity
   end
 
   private
+
+  def transfer_errors_from_submodel_to_base(instance_var, model, options)
+    result = true
+    unless send(instance_var).valid?
+      if options[:collection] == false || perform_collection_validation_for?(instance_var)
+        errors = send(instance_var).errors
+          errors.each_with_index do |error, index|
+            attribute = error.first
+            if options[:collection] == false
+              key = "claim_#{instance_var}_#{attribute}_error"
+            else
+              key = "claim_#{attribute}_error"
+            end
+          @errors[:base] << [ key, error.last ]
+        end
+        result = false
+      end
+    end
+    result
+  end
 
 
   # Calls the method defined for this instance_var to determine whether the claim object is in a state where it is worth 

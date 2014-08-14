@@ -107,7 +107,7 @@ class Claimant < BaseClass
     when 'individual'
       validate_individual_fields_are_present
     else
-      raise "Unable to instantiate a claimant with no claimant type specified"
+      errors.add(:claimant_type, 'Please select what kind of claimant you are')
     end
   end
 
