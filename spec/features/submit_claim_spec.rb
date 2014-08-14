@@ -1,6 +1,6 @@
 feature "submit claim" do
 
-  pending 'submit claim being skipped until tests rewritten for claimant type' do
+  pending ' - Pending until user hourney spreadsheet rewritten for variable number of claimants' do
 
     before do
       stub_request(:post, "http://localhost:4000/").to_return(:status => 200, :body => "", :headers => {})

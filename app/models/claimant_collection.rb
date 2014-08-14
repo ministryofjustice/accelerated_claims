@@ -2,7 +2,7 @@
 class ClaimantCollection < BaseClass
 
 
-  @@max_claimants = 4
+  MAX_CLAIMANTS = 4
 
   def initialize(claim_params)
     @errors = ActiveModel::Errors.new(self)
@@ -11,6 +11,8 @@ class ClaimantCollection < BaseClass
     @claimant_type = claim_params['claimant_type']
     populate_claimants(claim_params)
   end
+
+
 
   # returns the specified claimant (note: index starts at 1 )         
   def [](index)
@@ -62,9 +64,9 @@ class ClaimantCollection < BaseClass
 
   def populate_claimants(claim_params)
     if claim_params.nil? || claim_params.empty?
-      (1..@@max_claimants).each { |i|  @claimants[i] = Claimant.new }
+      ( 1 .. MAX_CLAIMANTS ).each { |i|  @claimants[i] = Claimant.new }
     else
-      (1..@@max_claimants).each { | i | populate_claimant(i, claim_params) }
+      ( 1 .. MAX_CLAIMANTS ).each { | i | populate_claimant(i, claim_params) }
     end
   end
 

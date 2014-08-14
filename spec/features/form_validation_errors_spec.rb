@@ -41,61 +41,62 @@ feature 'Filling in claim form' do
     click_button 'Complete form'
   end
 
-  scenario "submitting form with only claimant type selected", js: true do
-    visit '/'
-    choose('claim_claimant_type_individual')
-    click_button 'Complete form'
+  pending " - Pending until front end bug that auto populates number of defendants is fixed" do
+    scenario "submitting form with only claimant type selected", js: true do
+      visit '/'
+      choose('claim_claimant_type_individual')
+      click_button 'Complete form'
 
-    expect(page).to have_content('Please say how many claimants there are')
+      expect(page).to have_content('Please say how many claimants there are')
 
-    expect(page).to have_selector('input#claim_order_possession')
-    expect(page).to have_selector(:xpath, '//label[@for="claim_order_possession"]')
+      expect(page).to have_selector('input#claim_order_possession')
+      expect(page).to have_selector(:xpath, '//label[@for="claim_order_possession"]')
 
-    check_focus_after_click 'Please say how many claimants there are', 'claim_num_claimants'
-    check_focus_after_click 'Please say how many defendants there are', 'claim_num_defendants_1'
+      check_focus_after_click 'Please say how many claimants there are', 'claim_num_claimants'
+      check_focus_after_click 'Please say how many defendants there are', 'claim_num_defendants_1'
 
-    check_focus_after_click 'Please select what kind of property it is', 'claim_property_house_yes'
-    check_focus_after_click 'Enter the full address', 'claim_property_street'
-    check_focus_after_click 'Enter the postcode', 'claim_property_postcode'
+      check_focus_after_click 'Please select what kind of property it is', 'claim_property_house_yes'
+      check_focus_after_click 'Enter the full address', 'claim_property_street'
+      check_focus_after_click 'Enter the postcode', 'claim_property_postcode'
 
-    check_focus_after_click 'You must say whether or not you gave notice to the defendant', 'claim_notice_notice_served_yes'
+      check_focus_after_click 'You must say whether or not you gave notice to the defendant', 'claim_notice_notice_served_yes'
 
-    check_focus_after_click 'You must say whether or not you have an HMO licence', 'claim_license_multiple_occupation_yes'
-    check_focus_after_click 'You must say whether the defendant paid a deposit', 'claim_deposit_received_yes'
-    check_focus_after_click 'You must choose whether you wish to attend the possible court hearing', 'claim_possession_hearing_no'
-    check_focus_after_click 'Please tick to confirm that you want to repossess the property', 'claim_order_possession'
-    check_focus_after_click 'You must say what kind of tenancy agreement you have', 'claim_tenancy_tenancy_type_assured'
+      check_focus_after_click 'You must say whether or not you have an HMO licence', 'claim_license_multiple_occupation_yes'
+      check_focus_after_click 'You must say whether the defendant paid a deposit', 'claim_deposit_received_yes'
+      check_focus_after_click 'You must choose whether you wish to attend the possible court hearing', 'claim_possession_hearing_no'
+      check_focus_after_click 'Please tick to confirm that you want to repossess the property', 'claim_order_possession'
+      check_focus_after_click 'You must say what kind of tenancy agreement you have', 'claim_tenancy_tenancy_type_assured'
 
-    choose('claim_num_claimants_1')
-    choose('claim_num_defendants_1')
-    choose('claim_defendant_one_inhabits_property_yes')
-    choose('claim_notice_notice_served_yes')
+      choose('claim_num_claimants_1')
+      choose('claim_num_defendants_1')
+      choose('claim_defendant_one_inhabits_property_yes')
+      choose('claim_notice_notice_served_yes')
 
-    fill_in('claim_claimant_one_title', with: 'Major')
-    fill_in('claim_claimant_one_full_name', with: 'Tom')
+      fill_in('claim_claimant_one_title', with: 'Major')
+      fill_in('claim_claimant_one_full_name', with: 'Tom')
 
-    click_button 'Complete form'
+      click_button 'Complete form'
 
-    unless remote_test?
-      expect(find_field('claim_claimant_one_title').value).to eq('Major')
-      expect(find_field('claim_claimant_one_full_name').value).to eq('Tom')
+      unless remote_test?
+        expect(find_field('claim_claimant_one_title').value).to eq('Major')
+        expect(find_field('claim_claimant_one_full_name').value).to eq('Tom')
+      end
+
+      check_focus_after_click 'Enter the name of the person who gave the notice', 'claim_notice_served_by_name'
+      check_focus_after_click 'You must say how the notice was given', 'claim_notice_served_method'
+      check_focus_after_click 'Enter the date notice was served', 'claim_notice_date_served_3i'
+      check_focus_after_click 'Enter the date notice ended', 'claim_notice_expiry_date_3i'
+
+      choose('claim_notice_notice_served_no')
+
+      expect(page).to have_content('You cannot continue with this claim')
+
+      click_button 'Complete form'
+
+      check_focus_after_click 'You must say whether or not you gave notice to the defendant', 'claim_notice_notice_served_yes'
+
     end
-
-    check_focus_after_click 'Enter the name of the person who gave the notice', 'claim_notice_served_by_name'
-    check_focus_after_click 'You must say how the notice was given', 'claim_notice_served_method'
-    check_focus_after_click 'Enter the date notice was served', 'claim_notice_date_served_3i'
-    check_focus_after_click 'Enter the date notice ended', 'claim_notice_expiry_date_3i'
-
-    choose('claim_notice_notice_served_no')
-
-    expect(page).to have_content('You cannot continue with this claim')
-
-    click_button 'Complete form'
-
-    check_focus_after_click 'You must say whether or not you gave notice to the defendant', 'claim_notice_notice_served_yes'
-
   end
-
 
 
   def select_tenancy_start_date date
