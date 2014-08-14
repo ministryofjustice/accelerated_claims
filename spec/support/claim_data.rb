@@ -147,6 +147,26 @@ def demoted_claim_post_data
   data
 end
 
+
+def claim_with_3_claimants_formatted_data
+  data = claim_formatted_data
+  data['claimant_3_address'] = "Miss Ann Chovey\n2 High Street\nAnytown"
+  data['claimant_3_postcode1'] = 'AY3'
+  data['claimant_3_postcode2'] = '0XX'
+  data
+end
+
+
+def claim_with_4_claimants_formatted_data
+  data = claim_with_3_claimants_formatted_data
+  data['claimant_4_address'] = "Mr Mark Atteer\n2 High Street\nAnytown"
+  data['claimant_4_postcode1'] = 'AY34'
+  data['claimant_4_postcode2'] = '9ZZ'
+  data
+end
+
+
+
 def claim_formatted_data
   {
     "fee_court_fee" => "280.00",
