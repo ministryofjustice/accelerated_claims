@@ -16,25 +16,40 @@
       number_of_claimants: "2",
       number_of_defendants: "1"
     },
-    claimant_one: {
+    claimant_1: {
       title: "Mr",
       organization_name: nil,
       full_name: "John Smith",
       street: "2 Brown St\nBwlchllydd",
       postcode: "FX1W 0LU"
     },
-    claimant_two: {
+    claimant_2: {
       title: "Ms",
+      organization_name: nil,
       full_name: "Jane Smith",
       street: "7 Main Street\nAlfreton",
       postcode: "FX1W 0LU"
     },
     javascript: {
-      claimant_two_same_address: "No",
+      claimant_two_same_address: nil,
       any_legal_costs: "Yes",
       separate_correspondence_address: "Yes",
       other_contact_details: "Yes",
       add_reference_number: "Yes"
+    },
+    claimant_3: {
+      title: nil,
+      organization_name: nil,
+      full_name: nil,
+      street: nil,
+      postcode: nil
+    },
+    claimant_4: {
+      title: nil,
+      organization_name: nil,
+      full_name: nil,
+      street: nil,
+      postcode: nil
     },
     legal_cost: {
       legal_costs: "123.34"
@@ -79,7 +94,9 @@
       assured_shorthold_tenancy_notice_served_date: nil,
       demotion_order_date: "2010-01-01",
       demotion_order_court: "Anytown County Court",
-      previous_tenancy_type: "assured"
+      previous_tenancy_type: "assured",
+      confirmed_first_rules_period_applicable_statements: nil,
+      confirmed_second_rules_period_applicable_statements: nil
     },
     notice: {
       served_by_name: "Somebody",

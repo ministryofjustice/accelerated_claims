@@ -16,25 +16,40 @@
       number_of_claimants: "2",
       number_of_defendants: "2"
     },
-    claimant_one: {
+    claimant_1: {
       title: "Mr",
       organization_name: nil,
       full_name: "Francis Coker",
       street: "13 Princess Square\nMilton",
       postcode: "RT12 1LS"
     },
-    claimant_two: {
+    claimant_2: {
       title: "Miss",
+      organization_name: nil,
       full_name: "Heather Heath",
       street: nil,
       postcode: nil
     },
     javascript: {
-      claimant_two_same_address: "Yes",
+      claimant_two_same_address: nil,
       any_legal_costs: "No",
       separate_correspondence_address: "No",
       other_contact_details: "No",
       add_reference_number: "No"
+    },
+    claimant_3: {
+      title: nil,
+      organization_name: nil,
+      full_name: nil,
+      street: nil,
+      postcode: nil
+    },
+    claimant_4: {
+      title: nil,
+      organization_name: nil,
+      full_name: nil,
+      street: nil,
+      postcode: nil
     },
     legal_cost: {
       legal_costs: nil
@@ -79,7 +94,9 @@
       assured_shorthold_tenancy_notice_served_date: nil,
       demotion_order_date: nil,
       demotion_order_court: nil,
-      previous_tenancy_type: nil
+      previous_tenancy_type: nil,
+      confirmed_first_rules_period_applicable_statements: "No",
+      confirmed_second_rules_period_applicable_statements: "Yes"
     },
     notice: {
       served_by_name: "Heather Heath",

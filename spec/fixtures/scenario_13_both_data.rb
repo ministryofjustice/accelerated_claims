@@ -16,15 +16,16 @@
       number_of_claimants: "1",
       number_of_defendants: "1"
     },
-    claimant_one: {
+    claimant_1: {
       title: "Mr",
       organization_name: nil,
       full_name: "John Smith",
       street: "2 Brown St\nBwlchllydd",
       postcode: "FX1W 0LU"
     },
-    claimant_two: {
+    claimant_2: {
       title: nil,
+      organization_name: nil,
       full_name: nil,
       street: nil,
       postcode: nil
@@ -35,6 +36,20 @@
       separate_correspondence_address: "No",
       other_contact_details: "Yes",
       add_reference_number: "No"
+    },
+    claimant_3: {
+      title: nil,
+      organization_name: nil,
+      full_name: nil,
+      street: nil,
+      postcode: nil
+    },
+    claimant_4: {
+      title: nil,
+      organization_name: nil,
+      full_name: nil,
+      street: nil,
+      postcode: nil
     },
     legal_cost: {
       legal_costs: "332.45"
@@ -79,7 +94,9 @@
       assured_shorthold_tenancy_notice_served_date: nil,
       demotion_order_date: nil,
       demotion_order_court: nil,
-      previous_tenancy_type: nil
+      previous_tenancy_type: nil,
+      confirmed_first_rules_period_applicable_statements: nil,
+      confirmed_second_rules_period_applicable_statements: "Yes"
     },
     notice: {
       served_by_name: "Royal mail",

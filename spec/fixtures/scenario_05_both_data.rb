@@ -16,15 +16,16 @@
       number_of_claimants: "1",
       number_of_defendants: "1"
     },
-    claimant_one: {
+    claimant_1: {
       title: nil,
       organization_name: "Yammerton City Council",
       full_name: nil,
       street: "Civic Centre, St. Peter's Square\nYammerton",
       postcode: "AV1 1SH"
     },
-    claimant_two: {
+    claimant_2: {
       title: nil,
+      organization_name: "Yammerton City Council",
       full_name: nil,
       street: nil,
       postcode: nil
@@ -35,6 +36,20 @@
       separate_correspondence_address: "Yes",
       other_contact_details: "Yes",
       add_reference_number: "Yes"
+    },
+    claimant_3: {
+      title: nil,
+      organization_name: nil,
+      full_name: nil,
+      street: nil,
+      postcode: nil
+    },
+    claimant_4: {
+      title: nil,
+      organization_name: nil,
+      full_name: nil,
+      street: nil,
+      postcode: nil
     },
     legal_cost: {
       legal_costs: nil
@@ -79,7 +94,9 @@
       assured_shorthold_tenancy_notice_served_date: nil,
       demotion_order_date: "2013-04-20",
       demotion_order_court: "Yammerton District Court",
-      previous_tenancy_type: "secure"
+      previous_tenancy_type: "secure",
+      confirmed_first_rules_period_applicable_statements: nil,
+      confirmed_second_rules_period_applicable_statements: nil
     },
     notice: {
       served_by_name: "Wendy Lesser",

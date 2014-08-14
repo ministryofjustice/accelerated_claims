@@ -1,7 +1,5 @@
 feature "submit claim" do
 
-  pending ' - Pending until user hourney spreadsheet rewritten for variable number of claimants' do
-
     before do
       stub_request(:post, "http://localhost:4000/").to_return(:status => 200, :body => "", :headers => {})
       WebMock.disable_net_connect!(:allow => "127.0.0.1")
@@ -47,7 +45,8 @@ feature "submit claim" do
       end
     end
 
-    Dir.glob('spec/fixtures/scenario_*_data.rb') do |data_file|
+
+    Dir.glob("spec/fixtures/scenario_01*_data.rb") do |data_file|
       data = load_fixture_data(data_file)
       title = data['title']
       description = data['description']
@@ -71,5 +70,4 @@ feature "submit claim" do
         |)
       end
     end
- end                                  # end of pending loop
 end

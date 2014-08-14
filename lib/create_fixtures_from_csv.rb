@@ -120,11 +120,13 @@ class DownloadScenarioData
   end
 
   def self.write_csv_to_tempfile(csv_data)
+    puts csv_data
     file = Tempfile.new('data_csv', encoding: 'utf-8')
     file.write(csv_data)
     file.path
   end
 
+  # TODO replace this temprorary URl with real one once testing done
   def self.get_download_url
     key = "0Arsa0arziNdndHlwM2xJMVl5Z3pDdFVOYnVsRmZST1E"
     "https://docs.google.com/spreadsheet/pub?key=#{key}&single=true&gid=0&output=csv"
