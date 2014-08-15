@@ -47,7 +47,7 @@ class ClaimForm
       if number_of_claimants == '2'
         puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
         
-        choose_claimant_two_address_the_same
+        choose_claimant_2_address_the_same
         fill_claimant_2
       end
     else
@@ -111,7 +111,7 @@ class ClaimForm
 
 
 
-  def choose_claimant_two_address_the_same
+  def choose_claimant_2_address_the_same
     case get_data('javascript','claimant_2_same_address')
     when 'Yes'
       puts "++++++ DEBUG same address ++++++ #{__FILE__}::#{__LINE__} ++++\n"
@@ -241,9 +241,9 @@ class ClaimForm
 
 
   def fill_organizational_claimant
-    fill_in_text_field('claimant_one', 'organization_name')
-    fill_in_text_field('claimant_one', 'street')
-    fill_in_text_field('claimant_one', 'postcode')
+    fill_in_text_field('claimant_1', 'organization_name')
+    fill_in_text_field('claimant_1', 'street')
+    fill_in_text_field('claimant_1', 'postcode')
   end
 
 

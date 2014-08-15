@@ -11,11 +11,11 @@ casper.wait(500, function() {
 
   this.test.comment('claimants');
   this.test.assertVisible('#multiplePanelSelector_claimants');
-  this.test.assertNotVisible('#claimant_two');
+  this.test.assertNotVisible('#claimant_2');
   this.evaluate(function(){
     $('#multiplePanelSelector_claimants').val('2').trigger('change');
   });
-  this.test.assertVisible('#claimant_two');
+  this.test.assertVisible('#claimant_2');
 
   this.test.comment('defendants');
   this.test.assertVisible('#multiplePanelSelector_defendants');

@@ -346,7 +346,7 @@ describe Claim, :type => :model do
       let(:data) {
         mydata = claim_post_data['claim'] 
         mydata['num_claimants'] = 1
-        mydata.delete('claimant_two')
+        mydata.delete('claimant_2')
         mydata
       }
 

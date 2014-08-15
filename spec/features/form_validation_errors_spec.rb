@@ -72,14 +72,14 @@ feature 'Filling in claim form' do
       choose('claim_defendant_one_inhabits_property_yes')
       choose('claim_notice_notice_served_yes')
 
-      fill_in('claim_claimant_one_title', with: 'Major')
-      fill_in('claim_claimant_one_full_name', with: 'Tom')
+      fill_in('claim_claimant_1_title', with: 'Major')
+      fill_in('claim_claimant_1_full_name', with: 'Tom')
 
       click_button 'Complete form'
 
       unless remote_test?
-        expect(find_field('claim_claimant_one_title').value).to eq('Major')
-        expect(find_field('claim_claimant_one_full_name').value).to eq('Tom')
+        expect(find_field('claim_claimant_1_title').value).to eq('Major')
+        expect(find_field('claim_claimant_1_full_name').value).to eq('Tom')
       end
 
       check_focus_after_click 'Enter the name of the person who gave the notice', 'claim_notice_served_by_name'

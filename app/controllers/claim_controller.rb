@@ -68,15 +68,13 @@ class ClaimController < ApplicationController
   end
 
   def submission
-    puts "++++++ DEBUG CLAIM CONTROLLER SUBMISSION ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    pp params
-    
-
-
-
     session[:claim] = params['claim']
+    move_claimant_address_params_into_the_model
     move_defendant_address_params_into_model
     @claim = Claim.new(params['claim'])
+
+    sleep(5)
+
 
     unless @claim.valid?
       redirect_to_with_protocol :new
@@ -101,6 +99,20 @@ class ClaimController < ApplicationController
       end
     end
   end
+
+
+  def move_claimant_address_params_into_the_model
+    (2 .. ClaimantCollection::MAX_CLAIMANTS).each do |i|
+
+      key = "claimant#{i}address"
+      if params.key?(key) && params[key] == "yes"
+        params['claim']["claimant_#{i}"]['street'] = params['claim']['claimant_1']['street']
+        params['claim']["claimant_#{i}"]['postcode'] = params['claim']['claimant_1']['postcode']
+      end
+    end
+  end
+
+
 
   def delete_all_pdfs
     FileUtils.rm Dir.glob('/tmp/*pdf')

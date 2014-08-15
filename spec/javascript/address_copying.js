@@ -14,9 +14,9 @@ casper.wait(500, function() {
     'claim[property][town]':          'London',
     'claim[property][postcode]':      'W12 8QT',
     
-    'claim[claimant_one][street]':    '22 Acacia Avenue',
-    'claim[claimant_one][town]':      'Birmingham',
-    'claim[claimant_one][postcode]':  'B15 2TT'
+    'claim[claimant_1][street]':    '22 Acacia Avenue',
+    'claim[claimant_1][town]':      'Birmingham',
+    'claim[claimant_1][postcode]':  'B15 2TT'
   });
 
   this.click( '#claimant2address-yes' );
@@ -33,9 +33,9 @@ casper.wait(500, function() {
   this.test.assertField('claim[defendant_two][town]', 'London');
   this.test.assertField('claim[defendant_two][postcode]', 'W12 8QT');
 
-  this.test.assertField('claim[claimant_two][street]', '22 Acacia Avenue');
-  this.test.assertField('claim[claimant_two][town]', 'Birmingham');
-  this.test.assertField('claim[claimant_two][postcode]', 'B15 2TT');
+  this.test.assertField('claim[claimant_2][street]', '22 Acacia Avenue');
+  this.test.assertField('claim[claimant_2][town]', 'Birmingham');
+  this.test.assertField('claim[claimant_2][postcode]', 'B15 2TT');
 });
 
 casper.run(function() {
