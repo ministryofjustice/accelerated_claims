@@ -23,10 +23,11 @@ AcceleratedClaims::Application.routes.draw do
     get  '/cookies',        controller: :static, action: :cookies, as: :cookies
     get  '/accessibility',  controller: :static, action: :accessibility, as: :accessibility
     get  '/terms',          controller: :static, action: :terms, as: :terms
-    get  '/expired',        controller: :static, action: :expired, as: :expired
+    get  '/expired',        controller: :application, action: :expired, as: :expired
 
     get  '/heartbeat',      controller: :application, action: :heartbeat
     post '/expire_session', controller: :application, action: :expire_session
+    post '/invalid_access_token', controller: :application, action: :invalid_access_token, as: :invalid_access_token
 
     # zendesk
     resource :feedback,     only: [:new, :create], controller: 'feedback'

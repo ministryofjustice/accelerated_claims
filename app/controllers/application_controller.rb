@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  rescue_from ActionController::InvalidAuthenticityToken, with: :expired_session_redirection
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null session instead.
@@ -29,6 +30,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  unless Rails.env.production?
+    def invalid_access_token
+      raise ActionController::InvalidAuthenticityToken
+    end
+  end
+
   protected
 
 
@@ -51,6 +58,12 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def expired_session_redirection
+    Rails.logger.info "The user tried to access a resource with an expired session token!"
+    Rails.logger.info "They are now being redirected."
+    redirect_to_with_protocol :expired
+  end
 
   def protocol
     (Rails.env.production? ? 'https' : 'http')
