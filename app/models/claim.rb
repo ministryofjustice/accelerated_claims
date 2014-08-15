@@ -14,7 +14,6 @@ class Claim < BaseClass
   @@max_num_claimants       = 4
   @@valid_num_defendants    = [1, 2]
 
-  # @@ambiguous_instance_vars = ['claimant_one', 'claimant_two', 'defendant_one', 'defendant_two']
   @@valid_claimant_types    = %w{ organization individual }
 
 
@@ -297,19 +296,19 @@ class Claim < BaseClass
 
 
     case attribute_name
-      when /claimant_one/
+      when /claimant_1/
         if @num_claimants.nil?
-          params.merge!(validate_presence: false, validate_absence: false, num_claimants: nil, claimant_num: :claimant_one, claimant_type: claimant_type)  
+          params.merge!(validate_presence: false, validate_absence: false, num_claimants: nil, claimant_num: :claimant_1, claimant_type: claimant_type)  
         else
-          params.merge!(validate_presence: true, validate_absence: false, num_claimants: claim_params[:num_claimants], claimant_num: :claimant_one, claimant_type: claimant_type)
+          params.merge!(validate_presence: true, validate_absence: false, num_claimants: claim_params[:num_claimants], claimant_num: :claimant_1, claimant_type: claimant_type)
         end
-      when /claimant_two/
+      when /claimant_2/
         if @num_claimants.nil?
-          params.merge!(validate_absence: false, validate_presence: false, num_claimants: nil, claimant_num: :claimant_two)
+          params.merge!(validate_absence: false, validate_presence: false, num_claimants: nil, claimant_num: :claimant_2)
         elsif @num_claimants == 1
           params.merge!(validate_absence: true, validate_presence: false)
         else
-          params.merge!(validate_presence: true, num_claimants: '2', claimant_num: :claimant_two, claimant_type: claimant_type)
+          params.merge!(validate_presence: true, num_claimants: '2', claimant_num: :claimant_2, claimant_type: claimant_type)
         end
       when /defendant_one/
         if @num_defendants.nil?
@@ -323,7 +322,7 @@ class Claim < BaseClass
         elsif @num_defendants == 1
           params.merge!(validate_absence: true, validate_presence: false)
         else
-          params.merge!(validate_presence: true, num_defendants: '2', defendant_num: :claimant_two)
+          params.merge!(validate_presence: true, num_defendants: '2', defendant_num: :defendant_two)
         end
     end
 
