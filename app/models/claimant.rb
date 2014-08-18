@@ -96,7 +96,7 @@ class Claimant < BaseClass
   def validate_are_blank(*fields)
     fields.each do |field|
       unless self.send(field).blank?
-        errors.add(field, "must not be entered if number of claimants is 1 AAAAA") unless self.send(field).blank?
+        errors.add(field, "must not be entered if number of claimants is 1") unless self.send(field).blank?
       end
     end
   end
