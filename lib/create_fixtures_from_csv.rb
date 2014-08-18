@@ -120,7 +120,6 @@ class DownloadScenarioData
   end
 
   def self.write_csv_to_tempfile(csv_data)
-    puts csv_data
     file = Tempfile.new('data_csv', encoding: 'utf-8')
     file.write(csv_data)
     file.path

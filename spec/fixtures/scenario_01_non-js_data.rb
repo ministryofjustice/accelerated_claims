@@ -24,7 +24,7 @@
       postcode: "EY88 1ZZ"
     },
     claimant_2: {
-      title: "Mrs-XXXXXXXXXX",
+      title: "Mrs",
       organization_name: nil,
       full_name: "Jane Doe",
       street: "9 Made-up Lane\nAnytown",

@@ -48,13 +48,13 @@ moj.Modules.jsValidate = (function() {
   };
 
   checkData = function() {
-    if( moj.Modules.tools.getRadioVal( $numClaimants ).toString() === '2' ) {
-      if( moj.Modules.tools.getRadioVal( $secondClaimantAddressSameAsFirst ) === 'yes' ) {
-        $( '#claimant_2 .address' ).show();
-        $secondClaimantAddress.val( $firstClaimantAddress.val() );
-        $secondClaimantPostcode.val( $firstClaimantPostcode.val() );
-      }
-    }
+    // if( moj.Modules.tools.getTextFieldValue( $numClaimants ) === '2' ) {
+    //   if( moj.Modules.tools.getRadioVal( $secondClaimantAddressSameAsFirst ) === 'yes' ) {
+    //     $( '#claimant_2 .address' ).show();
+    //     $secondClaimantAddress.val( $firstClaimantAddress.val() );
+    //     $secondClaimantPostcode.val( $firstClaimantPostcode.val() );
+    //   }
+    // }
 
     submitForm();
   };

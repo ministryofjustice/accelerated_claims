@@ -16,21 +16,17 @@ class ClaimController < ApplicationController
 
     if(data = session[:claim])
       @claim = Claim.new(data)
-
       @errors = @claim.errors unless @claim.valid?
     else
       @claim = Claim.new
     end
-    
   end
 
   def confirmation
     claim = session[:claim]
-
     if claim.nil? || !Claim.new(claim).valid?
       redirect_to_with_protocol(:new)
     end
-
     @page_title = 'Make a claim to evict tenants: accelerated possession'
   end
 
@@ -41,7 +37,6 @@ class ClaimController < ApplicationController
       redirect_to expired_path
     else
       @claim = Claim.new(session[:claim])
-
       if @claim.valid?
         flatten = Rails.env.test? || params[:flatten] == 'false' ? false : true
         pdf = PDFDocument.new(@claim.as_json, flatten).fill
@@ -72,9 +67,6 @@ class ClaimController < ApplicationController
     move_claimant_address_params_into_the_model
     move_defendant_address_params_into_model
     @claim = Claim.new(params['claim'])
-
-    sleep(5)
-
 
     unless @claim.valid?
       redirect_to_with_protocol :new

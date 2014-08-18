@@ -25,7 +25,7 @@ class Claim < BaseClass
     else
       @num_claimants  = claim_params.key?(:num_claimants) ? claim_params[:num_claimants].to_i : 0
     end
-    @num_defendants = claim_params.key?(:num_defendants) ? claim_params[:num_defendants].to_i : 1
+    @num_defendants = claim_params.key?(:num_defendants) ? claim_params[:num_defendants].to_i : nil
     initialize_all_submodels(claim_params)
     @errors = ActiveModel::Errors.new(self)
   end
