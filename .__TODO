@@ -6,4 +6,8 @@
 
 
 - Decide how to handle non-js where the number of claimants is not entered.
+
+
+write test to test expansion of full name OR organization name for claimant 1 only in non-javascript mode 
+write test to make sure there is no OR in javascript mode
   

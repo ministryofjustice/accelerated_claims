@@ -5,9 +5,6 @@ class ClaimantCollection < BaseClass
   MAX_CLAIMANTS = 4
 
   def initialize(claim_params)
-    puts "++++++ DEBUG CLAIMANT COLLECTION PARAMS ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    pp claim_params
-    
     @errors = ActiveModel::Errors.new(self)
     @num_claimants = claim_params['num_claimants'].to_i || 0
     @claimants = {}

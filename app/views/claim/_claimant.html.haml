@@ -1,9 +1,13 @@
 = claim_form.fields_for claimant_field, claimant, builder: LabellingFormBuilder do |form|
   = form.text_field_row :title,    class: 'title hide js-claimanttype individual', input_class: 'smalltext'
   = form.text_field_row :full_name, class: 'rel hide js-claimanttype individual'
-  - if claimant_field == :claimant_1
-    .row.hide.js-claimanttype.individual OR
+
+  -# we want to execture the following bit of code if non-javascript (:claimant_1) or with javascript ("claimant_{{id}}")
+  - if claimant_field == :claimant_1 || claimant_field == 'claimant_{{id}}'
+    - if claimant_field == :claimant_1
+      .row.hide.js-claimanttype.individual OR 
     = form.text_field_row :organization_name, label: 'Company name or local authority name', class: 'rel hide js-claimanttype organization'
+    
   .sub-panel.rel.address
     = form.text_area_row  :street,   label: 'Full address', class: 'rel street'
     = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'
