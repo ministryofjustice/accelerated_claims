@@ -25,7 +25,7 @@
     },
     claimant_2: {
       title: nil,
-      organization_name: "Infinity Southwich",
+      organization_name: nil,
       full_name: nil,
       street: nil,
       postcode: nil

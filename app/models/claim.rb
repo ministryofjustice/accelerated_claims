@@ -19,6 +19,9 @@ class Claim < BaseClass
 
 
   def initialize(claim_params={})
+    puts "++++++ DEBUG CLAIM PARAMS ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    pp claim_params
+    
     @claimant_type  = claim_params.key?(:claimant_type) ? claim_params[:claimant_type] : nil
     if @claimant_type == 'organization'
       @num_claimants = 1

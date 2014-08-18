@@ -27,16 +27,18 @@ moj.Helpers.personGenerator = (function(moj, $, Handlebars){
     /** Creates a single person block
      */
     createPersonBlock: function(personNumber){
-      var template = Handlebars.compile(this.template),
-        html = template({id: personNumber, number: personNumber}),
-        $block = $(html);
+      if (this.template) {
+        var template = Handlebars.compile(this.template),
+          html = template({id: personNumber, number: personNumber}),
+          $block = $(html);
 
-      if(personNumber>1){
-        $block.addClass('same-address');
+        if(personNumber>1){
+          $block.addClass('same-address');
+        }
+
+        this.idFix($block, personNumber);
+        $block.appendTo(this.$personsContainer);
       }
-
-      this.idFix($block, personNumber);
-      $block.appendTo(this.$personsContainer);
     },
 
     /**
@@ -54,6 +56,7 @@ moj.Helpers.personGenerator = (function(moj, $, Handlebars){
         $(this).attr('for', $(this).attr('for').replace('__id__', blockNumber));
       });
     }
+  
   };
 
   return function($personsContainer, template, maxPersons){
