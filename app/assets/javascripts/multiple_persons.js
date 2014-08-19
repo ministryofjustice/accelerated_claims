@@ -30,23 +30,37 @@ moj.Modules.multiplePersons = (function() {
   };
 
   bindEvents = function() {
-    //type of claimant
-    $('[name=claim\\[claimant_type\\]]').on('change', expand_claimants();
+    
+    $('[name=claim\\[claimant_type\\]]').on('change', expand_claimants());
+
+    //number of claimants
+    $( document ).on( 'change', '.has-multiple .multiple [type="radio"]', function() {
+      var $this = $( this );
+      showMultiples($this.closest( '.has-multiple' ), $this, $this.val());
+    });
   };
 
 
-  expand_claimants = function() {
-    var claimantType = $(this).val();
-    var $checked = $('[name=claim\\[num_claimants\\]]:checked');
 
-    if(claimantType==='individual'){
-      showMultiples($(this).closest('.has-multiple'), $checked, $checked.val());
-    }
-    else{
-      showMultiples($(this).closest('.has-multiple'), $checked, 1);
-    }
+expand_claimants = function() {
+  //type of claimant
+  var claimantType = $(this).val();
+  var $checked = $('[name=claim\\[num_claimants\\]]:checked');
 
-  };
+  if(claimantType==='individual'){
+    showMultiples($(this).closest('.has-multiple'), $checked, $checked.val());
+  }
+  else{
+    showMultiples($(this).closest('.has-multiple'), $checked, 1);
+  }
+});
+
+
+
+
+
+
+
 
 
   setupMultiples = function() {
