@@ -1,8 +1,9 @@
 
 
-- Front End:
-  - Number of Defendants radio button is pre selected, but the defendant details aren't shown
-  - redisplaying the page after errors, the number of claimants is shown, but the claimant details are still hidden
+
+- redisplaying the page after errors, the number of claimants is shown, but the claimant details are still hidden
+
+- non JS asks for how many claimants there are even though it's not on the form   DONE
 
 
 - Decide how to handle non-js where the number of claimants is not entered.
