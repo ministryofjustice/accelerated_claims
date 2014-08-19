@@ -10,7 +10,7 @@ class Claimant < BaseClass
   attr_accessor :claimant_num
   attr_accessor :title
   attr_accessor :full_name
-  attr_accessor :organization_name  
+  attr_accessor :organization_name
   attr_accessor :claimant_type
 
 
@@ -28,7 +28,7 @@ class Claimant < BaseClass
     @num_claimants = @num_claimants.nil? ? 1 : @num_claimants.to_i
     @claimant_type = params['claimant_type']
   end
-  
+
 
   def ==(other)
     return false if instance_variables.size != other.instance_variables.size
@@ -45,7 +45,7 @@ class Claimant < BaseClass
   # main validation for claimant state
   def validate_claimant_state
     if validate_absence?
-      validate_are_blank(:title, :full_name, :organization_name, :street, :postcode)
+      validate_are_blank(:title, :full_name, :organization_name, :claimant_type, :street, :postcode)
     else
       validate_fields_are_present
     end

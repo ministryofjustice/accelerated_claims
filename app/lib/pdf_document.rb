@@ -90,30 +90,43 @@ class PDFDocument
     end
   end
 
+  FIRST_3A_LINES = [
+    { x0: 42, x1: 515, y: 327+57 },
+    { x0: 42, x1: 120, y: 315+56 }
+  ]
+  FIRST_3B_LINES = [
+    { x0: 42, x1: 505, y: 299+57 }
+  ]
+  FIRST_3C_LINES = [
+    { x0: 42, x1: 515, y: 282+57 },
+    { x0: 42, x1: 100, y: 270+55 }
+  ]
+  SECOND_3A_LINES = [
+    { x0: 42, x1: 420, y: 215+52 }
+  ]
+  SECOND_3B_LINES = [
+    { x0: 42, x1: 465, y: 198+51 }
+  ]
+  SECOND_3C_3D_LINES = [
+    { x0: 42, x1: 505, y: 180+49 },
+    { x0: 42, x1: 470, y: 160+50 },
+    { x0: 42, x1: 475, y: 123+48 }
+  ]
+
   def strike_out_paths index
     case index
     when 1
-      [
-        { x0: 42, x1: 515, y: 327+57 },
-        { x0: 42, x1: 120, y: 315+56 }
-      ]
+      FIRST_3A_LINES
     when 2
-      [ { x0: 42, x1: 505, y: 299+57 } ]
+      FIRST_3B_LINES
     when 3
-      [
-        { x0: 42, x1: 515, y: 282+57 },
-        { x0: 42, x1: 100, y: 270+55 }
-      ]
+      FIRST_3C_LINES
     when 4
-      [ { x0: 42, x1: 420, y: 215+52 } ]
+      SECOND_3A_LINES
     when 5
-      [ { x0: 42, x1: 465, y: 198+51 } ]
+      SECOND_3B_LINES
     when 6
-      [
-        { x0: 42, x1: 505, y: 180+49 },
-        { x0: 42, x1: 470, y: 160+50 },
-        { x0: 42, x1: 475, y: 123+48 }
-      ]
+      SECOND_3C_3D_LINES
     end
   end
 
@@ -155,32 +168,15 @@ class PDFDocument
 
   def perform_strike_through list, result_pdf
     output_pdf = Tempfile.new('strike_out', '/tmp/')
-
     begin
-      Rails.logger.debug "result_pdf: #{result_pdf.path} size: #{File.size?(result_pdf.path)}"
-      connection = Faraday.new(url: 'http://localhost:4000')
-      response = connection.post do |request|
-        ActiveSupport::Notifications.instrument('add_strikes_service.pdf') do
-          request.path = '/'
-          request.body = strike_through_json(list, result_pdf, output_pdf)
-          request.headers['Content-Type'] = 'application/json'
-          request.headers['Accept'] = 'application/json'
-        end
-      end
-      Rails.logger.debug "response: #{response.body}"
-      Rails.logger.debug "output_pdf: #{output_pdf.path} size: #{File.size?(output_pdf.path)}"
-
+      call_strike_through_service list, result_pdf, output_pdf
     rescue Faraday::ConnectionFailed, Errno::EPIPE, Exception => e
       Rails.logger.warn "e: #{e.class}: #{e.to_s}:\n  #{e.backtrace[0..3].join("\n  ")}"
-      ActiveSupport::Notifications.instrument('error_add_strikes_commandline.pdf') do
-        use_strike_through_command list, result_pdf, output_pdf
-      end
+      use_strike_through_command list, result_pdf, output_pdf, 'error_add_strikes_commandline.pdf'
     end
 
     unless File.exists?(output_pdf.path)
-      ActiveSupport::Notifications.instrument('missing_file_add_strikes_commandline.pdf') do
-        use_strike_through_command list, result_pdf, output_pdf
-      end
+      use_strike_through_command list, result_pdf, output_pdf, 'missing_file_add_strikes_commandline.pdf'
     end
 
     if !Rails.env.test? || ENV['browser']
@@ -189,18 +185,39 @@ class PDFDocument
     Rails.logger.debug "result_pdf: #{result_pdf.path} size: #{File.size?(result_pdf.path)}"
   end
 
-  def use_strike_through_command list, result_pdf, output_pdf
-     if !Rails.env.test? || ENV['browser']
-       strikes = nil
-       ActiveSupport::Notifications.instrument('store_strikes.pdf') do
-         strikes = Tempfile.new('strikes.json', '/tmp/')
-         strikes.write({ 'strikes' => list, 'flatten' => "#{@flatten}" }.to_json)
-         strikes.close
-       end
-       path = `pwd`
-       cmd = "cd /tmp; java -jar #{STRIKER_JAR} -i #{result_pdf.path.sub('/tmp/','')} -o #{output_pdf.path.sub('/tmp/','')} -j #{strikes.path}; cd #{path}"
-       `#{cmd}`
-     end
+  def call_strike_through_service list, result_pdf, output_pdf
+    Rails.logger.debug "result_pdf: #{result_pdf.path} size: #{File.size?(result_pdf.path)}"
+    connection = Faraday.new(url: 'http://localhost:4000')
+    response = connection.post do |request|
+      ActiveSupport::Notifications.instrument('add_strikes_service.pdf') do
+        request.path = '/'
+        request.body = strike_through_json(list, result_pdf, output_pdf)
+        request.headers['Content-Type'] = 'application/json'
+        request.headers['Accept'] = 'application/json'
+      end
+    end
+    Rails.logger.debug "response: #{response.body}"
+    Rails.logger.debug "output_pdf: #{output_pdf.path} size: #{File.size?(output_pdf.path)}"
+  end
+
+  def use_strike_through_command list, result_pdf, output_pdf, instrumentation_label
+    ActiveSupport::Notifications.instrument(instrumentation_label) do
+      call_strike_through_command list, result_pdf, output_pdf
+    end
+  end
+
+  def call_strike_through_command list, result_pdf, output_pdf
+    if !Rails.env.test? || ENV['browser']
+      strikes = nil
+      ActiveSupport::Notifications.instrument('store_strikes.pdf') do
+        strikes = Tempfile.new('strikes.json', '/tmp/')
+        strikes.write({ 'strikes' => list, 'flatten' => "#{@flatten}" }.to_json)
+        strikes.close
+      end
+      path = `pwd`
+      cmd = "cd /tmp; java -jar #{STRIKER_JAR} -i #{result_pdf.path.sub('/tmp/','')} -o #{output_pdf.path.sub('/tmp/','')} -j #{strikes.path}; cd #{path}"
+      `#{cmd}`
+    end
   end
 
   def strike_through_json list, result_pdf, output_pdf

@@ -1,5 +1,3 @@
-
-
 class Defendant < BaseClass
 
   include Address
@@ -23,9 +21,6 @@ class Defendant < BaseClass
   validate :num_defendants_is_valid
   validate :validate_defendant_state
 
-
-
-  
   def num_defendants_is_valid
     if validate_presence?
       unless %w{ yes no }.include?(inhabits_property)
@@ -38,18 +33,14 @@ class Defendant < BaseClass
     end
   end
 
-
-
-
   # main validation for claimant state
   def validate_defendant_state
     if validate_absence?
       validate_are_blank(:title, :full_name, :street, :postcode)
-    else
+    elsif validate_presence?
       validate_fields_are_present
     end
   end
-
 
   def initialize(params = {})
     super
@@ -66,8 +57,6 @@ class Defendant < BaseClass
   def validate_absence?
     self.validate_absence == true
   end
-
-
 
   def as_json
     if present?
@@ -90,17 +79,14 @@ class Defendant < BaseClass
     end
   end
 
-
   def address_blank?
     (street.blank? && postcode.blank?)
   end
 
-
-
   def subject_description
     if @num_claimants == 1
       "the defendant"
-    else 
+    else
       if defendant_num == :defendant_one
         "defendant 1"
       else
@@ -108,7 +94,6 @@ class Defendant < BaseClass
       end
     end
   end
-
 
   private
 
@@ -129,7 +114,6 @@ class Defendant < BaseClass
     end
   end
 
-
   def validate_fields_are_present
     if self.inhabits_property == 'yes'
       validate_are_present(:title, :full_name)
@@ -137,7 +121,6 @@ class Defendant < BaseClass
       validate_are_present(:title, :full_name, :street, :postcode)
     end
   end
-
 
   def validate_are_present(*fields)
     fields.each do |field|

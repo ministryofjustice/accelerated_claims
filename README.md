@@ -2,6 +2,8 @@
 
 [![Build Status](http://jenkins.dsd.io/view/Civil%20Claims%20Dashboard/job/civilclaims-accelerated-test/badge/icon)](http://ec2-54-194-212-120.eu-west-1.compute.amazonaws.com/view/Civil%20Claims%20Dashboard/job/civilclaims-accelerated-test/)
 
+[![Code Climate](https://codeclimate.com/github/ministryofjustice/accelerated_claims.png)](https://codeclimate.com/github/ministryofjustice/accelerated_claims)
+
 This is the source code of what is currently a minimum viable product for the Civil Claims exemplar. The application consists in a single form that claimants of accelerated claims fill out to download a PDF. The PDF is the standard accelerated claim form from HMCTS, is filled out with the details that the claimant has provided, and can be signed and sent by post.
 
 ## Local setup

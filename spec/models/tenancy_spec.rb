@@ -1,44 +1,7 @@
+# -*- coding: utf-8 -*-
 describe Tenancy, :type => :model do
 
-  def value attribute, default, overrides
-    overrides.has_key?(attribute) ? overrides.delete(attribute) : default
-  end
-
-  def assured_tenancy overrides={}
-    date_fields = {}.merge (
-      form_date(:start_date, value(:start_date, Date.parse("2010-01-05"), overrides))
-    ).merge (
-      form_date(:assured_shorthold_tenancy_notice_served_date, value(:assured_shorthold_tenancy_notice_served_date, nil, overrides))
-    ).merge (
-      form_date(:original_assured_shorthold_tenancy_agreement_date, value(:original_assured_shorthold_tenancy_agreement_date, nil, overrides))
-    ).merge (
-      form_date(:latest_agreement_date, value(:latest_agreement_date, nil, overrides))
-    )
-
-    Tenancy.new({
-      tenancy_type: 'assured',
-      assured_shorthold_tenancy_type: 'one',
-      agreement_reissued_for_same_property: nil,
-      agreement_reissued_for_same_landlord_and_tenant: nil,
-      from_1997_option: 'Yes',
-      upto_1997_option: 'No'
-    }.merge(date_fields).merge(overrides)
-    )
-  end
-
-  def demoted_tenancy overrides={}
-    date_fields = {}.merge(
-      form_date(:demotion_order_date, value(:demotion_order_date, Date.parse("2010-01-01"), overrides))
-    )
-
-    Tenancy.new({
-      tenancy_type: 'demoted',
-      demotion_order_court: "Brighton County Court",
-      previous_tenancy_type: "assured",
-      from_1997_option: 'No',
-      upto_1997_option: 'No'
-    }.merge(date_fields).merge(overrides))
-  end
+  include TenancyHelper
 
   shared_examples_for 'assured_shorthold_tenancy_type unset' do
     it { is_expected.not_to be_valid }
@@ -102,7 +65,6 @@ describe Tenancy, :type => :model do
         expect(subject).to be_valid
       end
     end
-
   end
 
   context "when 'demoted' and non-relevant fields are not blank" do
@@ -135,6 +97,11 @@ describe Tenancy, :type => :model do
       it "should provide an error message" do
         expect(tenancy.errors[:tenancy_type]).to eq [ "You must say what kind of tenancy agreement you have" ]
       end
+
+      it 'should not have applicable statement errors' do
+        expect(tenancy.errors[:confirmed_second_rules_period_applicable_statements]).to eq []
+        expect(tenancy.errors[:confirmed_first_rules_period_applicable_statements]).to eq []
+      end
     end
   end
 
@@ -153,13 +120,7 @@ describe Tenancy, :type => :model do
   end
 
   context "when 'assured'" do
-    subject { assured_tenancy }
-
-    it { is_expected.to be_valid }
-    its(:demoted_tenancy?) { should be false }
-    its(:assured_tenancy?) { should be true }
-
-    context 'when there is only one tenancy agreement' do
+    context 'one tenancy agreement' do
       describe 'as_json' do
         subject { assured_tenancy.as_json }
         its(['demoted_tenancy']) { should == 'No'}
@@ -172,8 +133,20 @@ describe Tenancy, :type => :model do
         its(['assured_shorthold_tenancy_type']) { should == 'one' }
       end
     end
+  end
 
-    context 'when there are multiple tenancy agreements' do
+  context "when 'assured'" do
+    subject { assured_tenancy }
+
+    it { is_expected.to be_valid }
+    its(:demoted_tenancy?) { should be false }
+    its(:assured_tenancy?) { should be true }
+  end
+
+  context "when 'assured'" do
+    subject { assured_tenancy }
+
+    context 'multiple tenancy agreements' do
       describe 'as_json' do
         subject {
           assured_tenancy({'assured_shorthold_tenancy_type' => 'multiple'}).as_json
@@ -189,7 +162,6 @@ describe Tenancy, :type => :model do
         its(['assured_shorthold_tenancy_type']) { should == 'multiple' }
       end
     end
-
 
     context 'when previous_tenancy_type "secure"' do
       before { subject.previous_tenancy_type = 'secure' }
@@ -251,40 +223,9 @@ describe Tenancy, :type => :model do
         subject{ assured_tenancy(assured_shorthold_tenancy_type: 'one',
           start_date: (Tenancy::APPLICABLE_FROM_DATE - 1)) }
 
-        # it { should_not be_valid }
+        it { should_not be_valid }
       end
 
-      context 'when start_date between 15 January 1989 and 27 February 1997' do
-        subject{ assured_tenancy(assured_shorthold_tenancy_type: 'one',
-          start_date: Tenancy::APPLICABLE_FROM_DATE) }
-
-        context 'and incorrect applicable statements selected' do
-          before { subject.from_1997_option = 'Yes' }
-
-          it { is_expected.not_to be_valid }
-          it 'should have validation errors' do
-            subject.valid?
-            msg = 'Leave blank as you specified original tenancy agreement was made before 28 February 1997'
-            expect(subject.errors[:from_1997_option]).to include msg
-          end
-        end
-      end
-
-      context 'when start_date on or after 28 February 1997' do
-        subject{ assured_tenancy(assured_shorthold_tenancy_type: 'one',
-          start_date: Tenancy::RULES_CHANGE_DATE) }
-
-        context 'and incorrect applicable statements selected' do
-          before { subject.upto_1997_option = 'Yes' }
-
-          it { is_expected.not_to be_valid }
-          it 'should have validation errors' do
-            subject.valid?
-            msg = "Upto 1997 option leave blank as you specified original tenancy agreement was made on or after 28 February 1997"
-            expect(subject.errors.full_messages).to include msg
-          end
-        end
-      end
     end
 
     shared_examples_for 'validates yes/no' do

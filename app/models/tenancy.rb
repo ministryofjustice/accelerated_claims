@@ -23,13 +23,8 @@ class Tenancy < BaseClass
   attr_accessor :demotion_order_court
   attr_accessor :previous_tenancy_type
 
-  attr_accessor :from_1997_option
-  attr_accessor :upto_1997_option
-
-  # with_options if: :latest_agreement_date, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] } do |tenancy|
-  #   tenancy.validates :agreement_reissued_for_same_property
-  #   tenancy.validates :agreement_reissued_for_same_landlord_and_tenant
-  # end
+  attr_accessor :confirmed_second_rules_period_applicable_statements
+  attr_accessor :confirmed_first_rules_period_applicable_statements
 
   after_validation :remove_shorthold_tenancies_radio_selection_if_demoted
   after_validation :remove_previous_tenancy_radio_selection_if_not_demoted
@@ -49,7 +44,7 @@ class Tenancy < BaseClass
       :assured_shorthold_tenancy_notice_served_by,
       :assured_shorthold_tenancy_notice_served_date]
 
-  STATEMENTS_FIELDS = [:from_1997_option, :upto_1997_option]
+  STATEMENTS_FIELDS = [:confirmed_second_rules_period_applicable_statements, :confirmed_first_rules_period_applicable_statements]
 
   with_options if: :demoted_tenancy? do |t|
     t.validates :demotion_order_date, presence: { message: 'Enter the date of the tenancy demotion order' }
@@ -69,6 +64,8 @@ class Tenancy < BaseClass
 
     t.validates *DEMOTED_FIELDS,
       absence: { message: 'leave blank as you specified tenancy is not demoted' }
+
+    t.validate :validate_applicable_statements_confirmed
   end
 
   with_options if: :one_tenancy_agreement? do |t|
@@ -92,22 +89,26 @@ class Tenancy < BaseClass
       absence: { message: "must be blank if more than one tenancy agreement" }
   end
 
-  with_options if: :in_first_rules_period? do |t|
-    t.validates :from_1997_option,
-      inclusion: { in: ['No'], message: "Leave blank as you specified original tenancy agreement was made before #{Tenancy::RULES_CHANGE_DATE.to_s(:printed)}" }
+  with_options if: :only_in_first_rules_period? do |t|
+    t.validates :assured_shorthold_tenancy_notice_served_by,
+      presence: { message: 'You must say who told the defendant about their tenancy agreement' }
+    t.validates :assured_shorthold_tenancy_notice_served_date,
+      presence: { message: 'You must say when the defendant was told about their tenancy agreement' }
+
+    t.validates :confirmed_second_rules_period_applicable_statements,
+      inclusion: { in: ['No'], message: "leave blank as you specified original tenancy agreement was made before #{Tenancy::RULES_CHANGE_DATE.to_s(:printed)}" }
   end
 
-  with_options if: :in_second_rules_period? do |t|
-    t.validates :upto_1997_option,
+  with_options if: :in_both_rules_periods? do |t|
+    t.validates :assured_shorthold_tenancy_notice_served_by,
+      presence: { message: 'You must say who told the defendant about their tenancy agreement' }
+    t.validates :assured_shorthold_tenancy_notice_served_date,
+      presence: { message: 'You must say when the defendant was told about their tenancy agreement' }
+  end
+
+  with_options if: :only_in_second_rules_period? do |t|
+    t.validates :confirmed_first_rules_period_applicable_statements,
       inclusion: { in: ['No'], message: "leave blank as you specified original tenancy agreement was made on or after #{Tenancy::RULES_CHANGE_DATE.to_s(:printed)}" }
-  end
-
-  with_options if: -> tenancy { tenancy.assured_shorthold_tenancy_notice_served_date.present? } do |t|
-    t.validates :assured_shorthold_tenancy_notice_served_by, presence: { message: 'must be completed' }
-  end
-
-  with_options if: -> tenancy { tenancy.assured_shorthold_tenancy_notice_served_by.present? } do |t|
-    t.validates :assured_shorthold_tenancy_notice_served_date, presence: { message: 'must be entered' }
   end
 
   def self.in_first_rules_period? date
@@ -136,6 +137,26 @@ class Tenancy < BaseClass
     else
       false
     end
+  end
+
+  def only_in_first_rules_period?
+    in_first_rules_period? && !in_both_rules_periods?
+  end
+
+  def only_in_second_rules_period?
+    in_second_rules_period? && !in_both_rules_periods?
+  end
+
+  def in_both_rules_periods?
+    if multiple_tenancy_agreements?
+      in_first_rules_period? && latest_agreement_in_second_rules_period?
+    else
+      false
+    end
+  end
+
+  def latest_agreement_in_second_rules_period?
+    latest_agreement_date >= Tenancy::RULES_CHANGE_DATE
   end
 
   def only_start_date_present?
@@ -191,12 +212,12 @@ class Tenancy < BaseClass
 
   def applicable_statements
     {
-      'applicable_statements_1' => "#{from_1997_option}",
-      'applicable_statements_2' => "#{from_1997_option}",
-      'applicable_statements_3' => "#{from_1997_option}",
-      'applicable_statements_4' => "#{upto_1997_option}",
-      'applicable_statements_5' => "#{upto_1997_option}",
-      'applicable_statements_6' => "#{upto_1997_option}"
+      'applicable_statements_1' => "#{confirmed_second_rules_period_applicable_statements}",
+      'applicable_statements_2' => "#{confirmed_second_rules_period_applicable_statements}",
+      'applicable_statements_3' => "#{confirmed_second_rules_period_applicable_statements}",
+      'applicable_statements_4' => "#{confirmed_first_rules_period_applicable_statements}",
+      'applicable_statements_5' => "#{confirmed_first_rules_period_applicable_statements}",
+      'applicable_statements_6' => "#{confirmed_first_rules_period_applicable_statements}"
     }
   end
 
@@ -219,4 +240,33 @@ class Tenancy < BaseClass
       self.previous_tenancy_type = nil
     end
   end
+
+  def validate_applicable_statements_confirmed
+    message = 'Please read the statements and tick if they apply'
+
+    if in_both_rules_periods?
+      if confirmed_first_rules_period_applicable_statements == 'No'
+        errors.add(:confirmed_first_rules_period_applicable_statements, message)
+      end
+      if confirmed_second_rules_period_applicable_statements == 'No'
+        errors.add(:confirmed_second_rules_period_applicable_statements, message)
+      end
+    elsif applicable_statements_not_confirmed?
+      if in_first_rules_period?
+        errors.add(:confirmed_first_rules_period_applicable_statements, message)
+      elsif in_second_rules_period?
+        errors.add(:confirmed_second_rules_period_applicable_statements, message)
+      end
+    end
+  end
+
+  def applicable_statements_not_confirmed?
+    confirmed_second_rules_period_applicable_statements == 'No' &&
+      confirmed_first_rules_period_applicable_statements == 'No'
+  end
+
+  def confirmed_first_rules_period_applicable_statements?
+    confirmed_first_rules_period_applicable_statements == 'Yes'
+  end
+
 end

@@ -35,6 +35,8 @@ feature 'Callback request' do
   end
 
   context 'redirect user from the page they came from' do
+    let(:expected_url) { remote_test? ? '/accelerated-possession-eviction' : '/' }
+
     scenario 'go back to form page' do
       visit '/'
       click_link 'Technical help'
@@ -43,7 +45,7 @@ feature 'Callback request' do
       fill_in_the_form_correctly
 
       expect(page).to have_content('Thank you we will call you back during the next working day between 9am and 5pm.')
-      expect(current_path).to eq '/'
+      expect(current_path).to eq expected_url
     end
 
     scenario 'go back to form page' do
@@ -55,7 +57,7 @@ feature 'Callback request' do
 
       expect(page).to have_content('Thank you we will call you back during the next working day between 9am and 5pm.')
 
-      expect(current_path).to eq '/'
+      expect(current_path).to eq expected_url
     end
 
     scenario 'go back to technical help page' do
@@ -67,7 +69,7 @@ feature 'Callback request' do
 
       expect(page).to have_content('Thank you we will call you back during the next working day between 9am and 5pm.')
 
-      expect(current_path).to eq '/'
+      expect(current_path).to eq expected_url
     end
   end
 end

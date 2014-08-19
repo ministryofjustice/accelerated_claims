@@ -16,8 +16,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     df.emit
   end
 
-
-
   def date_select_field_set attribute, legend, options={}
     set_class_and_id attribute, options
 
@@ -99,13 +97,15 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
       check_box_input(attribute, options, yes, no) + label
     end
 
-    list = [hidden_input, labeled_input]
+    list = [hidden_input]
 
     if error_for?(attribute)
       id = error_id_for(attribute)
       labeled_input.sub!(%Q[id="#{id}"], %Q[id="#{id.sub('_error','')}"])
       list << error_span(attribute)
     end
+
+    list << labeled_input
 
     list.join("\n").html_safe
   end

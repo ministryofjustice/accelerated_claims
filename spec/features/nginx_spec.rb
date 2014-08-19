@@ -11,9 +11,11 @@ feature 'nginx configuration', :remote => true do
 
   if ENV['env'] == 'production' || ENV['env'] == 'staging'
     scenario '/ redirects to /accelerated-possession-eviction' do
-      base_url = Capybara.app_host.sub('http:', 'https:').sub('/accelerated-possession-eviction','/')
+      service_url = Capybara.app_host.sub('http:', 'https:')
+      base_url = service_url.sub('/accelerated-possession-eviction','/')
       visit base_url
-      expect(page.current_url).to eql 'https://www.gov.uk/accelerated-possession-eviction'
+      expected_url = (ENV['env'] == 'production') ? 'https://www.gov.uk/accelerated-possession-eviction' : service_url.sub(/\/\/[^@]+@/, '//')
+      expect(page.current_url).to eql expected_url
     end
   end
 end
