@@ -298,7 +298,7 @@ class Claim < BaseClass
     case attribute_name
       when /claimant_1/
         if @num_claimants.nil?
-          params.merge!(validate_presence: false, validate_absence: false, num_claimants: nil, claimant_num: :claimant_one, claimant_type: claimant_type)  
+          params.merge!(validate_presence: false, validate_absence: false, num_claimants: nil, claimant_num: :claimant_1, claimant_type: claimant_type)  
         else
           params.merge!(validate_presence: true, validate_absence: false, num_claimants: claim_params[:num_claimants], claimant_num: :claimant_1, claimant_type: claimant_type)
         end

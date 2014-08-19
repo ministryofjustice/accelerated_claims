@@ -45,7 +45,7 @@ class Claimant < BaseClass
   # main validation for claimant state
   def validate_claimant_state
     if validate_absence?
-      validate_are_blank(:title, :full_name, :organization_name, :claimant_type, :street, :postcode)
+      validate_are_blank(:title, :full_name, :organization_name, :street, :postcode)
     else
       validate_fields_are_present
     end
