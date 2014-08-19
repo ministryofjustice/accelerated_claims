@@ -155,7 +155,7 @@ class ClaimForm
   end
 
   def submit
-    click_button 'Complete form'
+    click_button 'Continue'
   end
 
   def validation_error_text
