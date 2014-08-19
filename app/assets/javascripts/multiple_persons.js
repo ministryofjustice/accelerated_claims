@@ -10,6 +10,7 @@ moj.Modules.multiplePersons = (function() {
       bindEvents,
       setupMultiples,
       showMultiples,
+      expand_claimants,
 
       //elements
       $multiples,
@@ -35,6 +36,7 @@ moj.Modules.multiplePersons = (function() {
 
     //number of claimants
     $( document ).on( 'change', '.has-multiple .multiple [type="radio"]', function() {
+      console.log("EXAPANDED CLICKING");
       var $this = $( this );
       showMultiples($this.closest( '.has-multiple' ), $this, $this.val());
     });
@@ -53,7 +55,7 @@ expand_claimants = function() {
   else{
     showMultiples($(this).closest('.has-multiple'), $checked, 1);
   }
-});
+};
 
 
 
