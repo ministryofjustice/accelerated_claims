@@ -8,7 +8,7 @@ feature 'Filling in claim form' do
   unless remote_test?
     scenario "submitting incomplete form", js: false do
       visit '/'
-      click_button 'Complete form'
+      click_button 'Continue'
       expect(page).to have_content("Enter the full address")
 
       expect(page).to have_content("Enter the name of the person who gave the notice")
@@ -26,7 +26,7 @@ feature 'Filling in claim form' do
 
   scenario "submitting incomplete form", js: true do
     visit '/'
-    click_button 'Complete form'
+    click_button 'Continue'
 
     expect(page).to have_content('Please select what kind of claimant you are')
 
@@ -38,13 +38,13 @@ feature 'Filling in claim form' do
     check_focus_after_click 'Please tick to confirm that you want to repossess the property', 'claim_order_possession'
     check_focus_after_click 'You must say what kind of tenancy agreement you have', 'claim_tenancy_tenancy_type_assured'
 
-    click_button 'Complete form'
+    click_button 'Continue'
   end
 
   scenario "submitting form with only claimant type selected", js: true do
     visit '/'
     choose('claim_claimant_type_individual')
-    click_button 'Complete form'
+    click_button 'Continue'
 
     expect(page).to have_content('Please say how many claimants there are')
     expect(page).to_not have_content("Enter defendant 1's full name")
@@ -76,7 +76,7 @@ feature 'Filling in claim form' do
     fill_in('claim_claimant_one_title', with: 'Major')
     fill_in('claim_claimant_one_full_name', with: 'Tom')
 
-    click_button 'Complete form'
+    click_button 'Continue'
 
     unless remote_test?
       expect(find_field('claim_claimant_one_title').value).to eq('Major')
@@ -92,7 +92,7 @@ feature 'Filling in claim form' do
 
     expect(page).to have_content('You cannot continue with this claim')
 
-    click_button 'Complete form'
+    click_button 'Continue'
 
     check_focus_after_click 'You must say whether or not you gave notice to the defendant', 'claim_notice_notice_served_yes'
   end
@@ -127,14 +127,14 @@ feature 'Filling in claim form' do
     expect(page).to have_content("The tenancy agreement was for 6 months (or more)")
 
     expect(page).to have_content("Carefully read the statements below:")
-    click_button 'Complete form'
+    click_button 'Continue'
     check_focus_after_click 'Please read the statements and tick if they apply', 'claim_tenancy_confirmed_first_rules_period_applicable_statements'
 
     check_focus_after_click 'You must say who told the defendant about their tenancy agreement', 'claim_tenancy_assured_shorthold_tenancy_notice_served_by'
     check_focus_after_click 'You must say when the defendant was told about their tenancy agreement', 'claim_tenancy_assured_shorthold_tenancy_notice_served_date_3i'
 
     check('claim_tenancy_confirmed_first_rules_period_applicable_statements')
-    click_button 'Complete form'
+    click_button 'Continue'
 
     check_focus_after_click 'You must say who told the defendant about their tenancy agreement', 'claim_tenancy_assured_shorthold_tenancy_notice_served_by'
     check_focus_after_click 'You must say when the defendant was told about their tenancy agreement', 'claim_tenancy_assured_shorthold_tenancy_notice_served_date_3i'
@@ -150,7 +150,7 @@ feature 'Filling in claim form' do
     expect(page).to have_content("You didn’t tell the defendant that the agreement was likely to change")
 
     expect(page).to have_content("Carefully read the statements below:")
-    click_button 'Complete form'
+    click_button 'Continue'
     check_focus_after_click 'Please read the statements and tick if they apply', 'claim_tenancy_confirmed_second_rules_period_applicable_statements'
   end
 
