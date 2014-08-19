@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  rescue_from ActionController::InvalidAuthenticityToken, with: :expired_session_redirection
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null session instead.
@@ -29,6 +30,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  unless Rails.env.production?
+    def invalid_access_token
+      raise ActionController::InvalidAuthenticityToken
+    end
+  end
+
   protected
 
 
@@ -51,6 +58,15 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def expired_session_redirection
+    message = "Rescued invalid Authenticity Token. They are now being redirected."
+    severity = 'warn'
+    fields = { :message => message, :level => severity }
+    event = LogStash::Event.new('@source' => 'unknown', '@fields' => fields, '@tags' => ['log'])
+    LogStasher.logger << "#{event.to_json}\n"
+    redirect_to url_for(action: :expired, controller: :static)
+  end
 
   def protocol
     (Rails.env.production? ? 'https' : 'http')
