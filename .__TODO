@@ -1,14 +1,6 @@
 
 
-
-- redisplaying the page after errors, the number of claimants is shown, but the claimant details are still hidden
-
-- non JS asks for how many claimants there are even though it's not on the form   DONE
-
-
-- Decide how to handle non-js where the number of claimants is not entered.
-
-- when you go back, it displays the bnumber of claimants, but doens't expand the claimants section
+- BIGGY: Ensure claimant blocks are populated with the correct model when displaying errors or going back
 
 
 - check that claimants 1-4 is populated when going back.
