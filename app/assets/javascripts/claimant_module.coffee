@@ -2,38 +2,38 @@ root = exports ? this
 
 ClaimantModule = 
   hideClaimantSections: ->
-    console.log("hideClaimantSections")
     $('.sub-panel.claimant').hide()
 
   showClaimants: (numberOfClaimants) ->
-    console.log("show claimants " + numberOfClaimants)
     ClaimantModule.hideClaimantSections()
     number = parseInt numberOfClaimants
-    if number > 0 and number < 5 
-      console.log("showing the stuff")
+    if number > 0 and number < 5
       array = _.range(1, number + 1)
       _.each array, (i) ->
-
         id = "#claimant_#{i}_subpanel"
-        console.log("showing " + id)
         $(id).show()
     
-
   bindToNumberClaimantsInput: ->   
-    console.log("bind") 
-    $('#claim_num_claimants').on('keyup', ->
+    $('#claim_num_claimants').on 'keyup', ->
       string = $(this).val()
       ClaimantModule.showClaimants(string)
-    )
+
+  bindOrganisationLandlordSelectToShowFirstClaimant: ->
+    $('#claim_claimant_type_organization').on 'change', ->
+      if $( this ).is( ':checked' )
+        ClaimantModule.showClaimants '1'
+
+  bindIndividualLandlordSelectToShowClaimants: ->
+    $('#claim_claimant_type_individual').on 'change', ->
+      if $( this ).is( ':checked' )
+        ClaimantModule.showClaimants $('#claim_num_claimants').val()
 
   setup: ->
-    console.log("AAAA")
     ClaimantModule.hideClaimantSections()
-    console.log("BBBB")
     ClaimantModule.bindToNumberClaimantsInput()
-    console.log("CCCC")
+    ClaimantModule.bindOrganisationLandlordSelectToShowFirstClaimant()
+    ClaimantModule.bindIndividualLandlordSelectToShowClaimants()
     ClaimantModule.showClaimants($('#claim_num_claimants').val())
-    console.log("end of setup")
 
 
 root.ClaimantModule = ClaimantModule

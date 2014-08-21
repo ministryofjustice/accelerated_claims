@@ -16,13 +16,17 @@ describe 'ClaimantModule', ->
 
   beforeEach ->
     element = $(
-      '<input id="claim_num_claimants" name="claim[num_claimants]" type="text">' +
-      '<div class="sub-panel claimant" id="claimant_1_subpanel">AAAA</div>' + 
-      '<div class="sub-panel claimant" id="claimant_2_subpanel">BBBB</div>' + 
-      '<div class="sub-panel claimant" id="claimant_3_subpanel">CCCC</div>' + 
-      '<div class="sub-panel claimant" id="claimant_4_subpanel">DDDD</div>')
+      '<input id="claim_claimant_type_individual" name="claim[claimant_type]" value="individual" type="radio"></input>' +
+      '<input id="claim_claimant_type_organization" name="claim[claimant_type]" value="organization" type="radio"></input>' +
+      '<input id="claim_num_claimants" name="claim[num_claimants]" type="text"></input>' +
+      '<div id="claimant_1_subpanel" class="sub-panel claimant">AAAA</div>' + 
+      '<div id="claimant_2_subpanel" class="sub-panel claimant">BBBB</div>' + 
+      '<div id="claimant_3_subpanel" class="sub-panel claimant">CCCC</div>' + 
+      '<div id="claimant_4_subpanel" class="sub-panel claimant">DDDD</div>'
+    )
     $(document.body).append(element)
     window.ClaimantModule.setup()
+    $('#claim_claimant_type_individual').trigger('click')
 
   afterEach ->
     element.remove()
@@ -31,7 +35,6 @@ describe 'ClaimantModule', ->
   describe 'setup', ->
     describe 'when there is no value in num_claimants', ->
       it 'hides all sub-panel claimant sections', ->
-        window.ClaimantModule.setup()
         expectSubpanelsVisible(false, false, false, false)
         
     describe 'when there is the value 2 in num_claimants', ->
@@ -41,9 +44,6 @@ describe 'ClaimantModule', ->
         expectSubpanelsVisible(true, true, false, false)
         
   describe 'showClaimants', ->
-    beforeEach ->
-      window.ClaimantModule.setup()
-
     describe 'called with 2', ->
       it 'shows first two claimant sections', ->
         window.ClaimantModule.showClaimants('2')
@@ -74,16 +74,34 @@ describe 'ClaimantModule', ->
           window.ClaimantModule.showClaimants('AB')
           expectSubpanelsVisible(false, false, false, false)
 
-
   describe 'on number of claimants keyup event', ->
-    beforeEach ->
-      window.ClaimantModule.setup()
-
     describe 'with 2 entered', ->
       it 'calls showClaimants with 2', ->
         spyOn window.ClaimantModule, 'showClaimants'
         $('#claim_num_claimants').val('2')
         $('#claim_num_claimants').trigger 'keyup'
         expect(window.ClaimantModule.showClaimants).toHaveBeenCalledWith('2')
+
+  describe 'switching claimant type', ->
+
+    describe 'switching from 2 individuals to organization', ->
+      beforeEach =>
+        $('#claim_num_claimants').val('2')
+        $('#claim_num_claimants').trigger 'keyup'
+        $('#claim_claimant_type_organization').trigger('click')
+
+      it 'should only display the first claimant section', ->
+        expectSubpanelsVisible(true, false, false, false)
+
+      describe 'and then switching back to individual', ->
+        it 'should display the first two claimant section', ->
+          $('#claim_claimant_type_individual').trigger('click')
+          expectSubpanelsVisible(true, true, false, false)
+
+
+
+
+
+
 
 
