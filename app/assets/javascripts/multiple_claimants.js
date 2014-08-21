@@ -41,6 +41,7 @@ moj.Modules.multipleClaimants = (function(moj, $, Handlebars){
   };
 
   bindEvents = function(){
+    console.log("binding evenets");
     $numberOfClaimants.on('keyup blur', function(){
       updateClaimantBlocks();
       moj.Modules.claimantContact.updateClaimantSolicitorVisibility();
@@ -55,6 +56,7 @@ moj.Modules.multipleClaimants = (function(moj, $, Handlebars){
   /** Updates the visibility of claimant blocks to correspond to the number of claimants entered and the landlord type
    */
   updateClaimantBlocks = function(){
+    console.log("updateClaimantBlocks");
     var numberOfBlocks;
     var landlordType = moj.Modules.tools.getRadioVal($claimantTypeRadio);
 
@@ -69,7 +71,7 @@ moj.Modules.multipleClaimants = (function(moj, $, Handlebars){
     if(numberOfBlocks > config.maxClaimants){
       numberOfBlocks = config.maxClaimants;
     }
-
+    console.log("NUmber of Blocks: " + numberOfBlocks);
     $claimantBlocks.filter(':lt('+numberOfBlocks+')').show();
 
     $claimantBlocks.eq(0).find('h3').toggle(numberOfBlocks!==1);
@@ -80,6 +82,7 @@ moj.Modules.multipleClaimants = (function(moj, $, Handlebars){
   /** Hides all claimant blocks
    */
   hideAll = function(){
+    console.log("hideAll");
     $claimantBlocks.hide();
   };
 

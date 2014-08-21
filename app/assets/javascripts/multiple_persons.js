@@ -30,18 +30,18 @@ moj.Modules.multiplePersons = (function() {
   };
 
   bindEvents = function() {
-    //type of claimant
-    $('[name=claim\\[claimant_type\\]]').on('change', function(){
-      var claimantType = $(this).val();
-      var $checked = $('[name=claim\\[num_claimants\\]]:checked');
+    //type   of claimant
+    // $('[name = claim\\[claimant_type\\]]').on('change', function(){
+    //   var claimantType = $(this).val();
+    //   var $checked = $('[name=claim\\[num_claimants\\]]:checked');
 
-      if(claimantType==='individual'){
-        showMultiples($(this).closest('.has-multiple'), $checked, $checked.val());
-      }
-      else{
-        showMultiples($(this).closest('.has-multiple'), $checked, 1);
-      }
-    });
+    //   if(claimantType==='individual'){
+    //     showMultiples($(this).closest('.has-multiple'), $checked, $checked.val());
+    //   }
+    //   else{
+    //     showMultiples($(this).closest('.has-multiple'), $checked, 1);
+    //   }
+    // });
 
     //number of claimants
     $( document ).on( 'change', '.has-multiple .multiple [type="radio"]', function() {
@@ -71,9 +71,9 @@ moj.Modules.multiplePersons = (function() {
         childItemClass = $panel.data( 'multiple' ),
         $childItems = $panel.find( '.' + childItemClass );
 
-    if($srcEl && $srcEl.attr('name')==='claim[num_claimants]'){
-      $claimantSolicitor.toggle(shownum>0);
-    }
+    // if($srcEl && $srcEl.attr('name')==='claim[num_claimants]'){
+    //   $claimantSolicitor.toggle(shownum>0);
+    // }
 
     for( x = 0; x < $childItems.length; x++ ) {
       section = $childItems.eq( x );
