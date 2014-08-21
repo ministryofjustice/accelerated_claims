@@ -1,5 +1,5 @@
 
-.sub-panel.claimant{ id: "claimant_#{claimant_id}_subpanel" }
+.sub-panel.claimant{ id: "claimant_#{claimant_id}_subpanel", 'data-claimant-id'=> claimant_id, class: claimant_id != 1 ? 'same-address' : '' }
   .row.divider
   .row
     = claimant_header claimant_id
@@ -17,3 +17,7 @@
     .sub-panel.rel.address
       = form.text_area_row  :street,   label: 'Full address', class: 'rel street'
       = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'
+
+
+
+
