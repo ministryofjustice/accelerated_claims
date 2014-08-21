@@ -3,6 +3,14 @@
 //= require jasmine-jquery
 //= require claimant_module
 
+expectSubpanelsVisible = (v1, v2, v3, v4) ->
+  if (v1 is true) then expect($("#claimant_1_subpanel")[0]).toBeVisible() else expect($("#claimant_1_subpanel")[0]).toBeHidden()
+  if (v2 is true) then expect($("#claimant_2_subpanel")[0]).toBeVisible() else expect($("#claimant_2_subpanel")[0]).toBeHidden()
+  if (v3 is true) then expect($("#claimant_3_subpanel")[0]).toBeVisible() else expect($("#claimant_3_subpanel")[0]).toBeHidden()
+  if (v4 is true) then expect($("#claimant_4_subpanel")[0]).toBeVisible() else expect($("#claimant_4_subpanel")[0]).toBeHidden()
+
+  
+
 describe 'ClaimantModule', ->
   element = null
 
@@ -24,20 +32,14 @@ describe 'ClaimantModule', ->
     describe 'when there is no value in num_claimants', ->
       it 'hides all sub-panel claimant sections', ->
         window.ClaimantModule.setup()
-        expect( $('#claimant_1_subpanel')[0] ).toBeHidden()
-        expect( $('#claimant_2_subpanel')[0] ).toBeHidden()
-        expect( $('#claimant_3_subpanel')[0] ).toBeHidden()
-        expect( $('#claimant_4_subpanel')[0] ).toBeHidden()
-
+        expectSubpanelsVisible(false, false, false, false)
+        
     describe 'when there is the value 2 in num_claimants', ->
       it 'displays the first two claimant sections', ->
         $('#claim_num_claimants').val('2')
         window.ClaimantModule.setup()
-        expect( $('#claimant_1_subpanel')[0] ).toBeVisible()
-        expect( $('#claimant_2_subpanel')[0] ).toBeVisible()
-        expect( $('#claimant_3_subpanel')[0] ).toBeHidden()
-        expect( $('#claimant_4_subpanel')[0] ).toBeHidden()
-
+        expectSubpanelsVisible(true, true, false, false)
+        
   describe 'showClaimants', ->
     beforeEach ->
       window.ClaimantModule.setup()
@@ -45,49 +47,32 @@ describe 'ClaimantModule', ->
     describe 'called with 2', ->
       it 'shows first two claimant sections', ->
         window.ClaimantModule.showClaimants('2')
-        expect( $('#claimant_1_subpanel')[0] ).toBeVisible()
-        expect( $('#claimant_2_subpanel')[0] ).toBeVisible()
-        expect( $('#claimant_3_subpanel')[0] ).toBeHidden()
-        expect( $('#claimant_4_subpanel')[0] ).toBeHidden()
+        expectSubpanelsVisible(true, true, false, false)
 
     describe 'called with 1 after 3', ->
       it 'shows just one claimant', ->
         window.ClaimantModule.showClaimants('3')
-        expect( $('#claimant_1_subpanel')[0] ).toBeVisible()
-        expect( $('#claimant_2_subpanel')[0] ).toBeVisible()
-        expect( $('#claimant_3_subpanel')[0] ).toBeVisible()
-        expect( $('#claimant_4_subpanel')[0] ).toBeHidden()
+        expectSubpanelsVisible(true, true, true, false)
 
         window.ClaimantModule.showClaimants('1')
-        expect( $('#claimant_1_subpanel')[0] ).toBeVisible()
-        expect( $('#claimant_2_subpanel')[0] ).toBeHidden()
-        expect( $('#claimant_3_subpanel')[0] ).toBeHidden()
-        expect( $('#claimant_4_subpanel')[0] ).toBeHidden()
+        expectSubpanelsVisible(true, false, false, false)
+      
 
     describe 'with out of range values', ->
       describe 'with zero', ->
         it 'hides all sections', ->
           window.ClaimantModule.showClaimants('0')
-          expect( $('#claimant_1_subpanel')[0] ).toBeHidden()
-          expect( $('#claimant_2_subpanel')[0] ).toBeHidden()
-          expect( $('#claimant_3_subpanel')[0] ).toBeHidden()
-          expect( $('#claimant_4_subpanel')[0] ).toBeHidden()
+          expectSubpanelsVisible(false, false, false, false)
 
       describe 'with empty string', ->
         it 'hides all sections', ->
           window.ClaimantModule.showClaimants('')
-          expect( $('#claimant_1_subpanel')[0] ).toBeHidden()
-          expect( $('#claimant_2_subpanel')[0] ).toBeHidden()
-          expect( $('#claimant_3_subpanel')[0] ).toBeHidden()
-          expect( $('#claimant_4_subpanel')[0] ).toBeHidden()
+          expectSubpanelsVisible(false, false, false, false)
 
       describe 'with alpha string', ->
         it 'hides all sections', ->
           window.ClaimantModule.showClaimants('AB')
-          expect( $('#claimant_1_subpanel')[0] ).toBeHidden()
-          expect( $('#claimant_2_subpanel')[0] ).toBeHidden()
-          expect( $('#claimant_3_subpanel')[0] ).toBeHidden()
-          expect( $('#claimant_4_subpanel')[0] ).toBeHidden()
+          expectSubpanelsVisible(false, false, false, false)
 
 
   describe 'on number of claimants keyup event', ->
@@ -100,3 +85,5 @@ describe 'ClaimantModule', ->
         $('#claim_num_claimants').val('2')
         $('#claim_num_claimants').trigger 'keyup'
         expect(window.ClaimantModule.showClaimants).toHaveBeenCalledWith('2')
+
+
