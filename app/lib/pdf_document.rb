@@ -161,7 +161,7 @@ class PDFDocument
     add_previous_tenancy_type_strike_out list
     add_applicable_statement_strike_outs(list) unless @json["tenancy_demoted_tenancy"] == 'Yes'
 
-    ActiveSupport::Notifications.instrument('add_strikes.pdf') do
+    ActiveSupport::Notifications.instrument('add_strikes_via_cli.pdf') do
       perform_strike_through(list, result_pdf) unless list.empty?
     end
   end
@@ -189,7 +189,7 @@ class PDFDocument
     Rails.logger.debug "result_pdf: #{result_pdf.path} size: #{File.size?(result_pdf.path)}"
     connection = Faraday.new(url: 'http://localhost:4000')
     response = connection.post do |request|
-      ActiveSupport::Notifications.instrument('add_strikes_service.pdf') do
+      ActiveSupport::Notifications.instrument('add_strikes_via_service.pdf') do
         request.path = '/'
         request.body = strike_through_json(list, result_pdf, output_pdf)
         request.headers['Content-Type'] = 'application/json'
