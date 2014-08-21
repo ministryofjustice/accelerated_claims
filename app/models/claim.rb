@@ -148,10 +148,10 @@ class Claim < BaseClass
       if @claimant_type.present?
         @num_claimants_valid_result = true
         if @num_claimants.nil? || @num_claimants == 0
-          @errors[:base] << ['claim_num_claimants_error', 'Please say how many claimants there are']
+          @errors[:base] << ['claim_claimant_number_of_claimants_error', 'Please say how many claimants there are']
           @num_claimants_valid_result = false
         elsif @num_claimants > @@max_num_claimants
-          @errors[:base] << ['claim_num_claimants_error', 'If there are more than 4 claimants in this case, you’ll need to complete your accelerated possession claim on the N5b form (LINK: http://hmctsformfinder.justice.gov.uk/HMCTS/GetForm.do?court_forms_id=618)']
+          @errors[:base] << ['claim_claimant_number_of_claimants_error', 'If there are more than 4 claimants in this case, you’ll need to complete your accelerated possession claim on the N5b form (LINK: http://hmctsformfinder.justice.gov.uk/HMCTS/GetForm.do?court_forms_id=618)']
           @num_claimants_valid_result = false
         end
       end
@@ -161,7 +161,7 @@ class Claim < BaseClass
 
   def num_defendants_valid?
     unless @@valid_num_defendants.include?(@num_defendants)
-      @errors[:base] << ['claim_num_defendants_error', 'Please say how many defendants there are']
+      @errors[:base] << ['claim_defendant_number_of_defendants_error', 'Please say how many defendants there are']
       return false
     end
     true
