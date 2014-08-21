@@ -67,25 +67,8 @@ feature 'Filling in claim form' do
     check_focus_after_click 'Please tick to confirm that you want to repossess the property', 'claim_order_possession'
     check_focus_after_click 'You must say what kind of tenancy agreement you have', 'claim_tenancy_tenancy_type_assured'
 
-    choose('claim_num_claimants_1')
-    choose('claim_num_defendants_1')
-    choose('claim_defendant_one_inhabits_property_yes')
-    choose('claim_notice_notice_served_yes')
-
-    fill_in('claim_claimant_1_title', with: 'Major')
-    fill_in('claim_claimant_1_full_name', with: 'Tom')
-
     click_button 'Continue'
 
-    unless remote_test?
-      expect(find_field('claim_claimant_1_title').value).to eq('Major')
-      expect(find_field('claim_claimant_1_full_name').value).to eq('Tom')
-    end
-
-    check_focus_after_click 'Enter the name of the person who gave the notice', 'claim_notice_served_by_name'
-    check_focus_after_click 'You must say how the notice was given', 'claim_notice_served_method'
-    check_focus_after_click 'Enter the date notice was served', 'claim_notice_date_served_3i'
-    check_focus_after_click 'Enter the date notice ended', 'claim_notice_expiry_date_3i'
 
     choose('claim_notice_notice_served_no')
     expect(page).to have_content('You cannot continue with this claim')
