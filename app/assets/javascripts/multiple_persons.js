@@ -12,7 +12,7 @@ moj.Modules.multiplePersons = (function() {
       showMultiples,
 
       //elements
-      $multiples,
+      $multiples
       ;
 
   init = function() {
