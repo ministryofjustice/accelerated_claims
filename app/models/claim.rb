@@ -31,19 +31,16 @@ class Claim < BaseClass
     @errors = ActiveModel::Errors.new(self)
   end
 
-
-  def method_missing(meth, *args)
-    meth_string = meth.to_s
-    if meth_string =~ /^claimant_(\d)\=$/
+  def method_missing(symbol, *args)
+    case symbol
+    when /^claimant_(\d)\=$/
       claimants[$1.to_i] = args.first
-    elsif meth_string =~ /^claimant_(\d)$/
+    when /^claimant_(\d)$/
       claimants[$1.to_i]
     else
-      super(meth, *args)
+      super(symbol, *args)
     end
   end
-
-
 
   def as_json
     json_in = {}
@@ -85,7 +82,7 @@ class Claim < BaseClass
 
 
     attributes_for_submodels.each do |instance_var, model|
-      result = transfer_errors_from_submodel_to_base(instance_var, model, collection: false) 
+      result = transfer_errors_from_submodel_to_base(instance_var, model, collection: false)
       validity = false if result == false
     end
 
@@ -121,7 +118,7 @@ class Claim < BaseClass
   end
 
 
-  # Calls the method defined for this instance_var to determine whether the claim object is in a state where it is worth 
+  # Calls the method defined for this instance_var to determine whether the claim object is in a state where it is worth
   # validating the instance variable.
   def perform_collection_validation_for?(instance_var)
     method = validation_dependencies_for_submodel_collections[instance_var]
@@ -144,9 +141,6 @@ class Claim < BaseClass
     end
     @claimant_type_valid_result
   end
-
-
-############# TODO  TIDY THIS UP _ MEMOIZING RESULT OF NUM CLKAIMANTS
 
   def num_claimants_valid?
     if @num_claimants_valid_result.nil?
@@ -250,7 +244,7 @@ class Claim < BaseClass
   def attributes_for_submodels
     attributes = {}
     singular_submodels.each { |model| attributes[model.underscore] = model }
-  
+
     doubled_submodels.each do |model|
       %w(one two).each { |n| attributes["#{model.underscore}_#{n}"] = model }
     end
@@ -264,11 +258,9 @@ class Claim < BaseClass
     attributes_for_submodel_collections.each do |attribute, model|
       initialize_submodel_collection(attribute, model, claim_params)
     end
-   
+
     self.form_state = claim_params['form_state'] if claim_params['form_state'].present?
   end
-
-
 
   def init_submodel(claim_params, attribute_name, model)
     sub_params = params_for(attribute_name, claim_params)
@@ -297,7 +289,7 @@ class Claim < BaseClass
     case attribute_name
       when /claimant_1/
         if @num_claimants.nil?
-          params.merge!(validate_presence: false, validate_absence: false, num_claimants: nil, claimant_num: :claimant_1, claimant_type: claimant_type)  
+          params.merge!(validate_presence: false, validate_absence: false, num_claimants: nil, claimant_num: :claimant_1, claimant_type: claimant_type)
         else
           params.merge!(validate_presence: true, validate_absence: false, num_claimants: claim_params[:num_claimants], claimant_num: :claimant_1, claimant_type: claimant_type)
         end
