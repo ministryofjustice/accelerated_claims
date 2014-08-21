@@ -270,12 +270,9 @@ class Claim < BaseClass
     }
   end
 
-
   def initialize_submodel_collection(attribute, model, claim_params)
     instance_variable_set("@#{attribute}", model.constantize.new(claim_params))
   end
-
-
 
   def params_for attribute_name, claim_params
     begin
@@ -284,23 +281,7 @@ class Claim < BaseClass
       raise NoMethodError.new(err.message + "attribute: #{attribute_name} #{claim_params.inspect}")
     end
 
-
-
     case attribute_name
-      when /claimant_1/
-        if @num_claimants.nil?
-          params.merge!(validate_presence: false, validate_absence: false, num_claimants: nil, claimant_num: :claimant_1, claimant_type: claimant_type)
-        else
-          params.merge!(validate_presence: true, validate_absence: false, num_claimants: claim_params[:num_claimants], claimant_num: :claimant_1, claimant_type: claimant_type)
-        end
-      when /claimant_2/
-        if @num_claimants.nil?
-          params.merge!(validate_absence: false, validate_presence: false, num_claimants: nil, claimant_num: :claimant_2)
-        elsif @num_claimants == 1
-          params.merge!(validate_absence: true, validate_presence: false)
-        else
-          params.merge!(validate_presence: true, num_claimants: '2', claimant_num: :claimant_2, claimant_type: claimant_type)
-        end
       when /defendant_one/
         if @num_defendants.nil?
           params.merge!(validate_presence: false, validate_absence: false, num_defendants: nil, defendant_num: :defendant_one)
