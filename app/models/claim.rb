@@ -173,18 +173,17 @@ class Claim < BaseClass
     true
   end
 
+  def populate_address_for number, defendant, hash
+    if defendant.present? && defendant.address_blank?
+      hash["defendant_#{number}_address"] << hash['property_address']
+      hash["defendant_#{number}_postcode1"] = hash['property_postcode1']
+      hash["defendant_#{number}_postcode2"] = hash['property_postcode2']
+    end
+  end
 
   def populate_defendants_address_if_blank hash
-    if defendant_one.present? && defendant_one.address_blank?
-      hash['defendant_one_address'] << hash['property_address']
-      hash['defendant_one_postcode1'] = hash['property_postcode1']
-      hash['defendant_one_postcode2'] = hash['property_postcode2']
-    end
-    if defendant_two.present? && defendant_two.address_blank?
-      hash['defendant_two_address'] << hash['property_address']
-      hash['defendant_two_postcode1'] = hash['property_postcode1']
-      hash['defendant_two_postcode2'] = hash['property_postcode2']
-    end
+    populate_address_for("one", defendant_one, hash)
+    populate_address_for("two", defendant_two, hash)
   end
 
   def add_fee_and_costs hash

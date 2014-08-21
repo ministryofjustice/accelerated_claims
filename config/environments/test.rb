@@ -32,4 +32,6 @@ AcceleratedClaims::Application.configure do
   # in memory cache store
   config.cache_store = :memory_store
 
+  # Logstash
+  config.logstasher.enabled = true
 end

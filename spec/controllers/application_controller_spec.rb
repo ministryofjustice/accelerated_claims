@@ -7,4 +7,13 @@ describe ApplicationController, :type => :controller do
       expect(response.body).to eq('')
     end
   end
+
+  describe 'expired token behaviour' do
+    context 'when the user has an invalid session token' do
+      it 'should redirect the user' do
+        post :invalid_access_token, {}
+        expect(response).to redirect_to('/expired')
+      end
+    end
+  end
 end
