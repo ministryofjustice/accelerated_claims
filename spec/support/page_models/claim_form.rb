@@ -11,10 +11,10 @@ class ClaimForm
     claimant_type = select_claimant_type
     if claimant_type == 'individual'
       select_number_of_claimants
-      fill_claimant(1)
-      fill_claimant(2)
-      fill_claimant(3)
-      fill_claimant(4)
+      fill_claimant(1, use_javascript: false)
+      fill_claimant(2, use_javascript: false)
+      fill_claimant(3, use_javascript: false)
+      fill_claimant(4, use_javascript: false)
     else
       fill_organizational_claimant
     end
@@ -265,17 +265,11 @@ class ClaimForm
   end
 
 
-  def fill_claimant(claimant_id)
-    puts "++++++ DEBUG FILLING CLAIMANT #{claimant_id} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    
+  def fill_claimant(claimant_id, options = {use_javascript: true} )
     fill_in_address = true
-    if claimant_id != 1
-      puts "++++++ DEBUG claimant same address?  #{get_data('javascript', "claimant_#{claimant_id}_same_address")} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-      
+    if claimant_id != 1  && options[:javascript] == true
       fill_in_address = get_data('javascript', "claimant_#{claimant_id}_same_address") == 'Yes' ? false : true
-      fill_in_address == true ? choose('claimant2address-no') : choose('claimant2address-yes')
-      puts "++++++ DEBUG fill in address #{fill_in_address.inspect} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-      
+      fill_in_address == true ? choose("claimant#{claimant_id}address-no") : choose("claimant#{claimant_id}address-yes")
     end
     complete_details_of_person("claimant_#{claimant_id}", complete_address: fill_in_address)
   end

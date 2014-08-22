@@ -52,15 +52,15 @@ feature "submit claim" do
     title = data['title']
     description = data['description']
 
-    # unless remote_test?
-    #   unless data['javascript'] == 'JS'
-    #     eval(%Q|
-    #       scenario "#{title}: #{description.first} (#{description.last})" do
-    #         run_scenario '#{data_file}', js: false
-    #       end
-    #     |)
-    #   end
-    # end
+    unless remote_test?
+      unless data['javascript'] == 'JS'
+        eval(%Q|
+          scenario "#{title}: #{description.first} (#{description.last})" do
+            run_scenario '#{data_file}', js: false
+          end
+        |)
+      end
+    end
 
     unless data['javascript'] == 'NON-JS'
       eval(%Q|
