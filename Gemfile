@@ -74,6 +74,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'curb'
   gem 'show_me_the_cookies'
+  gem 'codeclimate-test-reporter', require: nil
 end
 
 gem 'pdf-forms', '0.5.5'
