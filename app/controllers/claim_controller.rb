@@ -95,7 +95,6 @@ class ClaimController < ApplicationController
 
   def move_claimant_address_params_into_the_model
     (2 .. ClaimantCollection::MAX_CLAIMANTS).each do |i|
-
       key = "claimant#{i}address"
       if params.key?(key) && params[key] == "yes"
         params['claim']["claimant_#{i}"]['street'] = params['claim']['claimant_1']['street']

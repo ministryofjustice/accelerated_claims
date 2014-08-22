@@ -11,8 +11,10 @@ class ClaimForm
     claimant_type = select_claimant_type
     if claimant_type == 'individual'
       select_number_of_claimants
-      fill_claimant_1
-      fill_claimant_2
+      fill_claimant(1)
+      fill_claimant(2)
+      fill_claimant(3)
+      fill_claimant(4)
     else
       fill_organizational_claimant
     end
@@ -38,10 +40,8 @@ class ClaimForm
 
     if claimant_type == 'individual'
       number_of_claimants = select_number_of_claimants
-      fill_claimant_1
-      if number_of_claimants == '2'
-        choose_claimant_2_address_the_same
-        fill_claimant_2
+      (1 .. number_of_claimants.to_i).each do |claimant_id|
+        fill_claimant(claimant_id)
       end
     else
       fill_organizational_claimant
@@ -65,7 +65,7 @@ class ClaimForm
     check_order_possession_and_cost
     fill_court_fee
     fill_legal_costs
-    fill_reference_number_with_js
+    fill_reference_number_with_js unless claimant_type == 'individual'
   end
 
   def select_number_of_claimants
@@ -264,14 +264,23 @@ class ClaimForm
     choose_radio(prefix, 'house')
   end
 
-  def fill_claimant_1
-    complete_details_of_person('claimant_1')
+
+  def fill_claimant(claimant_id)
+    puts "++++++ DEBUG FILLING CLAIMANT #{claimant_id} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
+    fill_in_address = true
+    if claimant_id != 1
+      puts "++++++ DEBUG claimant same address?  #{get_data('javascript', "claimant_#{claimant_id}_same_address")} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+      
+      fill_in_address = get_data('javascript', "claimant_#{claimant_id}_same_address") == 'Yes' ? false : true
+      fill_in_address == true ? choose('claimant2address-no') : choose('claimant2address-yes')
+      puts "++++++ DEBUG fill in address #{fill_in_address.inspect} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+      
+    end
+    complete_details_of_person("claimant_#{claimant_id}", complete_address: fill_in_address)
   end
 
-  def fill_claimant_2
-    fill_in_address = get_data('javascript', 'claimant_2_same_address') == 'Yes' ? false : true
-    complete_details_of_person('claimant_2', complete_address: fill_in_address)
-  end
+
 
   def fill_defendant_one(options = {})
     fill_in_defendant('one', options)

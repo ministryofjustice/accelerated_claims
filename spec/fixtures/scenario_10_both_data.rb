@@ -37,7 +37,7 @@
       any_legal_costs: "Yes",
       separate_correspondence_address: "Yes",
       other_contact_details: "Yes",
-      add_reference_number: "Yes"
+      add_reference_number: nil
     },
     claimant_3: {
       title: nil,
