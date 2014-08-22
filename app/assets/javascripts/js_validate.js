@@ -8,7 +8,6 @@ moj.Modules.jsValidate = (function() {
       init,
       cacheEls,
       bindEvents,
-      checkData,
       submitForm,
       clearHidden,
 
@@ -43,20 +42,8 @@ moj.Modules.jsValidate = (function() {
   bindEvents = function() {
     $form.on( 'submit', function( e ) {
       e.preventDefault();
-      checkData();
+      submitForm();
     } );
-  };
-
-  checkData = function() {
-    // if( moj.Modules.tools.getTextFieldValue( $numClaimants ) === '2' ) {
-    //   if( moj.Modules.tools.getRadioVal( $secondClaimantAddressSameAsFirst ) === 'yes' ) {
-    //     $( '#claimant_2 .address' ).show();
-    //     $secondClaimantAddress.val( $firstClaimantAddress.val() );
-    //     $secondClaimantPostcode.val( $firstClaimantPostcode.val() );
-    //   }
-    // }
-
-    submitForm();
   };
 
   submitForm = function() {
