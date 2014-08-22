@@ -25,10 +25,9 @@ gem 'coffee-rails'
 gem 'unicorn'
 
 # Gov.uk styles
-gem 'govuk_frontend_toolkit', '0.43.2'
+gem 'govuk_frontend_toolkit', '1.5.0'
 # MOJ styles
-gem 'moj_template', '0.14.3'
-
+gem 'moj_template', '0.16.0'
 # required for feedback form
 gem 'zendesk_api'
 gem 'mail'
