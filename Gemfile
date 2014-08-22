@@ -85,3 +85,6 @@ gem 'validates_timeliness', '~> 3.0'
 
 # pretty logstashing
 gem 'logstasher'
+
+# statsd client
+gem 'statsd-ruby'
