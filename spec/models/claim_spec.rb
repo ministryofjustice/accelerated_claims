@@ -105,13 +105,6 @@ describe Claim, :type => :model do
           format
         end
 
-        context "and it's the only tenancy" do
-          pending  ' - Pending until we have an answer from Kellie: should agreement_reissued_for_same_property be "NA"?' do
-            it 'should return the right JSON' do
-              assert_hash_is_correct claim.as_json, desired_format
-            end
-          end
-        end
       end
 
       context "and there is more than one tenancy agreement" do

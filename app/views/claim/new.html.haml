@@ -17,7 +17,7 @@
     %h2.section-header Claimants
 
 
-    .moj-panel.has-multiple#claimants(data-multiple="claimant" data-single="claimant" data-plural="claimants" data-caption="As the landlord, you're known as the <strong>claimant</strong> in this case.")
+    .moj-panel#claimants(data-multiple="claimant" data-single="claimant" data-plural="claimants" data-caption="As the landlord, you're known as the <strong>claimant</strong> in this case.")
 
       .row
         As the landlord, you’re known as the <b>claimant</b> in this case.
@@ -31,48 +31,15 @@
       = claim_form.text_field_row :num_claimants,
         class: 'hide js-claimanttype individual',
         input_class: 'smalltext',
+        data: { depend: 'num-claimants' },
         label: 'How many claimants are there?'
 
       .claimants
-        .sub-panel.claimant.static
-          .row.divider
-          .row
-            %h3 Claimant 1
-          = render partial: 'claimant', object: @claim.claimant_1, locals: { claim_form: claim_form, claimant_field: :claimant_1}
-
-        .sub-panel.claimant.individual.static
-          .row.divider
-          .row
-            %h3
-              Claimant 2
-              %span.hint.hide.js-claimanttype (optional)
-          = render partial: 'claimant', object: @claim.claimant_2, locals: { claim_form: claim_form, claimant_field: :claimant_2}
-
-        .sub-panel.claimant.individual.static
-          .row.divider
-          .row
-            %h3
-              Claimant 3
-              %span.hint.hide.js-claimanttype (optional)
-          = render partial: 'claimant', object: @claim.claimant_3, locals: { claim_form: claim_form, claimant_field: :claimant_3}
-
-        .sub-panel.claimant.individual.static
-          .row.divider
-          .row
-            %h3
-              Claimant 4
-              %span.hint.hide.js-claimanttype (optional)
-          = render partial: 'claimant', object: @claim.claimant_4, locals: { claim_form: claim_form, claimant_field: :claimant_4}
-
+        = render partial: 'claimant', object: @claim.claimant_1, locals: { claimant_id: 1, claim_form: claim_form, claimant_field: :claimant_1}
+        = render partial: 'claimant', object: @claim.claimant_2, locals: { claimant_id: 2, claim_form: claim_form, claimant_field: :claimant_2}
+        = render partial: 'claimant', object: @claim.claimant_3, locals: { claimant_id: 3, claim_form: claim_form, claimant_field: :claimant_3}
+        = render partial: 'claimant', object: @claim.claimant_4, locals: { claimant_id: 4, claim_form: claim_form, claimant_field: :claimant_4}
       .row.divider
-
-      .claimant-template
-        .sub-panel.claimant{'data-claimant-id'=>'{{id}}'}
-          .row.divider
-          .row
-            %h3 Claimant {{number}}
-          = render partial: 'claimant', object: @claim.claimant_1, locals: { claim_form: claim_form, claimant_field: 'claimant_{{id}}'}
-
       = render partial: 'claimant_contact', object: @claim.claimant_contact, locals: { claim_form: claim_form, claimant_field: :claimant_contact}
 
 
@@ -130,7 +97,7 @@
 
   %section
     .action-buttons.cf
-      %input.button.primary.large.chevron.left#submit{name: 'Complete form', value: 'Complete form', type: 'submit'}
+      %input.button.primary.large.chevron.left#submit{name: 'Continue', value: 'Continue', type: 'submit'}
 
   %section
     %p

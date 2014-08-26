@@ -27,6 +27,7 @@ AcceleratedClaims::Application.routes.draw do
 
     get  '/heartbeat',      controller: :application, action: :heartbeat
     post '/expire_session', controller: :application, action: :expire_session
+    post '/invalid_access_token', controller: :application, action: :invalid_access_token, as: :invalid_access_token
 
     # zendesk
     resource :feedback,     only: [:new, :create], controller: 'feedback'

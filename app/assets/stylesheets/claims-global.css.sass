@@ -262,9 +262,24 @@ ul.sections
 .num-of-persons
   display: none
 
-.claimant-template
-  display: none
-
 .claimant.individual.static .organization
   display: none
 
+// LIVE PHASE PATCH - REMOVE once template is upgraded to cater for 'live' phase
+body.live
+  .indicator
+    padding-top: 0 !important
+    p
+      font-size: 16px
+      line-height: 1.25
+      margin: 0 auto
+      max-width: 960px
+      padding: 10px 0 !important
+      border-top: 10px solid $govuk-blue
+      clear: both
+      strong
+        display: none
+
+.proposition-phase
+  display: none
+// end LIVE PHASE PATCH

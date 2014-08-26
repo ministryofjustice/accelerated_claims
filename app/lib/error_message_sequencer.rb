@@ -21,17 +21,18 @@ class ErrorMessageSequencer
 
     'claim_claimant' => [
       'claim_claimant_type_error',
-      'claim_claimant_number_of_claimants_error',
-      'claim_claimant_1_full_name_error',
-      'claim_claimant_1_street_error',
-      'claim_claimant_1_postcode_error',
-      'claim_claimant_2_full_name_error',
-      'claim_claimant_2_street_error',
-      'claim_claimant_2_postcode_error',
+      'claim_claimant_number_of_claimants_error'] +
+        (1..4).to_a.collect do |i|
+          ["claim_claimant_#{i}_title_error",
+          "claim_claimant_#{i}_full_name_error",
+          "claim_claimant_#{i}_street_error",
+          "claim_claimant_#{i}_postcode_error"]
+        end.flatten +
+      [
       'claim_claimant_contact_email_error',
       'claim_claimant_contact_phone_error',
       'claim_claimant_contact_full_name_error',
-      'claim_claimant_contact_postcode_error',
+      'claim_claimant_contact_postcode_error'
     ],
 
     'claim_defendant' => [

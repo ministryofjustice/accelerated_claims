@@ -31,19 +31,16 @@ class Claim < BaseClass
     @errors = ActiveModel::Errors.new(self)
   end
 
-
-  def method_missing(meth, *args)
-    meth_string = meth.to_s
-    if meth_string =~ /^claimant_(\d)\=$/
+  def method_missing(symbol, *args)
+    case symbol
+    when /^claimant_(\d)\=$/
       claimants[$1.to_i] = args.first
-    elsif meth_string =~ /^claimant_(\d)$/
+    when /^claimant_(\d)$/
       claimants[$1.to_i]
     else
-      super(meth, *args)
+      super(symbol, *args)
     end
   end
-
-
 
   def as_json
     json_in = {}
@@ -85,7 +82,7 @@ class Claim < BaseClass
 
 
     attributes_for_submodels.each do |instance_var, model|
-      result = transfer_errors_from_submodel_to_base(instance_var, model, collection: false) 
+      result = transfer_errors_from_submodel_to_base(instance_var, model, collection: false)
       validity = false if result == false
     end
 
@@ -121,7 +118,7 @@ class Claim < BaseClass
   end
 
 
-  # Calls the method defined for this instance_var to determine whether the claim object is in a state where it is worth 
+  # Calls the method defined for this instance_var to determine whether the claim object is in a state where it is worth
   # validating the instance variable.
   def perform_collection_validation_for?(instance_var)
     method = validation_dependencies_for_submodel_collections[instance_var]
@@ -145,19 +142,16 @@ class Claim < BaseClass
     @claimant_type_valid_result
   end
 
-
-############# TODO  TIDY THIS UP _ MEMOIZING RESULT OF NUM CLKAIMANTS
-
   def num_claimants_valid?
     if @num_claimants_valid_result.nil?
       @num_claimants_valid_result = false
       if @claimant_type.present?
         @num_claimants_valid_result = true
         if @num_claimants.nil? || @num_claimants == 0
-          @errors[:base] << ['claim_num_claimants_error', 'Please say how many claimants there are']
+          @errors[:base] << ['claim_claimant_number_of_claimants_error', 'Please say how many claimants there are']
           @num_claimants_valid_result = false
         elsif @num_claimants > @@max_num_claimants
-          @errors[:base] << ['claim_num_claimants_error', 'If there are more than 4 claimants in this case, you’ll need to complete your accelerated possession claim on the N5b form (LINK: http://hmctsformfinder.justice.gov.uk/HMCTS/GetForm.do?court_forms_id=618)']
+          @errors[:base] << ['claim_claimant_number_of_claimants_error', 'If there are more than 4 claimants in this case, you’ll need to complete your accelerated possession claim on the N5b form (LINK: http://hmctsformfinder.justice.gov.uk/HMCTS/GetForm.do?court_forms_id=618)']
           @num_claimants_valid_result = false
         end
       end
@@ -167,24 +161,23 @@ class Claim < BaseClass
 
   def num_defendants_valid?
     unless @@valid_num_defendants.include?(@num_defendants)
-      @errors[:base] << ['claim_num_defendants_error', 'Please say how many defendants there are']
+      @errors[:base] << ['claim_defendant_number_of_defendants_error', 'Please say how many defendants there are']
       return false
     end
     true
   end
 
+  def populate_address_for number, defendant, hash
+    if defendant.present? && defendant.address_blank?
+      hash["defendant_#{number}_address"] << hash['property_address']
+      hash["defendant_#{number}_postcode1"] = hash['property_postcode1']
+      hash["defendant_#{number}_postcode2"] = hash['property_postcode2']
+    end
+  end
 
   def populate_defendants_address_if_blank hash
-    if defendant_one.present? && defendant_one.address_blank?
-      hash['defendant_one_address'] << hash['property_address']
-      hash['defendant_one_postcode1'] = hash['property_postcode1']
-      hash['defendant_one_postcode2'] = hash['property_postcode2']
-    end
-    if defendant_two.present? && defendant_two.address_blank?
-      hash['defendant_two_address'] << hash['property_address']
-      hash['defendant_two_postcode1'] = hash['property_postcode1']
-      hash['defendant_two_postcode2'] = hash['property_postcode2']
-    end
+    populate_address_for("one", defendant_one, hash)
+    populate_address_for("two", defendant_two, hash)
   end
 
   def add_fee_and_costs hash
@@ -251,7 +244,7 @@ class Claim < BaseClass
   def attributes_for_submodels
     attributes = {}
     singular_submodels.each { |model| attributes[model.underscore] = model }
-  
+
     doubled_submodels.each do |model|
       %w(one two).each { |n| attributes["#{model.underscore}_#{n}"] = model }
     end
@@ -265,11 +258,9 @@ class Claim < BaseClass
     attributes_for_submodel_collections.each do |attribute, model|
       initialize_submodel_collection(attribute, model, claim_params)
     end
-   
+
     self.form_state = claim_params['form_state'] if claim_params['form_state'].present?
   end
-
-
 
   def init_submodel(claim_params, attribute_name, model)
     sub_params = params_for(attribute_name, claim_params)
@@ -279,12 +270,9 @@ class Claim < BaseClass
     }
   end
 
-
   def initialize_submodel_collection(attribute, model, claim_params)
     instance_variable_set("@#{attribute}", model.constantize.new(claim_params))
   end
-
-
 
   def params_for attribute_name, claim_params
     begin
@@ -293,23 +281,7 @@ class Claim < BaseClass
       raise NoMethodError.new(err.message + "attribute: #{attribute_name} #{claim_params.inspect}")
     end
 
-
-
     case attribute_name
-      when /claimant_1/
-        if @num_claimants.nil?
-          params.merge!(validate_presence: false, validate_absence: false, num_claimants: nil, claimant_num: :claimant_1, claimant_type: claimant_type)  
-        else
-          params.merge!(validate_presence: true, validate_absence: false, num_claimants: claim_params[:num_claimants], claimant_num: :claimant_1, claimant_type: claimant_type)
-        end
-      when /claimant_2/
-        if @num_claimants.nil?
-          params.merge!(validate_absence: false, validate_presence: false, num_claimants: nil, claimant_num: :claimant_2)
-        elsif @num_claimants == 1
-          params.merge!(validate_absence: true, validate_presence: false)
-        else
-          params.merge!(validate_presence: true, num_claimants: '2', claimant_num: :claimant_2, claimant_type: claimant_type)
-        end
       when /defendant_one/
         if @num_defendants.nil?
           params.merge!(validate_presence: false, validate_absence: false, num_defendants: nil, defendant_num: :defendant_one)
