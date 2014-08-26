@@ -27,6 +27,11 @@ require 'rspec/rails'
 require 'capybara/rails'
 require 'capybara/rspec'
 require 'webmock/rspec'
+require 'codeclimate-test-reporter'
+
+CodeClimate::TestReporter.start
+# allow Code Climate Test coverage reports to be sent
+WebMock.disable_net_connect!(:allow => /codeclimate.com/)
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
