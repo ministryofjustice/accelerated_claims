@@ -1,7 +1,7 @@
 
 feature 'Claimant number selection' do
 
-  before { WebMock.disable_net_connect!(:allow => "127.0.0.1") }
+  before { WebMock.disable_net_connect!(:allow => ["127.0.0.1", /codeclimate.com/]) }
 
   scenario 'when nothing on the page is selected', js: true do
     visit '/'

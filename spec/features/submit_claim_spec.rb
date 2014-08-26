@@ -5,6 +5,7 @@ feature "submit claim" do
     WebMock.disable_net_connect!(:allow => "127.0.0.1")
   end
 
+
   def run_scenario data_file, options={}
     data = load_fixture_data(data_file)
     expected_data = load_expected_data(data_file)

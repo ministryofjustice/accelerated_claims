@@ -1,6 +1,6 @@
 feature 'Claimant' do
 
-  before { WebMock.disable_net_connect!(:allow => "127.0.0.1") }
+  before { WebMock.disable_net_connect!(:allow => ["127.0.0.1", /codeclimate.com/]) }
 
   def switch_between_landlord_types
     choose 'A private landlord (individual)'

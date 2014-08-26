@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.4'
+gem 'rails', '4.1.5'
 
 # Enable HAML (required for MOJ toolkit)
 gem 'haml-rails'
@@ -25,10 +25,9 @@ gem 'coffee-rails'
 gem 'unicorn'
 
 # Gov.uk styles
-gem 'govuk_frontend_toolkit', '0.43.2'
+gem 'govuk_frontend_toolkit', '1.5.0'
 # MOJ styles
-gem 'moj_template', '0.14.3'
-
+gem 'moj_template', '0.16.0'
 # required for feedback form
 gem 'zendesk_api'
 gem 'mail'
@@ -74,6 +73,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'curb'
   gem 'show_me_the_cookies'
+  gem 'codeclimate-test-reporter', require: nil
 end
 
 gem 'pdf-forms', '0.5.5'
@@ -85,3 +85,6 @@ gem 'validates_timeliness', '~> 3.0'
 
 # pretty logstashing
 gem 'logstasher'
+
+# statsd client
+gem 'statsd-ruby'

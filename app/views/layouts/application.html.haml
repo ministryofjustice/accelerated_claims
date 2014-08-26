@@ -16,8 +16,13 @@
   = csrf_meta_tag
   = render partial: 'shared/analytics'
 
-- content_for :cookie_message do
-  %p GOV.UK uses cookies to make the site simpler. #{link_to 'Find out more about cookies', controller: :static, action: :cookies}
+- content_for :cookie_message, ""
+
+- content_for :content do
+  .phase-banner
+    %p 
+      %span This is a new service - #{link_to "your feedback", config_item(:feedback_url)} will help us to improve it
+  =yield
 
 - content_for :proposition_links do
   %ul#proposition-links
