@@ -13,6 +13,7 @@ moj.Modules.sessionTimeout = (function() {
 
       //vars
       endSessionTimer = null,
+      endSessionTime = null,
       sessionMinutes = 55,
       warnMinutesBeforeEnd = 15,
       elapsedMinutes,
@@ -45,6 +46,7 @@ moj.Modules.sessionTimeout = (function() {
 
   startTimer = function() {
     var sessionStartTime = new Date();
+    endSessionTime = new Date( sessionStartTime.getTime() + (sessionMinutes * 60 * 1000) )
 
     var popupDelay = ( sessionMinutes - warnMinutesBeforeEnd );
     new window.EndTimer(function() { showPopup(); }, popupDelay, sessionStartTime );
@@ -54,9 +56,9 @@ moj.Modules.sessionTimeout = (function() {
   };
 
   showPopup = function() {
-    moj.Modules.sessionModal.showModal( function() {
-      refreshSession();
-    }, sessionMinutes, warnMinutesBeforeEnd );
+    var minutesToEnd = (endSessionTime.getTime() - new Date().getTime()) / (60 * 1000);
+    moj.Modules.sessionModal.showModal( function() { refreshSession(); },
+      sessionMinutes, minutesToEnd );
   };
 
   refreshSession = function() {
