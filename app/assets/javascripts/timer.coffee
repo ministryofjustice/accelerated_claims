@@ -1,13 +1,20 @@
 root = exports ? this
 
 class EndTimer
-  constructor: (callback, minutesDelay, now) ->
+  constructor: (endCallback, minutesDelay, now, secondsCallback) ->
     now = new Date() if !now
     millisecondsDelay = (minutesDelay * 60 * 1000)
     @endTime = new Date( now.getTime() + millisecondsDelay )
-    checkFunction = ( => @checkEndTimeReached() )
+    @secondsCallback = secondsCallback
+    checkFunction = ( =>
+      if @secondsCallback
+        timeLeft = @millisecondsLeft()
+        @secondsCallback(timeLeft)
+
+      @checkEndTimeReached()
+    )
     @intervalId = setInterval(checkFunction, 1000)
-    @callback = callback
+    @endCallback = endCallback
 
   checkEndTimeReached: ->
     now = new Date()
@@ -19,7 +26,7 @@ class EndTimer
     clearInterval(@intervalId)
 
   triggerEnd: ->
-    @callback()
+    @endCallback()
 
   millisecondsLeft: ->
     @endTime - new Date()

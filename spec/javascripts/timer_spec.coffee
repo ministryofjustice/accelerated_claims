@@ -9,6 +9,7 @@ describe 'EndTimer', ->
     @startTime = new Date(2013, 9, 23, 10, 32, 21)
     @minutes = 60
     @foo = bar: () ->
+    @bar = foo: () ->
     @timer = new window.EndTimer(@foo.bar, @minutes, @startTime)
 
   afterEach ->
@@ -30,6 +31,12 @@ describe 'EndTimer', ->
       jasmine.clock().tick(999)
       expect(@timer.checkEndTimeReached).not.toHaveBeenCalled()
 
+    it 'has not called seconds callback', ->
+      spyOn @bar, 'foo'
+      @timer = new window.EndTimer(@foo.bar, @minutes, @startTime, @bar.foo)
+      jasmine.clock().tick(999)
+      expect(@bar.foo).not.toHaveBeenCalled()
+
     describe 'milliseconds left', ->
       it 'should be correct', ->
         jasmine.clock().mockDate(@startTime)
@@ -41,6 +48,12 @@ describe 'EndTimer', ->
       spyOn @timer, 'checkEndTimeReached'
       jasmine.clock().tick(1000)
       expect(@timer.checkEndTimeReached).toHaveBeenCalled()
+
+    it 'calls seconds callback', ->
+      spyOn @bar, 'foo'
+      @timer = new window.EndTimer(@foo.bar, @minutes, @startTime, @bar.foo)
+      jasmine.clock().tick(1000)
+      expect(@bar.foo).toHaveBeenCalled()
 
     describe 'milliseconds left', ->
       it 'should be correct', ->

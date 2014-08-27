@@ -14,11 +14,10 @@ moj.Modules.sessionModal = (function() {
       writeTime,
 
       //vars
-      countdown
+      countdownTimer
       ;
 
   init = function() {
-
   };
 
   showModal = function( refreshSession, sessionMinutes, warnBeforeEndMinutes ) {
@@ -55,7 +54,6 @@ moj.Modules.sessionModal = (function() {
       }
     } );
 
-
     $( '#session-modal' ).find( 'a#extend' ).on( 'click' , ( function( _this, callback ) {
       return function( e ) {
         e.preventDefault();
@@ -79,33 +77,27 @@ moj.Modules.sessionModal = (function() {
       m = Math.ceil( minutes );
       return m + ' minute' + ( m === 1 ? '' : 's' ) + '.';
     }
-    return parseInt( minutes * 60, 10 ) + ' second' + ( ( minutes * 60 ) === 1 ? '' : 's' ) + '.';
+    return parseInt( minutes * 60, 10 ) + ' second' + ( (Math.floor( minutes * 60 ) === 1) ? '' : 's' ) + '.';
   };
 
   startCountdown = function( remaining ) {
-    var interval = 1, // seconds
-        secondsRemaining = remaining * 60;
-
-    countdown = window.setInterval( function() {
-      if( secondsRemaining > 0 ) {
-        secondsRemaining -= interval;
-        writeTime( secondsRemaining / 60 );
-      } else {
-        cancelCountdown();
-      }
-    }, interval * 1000 );
+    countdownTimer = new window.EndTimer(function() {}, remaining, new Date(), function(millisecondsLeft) {
+        var secondsRemaining = millisecondsLeft / 1000;
+        if( secondsRemaining > 0 ) {
+          writeTime( secondsRemaining / 60 );
+        } else {
+          cancelCountdown();
+        }
+    });
   };
 
   cancelCountdown = function() {
-    window.clearInterval( countdown );
-    countdown = null;
+    countdownTimer.stopTimer();
   };
 
   writeTime = function( t ) {
     $( '#timeRemaining' ).text( timeString( t ) );
   };
-
-  // public
 
   return {
     init: init,
