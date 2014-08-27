@@ -49,6 +49,13 @@ describe 'ClaimantModule', ->
         window.ClaimantModule.showClaimants('2')
         expectSubpanelsVisible(true, true, false, false)
 
+
+    describe 'called with 5', ->
+      it 'should display an alert', ->
+        spyOn(window, 'alert')
+        window.ClaimantModule.showClaimants('5')
+        expect(window.alert).toHaveBeenCalledWith('The maxiumum number of claimants is 4')
+
     describe 'called with 1 after 3', ->
       it 'shows just one claimant', ->
         window.ClaimantModule.showClaimants('3')
