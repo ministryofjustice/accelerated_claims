@@ -22,8 +22,9 @@ AcceleratedClaims::Application.configure do
   # Disable Rails's static asset server (Apache or nginx will already do this).
   config.serve_static_assets = false
 
+  config.assets.debug = true
   # Compress JavaScripts and CSS.
-  config.assets.js_compressor = :uglifier
+  # config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass
 
   # Do fallback to assets pipeline if a precompiled asset is missed.
@@ -50,7 +51,7 @@ AcceleratedClaims::Application.configure do
 
   # Use a different logger for distributed setups.
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
-  
+
   config.logstasher.enabled = true
   config.logstasher.suppress_app_log = true
 
