@@ -51,10 +51,15 @@ describe 'ClaimantModule', ->
 
 
     describe 'called with 5', ->
-      it 'should display an alert', ->
-        spyOn(window, 'alert')
+      it 'should unhide the error message', ->
+        html = $(
+               '<input id="claim_num_claimants" name="claim[num_claimants]" type="text"></input>' +
+               '<span class="error hide" id="num-claimants-error-message" style="display: inline;">XXXXX</span>'
+        )
+        $(document.body).append(html)     
         window.ClaimantModule.showClaimants('5')
-        expect(window.alert).toHaveBeenCalledWith('The maxiumum number of claimants is 4')
+        errorMessage = $('#num-claimants-error-message')
+        expect(errorMessage).toBeVisible()
 
     describe 'called with 1 after 3', ->
       it 'shows just one claimant', ->

@@ -30,9 +30,14 @@
 
       = claim_form.text_field_row :num_claimants,
         class: 'hide js-claimanttype individual',
-        input_class: 'smalltext',
+        input_class: 'narrow',
         data: { depend: 'num-claimants' },
-        label: 'How many claimants are there?'
+        label: 'How many claimants are there? <br/><span class="hint">You need a minimum of 1 claimant and can have up to 4 claimants</span>'
+
+      .row
+        %span.error.hide#num-claimants-error-message
+          The number of claimants must be between 1 and 4. If you have more than 4 claimants, you’ll need to complete your 
+          accelerated possession claim on the <a href="http://hmctsformfinder.justice.gov.uk/HMCTS/GetForm.do?court_forms_id=618">N5b form</a>
 
       .claimants
         = render partial: 'claimant', object: @claim.claimant_1, locals: { claimant_id: 1, claim_form: claim_form, claimant_field: :claimant_1}

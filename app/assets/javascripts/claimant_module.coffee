@@ -6,9 +6,10 @@ ClaimantModule =
 
   showClaimants: (numberOfClaimants) ->
     ClaimantModule.hideClaimantSections()
+    $('#num-claimants-error-message').hide()
     number = parseInt numberOfClaimants
     if number > 4
-      alert('The maxiumum number of claimants is 4')
+      $('#num-claimants-error-message').show()
     else
       if number > 0 and number < 5
         array = _.range(1, number + 1)
