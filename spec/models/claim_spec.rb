@@ -440,7 +440,7 @@ describe Claim, :type => :model do
       it 'should not be valid if greater than 4' do
         data[:num_claimants] = '5'
         expect(claim).to_not be_valid
-        expect(claim.errors.full_messages).to eq [["claim_num_claimants_error", "If there are more than 4 claimants in this case, you’ll need to complete your accelerated possession claim on the N5b form (LINK: http://hmctsformfinder.justice.gov.uk/HMCTS/GetForm.do?court_forms_id=618)"]]
+        expect(claim.errors.full_messages).to eq [["claim_num_claimants_error", "If there are more than 4 claimants in this case, you’ll need to complete your accelerated possession claim on the N5b form"]]
       end
     end
   end
