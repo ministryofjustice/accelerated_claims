@@ -73,13 +73,13 @@ moj.Modules.sessionModal = (function() {
     cancelCountdown();
   };
 
-  timeString = function( t ) {
+  timeString = function( minutes ) {
     var m;
-    if( t >= 1 ) {
-      m = Math.ceil( t );
+    if( minutes >= 1 ) {
+      m = Math.ceil( minutes );
       return m + ' minute' + ( m === 1 ? '' : 's' ) + '.';
     }
-    return parseInt( t * 60, 10 ) + ' second' + ( ( t * 60 ) === 1 ? '' : 's' ) + '.';
+    return parseInt( minutes * 60, 10 ) + ' second' + ( ( minutes * 60 ) === 1 ? '' : 's' ) + '.';
   };
 
   startCountdown = function( remaining ) {

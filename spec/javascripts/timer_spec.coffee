@@ -30,11 +30,23 @@ describe 'EndTimer', ->
       jasmine.clock().tick(999)
       expect(@timer.checkEndTimeReached).not.toHaveBeenCalled()
 
+    describe 'milliseconds left', ->
+      it 'should be correct', ->
+        jasmine.clock().mockDate(@startTime)
+        jasmine.clock().tick(999)
+        expect(@timer.millisecondsLeft()).toEqual( (60 * 60 * 1000) - 999 )
+
   describe 'after 1000 ms', ->
     it 'checks if end time is reached', ->
       spyOn @timer, 'checkEndTimeReached'
       jasmine.clock().tick(1000)
       expect(@timer.checkEndTimeReached).toHaveBeenCalled()
+
+    describe 'milliseconds left', ->
+      it 'should be correct', ->
+        jasmine.clock().mockDate(@startTime)
+        jasmine.clock().tick(1000)
+        expect(@timer.millisecondsLeft()).toEqual( (60 * 60 * 1000) - 1000 )
 
     describe 'when stopTimer() called before 100 ms', ->
       it 'does not check if end time is reached', ->

@@ -21,4 +21,7 @@ class EndTimer
   triggerEnd: ->
     @callback()
 
+  millisecondsLeft: ->
+    @endTime - new Date()
+
 root.EndTimer = EndTimer
