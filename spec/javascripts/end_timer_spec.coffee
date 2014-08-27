@@ -1,6 +1,6 @@
 //= require jquery
 //= require jasmine-jquery
-//= require timer
+//= require end_timer
 
 describe 'EndTimer', ->
 
