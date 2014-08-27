@@ -6,23 +6,23 @@ describe 'EndTimer', ->
 
   beforeEach ->
     jasmine.clock().install()
-    @start = new Date(2013, 9, 23)
+    @startTime = new Date(2013, 9, 23, 10, 32, 21)
     @minutes = 60
     @foo = bar: () ->
-    @timer = new window.EndTimer(@minutes, @foo.bar, @start)
+    @timer = new window.EndTimer(@foo.bar, @minutes, @startTime)
 
   afterEach ->
     jasmine.clock().uninstall()
 
   describe 'test Date mock', ->
     it 'mocks ticks correctly', ->
-      jasmine.clock().mockDate(@start)
+      jasmine.clock().mockDate(@startTime)
       jasmine.clock().tick(50)
-      expect(new Date().getTime()).toEqual(@start.getTime() + 50)
+      expect(new Date().getTime()).toEqual(@startTime.getTime() + 50)
 
   describe 'on initialisation with start date and duration in minutes', ->
     it 'set end time is set correctly', ->
-      expect( @timer.endTime.getTime() ).toEqual( @start.getTime() + (@minutes * 60 * 1000) )
+      expect( @timer.endTime.getTime() ).toEqual( @startTime.getTime() + (@minutes * 60 * 1000) )
 
   describe 'after 999 ms', ->
     it 'has not checked if end time is reached', ->
@@ -35,6 +35,14 @@ describe 'EndTimer', ->
       spyOn @timer, 'checkEndTimeReached'
       jasmine.clock().tick(1000)
       expect(@timer.checkEndTimeReached).toHaveBeenCalled()
+
+    describe 'when stopTimer() called before 100 ms', ->
+      it 'does not check if end time is reached', ->
+        spyOn @timer, 'checkEndTimeReached'
+        jasmine.clock().tick(999)
+        @timer.stopTimer()
+        jasmine.clock().tick(1)
+        expect(@timer.checkEndTimeReached).not.toHaveBeenCalled()
 
   describe 'after 60 minutes', ->
     it 'triggers end', ->
@@ -56,6 +64,6 @@ describe 'EndTimer', ->
   describe 'triggerEnd()', ->
     it 'calls callback function', ->
       spyOn(@foo, 'bar')
-      @timer = new window.EndTimer(@minutes, @foo.bar, @start)
+      @timer = new window.EndTimer(@foo.bar, @minutes, @startTime)
       @timer.triggerEnd()
       expect(@foo.bar).toHaveBeenCalled()

@@ -12,7 +12,7 @@ moj.Modules.sessionTimeout = (function() {
       endSession,
 
       //vars
-      timer = null,
+      endSessionTimer = null,
       sessionMinutes = 55,
       warnMinutesBeforeEnd = 15,
       elapsedMinutes,
@@ -44,28 +44,25 @@ moj.Modules.sessionTimeout = (function() {
   };
 
   startTimer = function() {
-    if( timer ) {
-      window.clearTimeout( timer );
-      timer = null;
-    }
+    var sessionStartTime = new Date();
 
-    timer = window.setTimeout( function() {
-      showPopup();
-    }, ( sessionMinutes - warnMinutesBeforeEnd ) * minute );
+    var popupDelay = ( sessionMinutes - warnMinutesBeforeEnd );
+    new window.EndTimer(function() { showPopup(); }, popupDelay, sessionStartTime );
+
+    var endSessionDelay = sessionMinutes;
+    endSessionTimer = new window.EndTimer(function() { endSession(); }, endSessionDelay, sessionStartTime );
   };
 
   showPopup = function() {
     moj.Modules.sessionModal.showModal( function() {
       refreshSession();
     }, sessionMinutes, warnMinutesBeforeEnd );
-    timer = window.setTimeout( function() {
-      endSession();
-    }, warnMinutesBeforeEnd * minute );
   };
 
   refreshSession = function() {
     $.get( basePath + '/heartbeat', function() {
       moj.Modules.sessionModal.closeModal();
+      endSessionTimer.stopTimer();
       startTimer();
     } );
   };
