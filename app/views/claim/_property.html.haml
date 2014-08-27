@@ -8,5 +8,11 @@
       data: { 'virtual-pageview' => '/accelerated/property-section' }
 
   .sub-panel.address#property
-    = form.text_area_row  :street,   label: 'Full address', class: 'street'
+    -# = form.text_area_row  :street,   label: 'Full address', class: 'street'
+    .row
+      %label{:for => "street"}
+        Form label
+        %span.hint.toggle-hint#room_number include here
+      %textarea#street{:rows => "10"}
     = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'
+    = form.text_field_row :room_number, class: 'room_number hide', input_class: 'smalltext'
