@@ -30,10 +30,18 @@ class Deposit < BaseClass
   end
 
   def as_json
-    json = super
-    json = split_date :information_given_date, json
-    json['received_cert'] = (received? ? 'Yes' : '')
-    json
+    begin
+      json = super
+      json = split_date :information_given_date, json
+      json['received_cert'] = (received? ? 'Yes' : '')
+      json
+    rescue NoMethodError => err
+      if err.message =~ /undefined method .strftime. for/
+        raise RuntimeError.new("undefined method strftime while converting deposit to JSON: #{self.inspect}")
+      else
+        raise
+      end
+    end
   end
 
   private
