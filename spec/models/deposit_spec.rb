@@ -132,4 +132,13 @@ describe Deposit, :type => :model do
     end
   end
 
+  context 'catching errors during as_json' do
+    it 'should catch undefined method strftime errors and add extra information' do
+      deposit = Deposit.new(:information_given_date => InvalidDate.new('kjkdjf-dkfdkfj-dfdf'))
+      expect {
+        deposit.as_json
+      }.to raise_error RuntimeError, /undefined method strftime while converting deposit to JSON/
+    end
+  end
+
 end
