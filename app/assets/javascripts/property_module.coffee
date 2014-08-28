@@ -16,9 +16,6 @@ PropertyModule =
   showRoomNumberPrompt: ->
     $('#room_number').show()    
 
-  hideNonJsMessage: ->
-    $("#room_number-non-js").hide()
-
   bindTypeOfProperty: ->
     $("#claim_property_house_no").on "change", ->
       PropertyModule.hideOrShowRoomNumberPrompt()
@@ -29,7 +26,6 @@ PropertyModule =
 
 
   setup: ->
-    PropertyModule.hideNonJsMessage()
     PropertyModule.bindTypeOfProperty()
 
 

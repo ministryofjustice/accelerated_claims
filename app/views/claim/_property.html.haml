@@ -9,7 +9,7 @@
 
   .sub-panel.address#property
     .row
-    - street_label = %q{Full Address<span class="hint toggle-hint js-enabled" id="room_number"><br>Include the room number</span><span class="hint hide" id="room_number-non-js">If "Room(s) in a property" was selected above, include the room number</span>}
+    - street_label = %q{Full Address<span class="hint toggle-hint js-enabled" id="room_number"><br>Include the room number</span><span class="hint nonjs" id="room_number-non-js">If "Room(s) in a property" was selected above, include the room number</span>}
 
     = form.text_area_row  :street,   label: street_label, class: 'street'
     = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'
