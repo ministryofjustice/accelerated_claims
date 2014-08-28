@@ -22,7 +22,6 @@ class Property < BaseClass
   attr_accessor :house
   validates :house, presence: { message: 'Please select what kind of property it is' }, inclusion: { in: ['Yes', 'No'] }
 
-
   def as_json
     postcode1, postcode2 = split_postcode
     {
