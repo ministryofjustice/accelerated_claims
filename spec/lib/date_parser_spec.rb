@@ -60,7 +60,7 @@ describe DateParser do
     end
 
     it 'should reject 33rd in any year' do
-      expect(DateParser.new(set_values(['29', '02', '2014'])).parse).to eq(InvalidDate.new('33-01-2014'))
+      expect(DateParser.new(set_values(['33', '01', '2014'])).parse).to eq(InvalidDate.new('33-01-2014'))
     end
 
     it 'should reject 31st in a 30-day month' do

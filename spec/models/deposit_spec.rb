@@ -41,6 +41,16 @@ describe Deposit, :type => :model do
         end
       end
 
+      describe 'when deposit received and date is invalid' do
+        it 'shouldnt be valid' do
+          deposit.received = "Yes"
+          deposit.as_money = "Yes"
+          deposit.information_given_date = InvalidDate.new('-7-2011')
+          expect(deposit).not_to be_valid
+          expect(deposit.errors[:information_given_date]).to eq ["Enter a valid date you gave the defendant this information"]
+        end
+      end
+
       describe "when deposit as property is blank and deposit as money is yes" do
         it "should be valid" do
           deposit.as_property = ""
