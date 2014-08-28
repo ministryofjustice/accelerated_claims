@@ -451,11 +451,14 @@
 
 					s.position = 'absolute';
 					if (i < 2) {
+					  // PATCHED TO FIX IE BUG - removeExpression() not supported in all IE versions
+					  // see: http://www.ericmmartin.com/simplemodal-1-4-4-released/#comment-73180
 						// s.removeExpression('height');
 						// s.removeExpression('width');
 						var h = eval('' + bsh + ' > ' + bch + ' ? ' + bsh + ' : ' + bch)+'px';
 						var w = eval('' + bsw + ' > ' + bcw + ' ? ' + bsw + ' : ' + bcw)+'px';
 
+					  // PATCHED TO FIX IE BUG - setExpression() not supported in all IE versions
 						// s.setExpression('height','' + bsh + ' > ' + bch + ' ? ' + bsh + ' : ' + bch + ' + "px"');
 						// s.setExpression('width','' + bsw + ' > ' + bcw + ' ? ' + bsw + ' : ' + bcw + ' + "px"');
 						$(s).height( h);
@@ -482,6 +485,7 @@
 							te = '(' + ch + ' || ' + bch + ') / 2 - (this.offsetHeight / 2) + (t = ' + st + ' ? ' + st + ' : ' + bst + ') + "px"';
 							le = '(' + cw + ' || ' + bcw + ') / 2 - (this.offsetWidth / 2) + (t = ' + sl + ' ? ' + sl + ' : ' + bsl + ') + "px"';
 						}
+            // PATCHED TO FIX IE BUG - removeExpression(), setExpression() not supported in all IE versions
 						$(s).css('top', eval(te));
 						$(s).css('left', eval(le));
 						// s.removeExpression('top');
