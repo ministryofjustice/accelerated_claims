@@ -10,19 +10,34 @@ class ContactValidator < ActiveModel::Validator
   private
 
   def validate_is_present(record)
-    record.errors[:title] << title_missing_message(record) if record.is_a?(Defendant) && record.title.blank?
-    record.errors[:title] << title_missing_message(record) if is_individual_claimant?(record) && record.title.blank?
-    record.errors[:organization_name] << "You must enter a company name or local authority name" if is_organization_claimant?(record) && record.organization_name.blank?
+    verify_defendant_title(record)
+    verify_individual_claimant_title(record)
+    verify_organization_name(record)
 
-    if record.full_name.blank?
-      record.errors[:full_name] << full_name_missing_message(record) unless is_organization_claimant?(record)
-    end
+    add_full_name_message(record) if record.full_name.blank?
     validate_address(record) if record.is_a?(Claimant)
+
     if record.is_a?(Defendant) && record.inhabits_property == 'no'
       validate_address(record) if inhabits_property_has_been_set(record)
     end
   end
 
+  def verify_defendant_title(record)
+    record.errors[:title] << title_missing_message(record) if record.is_a?(Defendant) && record.title.blank?
+  end
+
+  def verify_individual_claimant_title(record)
+    record.errors[:title] << title_missing_message(record) if is_individual_claimant?(record) && record.title.blank?
+  end
+
+  def verify_organization_name(record)
+    message = "You must enter a company name or local authority name"
+    record.errors[:organization_name] << message if is_organization_claimant?(record) && record.organization_name.blank?
+  end
+
+  def add_full_name_message(record)
+    record.errors[:full_name] << full_name_missing_message(record) unless is_organization_claimant?(record)
+  end
 
   def validate_address(record)
     record.errors[:street]    << full_address_missing_message(record) if record.street.blank?
@@ -42,15 +57,15 @@ class ContactValidator < ActiveModel::Validator
     "Enter #{record.subject_description}'s title"
   end
 
-  def full_name_missing_message(record) 
+  def full_name_missing_message(record)
     "Enter #{record.subject_description}'s full name"
   end
 
-  def full_address_missing_message(record) 
+  def full_address_missing_message(record)
     "Enter #{record.subject_description}'s full address"
   end
 
-  def postcode_missing_message(record) 
+  def postcode_missing_message(record)
     "Enter #{record.subject_description}'s postcode"
   end
 
@@ -65,7 +80,7 @@ class ContactValidator < ActiveModel::Validator
 
   def is_organization_claimant?(record)
     record.is_a?(Claimant)  && record.claimant_type == 'organization'
-  end    
+  end
 
 
 
