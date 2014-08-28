@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 feature 'Session timeout' do
 
   before do
