@@ -18,7 +18,7 @@ feature 'Session timeout' do
     end
 
     scenario "session expires if you wait long enough", js: true do
-      using_wait_time(10) do
+      using_wait_time(12) do
         start = Time.now
         visit '/?quick=very' # this causes client session to expire in 9 secs
         expect(page).to have_content('Session expired')
