@@ -5,6 +5,7 @@ class Claim < BaseClass
   attr_accessor :errors,
                 :error_messages,
                 :claimants,
+                :defendants,
                 :form_state,
                 :num_claimants,
                 :claimant_type,
