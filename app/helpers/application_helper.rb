@@ -18,4 +18,13 @@ module ApplicationHelper
     end
   end
 
+
+  def add_optional text
+    %Q[#{text}<span class="hint"> (Optional)</span>].html_safe
+  end
+
+  def add_optional_nonjs text
+    %Q[#{text}<span class="hint nonjs"> (Optional)</span>].html_safe
+  end
+
 end
