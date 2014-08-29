@@ -20,7 +20,7 @@ feature "submit claim" do
       end
       claim_form.submit
 
-      expect(confirmation_page.is_displayed?).to be_truthy, claim_form.validation_error_text
+      expect(page).to have_text('After you’ve submitted your claim, complete our satisfaction survey'), claim_form.validation_error_text
 
       if Capybara.default_driver == :browserstack
         find('a#data').click
