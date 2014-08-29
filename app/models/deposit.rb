@@ -58,7 +58,7 @@ class Deposit < BaseClass
   end
 
 
-  def information_give_daten_must_not_be_invalid
+  def information_given_date_must_not_be_invalid
     if self.information_given_date.is_a?(InvalidDate)
       errors[:information_given_date] << 'Enter a valid date you gave the defendant this information'
     end
