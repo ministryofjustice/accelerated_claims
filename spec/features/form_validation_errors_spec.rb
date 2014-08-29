@@ -20,8 +20,11 @@ feature 'Filling in claim form' do
   end
 
   def check_focus_after_click link_text, selector
+    expect(page).to have_content(link_text)
+    expect(page).to have_css('div#javascript_done')
     click_link link_text
-    expect(page.evaluate_script('document.activeElement.id')).to eq(selector)
+    active_element = page.evaluate_script('document.activeElement.id')
+    expect(active_element).to eq(selector)
   end
 
 
