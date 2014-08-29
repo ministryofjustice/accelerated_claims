@@ -1,11 +1,11 @@
 root = exports ? this
 
-PropertyModule = 
+PropertyModule =
 
   hideOrShowRoomNumberPrompt: ->
-    typeOfProperty = $("#claim_property_house_no")
-    isHmo = typeOfProperty.is(':checked')
-    if isHmo
+    multipleOccupancy = $("#claim_property_house_no").is(':checked')
+
+    if multipleOccupancy
       PropertyModule.showRoomNumberPrompt()
     else
       PropertyModule.hideRoomNumberPrompt()
@@ -14,7 +14,7 @@ PropertyModule =
     $('#room_number').hide()
 
   showRoomNumberPrompt: ->
-    $('#room_number').show()    
+    $('#room_number').show()
 
   bindTypeOfProperty: ->
     $("#claim_property_house_no").on "change", ->
@@ -22,12 +22,9 @@ PropertyModule =
     $("#claim_property_house_yes").on "change", ->
       PropertyModule.hideOrShowRoomNumberPrompt()
 
-
-
-
   setup: ->
     PropertyModule.bindTypeOfProperty()
-
+    PropertyModule.hideOrShowRoomNumberPrompt()
 
 root.PropertyModule = PropertyModule
 
