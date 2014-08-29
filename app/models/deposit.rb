@@ -14,7 +14,7 @@ class Deposit < BaseClass
 
   validate :money_or_property_must_be_selected_if_received
 
-  validate :information_give_date_must_not_be_invalid
+  validate :information_given_date_must_not_be_invalid
 
   with_options if: -> deposit { deposit.received == 'No'} do |deposit|
     deposit.validates :ref_number, absence: { message: 'You should not give a deposit scheme reference number if no deposit was given' }
@@ -58,7 +58,7 @@ class Deposit < BaseClass
   end
 
 
-  def information_give_date_must_not_be_invalid
+  def information_give_daten_must_not_be_invalid
     if self.information_given_date.is_a?(InvalidDate)
       errors[:information_given_date] << 'Enter a valid date you gave the defendant this information'
     end
