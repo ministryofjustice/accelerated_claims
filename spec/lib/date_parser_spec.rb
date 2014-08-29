@@ -76,11 +76,11 @@ describe DateParser do
     end
 
      it 'should reject dates with missing days' do
-      expect(DateParser.new(set_values(['', '15', '2014'])).parse).to eq(InvalidDate.new('-01-2014'))
+      expect(DateParser.new(set_values(['', '15', '2014'])).parse).to eq(InvalidDate.new('-15-2014'))
     end
 
     it 'should reject dates with missing months' do
-      expect(DateParser.new(set_values(['3', '', '2014'])).parse).to eq(InvalidDate.new('33--2014'))
+      expect(DateParser.new(set_values(['3', '', '2014'])).parse).to eq(InvalidDate.new('3--2014'))
     end
 
     it 'should reject dates with missing year' do
