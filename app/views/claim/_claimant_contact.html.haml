@@ -3,11 +3,13 @@
     .sub-panel.details
       .row.js-only
         %a.caption#contact-details{ href: '#contact-details' }
-          = 'Add phone and email'.html_safe
-      = form.text_field_row :email, class: 'rel email'
-      = form.text_field_row :phone, class: 'rel phone'
-      = form.text_field_row :fax, class: 'rel fax'
-      = form.text_field_row :dx_number, label: 'DX number', class: 'rel dx_number'
+          = 'Add phone and email'
+        %span.hint (Optional)
+
+      = form.text_field_row :email, label: add_optional('Email'), class: 'rel email'
+      = form.text_field_row :phone, label: add_optional('Phone'), class: 'rel phone'
+      = form.text_field_row :fax, label: add_optional('Fax'), class: 'rel fax'
+      = form.text_field_row :dx_number, label: add_optional('DX number'), class: 'rel dx_number'
     .row
       If you want us to send correspondence about the case to a different address, enter it here.
       %span.hint.block.hide.js-claimanttype.individual
@@ -19,14 +21,16 @@
       .row.js-only
         %a.caption#correspondence-address{ href: '#correspondence-address' }
           = 'Add alternative address'.html_safe
-      = form.text_field_row :title,    class: 'rel title', input_class: 'smalltext'
-      = form.text_field_row :full_name, class: 'rel '
-      = form.text_field_row :company_name,  class: 'rel company_name'
-      = form.text_area_row  :street,   label: 'Street address', class: 'rel street'
-      = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'
+        %span.hint (Optional)
+      = form.text_field_row :title, label: add_optional_nonjs('Title'),    class: 'rel title', input_class: 'smalltext'
+      = form.text_field_row :full_name, label: add_optional_nonjs('Full name'), class: 'rel '
+      = form.text_field_row :company_name, label: add_optional_nonjs('Company name'),  class: 'rel company_name'
+      = form.text_area_row  :street, label: add_optional_nonjs('Full address'), class: 'rel street'
+      = form.text_field_row :postcode, label: add_optional_nonjs('Postcode'), class: 'rel postcode', input_class: 'smalltext'
 
     .sub-panel.details.js-claimanttype.organization
       .row.js-only
         %a.caption#reference-number{ href: '#reference-number' }
-          = 'Add a reference number'.html_safe
+          = 'Add a reference number'
+        %span.hint (Optional)
       = render partial: 'reference_number', object: @claim.reference_number, locals: { claim_form: claim_form }
