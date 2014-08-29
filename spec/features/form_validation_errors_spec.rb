@@ -25,7 +25,7 @@ feature 'Filling in claim form' do
   end
 
 
-  scenario "submitting an incomplete deposit information given date" do
+  scenario "submitting an incomplete deposit information given date", js: true do
     visit '/'
     choose('claim_deposit_received_yes')
     check('claim_deposit_as_money')
@@ -38,7 +38,7 @@ feature 'Filling in claim form' do
     expect(find_field('claim_deposit_ref_number').value).to eq('ABC123')
     expect(find_field('claim_deposit_information_given_date_3i').value).to eq('')
     expect(find_field('claim_deposit_information_given_date_2i').value).to eq('7')
-    expect(find_field('claim_deposit_information_given_date_1i').value).to eq('14')
+    expect(find_field('claim_deposit_information_given_date_1i').value).to eq('2014')
   end
 
 
