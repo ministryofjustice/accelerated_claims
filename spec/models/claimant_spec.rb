@@ -161,13 +161,13 @@ describe Claimant, :type => :model do
     it 'should not validate if postcode is incomplete' do
       claimant.postcode = 'SW10'
       expect(claimant).not_to be_valid
-      expect(claimant.errors[:postcode]).to eq ["not full postcode"]
+      expect(claimant.errors[:postcode]).to eq ["claimant 2's postcode is not a full postcode"]
     end    
 
     it 'should not validate if postcode is invalid' do
       claimant.postcode = 'SW10XX 5FF'
       expect(claimant).not_to be_valid
-      expect(claimant.errors[:postcode]).to eq ["is too long (maximum is 8 characters)", "not valid postcode"]
+      expect(claimant.errors[:postcode]).to eq ["is too long (maximum is 8 characters)", "Enter a valid postcode for claimant 2"]
     end
 
     it 'should not validate if street is too long' do
