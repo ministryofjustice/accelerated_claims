@@ -28,15 +28,18 @@ moj.Modules.claimantAddress = (function() {
   setupAddressBlock = function( $el ) {
     var source,
         template,
-        context;
+        context,
+        id;
+
+    id = $el.attr('data-claimant-id');
 
     source = $( '#hb-yesno' ).html();
     template = Handlebars.compile( source );
-    context = { question: 'Is the address the same as the first claimant?', id: 'claimant2address', reverse: 'true' };
+    context = { question: 'Is the address the same as the first claimant?', id: 'claimant'+id+'address', reverse: 'true' };
 
     $el.find( '.sub-panel.address' ).addClass( 'rel' ).before( template( context ) ).hide();
 
-    moj.Modules.jsState.registerField( $( '[name=claimant2address]' ) );
+    moj.Modules.jsState.registerField( $( '[name=claimant'+id+'address]' ) );
   };
 
   // public

@@ -13,6 +13,8 @@ guard :rspec, all_on_start: false do
 
   watch(%r{^spec/models/(.+)_spec\.rb$}) { |m| "spec/models/#{m[1]}_spec.rb" }
 
+  watch(%r{^spec/helpers/(.+)_spec\.rb$}) { |m| "spec/helpers/#{m[1]}_spec.rb" }
+
   # watch(%r{^spec/models/tenancy(.+)_spec\.rb$}) { |m| "spec/models/tenancy#{m[1]}_spec.rb" }
 
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
@@ -36,5 +38,8 @@ guard :rspec, all_on_start: false do
   # Turnip features and steps
   watch(%r{^spec/acceptance/(.+)\.feature$})
   watch(%r{^spec/acceptance/steps/(.+)_steps\.rb$})   { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'spec/acceptance' }
+
+  watch(%r{^app/views/claim/new\.html\.haml$}) { |m| "spec/features/submit_claim_spec.rb" }
+
 end
 

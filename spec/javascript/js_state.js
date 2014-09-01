@@ -11,10 +11,10 @@ casper.wait(500, function() {
 
   this.test.comment('Setting all JS-created elements');
   this.evaluate(function(){
-    $('#claim_claimant_one_title').val('Mr').trigger('change');
-    $('#claim_claimant_two_title').val('Mrs').trigger('change');
-    $('#claim_defendant_one_title').val('Miss').trigger('change');
-    $('#claim_defendant_two_title').val('other').trigger('change');
+    $('#claim_claimant_1_title').val('Mr').trigger('change');
+    $('#claim_claimant_2_title').val('Mrs').trigger('change');
+    $('#claim_defendant_1_title').val('Miss').trigger('change');
+    $('#claim_defendant_2_title').val('other').trigger('change');
 
     $('#multiplePanelSelector_claimants').val('2').trigger('change');
     $('#multiplePanelSelector_defendants').val('2').trigger('change');
@@ -45,9 +45,9 @@ casper.wait(500, function() {
     this.test.assertVisible( 'section.error-summary' );
 
     this.test.comment('Checking claimant one title');
-    this.test.assertField( 'claim[claimant_one][title]', 'Mr' );
+    this.test.assertField( 'claim[claimant_1][title]', 'Mr' );
     this.test.comment('Checking claimant two title');
-    this.test.assertField( 'claim[claimant_two][title]', 'Mrs' );
+    this.test.assertField( 'claim[claimant_2][title]', 'Mrs' );
     this.test.comment('Checking defendant one title');
     this.test.assertField( 'claim[defendant_one][title]', 'Miss' );
     this.test.comment('Checking defendant two title');
@@ -59,12 +59,12 @@ casper.wait(500, function() {
     this.test.assertField( 'multiplePanelSelector_defendants', '2' );
 
     this.test.comment('Checking second claimant visible');
-    this.test.assertVisible( '#claimant_two' );
+    this.test.assertVisible( '#claimant_2' );
     this.test.comment('Checking second defendant visible');
     this.test.assertVisible( '#defendant_two' );
 
     this.test.comment('Checking second claimant separate address visible');
-    this.test.assertVisible( '#claimant_two .sub-panel.address' );
+    this.test.assertVisible( '#claimant_2 .sub-panel.address' );
     this.test.comment('Checking first defendant separate address visible');
     this.test.assertVisible( '#defendant_one .sub-panel.address' );
     this.test.comment('Checking second defendant separate address visible');

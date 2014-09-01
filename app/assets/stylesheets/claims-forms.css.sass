@@ -39,6 +39,9 @@ input, [type="text"], [type="password"], button, select, textarea
     display: block
     max-width: 280px
 
+  &.narrow
+    max-width: 50px
+
   &.moj-date-day
     max-width: 30px
     display: block
@@ -104,6 +107,10 @@ fieldset, legend
     &.hide
       .js-enabled &
         display: none
+    &.js-only
+      display: none
+      .js-enabled &
+        display: block
 
 select, option, legend
   color: $black

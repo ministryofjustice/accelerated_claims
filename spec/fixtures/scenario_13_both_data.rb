@@ -16,25 +16,42 @@
       number_of_claimants: "1",
       number_of_defendants: "1"
     },
-    claimant_one: {
+    claimant_1: {
       title: "Mr",
       organization_name: nil,
       full_name: "John Smith",
       street: "2 Brown St\nBwlchllydd",
       postcode: "FX1W 0LU"
     },
-    claimant_two: {
+    claimant_2: {
       title: nil,
+      organization_name: nil,
       full_name: nil,
       street: nil,
       postcode: nil
     },
     javascript: {
-      claimant_two_same_address: nil,
+      claimant_2_same_address: nil,
+      claimant_3_same_address: nil,
+      claimant_4_same_address: nil,
       any_legal_costs: "Yes",
       separate_correspondence_address: "No",
       other_contact_details: "Yes",
-      add_reference_number: "No"
+      add_reference_number: nil
+    },
+    claimant_3: {
+      title: nil,
+      organization_name: nil,
+      full_name: nil,
+      street: nil,
+      postcode: nil
+    },
+    claimant_4: {
+      title: nil,
+      organization_name: nil,
+      full_name: nil,
+      street: nil,
+      postcode: nil
     },
     legal_cost: {
       legal_costs: "332.45"

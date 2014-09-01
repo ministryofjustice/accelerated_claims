@@ -12,11 +12,13 @@ moj.Modules.claimantContact = (function() {
       showPanel,
       hidePanel,
       checkPanel,
+      updateClaimantSolicitorVisibility,
 
       //elements
       $panel,
-      $captions
-      ;
+      $captions,
+      $claimantTypeRadio,
+      $numberOfClaimants;
 
   init = function() {
     cacheEls();
@@ -29,6 +31,8 @@ moj.Modules.claimantContact = (function() {
   cacheEls = function() {
     $panel = $( '.claimant-solicitor' );
     $captions = $( '.caption', $panel );
+    $claimantTypeRadio = $('[name="claim[claimant_type]"]');
+    $numberOfClaimants = $('#claim_num_claimants');
   };
 
   bindEvents = function() {
@@ -36,10 +40,13 @@ moj.Modules.claimantContact = (function() {
       e.preventDefault();
       toggleDetailsBlock( $( this ).closest( '.details' ) );
     } );
+  };
 
-    $( '[name="claim[num_claimants]"]' ).on( 'click', function() {
-      showPanel();
-    } );
+  updateClaimantSolicitorVisibility = function(){
+    var claimantType = moj.Modules.tools.getRadioVal($claimantTypeRadio);
+    var isSetNumberOfClaimants = !!$numberOfClaimants.val();
+
+    $panel.toggle(claimantType==='organization' || claimantType==='individual' && isSetNumberOfClaimants);
   };
 
   toggleDetailsBlock = function( $el ) {
@@ -81,7 +88,8 @@ moj.Modules.claimantContact = (function() {
   // public
 
   return {
-    init: init
+    init: init,
+    updateClaimantSolicitorVisibility: updateClaimantSolicitorVisibility
   };
 
 }());

@@ -16,25 +16,42 @@
       number_of_claimants: "1",
       number_of_defendants: "1"
     },
-    claimant_one: {
+    claimant_1: {
       title: nil,
       organization_name: "Infinity Southwich",
       full_name: nil,
       street: "Redleaf House, 157-159 Masonic Hall\nSouthwich",
       postcode: "SH2 9HY"
     },
-    claimant_two: {
+    claimant_2: {
       title: nil,
+      organization_name: nil,
       full_name: nil,
       street: nil,
       postcode: nil
     },
     javascript: {
-      claimant_two_same_address: nil,
+      claimant_2_same_address: nil,
+      claimant_3_same_address: nil,
+      claimant_4_same_address: nil,
       any_legal_costs: "No",
       separate_correspondence_address: "No",
       other_contact_details: "Yes",
       add_reference_number: "Yes"
+    },
+    claimant_3: {
+      title: nil,
+      organization_name: nil,
+      full_name: nil,
+      street: nil,
+      postcode: nil
+    },
+    claimant_4: {
+      title: nil,
+      organization_name: nil,
+      full_name: nil,
+      street: nil,
+      postcode: nil
     },
     legal_cost: {
       legal_costs: nil

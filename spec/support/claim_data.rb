@@ -4,7 +4,7 @@ def claim_post_data
   { "claim" =>
     { "num_claimants" => 2,
       "claimant_type" => 'individual',
-      "claimant_one" =>
+      "claimant_1" =>
       {
         "title" => "Mr",
         "full_name" => "John Smith",
@@ -31,7 +31,7 @@ def claim_post_data
       {
         "legal_costs" => '123.34'
       },
-      "claimant_two" =>
+      "claimant_2" =>
       {
         "title" => "Ms",
         "full_name" => "Jane Smith",
@@ -147,12 +147,32 @@ def demoted_claim_post_data
   data
 end
 
+
+def claim_with_3_claimants_formatted_data
+  data = claim_formatted_data
+  data['claimant_3_address'] = "Miss Ann Chovey\n2 High Street\nAnytown"
+  data['claimant_3_postcode1'] = 'AY3'
+  data['claimant_3_postcode2'] = '0XX'
+  data
+end
+
+
+def claim_with_4_claimants_formatted_data
+  data = claim_with_3_claimants_formatted_data
+  data['claimant_4_address'] = "Mr Mark Atteer\n2 High Street\nAnytown"
+  data['claimant_4_postcode1'] = 'AY34'
+  data['claimant_4_postcode2'] = '9ZZ'
+  data
+end
+
+
+
 def claim_formatted_data
   {
     "fee_court_fee" => "280.00",
-    "claimant_one_address" => "Mr John Smith\n2 Brown St\nCwmbran",
-    "claimant_one_postcode1" => "SW1W",
-    "claimant_one_postcode2" => "0LU",
+    "claimant_1_address" => "Mr John Smith\n2 Brown St\nCwmbran",
+    "claimant_1_postcode1" => "SW1W",
+    "claimant_1_postcode2" => "0LU",
     "claimant_contact_address" => "Mr Jim Brown\nWinning\n3 Smith St\nWinsum",
     "claimant_contact_postcode1" => "SW1W",
     "claimant_contact_postcode2" => "0LU",
@@ -162,9 +182,9 @@ def claim_formatted_data
     "claimant_contact_dx_number" => "DX 123",
     "claimant_contact_reference_number" => "my-ref-123",
     "claimant_contact_legal_costs" => "123.34",
-    "claimant_two_address" => "Ms Jane Smith\n7 Main St\nAlfreton",
-    "claimant_two_postcode1" => "SW1W",
-    "claimant_two_postcode2" => "0LU",
+    "claimant_2_address" => "Ms Jane Smith\n7 Main St\nAlfreton",
+    "claimant_2_postcode1" => "SW1W",
+    "claimant_2_postcode2" => "0LU",
     "property_address" => "Mucho Gracias Road\nLondon",
     "property_postcode1" => "SW1H",
     "property_postcode2" => "9AJ",

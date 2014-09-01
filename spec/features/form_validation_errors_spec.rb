@@ -59,19 +59,18 @@ feature 'Filling in claim form' do
     click_button 'Continue'
   end
 
+
   scenario "submitting form with only claimant type selected", js: true do
     visit '/'
     choose('claim_claimant_type_individual')
     click_button 'Continue'
 
     expect(page).to have_content('Please say how many claimants there are')
-    expect(page).to_not have_content("Enter defendant 1's full name")
-    expect(page).to_not have_content("Enter the claimant's full name")
 
     expect(page).to have_selector('input#claim_order_possession')
     expect(page).to have_selector(:xpath, '//label[@for="claim_order_possession"]')
 
-    check_focus_after_click 'Please say how many claimants there are', 'claim_num_claimants_1'
+    check_focus_after_click 'Please say how many claimants there are', 'claim_num_claimants'
     check_focus_after_click 'Please say how many defendants there are', 'claim_num_defendants_1'
 
     check_focus_after_click 'Please select what kind of property it is', 'claim_property_house_yes'
@@ -86,34 +85,15 @@ feature 'Filling in claim form' do
     check_focus_after_click 'Please tick to confirm that you want to repossess the property', 'claim_order_possession'
     check_focus_after_click 'You must say what kind of tenancy agreement you have', 'claim_tenancy_tenancy_type_assured'
 
-    choose('claim_num_claimants_1')
-    choose('claim_num_defendants_1')
-    choose('claim_defendant_one_inhabits_property_yes')
-    choose('claim_notice_notice_served_yes')
-
-    fill_in('claim_claimant_one_title', with: 'Major')
-    fill_in('claim_claimant_one_full_name', with: 'Tom')
-
     click_button 'Continue'
 
-    unless remote_test?
-      expect(find_field('claim_claimant_one_title').value).to eq('Major')
-      expect(find_field('claim_claimant_one_full_name').value).to eq('Tom')
-    end
-
-    check_focus_after_click 'Enter the name of the person who gave the notice', 'claim_notice_served_by_name'
-    check_focus_after_click 'You must say how the notice was given', 'claim_notice_served_method'
-    check_focus_after_click 'Enter the date notice was served', 'claim_notice_date_served_3i'
-    check_focus_after_click 'Enter the date notice ended', 'claim_notice_expiry_date_3i'
 
     choose('claim_notice_notice_served_no')
-
     expect(page).to have_content('You cannot continue with this claim')
-
     click_button 'Continue'
-
     check_focus_after_click 'You must say whether or not you gave notice to the defendant', 'claim_notice_notice_served_yes'
   end
+
 
   def select_tenancy_start_date date
     day = date.day.to_s
@@ -125,7 +105,7 @@ feature 'Filling in claim form' do
     fill_in("claim_tenancy_start_date_1i", with: year)
   end
 
-  scenario 'tenancy starting before first rules period', js: true do
+  scenario 'tenancy start_date before 15 January 1989', js: true do
     visit '/'
     choose('claim_tenancy_tenancy_type_assured')
     choose('claim_tenancy_assured_shorthold_tenancy_type_one')
@@ -135,14 +115,16 @@ feature 'Filling in claim form' do
     expect(page).to_not have_content("The tenancy agreement was for 6 months (or more)")
   end
 
-  scenario 'tenancy starting in first rules period', js: true do
+  scenario 'tenancy start_date between 15 January 1989 and 27 February 1997', js: true do
     visit '/'
     choose('claim_tenancy_tenancy_type_assured')
     choose('claim_tenancy_assured_shorthold_tenancy_type_one')
     select_tenancy_start_date Tenancy::APPLICABLE_FROM_DATE
 
+    expect(page).to have_content("Carefully read the statements below:")
     expect(page).to_not have_content("You didn’t tell the defendant that the agreement was likely to change")
     expect(page).to have_content("The tenancy agreement was for 6 months (or more)")
+
 
     expect(page).to have_content("Carefully read the statements below:")
     click_button 'Continue'
@@ -158,7 +140,7 @@ feature 'Filling in claim form' do
     check_focus_after_click 'You must say when the defendant was told about their tenancy agreement', 'claim_tenancy_assured_shorthold_tenancy_notice_served_date_3i'
   end
 
-  scenario 'tenancy starting in second rules period', js: true do
+  scenario 'tenancy start_date on or after 28 February 1997', js: true do
     visit '/'
     choose('claim_tenancy_tenancy_type_assured')
     choose('claim_tenancy_assured_shorthold_tenancy_type_one')

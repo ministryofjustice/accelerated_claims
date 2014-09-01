@@ -17,7 +17,8 @@ moj.Modules.tools = (function() {
       isValidDate,
       validMonth,
       jsError,
-      getQueryVar
+      getQueryVar,
+      getTextFieldValue
       ;
 
   removeFromArray = function( arr, item ) {
@@ -119,6 +120,22 @@ moj.Modules.tools = (function() {
     }
 
     return radioVal;
+  };
+
+  getTextFieldValue = function(field){
+    console.log("AAAA");
+    var item = $(field).length,
+        value = $(field).val();
+    
+    if(item){
+      if(value != '' ) {
+        return value;
+      } else {
+        return '';
+      }
+    } else {
+      return '';
+    }
   };
 
   lz = function( n ) {

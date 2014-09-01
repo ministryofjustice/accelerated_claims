@@ -10,6 +10,7 @@ moj.Modules.multiplePersons = (function() {
       bindEvents,
       setupMultiples,
       showMultiples,
+      expand_claimants,
 
       //elements
       $multiples,
@@ -26,7 +27,6 @@ moj.Modules.multiplePersons = (function() {
 
   cacheEls = function() {
     $multiples = $( '.has-multiple' );
-    $claimantSolicitor = $('.claimant-solicitor');
   };
 
   bindEvents = function() {
@@ -50,6 +50,14 @@ moj.Modules.multiplePersons = (function() {
     });
   };
 
+
+
+
+
+
+
+
+
   setupMultiples = function() {
     var x,
         $panel;
@@ -70,10 +78,6 @@ moj.Modules.multiplePersons = (function() {
         show = shownum || 0,
         childItemClass = $panel.data( 'multiple' ),
         $childItems = $panel.find( '.' + childItemClass );
-
-    if($srcEl && $srcEl.attr('name')==='claim[num_claimants]'){
-      $claimantSolicitor.toggle(shownum>0);
-    }
 
     for( x = 0; x < $childItems.length; x++ ) {
       section = $childItems.eq( x );

@@ -28,9 +28,9 @@ module Address
   def full_postcode
     if postcode.present?
       if !UKPostcode.new(postcode).valid?
-        errors.add(:postcode, "not valid postcode")
+        errors.add(:postcode, "Enter a valid postcode for #{subject_description}")
       elsif !UKPostcode.new(postcode).full?
-        errors.add(:postcode, "not full postcode")
+        errors.add(:postcode, "#{subject_description}'s postcode is not a full postcode")
       end
     end
   end

@@ -2,17 +2,17 @@ class Claim < BaseClass
 
   include ActiveSupport::Inflector
 
-  attr_accessor :errors
-  attr_accessor :error_messages
-  attr_accessor :form_state
-  attr_accessor :num_claimants
-  attr_accessor :claimant_type
-  attr_accessor :num_defendants
+  attr_accessor :errors,
+                :error_messages,
+                :claimants,
+                :form_state,
+                :num_claimants,
+                :claimant_type,
+                :num_defendants
 
 
-  @@valid_num_claimants     = [1, 2]
   @@valid_num_defendants    = [1, 2]
-  @@ambiguous_instance_vars = ['claimant_one', 'claimant_two', 'defendant_one', 'defendant_two']
+
   @@valid_claimant_types    = %w{ organization individual }
 
 
@@ -21,22 +21,33 @@ class Claim < BaseClass
     @claimant_type  = claim_params.key?(:claimant_type) ? claim_params[:claimant_type] : nil
     if @claimant_type == 'organization'
       @num_claimants = 1
+      claim_params[:num_claimants] = '1'
     else
       @num_claimants  = claim_params.key?(:num_claimants) ? claim_params[:num_claimants].to_i : nil
     end
     @num_defendants = claim_params.key?(:num_defendants) ? claim_params[:num_defendants].to_i : nil
-
     initialize_all_submodels(claim_params)
     @errors = ActiveModel::Errors.new(self)
   end
 
+  def method_missing(symbol, *args)
+    case symbol
+    when /^claimant_(\d)\=$/
+      claimants[$1.to_i] = args.first
+    when /^claimant_(\d)$/
+      claimants[$1.to_i]
+    else
+      super(symbol, *args)
+    end
+  end
 
   def as_json
     json_in = {}
-    attributes_from_submodels.each do |attribute, model|
+    attributes_for_submodels.each do |attribute, model|
       submodel_data = instance_variable_get("@#{attribute}").as_json
       json_in[attribute] = submodel_data
     end
+    json_in.merge!(@claimants.as_json)
 
     json_out = {}
     json_in.each do |attribute, submodel_data|
@@ -68,17 +79,15 @@ class Claim < BaseClass
     validity = false unless num_claimants_valid?
     validity = false unless num_defendants_valid?
 
-    attributes_from_submodels.each do |instance_var, model|
-      unless send(instance_var).valid?
-        errors = send(instance_var).errors
-        errors.each_with_index do |error, index|
-          attribute = error.first
-          key = "claim_#{instance_var}_#{attribute}_error"
-          @errors[:base] << [ key, error.last ]
-        end
 
-        validity = false
-      end
+    attributes_for_submodels.each do |instance_var, model|
+      result = transfer_errors_from_submodel_to_base(instance_var, model, collection: false)
+      validity = false if result == false
+    end
+
+    attributes_for_submodel_collections.each do |instance_var, model|
+      result = transfer_errors_from_submodel_to_base(instance_var, model, collection: true)
+      validity = false if result == false
     end
 
     @error_messages = ErrorMessageSequencer.new.sequence(@errors)
@@ -87,15 +96,20 @@ class Claim < BaseClass
 
   private
 
-
-  def claimant_type_valid?
+  def transfer_errors_from_submodel_to_base(instance_var, model, options)
     result = true
-    if @claimant_type.nil?
-      @errors[:base] << ['claim_claimant_type_error', 'Please select what kind of claimant you are']
-      result = false
-    else
-      unless @@valid_claimant_types.include?(@claimant_type)
-        @errors[:base] << ['claim_claimant_type_error', 'You must specify a valid kind of claimant']
+    unless send(instance_var).valid?
+      if options[:collection] == false || perform_collection_validation_for?(instance_var)
+        errors = send(instance_var).errors
+          errors.each_with_index do |error, index|
+            attribute = error.first
+            if options[:collection] == false
+              key = "claim_#{instance_var}_#{attribute}_error"
+            else
+              key = "claim_#{attribute}_error"
+            end
+          @errors[:base] << [ key, error.last ]
+        end
         result = false
       end
     end
@@ -103,14 +117,45 @@ class Claim < BaseClass
   end
 
 
-  def num_claimants_valid?
-    if @claimant_type.present?
-      unless @@valid_num_claimants.include?(@num_claimants)
-        @errors[:base] << ['claim_claimant_number_of_claimants_error', 'Please say how many claimants there are']
-        return false
+  # Calls the method defined for this instance_var to determine whether the claim object is in a state where it is worth
+  # validating the instance variable.
+  def perform_collection_validation_for?(instance_var)
+    method = validation_dependencies_for_submodel_collections[instance_var]
+    send(method)
+  end
+
+
+  def claimant_type_valid?
+    if @claimant_type_valid_result.nil?
+      @claimant_type_valid_result = true
+      if @claimant_type.nil?
+        @errors[:base] << ['claim_claimant_type_error', 'Please select what kind of claimant you are']
+        @claimant_type_valid_result = false
+      else
+        unless @@valid_claimant_types.include?(@claimant_type)
+          @errors[:base] << ['claim_claimant_type_error', 'You must specify a valid kind of claimant']
+          @claimant_type_valid_result = false
+        end
       end
     end
-    true
+    @claimant_type_valid_result
+  end
+
+  def num_claimants_valid?
+    if @num_claimants_valid_result.nil?
+      @num_claimants_valid_result = false
+      if @claimant_type.present?
+        @num_claimants_valid_result = true
+        if @num_claimants.nil? || @num_claimants == 0
+          @errors[:base] << ['claim_claimant_number_of_claimants_error', 'Please say how many claimants there are']
+          @num_claimants_valid_result = false
+      elsif @num_claimants > ClaimantCollection::MAX_CLAIMANTS
+          @errors[:base] << ['claim_claimant_number_of_claimants_error', 'If there are more than 4 claimants in this case, you’ll need to complete your accelerated possession claim on the N5b form']
+          @num_claimants_valid_result = false
+        end
+      end
+    end
+    @num_claimants_valid_result
   end
 
   def num_defendants_valid?
@@ -172,12 +217,33 @@ class Claim < BaseClass
   end
 
   def doubled_submodels
-    %w(Claimant Defendant)
+    %w(Defendant)
   end
 
-  def attributes_from_submodels
+  def attributes_for_submodel_collections
+    { 'claimants' => 'ClaimantCollection' }
+  end
+
+
+  def validation_dependencies_for_submodel_collections
+    { 'claimants' => :validate_claimants? }
+  end
+
+
+  def validate_claimants?
+    claimant_type_valid? && num_claimants_valid?
+  end
+
+
+  def attributes_for_submodels_and_collections
+    attributes_for_submodels.merge attributes_for_submodel_collections
+  end
+
+
+  def attributes_for_submodels
     attributes = {}
     singular_submodels.each { |model| attributes[model.underscore] = model }
+
     doubled_submodels.each do |model|
       %w(one two).each { |n| attributes["#{model.underscore}_#{n}"] = model }
     end
@@ -185,9 +251,13 @@ class Claim < BaseClass
   end
 
   def initialize_all_submodels(claim_params)
-    attributes_from_submodels.each do |attribute_name, model|
+    attributes_for_submodels.each do |attribute_name, model|
       init_submodel(claim_params, attribute_name, model)
     end
+    attributes_for_submodel_collections.each do |attribute, model|
+      initialize_submodel_collection(attribute, model, claim_params)
+    end
+
     self.form_state = claim_params['form_state'] if claim_params['form_state'].present?
   end
 
@@ -199,6 +269,10 @@ class Claim < BaseClass
     }
   end
 
+  def initialize_submodel_collection(attribute, model, claim_params)
+    instance_variable_set("@#{attribute}", model.constantize.new(claim_params))
+  end
+
   def params_for attribute_name, claim_params
     begin
       params = claim_params.key?(attribute_name) ? claim_params[attribute_name] : {}
@@ -206,23 +280,7 @@ class Claim < BaseClass
       raise NoMethodError.new(err.message + "attribute: #{attribute_name} #{claim_params.inspect}")
     end
 
-
-
     case attribute_name
-      when /claimant_one/
-        if @num_claimants.nil?
-          params.merge!(validate_presence: false, validate_absence: false, num_claimants: nil, claimant_num: :claimant_one, claimant_type: claimant_type)
-        else
-          params.merge!(validate_presence: true, validate_absence: false, num_claimants: claim_params[:num_claimants], claimant_num: :claimant_one, claimant_type: claimant_type)
-        end
-      when /claimant_two/
-        if @num_claimants.nil?
-          params.merge!(validate_absence: false, validate_presence: false, num_claimants: nil, claimant_num: :claimant_two)
-        elsif @num_claimants == 1
-          params.merge!(validate_absence: true, validate_presence: false)
-        else
-          params.merge!(validate_presence: true, num_claimants: '2', claimant_num: :claimant_two, claimant_type: claimant_type)
-        end
       when /defendant_one/
         if @num_defendants.nil?
           params.merge!(validate_presence: false, validate_absence: false, num_defendants: nil, defendant_num: :defendant_one)
@@ -235,7 +293,7 @@ class Claim < BaseClass
         elsif @num_defendants == 1
           params.merge!(validate_absence: true, validate_presence: false)
         else
-          params.merge!(validate_presence: true, num_defendants: '2', defendant_num: :claimant_two)
+          params.merge!(validate_presence: true, num_defendants: '2', defendant_num: :defendant_two)
         end
     end
 

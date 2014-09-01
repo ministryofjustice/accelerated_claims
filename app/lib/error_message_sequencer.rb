@@ -21,17 +21,18 @@ class ErrorMessageSequencer
 
     'claim_claimant' => [
       'claim_claimant_type_error',
-      'claim_claimant_number_of_claimants_error',
-      'claim_claimant_one_full_name_error',
-      'claim_claimant_one_street_error',
-      'claim_claimant_one_postcode_error',
-      'claim_claimant_two_full_name_error',
-      'claim_claimant_two_street_error',
-      'claim_claimant_two_postcode_error',
+      'claim_claimant_number_of_claimants_error'] +
+        (1..4).to_a.collect do |i|
+          ["claim_claimant_#{i}_title_error",
+          "claim_claimant_#{i}_full_name_error",
+          "claim_claimant_#{i}_street_error",
+          "claim_claimant_#{i}_postcode_error"]
+        end.flatten +
+      [
       'claim_claimant_contact_email_error',
       'claim_claimant_contact_phone_error',
       'claim_claimant_contact_full_name_error',
-      'claim_claimant_contact_postcode_error',
+      'claim_claimant_contact_postcode_error'
     ],
 
     'claim_defendant' => [
@@ -93,6 +94,10 @@ class ErrorMessageSequencer
   # this is what we use to determine the order.
   def sequence(errors)
     errors = errors[:base]
+    errors.each do |pair|
+      pair[0] = 'claim_claimant_number_of_claimants_error'  if pair[0] =='claim_num_claimants_error'
+      pair[0] = 'claim_defendant_number_of_defendants_error' if pair[0] =='claim_num_defendants_error'
+    end
     sorted = errors.sort { |a, b| comparison_number(a[0], b[0]) }
     sorted.each do |pair|
       pair[0] = 'claim_num_claimants_error'  if pair[0] =='claim_claimant_number_of_claimants_error'

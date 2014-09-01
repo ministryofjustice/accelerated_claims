@@ -16,25 +16,42 @@
       number_of_claimants: "2",
       number_of_defendants: "2"
     },
-    claimant_one: {
+    claimant_1: {
       title: "Mr ",
       organization_name: nil,
       full_name: "Joe Blow",
       street: "9 Made-up Lane\nAnytown",
       postcode: "EY88 1ZZ"
     },
-    claimant_two: {
+    claimant_2: {
       title: "Mrs",
+      organization_name: nil,
       full_name: "Jane Doe",
       street: "9 Made-up Lane\nAnytown",
       postcode: "EY88 1ZZ"
     },
     javascript: {
-      claimant_two_same_address: "Yes",
+      claimant_2_same_address: "Yes",
+      claimant_3_same_address: nil,
+      claimant_4_same_address: nil,
       any_legal_costs: "No",
       separate_correspondence_address: "Yes",
       other_contact_details: "Yes",
-      add_reference_number: "No"
+      add_reference_number: nil
+    },
+    claimant_3: {
+      title: nil,
+      organization_name: nil,
+      full_name: nil,
+      street: nil,
+      postcode: nil
+    },
+    claimant_4: {
+      title: nil,
+      organization_name: nil,
+      full_name: nil,
+      street: nil,
+      postcode: nil
     },
     legal_cost: {
       legal_costs: nil

@@ -16,12 +16,12 @@ describe ErrorMessageSequencer do
   let(:claim_possession_hearing_error)      { ['claim_possession_hearing_error',                'msg']}
   let(:claim_order_possession_error)        { ['claim_order_possession_error',                  'msg']}
   let(:claim_tenancy_tenancy_type_error)    { ['claim_tenancy_tenancy_type_error',              'msg']}
-  let(:claim_claimant_one_full_name_error)  { ['claim_claimant_one_full_name_error',            'msg']}
-  let(:claim_claimant_one_street_error)     { ['claim_claimant_one_street_error',               'msg']}
-  let(:claim_claimant_one_postcode_error)   { ['claim_claimant_one_postcode_error',             'msg']}
-  let(:claim_claimant_two_full_name_error)  { ['claim_claimant_two_full_name_error',            'msg']}
-  let(:claim_claimant_two_street_error)     { ['claim_claimant_two_street_error',               'msg']}
-  let(:claim_claimant_two_postcode_error)   { ['claim_claimant_two_postcode_error',             'msg']}
+  let(:claim_claimant_1_full_name_error)    { ['claim_claimant_1_full_name_error',            'msg']}
+  let(:claim_claimant_1_street_error)       { ['claim_claimant_1_street_error',               'msg']}
+  let(:claim_claimant_1_postcode_error)     { ['claim_claimant_1_postcode_error',             'msg']}
+  let(:claim_claimant_2_full_name_error)    { ['claim_claimant_2_full_name_error',            'msg']}
+  let(:claim_claimant_2_street_error)       { ['claim_claimant_2_street_error',               'msg']}
+  let(:claim_claimant_2_postcode_error)     { ['claim_claimant_2_postcode_error',             'msg']}
   let(:claim_defendant_one_inhabits_property_error) { ['claim_defendant_one_inhabits_property_error',   'msg']}
   let(:claim_defendant_one_title_error)     { ['claim_defendant_one_title_error',               'msg']}
   let(:claim_defendant_one_full_name_error) { ['claim_defendant_one_full_name_error',           'msg']}
@@ -50,12 +50,12 @@ describe ErrorMessageSequencer do
       claim_possession_hearing_error,
       claim_order_possession_error,
       claim_tenancy_tenancy_type_error,
-      claim_claimant_one_full_name_error,
-      claim_claimant_one_street_error,
-      claim_claimant_one_postcode_error,
-      claim_claimant_two_full_name_error,
-      claim_claimant_two_street_error,
-      claim_claimant_two_postcode_error,
+      claim_claimant_1_full_name_error,
+      claim_claimant_1_street_error,
+      claim_claimant_1_postcode_error,
+      claim_claimant_2_full_name_error,
+      claim_claimant_2_street_error,
+      claim_claimant_2_postcode_error,
       claim_defendant_one_inhabits_property_error,
       claim_defendant_one_title_error,
       claim_defendant_one_full_name_error,
@@ -75,12 +75,12 @@ describe ErrorMessageSequencer do
       claim_property_new_error,
 
       ['claim_num_claimants_error', 'msg'],
-      claim_claimant_one_full_name_error,
-      claim_claimant_one_street_error,
-      claim_claimant_one_postcode_error,
-      claim_claimant_two_full_name_error,
-      claim_claimant_two_street_error,
-      claim_claimant_two_postcode_error,
+      claim_claimant_1_full_name_error,
+      claim_claimant_1_street_error,
+      claim_claimant_1_postcode_error,
+      claim_claimant_2_full_name_error,
+      claim_claimant_2_street_error,
+      claim_claimant_2_postcode_error,
 
       ['claim_num_defendants_error', 'msg'],
       claim_defendant_one_title_error,

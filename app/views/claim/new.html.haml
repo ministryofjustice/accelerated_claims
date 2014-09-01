@@ -16,7 +16,8 @@
   %section
     %h2.section-header Claimants
 
-    .moj-panel.has-multiple#claimants(data-multiple="claimant" data-single="claimant" data-plural="claimants" data-caption="As the landlord, you're known as the <strong>claimant</strong> in this case.")
+
+    .moj-panel#claimants(data-multiple="claimant" data-single="claimant" data-plural="claimants" data-caption="As the landlord, you're known as the <strong>claimant</strong> in this case.")
 
       .row
         As the landlord, you’re known as the <b>claimant</b> in this case.
@@ -27,24 +28,23 @@
         choice: {'A private landlord (individual)' => 'individual', 'A private landlord (company), a local authority or a housing association' => 'organization'},
         data: { depend: 'claimanttype', 'virtual-pageview' => '/accelerated/claimants-section' }
 
-      = claim_form.radio_button_fieldset :num_claimants,
-          'How many claimants are there?'.html_safe,
-          class: 'hide js-claimanttype individual radio inline multiple',
-          choice: {'1 claimant'=>'1', '2 claimants'=>'2'},
-          data: { depend: 'numclaimants' }
+      = claim_form.text_field_row :num_claimants,
+        class: 'hide js-claimanttype individual',
+        input_class: 'narrow',
+        data: { depend: 'num-claimants' },
+        label: 'How many claimants are there? <br/><span class="hint">You need a minimum of 1 claimant and can have up to 4 claimants</span>'
 
+      .row.js-only
+        %span.error.hide#num-claimants-error-message
+          The number of claimants must be between 1 and 4. If you have more than 4 claimants, you’ll need to complete your 
+          accelerated possession claim on the <a href="http://hmctsformfinder.justice.gov.uk/HMCTS/GetForm.do?court_forms_id=618">N5b form</a>
 
-      .sub-panel.hide.js-numclaimants.1.2.claimant.js-claimanttype.organization#claimant_one
-        %h3.person.hide.js-claimanttype.individual First claimant
-        = render partial: 'claimant', object: @claim.claimant_one, locals: { claim_form: claim_form, claimant_field: :claimant_one}
-        .row.divider
-      .sub-panel.hide.js-claimanttype.inidvidual.js-numclaimants.2.claimant.same-address#claimant_two
-        %h3.person
-          Second claimant
-          %span.hint.block.hide (optional)
-        = render partial: 'claimant', object: @claim.claimant_two, locals: { claim_form: claim_form, claimant_field: :claimant_two}
-        .row.divider
-
+      .claimants
+        = render partial: 'claimant', object: @claim.claimant_1, locals: { claimant_id: 1, claim_form: claim_form, claimant_field: :claimant_1}
+        = render partial: 'claimant', object: @claim.claimant_2, locals: { claimant_id: 2, claim_form: claim_form, claimant_field: :claimant_2}
+        = render partial: 'claimant', object: @claim.claimant_3, locals: { claimant_id: 3, claim_form: claim_form, claimant_field: :claimant_3}
+        = render partial: 'claimant', object: @claim.claimant_4, locals: { claimant_id: 4, claim_form: claim_form, claimant_field: :claimant_4}
+      .row.divider
       = render partial: 'claimant_contact', object: @claim.claimant_contact, locals: { claim_form: claim_form, claimant_field: :claimant_contact}
 
 

@@ -3,6 +3,7 @@ class Claimant < BaseClass
 
   include Address
   include ActiveModel::Validations
+  include Comparable
 
   attr_accessor :validate_presence, :validate_absence
   attr_accessor :num_claimants
@@ -14,11 +15,9 @@ class Claimant < BaseClass
 
 
   validate :validate_claimant_state
-
+  validates :claimant_num, presence: { message: 'Claimant number not specified' }, allow_nil: false
   validates :title, length: { maximum: 8 }
   validates :full_name, length: { maximum: 40 }
-
-
 
 
   def initialize(params = {})
@@ -27,15 +26,27 @@ class Claimant < BaseClass
       @validate_presence = true unless params[:validate_absence] == true
     end
     @num_claimants = @num_claimants.nil? ? 1 : @num_claimants.to_i
+    @claimant_type = params['claimant_type']
   end
 
+
+  def ==(other)
+    return false if instance_variables.size != other.instance_variables.size
+    instance_variables.each do |ivar|
+      return false unless instance_variable_get(ivar) == other.instance_variable_get(ivar)
+    end
+  end
+
+  def empty?
+    title.blank? && full_name.blank? && organization_name.blank? && street.blank? && postcode.blank?
+  end
 
 
   # main validation for claimant state
   def validate_claimant_state
     if validate_absence?
-      validate_are_blank(:title, :full_name, :organization_name, :claimant_type, :street, :postcode)
-    elsif validate_presence?
+      validate_are_blank(:title, :full_name, :organization_name, :street, :postcode)
+    else
       validate_fields_are_present
     end
   end
@@ -64,15 +75,7 @@ class Claimant < BaseClass
 
 
   def subject_description
-    if @num_claimants == 1
-      "the claimant"
-    else
-      if @claimant_num == :claimant_one
-        "claimant 1"
-      else
-        "claimant 2"
-      end
-    end
+    "claimant #{@claimant_num}"
   end
 
 
@@ -92,17 +95,21 @@ class Claimant < BaseClass
 
   def validate_are_blank(*fields)
     fields.each do |field|
-      errors.add(field, "must not be entered if number of claimants is 1") unless self.send(field).blank?
+      unless self.send(field).blank?
+        errors.add(field, "must not be entered if number of claimants is 1") unless self.send(field).blank?
+      end
     end
   end
 
 
   def validate_fields_are_present
-    case claimant_type
+    case @claimant_type
     when 'organization'
       validate_organization_fields_are_present
     when 'individual'
       validate_individual_fields_are_present
+    else
+      errors.add(:claimant_type, 'Please select what kind of claimant you are')
     end
   end
 

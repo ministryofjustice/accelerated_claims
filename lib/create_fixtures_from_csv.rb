@@ -125,6 +125,7 @@ class DownloadScenarioData
     file.path
   end
 
+  # TODO replace this temprorary URl with real one once testing done
   def self.get_download_url
     key = "0Arsa0arziNdndHlwM2xJMVl5Z3pDdFVOYnVsRmZST1E"
     "https://docs.google.com/spreadsheet/pub?key=#{key}&single=true&gid=0&output=csv"

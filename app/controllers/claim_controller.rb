@@ -13,9 +13,9 @@ class ClaimController < ApplicationController
       start_year: Date.today.year,
       end_year: Tenancy::APPLICABLE_FROM_DATE.year
     }
+
     if(data = session[:claim])
       @claim = Claim.new(data)
-
       @errors = @claim.errors unless @claim.valid?
     else
       @claim = Claim.new
@@ -24,11 +24,9 @@ class ClaimController < ApplicationController
 
   def confirmation
     claim = session[:claim]
-
     if claim.nil? || !Claim.new(claim).valid?
       redirect_to_with_protocol(:new)
     end
-
     @page_title = 'Make a claim to evict tenants: accelerated possession'
   end
 
@@ -39,7 +37,6 @@ class ClaimController < ApplicationController
       redirect_to expired_path
     else
       @claim = Claim.new(session[:claim])
-
       if @claim.valid?
         flatten = Rails.env.test? || params[:flatten] == 'false' ? false : true
         pdf = PDFDocument.new(@claim.as_json, flatten).fill
@@ -67,6 +64,7 @@ class ClaimController < ApplicationController
 
   def submission
     session[:claim] = params['claim']
+    move_claimant_address_params_into_the_model
     move_defendant_address_params_into_model
     @claim = Claim.new(params['claim'])
 
@@ -93,6 +91,19 @@ class ClaimController < ApplicationController
       end
     end
   end
+
+
+  def move_claimant_address_params_into_the_model
+    (2 .. ClaimantCollection::MAX_CLAIMANTS).each do |i|
+      key = "claimant#{i}address"
+      if params.key?(key) && params[key] == "yes"
+        params['claim']["claimant_#{i}"]['street'] = params['claim']['claimant_1']['street']
+        params['claim']["claimant_#{i}"]['postcode'] = params['claim']['claimant_1']['postcode']
+      end
+    end
+  end
+
+
 
   def delete_all_pdfs
     FileUtils.rm Dir.glob('/tmp/*pdf')

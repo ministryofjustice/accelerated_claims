@@ -1,5 +1,5 @@
 = claim_form.fields_for claimant_field, claimant_contact, builder: LabellingFormBuilder do |form|
-  .sub-panel.claimant-solicitor.hide.js-claimanttype.organization
+  .sub-panel.claimant-solicitor.js-claimanttype.individual.organization
     .sub-panel.details
       .row.js-only
         %a.caption#contact-details{ href: '#contact-details' }
@@ -12,9 +12,9 @@
       = form.text_field_row :dx_number, label: add_optional('DX number'), class: 'rel dx_number'
     .row
       If you want us to send correspondence about the case to a different address, enter it here.
-      %span.hint.block.hide.js-claimanttype.individual
+      %span.hint.block.js-claimanttype.individual.js-only
         eg a legal representative's address (Optional)
-      %span.hint.block.hide.js-claimanttype.organization
+      %span.hint.block.js-claimanttype.organization
         eg a legal representative or managing agent's address (Optional)
 
     .sub-panel.details

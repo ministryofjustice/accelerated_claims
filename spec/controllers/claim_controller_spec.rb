@@ -78,7 +78,7 @@ describe ClaimController, :type => :controller do
     context 'with invalid claim data' do
       it 'should redirect to the claim form' do
         data = claim_post_data['claim']
-        data['claimant_one'].delete('full_name')
+        data['claimant_1'].delete('full_name')
         @controller.session['claim'] = data
         get :confirmation
         expect(response).to redirect_to('/')
@@ -119,7 +119,7 @@ describe ClaimController, :type => :controller do
     context 'with invalid claim data' do
       it 'should redirect to the claim form' do
         data = claim_post_data['claim']
-        data['claimant_one'].delete('full_name')
+        data['claimant_1'].delete('full_name')
         post :submission, claim: data
         get :download
         expect(response).to redirect_to('/')
@@ -167,7 +167,7 @@ describe ClaimController, :type => :controller do
     context 'with invalid claim data' do
       it 'should redirect to the claim form' do
         data = claim_post_data['claim']
-        data['claimant_one'].delete('full_name')
+        data['claimant_1'].delete('full_name')
         post :submission, claim: data
         get :data
         expect(response).to redirect_to('/')

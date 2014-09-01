@@ -29,6 +29,9 @@ class PDFDocument
       ActiveSupport::Notifications.instrument('add_defendant_two.pdf') do
         add_defendant_two result_path
       end
+
+      add_further_claimants(result_path)
+
       ActiveSupport::Notifications.instrument('strike_out_statements.pdf') do
         strike_out_applicable_statements result_pdf
       end
@@ -61,8 +64,9 @@ class PDFDocument
     end
   end
 
-  CONTINUATION_TEMPLATE = File.join Rails.root, 'templates', 'defendant_form.pdf'
-  STRIKER_JAR = File.join Rails.root, 'scripts', 'striker-0.3.1-standalone.jar'
+  CONTINUATION_TEMPLATE      = File.join Rails.root, 'templates', 'defendant_form.pdf'
+  FURTHER_CLAIMANTS_TEMPLATE = File.join Rails.root, 'templates', 'n5b-extra-claimants.pdf'
+  STRIKER_JAR                = File.join Rails.root, 'scripts', 'striker-0.3.1-standalone.jar'
 
   def defendant_two_data
     { 'defendant_two_address'   => "#{@json['defendant_two_address']}",
@@ -89,6 +93,43 @@ class PDFDocument
       combine_pdfs result_path, continuation_path
     end
   end
+
+
+
+  def add_further_claimants(result_path)
+    if @json.key?('claimant_3_address') || @json.key?('claimant_4_address')
+      further_claimants_path = create_further_claimants_pdf
+      combine_pdfs result_path, further_claimants_path
+    end
+  end
+
+
+  def create_further_claimants_pdf
+    further_claimants_pdf = Tempfile.new('further_claimants', '/tmp/')
+    pdf = PdfForms.new(ENV['PDFTK'])
+    pdf.fill_form FURTHER_CLAIMANTS_TEMPLATE, further_claimants_pdf, further_claimants_data
+    further_claimants_pdf.path
+  end
+
+
+  def further_claimants_data
+    further_claimants_string = "Further Claimants:\n\n"
+
+    if @json.key?('claimant_3_address')
+      further_claimants_string += @json['claimant_3_address']
+      further_claimants_string += "\n" + @json['claimant_3_postcode1'] + ' ' + @json['claimant_3_postcode2'] + "\n\n"
+    end
+
+    if @json.key?('claimant_4_address')
+      further_claimants_string += @json['claimant_4_address']
+      further_claimants_string += "\n" + @json['claimant_4_postcode1'] + ' ' + @json['claimant_4_postcode2'] + "\n\n"
+    end
+
+    { 'further_claimants' => further_claimants_string }
+  end
+
+
+
 
   FIRST_3A_LINES = [
     { x0: 42, x1: 515, y: 327+57 },

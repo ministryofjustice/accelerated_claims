@@ -192,13 +192,13 @@ describe Defendant, :type => :model do
     it 'should not validate if postcode is incomplete' do
       defendant.postcode = 'SW10'
       expect(defendant).not_to be_valid
-      expect(defendant.errors[:postcode]).to eq ["not full postcode"]
+      expect(defendant.errors[:postcode]).to eq ["defendant 2's postcode is not a full postcode"]
     end    
 
     it 'should not validate if postcode is invalid' do
       defendant.postcode = 'SW10XX 5FF'
       expect(defendant).not_to be_valid
-      expect(defendant.errors[:postcode]).to eq ["is too long (maximum is 8 characters)", "not valid postcode"]
+      expect(defendant.errors[:postcode]).to eq ["is too long (maximum is 8 characters)", "Enter a valid postcode for defendant 2"]
     end
 
     it 'should not validate if street is too long' do
