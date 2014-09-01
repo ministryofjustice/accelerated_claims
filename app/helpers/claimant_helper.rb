@@ -1,6 +1,5 @@
 module ClaimantHelper
   
-  include Haml::Helpers
 
   def claimant_header claimant_id
     if claimant_id == 1
