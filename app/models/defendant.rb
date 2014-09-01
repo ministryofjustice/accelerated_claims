@@ -2,7 +2,7 @@ class Defendant < BaseClass
 
   include Address
 
-  @do_partial_address_completion_validation = true
+  # @do_partial_address_completion_validation = true
 
   attr_accessor :validate_presence, :validate_absence
 
@@ -23,7 +23,7 @@ class Defendant < BaseClass
 
   def num_defendants_is_valid
     if validate_presence?
-      unless %w{ yes no }.include?(inhabits_property)
+      unless %w{ yes no }.include?(inhabits_property.try(:downcase))
         errors[:inhabits_property] << "Please select whether or not #{subject_description} lives in the property"
       end
     elsif validate_absence?
@@ -48,6 +48,9 @@ class Defendant < BaseClass
       @validate_presence = true unless params[:validate_absence] == true
     end
     @num_defendants = @num_defendants.nil? ? 1 : @num_defendants.to_i
+
+    puts "++++++ DEBUG defendant after init ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    pp self
   end
 
   def validate_presence?
@@ -87,11 +90,7 @@ class Defendant < BaseClass
     if @num_claimants == 1
       "the defendant"
     else
-      if defendant_num == :defendant_one
-        "defendant 1"
-      else
-        "defendant 2"
-      end
+      "defendant #{@defendant_num}"
     end
   end
 
