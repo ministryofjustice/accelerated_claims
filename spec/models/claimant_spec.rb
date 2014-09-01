@@ -72,8 +72,8 @@ describe Claimant, :type => :model do
   end
 
 
-  context 'ccc' do
-    it 'should not validate if validate presence true but attrs are blank' do
+  context 'validate presence true' do
+    it 'should not validate if attrs are blank' do
       claimant = Claimant.new(HashWithIndifferentAccess.new(claimant_type: 'individual', validate_presence: true, full_name: '', num_claimants: 1, postcode: '', street: '', title: '', claimant_num: 2))
       expect(claimant).not_to be_valid
       expect(claimant.errors[:title]).to eq ["Enter claimant 2's title"]
