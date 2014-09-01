@@ -56,7 +56,7 @@ class ClaimantCollection < BaseClass
         end
       end
     end
-    @errors.empty? ? true : false
+    @errors.empty? 
   end
 
 
