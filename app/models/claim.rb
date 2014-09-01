@@ -11,7 +11,6 @@ class Claim < BaseClass
                 :num_defendants
 
 
-  @@max_num_claimants       = 4
   @@valid_num_defendants    = [1, 2]
 
   @@valid_claimant_types    = %w{ organization individual }
@@ -150,7 +149,7 @@ class Claim < BaseClass
         if @num_claimants.nil? || @num_claimants == 0
           @errors[:base] << ['claim_claimant_number_of_claimants_error', 'Please say how many claimants there are']
           @num_claimants_valid_result = false
-        elsif @num_claimants > @@max_num_claimants
+      elsif @num_claimants > ClaimantCollection::MAX_CLAIMANTS
           @errors[:base] << ['claim_claimant_number_of_claimants_error', 'If there are more than 4 claimants in this case, you’ll need to complete your accelerated possession claim on the N5b form']
           @num_claimants_valid_result = false
         end
