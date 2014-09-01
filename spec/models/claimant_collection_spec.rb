@@ -93,11 +93,11 @@ describe ClaimantCollection do
   end
 
 
-  describe 'model_hash' do
-    it 'should produce the hash with the correct number of claimants' do
-      expect(cc.model_hash).to eq({ 'claimant_1' => 'Claimant', 'claimant_2' => 'Claimant', 'claimant_3' => 'Claimant' })
-    end
-  end
+  # describe 'model_hash' do
+  #   it 'should produce the hash with the correct number of claimants' do
+  #     expect(cc.model_hash).to eq({ 'claimant_1' => 'Claimant', 'claimant_2' => 'Claimant', 'claimant_3' => 'Claimant' })
+  #   end
+  # end
 
   describe 'as_json' do
     it 'should produce a json representation of the contacts' do
@@ -118,6 +118,22 @@ describe ClaimantCollection do
     end
   end
 
+
+  describe '.max_claimants' do
+    it 'should return the maximum number of claimants' do
+      expect(ClaimantCollection.max_claimants).to eq 4
+    end
+  end
+
+
+  describe '.participant_type' do
+    it 'should return claimant' do
+      expect(ClaimantCollection.participant_type).to eq 'claimant'
+    end
+  end
+
+
+  
 end
 
 
