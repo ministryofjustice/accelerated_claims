@@ -68,6 +68,29 @@ describe DefendantCollection do
   end
 
 
+  describe '#[]=' do
+
+    let(:defendant)   { Defendant.new( { "title" => "Mrs", "full_name" => "Maggie Thatcher", "street" => "10 Downing Street St\nLondon", "postcode" => "SW1W 0LU"} ) }
+    it 'should raise error if index is zero' do
+      expect {
+        dc[0] = defendant
+      }.to raise_error ArgumentError, "Invalid index: 0"
+    end
+
+    it 'should raise error if index is greater than number of claimants' do
+      expect {
+        dc[4] = defendant
+      }.to raise_error ArgumentError, "Invalid index: 4"
+    end
+
+    it 'should replace the specified claimant with the new claimant' do
+      dc[3] = defendant
+      d = dc[3]
+      expect(d.full_name).to eq 'Maggie Thatcher'
+    end
+  end
+
+
 end
 
 

@@ -93,12 +93,6 @@ describe ClaimantCollection do
   end
 
 
-  # describe 'model_hash' do
-  #   it 'should produce the hash with the correct number of claimants' do
-  #     expect(cc.model_hash).to eq({ 'claimant_1' => 'Claimant', 'claimant_2' => 'Claimant', 'claimant_3' => 'Claimant' })
-  #   end
-  # end
-
   describe 'as_json' do
     it 'should produce a json representation of the contacts' do
       expect(cc.as_json).to eq expected_json(cc)
