@@ -13,8 +13,8 @@
     },
     claim: {
       claimant_type: "organization",
-      number_of_claimants: "1",
-      number_of_defendants: "1"
+      num_claimants: "1",
+      num_defendants: "1"
     },
     claimant_1: {
       title: nil,
