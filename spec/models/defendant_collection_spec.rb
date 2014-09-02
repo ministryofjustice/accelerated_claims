@@ -45,9 +45,29 @@ describe DefendantCollection do
       expect(invalid_defendant.valid?).to be false
       expect(dc2.size).to eq 2
     end
-
-
   end
+
+  describe '#[]' do
+    it 'should return the defendant of the given index' do
+      defendant = dc[2]
+      expect(defendant).to be_instance_of(Defendant)
+      expect(defendant.full_name).to eq "Barb Akew"
+    end
+
+    it 'should raise error if index 0 is given' do
+      expect {
+        dc[0]
+      }.to raise_error ArgumentError, "No such index: 0"
+    end
+  
+
+    it 'should return empty claimant if the index is higher than the number of claimants' do
+      defendant = dc[4]
+      expect(defendant.empty?).to be true
+    end
+  end
+
+
 end
 
 

@@ -57,6 +57,11 @@ class Defendant < BaseClass
     self.validate_absence == true
   end
 
+  def empty?
+    title.blank? && full_name.blank? && street.blank? && postcode.blank?
+  end
+
+
   def as_json
     if present?
       postcode1, postcode2 = split_postcode
