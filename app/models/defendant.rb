@@ -31,6 +31,7 @@ class Defendant < BaseClass
         errors[:inhabits_property] << "Please select whether or not #{subject_description} lives in the property"
       end
     end
+
   end
 
   # main validation for claimant state
@@ -48,9 +49,6 @@ class Defendant < BaseClass
       @validate_presence = true unless params[:validate_absence] == true
     end
     @num_defendants = @num_defendants.nil? ? 1 : @num_defendants.to_i
-
-    puts "++++++ DEBUG defendant after init ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    pp self
   end
 
   def validate_presence?

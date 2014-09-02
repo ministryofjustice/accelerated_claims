@@ -33,13 +33,8 @@ class DefendantCollection < ParticipantCollection
   private
 
   def populate_defendants(claim_params)
-    pp claim_params
     @cached_defendant_1_street = claim_params['defendant_1']['street']
     @cached_defendant_1_postcode = claim_params['defendant_1']['postcode']
-    puts "++++++ DEBUG cached ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    puts @cached_defendant_1_street
-    puts @cached_defendant_1_postcode
-    
     if claim_params.nil? || claim_params.empty?
       ( 1 .. DefendantCollection.max_defendants ).each { |i|  @participants[i] = Defendant.new }
     else
@@ -59,6 +54,7 @@ class DefendantCollection < ParticipantCollection
     defendant_params = claim_params["defendant_#{index}"]
     defendant_params = ActiveSupport::HashWithIndifferentAccess.new if defendant_params.nil?
     defendant_params['defendant_num'] = index
+    copy_cached_defendant_1_address(defendant_params) if defendant_params['inhabits_property'].try(:downcase) == 'yes'
     if index > num_defendants
       defendant_params['validate_absence'] = true 
       defendant_params['validate_presence'] = false
@@ -68,6 +64,11 @@ class DefendantCollection < ParticipantCollection
     @participants[index] = Defendant.new(defendant_params)
   end
   
+
+  def copy_cached_defendant_1_address(params)
+    params['street'] = @cached_defendant_1_street
+    params['postcode'] = @cached_defendant_1_postcode
+  end
 
 
 
