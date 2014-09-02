@@ -4,12 +4,14 @@ describe Defendant, :type => :model do
                   full_name: "John Major",
                   street: "Sesame Street\nLondon",
                   postcode: "SW1X 2PT",
+                  defendant_num: 2,
                   inhabits_property: 'no')
   end
 
   let(:property_inhabiting_defendant) do
     Defendant.new(title: "Mr",
                   full_name: "John Major",
+                  defendant_num: 2,
                   inhabits_property: 'yes')
   end
 
@@ -23,7 +25,7 @@ describe Defendant, :type => :model do
 
 
   context 'validate inhabits property' do
-    let(:invalid_defendant)  { Defendant.new(title: "Mr", full_name: "John Major", street: "Sesame Street\nLondon",  postcode: "SW1X 2PT") }
+    let(:invalid_defendant)  { Defendant.new(title: "Mr", full_name: "John Major", street: "Sesame Street\nLondon",  postcode: "SW1X 2PT", defendant_num: 2) }
 
     it 'should raise error if inhabits property not set' do
       expect(invalid_defendant).not_to be_valid

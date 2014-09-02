@@ -12,22 +12,21 @@ class Defendant < BaseClass
   attr_accessor :postcode
   attr_accessor :property_address
   attr_accessor :inhabits_property
-  attr_accessor :num_defendants
   attr_accessor :defendant_num
 
   validates :title, length: { maximum: 8 }
   validates :full_name, length: { maximum: 40 }
 
-  validate :num_defendants_is_valid
+  validate :inhabits_property_is_valid
   validate :validate_defendant_state
 
-  def num_defendants_is_valid
+  def inhabits_property_is_valid
     if validate_presence?
       unless %w{ yes no }.include?(inhabits_property.try(:downcase))
         errors[:inhabits_property] << "Please select whether or not #{subject_description} lives in the property"
       end
     elsif validate_absence?
-      unless inhabits_property.nil?
+      unless inhabits_property.blank?
         errors[:inhabits_property] << "Please select whether or not #{subject_description} lives in the property"
       end
     end
@@ -48,7 +47,6 @@ class Defendant < BaseClass
     unless params.include?(:validate_presence)
       @validate_presence = true unless params[:validate_absence] == true
     end
-    @num_defendants = @num_defendants.nil? ? 1 : @num_defendants.to_i
   end
 
   def validate_presence?

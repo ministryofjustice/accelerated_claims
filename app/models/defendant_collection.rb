@@ -4,7 +4,6 @@ class DefendantCollection < ParticipantCollection
   MAX_DEFENDANTS = 20
 
   def initialize(claim_params)
-    
     @num_participants = claim_params['num_defendants'].to_i || 0
     super
     populate_defendants(claim_params)
@@ -33,8 +32,7 @@ class DefendantCollection < ParticipantCollection
   private
 
   def populate_defendants(claim_params)
-    @cached_defendant_1_street = claim_params['defendant_1']['street']
-    @cached_defendant_1_postcode = claim_params['defendant_1']['postcode']
+    cache_defendant_1_address
     if claim_params.nil? || claim_params.empty?
       ( 1 .. DefendantCollection.max_defendants ).each { |i|  @participants[i] = Defendant.new }
     else
@@ -55,6 +53,10 @@ class DefendantCollection < ParticipantCollection
     defendant_params = ActiveSupport::HashWithIndifferentAccess.new if defendant_params.nil?
     defendant_params['defendant_num'] = index
     copy_cached_defendant_1_address(defendant_params) if defendant_params['inhabits_property'].try(:downcase) == 'yes'
+
+
+    # we need to populate the defendant with the params even if > thn number of defendants!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
     if index > num_defendants
       defendant_params['validate_absence'] = true 
       defendant_params['validate_presence'] = false
@@ -64,6 +66,17 @@ class DefendantCollection < ParticipantCollection
     @participants[index] = Defendant.new(defendant_params)
   end
   
+
+  def cache_defendant_1_address
+    if claim_params['defendant_1'].nil?
+      @cached_defendant_1_street = ''
+      @cached_defendant_1_postcode = ''
+    else
+      @cached_defendant_1_street = claim_params['defendant_1']['street']
+      @cached_defendant_1_postcode = claim_params['defendant_1']['postcode']
+    end
+  end
+
 
   def copy_cached_defendant_1_address(params)
     params['street'] = @cached_defendant_1_street
