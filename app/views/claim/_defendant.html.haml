@@ -1,16 +1,22 @@
 = claim_form.fields_for defendant_field, defendant, builder: LabellingFormBuilder do |form|
-  = form.text_field_row :title, class: 'title', input_class: 'smalltext'
-  = form.text_field_row :full_name, class: 'rel'
+  = 'AAAAAAAAA'
+  = debug form.object
+  = 'XXXXXXXXX'
 
 
-  = form.radio_button_fieldset :inhabits_property,
-          'Does the defendant live in the property?',
-          class: 'radio inline js-depend',
-          choice: {'Yes'=>'yes', 'No'=>'no'},
-          data: { depend: 'inhabitproperty_' + defendant_field.to_s }
 
-  .sub-panel.extra.address.hide.no{ class: 'js-inhabitproperty_' + defendant_field.to_s }
-    .row.nonjs
-      Defendant’s address if they’re <strong>not</strong> living in the property
-    = form.text_area_row  :street,   label: 'Full address', class: 'rel street'
-    = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'
+  -# = form.text_field_row :title, class: 'title', input_class: 'smalltext'
+  -# = form.text_field_row :full_name, class: 'rel'
+
+
+  -# = form.radio_button_fieldset :inhabits_property,
+  -#         'Does the defendant live in the property?',
+  -#         class: 'radio inline js-depend',
+  -#         choice: {'Yes'=>'yes', 'No'=>'no'},
+  -#         data: { depend: 'inhabitproperty_' + defendant_field.to_s }
+
+  -# .sub-panel.extra.address.hide.no{ class: 'js-inhabitproperty_' + defendant_field.to_s }
+  -#   .row.nonjs
+  -#     Defendant’s address if they’re <strong>not</strong> living in the property
+  -#   = form.text_area_row  :street,   label: 'Full address', class: 'rel street'
+  -#   = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'

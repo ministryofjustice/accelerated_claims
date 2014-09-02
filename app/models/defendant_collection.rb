@@ -32,7 +32,7 @@ class DefendantCollection < ParticipantCollection
   private
 
   def populate_defendants(claim_params)
-    cache_defendant_1_address
+    cache_defendant_1_address(claim_params)
     if claim_params.nil? || claim_params.empty?
       ( 1 .. DefendantCollection.max_defendants ).each { |i|  @participants[i] = Defendant.new }
     else
@@ -67,7 +67,7 @@ class DefendantCollection < ParticipantCollection
   end
   
 
-  def cache_defendant_1_address
+  def cache_defendant_1_address(claim_params)
     if claim_params['defendant_1'].nil?
       @cached_defendant_1_street = ''
       @cached_defendant_1_postcode = ''

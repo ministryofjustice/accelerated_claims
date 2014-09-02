@@ -59,14 +59,18 @@
           class: 'hide individual',
           input_class: 'narrow',
           data: { 'virtual-pageview' => '/accelerated/defendants-section' },
-          label: 'How many defendants are there?'
+          label: 'How many defendants are there'
+
+      = debug 'CCCCCCCC'
+      = debug @claim.defendant_1.class
+      = debug 'CCCCCCC'
+
 
       .defendants
         - (1 .. DefendantCollection::MAX_DEFENDANTS).each do |i|
-          = render partial: 'defendant', object: @claim.send("defendant_#{i}"), locals: { claimant_id: i, claim_form: claim_form, defendant_field: "defendant_#{i}".to_sym}
+          = render partial: 'defendant', object: @claim.defendant_1, locals: { defendant_id: 1, claim_form: claim_form, defendant_field: :defendant_1 }
+          
 
-
-     
 
   %section
     %h2.section-header Notice

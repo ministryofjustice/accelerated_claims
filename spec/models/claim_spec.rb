@@ -18,16 +18,36 @@ describe Claim, :type => :model do
     let(:data) { {} }
 
     it 'should have submodels' do
-      %w(property notice license deposit fee possession order defendant_one defendant_two).each do |attr|
+      %w(property notice license deposit fee possession order).each do |attr|
         expect(claim).to respond_to attr
       end
     end
+  end
 
+  context 'method_missing' do
+    let(:data) { {} }
     it 'should respond to magic methods claimant_n' do
       expect{
         claim.claimant_1
         claim.claimant_2
       }.not_to raise_error
+    end
+
+    it 'should respond to magic methods defendant_n' do
+      expect{
+        claim.defendant_1
+        claim.defendant_7
+        claim.defendant_20
+      }.not_to raise_error
+    end
+
+    it 'should return a claimant object for magic methods claimant_n' do
+      expect(claim.claimant_4).to be_instance_of(Claimant)
+    end
+
+    it 'shuld return a defendant object for magic mehods defendnat_n' do
+      expect(claim.defendant_4).to be_instance_of(Defendant)
+      expect(claim.defendant_20).to be_instance_of(Defendant)
     end
   end
 
@@ -246,21 +266,27 @@ describe Claim, :type => :model do
     context "when a defendant's address is blank" do
       let(:data) do
         hash = claim_post_data['claim']
-        hash['defendant_one'] = hash['defendant_one'].except('street', 'postcode')
-        hash['defendant_two'] = hash['defendant_two'].except('street', 'postcode')
-        hash['defendant_one']["inhabits_property"] = "yes"
-        hash['defendant_two']["inhabits_property"] = "yes"
+        hash['defendant_1'] = hash['defendant_1'].except('street', 'postcode')
+        hash['defendant_2'] = hash['defendant_2'].except('street', 'postcode')
+        hash['defendant_1']["inhabits_property"] = "yes"
+        hash['defendant_2']["inhabits_property"] = "yes"
         hash
       end
       it "defendant one should render with the property's address" do
-        expect(claim.as_json['defendant_one_address']).to include claim.as_json['property_address']
-        expect(claim.as_json['defendant_one_postcode1']).to eql claim.as_json['property_postcode1']
-        expect(claim.as_json['defendant_one_postcode2']).to eql claim.as_json['property_postcode2']
+        expect(claim.as_json['defendant_1_address']).to include claim.as_json['property_address']
+        expect(claim.as_json['defendant_1_postcode1']).to eql claim.as_json['property_postcode1']
+        expect(claim.as_json['defendant_1_postcode2']).to eql claim.as_json['property_postcode2']
       end
       it "defendant two should render with the property's address" do
-        expect(claim.as_json['defendant_two_address']).to include claim.as_json['property_address']
-        expect(claim.as_json['defendant_one_postcode1']).to eql claim.as_json['property_postcode1']
-        expect(claim.as_json['defendant_one_postcode2']).to eql claim.as_json['property_postcode2']
+        puts "++++++ DEBUG json defendant 2 address ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+        pp claim
+        puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+        
+        pp claim.as_json['defendant_2_address']
+        
+        expect(claim.as_json['defendant_2_address']).to include claim.as_json['property_address']
+        expect(claim.as_json['defendant_1_postcode1']).to eql claim.as_json['property_postcode1']
+        expect(claim.as_json['defendant_1_postcode2']).to eql claim.as_json['property_postcode2']
       end
     end
 
