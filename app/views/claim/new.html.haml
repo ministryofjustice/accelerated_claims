@@ -55,22 +55,18 @@
       .row
         Your tenants are known as <b>defendants</b> in this case.
 
-      = claim_form.radio_button_fieldset :num_defendants,
-          'How many defendants are there?',
-          class: 'radio inline multiple',
-          choice: {'1 defendant'=>'1', '2 defendants'=>'2'},
-          data: { depend: 'numdefendants', 'virtual-pageview' => '/accelerated/defendants-section' }
+      = claim_form.text_field_row :num_defendants,
+          class: 'hide individual',
+          input_class: 'narrow',
+          data: { 'virtual-pageview' => '/accelerated/defendants-section' },
+          label: 'How many defendants are there?'
 
-      .sub-panel.hide.js-numdefendants.1.2.defendant#defendant_one
-        %h3.person First defendant
-        = render partial: 'defendant', object: @claim.defendant_one, locals: { claim_form: claim_form, defendant_field: :defendant_one}
+      .defendants
+        - (1 .. DefendantCollection::MAX_DEFENDANTS).each do |i|
+          = render partial: 'defendant', object: @claim.send("defendant_#{i}"), locals: { claimant_id: i, claim_form: claim_form, defendant_field: "defendant_#{i}".to_sym}
 
-      .row.divider
-      .sub-panel.hide.js-numdefendants.2.defendant#defendant_two
-        %h3.person
-          Second defendant
-          %span.hint.block.hide (optional)
-        = render partial: 'defendant', object: @claim.defendant_two, locals: { claim_form: claim_form, defendant_field: :defendant_two}
+
+     
 
   %section
     %h2.section-header Notice
