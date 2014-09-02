@@ -14,11 +14,17 @@ class ClaimController < ApplicationController
       end_year: Tenancy::APPLICABLE_FROM_DATE.year
     }
 
-    if(data = session[:claim])
-      @claim = Claim.new(data)
-      @errors = @claim.errors unless @claim.valid?
+    @claim = if params.has_key?(:journey)
+      require 'fixture_data'
+      journey_id = params[:journey].to_i
+      claim_data = FixtureData.data.params_data_for(journey_id)
+      Claim.new(HashWithIndifferentAccess.new(claim_data))
+    elsif (data = session[:claim])
+      Claim.new(data).tap { |claim|
+        @errors = claim.errors unless claim.valid?
+      }
     else
-      @claim = Claim.new
+      Claim.new
     end
   end
 
