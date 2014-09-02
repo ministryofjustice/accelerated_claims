@@ -97,6 +97,38 @@ describe DefendantCollection do
     end
   end
 
+  context 'instantiating with an empty array' do
+    it 'should intantiate a collection of 20 empty objects' do
+      dc = DefendantCollection.new( HashWithIndifferentAccess.new )
+      expect(dc.size).to eq 0
+      expect(empty_defendant?(dc[1])).to be true
+      expect(empty_defendant?(dc[2])).to be true
+      expect(empty_defendant?(dc[3])).to be true
+      expect(empty_defendant?(dc[4])).to be true
+      expect(empty_defendant?(dc[5])).to be true
+      expect(empty_defendant?(dc[6])).to be true
+      expect(empty_defendant?(dc[15])).to be true
+      expect(empty_defendant?(dc[19])).to be true
+      expect(empty_defendant?(dc[20])).to be true
+    end
+  end
+
+
+
+  describe '.max_defendants' do
+    it 'should return the maximum number of defendants' do
+      expect(DefendantCollection.max_defendants).to eq 20
+    end
+  end
+
+
+
+end
+
+
+
+def empty_defendant?(obj)
+  obj.is_a?(Defendant) && obj.empty?
 end
 
 
