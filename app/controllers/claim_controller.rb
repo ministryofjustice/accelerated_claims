@@ -14,7 +14,9 @@ class ClaimController < ApplicationController
       end_year: Tenancy::APPLICABLE_FROM_DATE.year
     }
 
-    @claim = if params.has_key?(:journey)
+    production = ENV["ENV_NAME"] == "production"
+
+    @claim = if !production && params.has_key?(:journey)
       require 'fixture_data'
       journey_id = params[:journey].to_i
       claim_data = FixtureData.data.params_data_for(journey_id)
