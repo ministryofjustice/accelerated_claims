@@ -91,10 +91,19 @@ describe DefendantCollection do
   end
 
 
+  describe 'as_json' do
+    it 'should produce a json representation of the contacts' do
+      expect(dc.as_json).to eq expected_json(dc)
+    end
+  end
+
 end
 
 
 
+def expected_json(dc)
+  {'defendant_1' => dc[1].as_json, 'defendant_2' => dc[2].as_json, 'defendant_3' => dc[3].as_json }.as_json
+end
 
 
 
