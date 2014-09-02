@@ -69,7 +69,7 @@ class ClaimForm
   end
 
   def select_number_of_claimants
-    num_claimants = get_data('claim', 'number_of_claimants')
+    num_claimants = get_data('claim', 'num_claimants')
     fill_in "How many claimants are there?", with: num_claimants
     num_claimants
   end
@@ -89,7 +89,7 @@ class ClaimForm
       model = "claim"
     end
 
-    number = get_data(model, "number_of_#{type}").to_i
+    number = get_data(model, "num_#{type}").to_i
     case number
       when 1
         choose("#{button_prefix}_#{type}_1")
