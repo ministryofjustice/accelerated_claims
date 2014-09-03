@@ -302,7 +302,7 @@ class ClaimForm
     choose_radio  prefix, 'tenancy_type'
 
     case get_data(prefix, 'tenancy_type')
-    when 'Assured'
+    when 'assured'
       choose_radio  prefix, 'assured_shorthold_tenancy_type'
 
       case get_data(prefix, 'assured_shorthold_tenancy_type')
@@ -313,7 +313,7 @@ class ClaimForm
       else
         raise 'Unexpected number of tenancy agreements'
       end
-    when 'Demoted'
+    when 'demoted'
       fill_in_moj_date_fieldset prefix, 'demotion_order_date'
       fill_in_text_field prefix, 'demotion_order_court'
       choose_radio  prefix, 'previous_tenancy_type'

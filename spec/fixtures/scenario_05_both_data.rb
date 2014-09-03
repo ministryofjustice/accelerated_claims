@@ -85,7 +85,7 @@
       postcode: nil
     },
     tenancy: {
-      tenancy_type: "Demoted",
+      tenancy_type: "demoted",
       assured_shorthold_tenancy_type: nil,
       original_assured_shorthold_tenancy_agreement_date: nil,
       start_date: nil,

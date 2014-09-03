@@ -85,7 +85,7 @@
       postcode: nil
     },
     tenancy: {
-      tenancy_type: "Assured",
+      tenancy_type: "assured",
       assured_shorthold_tenancy_type: "multiple",
       original_assured_shorthold_tenancy_agreement_date: "1995-01-01",
       start_date: nil,
