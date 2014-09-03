@@ -85,6 +85,13 @@ class ClaimController < ApplicationController
     end
   end
 
+  def clear
+    # Note that we do not call reset_session - in future other stuff may be
+    # stored in the session which we probably don't want to clear
+    session.delete(:claim)
+    redirect_to(action: :new)
+  end
+
   def raise_exception
     session[:special_values] = "session variable"
     raise "This exception has been deliberately raised"

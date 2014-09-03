@@ -15,6 +15,7 @@ AcceleratedClaims::Application.routes.draw do
     get  '/',               controller: :claim, action: :new
     post '/submission',     controller: :claim, action: :submission
     get  '/confirmation',   controller: :claim, action: :confirmation
+    post '/clear',          controller: :claim, action: :clear
     get  '/download',       controller: :claim, action: :download
     get  '/data',           controller: :claim, action: :data
     get  '/raise_exception',controller: :claim, action: :raise_exception

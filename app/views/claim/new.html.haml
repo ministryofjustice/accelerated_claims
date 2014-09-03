@@ -107,6 +107,7 @@
   %section
     .action-buttons.cf
       %input.button.primary.large.chevron.left#submit{name: 'Continue', value: 'Continue', type: 'submit'}
+    = link_to "Clear form", clear_path, method: :post, confirm: "This will clear the form and start again. Are you sure?"
 
   %section
     %p
