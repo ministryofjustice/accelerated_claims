@@ -83,7 +83,6 @@ GEM
     columnize (0.8.9)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
-    curb (0.8.5)
     debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
     docile (1.1.5)
@@ -93,6 +92,7 @@ GEM
     dotenv-rails (0.11.1)
       dotenv (= 0.11.1)
     erubis (2.7.0)
+    excon (0.39.5)
     execjs (2.2.0)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
@@ -343,8 +343,8 @@ DEPENDENCIES
   ci_reporter
   codeclimate-test-reporter
   coffee-rails
-  curb
   dotenv-rails
+  excon
   faraday
   govuk_frontend_toolkit (= 1.5.0)
   guard-coffeescript

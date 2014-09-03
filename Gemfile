@@ -35,7 +35,7 @@ gem 'mail'
 gem 'faraday'
 gem 'redis-rails'
 
-gem 'curb'
+gem 'excon'
 
 group :production, :development do
 #  gem 'newrelic_rpm'

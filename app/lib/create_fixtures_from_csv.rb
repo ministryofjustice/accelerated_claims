@@ -6,7 +6,7 @@
 
 require 'csv'
 require 'json'
-require 'curb'
+require 'excon'
 
 class DataScenarioGenerator
   def initialize(csv_filename)
@@ -110,12 +110,15 @@ class DownloadScenarioData
   def self.download
     url = get_download_url
     puts "Downloading: #{url}"
-    http = Curl.get(get_download_url) do |http|
-      http.headers['Accept'] = "text/csv"
-      http.follow_location = true
-    end
 
-    write_csv_to_tempfile http.body_str
+    response = Excon.get(url, {
+      headers: {
+        "Accept" => "text/csv"
+      },
+      expects: [200],
+    })
+
+    write_csv_to_tempfile response.body
   end
 
   def self.write_csv_to_tempfile(csv_data)
