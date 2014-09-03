@@ -59,6 +59,7 @@ group :development, :test do
   gem 'awesome_print'
   gem 'timecop'
   gem 'pry'
+  gem 'foreman'
 end
 
 group :test do
