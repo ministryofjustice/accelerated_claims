@@ -17,9 +17,11 @@ class ClaimController < ApplicationController
     production = ENV["ENV_NAME"] == "production"
 
     @claim = if !production && params.has_key?(:journey)
+      force_reload = params.has_key?(:reload)
+
       require 'fixture_data'
       journey_id = params[:journey].to_i
-      claim_data = FixtureData.data.params_data_for(journey_id)
+      claim_data = FixtureData.data(force_reload).params_data_for(journey_id)
       Claim.new(HashWithIndifferentAccess.new(claim_data))
     elsif (data = session[:claim])
       Claim.new(data).tap { |claim|

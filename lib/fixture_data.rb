@@ -2,8 +2,13 @@ require 'create_fixtures_from_csv'
 
 class FixtureData
   class << self
-    def data
-      @data ||= FixtureData.new
+    def data(reload = false)
+      if reload
+        # Note that it can take a minute for the CSV file from google to update
+        @data = FixtureData.new
+      else
+        @data ||= FixtureData.new
+      end
     end
   end
 
