@@ -50,7 +50,7 @@ group :development, :test do
   gem 'jasmine', '~> 2.0.2'
   gem 'jasmine-rails', '~> 0.9.1'
   gem 'jasmine-jquery-rails', '~> 2.0.2'
-  gem 'guard-jasmine', :git => 'https://github.com/guard/guard-jasmine', :branch => 'jasmine-2'
+  gem 'guard-jasmine', git: 'https://github.com/guard/guard-jasmine', branch: 'jasmine-2'
   gem 'quiet_assets'
   gem 'byebug'
   gem 'dotenv-rails'  # set environment variables via the filesystem

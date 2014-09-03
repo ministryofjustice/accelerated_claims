@@ -27,7 +27,7 @@ class ClaimForm
     fill_licences
     fill_deposit
     fill_postponement
-    check_order_possession_and_cost
+    choose_defendant_pay_costs
     fill_court_fee
     fill_legal_costs
     fill_reference_number
@@ -62,7 +62,7 @@ class ClaimForm
     fill_licences
     fill_deposit
     fill_postponement
-    check_order_possession_and_cost
+    choose_defendant_pay_costs
     fill_court_fee
     fill_legal_costs
     fill_reference_number_with_js unless claimant_type == 'individual'
@@ -74,12 +74,7 @@ class ClaimForm
     num_claimants
   end
 
-
-
-
-
   def select_number_of type
-
     case type
     when :claimants
       button_prefix = "claim_num"
@@ -424,11 +419,8 @@ class ClaimForm
     choose_radio('possession','hearing')
   end
 
-  def check_order_possession_and_cost
-    prefix = 'order'
-    check_box(prefix, 'possession')
-
-    choose_radio(prefix, 'cost')
+  def choose_defendant_pay_costs
+    choose_radio('order', 'cost')
   end
 
   def fill_court_fee

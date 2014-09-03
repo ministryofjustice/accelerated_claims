@@ -5,12 +5,3 @@
           class: 'radio inline',
           choice: {'Yes'=>'Yes', 'No'=>'No'}
 
-  .row
-    You need to confirm that you want the court to order the defendant to move out of the property.
-  %fieldset.radio{ id: (form.error_for?(:possession) ? form.error_id_for(:possession) : 'possession_fieldset') }
-    %h3
-      Select all options that apply:
-    .options
-      - form.row :possession do
-        = form.labelled_check_box :possession, 'The defendant must give up the property'
-
