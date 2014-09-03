@@ -56,15 +56,9 @@
         Your tenants are known as <b>defendants</b> in this case.
 
       = claim_form.text_field_row :num_defendants,
-          class: 'hide individual',
           input_class: 'narrow',
           data: { 'virtual-pageview' => '/accelerated/defendants-section' },
           label: 'How many defendants are there'
-
-      = debug 'CCCCCCCC'
-      = debug @claim.defendant_1.class
-      = debug 'CCCCCCC'
-
 
       .defendants
         - (1 .. DefendantCollection::MAX_DEFENDANTS).each do |i|
