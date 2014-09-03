@@ -60,12 +60,16 @@ class ApplicationController < ActionController::Base
   private
 
   def expired_session_redirection
-    message = "Rescued invalid Authenticity Token. They are now being redirected."
-    severity = 'warn'
-    fields = { :message => message, :level => severity }
-    event = LogStash::Event.new('@source' => 'unknown', '@fields' => fields, '@tags' => ['log'])
-    LogStasher.logger << "#{event.to_json}\n"
-    redirect_to url_for(action: :expired, controller: :static)
+    unless Rails.env.development?
+      message = "Rescued invalid Authenticity Token. They are now being redirected."
+      severity = 'warn'
+      fields = { :message => message, :level => severity }
+      event = LogStash::Event.new('@source' => 'unknown', '@fields' => fields, '@tags' => ['log'])
+      LogStasher.logger << "#{event.to_json}\n"
+      redirect_to url_for(action: :expired, controller: :static)
+    else
+      raise
+    end
   end
 
   def protocol

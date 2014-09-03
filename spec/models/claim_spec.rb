@@ -443,5 +443,6 @@ describe Claim, :type => :model do
         expect(claim.errors.full_messages).to eq [["claim_num_claimants_error", "If there are more than 4 claimants in this case, you’ll need to complete your accelerated possession claim on the N5b form"]]
       end
     end
+    
   end
 end

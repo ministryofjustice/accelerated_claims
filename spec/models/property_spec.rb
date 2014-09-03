@@ -45,5 +45,13 @@ describe Property, :type => :model do
         expect(property).not_to be_valid
       end
     end
+
+
+    context 'invalid postcode' do
+      it 'should generate an error message' do
+        property.postcode = 'ABC4545'
+        expect(property).not_to be_valid
+      end
+    end
   end
 end
