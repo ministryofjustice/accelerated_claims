@@ -278,12 +278,6 @@ describe Claim, :type => :model do
         expect(claim.as_json['defendant_1_postcode2']).to eql claim.as_json['property_postcode2']
       end
       it "defendant two should render with the property's address" do
-        puts "++++++ DEBUG json defendant 2 address ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-        pp claim
-        puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-        
-        pp claim.as_json['defendant_2_address']
-        
         expect(claim.as_json['defendant_2_address']).to include claim.as_json['property_address']
         expect(claim.as_json['defendant_1_postcode1']).to eql claim.as_json['property_postcode1']
         expect(claim.as_json['defendant_1_postcode2']).to eql claim.as_json['property_postcode2']
