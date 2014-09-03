@@ -1,6 +1,6 @@
 = claim_form.fields_for fee, builder: LabellingFormBuilder do |form|
   .row
-    = 'Court fee<span class=\'hint block\'>Enclose a cheque with the completed claim form</span>'.html_safe
+    = 'Court fee <span class=\'hint block\'>Enclose a cheque with the completed claim form</span>'.html_safe
     = form.text_field :court_fee, class: 'fee', input_class: 'pound', readonly: true
 
   - if false # hide link to PDF while fee is hardcoded

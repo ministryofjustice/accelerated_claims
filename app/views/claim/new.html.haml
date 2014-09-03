@@ -36,7 +36,7 @@
 
       .row.js-only
         %span.error.hide#num-claimants-error-message
-          The number of claimants must be between 1 and 4. If you have more than 4 claimants, you’ll need to complete your 
+          The number of claimants must be between 1 and 4. If you have more than 4 claimants, you’ll need to complete your
           accelerated possession claim on the <a href="http://hmctsformfinder.justice.gov.uk/HMCTS/GetForm.do?court_forms_id=618">N5b form</a>
 
       .claimants
@@ -93,12 +93,16 @@
       = render partial: 'deposit', object: @claim.deposit, locals: { claim_form: claim_form }
 
   %section
-    %h2.section-header The court order
+    %h2.section-header Claim costs
+    .moj-panel
+      = render partial: 'fee', object: @claim.fee, locals: { claim_form: claim_form }
+      = render partial: 'legal_cost', object: @claim.legal_cost, locals: { claim_form: claim_form }
+
+  %section
+    %h2.section-header Court
     .moj-panel
       = render partial: 'order', object: @claim.order, locals: { claim_form: claim_form }
       = render partial: 'possession', object: @claim.possession, locals: { claim_form: claim_form }
-      = render partial: 'fee', object: @claim.fee, locals: { claim_form: claim_form }
-      = render partial: 'legal_cost', object: @claim.legal_cost, locals: { claim_form: claim_form }
 
   %section
     .action-buttons.cf
