@@ -101,6 +101,7 @@
       confirmed_second_rules_period_applicable_statements: nil
     },
     notice: {
+      notice_served: "Yes",
       served_by_name: "Wendy Lesser",
       served_method: "By post",
       date_served: "2014-01-13",

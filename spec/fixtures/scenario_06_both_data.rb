@@ -101,6 +101,7 @@
       confirmed_second_rules_period_applicable_statements: "Yes"
     },
     notice: {
+      notice_served: "Yes",
       served_by_name: "Amy Turtle",
       served_method: "By post",
       date_served: "2014-01-04",

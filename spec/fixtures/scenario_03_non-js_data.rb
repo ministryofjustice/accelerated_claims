@@ -101,6 +101,7 @@
       confirmed_second_rules_period_applicable_statements: "Yes"
     },
     notice: {
+      notice_served: "Yes",
       served_by_name: "Patty O'Furniture",
       served_method: "By post",
       date_served: "2013-09-30",
