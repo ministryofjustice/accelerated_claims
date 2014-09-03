@@ -16,6 +16,14 @@ class FixtureData
     # Index journeys from 1
     journey = @data[index - 1]
 
+    unless journey
+      return HashWithIndifferentAccess.new({
+        property: {
+          street: "No journey with that ID",
+        }
+        })
+    end
+
     claim = replace_dates_with_form_style_dates(journey[:claim])
 
     # Move claim model data to top level
