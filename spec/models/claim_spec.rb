@@ -420,6 +420,7 @@ describe Claim, :type => :model do
     context 'invalid num claimants' do
 
       let(:data)  { claim_post_data['claim'] }
+      let(:claim) { Claim.new(data) }
 
       it 'should not be valid if the num claimants is 0' do
         data[:num_claimants] = 0
