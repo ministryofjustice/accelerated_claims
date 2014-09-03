@@ -20,7 +20,6 @@ DefendantModule =
 
 
   bindToNumberDefendantsInput: ->
-    console.log "BINDING"
     $('#claim_num_defendants').on 'keyup', ->
       string = $(this).val()
       DefendantModule.showDefendants(string)
@@ -28,7 +27,6 @@ DefendantModule =
 
 
   setup: ->
-    console.log "SETIUP"
     DefendantModule.hideDefendantSections()
     DefendantModule.bindToNumberDefendantsInput()
     DefendantModule.showDefendants($('#claim_num_defendants').val())
