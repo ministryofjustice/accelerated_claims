@@ -5,7 +5,6 @@
 # rename as 'data.csv'
 
 require 'csv'
-require 'pry'
 require 'json'
 require 'curb'
 
