@@ -32,6 +32,7 @@ checkVisible = (panel_number) ->
 
 
 checkHidden = (panel_number) ->
+  console.log "expecting subpanel #{panel_number} to be hidden"
   unless panel_number == 0
     element = $("#defendant_#{panel_number}_subpanel")[0]
     expect(element).toBeHidden()
@@ -91,3 +92,27 @@ describe 'DefendantModule', ->
         expectSubpanelsVisible(20)
 
 
+  describe 'showClaimants', ->
+    describe 'called with 2', ->
+      it 'shows first two claimant sections', ->
+        window.DefendantModule.showDefendants('2')
+        expectSubpanelsVisible(2)
+
+    describe 'called with 21', ->
+      it 'should unhide the error message', ->
+        html = $(
+               '<input id="claim_num_claimants" name="claim[num_claimants]" type="text"></input>' +
+               '<span class="error hide" id="num-defendants-error-message" style="display: inline;">XXXXX</span>'
+        )
+        $(document.body).append(html)     
+        window.DefendantModule.showDefendants('21')
+        errorMessage = $('#num-defendants-error-message')
+        expect(errorMessage).toBeVisible()
+
+    describe 'called with 1 after 3', ->
+      it 'shows just one defendant', ->
+        window.DefendantModule.showDefendants('3')
+        expectSubpanelsVisible(3)
+
+        window.window.DefendantModule.showDefendants('1')
+        expectSubpanelsVisible(1)
