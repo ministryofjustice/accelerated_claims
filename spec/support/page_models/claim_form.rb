@@ -79,7 +79,7 @@ class ClaimForm
 
 
   def select_number_of type
-   
+
     case type
     when :claimants
       button_prefix = "claim_num"
@@ -427,7 +427,8 @@ class ClaimForm
   def check_order_possession_and_cost
     prefix = 'order'
     check_box(prefix, 'possession')
-    check_box(prefix, 'cost')
+
+    choose_radio(prefix, 'cost')
   end
 
   def fill_court_fee
