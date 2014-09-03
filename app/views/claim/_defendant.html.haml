@@ -6,7 +6,7 @@
   = form.radio_button_fieldset :inhabits_property,
           'Does the defendant live in the property?',
           class: 'radio inline js-depend',
-          choice: {'Yes'=>'yes', 'No'=>'no'},
+          choice: {'Yes'=>'Yes', 'No'=>'No'},
           data: { depend: 'inhabitproperty_' + defendant_field.to_s }
 
   .sub-panel.extra.address.hide.no{ class: 'js-inhabitproperty_' + defendant_field.to_s }
