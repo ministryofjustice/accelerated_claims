@@ -18,9 +18,9 @@ class ClaimForm
     else
       fill_organizational_claimant
     end
-    select_number_of :defendants
-    fill_defendant_one complete_address: true
-    fill_defendant_two complete_address: true
+    select_number_of_defendants
+    fill_in_defendant(1, complete_address: true)
+    fill_in_defendant(2, complete_address: true)
     fill_claimant_contact
     fill_tenancy
     fill_notice
@@ -68,14 +68,16 @@ class ClaimForm
   end
 
   def select_number_of_claimants
-    num_claimants = get_data('claim', 'number_of_claimants')
+    num_claimants = get_data('claim', 'num_of_claimants')
     fill_in "How many claimants are there?", with: num_claimants
     num_claimants
   end
 
 
   def select_number_of_defendants
-    num_defendants = get_data('claim', 'number_of_defendants')
+    num_defendants = get_data('claim', 'num_of_defendants')
+    puts "++++++ DEBUG filling in num defendants #{num_defendants.inspect} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
     fill_in "How many defendants are there?", with: num_defendants
     num_defendants
   end
@@ -326,8 +328,10 @@ class ClaimForm
     prefix = 'tenancy'
     choose_radio  prefix, 'tenancy_type'
 
+    puts "++++++ DEBUG TENANCY TYP-E #{get_data(prefix, 'tenancy_type')} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
     case get_data(prefix, 'tenancy_type')
-    when 'Assured'
+      
+    when 'assured'
       choose_radio  prefix, 'assured_shorthold_tenancy_type'
 
       case get_data(prefix, 'assured_shorthold_tenancy_type')
@@ -338,7 +342,7 @@ class ClaimForm
       else
         raise 'Unexpected number of tenancy agreements'
       end
-    when 'Demoted'
+    when 'demoted'
       fill_in_moj_date_fieldset prefix, 'demotion_order_date'
       fill_in_text_field prefix, 'demotion_order_court'
       choose_radio  prefix, 'previous_tenancy_type'
