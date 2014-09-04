@@ -31,4 +31,11 @@ class Property < BaseClass
       "house" => house
     }
   end
+
+
+  def subject_description
+    'property address'
+  end
+
+
 end

@@ -12,7 +12,7 @@ class Claim < BaseClass
                 :num_defendants
 
 
-  # @@max_num_claimants       = 4
+  @@valid_num_defendants    = [1, 2]
 
   @@valid_claimant_types    = %w{ organization individual }
 

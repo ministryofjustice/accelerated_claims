@@ -27,7 +27,7 @@ class ClaimForm
     fill_licences
     fill_deposit
     fill_postponement
-    check_order_possession_and_cost
+    choose_defendant_pay_costs
     fill_court_fee
     fill_legal_costs
     fill_reference_number
@@ -61,14 +61,14 @@ class ClaimForm
     fill_licences
     fill_deposit
     fill_postponement
-    check_order_possession_and_cost
+    choose_defendant_pay_costs
     fill_court_fee
     fill_legal_costs
     fill_reference_number_with_js unless claimant_type == 'individual'
   end
 
   def select_number_of_claimants
-    num_claimants = get_data('claim', 'num_of_claimants')
+    num_claimants = get_data('claim', 'num_claimants')
     fill_in "How many claimants are there?", with: num_claimants
     num_claimants
   end
@@ -330,7 +330,6 @@ class ClaimForm
 
     puts "++++++ DEBUG TENANCY TYP-E #{get_data(prefix, 'tenancy_type')} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
     case get_data(prefix, 'tenancy_type')
-      
     when 'assured'
       choose_radio  prefix, 'assured_shorthold_tenancy_type'
 
@@ -453,10 +452,8 @@ class ClaimForm
     choose_radio('possession','hearing')
   end
 
-  def check_order_possession_and_cost
-    prefix = 'order'
-    check_box(prefix, 'possession')
-    check_box(prefix, 'cost')
+  def choose_defendant_pay_costs
+    choose_radio('order', 'cost')
   end
 
   def fill_court_fee

@@ -1,13 +1,7 @@
 = claim_form.fields_for order, builder: LabellingFormBuilder do |form|
-  .row
-    You need to confirm that you want the court to order the defendant to move out of the property. You can also ask that the tenant pay the costs of submitting this claim.
-  %fieldset.radio{ id: (form.error_for?(:possession) ? form.error_id_for(:possession) : 'possession_fieldset') }
-    %h3
-      Select all options that apply:
-    .options
-      - form.row :possession do
-        = form.labelled_check_box :possession, 'The defendant must give up the property'
-      - form.row :cost do
-        = form.labelled_check_box :cost, 'The defendant must pay the cost of submitting this claim'
+  .sub-panel
+    = form.radio_button_fieldset :cost,
+            'Do you want to ask the defendant to pay the cost of this claim? <span class="hint block">You may be reimbursed the court fee (and fixed legal fees if applicable)</span>'.html_safe,
+            class: 'radio inline',
+            choice: {'Yes'=>'Yes', 'No'=>'No'}
 
-  .row.divider

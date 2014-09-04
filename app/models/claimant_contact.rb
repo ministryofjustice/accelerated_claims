@@ -91,6 +91,10 @@ class ClaimantContact < BaseClass
   end
 
 
+  def subject_description
+    'Claimant Contact'
+  end
+
 
   def address_format
     if company_name.blank?

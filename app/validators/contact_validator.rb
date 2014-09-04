@@ -48,7 +48,7 @@ class ContactValidator < ActiveModel::Validator
   def validate_is_absent(record)
     fields = record.is_a?(Defendant) ? [:title, :full_name, :street, :postcode] : [:full_name, :street, :postcode]
     fields.each do |field|
-      record.errors[field] << "must not be entered if number of claimants is 1 BBBBB" if record.send(field).present?
+      record.errors[field] << "must not be entered if number of claimants is 1" if record.send(field).present?
     end
   end
 

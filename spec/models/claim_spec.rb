@@ -1,7 +1,9 @@
 describe Claim, :type => :model do
 
   let(:claim) do
-    Claim.new(data)
+    c = Claim.new(data)
+    c.valid?
+    c
   end
 
   subject { claim }
@@ -266,10 +268,10 @@ describe Claim, :type => :model do
     context "when a defendant's address is blank" do
       let(:data) do
         hash = claim_post_data['claim']
-        hash['defendant_1'] = hash['defendant_1'].except('street', 'postcode')
-        hash['defendant_2'] = hash['defendant_2'].except('street', 'postcode')
-        hash['defendant_1']["inhabits_property"] = "yes"
-        hash['defendant_2']["inhabits_property"] = "yes"
+        hash['defendant_one'] = hash['defendant_one'].except('street', 'postcode')
+        hash['defendant_two'] = hash['defendant_two'].except('street', 'postcode')
+        hash['defendant_one']["inhabits_property"] = "yes"
+        hash['defendant_two']["inhabits_property"] = "yes"
         hash
       end
       it "defendant one should render with the property's address" do
@@ -301,7 +303,7 @@ describe Claim, :type => :model do
       end
 
       it 'should be invalid when there is no claimant 1 data' do
-        data[:claimant_1] = { "title"=>"", "full_name"=>"", "street"=>"", "postcode"=>"", 'claimant_type' => 'individual'} 
+        data[:claimant_1] = { "title"=>"", "full_name"=>"", "street"=>"", "postcode"=>"", 'claimant_type' => 'individual'}
         claim = Claim.new(data)
         expect(claim).to_not be_valid
         expect(claim.claimant_1.errors.messages[:full_name]).to eq ["Enter claimant 1's full name"]
@@ -316,7 +318,7 @@ describe Claim, :type => :model do
       end
 
       it 'should be valid if there is claimant one data and  claimant two data is all blank' do
-        data[:claimant_2] = { "title"=>"", "full_name"=>"", "street"=>"", "postcode"=>""} 
+        data[:claimant_2] = { "title"=>"", "full_name"=>"", "street"=>"", "postcode"=>""}
         claim = Claim.new(data)
         expect(claim).to be_valid
       end
@@ -336,8 +338,8 @@ describe Claim, :type => :model do
         expect(claim).to_not be_valid
         expect(claim.errors.full_messages).to eq [
           ["claim_claimant_2_title_error", "Enter claimant 2's title"],
-          ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"], 
-          ["claim_claimant_2_street_error", "Enter claimant 2's full address"], 
+          ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"],
+          ["claim_claimant_2_street_error", "Enter claimant 2's full address"],
           ["claim_claimant_2_postcode_error", "Enter claimant 2's postcode"]
         ]
       end
@@ -347,8 +349,8 @@ describe Claim, :type => :model do
         expect(claim).to_not be_valid
         expect(claim.errors.full_messages).to eq [
             ["claim_claimant_2_title_error", "Enter claimant 2's title"],
-            ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"], 
-            ["claim_claimant_2_street_error", "Enter claimant 2's full address"], 
+            ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"],
+            ["claim_claimant_2_street_error", "Enter claimant 2's full address"],
             ["claim_claimant_2_postcode_error", "Enter claimant 2's postcode"]
           ]
       end
@@ -438,6 +440,7 @@ describe Claim, :type => :model do
     context 'invalid num claimants' do
 
       let(:data)  { claim_post_data['claim'] }
+      let(:claim) { Claim.new(data) }
 
       it 'should not be valid if the num claimants is 0' do
         data[:num_claimants] = 0
@@ -463,5 +466,6 @@ describe Claim, :type => :model do
         expect(claim.errors.full_messages).to eq [["claim_num_claimants_error", "If there are more than 4 claimants in this case, you’ll need to complete your accelerated possession claim on the N5b form"]]
       end
     end
+
   end
 end

@@ -93,6 +93,7 @@ GEM
     dotenv-rails (0.11.1)
       dotenv (= 0.11.1)
     erubis (2.7.0)
+    excon (0.39.5)
     execjs (2.2.0)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
@@ -345,6 +346,7 @@ DEPENDENCIES
   coffee-rails
   curb
   dotenv-rails
+  excon
   faraday
   govuk_frontend_toolkit (= 1.5.0)
   guard-coffeescript

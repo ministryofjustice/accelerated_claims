@@ -96,14 +96,14 @@ describe ClaimantContact, :type => :model do
       params = claim_post_data['claim']['claimant_contact'].merge(:postcode => 'sw10')
       cc = ClaimantContact.new(params)
       expect(cc).not_to be_valid
-      expect(cc.errors.full_messages).to eq( [ "Postcode SUBJECT DESCRIPTION's postcode is not a full postcode" ] )
+      expect(cc.errors.full_messages).to eq( [ "Postcode Claimant Contact's postcode is not a full postcode" ] )
     end
 
     it 'should invalid if postcode not valid postcode' do
       params = claim_post_data['claim']['claimant_contact'].merge(:postcode => 'sw109733')
       cc = ClaimantContact.new(params)
       expect(cc).not_to be_valid
-      expect(cc.errors.full_messages).to eq( [ "Postcode Enter a valid postcode for SUBJECT DESCRIPTION" ] )
+      expect(cc.errors.full_messages).to eq( [ "Postcode Enter a valid postcode for Claimant Contact" ] )
     end
   end
 

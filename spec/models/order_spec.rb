@@ -11,16 +11,22 @@ describe Order, :type => :model do
 
   context "when possession no" do
     let(:possession) { 'No' }
-    it { is_expected.not_to be_valid }
-    it 'should have error message' do
-      expect(order).not_to be_valid
-      expect(order.errors[:possession]).to eq [ "Please tick to confirm that you want to repossess the property" ]
+    it { is_expected.to be_valid }
+
+    context 'after validation' do
+      before { order.valid? }
+      its(:possession) { should == 'Yes' }
     end
   end
 
   context "when possession blank" do
     let(:possession) { '' }
-    it { is_expected.not_to be_valid }
+    it { is_expected.to be_valid }
+
+    context 'after validation' do
+      before { order.valid? }
+      its(:possession) { should == 'Yes' }
+    end
   end
 
   context "when cost blank" do

@@ -20,8 +20,11 @@ feature 'Filling in claim form' do
   end
 
   def check_focus_after_click link_text, selector
+    expect(page).to have_content(link_text)
+    expect(page).to have_css('div#javascript_done')
     click_link link_text
-    expect(page.evaluate_script('document.activeElement.id')).to eq(selector)
+    active_element = page.evaluate_script('document.activeElement.id')
+    expect(active_element).to eq(selector)
   end
 
 
@@ -48,12 +51,8 @@ feature 'Filling in claim form' do
 
     expect(page).to have_content('Please select what kind of claimant you are')
 
-    expect(page).to have_selector('input#claim_order_possession')
-    expect(page).to have_selector(:xpath, '//label[@for="claim_order_possession"]')
-
     check_focus_after_click 'You must say whether the defendant paid a deposit', 'claim_deposit_received_yes'
     check_focus_after_click 'You must choose whether you wish to attend the possible court hearing', 'claim_possession_hearing_no'
-    check_focus_after_click 'Please tick to confirm that you want to repossess the property', 'claim_order_possession'
     check_focus_after_click 'You must say what kind of tenancy agreement you have', 'claim_tenancy_tenancy_type_assured'
 
     click_button 'Continue'
@@ -67,9 +66,6 @@ feature 'Filling in claim form' do
 
     expect(page).to have_content('Please say how many claimants there are')
 
-    expect(page).to have_selector('input#claim_order_possession')
-    expect(page).to have_selector(:xpath, '//label[@for="claim_order_possession"]')
-
     check_focus_after_click 'Please say how many claimants there are', 'claim_num_claimants'
     check_focus_after_click 'Please enter a valid number of defendants between 1 and 20', 'claim_num_defendants'
 
@@ -82,11 +78,9 @@ feature 'Filling in claim form' do
     check_focus_after_click 'You must say whether or not you have an HMO licence', 'claim_license_multiple_occupation_yes'
     check_focus_after_click 'You must say whether the defendant paid a deposit', 'claim_deposit_received_yes'
     check_focus_after_click 'You must choose whether you wish to attend the possible court hearing', 'claim_possession_hearing_no'
-    check_focus_after_click 'Please tick to confirm that you want to repossess the property', 'claim_order_possession'
     check_focus_after_click 'You must say what kind of tenancy agreement you have', 'claim_tenancy_tenancy_type_assured'
 
     click_button 'Continue'
-
 
     choose('claim_notice_notice_served_no')
     expect(page).to have_content('You cannot continue with this claim')
