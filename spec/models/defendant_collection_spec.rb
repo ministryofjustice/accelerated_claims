@@ -167,6 +167,11 @@ def claim_params
         "inhabits_property" => 'No',
         "street" => "666 Made-up Lane\nAnytown",
         "postcode" => "FX4W 9LU"
+      },
+      "property" => 
+      {
+        "street" => "2 Toytown Road\nToytown",
+        "postcode" => "FX8X 8XX"
       }
     }
   )

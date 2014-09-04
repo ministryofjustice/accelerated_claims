@@ -6,7 +6,6 @@
 
 
 expectSubpanelsVisible = (num_visible_subpanels) ->
-  console.log 'expectSubpanelsVisible called with ' + num_visible_subpanels
   if num_visible_subpanels == 0
     visible_subpanels = [ 0 ]
     hidden_subpanels = [ 1 .. 20 ]
@@ -17,9 +16,6 @@ expectSubpanelsVisible = (num_visible_subpanels) ->
     else
       visible_subpanels = [ 1 .. num_visible_subpanels ]
       hidden_subpanels = [ num_visible_subpanels + 1 ..  20 ]
-
-  console.log "Visible subpanels: #{visible_subpanels}"
-  console.log "Hidden subpanels: #{hidden_subpanels}"
 
   checkVisible(panel) for panel in visible_subpanels 
   checkHidden(panel) for panel in hidden_subpanels

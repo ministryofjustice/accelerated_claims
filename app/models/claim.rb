@@ -83,7 +83,7 @@ class Claim < BaseClass
     validity = true
     validity = false unless claimant_type_valid?
     validity = false unless num_claimants_valid?
-    # validity = false unless num_defendants_valid?
+    validity = false unless num_defendants_valid?
 
 
     attributes_for_submodels.each do |instance_var, model|
@@ -164,14 +164,16 @@ class Claim < BaseClass
     @num_claimants_valid_result
   end
 
-  # def num_defendants_valid?
-  #   if @num_defendants.nil?
-  #     @errors[:base] << ['claim_defendant_number_of_defendants_error', 'Please say how many defendants there are']
-  #     return false
-  #   elsif @num_defendants < 1 || @num_defendantws >
-
-  #   true
-  # end
+  def num_defendants_valid?
+    if @num_defendants.blank?
+      @errors[:base] << ['claim_defendant_number_of_defendants_error', 'Please say how many defendants there are']
+      return false
+    elsif @num_defendants < 1 || @num_defendants > DefendantCollection.max_defendants
+      @errors[:base] << ['claim_defendant_number_of_defendants_error', "Please enter a valid number of defendants between 1 and #{DefendantCollection.max_defendants}"]
+      return false
+    end
+    true
+  end
 
   # def populate_address_for number, defendant, hash
   #   if defendant.present? && defendant.address_blank?
