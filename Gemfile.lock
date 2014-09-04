@@ -83,6 +83,7 @@ GEM
     columnize (0.8.9)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
+    curb (0.8.5)
     debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
     docile (1.1.5)
@@ -343,6 +344,7 @@ DEPENDENCIES
   ci_reporter
   codeclimate-test-reporter
   coffee-rails
+  curb
   dotenv-rails
   excon
   faraday

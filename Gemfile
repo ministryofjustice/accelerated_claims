@@ -71,6 +71,7 @@ group :test do
   gem 'ci_reporter'
   gem 'poltergeist'
   gem 'selenium-webdriver'
+  gem 'curb'
   gem 'show_me_the_cookies'
   gem 'codeclimate-test-reporter', require: nil
 end
