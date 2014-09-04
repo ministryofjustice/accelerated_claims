@@ -88,6 +88,19 @@ feature 'Filling in claim form' do
     check_focus_after_click 'You must say whether or not you gave notice to the defendant', 'claim_notice_notice_served_yes'
   end
 
+  scenario "submitting form without notice checked, the hidden errors should not be shown", js: true do
+    visit '/'
+    click_button 'Continue'
+
+    expect(page).to have_content('You must say whether or not you gave notice to the defendant')
+
+    expect(page).to have_css('div#javascript_done')
+    expect(page).not_to have_content('Enter the name of the person who gave the notice')
+    expect(page).not_to have_content('You must say how the notice was given')
+    expect(page).not_to have_content('Enter the date notice was served')
+    expect(page).not_to have_content('Enter the date notice ended')
+  end
+
 
   def select_tenancy_start_date date
     day = date.day.to_s
