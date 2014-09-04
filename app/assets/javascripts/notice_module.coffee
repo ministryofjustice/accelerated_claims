@@ -20,7 +20,7 @@ removeNoticeErrorLinks = ->
     null
 
   errors.each ->
-    $(this).remove()
+    $(this).parent().remove()
 
   errorLocation
 
