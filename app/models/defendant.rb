@@ -23,7 +23,7 @@ class Defendant < BaseClass
 
   def num_defendants_is_valid
     if validate_presence?
-      unless %w{ yes no }.include?(inhabits_property)
+      unless %w{ Yes No }.include?(inhabits_property)
         errors[:inhabits_property] << "Please select whether or not #{subject_description} lives in the property"
       end
     elsif validate_absence?
@@ -115,7 +115,7 @@ class Defendant < BaseClass
   end
 
   def validate_fields_are_present
-    if self.inhabits_property == 'yes'
+    if self.inhabits_property == 'Yes'
       validate_are_present(:title, :full_name)
     else
       validate_are_present(:title, :full_name, :street, :postcode)

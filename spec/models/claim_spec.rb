@@ -250,8 +250,8 @@ describe Claim, :type => :model do
         hash = claim_post_data['claim']
         hash['defendant_one'] = hash['defendant_one'].except('street', 'postcode')
         hash['defendant_two'] = hash['defendant_two'].except('street', 'postcode')
-        hash['defendant_one']["inhabits_property"] = "yes"
-        hash['defendant_two']["inhabits_property"] = "yes"
+        hash['defendant_one']["inhabits_property"] = "Yes"
+        hash['defendant_two']["inhabits_property"] = "Yes"
         hash
       end
       it "defendant one should render with the property's address" do

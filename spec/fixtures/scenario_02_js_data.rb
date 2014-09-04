@@ -85,7 +85,7 @@
       postcode: nil
     },
     tenancy: {
-      tenancy_type: "Assured",
+      tenancy_type: "assured",
       assured_shorthold_tenancy_type: "one",
       original_assured_shorthold_tenancy_agreement_date: nil,
       start_date: "1997-02-27",
@@ -101,6 +101,7 @@
       confirmed_second_rules_period_applicable_statements: nil
     },
     notice: {
+      notice_served: "Yes",
       served_by_name: "Mark Ateer",
       served_method: "By post",
       date_served: "2014-01-04",

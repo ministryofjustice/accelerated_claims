@@ -4,13 +4,13 @@ describe Defendant, :type => :model do
                   full_name: "John Major",
                   street: "Sesame Street\nLondon",
                   postcode: "SW1X 2PT",
-                  inhabits_property: 'no')
+                  inhabits_property: 'No')
   end
 
   let(:property_inhabiting_defendant) do
     Defendant.new(title: "Mr",
                   full_name: "John Major",
-                  inhabits_property: 'yes')
+                  inhabits_property: 'Yes')
   end
 
 

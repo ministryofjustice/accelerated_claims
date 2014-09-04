@@ -85,7 +85,7 @@
       postcode: nil
     },
     tenancy: {
-      tenancy_type: "Assured",
+      tenancy_type: "assured",
       assured_shorthold_tenancy_type: "multiple",
       original_assured_shorthold_tenancy_agreement_date: "2004-03-12",
       start_date: nil,
@@ -101,6 +101,7 @@
       confirmed_second_rules_period_applicable_statements: "Yes"
     },
     notice: {
+      notice_served: "Yes",
       served_by_name: "Royal Mail",
       served_method: "In person",
       date_served: "2013-12-13",

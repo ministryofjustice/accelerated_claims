@@ -85,7 +85,7 @@
       postcode: nil
     },
     tenancy: {
-      tenancy_type: "Demoted",
+      tenancy_type: "demoted",
       assured_shorthold_tenancy_type: nil,
       original_assured_shorthold_tenancy_agreement_date: nil,
       start_date: nil,
@@ -101,6 +101,7 @@
       confirmed_second_rules_period_applicable_statements: nil
     },
     notice: {
+      notice_served: "Yes",
       served_by_name: "Somebody",
       served_method: "In person",
       date_served: "2014-02-02",
