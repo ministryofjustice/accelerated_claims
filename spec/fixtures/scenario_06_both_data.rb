@@ -13,8 +13,8 @@
     },
     claim: {
       claimant_type: "organization",
-      number_of_claimants: "1",
-      number_of_defendants: "1"
+      num_claimants: "1",
+      num_defendants: "1"
     },
     claimant_1: {
       title: nil,
@@ -70,14 +70,14 @@
     reference_number: {
       reference_number: "T003900DF07"
     },
-    defendant_one: {
+    defendant_1: {
       title: "Ms",
       full_name: "I.C. Yew",
       inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
-    defendant_two: {
+    defendant_2: {
       title: nil,
       full_name: nil,
       inhabits_property: nil,
@@ -85,7 +85,7 @@
       postcode: nil
     },
     tenancy: {
-      tenancy_type: "Assured",
+      tenancy_type: "assured",
       assured_shorthold_tenancy_type: "one",
       original_assured_shorthold_tenancy_agreement_date: nil,
       start_date: "2011-10-02",
@@ -101,6 +101,7 @@
       confirmed_second_rules_period_applicable_statements: "Yes"
     },
     notice: {
+      notice_served: "Yes",
       served_by_name: "Amy Turtle",
       served_method: "By post",
       date_served: "2014-01-04",

@@ -1,0 +1,15 @@
+
+TO DO ON NUM DEFENDANTS
+=======================
+
+
+- work out what to do with extra defendants in the pdf
+
+- work out how to implement claimant_collections in the form params
+- ditto defendant_collections
+
+- work out how to not populate property address for defendnats that inhapbit property
+- work out how to not populate address for claimants who live at same address as claimant 1
+
+
+- refactor select_number_of_defendants/claimants in claim_form.rb

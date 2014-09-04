@@ -13,8 +13,8 @@
     },
     claim: {
       claimant_type: "individual",
-      number_of_claimants: "2",
-      number_of_defendants: "2"
+      num_claimants: "2",
+      num_defendants: "2"
     },
     claimant_1: {
       title: "Mr",
@@ -70,14 +70,14 @@
     reference_number: {
       reference_number: nil
     },
-    defendant_one: {
+    defendant_1: {
       title: "Mr",
       full_name: "Jeevesthe Butler",
       inhabits_property: "No",
       street: "13 Market St, Milton",
       postcode: "RT13 2JD"
     },
-    defendant_two: {
+    defendant_2: {
       title: "Ms",
       full_name: "Donna Summer",
       inhabits_property: "Yes",
@@ -85,7 +85,7 @@
       postcode: "RT4 8BA"
     },
     tenancy: {
-      tenancy_type: "Assured",
+      tenancy_type: "assured",
       assured_shorthold_tenancy_type: "one",
       original_assured_shorthold_tenancy_agreement_date: nil,
       start_date: "2012-09-16",
@@ -101,6 +101,7 @@
       confirmed_second_rules_period_applicable_statements: "Yes"
     },
     notice: {
+      notice_served: "Yes",
       served_by_name: "Heather Heath",
       served_method: "By email",
       date_served: "2013-09-30",

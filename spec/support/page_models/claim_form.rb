@@ -47,13 +47,12 @@ class ClaimForm
       fill_organizational_claimant
     end
 
-    number_of_defendants = select_number_of :defendants
-    address_to_be_completed = choose_defendant_living_in_property 'one',1           # selects the defendent living in property yes/no button according to the data
-    fill_defendant_one complete_address: address_to_be_completed
-    if number_of_defendants == 2
-      address_to_be_completed = choose_defendant_living_in_property 'two', 2
-      fill_defendant_two complete_address: address_to_be_completed
+    number_of_defendants = select_number_of_defendants
+    (1 .. DefendantCollection.max_defendants).each do |i|
+      address_to_be_completed = choose_defendant_living_in_property(i)           # selects the defendent living in property yes/no button according to the data
+      fill_in_defendant(i, complete_address: address_to_be_completed)
     end
+    
 
     fill_claimant_contact_with_js
 
@@ -75,30 +74,36 @@ class ClaimForm
   end
 
 
-
-
-
-  def select_number_of type
-   
-    case type
-    when :claimants
-      button_prefix = "claim_num"
-      model = "claim"
-    when :defendants
-      button_prefix =  "claim_num"
-      model = "claim"
-    end
-
-    number = get_data(model, "number_of_#{type}").to_i
-    case number
-      when 1
-        choose("#{button_prefix}_#{type}_1")
-      when 2
-        choose("#{button_prefix}_#{type}_2")
-    end
-    find("#claim_#{type.to_s.singularize}_one_title") # wait for selector to be shown
-    number
+  def select_number_of_defendants
+    num_defendants = get_data('claim', 'number_of_defendants')
+    fill_in "How many defendants are there?", with: num_defendants
+    num_defendants
   end
+
+
+
+
+  # def select_number_of type
+   
+  #   case type
+  #   when :claimants
+  #     button_prefix = "claim_num"
+  #     model = "claim"
+  #   when :defendants
+  #     button_prefix =  "claim_num"
+  #     model = "claim"
+  #   end
+
+  #   number = get_data(model, "number_of_#{type}").to_i
+  #   case number
+  #     when 1
+  #       choose("#{button_prefix}_#{type}_1")
+  #     when 2
+  #       choose("#{button_prefix}_#{type}_2")
+  #   end
+  #   find("#claim_#{type.to_s.singularize}_one_title") # wait for selector to be shown
+  #   number
+  # end
 
 
 
@@ -111,18 +116,38 @@ class ClaimForm
     end
   end
 
-  def choose_defendant_living_in_property count, index
-    defendant = "defendant_#{count}"
-    case get_data(defendant, "inhabits_property")
-    when 'Yes'
-      choose("claim_defendant_#{count}_inhabits_property_yes")
-      address_to_be_completed = false
-    else
-      choose("claim_defendant_#{count}_inhabits_property_no")
+  # def choose_defendant_living_in_property count, index
+  #   defendant = "defendant_#{count}"
+  #   case get_data(defendant, "inhabits_property")
+  #   when 'Yes'
+  #     choose("claim_defendant_#{count}_inhabits_property_yes")
+  #     address_to_be_completed = false
+  #   else
+  #     choose("claim_defendant_#{count}_inhabits_property_no")
+  #     address_to_be_completed = true
+  #   end
+  #   address_to_be_completed
+  # end
+
+
+  def choose_defendant_living_in_property(index)
+    if index == 1
       address_to_be_completed = true
+    else
+      defendant = "defendant_#{index}"
+      case get_data(defendant, "inhabits_proerty")
+      when 'Yes'
+        choose("claim_defendant_#{index}_inhabits_property_yes")
+        address_to_be_completed = false
+      else
+        choose("claim_defendant_#{index}_inhabits_property_no")
+        address_to_be_completed = true
+      end
     end
     address_to_be_completed
   end
+
+
 
   def fill_claimant_contact_with_js
     if get_data('javascript','separate_correspondence_address') == 'Yes'
@@ -276,13 +301,13 @@ class ClaimForm
 
 
 
-  def fill_defendant_one(options = {})
-    fill_in_defendant('one', options)
-  end
+  # def fill_defendant(defendant_number, options = {})
+  #   fill_in_defendant('one', options)
+  # end
 
-  def fill_defendant_two(options = {})
-    fill_in_defendant('two', options)
-  end
+  # def fill_defendant_two(options = {})
+  #   fill_in_defendant('two', options)
+  # end
 
   def fill_in_defendant(defendant_number, options)
     defendant = "defendant_#{defendant_number}"

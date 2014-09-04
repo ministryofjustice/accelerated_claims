@@ -88,7 +88,7 @@ class PDFDocument
   end
 
   def add_defendant_two result_path
-    if @json.key? 'defendant_two_address'
+    if @json.key? 'defendant_2_address'
       continuation_path = create_continuation_pdf
       combine_pdfs result_path, continuation_path
     end

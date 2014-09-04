@@ -92,7 +92,6 @@ describe PDFDocument do
       let(:json) { claim_formatted_data }
 
       it "should produce 6 page PDF" do
-        pp json
         pdf = @doc.fill
         pages = %x[pdftk #{pdf.path} dump_data | awk '/NumberOfPages/ {print $2}']
         expect(pages.to_i).to eq 6

@@ -13,8 +13,8 @@
     },
     claim: {
       claimant_type: "individual",
-      number_of_claimants: "2",
-      number_of_defendants: "1"
+      num_claimants: "2",
+      num_defendants: "1"
     },
     claimant_1: {
       title: "Mr",
@@ -70,14 +70,14 @@
     reference_number: {
       reference_number: nil
     },
-    defendant_one: {
+    defendant_1: {
       title: "Mr",
       full_name: "Malcom Mauve",
       inhabits_property: "No",
       street: "23c Piccalilly Rd\nTeds Heath, Londonville",
       postcode: "EY7 7BN"
     },
-    defendant_two: {
+    defendant_2: {
       title: nil,
       full_name: nil,
       inhabits_property: nil,
@@ -85,7 +85,7 @@
       postcode: nil
     },
     tenancy: {
-      tenancy_type: "Assured",
+      tenancy_type: "assured",
       assured_shorthold_tenancy_type: "one",
       original_assured_shorthold_tenancy_agreement_date: nil,
       start_date: "2010-12-20",
@@ -101,6 +101,7 @@
       confirmed_second_rules_period_applicable_statements: "Yes"
     },
     notice: {
+      notice_served: "Yes",
       served_by_name: "Royal mail",
       served_method: "By post",
       date_served: "2013-09-08",

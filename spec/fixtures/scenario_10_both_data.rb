@@ -13,8 +13,8 @@
     },
     claim: {
       claimant_type: "individual",
-      number_of_claimants: "2",
-      number_of_defendants: "1"
+      num_claimants: "2",
+      num_defendants: "1"
     },
     claimant_1: {
       title: "Mr",
@@ -70,14 +70,14 @@
     reference_number: {
       reference_number: nil
     },
-    defendant_one: {
+    defendant_1: {
       title: "Mr",
       full_name: "John Kapur",
       inhabits_property: "No",
       street: "Endof Road\nLondon",
       postcode: "FX1X 2PT"
     },
-    defendant_two: {
+    defendant_2: {
       title: nil,
       full_name: nil,
       inhabits_property: nil,
@@ -85,7 +85,7 @@
       postcode: nil
     },
     tenancy: {
-      tenancy_type: "Assured",
+      tenancy_type: "assured",
       assured_shorthold_tenancy_type: "multiple",
       original_assured_shorthold_tenancy_agreement_date: "1995-01-01",
       start_date: nil,
@@ -101,6 +101,7 @@
       confirmed_second_rules_period_applicable_statements: "Yes"
     },
     notice: {
+      notice_served: "Yes",
       served_by_name: "Somebody",
       served_method: "In person",
       date_served: "2014-02-02",

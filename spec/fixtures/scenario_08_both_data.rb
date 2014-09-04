@@ -13,8 +13,8 @@
     },
     claim: {
       claimant_type: "individual",
-      number_of_claimants: "1",
-      number_of_defendants: "2"
+      num_claimants: "1",
+      num_defendants: "2"
     },
     claimant_1: {
       title: "Mrs",
@@ -70,14 +70,14 @@
     reference_number: {
       reference_number: nil
     },
-    defendant_one: {
+    defendant_1: {
       title: "Mr",
       full_name: "Organ Morgan",
       inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
-    defendant_two: {
+    defendant_2: {
       title: "Mr",
       full_name: "Owen Alott",
       inhabits_property: "Yes",
@@ -85,7 +85,7 @@
       postcode: nil
     },
     tenancy: {
-      tenancy_type: "Assured",
+      tenancy_type: "assured",
       assured_shorthold_tenancy_type: "one",
       original_assured_shorthold_tenancy_agreement_date: nil,
       start_date: "1999-04-08",
@@ -101,6 +101,7 @@
       confirmed_second_rules_period_applicable_statements: "Yes"
     },
     notice: {
+      notice_served: "Yes",
       served_by_name: "Dilan Abbott",
       served_method: "By post",
       date_served: "2013-12-13",

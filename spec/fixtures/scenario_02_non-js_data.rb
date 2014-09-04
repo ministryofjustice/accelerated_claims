@@ -13,8 +13,8 @@
     },
     claim: {
       claimant_type: "individual",
-      number_of_claimants: "1",
-      number_of_defendants: "1"
+      num_claimants: "1",
+      num_defendants: "1"
     },
     claimant_1: {
       title: "Mr",
@@ -70,14 +70,14 @@
     reference_number: {
       reference_number: nil
     },
-    defendant_one: {
+    defendant_1: {
       title: "Mr",
       full_name: "Chris P. Bacon",
       inhabits_property: "Yes",
       street: "94 East St\nAnyville",
       postcode: "FX1X 9ZZ"
     },
-    defendant_two: {
+    defendant_2: {
       title: nil,
       full_name: nil,
       inhabits_property: nil,
@@ -85,7 +85,7 @@
       postcode: nil
     },
     tenancy: {
-      tenancy_type: "Assured",
+      tenancy_type: "assured",
       assured_shorthold_tenancy_type: "one",
       original_assured_shorthold_tenancy_agreement_date: nil,
       start_date: "1997-02-27",
@@ -101,6 +101,7 @@
       confirmed_second_rules_period_applicable_statements: nil
     },
     notice: {
+      notice_served: "Yes",
       served_by_name: "Mark Ateer",
       served_method: "By post",
       date_served: "2014-01-04",
