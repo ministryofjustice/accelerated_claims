@@ -32,13 +32,23 @@ moj.Modules.jsState = (function() {
   init = function() {
     cacheEls();
 
+    // DISCLAIMER: The approach of passing about js-state appears to be bad; suggestion - moved all data into the model and remove js-state. An example of a js-only attribute is "Is the address the same as the first claimant?" for claimant 2.
+    //
+    // This call to checkState uses the form_data populated with the page to
+    // fill in js-only fields
     checkState();
+
     focusRadios();
     moj.Modules.tenancyModule.checkDates();
 
     bindEvents();
 
     window.scrollTo( 0, 0 );
+
+    // Trigger a change on the form in order for the js-state to be filled
+    // (which is required for checkState to work correctly)
+    $( '#ypos' ).trigger( 'change' );
+    checkState();
   };
 
   bindEvents = function() {
