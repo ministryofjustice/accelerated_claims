@@ -30,6 +30,7 @@ moj.Modules.jsState = (function() {
       ;
 
   init = function() {
+    console.log("JS STATE INIT");
     cacheEls();
 
     checkState();
@@ -39,6 +40,7 @@ moj.Modules.jsState = (function() {
     bindEvents();
 
     window.scrollTo( 0, 0 );
+    console.log("JS STATE END OF INIT");
   };
 
   bindEvents = function() {
