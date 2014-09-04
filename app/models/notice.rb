@@ -1,6 +1,10 @@
 class Notice < BaseClass
 
   attr_accessor :notice_served
+  validates :notice_served, inclusion: {
+    in: ["Yes"],
+    message: "You must say whether or not you gave notice to the defendant",
+  }
 
   attr_accessor :served_by_name
   validates :served_by_name, presence: { message: 'Enter the name of the person who gave the notice' }, length: { maximum: 40 }

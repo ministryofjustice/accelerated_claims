@@ -1,14 +1,18 @@
 describe Notice, :type => :model do
   let(:notice) do
-    Notice.new(served_by_name: "Jim Bob",
-               served_method: "by post",
-               date_served: Date.parse("2013-01-01"),
-               expiry_date: Date.parse("2014-02-02"))
+    Notice.new({
+      notice_served: "Yes",
+      served_by_name: "Jim Bob",
+      served_method: "by post",
+      date_served: Date.parse("2013-01-01"),
+      expiry_date: Date.parse("2014-02-02"),
+    })
   end
 
   describe "#as_json" do
     let(:desired_format) do
       {
+        "notice_served" => "Yes",
         "served_by" => "Jim Bob, by post",
         "date_served_day" => "01",
         "date_served_month" => "01",

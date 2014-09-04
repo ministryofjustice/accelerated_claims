@@ -5,7 +5,7 @@
   %p= notice_caution
 
 = claim_form.fields_for notice, builder: LabellingFormBuilder do |form|
-  .sub-panel.js-only
+  .sub-panel
     = form.radio_button_fieldset :notice_served,
       'Was the defendant given notice to leave the property?',
       class: 'radio inline js-depend',
