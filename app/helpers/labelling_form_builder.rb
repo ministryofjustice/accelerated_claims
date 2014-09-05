@@ -19,7 +19,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   def date_select_field_set attribute, legend, options={}
     set_class_and_id attribute, options
 
-    fieldset_tag label_for(attribute, legend), options do
+    fieldset_tag attribute, legend, options do
       @template.surround("<div class='row'>".html_safe, "</div>".html_safe) do
         if @object.send(attribute).is_a?(InvalidDate)
           @object.send("#{attribute}=", nil) # nil date to avoid exception on date_select call
@@ -36,7 +36,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
     options[:choice] ||= {'Yes'=>'Yes', 'No'=>'No'}
 
-    fieldset_tag label_for(attribute, legend), options do
+    fieldset_tag attribute, legend, options do
       @template.surround("<div class='options'>".html_safe, "</div>".html_safe) do
         options[:choice].map do |label, choice|
           radio_button_row(attribute, label, choice, virtual_pageview)
@@ -110,30 +110,40 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     list.join("\n").html_safe
   end
 
-
   def set_class_and_id attribute, options
     options[:class] = css_for(attribute, options)
     options[:id] = id_for(attribute) unless id_for(attribute).blank?
   end
 
-  def label_for attribute, label
+  def label_for attribute, label, hint=nil
     label ||= attribute.to_s.humanize
-    label = %Q|#{label} #{error_span(attribute)}| if error_for? attribute
-    label.html_safe
+    label = [label]
+    label << "<span class='hint block'>#{hint}</span>".html_safe if hint
+    label << error_span(attribute) if error_for?(attribute)
+    label.join(" ").html_safe
   end
 
-  def fieldset_tag(legend = nil, options = {}, &block)
+  def fieldset_tag(attribute, legend, options = {}, &block)
+    hint = options.delete(:hint)
+    label = label_for(attribute, "<span aria-hidden='true'>#{legend}</span>".html_safe, hint)
+
+    options.delete(:class) if options[:class].blank?
     options_for_fieldset = {}.merge(options)
     options_for_fieldset.delete(:choice)
     options_for_fieldset.delete(:date_select_options)
 
     output = tag(:fieldset, options_for_fieldset, true)
-    output.safe_concat(content_tag(:legend, legend)) unless legend.blank?
+
+    unless legend.blank?
+      output.safe_concat content_tag(:legend, legend, class: 'visuallyhidden') # use visually hidden legend for screen reader accessibility
+    end
+    unless label.blank?
+      output.safe_concat content_tag(:div, label)
+    end
+
     output.concat(capture(&block)) if block_given?
     output.safe_concat("</fieldset>")
   end
-
-
 
   private
 
