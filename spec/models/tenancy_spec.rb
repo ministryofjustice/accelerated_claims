@@ -302,9 +302,12 @@ describe Tenancy, :type => :model do
 
         it "should have error messages for each missing field" do
           subject.valid?
-          ["Original assured shorthold tenancy agreement date must be selected",
-          "Agreement reissued for same property must be selected",
-          "Agreement reissued for same landlord and tenant must be selected"].each do |msg|
+          [
+          "Original assured shorthold tenancy agreement date You must say when the original tenancy agreement started",
+          "Latest agreement date You must say when the most recent tenancy agreement started",
+          "Agreement reissued for same property You must say whether the tenancy agreement is for the same property",
+          "Agreement reissued for same landlord and tenant You must say whether the tenancy agreement is between the same landlord and tenant",
+          "Start date must be blank if more than one tenancy agreement"].each do |msg|
             expect(subject.errors.full_messages).to include msg
           end
         end
