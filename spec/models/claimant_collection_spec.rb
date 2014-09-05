@@ -127,6 +127,42 @@ describe ClaimantCollection do
   end
 
 
+  describe '#further_participants' do
+    it 'should return an emtpy array if empty collection' do
+      cc = ClaimantCollection.new( HashWithIndifferentAccess.new )
+      expect(cc.further_participants).to be_empty
+    end
+
+    it 'should return an empty array if only one claimant' do
+      params = test_claim_params
+      params.delete('claimant_2')
+      params.delete('claimant_3')
+      params['num_claimants'] = 1
+      cc2 = ClaimantCollection.new(params)
+      expect(cc2.size).to eq 1
+      expect(cc2.further_participants).to be_empty
+    end
+
+    it 'should return an array of just second claimant if two claimants' do
+      params = test_claim_params
+      params.delete('claimant_3')
+      params['num_claimants'] = 2
+      cc2 = ClaimantCollection.new(params)
+      expect(cc2.size).to eq 2
+      expect(cc2.further_participants).to eq [ cc[2] ]
+    end
+
+    it 'should return an array of claimants 2, 3, 4 if 4 claimants' do
+      params = test_claim_params
+      params.merge!(test_claimant_4)
+      params['num_claimants'] = 4
+      cc2 = ClaimantCollection.new(params)
+      expect(cc2.size).to eq 4
+      expect(cc2.further_participants).to eq [ cc2[2], cc2[3], cc2[4] ]
+    end
+  end
+
+
   
 end
 
@@ -164,5 +200,18 @@ def test_claim_params
       }
     }
   )
+end
+
+
+def test_claimant_4
+  {
+    "claimant_4" =>
+    {
+      "title" => "Mr",
+      "full_name" => "John Smith 4th",
+      "street" => "2 Brown St\nCwmbran",
+      "postcode" => "SW4W 4LU"
+    }
+  }
 end
 

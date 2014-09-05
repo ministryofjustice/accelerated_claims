@@ -10,6 +10,7 @@ class ClaimantCollection < ParticipantCollection
     @claimant_type = claim_params['claimant_type']
     super
     populate_claimants(claim_params)
+    @max_participants = MAX_CLAIMANTS
   end
   
 

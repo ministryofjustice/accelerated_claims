@@ -35,6 +35,18 @@ class ParticipantCollection < BaseClass
   end
 
 
+  # returns an array of claimants 2 to 4
+  def further_participants
+    arr = []
+    (2 .. @max_participants).each do |i|
+      arr << self[i] unless self[i].empty?
+    end
+    arr
+  end
+
+
+
+
   # returns the participant type as defined in the sub-class
   def participant_type
     self.class.participant_type
