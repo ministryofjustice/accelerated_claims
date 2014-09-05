@@ -125,6 +125,8 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
   def fieldset_tag(attribute, legend, options = {}, &block)
     hint = options.delete(:hint)
+
+    # hide repeated legend text from screen readers using aria-hidden='true'
     label = label_for(attribute, "<span aria-hidden='true'>#{legend}</span>".html_safe, hint)
 
     options.delete(:class) if options[:class].blank?
@@ -135,7 +137,8 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     output = tag(:fieldset, options_for_fieldset, true)
 
     unless legend.blank?
-      output.safe_concat content_tag(:legend, legend, class: 'visuallyhidden') # use visually hidden legend for screen reader accessibility
+      # use visually hidden legend for screen reader accessibility
+      output.safe_concat content_tag(:legend, legend, class: 'visuallyhidden')
     end
     unless label.blank?
       output.safe_concat content_tag(:div, label)
