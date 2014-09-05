@@ -10,12 +10,12 @@ describe ContinuationSheet do
 
 
   let(:claimant_3) {
-    params = HashWithIndifferentAccess.new(title: 'Mr', full_name: "John Doe", street: "Streety Street\nLondon", postcode: "SW1H9AJ",  claimant_type: 'individual', claimant_num: 1) 
+    params = HashWithIndifferentAccess.new(title: 'Mr', full_name: "John Doe", street: "Streety Street\nLondon", postcode: "SW1H9AJ",  claimant_type: 'individual', claimant_num: 3) 
     Claimant.new(params)
   }
 
   let(:claimant_4) {
-    params = HashWithIndifferentAccess.new(title: 'Mr', full_name: "Jane Doe", street: "Flat 5\nMansion House\nStreety Street\nKensington\nLondon", postcode: "SW1H9AJ",  claimant_type: 'individual', claimant_num: 1) 
+    params = HashWithIndifferentAccess.new(title: 'Mrs', full_name: "Jane Doe", street: "Flat 5\nMansion House\nStreety Street\nKensington\nLondon", postcode: "SW1H9AJ",  claimant_type: 'individual', claimant_num: 4) 
     Claimant.new(params)
   }
 
@@ -71,9 +71,15 @@ describe ContinuationSheet do
 
   describe '#left_side' do
     context 'claimants only' do
+      
       it 'should produce a header and just the claimant when only one claimant' do
         cs = ContinuationSheet.new( [claimant_3], Array.new )
-        expect(cs.left_side).to eq one_claimant_expected_results
+        expect(cs.left_side).to eq claimant_3_expected_results
+      end
+
+      it 'should produce a header and claimants 3 and 4 when two claimants' do
+        cs = ContinuationSheet.new( [claimant_3, claimant_4], Array.new )
+        expect(cs.left_side).to eq claimants_3_and_4_expected_results
       end
     end
   end
@@ -82,16 +88,50 @@ end
 
 
 
-def one_claimant_expected_results
+def claimant_3_expected_results
   result =<<EOS
 Additional Claimants
 ====================
 
+
 Claimant 3:
-  Mr John Doe
-  Streety Street
-  London SW1H 9AJ
+    Mr John Doe
+    Streety Street
+    London
+    SW1H 9AJ
+
+
 EOS
+end
+
+
+
+def claimants_3_and_4_expected_results
+  result =<<EOS
+Additional Claimants
+====================
+
+
+Claimant 3:
+    Mr John Doe
+    Streety Street
+    London
+    SW1H 9AJ
+
+
+Claimant 4:
+    Mrs Jane Doe
+    Flat 5
+    Mansion House
+    Streety Street
+    Kensington
+    London
+    SW1H 9AJ
+
+
+EOS
+
+
 end
 
 

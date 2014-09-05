@@ -84,10 +84,14 @@ class Claimant < BaseClass
     str  = "#{indentation}#{title} #{full_name}\n"
     address_lines = street.split("\n")
     address_lines.each { |al| str += "#{indentation}#{al}\n" }
-    str += "#{indentation}#{postcode1} #{postcode2}"
+    str += "#{indentation}#{postcode1} #{postcode2}\n"
     str
   end
 
+
+  def numbered_claimant_header
+    "Claimant #{claimant_num}:\n"
+  end
 
 
 

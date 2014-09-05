@@ -27,9 +27,21 @@ class ContinuationSheet
     str = ''
     if any_claimants?
       str += claimants_header
-      @claimants.each { |c| str += c.indented_details(@@indentation) }
+      @claimants.each do |claimant| 
+        str += claimant.numbered_claimant_header
+        str += claimant.indented_details(@@indentation)
+        str += "\n\n"
+      end
     end
     str
+  end
+
+
+
+  private
+
+  def claimants_header
+    "Additional Claimants\n====================\n\n\n"
   end
 
 
