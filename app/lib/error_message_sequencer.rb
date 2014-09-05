@@ -37,15 +37,15 @@ class ErrorMessageSequencer
 
     'claim_defendant' => [
       'claim_defendant_number_of_defendants_error',
-      'claim_defendant_one_title_error',
-      'claim_defendant_one_full_name_error',
-      'claim_defendant_one_inhabits_property_error',
-      'claim_defendant_one_street_error',
-      'claim_defendant_one_postcode_error',
-      'claim_defendant_two_title_error',
-      'claim_defendant_two_full_name_error',
-      'claim_defendant_two_street_error',
-      'claim_defendant_two_postcode_error',
+      'claim_defendant_1_title_error',
+      'claim_defendant_1_full_name_error',
+      'claim_defendant_1_inhabits_property_error',
+      'claim_defendant_1_street_error',
+      'claim_defendant_1_postcode_error',
+      'claim_defendant_2_title_error',
+      'claim_defendant_2_full_name_error',
+      'claim_defendant_2_street_error',
+      'claim_defendant_2_postcode_error',
     ],
 
     'claim_notice' => [
@@ -108,7 +108,7 @@ class ErrorMessageSequencer
 
   private
 
-  # e.g. returns 'claim_defendant' if given 'claim_defendant_one_title_error'
+  # e.g. returns 'claim_defendant' if given 'claim_defendant_1_title_error'
   def section_prefix error
     error.split('_')[0..1].join('_')
   end

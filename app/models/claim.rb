@@ -175,19 +175,6 @@ class Claim < BaseClass
     true
   end
 
-  # def populate_address_for number, defendant, hash
-  #   if defendant.present? && defendant.address_blank?
-  #     hash["defendant_#{number}_address"] << hash['property_address']
-  #     hash["defendant_#{number}_postcode1"] = hash['property_postcode1']
-  #     hash["defendant_#{number}_postcode2"] = hash['property_postcode2']
-  #   end
-  # end
-
-  # def populate_defendants_address_if_blank hash
-  #   populate_address_for("one", defendant_one, hash)
-  #   populate_address_for("two", defendant_two, hash)
-  # end
-
   def add_fee_and_costs hash
     if hash["claimant_contact_legal_costs"].blank?
       hash.merge!({ "total_cost" => "#{hash["fee_court_fee"]}" })
@@ -293,23 +280,6 @@ class Claim < BaseClass
     rescue NoMethodError => err
       raise NoMethodError.new(err.message + "attribute: #{attribute_name} #{claim_params.inspect}")
     end
-
-    # case attribute_name
-    #   when /defendant_one/
-    #     if @num_defendants.nil?
-    #       params.merge!(validate_presence: false, validate_absence: false, num_defendants: nil, defendant_num: :defendant_one)
-    #     else
-    #       params.merge!(validate_presence: true, validate_absence: false, num_defendants: claim_params[:num_defendants], defendant_num: :defendant_one)
-    #     end
-    #   when /defendant_two/
-    #     if @num_defendants.nil?
-    #       params.merge!(validate_absence: false, validate_presence: false)
-    #     elsif @num_defendants == 1
-    #       params.merge!(validate_absence: true, validate_presence: false)
-    #     else
-    #       params.merge!(validate_presence: true, num_defendants: '2', defendant_num: :defendant_two)
-    #     end
-    # end
 
     params
   end

@@ -21,7 +21,7 @@ casper.wait(500, function() {
   });
 
   this.fill('form#claimForm', {
-    'claim[defendant_two][title]':  'Reverend'
+    'claim[defendant_2][title]':  'Reverend'
   });
 
   this.click( '#claimant2address-no' );
@@ -49,9 +49,9 @@ casper.wait(500, function() {
     this.test.comment('Checking claimant two title');
     this.test.assertField( 'claim[claimant_2][title]', 'Mrs' );
     this.test.comment('Checking defendant one title');
-    this.test.assertField( 'claim[defendant_one][title]', 'Miss' );
+    this.test.assertField( 'claim[defendant_1][title]', 'Miss' );
     this.test.comment('Checking defendant two title');
-    this.test.assertField( 'claim[defendant_two][title]', 'Reverend' );
+    this.test.assertField( 'claim[defendant_2][title]', 'Reverend' );
 
     this.test.comment('Checking number of claimants');
     this.test.assertField( 'multiplePanelSelector_claimants', '2' );
@@ -61,14 +61,14 @@ casper.wait(500, function() {
     this.test.comment('Checking second claimant visible');
     this.test.assertVisible( '#claimant_2' );
     this.test.comment('Checking second defendant visible');
-    this.test.assertVisible( '#defendant_two' );
+    this.test.assertVisible( '#defendant_2' );
 
     this.test.comment('Checking second claimant separate address visible');
     this.test.assertVisible( '#claimant_2 .sub-panel.address' );
     this.test.comment('Checking first defendant separate address visible');
-    this.test.assertVisible( '#defendant_one .sub-panel.address' );
+    this.test.assertVisible( '#defendant_1 .sub-panel.address' );
     this.test.comment('Checking second defendant separate address visible');
-    this.test.assertVisible( '#defendant_two .sub-panel.address' );
+    this.test.assertVisible( '#defendant_2 .sub-panel.address' );
 
     this.test.comment('Checking legal costs visible');
     this.test.assertVisible( '.sub-panel.yesno-solicitor' );

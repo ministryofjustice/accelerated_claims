@@ -69,9 +69,9 @@ class PDFDocument
   STRIKER_JAR                = File.join Rails.root, 'scripts', 'striker-0.3.1-standalone.jar'
 
   def defendant_two_data
-    { 'defendant_two_address'   => "#{@json['defendant_two_address']}",
-      'defendant_two_postcode1' => "#{@json['defendant_two_postcode1']}",
-      'defendant_two_postcode2' => "#{@json['defendant_two_postcode2']}" }
+    { 'defendant_2_address'   => "#{@json['defendant_2_address']}",
+      'defendant_2_postcode1' => "#{@json['defendant_2_postcode1']}",
+      'defendant_2_postcode2' => "#{@json['defendant_2_postcode2']}" }
   end
 
   def create_continuation_pdf
