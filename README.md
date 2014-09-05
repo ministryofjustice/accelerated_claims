@@ -10,27 +10,22 @@ This is the source code of what is currently a minimum viable product for the Ci
 
 ## Local setup
 
-Install **pdftk** & then:
+Install the following:
+
+* PhantomJS - `brew install phantomjs`
+* pdftk server - download from <https://www.pdflabs.com/tools/pdftk-server/>
+* Redis - `brew install redis` (optional)
+
+Configuration data is loaded from the .env file (via dotenv gem). The default configuration will work for local development, but see the file for optional variables.
+
+Install the bundle, then start the rails server and PDF strike through service:
 
 ```
-git clone https://github.com/ministryofjustice/accelerated_claim.git
-cd accelerated_claim
 bundle install
-export PDFTK=$(which pdftk)
-export REDIS_STORE=redis://localhost:6379/1
-
-export ZENDESK_USERNAME=[username]
-export ZENDESK_TOKEN=[token]
-export ANONYMOUS_PLACEHOLDER_EMAIL=[noreply-email]
-rails s
+foreman start
 ```
 
-You also need to run the PDF strike through service:
-
-```
-java -jar scripts/strike2-0.*.0-standalone.jar
-```
-
+See the `Procfile` for individual startup invocations.
 
 ## Using the Vagrant development environment
 
