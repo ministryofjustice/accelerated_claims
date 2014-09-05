@@ -22,8 +22,8 @@ class MojDateFieldset
   # @param [LabellingFormBuilder] form : the form builder
   # @param [Symbol] attribute: the name of the attribute to be updated (usually a Date class)
   # @param [String] legend: the legend for the date control
-  # @param [Hash] options : HTML options to be passed in.  These options are merged applied to the fieldset and span elements before the 
-  #  date boxes themselves.  Attributes to be applied to the day, month or year text boxes should be specified as inner hashes with keys 
+  # @param [Hash] options : HTML options to be passed in.  These options are merged applied to the fieldset and span elements before the
+  #  date boxes themselves.  Attributes to be applied to the day, month or year text boxes should be specified as inner hashes with keys
   #  "_day", "_month", "_year" respectively.  Attributes thus specified will be merged with the default attributes.
   # @param [Date] example_date : the date to use as the example in the explanatory text, defaults to today
   # @param [String] explanatory_text : the explanatory text to use if the standard example date isn't to be used (if this is non-nil, the example date is ignored)
@@ -42,33 +42,34 @@ class MojDateFieldset
   end
 
 
- 
+
   def emit
     @form.set_class_and_id @attribute, @options
-    @legend = embed_explanatiory_text(@elgend, @explanatory_text) unless @explanatory_text.nil?
-    @form.fieldset_tag @form.label_for(@attribute, @legend), @options do
-      
+    @options[:hint] = @explanatory_text unless @explanatory_text.nil?
+
+    @form.fieldset_tag @attribute, @legend, @options do
+
       date = @form.object.send(@attribute)
-      
+
       @form.fields_for(@attribute, date) do |date_form|
         obj_name   = @form.object.class.to_s.underscore
-        
-        default_day_options = { maxlength: 2, 
-                                id: "claim_#{obj_name}_#{@attribute}_3i", 
-                                name: "claim[#{obj_name}][#{@attribute}(3i)]",   
+
+        default_day_options = { maxlength: 2,
+                                id: "claim_#{obj_name}_#{@attribute}_3i",
+                                name: "claim[#{obj_name}][#{@attribute}(3i)]",
                                 class: 'moj-date-day'
                               }
-        default_month_options = { maxlength: 9, 
-                                id: "claim_#{obj_name}_#{@attribute}_2i",   
-                                name: "claim[#{obj_name}][#{@attribute}(2i)]",   
+        default_month_options = { maxlength: 9,
+                                id: "claim_#{obj_name}_#{@attribute}_2i",
+                                name: "claim[#{obj_name}][#{@attribute}(2i)]",
                                 class: 'moj-date-month'
                               }
-        default_year_options = { maxlength: 4, 
-                                id: "claim_#{obj_name}_#{@attribute}_1i",   
-                                name: "claim[#{obj_name}][#{@attribute}(1i)]",   
+        default_year_options = { maxlength: 4,
+                                id: "claim_#{obj_name}_#{@attribute}_1i",
+                                name: "claim[#{obj_name}][#{@attribute}(1i)]",
                                 class: 'moj-date-year'
                               }
-        
+
         html  = div_and_label_for(date_form, :day, default_day_options.merge(@passed_in_day_options)) +
                 div_and_label_for(date_form, :long_monthname, default_month_options.merge(@passed_in_month_options)) +
                 div_and_label_for(date_form, :year, default_year_options.merge(@passed_in_year_options))
@@ -97,13 +98,6 @@ class MojDateFieldset
     str.gsub!("> ", ">")
     str
   end
-
-
-
-  def embed_explanatiory_text(legend, text)
-    %Q(#{@legend}<span class="hint block">#{@explanatory_text}</span>)
-  end
-
 
   def extract_sub_options
     @passed_in_day_options   = @options.delete('_day') || {}
