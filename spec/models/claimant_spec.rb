@@ -49,6 +49,14 @@ describe Claimant, :type => :model do
   end
 
 
+  describe '#indented_details' do
+    it 'should return a string containting name and address with each line indented by the required number of spaces'  do
+      expected = "    Mr John Doe\n    Streety Street\n    London\n    SW1H 9AJ"
+      expect(claimant.indented_details(4)).to eq expected
+    end
+  end
+
+
 
   context 'validate_presence set to true' do
     

@@ -1,5 +1,6 @@
 class ContinuationSheet
 
+  @@indentation = 4
 
   def initialize(claimants, defendants)
     @claimants = claimants
@@ -20,5 +21,16 @@ class ContinuationSheet
   def any_claimants?
     @claimants.any?
   end
+
+
+  def left_side
+    str = ''
+    if any_claimants?
+      str += claimants_header
+      @claimants.each { |c| str += c.indented_details(@@indentation) }
+    end
+    str
+  end
+
 
 end

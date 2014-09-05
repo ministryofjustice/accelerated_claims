@@ -9,6 +9,16 @@ describe ContinuationSheet do
   }
 
 
+  let(:claimant_3) {
+    params = HashWithIndifferentAccess.new(title: 'Mr', full_name: "John Doe", street: "Streety Street\nLondon", postcode: "SW1H9AJ",  claimant_type: 'individual', claimant_num: 1) 
+    Claimant.new(params)
+  }
+
+  let(:claimant_4) {
+    params = HashWithIndifferentAccess.new(title: 'Mr', full_name: "Jane Doe", street: "Flat 5\nMansion House\nStreety Street\nKensington\nLondon", postcode: "SW1H9AJ",  claimant_type: 'individual', claimant_num: 1) 
+    Claimant.new(params)
+  }
+
   describe '#empty?' do
     it 'should respond true if instantiated with two empty arrays' do
       cs = ContinuationSheet.new(Array.new, Array.new)
@@ -33,7 +43,7 @@ describe ContinuationSheet do
 
 
 
-  describe 'any_defendants?' do
+  describe '#any_defendants?' do
     it 'should return true if there are any defendants' do
       cs = ContinuationSheet.new(Array.new, [ mock_defendant] )
       expect(cs.any_defendants?).to be true
@@ -46,7 +56,7 @@ describe ContinuationSheet do
   end
 
 
-  describe 'any_claimants?' do
+  describe '#any_claimants?' do
     it 'should return true if there are any defendants' do
       cs = ContinuationSheet.new([mock_claimant], Array.new )
       expect(cs.any_claimants?).to be true
@@ -59,4 +69,40 @@ describe ContinuationSheet do
   end
 
 
+  describe '#left_side' do
+    context 'claimants only' do
+      it 'should produce a header and just the claimant when only one claimant' do
+        cs = ContinuationSheet.new( [claimant_3], Array.new )
+        expect(cs.left_side).to eq one_claimant_expected_results
+      end
+    end
+  end
+
 end
+
+
+
+def one_claimant_expected_results
+  result =<<EOS
+Additional Claimants
+====================
+
+Claimant 3:
+  Mr John Doe
+  Streety Street
+  London SW1H 9AJ
+EOS
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
