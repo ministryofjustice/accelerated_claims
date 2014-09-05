@@ -149,16 +149,20 @@ describe ClaimantCollection do
       params['num_claimants'] = 2
       cc2 = ClaimantCollection.new(params)
       expect(cc2.size).to eq 2
-      expect(cc2.further_participants).to eq [ cc[2] ]
+      expect(cc2.further_participants).to be_empty
     end
 
-    it 'should return an array of claimants 2, 3, 4 if 4 claimants' do
+    it 'should return an arry of claimant 3 if 3 claimants' do
+      expect(cc.further_participants).to eq [ cc[3] ]
+    end
+
+    it 'should return an array of claimants 3, 4 if 4 claimants' do
       params = test_claim_params
       params.merge!(test_claimant_4)
       params['num_claimants'] = 4
       cc2 = ClaimantCollection.new(params)
       expect(cc2.size).to eq 4
-      expect(cc2.further_participants).to eq [ cc2[2], cc2[3], cc2[4] ]
+      expect(cc2.further_participants).to eq [ cc2[3], cc2[4] ]
     end
   end
 

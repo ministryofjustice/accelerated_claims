@@ -122,7 +122,41 @@ describe DefendantCollection do
   end
 
 
+  describe '#further_participants' do
+    it 'should return an emtpy array if empty collection' do
+      dc = DefendantCollection.new( HashWithIndifferentAccess.new )
+      expect(dc.further_participants).to be_empty
+    end
 
+    it 'should return an empty array if only one defendant' do
+      params = claim_params
+      params.delete('defendant_1')
+      params.delete('defendant_2')
+      params.delete('defendant_3')
+      params['num_defendants'] = 1
+      dc = DefendantCollection.new(params)
+      expect(dc.size).to eq 1
+      expect(dc.further_participants).to be_empty
+    end
+
+
+    it 'should return an array of one defendant if two defendants in collection' do
+      params = claim_params
+      params.delete('defendant_3')
+      params['num_defendants'] = 2
+      dc = DefendantCollection.new(params)
+      expect(dc.size).to eq 2
+      expect(dc.further_participants).to eq [ dc[2] ]
+    end
+
+
+    it 'should return an array of 5 defendants if 6 defendants in collection' do
+      params = claim_params_for_six_defendants
+      dc = DefendantCollection.new(params)
+      expect(dc.size).to eq 6
+      expect(dc.further_participants).to eq [ dc[2], dc[3], dc[4], dc[5], dc[6] ]
+    end
+  end
 end
 
 
@@ -168,6 +202,71 @@ def claim_params
         "street" => "666 Made-up Lane\nAnytown",
         "postcode" => "FX4W 9LU"
       },
+      "property" => 
+      {
+        "street" => "2 Toytown Road\nToytown",
+        "postcode" => "FX8X 8XX"
+      }
+    }
+  )
+end
+
+
+def claim_params_for_six_defendants
+  HashWithIndifferentAccess.new(
+    { "num_defendants" => 6,
+      "defendant_1" =>
+      {
+        "title" => "Miss",
+        "full_name" => "Ann Chovey",
+        "inhabits_property" => 'No',
+        "street" => "3 High Stree\nAnytown",
+        "postcode" => "FX1W 0LU"
+      },
+      "defendant_2" =>
+      {
+        "title" => "Miss",
+        "full_name" => "Barb Akew",
+        "inhabits_property" => 'Yes',
+        "street" => "",
+        "postcode" => ""
+      },
+      "defendant_3" =>
+      {
+        "title" => "Mr",
+        "full_name" => "Joe Blow",
+        "inhabits_property" => 'No',
+        "street" => "666 Made-up Lane\nAnytown",
+        "postcode" => "FX4W 9LU"
+      },
+      "defendant_4" =>
+      {
+        "title" => "Miss",
+        "full_name" => "Ann Chovey",
+        "inhabits_property" => 'No',
+        "street" => "4 High Stree\nAnytown",
+        "postcode" => "FX4W 4LU"
+      },
+      "defendant_5" =>
+      {
+        "title" => "Miss",
+        "full_name" => "Barb Akew",
+        "inhabits_property" => 'Yes',
+        "street" => "",
+        "postcode" => ""
+      },
+      "defendant_6" =>
+      {
+        "title" => "Mr",
+        "full_name" => "Joe Blow",
+        "inhabits_property" => 'No',
+        "street" => "666 Made-up Lane\nAnytown",
+        "postcode" => "F66 6LU"
+      },
+
+
+
+
       "property" => 
       {
         "street" => "2 Toytown Road\nToytown",

@@ -11,6 +11,7 @@ class ClaimantCollection < ParticipantCollection
     super
     populate_claimants(claim_params)
     @max_participants = MAX_CLAIMANTS
+    @first_extra_participant = 3
   end
   
 

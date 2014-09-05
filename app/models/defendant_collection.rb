@@ -11,6 +11,8 @@ class DefendantCollection < ParticipantCollection
     @property_postcode = ''
     super
     populate_defendants(claim_params)
+    @first_extra_participant = 2
+    @max_participants = MAX_DEFENDANTS
   end
   
 
