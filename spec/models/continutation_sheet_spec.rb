@@ -31,4 +31,32 @@ describe ContinuationSheet do
     end
   end
 
+
+
+  describe 'any_defendants?' do
+    it 'should return true if there are any defendants' do
+      cs = ContinuationSheet.new(Array.new, [ mock_defendant] )
+      expect(cs.any_defendants?).to be true
+    end
+
+    it 'should return flase if there are no defendants' do
+      cs = ContinuationSheet.new([mock_claimant], Array.new)
+      expect(cs.any_defendants?).to be false
+    end
+  end
+
+
+  describe 'any_claimants?' do
+    it 'should return true if there are any defendants' do
+      cs = ContinuationSheet.new([mock_claimant], Array.new )
+      expect(cs.any_claimants?).to be true
+    end
+
+    it 'should return flase if there are no defendants' do
+      cs = ContinuationSheet.new(Array.new, [ mock_defendant])
+      expect(cs.any_claimants?).to be false
+    end
+  end
+
+
 end

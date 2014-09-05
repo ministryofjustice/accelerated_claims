@@ -11,4 +11,14 @@ class ContinuationSheet
     @claimants.empty? && @defendants.empty?
   end
 
+
+  def any_defendants?
+    @defendants.any?
+  end
+
+
+  def any_claimants?
+    @claimants.any?
+  end
+
 end
