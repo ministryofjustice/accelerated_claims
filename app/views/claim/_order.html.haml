@@ -1,7 +1,8 @@
 = claim_form.fields_for order, builder: LabellingFormBuilder do |form|
   .sub-panel
     = form.radio_button_fieldset :cost,
-            'Do you want to ask the defendant to pay the cost of this claim? <span class="hint block">You may be reimbursed the court fee (and fixed legal fees if applicable)</span>'.html_safe,
+            'Do you want to ask the defendant to pay the cost of this claim?',
+            hint: 'You may be reimbursed the court fee (and fixed legal fees if applicable)',
             class: 'radio inline',
             choice: {'Yes'=>'Yes', 'No'=>'No'}
 

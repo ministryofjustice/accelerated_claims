@@ -27,11 +27,13 @@ require 'rspec/rails'
 require 'capybara/rails'
 require 'capybara/rspec'
 require 'webmock/rspec'
-require 'codeclimate-test-reporter'
 
-CodeClimate::TestReporter.start
-# allow Code Climate Test coverage reports to be sent
-WebMock.disable_net_connect!(:allow => /codeclimate.com/)
+if ENV['CODECLIMATE_REPO_TOKEN']
+  require 'codeclimate-test-reporter'
+  CodeClimate::TestReporter.start
+  # allow Code Climate Test coverage reports to be sent
+  WebMock.disable_net_connect!(:allow => /codeclimate.com/)
+end
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
