@@ -18,6 +18,8 @@ class ClaimForm
     else
       fill_organizational_claimant
     end
+    puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
     select_number_of_defendants
     fill_in_defendant(1, complete_address: true)
     fill_in_defendant(2, complete_address: true)
@@ -75,7 +77,7 @@ class ClaimForm
 
 
   def select_number_of_defendants
-    num_defendants = get_data('claim', 'num_of_defendants')
+    num_defendants = get_data('claim', 'num_defendants')
     puts "++++++ DEBUG filling in num defendants #{num_defendants.inspect} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
     
     fill_in "How many defendants are there?", with: num_defendants

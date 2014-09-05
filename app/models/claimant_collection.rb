@@ -30,7 +30,7 @@ class ClaimantCollection < ParticipantCollection
 
 
   def valid?
-    @claimants.each do |index, claimant| 
+    @participants.each do |index, claimant| 
       unless claimant.valid?
         claimant.errors.each do |field, msg|
           @errors.add("claimant_#{index}_#{field}".to_sym, msg)
