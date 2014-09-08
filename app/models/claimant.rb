@@ -89,7 +89,7 @@ class Claimant < BaseClass
   end
 
 
-  def numbered_claimant_header
+  def numbered_header
     "Claimant #{claimant_num}:\n"
   end
 

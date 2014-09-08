@@ -71,24 +71,69 @@ describe ContinuationSheet do
   end
 
 
-  describe '#left_side' do
+  describe '#pages' do
     context 'claimants only' do
       
       it 'should produce a header and just the claimant when only one claimant' do
         cs = ContinuationSheet.new( [claimant_3], Array.new )
-        expect(cs.left_side).to eq claimant_3_expected_results
+        cs.generate
+
+        expect(cs.pages.first['left']).to eq claimant_3_expected_results
+        expect(cs.pages.first['right']).to eq ''
       end
 
       it 'should produce a header and claimants 3 and 4 when two claimants' do
         cs = ContinuationSheet.new( [claimant_3, claimant_4], Array.new )
-        expect(cs.left_side).to eq claimants_3_and_4_expected_results
+        cs.generate
+        expect(cs.pages.first['left']).to eq claimants_3_and_4_expected_results
       end
 
       it 'should produce just claimants 3 and 4 and defendants 2 and 3 when intantiated with 2 of each' do
         cs = ContinuationSheet.new( [claimant_3, claimant_4], defendants_array(3) )
-        expect(cs.left_side).to eq claimants_3_and_4_and_defendants_2_and_3_expected_results
+        cs.generate
+        expect(cs.pages.first['left']).to eq claimants_3_and_4_and_defendants_2_and_3_expected_results
       end
 
+    end
+  end
+
+
+  describe 'format_pages' do
+    context "one panel" do
+      it 'should generate an array of one page comprising an emtpy right panel' do
+        cs = ContinuationSheet.new( [], [] )
+        cs.instance_variable_set(:@panels, [ 'panel 1' ] )
+        cs.instance_variable_set(:@num_panels, 1)
+        cs.send(:format_pages)
+        actual = cs.instance_variable_get(:@pages)
+        expect(actual).to eq [ {'left' => 'panel 1', 'right' => '' } ]
+      end
+    end
+
+    context 'two panels' do
+      it 'should generate and array of one page comprising a left and right panel' do
+        cs = ContinuationSheet.new( [], [] )
+        cs.instance_variable_set(:@panels, [ 'panel 1', 'panel 2' ] )
+        cs.instance_variable_set(:@num_panels, 2)
+        cs.send(:format_pages)
+        actual = cs.instance_variable_get(:@pages)
+        expect(actual).to eq [ {'left' => 'panel 1', 'right' => 'panel 2' } ]
+      end
+    end
+
+    context 'five panels' do
+      it 'should generate and array of three page ' do
+        cs = ContinuationSheet.new( [], [] )
+        cs.instance_variable_set(:@panels, [ 'panel 1', 'panel 2', 'panel 3', 'panel 4', 'panel 5' ] )
+        cs.instance_variable_set(:@num_panels, 5)
+        cs.send(:format_pages)
+        actual = cs.instance_variable_get(:@pages)
+        expect(actual).to eq [ 
+          {'left' => 'panel 1', 'right' => 'panel 2' },
+          {'left' => 'panel 3', 'right' => 'panel 4' },
+          {'left' => 'panel 5', 'right' => '' }
+         ]
+      end
     end
   end
 

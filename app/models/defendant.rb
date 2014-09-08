@@ -96,7 +96,7 @@ class Defendant < BaseClass
   end
 
 
-  def numbered_defendant_header
+  def numbered_header
     "Defendant #{defendant_num}:\n"
   end
 
