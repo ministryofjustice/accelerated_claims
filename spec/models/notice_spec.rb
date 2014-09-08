@@ -12,7 +12,6 @@ describe Notice, :type => :model do
   describe "#as_json" do
     let(:desired_format) do
       {
-        "notice_served" => "Yes",
         "served_by" => "Jim Bob, by post",
         "date_served_day" => "01",
         "date_served_month" => "01",
