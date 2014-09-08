@@ -3,7 +3,9 @@ TO DO ON NUM DEFENDANTS
 =======================
 
 
-- work out what to do with extra defendants in the pdf
+- find out why defendnat 1 and 2 aren't being printed (prob defendant_one instead of defendant_1)
+- work out why newlines are being duplicated in adresses on the continuation sheet
+
 
 - work out how to implement claimant_collections in the form params
 - ditto defendant_collections
