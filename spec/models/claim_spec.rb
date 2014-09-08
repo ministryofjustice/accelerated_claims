@@ -268,10 +268,10 @@ describe Claim, :type => :model do
     context "when a defendant's address is blank" do
       let(:data) do
         hash = claim_post_data['claim']
-        hash['defendant_one'] = hash['defendant_one'].except('street', 'postcode')
-        hash['defendant_two'] = hash['defendant_two'].except('street', 'postcode')
-        hash['defendant_one']["inhabits_property"] = "yes"
-        hash['defendant_two']["inhabits_property"] = "yes"
+        hash['defendant_1'] = hash['defendant_1'].except('street', 'postcode')
+        hash['defendant_2'] = hash['defendant_2'].except('street', 'postcode')
+        hash['defendant_1']["inhabits_property"] = "yes"
+        hash['defendant_2']["inhabits_property"] = "yes"
         hash
       end
       it "defendant one should render with the property's address" do

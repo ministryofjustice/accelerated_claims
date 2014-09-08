@@ -19,6 +19,8 @@ describe ContinuationSheet do
     Claimant.new(params)
   }
 
+
+
   describe '#empty?' do
     it 'should respond true if instantiated with two empty arrays' do
       cs = ContinuationSheet.new(Array.new, Array.new)
@@ -81,10 +83,31 @@ describe ContinuationSheet do
         cs = ContinuationSheet.new( [claimant_3, claimant_4], Array.new )
         expect(cs.left_side).to eq claimants_3_and_4_expected_results
       end
+
+      it 'should produce just claimants 3 and 4 and defendants 2 and 3 when intantiated with 2 of each' do
+        cs = ContinuationSheet.new( [claimant_3, claimant_4], defendants_array(3) )
+        expect(cs.left_side).to eq claimants_3_and_4_and_defendants_2_and_3_expected_results
+      end
+
     end
   end
 
 end
+
+# call this with the TOTAL number of defendants - this will return an array of defendants 2 to n
+def defendants_array(number_of_defendants)
+  array = []
+  (2 .. number_of_defendants).each do |i|
+    array << Defendant.new( { "title" => "Mrs", 
+                              "full_name" => "Defendant Number #{i}", 
+                              "street" => "#{i} Downing Street\nLondon", 
+                              "postcode" => "SW#{i} #{i}LU", 
+                              "defendant_num" => i} 
+                          ) 
+  end
+  array
+end
+
 
 
 
@@ -107,18 +130,8 @@ end
 
 
 def claimants_3_and_4_expected_results
-  result =<<EOS
-Additional Claimants
-====================
 
-
-Claimant 3:
-    Mr John Doe
-    Streety Street
-    London
-    SW1H 9AJ
-
-
+  claimant_4 =<<EOS
 Claimant 4:
     Mrs Jane Doe
     Flat 5
@@ -130,17 +143,40 @@ Claimant 4:
 
 
 EOS
-
-
+  "#{claimant_3_expected_results}#{claimant_4}"
 end
 
 
+def claimants_3_and_4_and_defendants_2_expected_results
+  defendant_2 =<<EOS
+Additional Defendants
+=====================
 
 
+Defendant 2:
+    Mrs Defendant Number 2
+    2 Downing Street
+    London
+    SW2 2LU
 
 
+EOS
+  "#{claimants_3_and_4_expected_results}#{defendant_2}"
+end
 
 
+def claimants_3_and_4_and_defendants_2_and_3_expected_results
+  defendant_3 =<<EOS
+Defendant 3:
+    Mrs Defendant Number 3
+    3 Downing Street
+    London
+    SW3 3LU
+
+
+EOS
+  "#{claimants_3_and_4_and_defendants_2_expected_results}#{defendant_3}"
+end
 
 
 

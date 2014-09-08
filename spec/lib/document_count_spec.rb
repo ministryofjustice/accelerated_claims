@@ -6,7 +6,6 @@ describe DocumentCount do
       let(:count) { DocumentCount.new(json).add }
 
       it 'should add the number of documents to JSON' do
-        pp json
         expect(count["copy_number"]).to eq 5
       end
     end

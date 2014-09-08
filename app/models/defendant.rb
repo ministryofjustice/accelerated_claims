@@ -95,6 +95,24 @@ class Defendant < BaseClass
     end
   end
 
+
+  def numbered_defendant_header
+    "Defendant #{defendant_num}:\n"
+  end
+
+
+  def indented_details(spaces_to_indent)
+    postcode1, postcode2 = split_postcode
+    indentation = ' ' * spaces_to_indent
+    str  = "#{indentation}#{title} #{full_name}\n"
+    address_lines = street.split("\n")
+    address_lines.each { |al| str += "#{indentation}#{al}\n" }
+    str += "#{indentation}#{postcode1} #{postcode2}\n"
+    str
+  end
+
+  
+
   private
 
   def display_name(field_name)

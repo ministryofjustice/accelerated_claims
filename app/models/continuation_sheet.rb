@@ -1,7 +1,11 @@
+
+# Class to format the output on the continuation sheet for additional claimants and defendants
+
 class ContinuationSheet
 
   @@indentation = 4
 
+  # instantiate a ContinuatinoSheet object with the ADDITIONAL claimants and defendants
   def initialize(claimants, defendants)
     @claimants = claimants
     @defendants = defendants
@@ -33,6 +37,15 @@ class ContinuationSheet
         str += "\n\n"
       end
     end
+
+    if any_defendants?
+      str += defendants_header
+      @defendants.each do |defendant|
+        str += defendant.numbered_defendant_header
+        str += defendant.indented_details(@@indentation)
+        str += "\n\n"
+      end
+    end
     str
   end
 
@@ -42,6 +55,11 @@ class ContinuationSheet
 
   def claimants_header
     "Additional Claimants\n====================\n\n\n"
+  end
+
+
+  def defendants_header
+    "Additional Defendants\n=====================\n\n\n"
   end
 
 
