@@ -77,10 +77,10 @@ class Tenancy < BaseClass
   end
 
   with_options if: :multiple_tenancy_agreements? do |t|
-    t.validates :original_assured_shorthold_tenancy_agreement_date, presence: { message: 'must be selected' }
-    t.validates :latest_agreement_date, presence: { message: 'must be selected' }
-    t.validates :agreement_reissued_for_same_property, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
-    t.validates :agreement_reissued_for_same_landlord_and_tenant, presence: { message: 'must be selected' }, inclusion: { in: ['Yes', 'No'] }
+    t.validates :original_assured_shorthold_tenancy_agreement_date, presence: { message: 'You must say when the original tenancy agreement started' }
+    t.validates :latest_agreement_date, presence: { message: 'You must say when the most recent tenancy agreement started' }
+    t.validates :agreement_reissued_for_same_property, presence: { message: 'You must say whether the tenancy agreement is for the same property' }, inclusion: { in: ['Yes', 'No'] }
+    t.validates :agreement_reissued_for_same_landlord_and_tenant, presence: { message: 'You must say whether the tenancy agreement is between the same landlord and tenant' }, inclusion: { in: ['Yes', 'No'] }
 
     t.validates_with DateValidator, fields:
       [:original_assured_shorthold_tenancy_agreement_date, :latest_agreement_date]

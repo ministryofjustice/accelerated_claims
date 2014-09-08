@@ -59,7 +59,7 @@ class ClaimForm
     fill_claimant_contact_with_js
 
     fill_tenancy
-    fill_notice_with_js
+    fill_notice
     fill_licences
     fill_deposit
     fill_postponement
@@ -383,17 +383,11 @@ class ClaimForm
     end
   end
 
-  def fill_notice_with_js
-    if get_data('notice', 'served_by_name').nil?
-      fill_notice
-    else
-      choose 'claim_notice_notice_served_yes'
-      fill_notice
-    end
-  end
-
   def fill_notice
     prefix = 'notice'
+    if get_data('notice', 'notice_served') == "Yes"
+      choose_radio(prefix, 'notice_served')
+    end
     fill_in_text_field(prefix, 'served_by_name')
     fill_in_text_field(prefix, 'served_method')
     fill_in_moj_date_fieldset(prefix, 'date_served')
