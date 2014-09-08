@@ -45,6 +45,7 @@ def claim_post_data
       },
       "notice" =>
       {
+        "notice_served" => "Yes",
         "served_by_name" => "Somebody",
         "served_method" => "In person",
         "date_served(3i)" => "2",

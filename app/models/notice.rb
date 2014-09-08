@@ -1,6 +1,10 @@
 class Notice < BaseClass
 
   attr_accessor :notice_served
+  validates :notice_served, inclusion: {
+    in: ["Yes"],
+    message: "You must say whether or not you gave notice to the defendant",
+  }
 
   attr_accessor :served_by_name
   validates :served_by_name, presence: { message: 'Enter the name of the person who gave the notice' }, length: { maximum: 40 }
@@ -21,7 +25,7 @@ class Notice < BaseClass
   def as_json
     json = super
     json["served_by"] = "#{json["served_by_name"]}, #{json["served_method"]}"
-    ["served_by_name", "served_method"].each { |attr| json.delete attr }
+    %w{served_by_name served_method notice_served}.each { |attr| json.delete attr }
     json = split_date :date_served, json
     json = split_date :expiry_date, json
     json
