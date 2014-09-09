@@ -78,7 +78,7 @@ class PDFDocument
   def add_continuation_sheets(result_path)
     (0 .. 4).each do | i |
       if @json.key?("continuation_sheet_#{i}_left")
-        add_continuation_sheet(result_path, @json["continuation_sheet_#{i}_left"], @json["continuation_sheet_#{i}_right}"])
+        add_continuation_sheet(result_path, @json["continuation_sheet_#{i}_left"], @json["continuation_sheet_#{i}_right"])
       end
     end
   end
@@ -92,61 +92,11 @@ class PDFDocument
     combine_pdfs result_path, continuation_sheet_pdf.path
   end
 
-
-  # def create_continuation_pdf
-  #   continuation_pdf = Tempfile.new('continuation', '/tmp/')
-  #   pdf = PdfForms.new(ENV['PDFTK'])
-  #   pdf.fill_form CONTINUATION_TEMPLATE, continuation_pdf, defendant_two_data
-  #   continuation_pdf.path
-  # end
-
   def combine_pdfs result_path, continuation_path
     combinded = Tempfile.new('combined', '/tmp/')
     %x[#{ENV['PDFTK']} #{result_path} #{continuation_path} cat output #{combinded.path}]
     FileUtils.mv combinded.path, result_path
   end
-
-  # def add_defendant_two result_path
-  #   if @json.key? 'defendant_2_address'
-  #     continuation_path = create_continuation_pdf
-  #     combine_pdfs result_path, continuation_path
-  #   end
-  # end
-
-
-
-  # def add_further_claimants(result_path)
-  #   if @json.key?('claimant_3_address') || @json.key?('claimant_4_address')
-  #     further_claimants_path = create_further_claimants_pdf
-  #     combine_pdfs result_path, further_claimants_path
-  #   end
-  # end
-
-
-  # def create_further_claimants_pdf
-  #   further_claimants_pdf = Tempfile.new('further_claimants', '/tmp/')
-  #   pdf = PdfForms.new(ENV['PDFTK'])
-  #   pdf.fill_form FURTHER_CLAIMANTS_TEMPLATE, further_claimants_pdf, further_claimants_data
-  #   further_claimants_pdf.path
-  # end
-
-
-  # def further_claimants_data
-  #   further_claimants_string = "Further Claimants:\n\n"
-
-  #   if @json.key?('claimant_3_address')
-  #     further_claimants_string += @json['claimant_3_address']
-  #     further_claimants_string += "\n" + @json['claimant_3_postcode1'] + ' ' + @json['claimant_3_postcode2'] + "\n\n"
-  #   end
-
-  #   if @json.key?('claimant_4_address')
-  #     further_claimants_string += @json['claimant_4_address']
-  #     further_claimants_string += "\n" + @json['claimant_4_postcode1'] + ' ' + @json['claimant_4_postcode2'] + "\n\n"
-  #   end
-
-  #   { 'further_claimants' => further_claimants_string }
-  # end
-
 
 
 
@@ -217,35 +167,19 @@ class PDFDocument
   end
 
   def strike_out_applicable_statements result_pdf
-    puts "++++++ DEBUG strike_out_applicable_statements ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    
     list = []
     add_previous_tenancy_type_strike_out list
     add_applicable_statement_strike_outs(list) unless @json["tenancy_demoted_tenancy"] == 'Yes'
-    puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    
     ActiveSupport::Notifications.instrument('add_strikes_via_cli.pdf') do
-      puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-      
       perform_strike_through(list, result_pdf) unless list.empty?
-      puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-      
     end
-    puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    
   end
 
   def perform_strike_through list, result_pdf
-    puts "++++++ DEBUG perform_strike_through ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    
     output_pdf = Tempfile.new('strike_out', '/tmp/')
     begin
-      puts "++++++ DEBUG call_strike_through_service ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-      
       call_strike_through_service list, result_pdf, output_pdf
     rescue Faraday::ConnectionFailed, Errno::EPIPE, Exception => e
-      puts "++++++ DEBUG use_strike_through_command ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-      
       Rails.logger.warn "e: #{e.class}: #{e.to_s}:\n  #{e.backtrace[0..3].join("\n  ")}"
       use_strike_through_command list, result_pdf, output_pdf, 'error_add_strikes_commandline.pdf'
     end

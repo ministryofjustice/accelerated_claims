@@ -22,10 +22,6 @@ class ClaimController < ApplicationController
       require 'fixture_data'
       journey_id = params[:journey].to_i
       claim_data = FixtureData.data(force_reload).params_data_for(journey_id)
-      puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-      require 'pp'
-      pp claim_data
-      
       Claim.new(HashWithIndifferentAccess.new(claim_data))
     elsif (data = session[:claim])
       Claim.new(data).tap { |claim|
@@ -81,11 +77,6 @@ class ClaimController < ApplicationController
     move_claimant_address_params_into_the_model
     move_defendant_address_params_into_model
     @claim = Claim.new(params['claim'])
-
-
-    puts "++++++ DEBUG CALIM AS JSON ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    pp @claim.as_json
-    
 
     unless @claim.valid?
       redirect_to_with_protocol :new

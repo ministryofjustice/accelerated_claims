@@ -55,20 +55,11 @@ class Claim < BaseClass
     json_in.merge!(@claimants.as_json)
     json_in.merge!(@defendants.as_json)
 
-    puts "++++++ DEBUG json in before merge ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    pp json_in 
-    
-
     cs = ContinuationSheet.new(claimants.further_participants, defendants.further_participants)
     cs.generate
     unless cs.empty?
       json_in.merge!( cs.as_json )
     end
-
-    puts "++++++ DEBUG json in after mergin in continuation sheet ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    pp json_in
-
-    
 
     json_out = {}
     json_in.each do |attribute, submodel_data|
