@@ -16,7 +16,7 @@
 class ContinuationSheet
 
   @@indentation       = 4
-  @@newline_threshold = 60
+  @@newline_threshold = 55
 
 
   attr_reader :pages
@@ -104,6 +104,7 @@ class ContinuationSheet
 
 
   def num_newlines
+    return 0 if @current_panel_index.nil?
     current_panel.count("\n")
   end
 
@@ -121,6 +122,7 @@ class ContinuationSheet
 
 
   def add_to_panels(object)
+    add_panel if needs_new_panel?
     append_to_current_panel(object.numbered_header)
     append_to_current_panel(object.indented_details(@@indentation))
     append_to_current_panel("\n\n")

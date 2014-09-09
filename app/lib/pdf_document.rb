@@ -3,18 +3,10 @@ class PDFDocument
   attr_reader :json
 
   def initialize(claim, flatten=true)
-
     @claim = claim
     @json = @claim.as_json
-
-    
     @flatten = flatten
     remove_backslash_r!
-
-    puts "++++++ DEBUG PDFDccumnet parameters ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    pp @json
-
-
     add_document_count
     add_checklist
   end
