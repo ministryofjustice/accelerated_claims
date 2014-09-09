@@ -14,7 +14,7 @@ class PDFDocument
     puts "++++++ DEBUG PDFDccumnet parameters ++++++ #{__FILE__}::#{__LINE__} ++++\n"
     pp @json
 
-    
+
     add_document_count
     add_checklist
   end
@@ -89,7 +89,10 @@ class PDFDocument
   def add_continuation_sheets(result_path, continuation_sheet_pages)
     continuation_sheet_pages.each_with_index do |page, index|
       continuation_sheet_pdf = Tempfile.new('continuation_sheet_#{index}', '/tmp/')
-      pdf = PdfForms.new(ENV['PDFTK'])
+      pdf = PdfForms.new(ENV['PDFTK'], :flatten => @flatten)
+      puts "++++++ DEBUG LEFT PANEL ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+      pp page['left']
+      
       pdf.fill_form CONTINUATION_SHEET_TEMPLATE, continuation_sheet_pdf, {'left_panel' => page['left'], 'right_panel' => page['right']}
       combine_pdfs result_path, continuation_sheet_pdf.path
     end

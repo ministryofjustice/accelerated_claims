@@ -124,6 +124,12 @@ class ContinuationSheet
     append_to_current_panel(object.numbered_header)
     append_to_current_panel(object.indented_details(@@indentation))
     append_to_current_panel("\n\n")
+    remove_backslash_r
+  end
+
+
+  def remove_backslash_r
+    @panels[@current_panel_index].gsub!("\r\n", "\n")
   end
 
   def format_pages
