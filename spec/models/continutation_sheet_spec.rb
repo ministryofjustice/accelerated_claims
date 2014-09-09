@@ -76,23 +76,23 @@ describe ContinuationSheet do
       it 'should produce a header and just the claimant when only one claimant' do
         cs = ContinuationSheet.new( [claimant_3], Array.new )
         cs.generate
-        left = cs.as_json['continuation_sheet_0_left']
+        left = cs.as_json['continuation']['sheet_0_left']
         expect(left).to eq claimant_3_expected_results
-        right = cs.as_json['continuation_sheet_0_right']
+        right = cs.as_json['continuation']['sheet_0_right']
         expect(right).to eq ''
       end
 
       it 'should produce a header and claimants 3 and 4 when two claimants' do
         cs = ContinuationSheet.new( [claimant_3, claimant_4], Array.new )
         cs.generate
-        left = cs.as_json['continuation_sheet_0_left']
+        left = cs.as_json['continuation']['sheet_0_left']
         expect(left).to eq claimants_3_and_4_expected_results
       end
 
       it 'should produce just claimants 3 and 4 and defendants 2 and 3 when intantiated with 2 of each' do
         cs = ContinuationSheet.new( [claimant_3, claimant_4], defendants_array(3) )
         cs.generate
-        left = cs.as_json['continuation_sheet_0_left']
+        left = cs.as_json['continuation']['sheet_0_left']
         expect(left).to eq claimants_3_and_4_and_defendants_2_and_3_expected_results
       end
 
