@@ -1,20 +1,20 @@
 {
-  title: "JOURNEY 14",
+  title: "JOURNEY 16",
   description: [
-    "HMO part 3 licence applied for",
-    "1 claimant 1 defendant, no selection on most options with HMO part 3 licence applied for"
+    "4 claimants and 20 defendants",
+    nil
   ],
-  javascript: "BOTH",
+  javascript: "JS",
   claim: {
     property: {
-      street: "107 Addison Valley Rd\nWalford",
-      postcode: "WL0 6SG",
+      street: "23 Mock St\nAnytown ",
+      postcode: "EY99 1XX",
       house: "Yes"
     },
     claim: {
       claimant_type: "individual",
-      num_claimants: "1",
-      num_defendants: "1"
+      num_claimants: "4",
+      num_defendants: "20"
     },
     claimant_1: {
       title: "Mr",
@@ -24,32 +24,32 @@
       postcode: "FX1W 0LU"
     },
     claimant_2: {
-      title: nil,
+      title: "Ms",
       organization_name: nil,
-      full_name: nil,
-      street: nil,
-      postcode: nil
+      full_name: "Diedre Smith",
+      street: "7 Main Street\nAlfreton",
+      postcode: "FX1W 0LU"
     },
     javascript: {
       claimant_2_same_address: nil,
       claimant_3_same_address: nil,
-      claimant_4_same_address: nil,
+      claimant_4_same_address: "Yes",
       any_legal_costs: "Yes",
-      separate_correspondence_address: "No",
+      separate_correspondence_address: "Yes",
       other_contact_details: "Yes",
       add_reference_number: nil
     },
     claimant_3: {
-      title: nil,
+      title: "Mrs",
       organization_name: nil,
-      full_name: nil,
-      street: nil,
-      postcode: nil
+      full_name: "Jane Smith",
+      street: "2 Brown St\nBwlchllydd",
+      postcode: "FX1W 0LU"
     },
     claimant_4: {
-      title: nil,
+      title: "Ms",
       organization_name: nil,
-      full_name: nil,
+      full_name: "Tammy Wynette",
       street: nil,
       postcode: nil
     },
@@ -57,30 +57,30 @@
       legal_costs: "332.45"
     },
     claimant_contact: {
-      title: nil,
-      full_name: nil,
+      title: "Mr",
+      full_name: "Jim Brown",
       company_name: nil,
-      street: nil,
-      postcode: nil,
+      street: "3 Smith Street\nBwlchllydd",
+      postcode: "FX1W 0LU",
       email: "jim@example.com",
-      phone: nil,
-      fax: nil,
-      dx_number: nil
+      phone: "020 000 000",
+      fax: "020 000 000",
+      dx_number: "DX 123"
     },
     reference_number: {
       reference_number: nil
     },
     defendant_1: {
-      title: "Mr",
-      full_name: "Malcom Mauve",
-      inhabits_property: "No",
-      street: "23c Piccalilly Rd\nTeds Heath, Londonville",
-      postcode: "EY7 7BN"
+      title: "Miss",
+      full_name: "Augusta Wind",
+      inhabits_property: "Yes",
+      street: nil,
+      postcode: nil
     },
     defendant_2: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "John Dorey",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
@@ -88,7 +88,7 @@
       tenancy_type: "assured",
       assured_shorthold_tenancy_type: "one",
       original_assured_shorthold_tenancy_agreement_date: nil,
-      start_date: "2010-12-20",
+      start_date: "2004-02-29",
       latest_agreement_date: nil,
       agreement_reissued_for_same_property: nil,
       agreement_reissued_for_same_landlord_and_tenant: nil,
@@ -102,23 +102,23 @@
     },
     notice: {
       notice_served: "Yes",
-      served_by_name: "Royal mail",
+      served_by_name: "Patty O'Furniture",
       served_method: "By post",
-      date_served: "2013-09-08",
-      expiry_date: "2013-11-08"
+      date_served: "2013-09-30",
+      expiry_date: "2013-11-30"
     },
     license: {
-      multiple_occupation: "Applied",
+      multiple_occupation: "No",
       issued_under_act_part_yes: nil,
-      issued_under_act_part_applied: "Part3",
+      issued_under_act_part_applied: nil,
       issued_by: nil,
       issued_date: nil
     },
     deposit: {
       received: "Yes",
       received_cert: "Yes",
-      ref_number: "TD1234",
-      information_given_date: "2010-12-20",
+      ref_number: "U527VwvpAZ",
+      information_given_date: "2004-02-29",
       as_money: "Yes",
       as_property: "No"
     },
@@ -130,130 +130,130 @@
       hearing: "Yes"
     },
     defendant_3: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Three",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_4: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
-      street: nil,
-      postcode: nil
+      title: "Mr",
+      full_name: "Defendant Four",
+      inhabits_property: "No",
+      street: "44 Fourth Street\nFourville",
+      postcode: "FY4 4VV"
     },
     defendant_5: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Five",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_6: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Six",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_7: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Seven",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_8: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
-      street: nil,
-      postcode: nil
+      title: "Mr",
+      full_name: "Defendant Eight",
+      inhabits_property: "No",
+      street: "88 Eighth Street\nEightown",
+      postcode: "EY12 7FF"
     },
     defendant_9: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Nine",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_10: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Ten",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_11: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Eleven",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_12: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Twelve",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_13: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Thirteen",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_14: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Fourteen",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_15: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Fifteen",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_16: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Sixteen",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_17: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Seventeen",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_18: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Eighteen",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_19: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Nineteen",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_20: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
-      street: nil,
-      postcode: nil
+      title: "Mr",
+      full_name: "Defendant Twenty",
+      inhabits_property: "No",
+      street: "2020 Twentieth Avenue\nTwentieth Century City\n",
+      postcode: "TY77 8HH"
     }
   }
 }

@@ -5,7 +5,7 @@
 #
 #     cs = ContinuationSheet.new( [array_of_additional_claimants], [array_of_additional_defendants])
 #     cs.generate
-#     cs.pages.each do |page|
+#     cs.pages.each_with_inde do |page|
 #       pdf['left_panel'] = page['left']
 #       pdf['right_panel'] = page['right']
 #     end
@@ -19,7 +19,6 @@ class ContinuationSheet
   @@newline_threshold = 55
 
 
-  attr_reader :pages
 
   # instantiate a ContinuatinoSheet object with the ADDITIONAL claimants and defendants
   def initialize(claimants, defendants)
@@ -60,7 +59,14 @@ class ContinuationSheet
     @claimants.any?
   end
 
-
+  def as_json
+    json = { }
+    @pages.each_with_index do |page, index|
+      json["sheet_#{index}_left"] = page['left']
+      json["sheet_#{index}_right"] = page['right']
+    end
+    { 'continuation' => json }
+  end
   
 
 
