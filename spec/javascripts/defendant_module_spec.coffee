@@ -88,7 +88,7 @@ describe 'DefendantModule', ->
         expectSubpanelsVisible(20)
 
 
-  describe 'showClaimants', ->
+  describe 'showDefendants', ->
     describe 'called with 2', ->
       it 'shows first two claimant sections', ->
         window.DefendantModule.showDefendants('2')

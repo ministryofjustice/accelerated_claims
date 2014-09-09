@@ -191,7 +191,7 @@ describe Claimant, :type => :model do
   describe '#numbered_claimant_header' do
     it 'should print claimant_x where x is the number of hte claimant' do
       claimant = Claimant.new(HashWithIndifferentAccess.new(title: 'Mr', full_name: "John Doe", street: "Streety Street\nLondon", postcode: "SW1H9AJ", claimant_type: 'individual', claimant_num: 3))
-      expect(claimant.numbered_claimant_header).to eq "Claimant 3:\n" 
+      expect(claimant.numbered_header).to eq "Claimant 3:\n" 
     end
   end
 
