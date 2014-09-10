@@ -3,9 +3,6 @@ class PDFDocument
   attr_reader :json
 
   def initialize(json, flatten=true)
-    puts "++++++ DEBUG JASON ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    pp json
-    
     @json = json
     @flatten = flatten
     remove_backslash_r!
@@ -91,11 +88,6 @@ class PDFDocument
   def add_continuation_sheet(result_path, sheet_num, left, right)
     continuation_sheet_pdf = Tempfile.new('continuation_sheet_#{sheet_num}', '/tmp/')
     pdf = PdfForms.new(ENV['PDFTK'], :flatten => @flatten)
-    puts "++++++ DEBUG file #{CONTINUATION_SHEET_TEMPLATE[sheet_num]} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    pp left
-    puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    pp right
-            
     pdf.fill_form CONTINUATION_SHEET_TEMPLATE[sheet_num], continuation_sheet_pdf, {"left_panel#{sheet_num}" => left, "right_panel#{sheet_num}" => right}
     combine_pdfs result_path, continuation_sheet_pdf.path
   end

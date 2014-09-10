@@ -7,7 +7,7 @@
   javascript: "JS",
   claim: {
     property: {
-      street: "23 Mock St\nAnytown ",
+      street: "23 Mock St\nAnytown",
       postcode: "EY99 1XX",
       house: "Yes"
     },

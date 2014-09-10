@@ -18,8 +18,7 @@ class ClaimForm
     else
       fill_organizational_claimant
     end
-    puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    
+
     select_number_of_defendants
     fill_in_defendant(1, complete_address: true)
     fill_in_defendant(2, complete_address: true)
@@ -220,14 +219,8 @@ class ClaimForm
   end
 
   def choose_radio(prefix, key)
-    puts "++++++ DEBUG choose radio #{prefix} #{key} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    
     choice = get_data(prefix,key)
-    puts "++++++ DEBUG choice for choose radio #{choice} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    
     selection = "claim_#{prefix}_#{key}_#{choice}".downcase
-    puts "++++++ DEBUG selection #{selection} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    
     choose(selection) unless choice.nil?
   end
 
@@ -331,7 +324,6 @@ class ClaimForm
     prefix = 'tenancy'
     choose_radio  prefix, 'tenancy_type'
 
-    puts "++++++ DEBUG TENANCY TYP-E #{get_data(prefix, 'tenancy_type')} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
     case get_data(prefix, 'tenancy_type')
     when 'assured'
       choose_radio  prefix, 'assured_shorthold_tenancy_type'

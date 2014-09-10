@@ -1,4 +1,4 @@
-def left_panel
+def left_panel0
   "Additional Claimants
 ====================
 
@@ -56,7 +56,7 @@ Defendant 6:
     EY99 1XX"
 end
 
-def right_panel
+def right_panel0
   "Defendant 7:
     Mr Defendant Seven
     23 Mock St
@@ -113,6 +113,49 @@ Defendant 14:
     EY99 1XX"
 end
 
+
+def left_panel1
+  "Defendant 15:
+    Mr Defendant Fifteen
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 16:
+    Mr Defendant Sixteen
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 17:
+    Mr Defendant Seventeen
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 18:
+    Mr Defendant Eighteen
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 19:
+    Mr Defendant Nineteen
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 20:
+    Mr Defendant Twenty
+    2020 Twentieth Avenue
+    Twentieth Century City
+    TY77 8HH"
+end
 
 
 {
@@ -209,6 +252,8 @@ end
   tenancy_demotion_order_date_year: nil,
   tenancy_demotion_order_court: nil,
   copy_number: 25,
-  left_panel: left_panel,
-  right_panel: right_panel
+  left_panel0: left_panel0,
+  right_panel0: right_panel0,
+  left_panel1: left_panel1,
+  right_panel1: ""
 }

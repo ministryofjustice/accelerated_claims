@@ -1,3 +1,28 @@
+def left_panel0
+  "Additional Claimants
+====================
+
+
+Claimant 3:
+    Mrs Jane Smith
+    2 Brown St
+    Bwlchllydd
+    FX1W 0LU
+
+
+Additional Defendants
+=====================
+
+
+Defendant 2:
+    Mr John Dorey
+    23 Mock St
+    Anytown
+    EY99 1XX"
+end
+
+
+
 {
   Button94: nil,
   Button95: nil,
@@ -7,7 +32,7 @@
   claimant_2_address: "Ms Diedre Smith\n7 Main Street\nAlfreton",
   claimant_2_postcode1: "FX1W",
   claimant_2_postcode2: "0LU",
-  further_claimants: "Further Claimants:\n\nMrs Jane Smith\n2 Brown St\nBwlchllydd\nFX1W 0LU",
+  left_panel0: left_panel0,
   defendant_2_address: "Mr John Dorey\n23 Mock St\nAnytown",
   defendant_2_postcode1: "EY99",
   defendant_2_postcode2: "1XX",
