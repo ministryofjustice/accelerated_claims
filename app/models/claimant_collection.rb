@@ -12,7 +12,9 @@ class ClaimantCollection < BaseClass
     populate_claimants(claim_params)
   end
 
-  # returns the specified claimant (note: index starts at 1 )
+
+
+  # returns the specified claimant (note: index starts at 1 )         
   def [](index)
     claimant = @claimants[index]
     raise ArgumentError.new "No such index: #{index}" if index == 0
@@ -47,29 +49,28 @@ class ClaimantCollection < BaseClass
 
 
   def valid?
-    @claimants.each do |index, claimant|
+    @claimants.each do |index, claimant| 
       unless claimant.valid?
         claimant.errors.each do |field, msg|
           @errors.add("claimant_#{index}_#{field}".to_sym, msg)
         end
       end
     end
-    @errors.empty?
+    @errors.empty? 
   end
 
 
   private
 
   def populate_claimants(claim_params)
-    ( 1 .. MAX_CLAIMANTS ).each do |i|
-      if claim_params.nil? || claim_params.empty?
-        is_first_claimant = (index == 1)
-        @claimants[i] = Claimant.new( 'first_claimant' => is_first_claimant )
-      else
-        populate_claimant(i, claim_params)
-      end
+    if claim_params.nil? || claim_params.empty?
+      ( 1 .. MAX_CLAIMANTS ).each { |i|  @claimants[i] = Claimant.new }
+    else
+      ( 1 .. MAX_CLAIMANTS ).each { | i | populate_claimant(i, claim_params) }
     end
   end
+
+
 
   # we want to iterate through this until max-num-claimants.
 
@@ -83,13 +84,14 @@ class ClaimantCollection < BaseClass
     claimant_params['claimant_type'] = @claimant_type
     claimant_params['claimant_num'] = index
     if index > @num_claimants
-      claimant_params['validate_absence'] = true
+      claimant_params['validate_absence'] = true 
       claimant_params['validate_presence'] = false
     else
-      claimant_params['validate_presence'] = true
+      claimant_params['validate_presence'] = true 
     end
-    claimant_params['first_claimant'] = (index == 1)
     @claimants[index] = Claimant.new(claimant_params)
   end
+  
+
 
 end

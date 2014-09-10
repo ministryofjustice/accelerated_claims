@@ -178,15 +178,5 @@ feature 'Filling in claim form' do
     expect(page.has_no_checked_field?('claim_deposit_as_money')).to eq(true)
     expect(page.has_no_checked_field?('claim_deposit_as_property')).to eq(true)
   end
-=begin
-  scenario 'user specifies 2 claimants but doesnt provide details', js: true do
-    visit '/'
-    choose 'A private landlord (individual)'
 
-    fill_in 'How many claimants are there?', with: '2'
-    click_button 'Continue'
-
-    check_focus_after_click 'Please select whether or not claimant 2 has the same address as the first claimant', 'claimant2address'
-  end
-=end
 end
