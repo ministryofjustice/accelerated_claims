@@ -31,16 +31,16 @@ class ClaimantCollection < ParticipantCollection
   end
 
 
-  def valid?
-    @participants.each do |index, claimant| 
-      unless claimant.valid?
-        claimant.errors.each do |field, msg|
-          @errors.add("claimant_#{index}_#{field}".to_sym, msg)
-        end
-      end
-    end
-    @errors.empty? ? true : false
-  end
+  # def valid?
+  #   @participants.each do |index, claimant| 
+  #     unless claimant.valid?
+  #       claimant.errors.each do |field, msg|
+  #         @errors.add("claimant_#{index}_#{field}".to_sym, msg)
+  #       end
+  #     end
+  #   end
+  #   @errors.empty? ? true : false
+  # end
 
 
   private
