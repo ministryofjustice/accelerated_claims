@@ -50,7 +50,7 @@ class ClaimForm
     end
 
     number_of_defendants = select_number_of_defendants
-    (1 .. DefendantCollection.max_defendants).each do |i|
+    (1 .. number_of_defendants.to_i).each do |i|  
       address_to_be_completed = choose_defendant_living_in_property(i)           # selects the defendent living in property yes/no button according to the data
       fill_in_defendant(i, complete_address: address_to_be_completed)
     end
@@ -78,8 +78,6 @@ class ClaimForm
 
   def select_number_of_defendants
     num_defendants = get_data('claim', 'num_defendants')
-    puts "++++++ DEBUG filling in num defendants #{num_defendants.inspect} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    
     fill_in "How many defendants are there?", with: num_defendants
     num_defendants
   end
@@ -135,18 +133,15 @@ class ClaimForm
 
 
   def choose_defendant_living_in_property(index)
-    if index == 1
-      address_to_be_completed = true
+    address_to_be_completed = nil
+    defendant = "defendant_#{index}"
+    case get_data(defendant, "inhabits_property")
+    when 'Yes'
+      choose("claim_defendant_#{index}_inhabits_property_yes")
+      address_to_be_completed = false
     else
-      defendant = "defendant_#{index}"
-      case get_data(defendant, "inhabits_proerty")
-      when 'Yes'
-        choose("claim_defendant_#{index}_inhabits_property_yes")
-        address_to_be_completed = false
-      else
-        choose("claim_defendant_#{index}_inhabits_property_no")
-        address_to_be_completed = true
-      end
+      choose("claim_defendant_#{index}_inhabits_property_no")
+      address_to_be_completed = true
     end
     address_to_be_completed
   end
@@ -225,8 +220,14 @@ class ClaimForm
   end
 
   def choose_radio(prefix, key)
+    puts "++++++ DEBUG choose radio #{prefix} #{key} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
     choice = get_data(prefix,key)
+    puts "++++++ DEBUG choice for choose radio #{choice} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
     selection = "claim_#{prefix}_#{key}_#{choice}".downcase
+    puts "++++++ DEBUG selection #{selection} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
     choose(selection) unless choice.nil?
   end
 

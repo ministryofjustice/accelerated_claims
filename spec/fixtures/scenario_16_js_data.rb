@@ -7,7 +7,7 @@
   javascript: "JS",
   claim: {
     property: {
-      street: "23 Mock St\nAnytown ",
+      street: "23 Mock St\nAnytown",
       postcode: "EY99 1XX",
       house: "Yes"
     },
@@ -19,7 +19,7 @@
     claimant_1: {
       title: "Mr",
       organization_name: nil,
-      full_name: "John Smith",
+      full_name: "Johann Schmidt",
       street: "2 Brown St\nBwlchllydd",
       postcode: "FX1W 0LU"
     },
