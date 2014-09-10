@@ -3,6 +3,9 @@ class PDFDocument
   attr_reader :json
 
   def initialize(json, flatten=true)
+    puts "++++++ DEBUG JASON ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    pp json
+    
     @json = json
     @flatten = flatten
     remove_backslash_r!
@@ -63,8 +66,8 @@ class PDFDocument
     end
   end
 
-  CONTINUATION_SHEET_TEMPLATE = File.join Rails.root, 'templates', 'continuation_sheet.pdf'
-  STRIKER_JAR                = File.join Rails.root, 'scripts', 'striker-0.3.1-standalone.jar'
+  CONTINUATION_SHEET_TEMPLATE = [ File.join(Rails.root, 'templates', 'continuation_sheet_0.pdf'), File.join(Rails.root, 'templates', 'continuation_sheet_1.pdf') ]
+  STRIKER_JAR                 = File.join Rails.root, 'scripts', 'striker-0.3.1-standalone.jar'
 
   def defendant_two_data
     { 'defendant_2_address'   => "#{@json['defendant_2_address']}",
@@ -76,19 +79,24 @@ class PDFDocument
   # the left and right hand columns of the continuation sheet
   #
   def add_continuation_sheets(result_path)
-    (0 .. 4).each do | i |
-      if @json.key?("continuation_sheet_#{i}_left")
-        add_continuation_sheet(result_path, @json["continuation_sheet_#{i}_left"], @json["continuation_sheet_#{i}_right"])
+    (0 .. 1).each do | sheet_num |
+      if @json.key?("continuation_sheet_#{sheet_num}_left")
+        add_continuation_sheet(result_path, sheet_num, @json["continuation_sheet_#{sheet_num}_left"], @json["continuation_sheet_#{sheet_num}_right"])
       end
     end
   end
 
 
 
-  def add_continuation_sheet(result_path, left, right)
-    continuation_sheet_pdf = Tempfile.new('continuation_sheet_#{index}', '/tmp/')
+  def add_continuation_sheet(result_path, sheet_num, left, right)
+    continuation_sheet_pdf = Tempfile.new('continuation_sheet_#{sheet_num}', '/tmp/')
     pdf = PdfForms.new(ENV['PDFTK'], :flatten => @flatten)
-    pdf.fill_form CONTINUATION_SHEET_TEMPLATE, continuation_sheet_pdf, {'left_panel' => left, 'right_panel' => right}
+    puts "++++++ DEBUG file #{CONTINUATION_SHEET_TEMPLATE[sheet_num]} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    pp left
+    puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    pp right
+            
+    pdf.fill_form CONTINUATION_SHEET_TEMPLATE[sheet_num], continuation_sheet_pdf, {"left_panel#{sheet_num}" => left, "right_panel#{sheet_num}" => right}
     combine_pdfs result_path, continuation_sheet_pdf.path
   end
 
