@@ -8,6 +8,15 @@ describe ClaimantCollection do
       expect(cc.size).to eq 3
     end
 
+    it 'first claimant has first_claimant set true' do
+      expect(cc[1].first_claimant).to eq true
+    end
+
+    it 'second and third claimant has first_claimant set false' do
+      expect(cc[2].first_claimant).to eq false
+      expect(cc[3].first_claimant).to eq false
+    end
+
     it 'should fail if the number of claimants in the params is less than the number given in the initializer' do
         params = claim_params
         params[:num_claimants] = 4
@@ -38,7 +47,7 @@ describe ClaimantCollection do
       valid_claimant = cc2[2]
       expect(valid_claimant.validate_absence?).to be false
       expect(valid_claimant.valid?).to be true
-      
+
 
       invalid_claimant = cc2[3]
       expect(invalid_claimant.validate_absence?).to be true
@@ -61,7 +70,7 @@ describe ClaimantCollection do
         cc[0]
       }.to raise_error ArgumentError, "No such index: 0"
     end
-  
+
 
     it 'should return empty claimant if the index is higher than the number of claimants' do
       claimant = cc[4]

@@ -12,7 +12,8 @@ class Claimant < BaseClass
   attr_accessor :full_name
   attr_accessor :organization_name
   attr_accessor :claimant_type
-
+  attr_accessor :first_claimant
+  attr_accessor :address_same_as_first_claimant
 
   validate :validate_claimant_state
   validates :claimant_num, presence: { message: 'Claimant number not specified' }, allow_nil: false
@@ -27,6 +28,7 @@ class Claimant < BaseClass
     end
     @num_claimants = @num_claimants.nil? ? 1 : @num_claimants.to_i
     @claimant_type = params['claimant_type']
+    @first_claimant = params['first_claimant']
   end
 
 
