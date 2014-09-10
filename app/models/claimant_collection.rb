@@ -12,7 +12,6 @@ class ClaimantCollection < ParticipantCollection
     @first_extra_participant = 3
   end
 
-
   def self.max_claimants
     MAX_CLAIMANTS
   end
@@ -28,19 +27,19 @@ class ClaimantCollection < ParticipantCollection
   end
 
 
-  
 
 
   private
 
   def populate_claimants(claim_params)
-    if claim_params.nil? || claim_params.empty?
-      ( 1 .. ClaimantCollection.max_claimants ).each { |i|  @participants[i] = Claimant.new }
-    else
-      ( 1 .. ClaimantCollection.max_claimants ).each { | i | populate_claimant(i, claim_params) }
+    ( 1 .. ClaimantCollection.max_claimants ).each do |i|
+      if claim_params.nil? || claim_params.empty?
+        @participants[i] = Claimant.new
+      else
+        populate_claimant(i, claim_params)
+      end
     end
   end
-
 
   def populate_claimant(index, claim_params)
     claimant_params = claim_params["claimant_#{index}"]
@@ -48,10 +47,10 @@ class ClaimantCollection < ParticipantCollection
     claimant_params['claimant_type'] = @claimant_type
     claimant_params['claimant_num'] = index
     if index > @num_participants
-      claimant_params['validate_absence'] = true 
+      claimant_params['validate_absence'] = true
       claimant_params['validate_presence'] = false
     else
-      claimant_params['validate_presence'] = true 
+      claimant_params['validate_presence'] = true
     end
     @participants[index] = Claimant.new(claimant_params)
   end
