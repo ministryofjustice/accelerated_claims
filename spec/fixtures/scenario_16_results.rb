@@ -1,3 +1,120 @@
+def left_panel
+  "Additional Claimants
+====================
+
+
+Claimant 3:
+    Mrs Jane Smith
+    2 Brown St
+    Bwlchllydd
+    FX1W 0LU
+
+
+Claimant 4:
+    Ms Tammy Wynette
+    2 Brown St
+    Bwlchllydd
+    FX1W 0LU
+
+
+Additional Defendants
+=====================
+
+
+Defendant 2:
+    Mr John Dorey
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 3:
+    Mr Defendant Three
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 4:
+    Mr Defendant Four
+    44 Fourth Street
+    Fourville
+    FY4 4VV
+
+
+Defendant 5:
+    Mr Defendant Five
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 6:
+    Mr Defendant Six
+    23 Mock St
+    Anytown
+    EY99 1XX"
+end
+
+def right_panel
+  "Defendant 7:
+    Mr Defendant Seven
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 8:
+    Mr Defendant Eight
+    88 Eighth Street
+    Eightown
+    EY12 7FF
+
+
+Defendant 9:
+    Mr Defendant Nine
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 10:
+    Mr Defendant Ten
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 11:
+    Mr Defendant Eleven
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 12:
+    Mr Defendant Twelve
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 13:
+    Mr Defendant Thirteen
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 14:
+    Mr Defendant Fourteen
+    23 Mock St
+    Anytown
+    EY99 1XX"
+end
+
+
+
 {
   Button94: nil,
   Button95: nil,
@@ -92,113 +209,6 @@
   tenancy_demotion_order_date_year: nil,
   tenancy_demotion_order_court: nil,
   copy_number: 25,
-  left_panel: "Additional Claimants
-====================
-
-
-Claimant 3:
-    Mrs Jane Smith
-    2 Brown St
-    Bwlchllydd
-    FX1W 0LU
-
-
-Claimant 4:
-    Ms Tammy Wynette
-    2 Brown St
-    Bwlchllydd
-    FX1W 0LU
-
-
-Additional Defendants
-=====================
-
-
-Defendant 2:
-    Mr John Dorey
-    23 Mock St
-    Anytown
-    EY99 1XX
-
-
-Defendant 3:
-    Mr Defendant Three
-    23 Mock St
-    Anytown
-    EY99 1XX
-
-
-Defendant 4:
-    Mr Defendant Four
-    44 Fourth Street
-    Fourville
-    FY4 4VV
-
-
-Defendant 5:
-    Mr Defendant Five
-    23 Mock St
-    Anytown
-    EY99 1XX
-
-
-Defendant 6:
-    Mr Defendant Six
-    23 Mock St
-    Anytown
-    EY99 1XX",
-  right_panel: "Defendant 7:
-    Mr Defendant Seven
-    23 Mock St
-    Anytown
-    EY99 1XX
-
-
-Defendant 8:
-    Mr Defendant Eight
-    88 Eighth Street
-    Eightown
-    EY12 7FF
-
-
-Defendant 9:
-    Mr Defendant Nine
-    23 Mock St
-    Anytown
-    EY99 1XX
-
-
-Defendant 10:
-    Mr Defendant Ten
-    23 Mock St
-    Anytown
-    EY99 1XX
-
-
-Defendant 11:
-    Mr Defendant Eleven
-    23 Mock St
-    Anytown
-    EY99 1XX
-
-
-Defendant 12:
-    Mr Defendant Twelve
-    23 Mock St
-    Anytown
-    EY99 1XX
-
-
-Defendant 13:
-    Mr Defendant Thirteen
-    23 Mock St
-    Anytown
-    EY99 1XX
-
-
-Defendant 14:
-    Mr Defendant Fourteen
-    23 Mock St
-    Anytown
-    EY99 1XX"
+  left_panel: left_panel,
+  right_panel: right_panel
 }

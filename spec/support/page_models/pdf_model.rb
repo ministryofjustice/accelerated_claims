@@ -6,9 +6,6 @@ class PdfModel
   end
 
   def assert_pdf_is_correct(expected_values)
-    puts "++++++ DEBUG EXPECTED VALUES ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    pp expected_values
-    
     expected_values.each do |field, value|
       generated = @generated_values[field]
       expect("#{field}: #{generated}").to eq("#{field}: #{value}")
