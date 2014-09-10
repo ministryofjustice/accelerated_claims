@@ -12,8 +12,6 @@ class Claim < BaseClass
                 :num_defendants
 
 
-  @@valid_num_defendants    = [1, 2]
-
   @@valid_claimant_types    = %w{ organization individual }
 
 
@@ -240,7 +238,7 @@ class Claim < BaseClass
 
 
   def validate_defendants?
-    
+    # put validation for number of defendants when non javascript in here
   end
 
 

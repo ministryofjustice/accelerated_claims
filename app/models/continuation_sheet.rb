@@ -1,14 +1,22 @@
 
 # Class to format the output on the continuation sheet for additional claimants and defendants
 # API fo usage
-
+#
 #
 #     cs = ContinuationSheet.new( [array_of_additional_claimants], [array_of_additional_defendants])
 #     cs.generate
-#     cs.pages.each_with_inde do |page|
-#       pdf['left_panel'] = page['left']
-#       pdf['right_panel'] = page['right']
-#     end
+#     cs.as_json     
+#
+#     produces a hash like this:
+#
+#
+#     {"continuation" => {
+#         "sheet_0_left"  => "data to go in left panel of sheet 0",
+#         "sheet_0_right" => "data to go in right panel of sheet 0",
+#         "sheet_1_left"  => "data to go in left panel of sheet 1",
+#         "sheet_1_right" => "data to go in right panel of sheet 1",
+#       }
+#     }
 #
 
 

@@ -2,8 +2,6 @@ class Defendant < BaseClass
 
   include Address
 
-  # @do_partial_address_completion_validation = true
-
   attr_accessor :validate_presence, :validate_absence
 
   attr_accessor :title
