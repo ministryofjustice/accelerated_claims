@@ -36,4 +36,13 @@ module ApplicationHelper
     end
   end
 
+
+  def defendant_header defendant_id
+    if defendant_id == 1
+      "<h3>Defendant #{defendant_id}</h3>".html_safe
+    else
+      "<h3>Defendant #{defendant_id} <span class='hint hide js-claimanttype'>(optional)</span></h3>".html_safe
+    end
+  end
+
 end

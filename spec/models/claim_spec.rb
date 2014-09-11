@@ -51,6 +51,12 @@ describe Claim, :type => :model do
       expect(claim.defendant_4).to be_instance_of(Defendant)
       expect(claim.defendant_20).to be_instance_of(Defendant)
     end
+
+
+    it 'should respond to magic mehods defendant_n=' do
+      expect(claim.defendants).to receive(:[]=).with(3, nil)
+      claim.defendants[3] = nil
+    end
   end
 
   describe "fixture data" do
@@ -60,6 +66,26 @@ describe Claim, :type => :model do
       expect(claim).to be_valid
     end
   end
+
+
+  describe '#javascript_enabled?' do
+    context 'with javascript' do
+      it 'should return true' do
+        claim = Claim.new(claim_post_data['claim'].merge( 'javascript_enabled' => 'Yes' ))
+        expect(claim.javascript_enabled?).to be true
+      end
+    end
+
+    context 'without javascript' do
+      it 'should return false' do
+        claim = Claim.new(claim_post_data)
+        expect(claim.javascript_enabled?).to be false
+      end
+    end
+  end
+
+
+
 
   describe '#as_json' do
     context "when both claim fee & legal cost are known" do
@@ -576,6 +602,7 @@ describe Claim, :type => :model do
 
       end
     end
+
 
   end
 end

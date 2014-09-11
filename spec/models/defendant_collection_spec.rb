@@ -16,9 +16,7 @@ describe DefendantCollection do
         expected_errors = [
               "Defendant 4 inhabits property Please select whether or not defendant 4 lives in the property",
               "Defendant 4 title Enter defendant 4's title",
-              "Defendant 4 full name Enter defendant 4's full name",
-              "Defendant 4 street Enter defendant 4's full address",
-              "Defendant 4 postcode Enter defendant 4's postcode"
+              "Defendant 4 full name Enter defendant 4's full name"
             ]
         expect(dc2.errors.full_messages).to eq expected_errors
     end

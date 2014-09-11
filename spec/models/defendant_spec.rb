@@ -92,6 +92,25 @@ describe Defendant, :type => :model do
         expect(property_inhabiting_defendant.errors[:title]).to eq ["Enter defendant 2's title"]
       end
     end
+
+
+    context 'inhabit property_not_set' do
+
+      it 'should generate an error message for the inhabit proporty radio button' do
+        defendant.inhabits_property = nil
+        expect(defendant).not_to be_valid
+        expect(defendant.errors[:inhabits_property]). to eq ["Please select whether or not defendant 2 lives in the property"] 
+      end
+
+      it 'should not generate error messages for full name and postcode' do
+        defendant.inhabits_property = nil
+        defendant.street = nil
+        defendant.postcode = nil
+        expect(defendant).not_to be_valid
+        expect(defendant.errors[:street]).to eq []
+        expect(defendant.errors[:postcode]).to eq []
+      end
+    end
   end
 
 

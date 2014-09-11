@@ -1,7 +1,7 @@
 .sub-panel{ id: "defendant_#{defendant_id}_subpanel", class: defendant_class_helper(defendant_id) }
   .row.divider
   .row
-    %h3= "Defendant #{defendant_id}"
+    %h3= defendant_header defendant_id
 
   = claim_form.fields_for defendant_field, defendant, builder: LabellingFormBuilder do |form|
     = form.text_field_row :title, class: 'title', input_class: 'smalltext'

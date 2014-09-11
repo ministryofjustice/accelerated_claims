@@ -78,7 +78,7 @@ class Defendant < BaseClass
       (title.present? && full_name.present? && !address_blank?)
     else
       (title.present? && full_name.present?)
-    end
+      end
   end
 
   def address_blank?
@@ -131,7 +131,7 @@ class Defendant < BaseClass
   end
 
   def validate_fields_are_present
-    if self.inhabits_property == 'yes'
+    if self.inhabits_property == 'yes' || self.inhabits_property.blank?
       validate_are_present(:title, :full_name)
     else
       validate_are_present(:title, :full_name, :street, :postcode)
