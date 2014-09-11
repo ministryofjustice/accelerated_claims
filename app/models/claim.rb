@@ -98,7 +98,6 @@ class Claim < BaseClass
       result = transfer_errors_from_submodel_to_base(instance_var, model, collection: true)
       validity = false if result == false
     end
-
     @error_messages = ErrorMessageSequencer.new.sequence(@errors)
     validity
   end
@@ -107,6 +106,7 @@ class Claim < BaseClass
 
   def transfer_errors_from_submodel_to_base(instance_var, model, options)
     result = true
+    
     unless send(instance_var).valid?
       if options[:collection] == false || perform_collection_validation_for?(instance_var)
         errors = send(instance_var).errors
@@ -122,6 +122,7 @@ class Claim < BaseClass
         result = false
       end
     end
+    
     result
   end
 
@@ -175,7 +176,7 @@ class Claim < BaseClass
       @errors[:base] << ['claim_defendant_number_of_defendants_error', "Please enter a valid number of defendants between 1 and #{DefendantCollection.max_defendants}"]
       return false
     end
-    true
+    true   
   end
 
   def add_fee_and_costs hash
@@ -238,7 +239,7 @@ class Claim < BaseClass
 
 
   def validate_defendants?
-    # put validation for number of defendants when non javascript in here
+    num_defendants_valid?
   end
 
 

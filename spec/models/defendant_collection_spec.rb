@@ -157,6 +157,31 @@ describe DefendantCollection do
       expect(dc.further_participants).to eq [ dc[2], dc[3], dc[4], dc[5], dc[6] ]
     end
   end
+
+
+  context 'validation' do
+
+    let(:invalid_params) do
+      params = claim_params
+      params['defendant_1']['title']     = ''
+      params['defendant_2']['full_name'] = ''
+      params['defendant_3']['postcode']  = ''
+      params
+    end
+
+    it 'should not be valid if given invalid params' do
+      dc = DefendantCollection.new(invalid_params)
+      expect(dc).not_to be_valid
+    end
+
+    it 'should have error messages for the missing fields' do
+      dc = DefendantCollection.new(invalid_params)
+      dc.valid?
+      expect(dc.errors[:defendant_1_title]).to eq ["Enter defendant 1's title"]
+      expect(dc.errors[:defendant_2_full_name]).to eq ["Enter defendant 2's full name"]
+      expect(dc.errors[:defendant_3_postcode]).to eq ["Enter defendant 3's postcode"]
+    end
+  end
 end
 
 

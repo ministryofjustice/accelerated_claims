@@ -467,5 +467,31 @@ describe Claim, :type => :model do
       end
     end
 
+    context 'collection of validation error messages' do
+      it 'should transfer error messages from collections to base' do
+        # given data with missing fields in the defendants collection
+        data = claim_post_data['claim']
+        data['defendant_1']['title'] = ''
+        data['defendant_1']['full_name'] = ''
+        data['defendant_2']['postcode'] = ''
+
+        # when I instantiate a claim
+        claim = Claim.new(data)
+
+        # it should not be valid, and the defendants collection should have the expected error messages
+        claim.valid?
+        expect(claim.defendants).to_not be_valid
+        expect(claim.defendants.errors['defendant_1_title']).to eq [ "Enter defendant 1's title",  ]
+        expect(claim.defendants.errors['defendant_1_full_name']).to eq [ "Enter defendant 1's full name" ]
+        expect(claim.defendants.errors['defendant_2_postcode']).to eq [ "Enter defendant 2's postcode" ]
+
+        # and the messages should be transferred to claim.errors[:base]
+        expect(claim.errors[:base]).to include(["claim_defendant_1_title_error", "Enter defendant 1's title"])
+        expect(claim.errors[:base]).to include(["claim_defendant_1_full_name_error", "Enter defendant 1's full name"])
+        expect(claim.errors[:base]).to include(["claim_defendant_2_postcode_error", "Enter defendant 2's postcode"])
+
+      end
+    end
+
   end
 end

@@ -13,6 +13,7 @@ class ParticipantCollection < BaseClass
     raise "Cannot instantiate Participant Collection: instantiate a subclass instead" if self.class == ParticipantCollection
     @errors = ActiveModel::Errors.new(self)
     @participants = {}
+    @is_valid = nil
   end
 
 
@@ -63,14 +64,17 @@ class ParticipantCollection < BaseClass
 
 
   def valid?
-    @participants.each do |index, participant| 
-      unless participant.valid?
-        participant.errors.each do |field, msg|
-          @errors.add("#{participant_type}_#{index}_#{field}".to_sym, msg)
+    if @is_valid.nil?
+      @participants.each do |index, participant| 
+        unless participant.valid?
+          participant.errors.each do |field, msg|
+            @errors.add("#{participant_type}_#{index}_#{field}".to_sym, msg)
+          end
         end
       end
+      @is_valid = @errors.empty?
     end
-    @errors.empty? ? true : false
+    @is_valid
   end
  
 
