@@ -1,58 +1,58 @@
 describe ClaimantCollection do
 
-  let(:cc)        { ClaimantCollection.new(test_claim_params) }
+  let(:claimants)        { ClaimantCollection.new(test_claim_params) }
 
   describe '.new' do
     it 'should instantiate a collection with the correct number of claimants' do
-      expect(cc).to be_instance_of ClaimantCollection
-      expect(cc.size).to eq 3
+      expect(claimants).to be_instance_of ClaimantCollection
+      expect(claimants.size).to eq 3
     end
 
     it 'first claimant has first_claimant set true' do
-      expect(cc[1].first_claimant).to eq true
+      expect(claimants[1].first_claimant).to eq true
     end
 
     it 'second and third claimant has first_claimant set false' do
-      expect(cc[2].first_claimant).to eq false
-      expect(cc[3].first_claimant).to eq false
+      expect(claimants[2].first_claimant).to eq false
+      expect(claimants[3].first_claimant).to eq false
     end
 
     it 'should fail if the number of claimants in the params is less than the number given in the initializer' do
         params = test_claim_params
         params[:num_claimants] = 4
-        cc2 = ClaimantCollection.new(params)
-        expect(cc2).not_to be_valid
+        claimants2 = ClaimantCollection.new(params)
+        expect(claimants2).not_to be_valid
         expected_errors = [
               "Claimant 4 title Enter claimant 4's title",
               "Claimant 4 full name Enter claimant 4's full name",
               "Claimant 4 street Enter claimant 4's full address",
               "Claimant 4 postcode Enter claimant 4's postcode"
             ]
-        expect(cc2.errors.full_messages).to eq expected_errors
+        expect(claimants2.errors.full_messages).to eq expected_errors
     end
 
     it 'should return size of zero with 1 empty claimant if instantiated with empty params' do
-      cc2 = ClaimantCollection.new({})
-      expect(cc2.size).to eq 0
+      claimants2 = ClaimantCollection.new({})
+      expect(claimants2.size).to eq 0
     end
 
     it 'should insert claimant with validate absence = true if more than the num_claimants' do
       params = test_claim_params
       params['num_claimants'] = 2
-      cc2 = ClaimantCollection.new(params)
-      valid_claimant = cc2[1]
+      claimants2 = ClaimantCollection.new(params)
+      valid_claimant = claimants2[1]
       expect(valid_claimant.validate_absence?).to be false
       expect(valid_claimant.valid?).to be true
 
-      valid_claimant = cc2[2]
+      valid_claimant = claimants2[2]
       expect(valid_claimant.validate_absence?).to be false
       expect(valid_claimant.valid?).to be true
 
 
-      invalid_claimant = cc2[3]
+      invalid_claimant = claimants2[3]
       expect(invalid_claimant.validate_absence?).to be true
       expect(invalid_claimant.valid?).to be false
-      expect(cc2.size).to eq 2
+      expect(claimants2.size).to eq 2
     end
 
   end
@@ -60,20 +60,20 @@ describe ClaimantCollection do
 
   describe '#[]' do
     it 'should return the claimant of the given index' do
-      claimant = cc[2]
+      claimant = claimants[2]
       expect(claimant).to be_instance_of(Claimant)
       expect(claimant.full_name).to eq "John Smith 2nd"
     end
 
     it 'should raise error if index 0 is given' do
       expect {
-        cc[0]
+        claimants[0]
       }.to raise_error ArgumentError, "No such index: 0"
     end
 
 
     it 'should return empty claimant if the index is higher than the number of claimants' do
-      claimant = cc[4]
+      claimant = claimants[4]
       expect(claimant.empty?).to be true
     end
   end
@@ -84,19 +84,19 @@ describe ClaimantCollection do
     let(:claimant)   { Claimant.new( { "title" => "Mrs", "full_name" => "Maggie Thatcher", "street" => "10 Downing Street St\nLondon", "postcode" => "SW1W 0LU"} ) }
     it 'should raise error if index is zero' do
       expect {
-        cc[0] = claimant
+        claimants[0] = claimant
       }.to raise_error ArgumentError, "Invalid index: 0"
     end
 
     it 'should raise error if index is greater than number of claimants' do
       expect {
-        cc[4] = claimant
+        claimants[4] = claimant
       }.to raise_error ArgumentError, "Invalid index: 4"
     end
 
     it 'should replace the specified claimant with the new claimant' do
-      cc[3] = claimant
-      c = cc[3]
+      claimants[3] = claimant
+      c = claimants[3]
       expect(c.full_name).to eq 'Maggie Thatcher'
     end
   end
@@ -104,7 +104,7 @@ describe ClaimantCollection do
 
   describe 'as_json' do
     it 'should produce a json representation of the contacts' do
-      expect(cc.as_json).to eq expected_claimant_collected_json(cc)
+      expect(claimants.as_json).to eq expected_claimant_collected_json(claimants)
     end
   end
 
@@ -112,12 +112,12 @@ describe ClaimantCollection do
 
   context 'instantiating with an empty array' do
     it 'should intantiate a collection of 4 empty objects' do
-      cc = ClaimantCollection.new( HashWithIndifferentAccess.new )
-      expect(cc.size).to eq 0
-      expect(cc[1]).to eq Claimant.new
-      expect(cc[2]).to eq Claimant.new
-      expect(cc[3]).to eq Claimant.new
-      expect(cc[4]).to eq Claimant.new
+      claimants = ClaimantCollection.new( HashWithIndifferentAccess.new )
+      expect(claimants.size).to eq 0
+      expect(claimants[1]).to eq Claimant.new('first_claimant' => true)
+      expect(claimants[2]).to eq Claimant.new('first_claimant' => false)
+      expect(claimants[3]).to eq Claimant.new('first_claimant' => false)
+      expect(claimants[4]).to eq Claimant.new('first_claimant' => false)
     end
   end
 
@@ -176,12 +176,12 @@ describe ClaimantCollection do
   end
 
 
-  
+
 end
 
 
-def expected_claimant_collected_json(cc)
-  {'claimant_1' => cc[1].as_json, 'claimant_2' => cc[2].as_json, 'claimant_3' => cc[3].as_json }.as_json
+def expected_claimant_collected_json(claimants)
+  {'claimant_1' => claimants[1].as_json, 'claimant_2' => claimants[2].as_json, 'claimant_3' => claimants[3].as_json }.as_json
 end
 
 
