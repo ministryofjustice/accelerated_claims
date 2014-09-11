@@ -87,10 +87,18 @@ describe Claimant, :type => :model do
     end
   end
 
-
   context 'validate presence true' do
+    let(:claimant_params) do
+      HashWithIndifferentAccess.new(claimant_type: 'individual',
+        validate_presence: true,
+        full_name: '',
+        postcode: '',
+        street: '',
+        title: '',
+        claimant_num: 2)
+    end
+
     it 'should not validate if attrs are blank' do
-      claimant = Claimant.new(HashWithIndifferentAccess.new(claimant_type: 'individual', validate_presence: true, full_name: '', num_claimants: 1, postcode: '', street: '', title: '', claimant_num: 2))
       expect(claimant).not_to be_valid
       expect(claimant.errors[:title]).to eq ["Enter claimant 2's title"]
       expect(claimant.errors[:full_name]).to eq ["Enter claimant 2's full name"]
@@ -99,54 +107,49 @@ describe Claimant, :type => :model do
     end
   end
 
+  context 'validate_absence set to true' do
 
-  context 'validate_absence set to false' do
-
-    let(:empty_claimant)  {  Claimant.new(HashWithIndifferentAccess.new(claimant_num: 1, :validate_absence => true, claimant_num: 2 ))  }
-
-    it 'should be valid if all fields are empty' do
-      expect(empty_claimant).to be_valid
+    context 'when all attributes are empty' do
+      let(:claimant_params) { { validate_absence: true, claimant_num: 1 } }
+      it { is_expected.to be_valid }
     end
 
-    it 'should not be valid if any of the attributes are entered' do
-      empty_claimant.street = 'Petty France'
-      expect(empty_claimant).to_not be_valid
-      expect(empty_claimant.errors.full_messages).to eq ['Street must not be entered if number of claimants is 1']
+    context 'when attributes are present' do
+      let(:claimant_params) { params.merge(validate_absence: true) }
+      it { is_expected.to_not be_valid }
     end
   end
 
 
   context 'mandatory fields for organizations are present' do
-    let(:org) do
-      Claimant.new(HashWithIndifferentAccess.new(
+    let(:claimant_params) do
+      params.merge(
+        title: nil,
+        full_name: nil,
         organization_name: 'Anytown Council Housing Departement',
-        street: "Streety Street\nLondon",
-        postcode: "SW1H9AJ",
         claimant_type: 'organization',
-        claimant_num: 2)
+        claimant_num: 2
       )
     end
 
+    it { is_expected.to be_valid }
+
     it 'should not be valid if organization name is missing' do
-      org.organization_name = nil
-      expect(org).not_to be_valid
-      expect(org.errors[:organization_name]).to eq ["Enter claimant 2's company name or local authority name"]
+      claimant.organization_name = nil
+      expect(claimant).not_to be_valid
+      expect(claimant.errors[:organization_name]).to eq ["Enter claimant 2's company name or local authority name"]
     end
 
     it 'should not be valid if street is missing' do
-      org.street = nil
-      expect(org).not_to be_valid
-      expect(org.errors[:street]).to eq ["Enter claimant 2's full address"]
+      claimant.street = nil
+      expect(claimant).not_to be_valid
+      expect(claimant.errors[:street]).to eq ["Enter claimant 2's full address"]
     end
 
     it 'should not be valid if the postcocde is missing' do
-      org.postcode = nil
-      expect(org).not_to be_valid
-      expect(org.errors[:postcode]).to eq ["Enter claimant 2's postcode"]
-    end
-
-    it 'should be valid if all fields are entered' do
-      expect(org).to be_valid
+      claimant.postcode = nil
+      expect(claimant).not_to be_valid
+      expect(claimant.errors[:postcode]).to eq ["Enter claimant 2's postcode"]
     end
   end
 
