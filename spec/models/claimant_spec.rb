@@ -91,7 +91,7 @@ describe Claimant, :type => :model do
     end
   end
 
-  context 'mandatory fields for organizations are present' do
+  context 'claimant_type organization' do
     let(:claimant_params) do
       params.merge(
         title: nil,
@@ -104,22 +104,24 @@ describe Claimant, :type => :model do
 
     it { is_expected.to be_valid }
 
-    it 'should not be valid if organization name is missing' do
-      claimant.organization_name = nil
-      expect(claimant).not_to be_valid
-      expect(claimant.errors[:organization_name]).to eq ["Enter claimant 2's company name or local authority name"]
-    end
+    describe 'mandatory fields for organizations are present' do
+      it 'should not be valid if organization name is missing' do
+        claimant.organization_name = nil
+        expect(claimant).not_to be_valid
+        expect(claimant.errors[:organization_name]).to eq ["Enter claimant 2's company name or local authority name"]
+      end
 
-    it 'should not be valid if street is missing' do
-      claimant.street = nil
-      expect(claimant).not_to be_valid
-      expect(claimant.errors[:street]).to eq ["Enter claimant 2's full address"]
-    end
+      it 'should not be valid if street is missing' do
+        claimant.street = nil
+        expect(claimant).not_to be_valid
+        expect(claimant.errors[:street]).to eq ["Enter claimant 2's full address"]
+      end
 
-    it 'should not be valid if the postcocde is missing' do
-      claimant.postcode = nil
-      expect(claimant).not_to be_valid
-      expect(claimant.errors[:postcode]).to eq ["Enter claimant 2's postcode"]
+      it 'should not be valid if the postcocde is missing' do
+        claimant.postcode = nil
+        expect(claimant).not_to be_valid
+        expect(claimant.errors[:postcode]).to eq ["Enter claimant 2's postcode"]
+      end
     end
   end
 
