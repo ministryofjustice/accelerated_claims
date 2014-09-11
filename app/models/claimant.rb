@@ -5,7 +5,6 @@ class Claimant < BaseClass
   include Comparable
 
   attr_accessor :validate_presence, :validate_absence
-  attr_accessor :num_claimants
   attr_accessor :claimant_num
   attr_accessor :title
   attr_accessor :full_name
@@ -27,7 +26,6 @@ class Claimant < BaseClass
     unless params.include?(:validate_presence)
       @validate_presence = true unless params[:validate_absence] == true
     end
-    @num_claimants = @num_claimants.nil? ? 1 : @num_claimants.to_i
     @claimant_type = params['claimant_type']
   end
 
