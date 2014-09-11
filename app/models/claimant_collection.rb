@@ -34,9 +34,9 @@ class ClaimantCollection < ParticipantCollection
   def populate_claimants(claim_params)
     ( 1 .. ClaimantCollection.max_claimants ).each do |i|
       if claim_params.nil? || claim_params.empty?
-        @participants[i] = Claimant.new
+        @participants[i] = Claimant.new( 'claimant_num' => index )
       else
-        populate_claimant(i, claim_params)
+        populate_claimant(index, claim_params)
       end
     end
   end
@@ -52,6 +52,7 @@ class ClaimantCollection < ParticipantCollection
     else
       claimant_params['validate_presence'] = true
     end
+
     @participants[index] = Claimant.new(claimant_params)
   end
 

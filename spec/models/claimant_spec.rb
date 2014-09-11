@@ -1,7 +1,17 @@
 describe Claimant, :type => :model do
 
-  let(:claimant_params)  { HashWithIndifferentAccess.new(title: 'Mr', full_name: "John Doe", street: "Streety Street\nLondon", postcode: "SW1H9AJ",  claimant_type: 'individual', claimant_num: 1) }
-  let(:claimant)         { Claimant.new(claimant_params) }
+  let(:claimant_params)  do
+    HashWithIndifferentAccess.new(
+      title: 'Mr',
+      full_name: "John Doe",
+      street: "Streety Street\nLondon",
+      postcode: "SW1H9AJ",
+      claimant_type: 'individual',
+      claimant_num: 1
+    )
+  end
+
+  let(:claimant) { Claimant.new(claimant_params) }
 
   subject { claimant }
 
@@ -25,7 +35,7 @@ describe Claimant, :type => :model do
     end
   end
 
-  
+
   context 'equality comparison' do
 
     it 'should be true if two new objects are compared with one another' do
@@ -45,7 +55,7 @@ describe Claimant, :type => :model do
       c2 = Claimant.new( { "title" => "XXX", "full_name" => "Maggie Thatcher", "street" => "10 Downing Street St\nLondon", "postcode" => "SW1W 0LU"} )
       expect(c1).not_to eq c2
     end
-  
+
   end
 
 
@@ -59,7 +69,7 @@ describe Claimant, :type => :model do
 
 
   context 'validate_presence set to true' do
-    
+
     before(:each)   { claimant.validate_presence = true }
 
     it 'should be valid if all attributes are set' do
@@ -170,7 +180,7 @@ describe Claimant, :type => :model do
       claimant.postcode = 'SW10'
       expect(claimant).not_to be_valid
       expect(claimant.errors[:postcode]).to eq ["claimant 2's postcode is not a full postcode"]
-    end    
+    end
 
     it 'should not validate if postcode is invalid' do
       claimant.postcode = 'SW10XX 5FF'

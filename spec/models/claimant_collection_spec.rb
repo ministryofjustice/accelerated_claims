@@ -1,8 +1,5 @@
 describe ClaimantCollection do
 
-<<<<<<< HEAD
-  let(:claimants)        { ClaimantCollection.new(test_claim_params) }
-=======
   def claim_params
     HashWithIndifferentAccess.new(
       { "num_claimants" => 3,
@@ -34,7 +31,6 @@ describe ClaimantCollection do
 
   let(:params) { claim_params }
   let(:claimants) { ClaimantCollection.new(params) }
->>>>>>> refactoring spec
 
   describe '.new' do
     it 'should instantiate a collection with the correct number of claimants' do
@@ -43,27 +39,19 @@ describe ClaimantCollection do
     end
 
     it 'first claimant has first_claimant set true' do
-      expect(claimants[1].first_claimant).to eq true
+      expect(claimants[1].first_claimant?).to eq true
     end
 
     it 'second and third claimant has first_claimant set false' do
-      expect(claimants[2].first_claimant).to eq false
-      expect(claimants[3].first_claimant).to eq false
+      expect(claimants[2].first_claimant?).to eq false
+      expect(claimants[3].first_claimant?).to eq false
     end
 
-<<<<<<< HEAD
-    it 'should fail if the number of claimants in the params is less than the number given in the initializer' do
-        params = test_claim_params
-        params[:num_claimants] = 4
-        claimants2 = ClaimantCollection.new(params)
-        expect(claimants2).not_to be_valid
-=======
     context 'with number of claimants in the params less than the number given in the initializer' do
       let(:params) { claim_params.merge(num_claimants: 4) }
 
       it 'should fail' do
         expect(claimants).not_to be_valid
->>>>>>> refactoring spec
         expected_errors = [
               "Claimant 4 title Enter claimant 4's title",
               "Claimant 4 full name Enter claimant 4's full name",
@@ -81,25 +69,6 @@ describe ClaimantCollection do
       end
     end
 
-<<<<<<< HEAD
-    it 'should insert claimant with validate absence = true if more than the num_claimants' do
-      params = test_claim_params
-      params['num_claimants'] = 2
-      claimants2 = ClaimantCollection.new(params)
-      valid_claimant = claimants2[1]
-      expect(valid_claimant.validate_absence?).to be false
-      expect(valid_claimant.valid?).to be true
-
-      valid_claimant = claimants2[2]
-      expect(valid_claimant.validate_absence?).to be false
-      expect(valid_claimant.valid?).to be true
-
-
-      invalid_claimant = claimants2[3]
-      expect(invalid_claimant.validate_absence?).to be true
-      expect(invalid_claimant.valid?).to be false
-      expect(claimants2.size).to eq 2
-=======
     context 'with number of claimants 2' do
       let(:params) do
         params = claim_params
@@ -137,7 +106,6 @@ describe ClaimantCollection do
           expect(claimants[4].valid?).to be true
         end
       end
->>>>>>> refactoring spec
     end
   end
 
@@ -194,10 +162,10 @@ describe ClaimantCollection do
 
     it 'should intantiate a collection of 4 empty objects' do
       expect(claimants.size).to eq 0
-      expect(claimants[1]).to eq Claimant.new('first_claimant' => true)
-      expect(claimants[2]).to eq Claimant.new('first_claimant' => false)
-      expect(claimants[3]).to eq Claimant.new('first_claimant' => false)
-      expect(claimants[4]).to eq Claimant.new('first_claimant' => false)
+      expect(claimants[1]).to eq Claimant.new('claimant_num' => 1)
+      expect(claimants[2]).to eq Claimant.new('claimant_num' => 2)
+      expect(claimants[3]).to eq Claimant.new('claimant_num' => 3)
+      expect(claimants[4]).to eq Claimant.new('claimant_num' => 4)
     end
   end
 
@@ -223,7 +191,7 @@ describe ClaimantCollection do
     end
 
     it 'should return an empty array if only one claimant' do
-      params = test_claim_params
+      params = claim_params
       params.delete('claimant_2')
       params.delete('claimant_3')
       params['num_claimants'] = 1
@@ -233,7 +201,7 @@ describe ClaimantCollection do
     end
 
     it 'should return an array of just second claimant if two claimants' do
-      params = test_claim_params
+      params = claim_params
       params.delete('claimant_3')
       params['num_claimants'] = 2
       cc2 = ClaimantCollection.new(params)
@@ -246,7 +214,7 @@ describe ClaimantCollection do
     end
 
     it 'should return an array of claimants 3, 4 if 4 claimants' do
-      params = test_claim_params
+      params = claim_params
       params.merge!(test_claimant_4)
       params['num_claimants'] = 4
       cc2 = ClaimantCollection.new(params)
@@ -264,36 +232,6 @@ def expected_claimant_collected_json(claimants)
   {'claimant_1' => claimants[1].as_json, 'claimant_2' => claimants[2].as_json, 'claimant_3' => claimants[3].as_json }.as_json
 end
 
-
-
-def test_claim_params
-  HashWithIndifferentAccess.new(
-    { "num_claimants" => 3,
-      "claimant_type" => 'individual',
-      "claimant_1" =>
-      {
-        "title" => "Mr",
-        "full_name" => "John Smith 1st",
-        "street" => "2 Brown St\nCwmbran",
-        "postcode" => "SW1W 0LU"
-      },
-      "claimant_2" =>
-      {
-        "title" => "Mr",
-        "full_name" => "John Smith 2nd",
-        "street" => "2 Brown St\nCwmbran",
-        "postcode" => "SW1W 0LU"
-      },
-      "claimant_3" =>
-      {
-        "title" => "Mr",
-        "full_name" => "John Smith 3rd",
-        "street" => "2 Brown St\nCwmbran",
-        "postcode" => "SW1W 0LU"
-      }
-    }
-  )
-end
 
 
 def test_claimant_4

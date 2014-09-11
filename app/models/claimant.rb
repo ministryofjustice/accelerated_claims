@@ -1,6 +1,5 @@
 class Claimant < BaseClass
 
-
   include Address
   include ActiveModel::Validations
   include Comparable
@@ -15,6 +14,8 @@ class Claimant < BaseClass
   attr_accessor :first_claimant
   attr_accessor :address_same_as_first_claimant
 
+  # validate :address_same_as_first_claimant, presence: true, unless: :first_claimant
+
   validate :validate_claimant_state
   validates :claimant_num, presence: { message: 'Claimant number not specified' }, allow_nil: false
   validates :title, length: { maximum: 8 }
@@ -28,7 +29,6 @@ class Claimant < BaseClass
     end
     @num_claimants = @num_claimants.nil? ? 1 : @num_claimants.to_i
     @claimant_type = params['claimant_type']
-    @first_claimant = params['first_claimant']
   end
 
 
@@ -74,6 +74,9 @@ class Claimant < BaseClass
     }
   end
 
+  def first_claimant?
+    @claimant_num == 1
+  end
 
   def subject_description
     "claimant #{@claimant_num}"
