@@ -150,27 +150,25 @@ describe Claimant, :type => :model do
     end
   end
 
-  context 'when number of claimants 2 and second address not provided' do
+  context 'when claimant number 2' do
     let(:claimant_params) { params.merge(claimant_num: 2) }
 
     context 'mandatory fields for individuals are present' do
-      it 'should be valid if all required fields are present' do
-        expect(claimant).to be_valid
-      end
+      it { is_expected.to be_valid }
 
-      it 'should not be valid if full name is missing' do
+      it 'should not be valid when full name is missing' do
         claimant.full_name = nil
         expect(claimant).not_to be_valid
         expect(claimant.errors[:full_name]).to eq ["Enter claimant 2's full name"]
       end
 
-      it 'should not be valid if full name is missing' do
+      it 'should not be valid when street is missing' do
         claimant.street = nil
         expect(claimant).not_to be_valid
         expect(claimant.errors[:street]).to eq ["Enter claimant 2's full address"]
       end
 
-      it 'should not be valid if postcode is missing' do
+      it 'should not be valid when postcode is missing' do
         claimant.postcode = nil
         expect(claimant).not_to be_valid
         expect(claimant.errors[:postcode]).to eq ["Enter claimant 2's postcode"]
@@ -178,19 +176,19 @@ describe Claimant, :type => :model do
     end
 
     describe 'address validation' do
-      it 'should not validate if postcode is incomplete' do
+      it 'should not validate when postcode is incomplete' do
         claimant.postcode = 'SW10'
         expect(claimant).not_to be_valid
         expect(claimant.errors[:postcode]).to eq ["claimant 2's postcode is not a full postcode"]
       end
 
-      it 'should not validate if postcode is invalid' do
+      it 'should not validate when postcode is invalid' do
         claimant.postcode = 'SW10XX 5FF'
         expect(claimant).not_to be_valid
         expect(claimant.errors[:postcode]).to eq ["is too long (maximum is 8 characters)", "Enter a valid postcode for claimant 2"]
       end
 
-      it 'should not validate if street is too long' do
+      it 'should not validate when street is too long' do
         claimant.street = "x" * 72
         expect(claimant).not_to be_valid
         expect(claimant.errors[:street]).to eq ["is too long (maximum is 70 characters)"]
