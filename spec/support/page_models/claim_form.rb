@@ -82,32 +82,6 @@ class ClaimForm
   end
 
 
-
-
-  # def select_number_of type
-   
-  #   case type
-  #   when :claimants
-  #     button_prefix = "claim_num"
-  #     model = "claim"
-  #   when :defendants
-  #     button_prefix =  "claim_num"
-  #     model = "claim"
-  #   end
-
-  #   number = get_data(model, "number_of_#{type}").to_i
-  #   case number
-  #     when 1
-  #       choose("#{button_prefix}_#{type}_1")
-  #     when 2
-  #       choose("#{button_prefix}_#{type}_2")
-  #   end
-  #   find("#claim_#{type.to_s.singularize}_one_title") # wait for selector to be shown
-  #   number
-  # end
-
-
-
   def choose_claimant_2_address_the_same
     case get_data('javascript','claimant_2_same_address')
     when 'Yes'
@@ -117,20 +91,7 @@ class ClaimForm
     end
   end
 
-  # def choose_defendant_living_in_property count, index
-  #   defendant = "defendant_#{count}"
-  #   case get_data(defendant, "inhabits_property")
-  #   when 'Yes'
-  #     choose("claim_defendant_#{count}_inhabits_property_yes")
-  #     address_to_be_completed = false
-  #   else
-  #     choose("claim_defendant_#{count}_inhabits_property_no")
-  #     address_to_be_completed = true
-  #   end
-  #   address_to_be_completed
-  # end
-
-
+  
   def choose_defendant_living_in_property(index)
     address_to_be_completed = nil
     defendant = "defendant_#{index}"
@@ -297,15 +258,6 @@ class ClaimForm
     complete_details_of_person("claimant_#{claimant_id}", complete_address: fill_in_address)
   end
 
-
-
-  # def fill_defendant(defendant_number, options = {})
-  #   fill_in_defendant('one', options)
-  # end
-
-  # def fill_defendant_two(options = {})
-  #   fill_in_defendant('two', options)
-  # end
 
   def fill_in_defendant(defendant_number, options)
     defendant = "defendant_#{defendant_number}"
