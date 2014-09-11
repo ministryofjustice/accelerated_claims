@@ -1,7 +1,8 @@
 class DefendantCollection < ParticipantCollection
 
 
-  MAX_DEFENDANTS = 20
+  MAX_DEFENDANTS_JS_ENABLED   = 20
+  MAX_DEFENDANTS_JS_DISABLED  = 4
 
   attr_reader 
 
@@ -12,14 +13,14 @@ class DefendantCollection < ParticipantCollection
     super
     populate_defendants(claim_params)
     @first_extra_participant = 2
-    @max_participants = MAX_DEFENDANTS
+    @max_participants = MAX_DEFENDANTS_JS_ENABLED
   end
   
 
 
 
-  def self.max_defendants
-    MAX_DEFENDANTS
+  def self.max_defendants(options = {:js_enabled => true})
+    options[:js_enabled] == true ? MAX_DEFENDANTS_JS_ENABLED : MAX_DEFENDANTS_JS_DISABLED
   end
 
   def self.participant_type

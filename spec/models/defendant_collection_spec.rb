@@ -116,9 +116,18 @@ describe DefendantCollection do
 
 
   describe '.max_defendants' do
-    it 'should return the maximum number of defendants' do
+    it 'should return the maximum number of defendants for js_enabled if not given a param' do
       expect(DefendantCollection.max_defendants).to eq 20
     end
+
+    it 'should return the maximum number of defendants for js_enabled if given true' do
+      expect(DefendantCollection.max_defendants(js_enabled: true)).to eq 20
+    end
+
+    it 'should return the maximum number of defendants for js_disabled if given false' do
+      expect(DefendantCollection.max_defendants(js_enabled: false)).to eq 4
+    end    
+
   end
 
 

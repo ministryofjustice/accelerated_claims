@@ -61,11 +61,12 @@
           label: 'How many defendants are there?'
 
       .row.js-only
-        %span.error.hide#num-defendants-error-message
-          The number of defendants must be between 1 and 20. 
+        The number of defendants must be between 1 and 20. 
+      .row.nonjs
+        The number of defendants must be between 1 and 4. 
 
       .defendants
-        - (1 .. DefendantCollection::MAX_DEFENDANTS).each do |i|
+        - (1 .. DefendantCollection::max_defendants(js_enabled: true)).each do |i|
           = render partial: 'defendant', object: @claim.send("defendant_#{i}".to_sym), locals: { defendant_id: i, claim_form: claim_form, defendant_field: "defendant_#{i}".to_sym }
           
 

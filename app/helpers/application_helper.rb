@@ -27,4 +27,13 @@ module ApplicationHelper
     %Q[#{text}<span class="hint nonjs"> (Optional)</span>].html_safe
   end
 
+
+  def defendant_class_helper(defendant_id)
+    if defendant_id > DefendantCollection.max_defendants(js_enabled: false)
+      "defendant js-only"
+    else
+      'defendant'
+    end
+  end
+
 end

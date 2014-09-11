@@ -478,7 +478,7 @@ describe Claim, :type => :model do
         # when I instantiate a claim
         claim = Claim.new(data)
 
-        # it should not be valid, and the defendants collection should have the expected error messages
+        # it should not be valid, and the defendants collection should have the expected error message(:s
         claim.valid?
         expect(claim.defendants).to_not be_valid
         expect(claim.defendants.errors['defendant_1_title']).to eq [ "Enter defendant 1's title",  ]
@@ -489,6 +489,90 @@ describe Claim, :type => :model do
         expect(claim.errors[:base]).to include(["claim_defendant_1_title_error", "Enter defendant 1's title"])
         expect(claim.errors[:base]).to include(["claim_defendant_1_full_name_error", "Enter defendant 1's full name"])
         expect(claim.errors[:base]).to include(["claim_defendant_2_postcode_error", "Enter defendant 2's postcode"])
+
+      end
+    end
+
+
+    describe 'validation of number of defendants' do
+      context 'with javascript enabled' do
+        
+        let(:javascript_enabled_params) do
+          data = claim_post_data['claim']
+          data['javascript_enabled'] = 'Yes'
+          data
+        end
+
+        it 'should not validate 0 num defendants' do
+          javascript_enabled_params['num_defendants'] = 0
+          claim = Claim.new(javascript_enabled_params)
+          expect(claim).not_to be_valid
+          expect(claim.errors[:base]).to eq [["claim_num_defendants_error", "Please enter a valid number of defendants between 1 and 20"]]
+        end
+
+        it 'should not be valid if num_defendants > 20' do
+          javascript_enabled_params['num_defendants'] = 21
+          claim = Claim.new(javascript_enabled_params)
+          expect(claim).not_to be_valid
+          expect(claim.errors[:base]).to eq [["claim_num_defendants_error", "Please enter a valid number of defendants between 1 and 20"]]
+        end
+
+        it 'should be valid if num_defendants is 1' do
+          javascript_enabled_params['num_defendants'] = 1
+          javascript_enabled_params.delete('defendant_2')
+          claim = Claim.new(javascript_enabled_params)
+          expect(claim).to be_valid
+          expect(claim.errors[:base]).to be_empty
+        end
+
+        it 'should be valid if num_defendants is 20' do
+          javascript_enabled_params['num_defendants'] = 20
+          (3 .. 20).each do |i|
+            javascript_enabled_params["defendant_#{i}"] = javascript_enabled_params['defendant_2']
+          end
+          claim = Claim.new(javascript_enabled_params)
+          expect(claim).to be_valid
+          expect(claim.errors[:base]).to be_empty
+        end
+      end
+
+
+      context('with javascript disabled') do
+        let(:javascript_disabled_params) do
+          claim_post_data['claim']
+        end
+
+        it 'should not validate 0 num defendants' do
+          javascript_disabled_params['num_defendants'] = 0
+          claim = Claim.new(javascript_disabled_params)
+          expect(claim).not_to be_valid
+          expect(claim.errors[:base]).to eq [["claim_num_defendants_error", "Please enter a valid number of defendants between 1 and 4"]]
+        end
+
+        it 'should not be valid if num_defendants > 4' do
+          javascript_disabled_params['num_defendants'] = 5
+          claim = Claim.new(javascript_disabled_params)
+          expect(claim).not_to be_valid
+          expect(claim.errors[:base]).to eq [["claim_num_defendants_error", "Please enter a valid number of defendants between 1 and 4"]]
+        end
+
+        it 'should be valid if num_defendants is 1' do
+          javascript_disabled_params['num_defendants'] = 1
+          javascript_disabled_params.delete('defendant_2')
+          claim = Claim.new(javascript_disabled_params)
+          expect(claim).to be_valid
+          expect(claim.errors[:base]).to be_empty
+        end
+
+        it 'should be valid if num_defendants is 20' do
+          javascript_disabled_params['num_defendants'] = 4
+          (3 .. 4).each do |i|
+            javascript_disabled_params["defendant_#{i}"] = javascript_disabled_params['defendant_2']
+          end
+          claim = Claim.new(javascript_disabled_params)
+          expect(claim).to be_valid
+          expect(claim.errors[:base]).to be_empty
+        end
 
       end
     end

@@ -17,6 +17,8 @@ class Claim < BaseClass
 
 
   def initialize(claim_params={})
+    @javascript_enabled = claim_params.key?('javascript_enabled')
+
     @claimant_type  = claim_params.key?(:claimant_type) ? claim_params[:claimant_type] : nil
     if @claimant_type == 'organization'
       @num_claimants = 1
@@ -28,6 +30,12 @@ class Claim < BaseClass
     initialize_all_submodels(claim_params)
     @errors = ActiveModel::Errors.new(self)
   end
+
+
+  def javascript_enabled?
+    @javascript_enabled
+  end
+
 
   def method_missing(symbol, *args)
     case symbol
@@ -104,6 +112,9 @@ class Claim < BaseClass
 
   private
 
+
+  # if the perform validation fails - then we need to return false tos that the errors get transfereed
+
   def transfer_errors_from_submodel_to_base(instance_var, model, options)
     unless send(instance_var).valid?
       if options[:collection] == false || perform_collection_validation_for?(instance_var)
@@ -166,16 +177,23 @@ class Claim < BaseClass
     @num_claimants_valid_result
   end
 
+
   def num_defendants_valid?
-    if @num_defendants.blank?
-      @errors[:base] << ['claim_defendant_number_of_defendants_error', 'Please say how many defendants there are']
-      return false
-    elsif @num_defendants < 1 || @num_defendants > DefendantCollection.max_defendants
-      @errors[:base] << ['claim_defendant_number_of_defendants_error', "Please enter a valid number of defendants between 1 and #{DefendantCollection.max_defendants}"]
-      return false
+    if @num_defendants_valid_result.nil?
+      max_num_defendants = DefendantCollection.max_defendants(js_enabled: @javascript_enabled)
+      if @num_defendants.blank?
+        @errors[:base] << ['claim_defendant_number_of_defendants_error', 'Please say how many defendants there are']
+        @num_defendants_valid_result = false
+      elsif @num_defendants < 1 || @num_defendants > max_num_defendants
+        @errors[:base] << ['claim_defendant_number_of_defendants_error', "Please enter a valid number of defendants between 1 and #{max_num_defendants}"]
+        @num_defendants_valid_result = false
+      else
+        @num_defendants_valid_result = true
+      end
     end
-    true   
+    @num_defendants_valid_result
   end
+
 
   def add_fee_and_costs hash
     if hash["claimant_contact_legal_costs"].blank?
