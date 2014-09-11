@@ -105,8 +105,6 @@ class Claim < BaseClass
   private
 
   def transfer_errors_from_submodel_to_base(instance_var, model, options)
-    result = true
-    
     unless send(instance_var).valid?
       if options[:collection] == false || perform_collection_validation_for?(instance_var)
         errors = send(instance_var).errors
