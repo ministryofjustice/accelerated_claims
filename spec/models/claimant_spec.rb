@@ -1,6 +1,6 @@
 describe Claimant, :type => :model do
 
-  let(:claimant_params)  do
+  def params
     HashWithIndifferentAccess.new(
       title: 'Mr',
       full_name: "John Doe",
@@ -10,6 +10,8 @@ describe Claimant, :type => :model do
       claimant_num: 1
     )
   end
+
+  let(:claimant_params) { params }
 
   let(:claimant) { Claimant.new(claimant_params) }
 
@@ -35,7 +37,6 @@ describe Claimant, :type => :model do
     end
   end
 
-
   context 'equality comparison' do
 
     it 'should be true if two new objects are compared with one another' do
@@ -58,15 +59,12 @@ describe Claimant, :type => :model do
 
   end
 
-
   describe '#indented_details' do
     it 'should return a string containting name and address with each line indented by the required number of spaces'  do
       expected = "    Mr John Doe\n    Streety Street\n    London\n    SW1H 9AJ\n"
       expect(claimant.indented_details(4)).to eq expected
     end
   end
-
-
 
   context 'validate_presence set to true' do
 
@@ -119,7 +117,15 @@ describe Claimant, :type => :model do
 
 
   context 'mandatory fields for organizations are present' do
-    let(:org) { Claimant.new(HashWithIndifferentAccess.new(organization_name: 'Anytown Council Housing Departement', street: "Streety Street\nLondon", postcode: "SW1H9AJ", claimant_type: 'organization', claimant_num: 2)) }
+    let(:org) do
+      Claimant.new(HashWithIndifferentAccess.new(
+        organization_name: 'Anytown Council Housing Departement',
+        street: "Streety Street\nLondon",
+        postcode: "SW1H9AJ",
+        claimant_type: 'organization',
+        claimant_num: 2)
+      )
+    end
 
     it 'should not be valid if organization name is missing' do
       org.organization_name = nil
@@ -133,7 +139,6 @@ describe Claimant, :type => :model do
       expect(org.errors[:street]).to eq ["Enter claimant 2's full address"]
     end
 
-
     it 'should not be valid if the postcocde is missing' do
       org.postcode = nil
       expect(org).not_to be_valid
@@ -145,65 +150,59 @@ describe Claimant, :type => :model do
     end
   end
 
-  context 'mandatory fields for individuals are present' do
-    let(:indiv) { Claimant.new(HashWithIndifferentAccess.new(title: 'Mr', full_name: "John Doe", street: "Streety Street\nLondon", postcode: "SW1H9AJ", claimant_type: 'individual', claimant_num: 2)) }
+  context 'when number of claimants 2 and second address not provided' do
+    let(:claimant_params) { params.merge(claimant_num: 2) }
 
-    it 'should be valid if all required fields are present' do
-      expect(indiv).to be_valid
+    context 'mandatory fields for individuals are present' do
+      it 'should be valid if all required fields are present' do
+        expect(claimant).to be_valid
+      end
+
+      it 'should not be valid if full name is missing' do
+        claimant.full_name = nil
+        expect(claimant).not_to be_valid
+        expect(claimant.errors[:full_name]).to eq ["Enter claimant 2's full name"]
+      end
+
+      it 'should not be valid if full name is missing' do
+        claimant.street = nil
+        expect(claimant).not_to be_valid
+        expect(claimant.errors[:street]).to eq ["Enter claimant 2's full address"]
+      end
+
+      it 'should not be valid if postcode is missing' do
+        claimant.postcode = nil
+        expect(claimant).not_to be_valid
+        expect(claimant.errors[:postcode]).to eq ["Enter claimant 2's postcode"]
+      end
     end
 
-    it 'should not be valid if full name is missing' do
-      indiv.full_name = nil
-      expect(indiv).not_to be_valid
-      expect(indiv.errors[:full_name]).to eq ["Enter claimant 2's full name"]
-    end
+    describe 'address validation' do
+      it 'should not validate if postcode is incomplete' do
+        claimant.postcode = 'SW10'
+        expect(claimant).not_to be_valid
+        expect(claimant.errors[:postcode]).to eq ["claimant 2's postcode is not a full postcode"]
+      end
 
-    it 'should not be valid if full name is missing' do
-      indiv.street = nil
-      expect(indiv).not_to be_valid
-      expect(indiv.errors[:street]).to eq ["Enter claimant 2's full address"]
-    end
+      it 'should not validate if postcode is invalid' do
+        claimant.postcode = 'SW10XX 5FF'
+        expect(claimant).not_to be_valid
+        expect(claimant.errors[:postcode]).to eq ["is too long (maximum is 8 characters)", "Enter a valid postcode for claimant 2"]
+      end
 
-    it 'should not be valid if postcode is missing' do
-      indiv.postcode = nil
-      expect(indiv).not_to be_valid
-      expect(indiv.errors[:postcode]).to eq ["Enter claimant 2's postcode"]
+      it 'should not validate if street is too long' do
+        claimant.street = "x" * 72
+        expect(claimant).not_to be_valid
+        expect(claimant.errors[:street]).to eq ["is too long (maximum is 70 characters)"]
+      end
     end
-
   end
-
-
-  context 'address validation' do
-    let(:claimant)  { Claimant.new(HashWithIndifferentAccess.new(title: 'Mr', full_name: "John Doe", street: "Streety Street\nLondon", postcode: "SW1H9AJ", claimant_type: 'individual', claimant_num: 2)) }
-
-    it 'should not validate if postcode is incomplete' do
-      claimant.postcode = 'SW10'
-      expect(claimant).not_to be_valid
-      expect(claimant.errors[:postcode]).to eq ["claimant 2's postcode is not a full postcode"]
-    end
-
-    it 'should not validate if postcode is invalid' do
-      claimant.postcode = 'SW10XX 5FF'
-      expect(claimant).not_to be_valid
-      expect(claimant.errors[:postcode]).to eq ["is too long (maximum is 8 characters)", "Enter a valid postcode for claimant 2"]
-    end
-
-    it 'should not validate if street is too long' do
-      claimant.street = "x" * 72
-      expect(claimant).not_to be_valid
-      expect(claimant.errors[:street]).to eq ["is too long (maximum is 70 characters)"]
-    end
-
-  end
-
-
 
   describe '#numbered_claimant_header' do
     it 'should print claimant_x where x is the number of hte claimant' do
       claimant = Claimant.new(HashWithIndifferentAccess.new(title: 'Mr', full_name: "John Doe", street: "Streety Street\nLondon", postcode: "SW1H9AJ", claimant_type: 'individual', claimant_num: 3))
-      expect(claimant.numbered_header).to eq "Claimant 3:\n" 
+      expect(claimant.numbered_header).to eq "Claimant 3:\n"
     end
   end
-
 
 end
