@@ -1,6 +1,40 @@
 describe ClaimantCollection do
 
+<<<<<<< HEAD
   let(:claimants)        { ClaimantCollection.new(test_claim_params) }
+=======
+  def claim_params
+    HashWithIndifferentAccess.new(
+      { "num_claimants" => 3,
+        "claimant_type" => 'individual',
+        "claimant_1" =>
+        {
+          "title" => "Mr",
+          "full_name" => "John Smith 1st",
+          "street" => "2 Brown St\nCwmbran",
+          "postcode" => "SW1W 0LU"
+        },
+        "claimant_2" =>
+        {
+          "title" => "Mr",
+          "full_name" => "John Smith 2nd",
+          "street" => "2 Brown St\nCwmbran",
+          "postcode" => "SW1W 0LU"
+        },
+        "claimant_3" =>
+        {
+          "title" => "Mr",
+          "full_name" => "John Smith 3rd",
+          "street" => "2 Brown St\nCwmbran",
+          "postcode" => "SW1W 0LU"
+        }
+      }
+    )
+  end
+
+  let(:params) { claim_params }
+  let(:claimants) { ClaimantCollection.new(params) }
+>>>>>>> refactoring spec
 
   describe '.new' do
     it 'should instantiate a collection with the correct number of claimants' do
@@ -17,25 +51,37 @@ describe ClaimantCollection do
       expect(claimants[3].first_claimant).to eq false
     end
 
+<<<<<<< HEAD
     it 'should fail if the number of claimants in the params is less than the number given in the initializer' do
         params = test_claim_params
         params[:num_claimants] = 4
         claimants2 = ClaimantCollection.new(params)
         expect(claimants2).not_to be_valid
+=======
+    context 'with number of claimants in the params less than the number given in the initializer' do
+      let(:params) { claim_params.merge(num_claimants: 4) }
+
+      it 'should fail' do
+        expect(claimants).not_to be_valid
+>>>>>>> refactoring spec
         expected_errors = [
               "Claimant 4 title Enter claimant 4's title",
               "Claimant 4 full name Enter claimant 4's full name",
               "Claimant 4 street Enter claimant 4's full address",
               "Claimant 4 postcode Enter claimant 4's postcode"
             ]
-        expect(claimants2.errors.full_messages).to eq expected_errors
+        expect(claimants.errors.full_messages).to eq expected_errors
+      end
     end
 
-    it 'should return size of zero with 1 empty claimant if instantiated with empty params' do
-      claimants2 = ClaimantCollection.new({})
-      expect(claimants2.size).to eq 0
+    context 'with empty params' do
+      let(:params) { {} }
+      it 'should return size of zero with 1 empty claimant' do
+        expect(claimants.size).to eq 0
+      end
     end
 
+<<<<<<< HEAD
     it 'should insert claimant with validate absence = true if more than the num_claimants' do
       params = test_claim_params
       params['num_claimants'] = 2
@@ -53,10 +99,47 @@ describe ClaimantCollection do
       expect(invalid_claimant.validate_absence?).to be true
       expect(invalid_claimant.valid?).to be false
       expect(claimants2.size).to eq 2
+=======
+    context 'with number of claimants 2' do
+      let(:params) do
+        params = claim_params
+        params['num_claimants'] = 2
+        params
+      end
+
+      it 'has size equal to 2' do
+        expect(claimants.size).to eq 2
+      end
+
+      describe 'first two claimants' do
+        it 'have validate absence set to false' do
+          expect(claimants[1].validate_absence?).to be false
+          expect(claimants[2].validate_absence?).to be false
+        end
+
+        it 'are valid' do
+          expect(claimants[1].valid?).to be true
+          expect(claimants[2].valid?).to be true
+        end
+      end
+
+      describe 'remaining claimants' do
+        it 'have validate absence set to true' do
+          expect(claimants[3].validate_absence?).to be true
+          expect(claimants[4].validate_absence?).to be true
+        end
+
+        it 'is not valid if details are provided' do
+          expect(claimants[3].valid?).to be false
+        end
+
+        it 'is valid if details are blank' do
+          expect(claimants[4].valid?).to be true
+        end
+      end
+>>>>>>> refactoring spec
     end
-
   end
-
 
   describe '#[]' do
     it 'should return the claimant of the given index' do
@@ -77,7 +160,6 @@ describe ClaimantCollection do
       expect(claimant.empty?).to be true
     end
   end
-
 
   describe '#[]=' do
 
@@ -101,18 +183,16 @@ describe ClaimantCollection do
     end
   end
 
-
   describe 'as_json' do
     it 'should produce a json representation of the contacts' do
       expect(claimants.as_json).to eq expected_claimant_collected_json(claimants)
     end
   end
 
-
-
   context 'instantiating with an empty array' do
+    let(:params) { HashWithIndifferentAccess.new }
+
     it 'should intantiate a collection of 4 empty objects' do
-      claimants = ClaimantCollection.new( HashWithIndifferentAccess.new )
       expect(claimants.size).to eq 0
       expect(claimants[1]).to eq Claimant.new('first_claimant' => true)
       expect(claimants[2]).to eq Claimant.new('first_claimant' => false)
