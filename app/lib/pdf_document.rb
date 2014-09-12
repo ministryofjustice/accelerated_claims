@@ -72,7 +72,7 @@ class PDFDocument
       'defendant_2_postcode2' => "#{@json['defendant_2_postcode2']}" }
   end
 
-  # takes an array of two-element hashes. Each hash has keys 'left' and 'right' representing 
+  # takes an array of two-element hashes. Each hash has keys 'left' and 'right' representing
   # the left and right hand columns of the continuation sheet
   #
   def add_continuation_sheets(result_path)
@@ -82,8 +82,6 @@ class PDFDocument
       end
     end
   end
-
-
 
   def add_continuation_sheet(result_path, sheet_num, left, right)
     continuation_sheet_pdf = Tempfile.new('continuation_sheet_#{sheet_num}', '/tmp/')
@@ -97,8 +95,6 @@ class PDFDocument
     %x[#{ENV['PDFTK']} #{result_path} #{continuation_path} cat output #{combinded.path}]
     FileUtils.mv combinded.path, result_path
   end
-
-
 
   FIRST_3A_LINES = [
     { x0: 42, x1: 515, y: 327+57 },
@@ -238,3 +234,4 @@ class PDFDocument
     }.to_json
   end
 end
+
