@@ -12,7 +12,7 @@ class Claimant < BaseClass
   attr_accessor :claimant_type
   attr_accessor :address_same_as_first_claimant
 
-  validate  :validate_claimant_state
+  validate :validate_claimant_state
 
   validates :claimant_num, presence: { message: 'Claimant number not specified' }, allow_nil: false
   validates :title, length: { maximum: 8 }
@@ -72,22 +72,9 @@ class Claimant < BaseClass
     "claimant #{@claimant_num}"
   end
 
-  def indented_details(spaces_to_indent)
-    postcode1, postcode2 = split_postcode
-    indentation = ' ' * spaces_to_indent
-    str  = "#{indentation}#{title} #{full_name}\n"
-    address_lines = street.split("\n")
-    address_lines.each { |al| str += "#{indentation}#{al}\n" }
-    str += "#{indentation}#{postcode1} #{postcode2}\n"
-    str
-  end
-
-
   def numbered_header
     "Claimant #{claimant_num}:\n"
   end
-
-
 
   private
 
@@ -145,3 +132,4 @@ class Claimant < BaseClass
   end
 
 end
+

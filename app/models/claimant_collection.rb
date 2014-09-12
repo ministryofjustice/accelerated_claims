@@ -52,3 +52,4 @@ class ClaimantCollection < ParticipantCollection
   end
 
 end
+
