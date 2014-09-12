@@ -15,11 +15,11 @@ module Address
 
     if @do_partial_address_completion_validation
       with_options if: -> address { address.postcode.present? } do |a|
-        a.validates :street, presence: { message: 'must be entered' }
+        a.validates :street, presence: { message: 'Enter the full address' }
       end
 
       with_options if: -> address { address.street.present? } do |a|
-        a.validates :postcode, presence: { message: 'must be entered' }
+        a.validates :postcode, presence: { message: 'Enter the postcode' }
       end
     end
 
