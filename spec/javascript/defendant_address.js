@@ -9,17 +9,17 @@ casper.start(url, function() {
 casper.wait(500, function() {
 
   casper.test.comment('Testing defendant 1 address show/hide');
-  this.test.assertNotVisible('#defendant_one .address');
+  this.test.assertNotVisible('#defendant_1 .address');
   this.click('#defendant1address-no');
-  this.test.assertVisible('#defendant_one .address');
+  this.test.assertVisible('#defendant_1 .address');
 
   casper.test.comment('Testing defendant 2 address show/hide');
-  this.test.assertNotVisible('#defendant_two .address');
+  this.test.assertNotVisible('#defendant_2 .address');
   this.evaluate(function(){
     $('#multiplePanelSelector_defendants').val('2').trigger('change');
   });
   this.click('#defendant2address-no');
-  this.test.assertVisible('#defendant_two .address');
+  this.test.assertVisible('#defendant_2.address');
 
 });
 

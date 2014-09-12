@@ -73,14 +73,29 @@ class Claimant < BaseClass
   end
 
 
-
   def subject_description
     "claimant #{@claimant_num}"
   end
 
 
-  private
+  def indented_details(spaces_to_indent)
+    postcode1, postcode2 = split_postcode
+    indentation = ' ' * spaces_to_indent
+    str  = "#{indentation}#{title} #{full_name}\n"
+    address_lines = street.split("\n")
+    address_lines.each { |al| str += "#{indentation}#{al}\n" }
+    str += "#{indentation}#{postcode1} #{postcode2}\n"
+    str
+  end
 
+
+  def numbered_header
+    "Claimant #{claimant_num}:\n"
+  end
+
+
+
+  private
 
   def display_name(field_name)
     case field_name

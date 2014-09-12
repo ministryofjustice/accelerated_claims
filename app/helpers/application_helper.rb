@@ -27,4 +27,30 @@ module ApplicationHelper
     %Q[#{text}<span class="hint nonjs"> (Optional)</span>].html_safe
   end
 
+
+  def defendant_class_helper(defendant_id)
+    if defendant_id > DefendantCollection.max_defendants(js_enabled: false)
+      "defendant js-only"
+    else
+      'defendant'
+    end
+  end
+
+
+  def defendant_header defendant_id
+    if defendant_id == 1
+      "<h3>Defendant #{defendant_id}</h3>".html_safe
+    else
+      "<h3>Defendant #{defendant_id} <span class='hint hide js-claimanttype'>(optional)</span></h3>".html_safe
+    end
+  end
+
+  def claimant_header claimant_id
+    if claimant_id == 1
+      "<h3>Claimant #{claimant_id}</h3>".html_safe
+    else
+      "<h3>Claimant #{claimant_id} <span class='hint hide js-claimanttype'>(optional)</span></h3>".html_safe
+    end
+  end
+
 end

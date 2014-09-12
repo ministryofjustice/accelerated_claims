@@ -20,16 +20,42 @@ describe Claim, :type => :model do
     let(:data) { {} }
 
     it 'should have submodels' do
-      %w(property notice license deposit fee possession order defendant_one defendant_two).each do |attr|
+      %w(property notice license deposit fee possession order).each do |attr|
         expect(claim).to respond_to attr
       end
     end
+  end
 
+  context 'method_missing' do
+    let(:data) { {} }
     it 'should respond to magic methods claimant_n' do
       expect{
         claim.claimant_1
         claim.claimant_2
       }.not_to raise_error
+    end
+
+    it 'should respond to magic methods defendant_n' do
+      expect{
+        claim.defendant_1
+        claim.defendant_7
+        claim.defendant_20
+      }.not_to raise_error
+    end
+
+    it 'should return a claimant object for magic methods claimant_n' do
+      expect(claim.claimant_4).to be_instance_of(Claimant)
+    end
+
+    it 'shuld return a defendant object for magic mehods defendnat_n' do
+      expect(claim.defendant_4).to be_instance_of(Defendant)
+      expect(claim.defendant_20).to be_instance_of(Defendant)
+    end
+
+
+    it 'should respond to magic mehods defendant_n=' do
+      expect(claim.defendants).to receive(:[]=).with(3, nil)
+      claim.defendants[3] = nil
     end
   end
 
@@ -40,6 +66,26 @@ describe Claim, :type => :model do
       expect(claim).to be_valid
     end
   end
+
+
+  describe '#javascript_enabled?' do
+    context 'with javascript' do
+      it 'should return true' do
+        claim = Claim.new(claim_post_data['claim'].merge( 'javascript_enabled' => 'Yes' ))
+        expect(claim.javascript_enabled?).to be true
+      end
+    end
+
+    context 'without javascript' do
+      it 'should return false' do
+        claim = Claim.new(claim_post_data)
+        expect(claim.javascript_enabled?).to be false
+      end
+    end
+  end
+
+
+
 
   describe '#as_json' do
     context "when both claim fee & legal cost are known" do
@@ -248,21 +294,21 @@ describe Claim, :type => :model do
     context "when a defendant's address is blank" do
       let(:data) do
         hash = claim_post_data['claim']
-        hash['defendant_one'] = hash['defendant_one'].except('street', 'postcode')
-        hash['defendant_two'] = hash['defendant_two'].except('street', 'postcode')
-        hash['defendant_one']["inhabits_property"] = "Yes"
-        hash['defendant_two']["inhabits_property"] = "Yes"
+        hash['defendant_1'] = hash['defendant_1'].except('street', 'postcode')
+        hash['defendant_2'] = hash['defendant_2'].except('street', 'postcode')
+        hash['defendant_1']["inhabits_property"] = "yes"
+        hash['defendant_2']["inhabits_property"] = "yes"
         hash
       end
       it "defendant one should render with the property's address" do
-        expect(claim.as_json['defendant_one_address']).to include claim.as_json['property_address']
-        expect(claim.as_json['defendant_one_postcode1']).to eql claim.as_json['property_postcode1']
-        expect(claim.as_json['defendant_one_postcode2']).to eql claim.as_json['property_postcode2']
+        expect(claim.as_json['defendant_1_address']).to include claim.as_json['property_address']
+        expect(claim.as_json['defendant_1_postcode1']).to eql claim.as_json['property_postcode1']
+        expect(claim.as_json['defendant_1_postcode2']).to eql claim.as_json['property_postcode2']
       end
       it "defendant two should render with the property's address" do
-        expect(claim.as_json['defendant_two_address']).to include claim.as_json['property_address']
-        expect(claim.as_json['defendant_one_postcode1']).to eql claim.as_json['property_postcode1']
-        expect(claim.as_json['defendant_one_postcode2']).to eql claim.as_json['property_postcode2']
+        expect(claim.as_json['defendant_2_address']).to include claim.as_json['property_address']
+        expect(claim.as_json['defendant_1_postcode1']).to eql claim.as_json['property_postcode1']
+        expect(claim.as_json['defendant_1_postcode2']).to eql claim.as_json['property_postcode2']
       end
     end
 
@@ -446,6 +492,117 @@ describe Claim, :type => :model do
         expect(claim.errors.full_messages).to eq [["claim_num_claimants_error", "If there are more than 4 claimants in this case, you’ll need to complete your accelerated possession claim on the N5b form"]]
       end
     end
+
+    context 'collection of validation error messages' do
+      it 'should transfer error messages from collections to base' do
+        # given data with missing fields in the defendants collection
+        data = claim_post_data['claim']
+        data['defendant_1']['title'] = ''
+        data['defendant_1']['full_name'] = ''
+        data['defendant_2']['postcode'] = ''
+
+        # when I instantiate a claim
+        claim = Claim.new(data)
+
+        # it should not be valid, and the defendants collection should have the expected error message(:s
+        claim.valid?
+        expect(claim.defendants).to_not be_valid
+        expect(claim.defendants.errors['defendant_1_title']).to eq [ "Enter defendant 1's title",  ]
+        expect(claim.defendants.errors['defendant_1_full_name']).to eq [ "Enter defendant 1's full name" ]
+        expect(claim.defendants.errors['defendant_2_postcode']).to eq [ "Enter defendant 2's postcode" ]
+
+        # and the messages should be transferred to claim.errors[:base]
+        expect(claim.errors[:base]).to include(["claim_defendant_1_title_error", "Enter defendant 1's title"])
+        expect(claim.errors[:base]).to include(["claim_defendant_1_full_name_error", "Enter defendant 1's full name"])
+        expect(claim.errors[:base]).to include(["claim_defendant_2_postcode_error", "Enter defendant 2's postcode"])
+
+      end
+    end
+
+
+    describe 'validation of number of defendants' do
+      context 'with javascript enabled' do
+        
+        let(:javascript_enabled_params) do
+          data = claim_post_data['claim']
+          data['javascript_enabled'] = 'Yes'
+          data
+        end
+
+        it 'should not validate 0 num defendants' do
+          javascript_enabled_params['num_defendants'] = 0
+          claim = Claim.new(javascript_enabled_params)
+          expect(claim).not_to be_valid
+          expect(claim.errors[:base]).to eq [["claim_num_defendants_error", "Please enter a valid number of defendants between 1 and 20"]]
+        end
+
+        it 'should not be valid if num_defendants > 20' do
+          javascript_enabled_params['num_defendants'] = 21
+          claim = Claim.new(javascript_enabled_params)
+          expect(claim).not_to be_valid
+          expect(claim.errors[:base]).to eq [["claim_num_defendants_error", "Please enter a valid number of defendants between 1 and 20"]]
+        end
+
+        it 'should be valid if num_defendants is 1' do
+          javascript_enabled_params['num_defendants'] = 1
+          javascript_enabled_params.delete('defendant_2')
+          claim = Claim.new(javascript_enabled_params)
+          expect(claim).to be_valid
+          expect(claim.errors[:base]).to be_empty
+        end
+
+        it 'should be valid if num_defendants is 20' do
+          javascript_enabled_params['num_defendants'] = 20
+          (3 .. 20).each do |i|
+            javascript_enabled_params["defendant_#{i}"] = javascript_enabled_params['defendant_2']
+          end
+          claim = Claim.new(javascript_enabled_params)
+          expect(claim).to be_valid
+          expect(claim.errors[:base]).to be_empty
+        end
+      end
+
+
+      context('with javascript disabled') do
+        let(:javascript_disabled_params) do
+          claim_post_data['claim']
+        end
+
+        it 'should not validate 0 num defendants' do
+          javascript_disabled_params['num_defendants'] = 0
+          claim = Claim.new(javascript_disabled_params)
+          expect(claim).not_to be_valid
+          expect(claim.errors[:base]).to eq [["claim_num_defendants_error", "Please enter a valid number of defendants between 1 and 4"]]
+        end
+
+        it 'should not be valid if num_defendants > 4' do
+          javascript_disabled_params['num_defendants'] = 5
+          claim = Claim.new(javascript_disabled_params)
+          expect(claim).not_to be_valid
+          expect(claim.errors[:base]).to eq [["claim_num_defendants_error", "Please enter a valid number of defendants between 1 and 4"]]
+        end
+
+        it 'should be valid if num_defendants is 1' do
+          javascript_disabled_params['num_defendants'] = 1
+          javascript_disabled_params.delete('defendant_2')
+          claim = Claim.new(javascript_disabled_params)
+          expect(claim).to be_valid
+          expect(claim.errors[:base]).to be_empty
+        end
+
+        it 'should be valid if num_defendants is 20' do
+          javascript_disabled_params['num_defendants'] = 4
+          (3 .. 4).each do |i|
+            javascript_disabled_params["defendant_#{i}"] = javascript_disabled_params['defendant_2']
+          end
+          claim = Claim.new(javascript_disabled_params)
+          expect(claim).to be_valid
+          expect(claim.errors[:base]).to be_empty
+        end
+
+      end
+    end
+
 
   end
 end

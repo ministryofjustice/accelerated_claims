@@ -4,13 +4,15 @@ describe Defendant, :type => :model do
                   full_name: "John Major",
                   street: "Sesame Street\nLondon",
                   postcode: "SW1X 2PT",
-                  inhabits_property: 'No')
+                  defendant_num: 2,
+                  inhabits_property: 'no')
   end
 
   let(:property_inhabiting_defendant) do
     Defendant.new(title: "Mr",
                   full_name: "John Major",
-                  inhabits_property: 'Yes')
+                  defendant_num: 2,
+                  inhabits_property: 'yes')
   end
 
 
@@ -23,7 +25,7 @@ describe Defendant, :type => :model do
 
 
   context 'validate inhabits property' do
-    let(:invalid_defendant)  { Defendant.new(title: "Mr", full_name: "John Major", street: "Sesame Street\nLondon",  postcode: "SW1X 2PT") }
+    let(:invalid_defendant)  { Defendant.new(title: "Mr", full_name: "John Major", street: "Sesame Street\nLondon",  postcode: "SW1X 2PT", defendant_num: 2) }
 
     it 'should raise error if inhabits property not set' do
       expect(invalid_defendant).not_to be_valid
@@ -88,6 +90,25 @@ describe Defendant, :type => :model do
         property_inhabiting_defendant.title = nil
         expect(property_inhabiting_defendant).to_not be_valid
         expect(property_inhabiting_defendant.errors[:title]).to eq ["Enter defendant 2's title"]
+      end
+    end
+
+
+    context 'inhabit property_not_set' do
+
+      it 'should generate an error message for the inhabit proporty radio button' do
+        defendant.inhabits_property = nil
+        expect(defendant).not_to be_valid
+        expect(defendant.errors[:inhabits_property]). to eq ["Please select whether or not defendant 2 lives in the property"] 
+      end
+
+      it 'should not generate error messages for full name and postcode' do
+        defendant.inhabits_property = nil
+        defendant.street = nil
+        defendant.postcode = nil
+        expect(defendant).not_to be_valid
+        expect(defendant.errors[:street]).to eq []
+        expect(defendant.errors[:postcode]).to eq []
       end
     end
   end

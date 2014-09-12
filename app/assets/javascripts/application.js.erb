@@ -24,12 +24,12 @@
 //= require claimant_address
 //= require claimant_contact
 //= require claimant_module
+//= require defendant_module
 //= require deposit_module
 //= require notice_module
 //= require tenancy_module
 //= require date_digits
 //= require show_hide
-//= require multiple_persons
 //= require js_validate
 //= require scrolling
 //= require js_alt_text
@@ -66,3 +66,4 @@ $.fn.scrollStopped = function(callback) {
 };
 
 $('body').append("<div id='javascript_done'></div>");
+$('form#claimForm').append('<input type="hidden" id="javascript-enabled" name="claim[javascript_enabled]" value="Yes">')

@@ -70,14 +70,14 @@
     reference_number: {
       reference_number: nil
     },
-    defendant_one: {
+    defendant_1: {
       title: "Mr",
       full_name: "Jeevesthe Butler",
       inhabits_property: "No",
       street: "13 Market St, Milton",
       postcode: "RT13 2JD"
     },
-    defendant_two: {
+    defendant_2: {
       title: "Ms",
       full_name: "Donna Summer",
       inhabits_property: "Yes",
@@ -128,6 +128,132 @@
     },
     possession: {
       hearing: "Yes"
+    },
+    defendant_3: {
+      title: nil,
+      full_name: nil,
+      inhabits_property: nil,
+      street: nil,
+      postcode: nil
+    },
+    defendant_4: {
+      title: nil,
+      full_name: nil,
+      inhabits_property: nil,
+      street: nil,
+      postcode: nil
+    },
+    defendant_5: {
+      title: nil,
+      full_name: nil,
+      inhabits_property: nil,
+      street: nil,
+      postcode: nil
+    },
+    defendant_6: {
+      title: nil,
+      full_name: nil,
+      inhabits_property: nil,
+      street: nil,
+      postcode: nil
+    },
+    defendant_7: {
+      title: nil,
+      full_name: nil,
+      inhabits_property: nil,
+      street: nil,
+      postcode: nil
+    },
+    defendant_8: {
+      title: nil,
+      full_name: nil,
+      inhabits_property: nil,
+      street: nil,
+      postcode: nil
+    },
+    defendant_9: {
+      title: nil,
+      full_name: nil,
+      inhabits_property: nil,
+      street: nil,
+      postcode: nil
+    },
+    defendant_10: {
+      title: nil,
+      full_name: nil,
+      inhabits_property: nil,
+      street: nil,
+      postcode: nil
+    },
+    defendant_11: {
+      title: nil,
+      full_name: nil,
+      inhabits_property: nil,
+      street: nil,
+      postcode: nil
+    },
+    defendant_12: {
+      title: nil,
+      full_name: nil,
+      inhabits_property: nil,
+      street: nil,
+      postcode: nil
+    },
+    defendant_13: {
+      title: nil,
+      full_name: nil,
+      inhabits_property: nil,
+      street: nil,
+      postcode: nil
+    },
+    defendant_14: {
+      title: nil,
+      full_name: nil,
+      inhabits_property: nil,
+      street: nil,
+      postcode: nil
+    },
+    defendant_15: {
+      title: nil,
+      full_name: nil,
+      inhabits_property: nil,
+      street: nil,
+      postcode: nil
+    },
+    defendant_16: {
+      title: nil,
+      full_name: nil,
+      inhabits_property: nil,
+      street: nil,
+      postcode: nil
+    },
+    defendant_17: {
+      title: nil,
+      full_name: nil,
+      inhabits_property: nil,
+      street: nil,
+      postcode: nil
+    },
+    defendant_18: {
+      title: nil,
+      full_name: nil,
+      inhabits_property: nil,
+      street: nil,
+      postcode: nil
+    },
+    defendant_19: {
+      title: nil,
+      full_name: nil,
+      inhabits_property: nil,
+      street: nil,
+      postcode: nil
+    },
+    defendant_20: {
+      title: nil,
+      full_name: nil,
+      inhabits_property: nil,
+      street: nil,
+      postcode: nil
     }
   }
 }

@@ -1,6 +1,6 @@
 describe ClaimantCollection do
 
-  let(:cc)        { ClaimantCollection.new(claim_params) }
+  let(:cc)        { ClaimantCollection.new(test_claim_params) }
 
   describe '.new' do
     it 'should instantiate a collection with the correct number of claimants' do
@@ -9,7 +9,7 @@ describe ClaimantCollection do
     end
 
     it 'should fail if the number of claimants in the params is less than the number given in the initializer' do
-        params = claim_params
+        params = test_claim_params
         params[:num_claimants] = 4
         cc2 = ClaimantCollection.new(params)
         expect(cc2).not_to be_valid
@@ -28,7 +28,7 @@ describe ClaimantCollection do
     end
 
     it 'should insert claimant with validate absence = true if more than the num_claimants' do
-      params = claim_params
+      params = test_claim_params
       params['num_claimants'] = 2
       cc2 = ClaimantCollection.new(params)
       valid_claimant = cc2[1]
@@ -93,15 +93,9 @@ describe ClaimantCollection do
   end
 
 
-  describe 'model_hash' do
-    it 'should produce the hash with the correct number of claimants' do
-      expect(cc.model_hash).to eq({ 'claimant_1' => 'Claimant', 'claimant_2' => 'Claimant', 'claimant_3' => 'Claimant' })
-    end
-  end
-
   describe 'as_json' do
     it 'should produce a json representation of the contacts' do
-      expect(cc.as_json).to eq expected_json(cc)
+      expect(cc.as_json).to eq expected_claimant_collected_json(cc)
     end
   end
 
@@ -118,16 +112,72 @@ describe ClaimantCollection do
     end
   end
 
+
+  describe '.max_claimants' do
+    it 'should return the maximum number of claimants' do
+      expect(ClaimantCollection.max_claimants).to eq 4
+    end
+  end
+
+
+  describe '.participant_type' do
+    it 'should return claimant' do
+      expect(ClaimantCollection.participant_type).to eq 'claimant'
+    end
+  end
+
+
+  describe '#further_participants' do
+    it 'should return an emtpy array if empty collection' do
+      cc = ClaimantCollection.new( HashWithIndifferentAccess.new )
+      expect(cc.further_participants).to be_empty
+    end
+
+    it 'should return an empty array if only one claimant' do
+      params = test_claim_params
+      params.delete('claimant_2')
+      params.delete('claimant_3')
+      params['num_claimants'] = 1
+      cc2 = ClaimantCollection.new(params)
+      expect(cc2.size).to eq 1
+      expect(cc2.further_participants).to be_empty
+    end
+
+    it 'should return an array of just second claimant if two claimants' do
+      params = test_claim_params
+      params.delete('claimant_3')
+      params['num_claimants'] = 2
+      cc2 = ClaimantCollection.new(params)
+      expect(cc2.size).to eq 2
+      expect(cc2.further_participants).to be_empty
+    end
+
+    it 'should return an arry of claimant 3 if 3 claimants' do
+      expect(cc.further_participants).to eq [ cc[3] ]
+    end
+
+    it 'should return an array of claimants 3, 4 if 4 claimants' do
+      params = test_claim_params
+      params.merge!(test_claimant_4)
+      params['num_claimants'] = 4
+      cc2 = ClaimantCollection.new(params)
+      expect(cc2.size).to eq 4
+      expect(cc2.further_participants).to eq [ cc2[3], cc2[4] ]
+    end
+  end
+
+
+  
 end
 
 
-def expected_json(cc)
+def expected_claimant_collected_json(cc)
   {'claimant_1' => cc[1].as_json, 'claimant_2' => cc[2].as_json, 'claimant_3' => cc[3].as_json }.as_json
 end
 
 
 
-def claim_params
+def test_claim_params
   HashWithIndifferentAccess.new(
     { "num_claimants" => 3,
       "claimant_type" => 'individual',
@@ -154,5 +204,18 @@ def claim_params
       }
     }
   )
+end
+
+
+def test_claimant_4
+  {
+    "claimant_4" =>
+    {
+      "title" => "Mr",
+      "full_name" => "John Smith 4th",
+      "street" => "2 Brown St\nCwmbran",
+      "postcode" => "SW4W 4LU"
+    }
+  }
 end
 

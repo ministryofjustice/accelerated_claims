@@ -91,10 +91,10 @@ describe PDFDocument do
     describe "when given data with two defendants" do
       let(:json) { claim_formatted_data }
 
-      it "should produce 6 page PDF" do
+      it "should produce 5 page PDF" do
         pdf = @doc.fill
         pages = %x[pdftk #{pdf.path} dump_data | awk '/NumberOfPages/ {print $2}']
-        expect(pages.to_i).to eq 6
+        expect(pages.to_i).to eq 5
       end
     end
   end
