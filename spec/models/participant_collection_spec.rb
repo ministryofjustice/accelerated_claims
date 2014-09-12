@@ -1,7 +1,5 @@
 describe ClaimantCollection do
 
- 
-
   describe '.new' do
     it 'should raise an exception' do
       expect {

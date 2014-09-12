@@ -57,14 +57,12 @@ describe DefendantCollection do
         dc[0]
       }.to raise_error ArgumentError, "No such index: 0"
     end
-  
 
     it 'should return empty claimant if the index is higher than the number of claimants' do
       defendant = dc[4]
       expect(defendant.empty?).to be true
     end
   end
-
 
   describe '#[]=' do
 
@@ -88,7 +86,6 @@ describe DefendantCollection do
     end
   end
 
-
   describe 'as_json' do
     it 'should produce a json representation of the contacts' do
       expect(dc.as_json).to eq expected_json(dc)
@@ -111,8 +108,6 @@ describe DefendantCollection do
     end
   end
 
-
-
   describe '.max_defendants' do
     it 'should return the maximum number of defendants for js_enabled if not given a param' do
       expect(DefendantCollection.max_defendants).to eq 20
@@ -124,10 +119,9 @@ describe DefendantCollection do
 
     it 'should return the maximum number of defendants for js_disabled if given false' do
       expect(DefendantCollection.max_defendants(js_enabled: false)).to eq 4
-    end    
+    end
 
   end
-
 
   describe '#further_participants' do
     it 'should return an emtpy array if empty collection' do
@@ -146,7 +140,6 @@ describe DefendantCollection do
       expect(dc.further_participants).to be_empty
     end
 
-
     it 'should return an array of one defendant if two defendants in collection' do
       params = claim_params
       params.delete('defendant_3')
@@ -156,7 +149,6 @@ describe DefendantCollection do
       expect(dc.further_participants).to eq [ dc[2] ]
     end
 
-
     it 'should return an array of 5 defendants if 6 defendants in collection' do
       params = claim_params_for_six_defendants
       dc = DefendantCollection.new(params)
@@ -164,7 +156,6 @@ describe DefendantCollection do
       expect(dc.further_participants).to eq [ dc[2], dc[3], dc[4], dc[5], dc[6] ]
     end
   end
-
 
   context 'validation' do
 
@@ -191,21 +182,13 @@ describe DefendantCollection do
   end
 end
 
-
-
 def empty_defendant?(obj)
   obj.is_a?(Defendant) && obj.empty?
 end
 
-
-
 def expected_json(dc)
   {'defendant_1' => dc[1].as_json, 'defendant_2' => dc[2].as_json, 'defendant_3' => dc[3].as_json }.as_json
 end
-
-
-
-
 
 def claim_params
   HashWithIndifferentAccess.new(
@@ -234,7 +217,7 @@ def claim_params
         "street" => "666 Made-up Lane\nAnytown",
         "postcode" => "FX4W 9LU"
       },
-      "property" => 
+      "property" =>
       {
         "street" => "2 Toytown Road\nToytown",
         "postcode" => "FX8X 8XX"
@@ -242,7 +225,6 @@ def claim_params
     }
   )
 end
-
 
 def claim_params_for_six_defendants
   HashWithIndifferentAccess.new(
@@ -296,10 +278,7 @@ def claim_params_for_six_defendants
         "postcode" => "F66 6LU"
       },
 
-
-
-
-      "property" => 
+      "property" =>
       {
         "street" => "2 Toytown Road\nToytown",
         "postcode" => "FX8X 8XX"
@@ -307,6 +286,4 @@ def claim_params_for_six_defendants
     }
   )
 end
-
-
 
