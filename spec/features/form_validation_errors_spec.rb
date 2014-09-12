@@ -85,7 +85,7 @@ feature 'Filling in claim form' do
     choose('claim_notice_notice_served_no')
     expect(page).to have_content('You cannot continue with this claim')
     click_button 'Continue'
-    check_focus_after_click 'You must say whether or not you gave notice to the defendant', 'claim_notice_notice_served_yes'
+    check_focus_after_click 'You must have given 2 months notice to make an accelerated possession claim', 'claim_notice_notice_served_yes'
   end
 
   scenario "submitting form without notice checked, the hidden errors should not be shown", js: true do
