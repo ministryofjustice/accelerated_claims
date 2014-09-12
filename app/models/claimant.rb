@@ -110,8 +110,7 @@ class Claimant < BaseClass
 
   def validate_address_same_as_first_claimant
     if address_same_as_first_claimant.blank? && !first_claimant?
-      self.address_same_as_first_claimant = 'No'
-      # errors.add(:address_same_as_first_claimant, 'You must specify whether the address is the same as the first claimant')
+      errors.add(:address_same_as_first_claimant, 'You must specify whether the address is the same as the first claimant')
     end
   end
 

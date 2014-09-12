@@ -21,8 +21,6 @@ describe Claimant, :type => :model do
     )
   end
 
-  let(:claimant) { Claimant.new(claimant_params) }
-
   context 'equality comparison' do
     it 'should be true if two new objects are compared with one another' do
       c1 = Claimant.new
@@ -100,6 +98,8 @@ describe Claimant, :type => :model do
   end
 
   context 'claimant_type individual and is not first claimant' do
+
+    let(:claimant) { Claimant.new(claimant_params) }
 
     context 'address_same_as_first_claimant nil' do
       let(:claimant_params) { individual_params.merge(claimant_num: 2, address_same_as_first_claimant: nil) }

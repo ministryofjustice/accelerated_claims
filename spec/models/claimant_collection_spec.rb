@@ -171,20 +171,17 @@ describe ClaimantCollection do
     end
   end
 
-
   describe '.max_claimants' do
     it 'should return the maximum number of claimants' do
       expect(ClaimantCollection.max_claimants).to eq 4
     end
   end
 
-
   describe '.participant_type' do
     it 'should return claimant' do
       expect(ClaimantCollection.participant_type).to eq 'claimant'
     end
   end
-
 
   describe '#further_participants' do
     it 'should return an emtpy array if empty collection' do
@@ -212,7 +209,7 @@ describe ClaimantCollection do
     end
 
     it 'should return an arry of claimant 3 if 3 claimants' do
-      expect(cc.further_participants).to eq [ cc[3] ]
+      expect(claimants.further_participants).to eq [ claimants[3] ]
     end
 
     it 'should return an array of claimants 3, 4 if 4 claimants' do
@@ -225,16 +222,11 @@ describe ClaimantCollection do
     end
   end
 
-
-
 end
-
 
 def expected_claimant_collected_json(claimants)
   {'claimant_1' => claimants[1].as_json, 'claimant_2' => claimants[2].as_json, 'claimant_3' => claimants[3].as_json }.as_json
 end
-
-
 
 def test_claimant_4
   {
