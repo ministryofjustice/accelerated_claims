@@ -54,16 +54,13 @@
 
       .row
         Your tenants are known as <b>defendants</b> in this case.
+        %p.nonjs If there are more than 4 defendants in this case, then you will need to change your browser settings to ‘enable javascript’.
+
 
       = claim_form.text_field_row :num_defendants,
           input_class: 'narrow',
           data: { 'virtual-pageview' => '/accelerated/defendants-section' },
-          label: 'How many defendants are there?'
-
-      .row.js-only
-        The number of defendants must be between 1 and 20. 
-      .row.nonjs
-        The number of defendants must be between 1 and 4. 
+          label: 'How many defendants are there?<p class="hint">All defendants should be named on the tenancy agreement</p>'
 
       .defendants
         - (1 .. DefendantCollection::max_defendants(js_enabled: true)).each do |i|
