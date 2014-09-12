@@ -16,25 +16,20 @@ class ClaimantCollection < ParticipantCollection
     MAX_CLAIMANTS
   end
 
-
   def self.participant_type
     'claimant'
   end
-
 
   def num_claimants
     @num_participants
   end
 
-
-
-
   private
 
   def populate_claimants(claim_params)
-    ( 1 .. ClaimantCollection.max_claimants ).each do |i|
+    ( 1 .. ClaimantCollection.max_claimants ).each do |index|
       if claim_params.nil? || claim_params.empty?
-        @participants[i] = Claimant.new( 'claimant_num' => index )
+        @participants[index] = Claimant.new( 'claimant_num' => index )
       else
         populate_claimant(index, claim_params)
       end
