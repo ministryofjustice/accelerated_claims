@@ -1,9 +1,8 @@
 root = exports ? this
 
-DefendantModule = 
+DefendantModule =
   hideDefendantSections: ->
     $('.sub-panel.defendant').hide()
-
 
   showDefendants: (numberOfDefendants) ->
     DefendantModule.hideDefendantSections()
@@ -18,26 +17,18 @@ DefendantModule =
           id = "#defendant_#{i}_subpanel"
           $(id).show()
 
-
   bindToNumberDefendantsInput: ->
     $('#claim_num_defendants').on 'keyup', ->
       string = $(this).val()
       DefendantModule.showDefendants(string)
-
-
 
   setup: ->
     DefendantModule.hideDefendantSections()
     DefendantModule.bindToNumberDefendantsInput()
     DefendantModule.showDefendants($('#claim_num_defendants').val())
 
-
-
-
 root.DefendantModule = DefendantModule
 
 jQuery ->
   DefendantModule.setup()
-
-
 

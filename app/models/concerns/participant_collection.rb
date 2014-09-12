@@ -1,13 +1,9 @@
-
+#
 # This is the superclass for ClaimantCollection and DefendantCollection
 # it is an abstract class and cannot be instantiated.
 # The subclasses must implement #participant_type()
 #
-
-
 class ParticipantCollection < BaseClass
-
-  
 
   def initialize(claim_params)
     raise "Cannot instantiate Participant Collection: instantiate a subclass instead" if self.class == ParticipantCollection
@@ -16,9 +12,7 @@ class ParticipantCollection < BaseClass
     @is_valid = nil
   end
 
-
-
-  # returns the specified claimant (note: index starts at 1 )         
+  # returns the specified participant (note: index starts at 1 )
   def [](index)
     participants = @participants[index]
     raise ArgumentError.new "No such index: #{index}" if index == 0
@@ -35,8 +29,7 @@ class ParticipantCollection < BaseClass
     @num_participants
   end
 
-
-  # returns an array of claimants 2 to 4
+  # returns an array of participants 2 to 4
   def further_participants
     arr = []
     (@first_extra_participant .. @max_participants).each do |i|
@@ -45,14 +38,10 @@ class ParticipantCollection < BaseClass
     arr
   end
 
-
-
-
   # returns the participant type as defined in the sub-class
   def participant_type
     self.class.participant_type
   end
-
 
   def as_json
     hash = {}
@@ -62,10 +51,9 @@ class ParticipantCollection < BaseClass
     hash.as_json
   end
 
-
   def valid?
     if @is_valid.nil?
-      @participants.each do |index, participant| 
+      @participants.each do |index, participant|
         unless participant.valid?
           participant.errors.each do |field, msg|
             @errors.add("#{participant_type}_#{index}_#{field}".to_sym, msg)
@@ -76,8 +64,5 @@ class ParticipantCollection < BaseClass
     end
     @is_valid
   end
- 
 
-
-  
 end
