@@ -8,18 +8,15 @@ describe ContinuationSheet do
     double Defendant
   }
 
-
   let(:claimant_3) {
-    params = HashWithIndifferentAccess.new(title: 'Mr', full_name: "John Doe", street: "Streety Street\nLondon", postcode: "SW1H9AJ",  claimant_type: 'individual', claimant_num: 3) 
+    params = HashWithIndifferentAccess.new(title: 'Mr', full_name: "John Doe", street: "Streety Street\nLondon", postcode: "SW1H9AJ",  claimant_type: 'individual', claimant_num: 3)
     Claimant.new(params)
   }
 
   let(:claimant_4) {
-    params = HashWithIndifferentAccess.new(title: 'Mrs', full_name: "Jane Doe", street: "Flat 5\nMansion House\nStreety Street\nKensington\nLondon", postcode: "SW1H9AJ",  claimant_type: 'individual', claimant_num: 4) 
+    params = HashWithIndifferentAccess.new(title: 'Mrs', full_name: "Jane Doe", street: "Flat 5\nMansion House\nStreety Street\nKensington\nLondon", postcode: "SW1H9AJ",  claimant_type: 'individual', claimant_num: 4)
     Claimant.new(params)
   }
-
-
 
   describe '#empty?' do
     it 'should respond true if instantiated with two empty arrays' do
@@ -39,11 +36,9 @@ describe ContinuationSheet do
 
     it 'should repsond false if both arrays are not empty' do
        cs = ContinuationSheet.new([mock_claimant], [ mock_defendant] )
-      expect(cs.empty?).to be false     
+      expect(cs.empty?).to be false
     end
   end
-
-
 
   describe '#any_defendants?' do
     it 'should return true if there are any defendants' do
@@ -57,7 +52,6 @@ describe ContinuationSheet do
     end
   end
 
-
   describe '#any_claimants?' do
     it 'should return true if there are any defendants' do
       cs = ContinuationSheet.new([mock_claimant], Array.new )
@@ -69,7 +63,6 @@ describe ContinuationSheet do
       expect(cs.any_claimants?).to be false
     end
   end
-
 
   describe '#as_json' do
     context 'claimants_only' do
@@ -98,9 +91,6 @@ describe ContinuationSheet do
 
     end
   end
-
-
-
 
   describe 'format_pages' do
     context "one panel" do
@@ -132,7 +122,7 @@ describe ContinuationSheet do
         cs.instance_variable_set(:@num_panels, 5)
         cs.send(:format_pages)
         actual = cs.instance_variable_get(:@pages)
-        expect(actual).to eq [ 
+        expect(actual).to eq [
           {'left' => 'panel 1', 'right' => 'panel 2' },
           {'left' => 'panel 3', 'right' => 'panel 4' },
           {'left' => 'panel 5', 'right' => '' }
@@ -147,24 +137,20 @@ end
 def defendants_array(number_of_defendants)
   array = []
   (2 .. number_of_defendants).each do |i|
-    array << Defendant.new( { "title" => "Mrs", 
-                              "full_name" => "Defendant Number #{i}", 
-                              "street" => "#{i} Downing Street\nLondon", 
-                              "postcode" => "SW#{i} #{i}LU", 
-                              "defendant_num" => i} 
-                          ) 
+    array << Defendant.new( { "title" => "Mrs",
+                              "full_name" => "Defendant Number #{i}",
+                              "street" => "#{i} Downing Street\nLondon",
+                              "postcode" => "SW#{i} #{i}LU",
+                              "defendant_num" => i}
+                          )
   end
   array
 end
-
-
-
 
 def claimant_3_expected_results
   result =<<EOS
 Additional Claimants
 ====================
-
 
 Claimant 3:
     Mr John Doe
@@ -172,11 +158,8 @@ Claimant 3:
     London
     SW1H 9AJ
 
-
 EOS
 end
-
-
 
 def claimants_3_and_4_expected_results
 
@@ -190,17 +173,14 @@ Claimant 4:
     London
     SW1H 9AJ
 
-
 EOS
   "#{claimant_3_expected_results}#{claimant_4}"
 end
-
 
 def claimants_3_and_4_and_defendants_2_expected_results
   defendant_2 =<<EOS
 Additional Defendants
 =====================
-
 
 Defendant 2:
     Mrs Defendant Number 2
@@ -208,11 +188,9 @@ Defendant 2:
     London
     SW2 2LU
 
-
 EOS
   "#{claimants_3_and_4_expected_results}#{defendant_2}"
 end
-
 
 def claimants_3_and_4_and_defendants_2_and_3_expected_results
   defendant_3 =<<EOS
@@ -222,12 +200,7 @@ Defendant 3:
     London
     SW3 3LU
 
-
 EOS
   "#{claimants_3_and_4_and_defendants_2_expected_results}#{defendant_3}"
 end
-
-
-
-
 
