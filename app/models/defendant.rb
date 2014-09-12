@@ -59,7 +59,6 @@ class Defendant < BaseClass
     title.blank? && full_name.blank? && street.blank? && postcode.blank?
   end
 
-
   def as_json
     if present?
       postcode1, postcode2 = split_postcode
@@ -93,11 +92,9 @@ class Defendant < BaseClass
     end
   end
 
-
   def numbered_header
     "Defendant #{defendant_num}:\n"
   end
-
 
   def indented_details(spaces_to_indent)
     postcode1, postcode2 = split_postcode
@@ -108,8 +105,6 @@ class Defendant < BaseClass
     str += "#{indentation}#{postcode1} #{postcode2}\n"
     str
   end
-
-  
 
   private
 
@@ -145,3 +140,4 @@ class Defendant < BaseClass
   end
 
 end
+
