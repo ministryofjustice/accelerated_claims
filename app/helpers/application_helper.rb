@@ -27,4 +27,9 @@ module ApplicationHelper
     %Q[#{text}<span class="hint nonjs"> (Optional)</span>].html_safe
   end
 
+
+  def address_error_message
+    "The address cannot have more than 4 lines in order to fit in the box on the pre-printed form.  Please reformat the address so that it has 4 lines or less."
+  end
+
 end
