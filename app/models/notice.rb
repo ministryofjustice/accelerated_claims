@@ -1,10 +1,7 @@
 class Notice < BaseClass
 
   attr_accessor :notice_served
-  validates :notice_served, inclusion: {
-    in: ["Yes"],
-    message: "You must say whether or not you gave notice to the defendant",
-  }
+  validate :validate_notice_served
 
   attr_accessor :served_by_name
   validates :served_by_name, presence: { message: 'Enter the name of the person who gave the notice' }, length: { maximum: 40 }
@@ -29,6 +26,18 @@ class Notice < BaseClass
     json = split_date :date_served, json
     json = split_date :expiry_date, json
     json
+  end
+
+  private
+
+  def validate_notice_served
+    case notice_served
+    when "Yes" # ok
+    when "No"
+      errors.add(:notice_served, "You must have given 2 months notice to make an accelerated possession claim")
+    else
+      errors.add(:notice_served, "You must say whether or not you gave notice to the defendant")
+    end
   end
 
   def expiry_date_must_be_after_served_date

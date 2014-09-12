@@ -57,8 +57,13 @@ moj.Modules.sessionTimeout = (function() {
 
   showPopup = function() {
     var minutesToEnd = (endSessionTime.getTime() - new Date().getTime()) / (60 * 1000);
-    moj.Modules.sessionModal.showModal( function() { refreshSession(); },
-      sessionMinutes, minutesToEnd );
+
+    if( minutesToEnd > 0) {
+      moj.Modules.sessionModal.showModal( function() { refreshSession(); },
+        sessionMinutes, minutesToEnd );
+    } else {
+      endSession();
+    }
   };
 
   refreshSession = function() {
@@ -85,6 +90,7 @@ moj.Modules.sessionTimeout = (function() {
         moj.log( jqXHR );
         moj.log( textStatus );
         moj.log( errorThrown );
+        document.location.href = basePath + '/expired';
       }
     } );
   };

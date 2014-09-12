@@ -106,4 +106,18 @@ describe Notice, :type => :model do
 
   end
 
+  context "notice validation" do
+    it "should validate that notice served is picked" do
+      notice.notice_served = nil
+      expect(notice).not_to be_valid
+      expect(notice.errors["notice_served"]).to eq(["You must say whether or not you gave notice to the defendant"])
+    end
+
+    it "should validate that notice served cannot be No" do
+      notice.notice_served = "No"
+      expect(notice).not_to be_valid
+      expect(notice.errors["notice_served"]).to eq(["You must have given 2 months notice to make an accelerated possession claim"])
+    end
+  end
+
 end
