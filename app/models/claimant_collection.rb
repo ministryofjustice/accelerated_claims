@@ -12,24 +12,17 @@ class ClaimantCollection < ParticipantCollection
     @first_extra_participant = 3
   end
 
-
   def self.max_claimants
     MAX_CLAIMANTS
   end
-
 
   def self.participant_type
     'claimant'
   end
 
-
   def num_claimants
     @num_participants
   end
-
-
-  
-
 
   private
 
@@ -41,19 +34,19 @@ class ClaimantCollection < ParticipantCollection
     end
   end
 
-
   def populate_claimant(index, claim_params)
     claimant_params = claim_params["claimant_#{index}"]
     claimant_params = ActiveSupport::HashWithIndifferentAccess.new if claimant_params.nil?
     claimant_params['claimant_type'] = @claimant_type
     claimant_params['claimant_num'] = index
     if index > @num_participants
-      claimant_params['validate_absence'] = true 
+      claimant_params['validate_absence'] = true
       claimant_params['validate_presence'] = false
     else
-      claimant_params['validate_presence'] = true 
+      claimant_params['validate_presence'] = true
     end
     @participants[index] = Claimant.new(claimant_params)
   end
 
 end
+

@@ -11,10 +11,7 @@ class Claim < BaseClass
                 :claimant_type,
                 :num_defendants
 
-
   @@valid_claimant_types    = %w{ organization individual }
-
-
 
   def initialize(claim_params={})
     @javascript_enabled = claim_params.key?('javascript_enabled')
@@ -31,11 +28,9 @@ class Claim < BaseClass
     @errors = ActiveModel::Errors.new(self)
   end
 
-
   def javascript_enabled?
     @javascript_enabled
   end
-
 
   def method_missing(symbol, *args)
     case symbol
@@ -83,7 +78,7 @@ class Claim < BaseClass
         json_out["#{attribute}_#{key}"] = value
       end
     end
-    
+
     add_fee_and_costs json_out
     tenancy_agreement_status json_out
     json_out
@@ -95,7 +90,6 @@ class Claim < BaseClass
     validity = false unless claimant_type_valid?
     validity = false unless num_claimants_valid?
     validity = false unless num_defendants_valid?
-
 
     attributes_for_submodels.each do |instance_var, model|
       result = transfer_errors_from_submodel_to_base(instance_var, model, collection: false)
@@ -111,7 +105,6 @@ class Claim < BaseClass
   end
 
   private
-
 
   # if the perform validation fails - then we need to return false tos that the errors get transfereed
 
@@ -131,10 +124,9 @@ class Claim < BaseClass
         result = false
       end
     end
-    
+
     result
   end
-
 
   # Calls the method defined for this instance_var to determine whether the claim object is in a state where it is worth
   # validating the instance variable.
@@ -142,7 +134,6 @@ class Claim < BaseClass
     method = validation_dependencies_for_submodel_collections[instance_var]
     send(method)
   end
-
 
   def claimant_type_valid?
     if @claimant_type_valid_result.nil?
@@ -168,7 +159,7 @@ class Claim < BaseClass
         if @num_claimants.nil? || @num_claimants == 0
           @errors[:base] << ['claim_claimant_number_of_claimants_error', 'Please say how many claimants there are']
           @num_claimants_valid_result = false
-        elsif @num_claimants > ClaimantCollection.max_claimants 
+        elsif @num_claimants > ClaimantCollection.max_claimants
           @errors[:base] << ['claim_claimant_number_of_claimants_error', 'If there are more than 4 claimants in this case, you’ll need to complete your accelerated possession claim on the N5b form']
           @num_claimants_valid_result = false
         end
@@ -176,7 +167,6 @@ class Claim < BaseClass
     end
     @num_claimants_valid_result
   end
-
 
   def num_defendants_valid?
     if @num_defendants_valid_result.nil?
@@ -193,7 +183,6 @@ class Claim < BaseClass
     end
     @num_defendants_valid_result
   end
-
 
   def add_fee_and_costs hash
     if hash["claimant_contact_legal_costs"].blank?
@@ -232,37 +221,31 @@ class Claim < BaseClass
     %w(Fee Property Notice License Deposit Possession Order Tenancy ClaimantContact LegalCost ReferenceNumber)
   end
 
- 
   def attributes_for_submodel_collections
-    { 
+    {
       'claimants'  => 'ClaimantCollection',
-      'defendants' => 'DefendantCollection' 
+      'defendants' => 'DefendantCollection'
     }
   end
 
-
   def validation_dependencies_for_submodel_collections
-    { 
+    {
       'claimants'   => :validate_claimants?,
       'defendants'  => :validate_defendants?
     }
   end
 
-
   def validate_claimants?
     claimant_type_valid? && num_claimants_valid?
   end
-
 
   def validate_defendants?
     num_defendants_valid?
   end
 
-
   def attributes_for_submodels_and_collections
     attributes_for_submodels.merge attributes_for_submodel_collections
   end
-
 
   def attributes_for_submodels
     attributes = {}
@@ -304,3 +287,4 @@ class Claim < BaseClass
   end
 
 end
+

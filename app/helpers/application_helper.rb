@@ -7,7 +7,7 @@ module ApplicationHelper
       'read-statements'
     when /claim_tenancy_assured_shorthold_tenancy_notice_served_(by|date)_error/
       'read-statements'
-      
+
     # renames number fields to match input field name
     when /claim_claimant_number_of_claimants_error/
       'claim_num_claimants_error'
@@ -18,7 +18,6 @@ module ApplicationHelper
     end
   end
 
-
   def add_optional text
     %Q[#{text}<span class="hint"> (Optional)</span>].html_safe
   end
@@ -27,7 +26,6 @@ module ApplicationHelper
     %Q[#{text}<span class="hint nonjs"> (Optional)</span>].html_safe
   end
 
-
   def defendant_class_helper(defendant_id)
     if defendant_id > DefendantCollection.max_defendants(js_enabled: false)
       "defendant js-only"
@@ -35,7 +33,6 @@ module ApplicationHelper
       'defendant'
     end
   end
-
 
   def defendant_header defendant_id
     if defendant_id == 1
@@ -54,3 +51,4 @@ module ApplicationHelper
   end
 
 end
+
