@@ -32,7 +32,7 @@
         class: 'hide js-claimanttype individual',
         input_class: 'narrow',
         data: { depend: 'num-claimants' },
-        label: 'How many claimants are there? <br/><span class="hint">You need a minimum of 1 claimant and can have up to 4 claimants</span>'
+        label: 'How many claimants are there? <br/><span>All claimants should be named on the tenancy agreement</span>'
 
       .row.js-only
         %span.error.hide#num-claimants-error-message
@@ -61,6 +61,11 @@
           input_class: 'narrow',
           data: { 'virtual-pageview' => '/accelerated/defendants-section' },
           label: 'How many defendants are there?<p class="hint">All defendants should be named on the tenancy agreement</p>'
+
+      .row.js-only
+        %span.error.hide#num-defendants-error-message
+          The number of defendants must be between 1 and 20. If you have more than 20 defendants, you’ll need to complete your
+          accelerated possession claim on the <a href="http://hmctsformfinder.justice.gov.uk/HMCTS/GetForm.do?court_forms_id=618">N5b form</a>
 
       .defendants
         - (1 .. DefendantCollection::max_defendants(js_enabled: true)).each do |i|
