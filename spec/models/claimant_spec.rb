@@ -21,6 +21,8 @@ describe Claimant, :type => :model do
     )
   end
 
+  let(:claimant) { Claimant.new(claimant_params) }
+
   context 'equality comparison' do
     it 'should be true if two new objects are compared with one another' do
       c1 = Claimant.new
@@ -38,13 +40,6 @@ describe Claimant, :type => :model do
       c1 = Claimant.new( individual_params )
       c2 = Claimant.new( individual_params.merge("title" => "XXX") )
       expect(c1).not_to eq c2
-    end
-  end
-
-  describe '#indented_details' do
-    it 'should return a string containting name and address with each line indented by the required number of spaces'  do
-      expected = "    Mr John Doe\n    Streety Street\n    London\n    SW1H 9AJ\n"
-      expect(claimant.indented_details(4)).to eq expected
     end
   end
 
@@ -93,22 +88,32 @@ describe Claimant, :type => :model do
     context 'address_same_as_first_claimant nil' do
       let(:claimant_params) { individual_params.merge(claimant_num: 1, address_same_as_first_claimant: nil) }
       subject { claimant }
+
       it { is_expected.to be_valid }
+      its(:numbered_header) { is_expected.to eq "Claimant 1:\n" }
+
+      describe '#indented_details' do
+        it 'should return a string containing name and address with each line indented by the required number of spaces'  do
+          expected = "    Mr John Doe\n    Streety Street\n    London\n    SW1H 9AJ\n"
+          expect(claimant.indented_details(4)).to eq expected
+        end
+      end
+
     end
   end
 
   context 'claimant_type individual and is not first claimant' do
 
-    let(:claimant) { Claimant.new(claimant_params) }
-
     context 'address_same_as_first_claimant nil' do
       let(:claimant_params) { individual_params.merge(claimant_num: 2, address_same_as_first_claimant: nil) }
+
       subject { claimant }
       it { is_expected.to_not be_valid }
     end
 
     context 'address_same_as_first_claimant true' do
       let(:claimant_params) { individual_params.merge(claimant_num: 2, address_same_as_first_claimant: 'Yes') }
+
       subject { claimant }
       it { is_expected.to be_valid }
     end
@@ -116,12 +121,12 @@ describe Claimant, :type => :model do
     context 'address_same_as_first_claimant false' do
       let(:claimant_params) { individual_params.merge(claimant_num: 2, address_same_as_first_claimant: 'No') }
 
+      subject { claimant }
+      it { is_expected.to be_valid }
+      its(:numbered_header) { is_expected.to eq "Claimant 2:\n" }
+
       it 'should set the validate_presence attribute to true if missing' do
         expect(claimant.validate_presence).to be true
-      end
-
-      it 'should be valid if all attributes are set' do
-        expect(claimant).to be_valid
       end
 
       it 'should not be valid if any of the attributes is missing' do
@@ -163,13 +168,6 @@ describe Claimant, :type => :model do
           expect(claimant.errors[:street]).to eq ["is too long (maximum is 70 characters)"]
         end
       end
-    end
-  end
-
-  describe '#numbered_claimant_header' do
-    it 'should print claimant_x where x is the number of hte claimant' do
-      claimant = Claimant.new(HashWithIndifferentAccess.new(title: 'Mr', full_name: "John Doe", street: "Streety Street\nLondon", postcode: "SW1H9AJ", claimant_type: 'individual', claimant_num: 3))
-      expect(claimant.numbered_header).to eq "Claimant 3:\n"
     end
   end
 
