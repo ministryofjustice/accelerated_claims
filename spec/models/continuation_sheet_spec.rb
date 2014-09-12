@@ -152,11 +152,11 @@ def claimant_3_expected_results
 Additional Claimants
 ====================
 
-Claimant 3:
+\nClaimant 3:
     Mr John Doe
     Streety Street
     London
-    SW1H 9AJ
+    SW1H 9AJ\n
 
 EOS
 end
@@ -171,7 +171,7 @@ Claimant 4:
     Streety Street
     Kensington
     London
-    SW1H 9AJ
+    SW1H 9AJ\n
 
 EOS
   "#{claimant_3_expected_results}#{claimant_4}"
@@ -182,7 +182,7 @@ def claimants_3_and_4_and_defendants_2_expected_results
 Additional Defendants
 =====================
 
-Defendant 2:
+\nDefendant 2:
     Mrs Defendant Number 2
     2 Downing Street
     London
@@ -194,11 +194,11 @@ end
 
 def claimants_3_and_4_and_defendants_2_and_3_expected_results
   defendant_3 =<<EOS
-Defendant 3:
+\nDefendant 3:
     Mrs Defendant Number 3
     3 Downing Street
     London
-    SW3 3LU
+    SW3 3LU\n
 
 EOS
   "#{claimants_3_and_4_and_defendants_2_expected_results}#{defendant_3}"
