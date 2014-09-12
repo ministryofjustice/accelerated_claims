@@ -63,7 +63,7 @@ describe Claim, :type => :model do
     let(:data) { claim_post_data['claim'] }
 
     it "creates a valid claim" do
-      expect(claim).to be_valid
+      expect(claim).to be_valid, claim.errors.full_messages
     end
   end
 
@@ -312,7 +312,6 @@ describe Claim, :type => :model do
       end
     end
 
-
     context 'num_claimants is 1' do
       let(:data) do
         mydata = claim_post_data['claim']
@@ -358,7 +357,6 @@ describe Claim, :type => :model do
         expect(claim).to be_valid
       end
 
-
       it 'should not be valid when no details are present for claimant 2' do
         data.delete(:claimant_2)
         expect(claim).to_not be_valid
@@ -366,7 +364,8 @@ describe Claim, :type => :model do
           ["claim_claimant_2_title_error", "Enter claimant 2's title"],
           ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"],
           ["claim_claimant_2_street_error", "Enter claimant 2's full address"],
-          ["claim_claimant_2_postcode_error", "Enter claimant 2's postcode"]
+          ["claim_claimant_2_postcode_error", "Enter claimant 2's postcode"],
+          ["claim_claimant_2_address_same_as_first_claimant_error", "You must specify whether the address is the same as the first claimant"]
         ]
       end
 
@@ -377,11 +376,11 @@ describe Claim, :type => :model do
             ["claim_claimant_2_title_error", "Enter claimant 2's title"],
             ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"],
             ["claim_claimant_2_street_error", "Enter claimant 2's full address"],
-            ["claim_claimant_2_postcode_error", "Enter claimant 2's postcode"]
+            ["claim_claimant_2_postcode_error", "Enter claimant 2's postcode"],
+            ["claim_claimant_2_address_same_as_first_claimant_error", "You must specify whether the address is the same as the first claimant"]
           ]
       end
     end
-
 
     context 'claimant_type_validation' do
       let(:data) {

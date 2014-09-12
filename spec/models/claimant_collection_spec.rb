@@ -16,14 +16,16 @@ describe ClaimantCollection do
           "title" => "Mr",
           "full_name" => "John Smith 2nd",
           "street" => "2 Brown St\nCwmbran",
-          "postcode" => "SW1W 0LU"
+          "postcode" => "SW1W 0LU",
+          "address_same_as_first_claimant" => 'No'
         },
         "claimant_3" =>
         {
           "title" => "Mr",
           "full_name" => "John Smith 3rd",
           "street" => "2 Brown St\nCwmbran",
-          "postcode" => "SW1W 0LU"
+          "postcode" => "SW1W 0LU",
+          "address_same_as_first_claimant" => 'No'
         }
       }
     )
@@ -56,7 +58,8 @@ describe ClaimantCollection do
               "Claimant 4 title Enter claimant 4's title",
               "Claimant 4 full name Enter claimant 4's full name",
               "Claimant 4 street Enter claimant 4's full address",
-              "Claimant 4 postcode Enter claimant 4's postcode"
+              "Claimant 4 postcode Enter claimant 4's postcode",
+              "Claimant 4 address same as first claimant You must specify whether the address is the same as the first claimant"
             ]
         expect(claimants.errors.full_messages).to eq expected_errors
       end
@@ -121,7 +124,6 @@ describe ClaimantCollection do
         claimants[0]
       }.to raise_error ArgumentError, "No such index: 0"
     end
-
 
     it 'should return empty claimant if the index is higher than the number of claimants' do
       claimant = claimants[4]

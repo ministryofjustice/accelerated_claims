@@ -10,12 +10,10 @@ class Claimant < BaseClass
   attr_accessor :full_name
   attr_accessor :organization_name
   attr_accessor :claimant_type
-  attr_accessor :first_claimant
   attr_accessor :address_same_as_first_claimant
 
-  # validate :address_same_as_first_claimant, presence: true, unless: :first_claimant
-
   validate  :validate_claimant_state
+
   validates :claimant_num, presence: { message: 'Claimant number not specified' }, allow_nil: false
   validates :title, length: { maximum: 8 }
   validates :full_name, length: { maximum: 40 }
@@ -115,7 +113,7 @@ class Claimant < BaseClass
   def validate_fields_are_present
     case @claimant_type
     when 'organization'
-      validate_organization_fields_are_present
+      validate_organisation_fields_are_present
     when 'individual'
       validate_individual_fields_are_present
     else
@@ -123,12 +121,20 @@ class Claimant < BaseClass
     end
   end
 
-  def validate_organization_fields_are_present
+  def validate_address_same_as_first_claimant
+    if address_same_as_first_claimant.blank? && !first_claimant?
+      errors.add(:address_same_as_first_claimant, 'You must specify whether the address is the same as the first claimant')
+    end
+  end
+
+  def validate_organisation_fields_are_present
     validate_are_present(:organization_name, :street, :postcode)
+    validate_address_same_as_first_claimant
   end
 
   def validate_individual_fields_are_present
     validate_are_present(:title, :full_name, :street, :postcode)
+    validate_address_same_as_first_claimant
   end
 
   def validate_are_present(*fields)
