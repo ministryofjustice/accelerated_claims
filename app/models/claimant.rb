@@ -1,6 +1,5 @@
 class Claimant < BaseClass
 
-
   include Address
   include ActiveModel::Validations
   include Comparable
@@ -13,12 +12,10 @@ class Claimant < BaseClass
   attr_accessor :organization_name
   attr_accessor :claimant_type
 
-
   validate :validate_claimant_state
   validates :claimant_num, presence: { message: 'Claimant number not specified' }, allow_nil: false
   validates :title, length: { maximum: 8 }
   validates :full_name, length: { maximum: 40 }
-
 
   def initialize(params = {})
     super
@@ -28,7 +25,6 @@ class Claimant < BaseClass
     @num_claimants = @num_claimants.nil? ? 1 : @num_claimants.to_i
     @claimant_type = params['claimant_type']
   end
-
 
   def ==(other)
     return false if instance_variables.size != other.instance_variables.size
@@ -41,7 +37,6 @@ class Claimant < BaseClass
     title.blank? && full_name.blank? && organization_name.blank? && street.blank? && postcode.blank?
   end
 
-
   # main validation for claimant state
   def validate_claimant_state
     if validate_absence?
@@ -51,8 +46,6 @@ class Claimant < BaseClass
     end
   end
 
-
-
   def validate_absence?
     validate_absence == true
   end
@@ -60,7 +53,6 @@ class Claimant < BaseClass
   def validate_presence?
     validate_presence == true
   end
-
 
   def as_json
     postcode1, postcode2 = split_postcode
@@ -72,28 +64,13 @@ class Claimant < BaseClass
     }
   end
 
-
   def subject_description
     "claimant #{@claimant_num}"
   end
 
-
-  def indented_details(spaces_to_indent)
-    postcode1, postcode2 = split_postcode
-    indentation = ' ' * spaces_to_indent
-    str  = "#{indentation}#{title} #{full_name}\n"
-    address_lines = street.split("\n")
-    address_lines.each { |al| str += "#{indentation}#{al}\n" }
-    str += "#{indentation}#{postcode1} #{postcode2}\n"
-    str
-  end
-
-
   def numbered_header
     "Claimant #{claimant_num}:\n"
   end
-
-
 
   private
 
@@ -116,7 +93,6 @@ class Claimant < BaseClass
     end
   end
 
-
   def validate_fields_are_present
     case @claimant_type
     when 'organization'
@@ -128,16 +104,13 @@ class Claimant < BaseClass
     end
   end
 
-
   def validate_organization_fields_are_present
     validate_are_present(:organization_name, :street, :postcode)
   end
 
-
   def validate_individual_fields_are_present
     validate_are_present(:title, :full_name, :street, :postcode)
   end
-
 
   def validate_are_present(*fields)
     fields.each do |field|
@@ -145,5 +118,5 @@ class Claimant < BaseClass
     end
   end
 
-
 end
+
