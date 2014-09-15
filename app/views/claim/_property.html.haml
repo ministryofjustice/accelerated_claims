@@ -12,7 +12,5 @@
     - room_hint_nonjs = '<div class="hint nonjs" id="room_number-non-js">If "Room(s) in a property" was selected above, include the room number</div>'
     - street_label = %Q|Full Address #{room_hint_js} #{room_hint_nonjs}|
     = form.text_area_row  :street,   label: street_label, class: 'street'
-    .row.js-only
-      %span.error.hide#claim_property_street-error-message
-        = address_error_message
+    = address_error_message("property")
     = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'
