@@ -16,4 +16,5 @@
       .row.nonjs
         Defendant’s address if they’re <strong>not</strong> living in the property
       = form.text_area_row  :street,   label: 'Full address', class: 'rel street'
+      = address_error_message("defendant_#{defendant_id}")
       = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'
