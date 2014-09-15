@@ -8,11 +8,33 @@
 describe 'AddressModule', ->
 
 
+  beforeEach ->
+    html =  '''
+      <div class="row street">
+        <label for="claim_property_street">Full Address
+          <div class="hint js-only" style="display: none;" id="room_number">Include the room number</div>
+        </label>
+        <textarea id="claim_property_street" maxlength="70" name="claim[property][street]"></textarea>
+      </div>
+      <div class="row street">
+        <label for="claim_claimant_1_street">Full Address</label>
+        <textarea id="claim_claimant_1_street" maxlength="70" name="claim[claimant][street]"></textarea>
+      </div>
+    '''
+    $(document.body).append($(html))
+  
+
   describe 'setup', ->
     it 'should call bindToAddressBoxes', ->
       spyOn window.AddressModule, 'bindToAddressBoxes'
       window.AddressModule.setup()
       expect(window.AddressModule.bindToAddressBoxes).toHaveBeenCalled()
+
+    it 'should call checkNewlines once for each address box', ->
+      spyOn window.AddressModule, 'checkNewlines'
+      window.AddressModule.setup()
+      expect(window.AddressModule.checkNewlines.calls.count()).toBe 2
+
 
 
   describe 'lastLineIsntWhiteSpace', ->
