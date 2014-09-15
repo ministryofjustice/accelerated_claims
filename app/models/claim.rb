@@ -5,19 +5,17 @@ class Claim < BaseClass
   attr_accessor :errors,
                 :error_messages,
                 :claimants,
+                :defendants,
                 :form_state,
                 :num_claimants,
                 :claimant_type,
                 :num_defendants
 
-
-  @@valid_num_defendants    = [1, 2]
-
   @@valid_claimant_types    = %w{ organization individual }
 
-
-
   def initialize(claim_params={})
+    @javascript_enabled = claim_params.key?('javascript_enabled')
+
     @claimant_type  = claim_params.key?(:claimant_type) ? claim_params[:claimant_type] : nil
     if @claimant_type == 'organization'
       @num_claimants = 1
@@ -30,12 +28,20 @@ class Claim < BaseClass
     @errors = ActiveModel::Errors.new(self)
   end
 
+  def javascript_enabled?
+    @javascript_enabled
+  end
+
   def method_missing(symbol, *args)
     case symbol
     when /^claimant_(\d)\=$/
       claimants[$1.to_i] = args.first
     when /^claimant_(\d)$/
       claimants[$1.to_i]
+    when /^defendant_(\d{1,2})\=$/
+      defendants[$1.to_i] = args.first
+    when /^defendant_(\d{1,2})$/
+      defendants[$1.to_i]
     else
       super(symbol, *args)
     end
@@ -48,6 +54,13 @@ class Claim < BaseClass
       json_in[attribute] = submodel_data
     end
     json_in.merge!(@claimants.as_json)
+    json_in.merge!(@defendants.as_json)
+
+    cs = ContinuationSheet.new(claimants.further_participants, defendants.further_participants)
+    cs.generate
+    unless cs.empty?
+      json_in.merge!( cs.as_json )
+    end
 
     json_out = {}
     json_in.each do |attribute, submodel_data|
@@ -66,7 +79,6 @@ class Claim < BaseClass
       end
     end
 
-    populate_defendants_address_if_blank json_out
     add_fee_and_costs json_out
     tenancy_agreement_status json_out
     json_out
@@ -79,7 +91,6 @@ class Claim < BaseClass
     validity = false unless num_claimants_valid?
     validity = false unless num_defendants_valid?
 
-
     attributes_for_submodels.each do |instance_var, model|
       result = transfer_errors_from_submodel_to_base(instance_var, model, collection: false)
       validity = false if result == false
@@ -89,15 +100,15 @@ class Claim < BaseClass
       result = transfer_errors_from_submodel_to_base(instance_var, model, collection: true)
       validity = false if result == false
     end
-
     @error_messages = ErrorMessageSequencer.new.sequence(@errors)
     validity
   end
 
   private
 
+  # if the perform validation fails - then we need to return false tos that the errors get transfereed
+
   def transfer_errors_from_submodel_to_base(instance_var, model, options)
-    result = true
     unless send(instance_var).valid?
       if options[:collection] == false || perform_collection_validation_for?(instance_var)
         errors = send(instance_var).errors
@@ -113,9 +124,9 @@ class Claim < BaseClass
         result = false
       end
     end
+
     result
   end
-
 
   # Calls the method defined for this instance_var to determine whether the claim object is in a state where it is worth
   # validating the instance variable.
@@ -123,7 +134,6 @@ class Claim < BaseClass
     method = validation_dependencies_for_submodel_collections[instance_var]
     send(method)
   end
-
 
   def claimant_type_valid?
     if @claimant_type_valid_result.nil?
@@ -149,7 +159,7 @@ class Claim < BaseClass
         if @num_claimants.nil? || @num_claimants == 0
           @errors[:base] << ['claim_claimant_number_of_claimants_error', 'Please say how many claimants there are']
           @num_claimants_valid_result = false
-      elsif @num_claimants > ClaimantCollection::MAX_CLAIMANTS
+        elsif @num_claimants > ClaimantCollection.max_claimants
           @errors[:base] << ['claim_claimant_number_of_claimants_error', 'If there are more than 4 claimants in this case, you’ll need to complete your accelerated possession claim on the N5b form']
           @num_claimants_valid_result = false
         end
@@ -159,24 +169,19 @@ class Claim < BaseClass
   end
 
   def num_defendants_valid?
-    unless @@valid_num_defendants.include?(@num_defendants)
-      @errors[:base] << ['claim_defendant_number_of_defendants_error', 'Please say how many defendants there are']
-      return false
+    if @num_defendants_valid_result.nil?
+      max_num_defendants = DefendantCollection.max_defendants(js_enabled: @javascript_enabled)
+      if @num_defendants.blank?
+        @errors[:base] << ['claim_defendant_number_of_defendants_error', 'Please say how many defendants there are']
+        @num_defendants_valid_result = false
+      elsif @num_defendants < 1 || @num_defendants > max_num_defendants
+        @errors[:base] << ['claim_defendant_number_of_defendants_error', "Please enter a valid number of defendants between 1 and #{max_num_defendants}"]
+        @num_defendants_valid_result = false
+      else
+        @num_defendants_valid_result = true
+      end
     end
-    true
-  end
-
-  def populate_address_for number, defendant, hash
-    if defendant.present? && defendant.address_blank?
-      hash["defendant_#{number}_address"] << hash['property_address']
-      hash["defendant_#{number}_postcode1"] = hash['property_postcode1']
-      hash["defendant_#{number}_postcode2"] = hash['property_postcode2']
-    end
-  end
-
-  def populate_defendants_address_if_blank hash
-    populate_address_for("one", defendant_one, hash)
-    populate_address_for("two", defendant_two, hash)
+    @num_defendants_valid_result
   end
 
   def add_fee_and_costs hash
@@ -216,37 +221,35 @@ class Claim < BaseClass
     %w(Fee Property Notice License Deposit Possession Order Tenancy ClaimantContact LegalCost ReferenceNumber)
   end
 
-  def doubled_submodels
-    %w(Defendant)
-  end
-
   def attributes_for_submodel_collections
-    { 'claimants' => 'ClaimantCollection' }
+    {
+      'claimants'  => 'ClaimantCollection',
+      'defendants' => 'DefendantCollection'
+    }
   end
-
 
   def validation_dependencies_for_submodel_collections
-    { 'claimants' => :validate_claimants? }
+    {
+      'claimants'   => :validate_claimants?,
+      'defendants'  => :validate_defendants?
+    }
   end
-
 
   def validate_claimants?
     claimant_type_valid? && num_claimants_valid?
   end
 
+  def validate_defendants?
+    num_defendants_valid?
+  end
 
   def attributes_for_submodels_and_collections
     attributes_for_submodels.merge attributes_for_submodel_collections
   end
 
-
   def attributes_for_submodels
     attributes = {}
     singular_submodels.each { |model| attributes[model.underscore] = model }
-
-    doubled_submodels.each do |model|
-      %w(one two).each { |n| attributes["#{model.underscore}_#{n}"] = model }
-    end
     attributes
   end
 
@@ -280,24 +283,8 @@ class Claim < BaseClass
       raise NoMethodError.new(err.message + "attribute: #{attribute_name} #{claim_params.inspect}")
     end
 
-    case attribute_name
-      when /defendant_one/
-        if @num_defendants.nil?
-          params.merge!(validate_presence: false, validate_absence: false, num_defendants: nil, defendant_num: :defendant_one)
-        else
-          params.merge!(validate_presence: true, validate_absence: false, num_defendants: claim_params[:num_defendants], defendant_num: :defendant_one)
-        end
-      when /defendant_two/
-        if @num_defendants.nil?
-          params.merge!(validate_absence: false, validate_presence: false)
-        elsif @num_defendants == 1
-          params.merge!(validate_absence: true, validate_presence: false)
-        else
-          params.merge!(validate_presence: true, num_defendants: '2', defendant_num: :defendant_two)
-        end
-    end
-
     params
   end
 
 end
+

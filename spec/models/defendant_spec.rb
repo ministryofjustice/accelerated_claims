@@ -4,16 +4,16 @@ describe Defendant, :type => :model do
                   full_name: "John Major",
                   street: "Sesame Street\nLondon",
                   postcode: "SW1X 2PT",
-                  inhabits_property: 'No')
+                  defendant_num: 2,
+                  inhabits_property: 'no')
   end
 
   let(:property_inhabiting_defendant) do
     Defendant.new(title: "Mr",
                   full_name: "John Major",
-                  inhabits_property: 'Yes')
+                  defendant_num: 2,
+                  inhabits_property: 'yes')
   end
-
-
 
   describe "when given all valid values" do
     it "should be valid" do
@@ -21,9 +21,8 @@ describe Defendant, :type => :model do
     end
   end
 
-
   context 'validate inhabits property' do
-    let(:invalid_defendant)  { Defendant.new(title: "Mr", full_name: "John Major", street: "Sesame Street\nLondon",  postcode: "SW1X 2PT") }
+    let(:invalid_defendant)  { Defendant.new(title: "Mr", full_name: "John Major", street: "Sesame Street\nLondon",  postcode: "SW1X 2PT", defendant_num: 2) }
 
     it 'should raise error if inhabits property not set' do
       expect(invalid_defendant).not_to be_valid
@@ -36,7 +35,6 @@ describe Defendant, :type => :model do
       expect(invalid_defendant.errors[:inhabits_property]).to eq( [ 'Please select whether or not defendant 2 lives in the property' ] )
     end
   end
-
 
   context 'validate_presence not set' do
 
@@ -69,7 +67,6 @@ describe Defendant, :type => :model do
       end
     end
 
-
     context 'inhabit_property is yes' do
       it 'should be valid if all attributes except street and postcode are set ' do
         expect(property_inhabiting_defendant.validate_presence).to be true
@@ -90,13 +87,30 @@ describe Defendant, :type => :model do
         expect(property_inhabiting_defendant.errors[:title]).to eq ["Enter defendant 2's title"]
       end
     end
-  end
 
+    context 'inhabit property_not_set' do
+
+      it 'should generate an error message for the inhabit proporty radio button' do
+        defendant.inhabits_property = nil
+        expect(defendant).not_to be_valid
+        expect(defendant.errors[:inhabits_property]). to eq ["Please select whether or not defendant 2 lives in the property"]
+      end
+
+      it 'should not generate error messages for full name and postcode' do
+        defendant.inhabits_property = nil
+        defendant.street = nil
+        defendant.postcode = nil
+        expect(defendant).not_to be_valid
+        expect(defendant.errors[:street]).to eq []
+        expect(defendant.errors[:postcode]).to eq []
+      end
+    end
+  end
 
   context 'validate_presence set to true' do
 
     context 'property_address is no' do
-      
+
       before(:each) { defendant.validate_presence = true }
 
       it 'should set the validate_presence attribute to true if missing' do
@@ -127,7 +141,6 @@ describe Defendant, :type => :model do
       end
     end
 
-
     context 'property_address is yes' do
 
       before(:each) { property_inhabiting_defendant.validate_presence = true }
@@ -152,7 +165,6 @@ describe Defendant, :type => :model do
       end
     end
   end
-
 
   context 'validate_abscence set to true' do
     let(:nil_defendant)  { Defendant.new(:validate_presence => false, :validate_absence => true) }
@@ -186,14 +198,13 @@ describe Defendant, :type => :model do
 
   end
 
-
   context 'address validation' do
 
     it 'should not validate if postcode is incomplete' do
       defendant.postcode = 'SW10'
       expect(defendant).not_to be_valid
       expect(defendant.errors[:postcode]).to eq ["defendant 2's postcode is not a full postcode"]
-    end    
+    end
 
     it 'should not validate if postcode is invalid' do
       defendant.postcode = 'SW10XX 5FF'
@@ -208,8 +219,6 @@ describe Defendant, :type => :model do
     end
 
   end
-
-
 
   describe "#as_json" do
     context "when the model is not blank" do
@@ -235,3 +244,4 @@ describe Defendant, :type => :model do
   end
 
 end
+

@@ -123,7 +123,6 @@ moj.Modules.tools = (function() {
   };
 
   getTextFieldValue = function(field){
-    console.log("AAAA");
     var item = $(field).length,
         value = $(field).val();
     

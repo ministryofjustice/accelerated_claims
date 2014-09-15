@@ -32,7 +32,7 @@
         class: 'hide js-claimanttype individual',
         input_class: 'narrow',
         data: { depend: 'num-claimants' },
-        label: 'How many claimants are there? <br/><span class="hint">You need a minimum of 1 claimant and can have up to 4 claimants</span>'
+        label: 'How many claimants are there? <br/><span class="hint">All claimants should be named on the tenancy agreement</span>'
 
       .row.js-only
         %span.error.hide#num-claimants-error-message
@@ -54,23 +54,24 @@
 
       .row
         Your tenants are known as <b>defendants</b> in this case.
+        %p.nonjs If there are more than 4 defendants in this case, then you will need to change your browser settings to ‘enable javascript’.
 
-      = claim_form.radio_button_fieldset :num_defendants,
-          'How many defendants are there?',
-          class: 'radio inline multiple',
-          choice: {'1 defendant'=>'1', '2 defendants'=>'2'},
-          data: { depend: 'numdefendants', 'virtual-pageview' => '/accelerated/defendants-section' }
 
-      .sub-panel.hide.js-numdefendants.1.2.defendant#defendant_one
-        %h3.person First defendant
-        = render partial: 'defendant', object: @claim.defendant_one, locals: { claim_form: claim_form, defendant_field: :defendant_one}
+      = claim_form.text_field_row :num_defendants,
+          input_class: 'narrow',
+          data: { 'virtual-pageview' => '/accelerated/defendants-section' },
+          label: 'How many defendants are there?<p class="hint">All defendants should be named on the tenancy agreement</p>'
 
-      .row.divider
-      .sub-panel.hide.js-numdefendants.2.defendant#defendant_two
-        %h3.person
-          Second defendant
-          %span.hint.block.hide (optional)
-        = render partial: 'defendant', object: @claim.defendant_two, locals: { claim_form: claim_form, defendant_field: :defendant_two}
+      .row.js-only
+        %span.error.hide#num-defendants-error-message
+          The number of defendants must be between 1 and 20. If you have more than 20 defendants, you’ll need to complete your
+          accelerated possession claim on the <a href="http://hmctsformfinder.justice.gov.uk/HMCTS/GetForm.do?court_forms_id=618">N5b form</a>
+
+      .defendants
+        - (1 .. DefendantCollection::max_defendants(js_enabled: true)).each do |i|
+          = render partial: 'defendant', object: @claim.send("defendant_#{i}".to_sym), locals: { defendant_id: i, claim_form: claim_form, defendant_field: "defendant_#{i}".to_sym }
+          
+
 
   %section
     %h2.section-header Notice

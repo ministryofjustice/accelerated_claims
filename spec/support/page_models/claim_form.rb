@@ -18,9 +18,10 @@ class ClaimForm
     else
       fill_organizational_claimant
     end
-    select_number_of :defendants
-    fill_defendant_one complete_address: true
-    fill_defendant_two complete_address: true
+
+    select_number_of_defendants
+    fill_in_defendant(1, complete_address: true)
+    fill_in_defendant(2, complete_address: true)
     fill_claimant_contact
     fill_tenancy
     fill_notice
@@ -47,13 +48,12 @@ class ClaimForm
       fill_organizational_claimant
     end
 
-    number_of_defendants = select_number_of :defendants
-    address_to_be_completed = choose_defendant_living_in_property 'one',1           # selects the defendent living in property yes/no button according to the data
-    fill_defendant_one complete_address: address_to_be_completed
-    if number_of_defendants == 2
-      address_to_be_completed = choose_defendant_living_in_property 'two', 2
-      fill_defendant_two complete_address: address_to_be_completed
+    number_of_defendants = select_number_of_defendants
+    (1 .. number_of_defendants.to_i).each do |i|  
+      address_to_be_completed = choose_defendant_living_in_property(i)           # selects the defendent living in property yes/no button according to the data
+      fill_in_defendant(i, complete_address: address_to_be_completed)
     end
+    
 
     fill_claimant_contact_with_js
 
@@ -74,27 +74,12 @@ class ClaimForm
     num_claimants
   end
 
-  def select_number_of type
-    case type
-    when :claimants
-      button_prefix = "claim_num"
-      model = "claim"
-    when :defendants
-      button_prefix =  "claim_num"
-      model = "claim"
-    end
 
-    number = get_data(model, "num_#{type}").to_i
-    case number
-      when 1
-        choose("#{button_prefix}_#{type}_1")
-      when 2
-        choose("#{button_prefix}_#{type}_2")
-    end
-    find("#claim_#{type.to_s.singularize}_one_title") # wait for selector to be shown
-    number
+  def select_number_of_defendants
+    num_defendants = get_data('claim', 'num_defendants')
+    fill_in "How many defendants are there?", with: num_defendants
+    num_defendants
   end
-
 
 
   def choose_claimant_2_address_the_same
@@ -106,18 +91,22 @@ class ClaimForm
     end
   end
 
-  def choose_defendant_living_in_property count, index
-    defendant = "defendant_#{count}"
+  
+  def choose_defendant_living_in_property(index)
+    address_to_be_completed = nil
+    defendant = "defendant_#{index}"
     case get_data(defendant, "inhabits_property")
     when 'Yes'
-      choose("claim_defendant_#{count}_inhabits_property_yes")
+      choose("claim_defendant_#{index}_inhabits_property_yes")
       address_to_be_completed = false
     else
-      choose("claim_defendant_#{count}_inhabits_property_no")
+      choose("claim_defendant_#{index}_inhabits_property_no")
       address_to_be_completed = true
     end
     address_to_be_completed
   end
+
+
 
   def fill_claimant_contact_with_js
     if get_data('javascript','separate_correspondence_address') == 'Yes'
@@ -269,15 +258,6 @@ class ClaimForm
     complete_details_of_person("claimant_#{claimant_id}", complete_address: fill_in_address)
   end
 
-
-
-  def fill_defendant_one(options = {})
-    fill_in_defendant('one', options)
-  end
-
-  def fill_defendant_two(options = {})
-    fill_in_defendant('two', options)
-  end
 
   def fill_in_defendant(defendant_number, options)
     defendant = "defendant_#{defendant_number}"

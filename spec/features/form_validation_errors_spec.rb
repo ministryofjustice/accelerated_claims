@@ -67,7 +67,7 @@ feature 'Filling in claim form' do
     expect(page).to have_content('Please say how many claimants there are')
 
     check_focus_after_click 'Please say how many claimants there are', 'claim_num_claimants'
-    check_focus_after_click 'Please say how many defendants there are', 'claim_num_defendants_1'
+    check_focus_after_click 'Please enter a valid number of defendants between 1 and 20', 'claim_num_defendants'
 
     check_focus_after_click 'Please select what kind of property it is', 'claim_property_house_yes'
     check_focus_after_click 'Enter the full address', 'claim_property_street'

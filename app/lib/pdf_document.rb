@@ -24,23 +24,22 @@ class PDFDocument
       ensure
         result_pdf.close
       end
-
-      result_path = result_pdf.path
-      ActiveSupport::Notifications.instrument('add_defendant_two.pdf') do
-        add_defendant_two result_path
-      end
-
-      add_further_claimants(result_path)
-
-      ActiveSupport::Notifications.instrument('strike_out_statements.pdf') do
-        strike_out_applicable_statements result_pdf
-      end
+      add_continuation_sheets(result_pdf.path)
+      strike_out_applicable_statements result_pdf
     end
 
     result_pdf
   end
 
   private
+
+  def further_claimants
+    @claim.claimants.further_participants
+  end
+
+  def further_defendants
+    @claim.defendants.further_participants
+  end
 
   def add_checklist
     Checklist.new(@json).add
@@ -64,21 +63,31 @@ class PDFDocument
     end
   end
 
-  CONTINUATION_TEMPLATE      = File.join Rails.root, 'templates', 'defendant_form.pdf'
-  FURTHER_CLAIMANTS_TEMPLATE = File.join Rails.root, 'templates', 'n5b-extra-claimants.pdf'
-  STRIKER_JAR                = File.join Rails.root, 'scripts', 'striker-0.3.1-standalone.jar'
+  CONTINUATION_SHEET_TEMPLATE = [ File.join(Rails.root, 'templates', 'continuation_sheet_0.pdf'), File.join(Rails.root, 'templates', 'continuation_sheet_1.pdf') ]
+  STRIKER_JAR                 = File.join Rails.root, 'scripts', 'striker-0.3.1-standalone.jar'
 
   def defendant_two_data
-    { 'defendant_two_address'   => "#{@json['defendant_two_address']}",
-      'defendant_two_postcode1' => "#{@json['defendant_two_postcode1']}",
-      'defendant_two_postcode2' => "#{@json['defendant_two_postcode2']}" }
+    { 'defendant_2_address'   => "#{@json['defendant_2_address']}",
+      'defendant_2_postcode1' => "#{@json['defendant_2_postcode1']}",
+      'defendant_2_postcode2' => "#{@json['defendant_2_postcode2']}" }
   end
 
-  def create_continuation_pdf
-    continuation_pdf = Tempfile.new('continuation', '/tmp/')
-    pdf = PdfForms.new(ENV['PDFTK'])
-    pdf.fill_form CONTINUATION_TEMPLATE, continuation_pdf, defendant_two_data
-    continuation_pdf.path
+  # takes an array of two-element hashes. Each hash has keys 'left' and 'right' representing
+  # the left and right hand columns of the continuation sheet
+  #
+  def add_continuation_sheets(result_path)
+    (0 .. 1).each do | sheet_num |
+      if @json.key?("continuation_sheet_#{sheet_num}_left")
+        add_continuation_sheet(result_path, sheet_num, @json["continuation_sheet_#{sheet_num}_left"], @json["continuation_sheet_#{sheet_num}_right"])
+      end
+    end
+  end
+
+  def add_continuation_sheet(result_path, sheet_num, left, right)
+    continuation_sheet_pdf = Tempfile.new('continuation_sheet_#{sheet_num}', '/tmp/')
+    pdf = PdfForms.new(ENV['PDFTK'], :flatten => @flatten)
+    pdf.fill_form CONTINUATION_SHEET_TEMPLATE[sheet_num], continuation_sheet_pdf, {"left_panel#{sheet_num}" => left, "right_panel#{sheet_num}" => right}
+    combine_pdfs result_path, continuation_sheet_pdf.path
   end
 
   def combine_pdfs result_path, continuation_path
@@ -86,50 +95,6 @@ class PDFDocument
     %x[#{ENV['PDFTK']} #{result_path} #{continuation_path} cat output #{combinded.path}]
     FileUtils.mv combinded.path, result_path
   end
-
-  def add_defendant_two result_path
-    if @json.key? 'defendant_two_address'
-      continuation_path = create_continuation_pdf
-      combine_pdfs result_path, continuation_path
-    end
-  end
-
-
-
-  def add_further_claimants(result_path)
-    if @json.key?('claimant_3_address') || @json.key?('claimant_4_address')
-      further_claimants_path = create_further_claimants_pdf
-      combine_pdfs result_path, further_claimants_path
-    end
-  end
-
-
-  def create_further_claimants_pdf
-    further_claimants_pdf = Tempfile.new('further_claimants', '/tmp/')
-    pdf = PdfForms.new(ENV['PDFTK'])
-    pdf.fill_form FURTHER_CLAIMANTS_TEMPLATE, further_claimants_pdf, further_claimants_data
-    further_claimants_pdf.path
-  end
-
-
-  def further_claimants_data
-    further_claimants_string = "Further Claimants:\n\n"
-
-    if @json.key?('claimant_3_address')
-      further_claimants_string += @json['claimant_3_address']
-      further_claimants_string += "\n" + @json['claimant_3_postcode1'] + ' ' + @json['claimant_3_postcode2'] + "\n\n"
-    end
-
-    if @json.key?('claimant_4_address')
-      further_claimants_string += @json['claimant_4_address']
-      further_claimants_string += "\n" + @json['claimant_4_postcode1'] + ' ' + @json['claimant_4_postcode2'] + "\n\n"
-    end
-
-    { 'further_claimants' => further_claimants_string }
-  end
-
-
-
 
   FIRST_3A_LINES = [
     { x0: 42, x1: 515, y: 327+57 },
@@ -201,7 +166,6 @@ class PDFDocument
     list = []
     add_previous_tenancy_type_strike_out list
     add_applicable_statement_strike_outs(list) unless @json["tenancy_demoted_tenancy"] == 'Yes'
-
     ActiveSupport::Notifications.instrument('add_strikes_via_cli.pdf') do
       perform_strike_through(list, result_pdf) unless list.empty?
     end
@@ -270,3 +234,4 @@ class PDFDocument
     }.to_json
   end
 end
+

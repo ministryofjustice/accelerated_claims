@@ -2,8 +2,6 @@ class Defendant < BaseClass
 
   include Address
 
-  @do_partial_address_completion_validation = true
-
   attr_accessor :validate_presence, :validate_absence
 
   attr_accessor :title
@@ -12,25 +10,25 @@ class Defendant < BaseClass
   attr_accessor :postcode
   attr_accessor :property_address
   attr_accessor :inhabits_property
-  attr_accessor :num_defendants
   attr_accessor :defendant_num
 
   validates :title, length: { maximum: 8 }
   validates :full_name, length: { maximum: 40 }
 
-  validate :num_defendants_is_valid
+  validate :inhabits_property_is_valid
   validate :validate_defendant_state
 
-  def num_defendants_is_valid
+  def inhabits_property_is_valid
     if validate_presence?
-      unless %w{ Yes No }.include?(inhabits_property)
+      unless %w{ yes no }.include?(inhabits_property.try(:downcase))
         errors[:inhabits_property] << "Please select whether or not #{subject_description} lives in the property"
       end
     elsif validate_absence?
-      unless inhabits_property.nil?
+      unless inhabits_property.blank?
         errors[:inhabits_property] << "Please select whether or not #{subject_description} lives in the property"
       end
     end
+
   end
 
   # main validation for claimant state
@@ -47,7 +45,6 @@ class Defendant < BaseClass
     unless params.include?(:validate_presence)
       @validate_presence = true unless params[:validate_absence] == true
     end
-    @num_defendants = @num_defendants.nil? ? 1 : @num_defendants.to_i
   end
 
   def validate_presence?
@@ -56,6 +53,10 @@ class Defendant < BaseClass
 
   def validate_absence?
     self.validate_absence == true
+  end
+
+  def empty?
+    title.blank? && full_name.blank? && street.blank? && postcode.blank?
   end
 
   def as_json
@@ -76,7 +77,7 @@ class Defendant < BaseClass
       (title.present? && full_name.present? && !address_blank?)
     else
       (title.present? && full_name.present?)
-    end
+      end
   end
 
   def address_blank?
@@ -87,12 +88,12 @@ class Defendant < BaseClass
     if @num_claimants == 1
       "the defendant"
     else
-      if defendant_num == :defendant_one
-        "defendant 1"
-      else
-        "defendant 2"
-      end
+      "defendant #{@defendant_num}"
     end
+  end
+
+  def numbered_header
+    "Defendant #{defendant_num}:\n"
   end
 
   private
@@ -115,7 +116,7 @@ class Defendant < BaseClass
   end
 
   def validate_fields_are_present
-    if self.inhabits_property == 'Yes'
+    if self.inhabits_property == 'yes' || self.inhabits_property.blank?
       validate_are_present(:title, :full_name)
     else
       validate_are_present(:title, :full_name, :street, :postcode)
@@ -129,3 +130,4 @@ class Defendant < BaseClass
   end
 
 end
+

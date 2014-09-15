@@ -1,8 +1,8 @@
 {
-  title: "JOURNEY 15-JS",
+  title: "JOURNEY 16",
   description: [
-    "3 claimants",
-    "3 claimants, 1 & 3 living together, 2 living seperately, 1 defendant liviing in the property "
+    "4 claimants and 20 defendants",
+    nil
   ],
   javascript: "JS",
   claim: {
@@ -13,13 +13,13 @@
     },
     claim: {
       claimant_type: "individual",
-      num_claimants: "3",
-      num_defendants: "2"
+      num_claimants: "4",
+      num_defendants: "20"
     },
     claimant_1: {
       title: "Mr",
       organization_name: nil,
-      full_name: "John Smith",
+      full_name: "Johann Schmidt",
       street: "2 Brown St\nBwlchllydd",
       postcode: "FX1W 0LU"
     },
@@ -31,9 +31,9 @@
       postcode: "FX1W 0LU"
     },
     javascript: {
-      claimant_2_same_address: "No",
-      claimant_3_same_address: "Yes",
-      claimant_4_same_address: nil,
+      claimant_2_same_address: nil,
+      claimant_3_same_address: nil,
+      claimant_4_same_address: "Yes",
       any_legal_costs: "Yes",
       separate_correspondence_address: "Yes",
       other_contact_details: "Yes",
@@ -43,13 +43,13 @@
       title: "Mrs",
       organization_name: nil,
       full_name: "Jane Smith",
-      street: nil,
-      postcode: nil
+      street: "2 Brown St\nBwlchllydd",
+      postcode: "FX1W 0LU"
     },
     claimant_4: {
-      title: nil,
+      title: "Ms",
       organization_name: nil,
-      full_name: nil,
+      full_name: "Tammy Wynette",
       street: nil,
       postcode: nil
     },
@@ -130,130 +130,130 @@
       hearing: "Yes"
     },
     defendant_3: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Three",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_4: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
-      street: nil,
-      postcode: nil
+      title: "Mr",
+      full_name: "Defendant Four",
+      inhabits_property: "No",
+      street: "44 Fourth Street\nFourville",
+      postcode: "FY4 4VV"
     },
     defendant_5: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Five",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_6: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Six",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_7: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Seven",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_8: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
-      street: nil,
-      postcode: nil
+      title: "Mr",
+      full_name: "Defendant Eight",
+      inhabits_property: "No",
+      street: "88 Eighth Street\nEightown",
+      postcode: "EY12 7FF"
     },
     defendant_9: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Nine",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_10: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Ten",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_11: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Eleven",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_12: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Twelve",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_13: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Thirteen",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_14: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Fourteen",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_15: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Fifteen",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_16: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Sixteen",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_17: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Seventeen",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_18: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Eighteen",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_19: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
+      title: "Mr",
+      full_name: "Defendant Nineteen",
+      inhabits_property: "Yes",
       street: nil,
       postcode: nil
     },
     defendant_20: {
-      title: nil,
-      full_name: nil,
-      inhabits_property: nil,
-      street: nil,
-      postcode: nil
+      title: "Mr",
+      full_name: "Defendant Twenty",
+      inhabits_property: "No",
+      street: "2020 Twentieth Avenue\nTwentieth Century City\n",
+      postcode: "TY77 8HH"
     }
   }
 }

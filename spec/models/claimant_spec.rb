@@ -49,6 +49,14 @@ describe Claimant, :type => :model do
   end
 
 
+  describe '#indented_details' do
+    it 'should return a string containting name and address with each line indented by the required number of spaces'  do
+      expected = "    Mr John Doe\n    Streety Street\n    London\n    SW1H 9AJ\n"
+      expect(claimant.indented_details(4)).to eq expected
+    end
+  end
+
+
 
   context 'validate_presence set to true' do
     
@@ -176,6 +184,15 @@ describe Claimant, :type => :model do
       expect(claimant.errors[:street]).to eq ["is too long (maximum is 70 characters)"]
     end
 
+  end
+
+
+
+  describe '#numbered_claimant_header' do
+    it 'should print claimant_x where x is the number of hte claimant' do
+      claimant = Claimant.new(HashWithIndifferentAccess.new(title: 'Mr', full_name: "John Doe", street: "Streety Street\nLondon", postcode: "SW1H9AJ", claimant_type: 'individual', claimant_num: 3))
+      expect(claimant.numbered_header).to eq "Claimant 3:\n" 
+    end
   end
 
 

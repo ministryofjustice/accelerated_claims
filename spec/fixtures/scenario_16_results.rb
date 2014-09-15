@@ -10,6 +10,13 @@ Claimant 3:
     FX1W 0LU
 
 
+Claimant 4:
+    Ms Tammy Wynette
+    2 Brown St
+    Bwlchllydd
+    FX1W 0LU
+
+
 Additional Defendants
 =====================
 
@@ -18,21 +25,148 @@ Defendant 2:
     Mr John Dorey
     23 Mock St
     Anytown
+    EY99 1XX
+
+
+Defendant 3:
+    Mr Defendant Three
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 4:
+    Mr Defendant Four
+    44 Fourth Street
+    Fourville
+    FY4 4VV
+
+
+Defendant 5:
+    Mr Defendant Five
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 6:
+    Mr Defendant Six
+    23 Mock St
+    Anytown
     EY99 1XX"
 end
 
+def right_panel0
+  "Defendant 7:
+    Mr Defendant Seven
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 8:
+    Mr Defendant Eight
+    88 Eighth Street
+    Eightown
+    EY12 7FF
+
+
+Defendant 9:
+    Mr Defendant Nine
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 10:
+    Mr Defendant Ten
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 11:
+    Mr Defendant Eleven
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 12:
+    Mr Defendant Twelve
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 13:
+    Mr Defendant Thirteen
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 14:
+    Mr Defendant Fourteen
+    23 Mock St
+    Anytown
+    EY99 1XX"
+end
+
+
+def left_panel1
+  "Defendant 15:
+    Mr Defendant Fifteen
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 16:
+    Mr Defendant Sixteen
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 17:
+    Mr Defendant Seventeen
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 18:
+    Mr Defendant Eighteen
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 19:
+    Mr Defendant Nineteen
+    23 Mock St
+    Anytown
+    EY99 1XX
+
+
+Defendant 20:
+    Mr Defendant Twenty
+    2020 Twentieth Avenue
+    Twentieth Century City
+    TY77 8HH"
+end
 
 
 {
   Button94: nil,
   Button95: nil,
-  claimant_1_address: "Mr John Smith\n2 Brown St\nBwlchllydd",
+  claimant_1_address: "Mr Johann Schmidt\n2 Brown St\nBwlchllydd",
   claimant_1_postcode1: "FX1W",
   claimant_1_postcode2: "0LU",
   claimant_2_address: "Ms Diedre Smith\n7 Main Street\nAlfreton",
   claimant_2_postcode1: "FX1W",
   claimant_2_postcode2: "0LU",
-  left_panel0: left_panel0,
   defendant_2_address: "Mr John Dorey\n23 Mock St\nAnytown",
   defendant_2_postcode1: "EY99",
   defendant_2_postcode2: "1XX",
@@ -117,5 +251,9 @@ end
   tenancy_demotion_order_date_month: nil,
   tenancy_demotion_order_date_year: nil,
   tenancy_demotion_order_court: nil,
-  copy_number: 6
+  copy_number: 25,
+  left_panel0: left_panel0,
+  right_panel0: right_panel0,
+  left_panel1: left_panel1,
+  right_panel1: ""
 }
