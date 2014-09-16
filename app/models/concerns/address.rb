@@ -12,6 +12,7 @@ module Address
     validates :postcode, length: { maximum: 8 }
 
     validate :full_postcode
+    validate :maximum_number_of_newlines
 
     if @do_partial_address_completion_validation
       with_options if: -> address { address.postcode.present? } do |a|
@@ -24,6 +25,15 @@ module Address
     end
 
   end
+
+
+  def maximum_number_of_newlines
+    if street.strip.count("\n") > 3
+      errors.add(:street, "#{subject_description}'s address cannot have more than 4 lines in order to fit in the box on the pre-printed form.  Please reformat the address so that it has 4 lines or less.")
+    end
+  end
+
+
 
   def full_postcode
     if postcode.present?

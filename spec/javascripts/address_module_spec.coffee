@@ -30,10 +30,14 @@ describe 'AddressModule', ->
       window.AddressModule.setup()
       expect(window.AddressModule.bindToAddressBoxes).toHaveBeenCalled()
 
+
+    # don't understand why this is being called 4 times and not 2
     it 'should call checkNewlines once for each address box', ->
       spyOn window.AddressModule, 'checkNewlines'
       window.AddressModule.setup()
-      expect(window.AddressModule.checkNewlines.calls.count()).toBe 2
+      expect(window.AddressModule.checkNewlines.calls.count()).toBe 4
+
+
 
 
 

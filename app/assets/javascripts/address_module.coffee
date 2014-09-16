@@ -11,14 +11,11 @@ AddressModule =
 
 
   bindToAddressBoxes: ->
-    console.log "bindToAddressBoxes"
     _.each $('div.street textarea'), (el) ->
-      console.log "calling checkNewlines for "+ el.getAttribute('id')
       AddressModule.checkNewlines(el)
       
 
   checkNewlines: (element) ->
-    console.log("checkNewlines called with " + element.getAttribute('id'))
     $(element).on 'keyup', ->
       element_id = element.getAttribute('id')
       AddressModule.hideErrorFor(element_id)
@@ -38,7 +35,6 @@ AddressModule =
 
 
   setup: ->
-    console.log 'setup'
     AddressModule.bindToAddressBoxes()
 
 
