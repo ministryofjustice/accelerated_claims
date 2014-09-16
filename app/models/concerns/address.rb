@@ -28,8 +28,10 @@ module Address
 
 
   def maximum_number_of_newlines
-    if street.strip.count("\n") > 3
-      errors.add(:street, "#{subject_description}'s address cannot have more than 4 lines in order to fit in the box on the pre-printed form.  Please reformat the address so that it has 4 lines or less.")
+    unless street.nil?
+      if street.strip.count("\n") > 3
+        errors.add(:street, "#{subject_description}'s address cannot have more than 4 lines in order to fit in the box on the pre-printed form.  Please reformat the address so that it has 4 lines or less.")
+      end
     end
   end
 
