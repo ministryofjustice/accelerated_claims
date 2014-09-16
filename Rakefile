@@ -8,5 +8,4 @@ if Rails.env.test?
 end
 
 AcceleratedClaims::Application.load_tasks
-require 'jasmine'
-load 'jasmine/tasks/jasmine.rake'
+
