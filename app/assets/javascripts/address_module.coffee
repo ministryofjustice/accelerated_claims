@@ -1,13 +1,13 @@
 root = exports ? this
 
 AddressModule = 
-	countNewlines: (str) ->
-  	n = 0
-  	i = 0
-  	while (pos = str.indexOf("\n", i)) != -1
-    	n += 1
-    	i = pos + 1
-  	n
+  countNewlines: (str) ->
+    n = 0
+    i = 0
+    while (pos = str.indexOf("\n", i)) != -1
+      n += 1
+      i = pos + 1
+    n
 
 
   bindToAddressBoxes: ->
@@ -39,8 +39,8 @@ AddressModule =
 
 
   lastLineIsntWhiteSpace: (str) ->
-  	match = /\n\s*$/.test(str)
-  	!match
+    match = /\n\s*$/.test(str)
+    !match
     
 
 
