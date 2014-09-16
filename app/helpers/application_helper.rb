@@ -31,7 +31,7 @@ module ApplicationHelper
 
   def address_error_message(attribute_name)
     %Q|<div class="row js-only"><span class="error hide" id="claim_#{attribute_name}_street-error-message">
-      The address cannot have more than 4 lines in order to fit in the box on the pre-printed form.  Please reformat the address so that it has 4 lines or less.
+      The address can’t be longer than 4 lines.
     </span></div>|.html_safe
   end
 

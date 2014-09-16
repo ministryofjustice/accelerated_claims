@@ -270,28 +270,28 @@ feature 'Filling in claim form' do
         visit '/'
         fill_in('claim_property_street', with: invalid_address)
         click_button 'Continue'
-        expect(page).to have_content( non_js_address_error_message('property address') )
+        expect(page).to have_content( non_js_address_error_message('Property') )
       end
 
       scenario 'claimant_1 address is invalid' do
         visit '/'
         fill_in('claim_claimant_1_street', with: invalid_address)
         click_button 'Continue'
-        expect(page).to have_content( non_js_address_error_message('claimant 1') )
+        expect(page).to have_content( non_js_address_error_message("Claimant 1's") )
       end
 
       scenario 'claimant_4 address is invalid' do
         visit '/'
         fill_in('claim_claimant_4_street', with: invalid_address)
         click_button 'Continue'
-        expect(page).to have_content( non_js_address_error_message('claimant 4') )
+        expect(page).to have_content( non_js_address_error_message("Claimant 4's") )
       end
 
       scenario 'claimant contact address is invalid' do
         visit '/'
         fill_in('claim_claimant_contact_street', with: invalid_address)
         click_button 'Continue'
-        expect(page).to have_content( non_js_address_error_message('Claimant Contact') )
+        expect(page).to have_content( non_js_address_error_message("Claimant contact's") )
       end
 
 
@@ -299,7 +299,7 @@ feature 'Filling in claim form' do
         visit '/'
         fill_in('claim_defendant_1_street', with: invalid_address)
         click_button 'Continue'
-        expect(page).to have_content( non_js_address_error_message('defendant 1') )
+        expect(page).to have_content( non_js_address_error_message("Defendant 1's") )
       end
 
 
@@ -322,12 +322,12 @@ end
 
 
 def address_js_error_message
-  "The address cannot have more than 4 lines in order to fit in the box on the pre-printed form.  Please reformat the address so that it has 4 lines or less."
+  "The address can’t be longer than 4 lines."
 end
 
 
 def non_js_address_error_message(attribute)
-  "#{attribute}'s address cannot have more than 4 lines in order to fit in the box on the pre-printed form. Please reformat the address so that it has 4 lines or less."
+  "#{attribute} address can’t be longer than 4 lines."
 end
 
 

@@ -21,7 +21,7 @@ describe Claimant, :type => :model do
     it 'should not be valid if any of the attributes is missing' do
       claimant.full_name = nil
       expect(claimant).to_not be_valid
-      expect(claimant.errors[:full_name]).to eq [ "Enter claimant 1's full name" ]
+      expect(claimant.errors[:full_name]).to eq [ "Enter the claimant's full name" ]
     end
   end
 
@@ -69,20 +69,20 @@ describe Claimant, :type => :model do
     it 'should not be valid if any of the attributes are missing' do
       claimant.street = nil
       expect(claimant).to_not be_valid
-      expect(claimant.errors[:street]).to eq ["Enter claimant 1's full address"]
+      expect(claimant.errors[:street]).to eq ["Enter the claimant's full address"]
     end
 
     it 'should not be valid if any of the attributes are blank' do
       claimant.postcode = ''
       expect(claimant).to_not be_valid
-      expect(claimant.errors[:postcode]).to eq ["Enter claimant 1's postcode"]
+      expect(claimant.errors[:postcode]).to eq ["Enter the claimant's postcode"]
     end
   end
 
 
   context 'validate presence true' do
     it 'should not validate if attrs are blank' do
-      claimant = Claimant.new(HashWithIndifferentAccess.new(claimant_type: 'individual', validate_presence: true, full_name: '', num_claimants: 1, postcode: '', street: '', title: '', claimant_num: 2))
+      claimant = Claimant.new(HashWithIndifferentAccess.new(claimant_type: 'individual', validate_presence: true, full_name: '', num_claimants: 1, postcode: '', street: '', title: '', claimant_num: 2, num_claimants: 2))
       expect(claimant).not_to be_valid
       expect(claimant.errors[:title]).to eq ["Enter claimant 2's title"]
       expect(claimant.errors[:full_name]).to eq ["Enter claimant 2's full name"]
@@ -109,7 +109,7 @@ describe Claimant, :type => :model do
 
 
   context 'mandatory fields for organizations are present' do
-    let(:org) { Claimant.new(HashWithIndifferentAccess.new(organization_name: 'Anytown Council Housing Departement', street: "Streety Street\nLondon", postcode: "SW1H9AJ", claimant_type: 'organization', claimant_num: 2)) }
+    let(:org) { Claimant.new(HashWithIndifferentAccess.new(organization_name: 'Anytown Council Housing Departement', street: "Streety Street\nLondon", postcode: "SW1H9AJ", claimant_type: 'organization', claimant_num: 2, num_claimants: 2)) }
 
     it 'should not be valid if organization name is missing' do
       org.organization_name = nil
@@ -136,7 +136,7 @@ describe Claimant, :type => :model do
   end
 
   context 'mandatory fields for individuals are present' do
-    let(:indiv) { Claimant.new(HashWithIndifferentAccess.new(title: 'Mr', full_name: "John Doe", street: "Streety Street\nLondon", postcode: "SW1H9AJ", claimant_type: 'individual', claimant_num: 2)) }
+    let(:indiv) { Claimant.new(HashWithIndifferentAccess.new(title: 'Mr', full_name: "John Doe", street: "Streety Street\nLondon", postcode: "SW1H9AJ", claimant_type: 'individual', claimant_num: 2, num_claimants: 2)) }
 
     it 'should be valid if all required fields are present' do
       expect(indiv).to be_valid
@@ -164,12 +164,12 @@ describe Claimant, :type => :model do
 
 
   context 'address validation' do
-    let(:claimant)  { Claimant.new(HashWithIndifferentAccess.new(title: 'Mr', full_name: "John Doe", street: "Streety Street\nLondon", postcode: "SW1H9AJ", claimant_type: 'individual', claimant_num: 2)) }
+    let(:claimant)  { Claimant.new(HashWithIndifferentAccess.new(title: 'Mr', full_name: "John Doe", street: "Streety Street\nLondon", postcode: "SW1H9AJ", claimant_type: 'individual', claimant_num: 2, num_claimants: 2)) }
 
     it 'should not validate if postcode is incomplete' do
       claimant.postcode = 'SW10'
       expect(claimant).not_to be_valid
-      expect(claimant.errors[:postcode]).to eq ["claimant 2's postcode is not a full postcode"]
+      expect(claimant.errors[:postcode]).to eq ["Claimant 2's postcode is not a full postcode"]
     end    
 
     it 'should not validate if postcode is invalid' do

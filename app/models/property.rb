@@ -34,8 +34,12 @@ class Property < BaseClass
 
 
   def subject_description
-    'property address'
+    'property'
   end
 
+
+  def possessive_subject_description
+    subject_description
+  end
 
 end

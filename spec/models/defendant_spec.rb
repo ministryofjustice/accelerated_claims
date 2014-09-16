@@ -203,7 +203,7 @@ describe Defendant, :type => :model do
     it 'should not validate if postcode is incomplete' do
       defendant.postcode = 'SW10'
       expect(defendant).not_to be_valid
-      expect(defendant.errors[:postcode]).to eq ["defendant 2's postcode is not a full postcode"]
+      expect(defendant.errors[:postcode]).to eq ["Defendant 2's postcode is not a full postcode"]
     end
 
     it 'should not validate if postcode is invalid' do

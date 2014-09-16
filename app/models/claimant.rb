@@ -65,7 +65,15 @@ class Claimant < BaseClass
   end
 
   def subject_description
-    "claimant #{@claimant_num}"
+    if @num_claimants == 1
+      "the claimant"
+    else
+      "claimant #{@claimant_num}"
+    end
+  end
+
+  def possessive_subject_description
+    "#{subject_description}'s"
   end
 
   def numbered_header

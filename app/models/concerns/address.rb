@@ -30,7 +30,7 @@ module Address
   def maximum_number_of_newlines
     unless street.nil?
       if street.strip.count("\n") > 3
-        errors.add(:street, "#{subject_description}'s address cannot have more than 4 lines in order to fit in the box on the pre-printed form.  Please reformat the address so that it has 4 lines or less.")
+        errors.add(:street, "#{possessive_subject_description.capitalize} address can’t be longer than 4 lines.")
       end
     end
   end
@@ -42,7 +42,7 @@ module Address
       if !UKPostcode.new(postcode).valid?
         errors.add(:postcode, "Enter a valid postcode for #{subject_description}")
       elsif !UKPostcode.new(postcode).full?
-        errors.add(:postcode, "#{subject_description}'s postcode is not a full postcode")
+        errors.add(:postcode, "#{possessive_subject_description.capitalize} postcode is not a full postcode")
       end
     end
   end
