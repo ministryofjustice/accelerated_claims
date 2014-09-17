@@ -1,3 +1,3 @@
 = claim_form.fields_for legal_cost, builder: LabellingFormBuilder do |form|
   .sub-panel
-    = form.text_field_row :legal_costs, label: 'Fixed legal fees <span class=\'hint block\'>If the form is being completed by a legal representative</span>'.html_safe, input_class: 'pound', maxlength: 8
+    = form.text_field_row :legal_costs, label: '<span class="visuallyhidden">Fixed legal fees. Enter in pounds</span> <span aria-hidden="true">Fixed legal fees</span> <span class=\'hint block\'>If the form is being completed by a legal representative</span>'.html_safe, input_class: 'pound', maxlength: 8

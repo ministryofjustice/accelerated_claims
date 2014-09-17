@@ -10,7 +10,7 @@
     = render partial: 'shared/flash'
 
     - unless @user_callback.errors.messages.blank?
-      %section.flash.error-summary
+      %section.flash.error-summary{tabindex: "-1"}
         %h2#error-heading You need to fix the errors on this page before continuing.
 
         %p See highlighted errors below.
