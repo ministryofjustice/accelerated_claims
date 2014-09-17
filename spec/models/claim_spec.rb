@@ -52,7 +52,6 @@ describe Claim, :type => :model do
       expect(claim.defendant_20).to be_instance_of(Defendant)
     end
 
-
     it 'should respond to magic mehods defendant_n=' do
       expect(claim.defendants).to receive(:[]=).with(3, nil)
       claim.defendants[3] = nil
@@ -66,7 +65,6 @@ describe Claim, :type => :model do
       expect(claim).to be_valid, claim.errors.full_messages
     end
   end
-
 
   describe '#javascript_enabled?' do
     context 'with javascript' do
@@ -83,9 +81,6 @@ describe Claim, :type => :model do
       end
     end
   end
-
-
-
 
   describe '#as_json' do
     context "when both claim fee & legal cost are known" do
@@ -331,9 +326,9 @@ describe Claim, :type => :model do
         data[:claimant_1] = { "title"=>"", "full_name"=>"", "street"=>"", "postcode"=>"", 'claimant_type' => 'individual'}
         claim = Claim.new(data)
         expect(claim).to_not be_valid
-        expect(claim.claimant_1.errors.messages[:full_name]).to eq ["Enter claimant 1's full name"]
-        expect(claim.claimant_1.errors.messages[:street]).to eq ["Enter claimant 1's full address"]
-        expect(claim.claimant_1.errors.messages[:postcode]).to eq ["Enter claimant 1's postcode"]
+        expect(claim.claimant_1.errors.messages[:full_name]).to eq ["Enter the claimant's full name"]
+        expect(claim.claimant_1.errors.messages[:street]).to eq ["Enter the claimant's full address"]
+        expect(claim.claimant_1.errors.messages[:postcode]).to eq ["Enter the claimant's postcode"]
       end
 
       it 'should be valid if there is claimant 1 data and no claimant 2 data' do
@@ -518,10 +513,9 @@ describe Claim, :type => :model do
       end
     end
 
-
     describe 'validation of number of defendants' do
       context 'with javascript enabled' do
-        
+
         let(:javascript_enabled_params) do
           data = claim_post_data['claim']
           data['javascript_enabled'] = 'Yes'
@@ -560,7 +554,6 @@ describe Claim, :type => :model do
           expect(claim.errors[:base]).to be_empty
         end
       end
-
 
       context('with javascript disabled') do
         let(:javascript_disabled_params) do
@@ -601,7 +594,6 @@ describe Claim, :type => :model do
 
       end
     end
-
 
   end
 end

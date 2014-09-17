@@ -40,6 +40,7 @@ class ClaimantCollection < ParticipantCollection
     claimant_params = claim_params["claimant_#{index}"]
     claimant_params = ActiveSupport::HashWithIndifferentAccess.new if claimant_params.nil?
     claimant_params['claimant_type'] = @claimant_type
+    claimant_params['num_claimants'] = @num_participants
     claimant_params['claimant_num'] = index
     if index > @num_participants
       claimant_params['validate_absence'] = true

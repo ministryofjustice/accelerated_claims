@@ -28,9 +28,6 @@ class ClaimantContact < BaseClass
 
   validate  :name_and_address_consistency
 
-
-
-  
   def name_and_address_consistency
     # if either title and name or company or both is present, then address must be present
     # if address present, then either title and name or company or both must be present
@@ -40,8 +37,7 @@ class ClaimantContact < BaseClass
 
     if full_name.present? && title.blank?
       errors.add(:title, 'must be present if full_name has been entered')
-    end      
-
+    end
 
     if (title.present?  && full_name.present?) || company_name.present?
       unless street.present?
@@ -62,8 +58,6 @@ class ClaimantContact < BaseClass
       end
     end
   end
-
-  
 
   def as_json
     postcode1, postcode2 = split_postcode
@@ -90,11 +84,13 @@ class ClaimantContact < BaseClass
     end
   end
 
-
   def subject_description
-    'Claimant Contact'
+    'claimant contact'
   end
 
+  def possessive_subject_description
+    "#{subject_description}'s"
+  end
 
   def address_format
     if company_name.blank?

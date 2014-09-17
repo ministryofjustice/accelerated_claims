@@ -26,6 +26,12 @@ module ApplicationHelper
     %Q[#{text}<span class="hint nonjs"> (Optional)</span>].html_safe
   end
 
+  def address_error_message(attribute_name)
+    %Q|<div class="row js-only"><span class="error hide" id="claim_#{attribute_name}_street-error-message">
+      The address can’t be longer than 4 lines.
+    </span></div>|.html_safe
+  end
+
   def defendant_class_helper(defendant_id)
     if defendant_id > DefendantCollection.max_defendants(js_enabled: false)
       "defendant js-only"

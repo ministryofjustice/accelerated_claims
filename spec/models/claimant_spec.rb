@@ -172,3 +172,4 @@ describe Claimant, :type => :model do
   end
 
 end
+

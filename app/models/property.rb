@@ -11,7 +11,6 @@ class PropertyError
   end
 end
 
-
 class Property < BaseClass
 
   include Address
@@ -32,10 +31,12 @@ class Property < BaseClass
     }
   end
 
-
   def subject_description
-    'property address'
+    'property'
   end
 
+  def possessive_subject_description
+    subject_description
+  end
 
 end
