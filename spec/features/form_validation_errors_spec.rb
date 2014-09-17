@@ -267,39 +267,49 @@ feature 'Filling in claim form' do
 
     context 'javascript disabled' do
       scenario 'property address is invalid' do
-        visit '/'
-        fill_in('claim_property_street', with: invalid_address)
-        click_button 'Continue'
-        expect(page).to have_content( non_js_address_error_message('Property') )
+        unless remote_test?
+          visit '/'
+          fill_in('claim_property_street', with: invalid_address)
+          click_button 'Continue'
+          expect(page).to have_content( non_js_address_error_message('Property') )
+        end
       end
 
       scenario 'claimant_1 address is invalid' do
-        visit '/'
-        fill_in('claim_claimant_1_street', with: invalid_address)
-        click_button 'Continue'
-        expect(page).to have_content( non_js_address_error_message("Claimant 1's") )
+        unless remote_test?
+          visit '/'
+          fill_in('claim_claimant_1_street', with: invalid_address)
+          click_button 'Continue'
+          expect(page).to have_content( non_js_address_error_message("Claimant 1's") )
+        end
       end
 
       scenario 'claimant_4 address is invalid' do
-        visit '/'
-        fill_in('claim_claimant_4_street', with: invalid_address)
-        click_button 'Continue'
-        expect(page).to have_content( non_js_address_error_message("Claimant 4's") )
+        unless remote_test?
+          visit '/'
+          fill_in('claim_claimant_4_street', with: invalid_address)
+          click_button 'Continue'
+          expect(page).to have_content( non_js_address_error_message("Claimant 4's") )
+        end
       end
 
       scenario 'claimant contact address is invalid' do
-        visit '/'
-        fill_in('claim_claimant_contact_street', with: invalid_address)
-        click_button 'Continue'
-        expect(page).to have_content( non_js_address_error_message("Claimant contact's") )
+        unless remote_test?
+          visit '/'
+          fill_in('claim_claimant_contact_street', with: invalid_address)
+          click_button 'Continue'
+          expect(page).to have_content( non_js_address_error_message("Claimant contact's") )
+        end
       end
 
 
       scenario 'defendant_1 address is invalid' do
-        visit '/'
-        fill_in('claim_defendant_1_street', with: invalid_address)
-        click_button 'Continue'
-        expect(page).to have_content( non_js_address_error_message("Defendant 1's") )
+        unless remote_test?
+          visit '/'
+          fill_in('claim_defendant_1_street', with: invalid_address)
+          click_button 'Continue'
+          expect(page).to have_content( non_js_address_error_message("Defendant 1's") )
+        end
       end
 
 
