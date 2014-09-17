@@ -164,14 +164,14 @@ describe ClaimantContact, :type => :model do
         params = claim_post_data['claim']['claimant_contact'].merge(:street => '')
         cc = ClaimantContact.new(params)
         expect(cc).not_to be_valid
-        expect(cc.errors.full_messages).to eq( ["Street must be entered", "Street must be present if name and/or company has been specified"] )
+        expect(cc.errors.full_messages).to eq( ["Street Enter the full address", "Street must be present if name and/or company has been specified"] )
       end
 
       it 'should not be valid if postcode is missing' do
         params = claim_post_data['claim']['claimant_contact'].merge(:postcode => '')
         cc = ClaimantContact.new(params)
         expect(cc).not_to be_valid
-        expect(cc.errors.full_messages).to eq( ["Postcode must be entered", "Postcode must be present if name and/or company has been specified"] )
+        expect(cc.errors.full_messages).to eq( ["Postcode Enter the postcode", "Postcode must be present if name and/or company has been specified"] )
       end
     end
 
