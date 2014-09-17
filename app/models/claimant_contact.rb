@@ -92,7 +92,11 @@ class ClaimantContact < BaseClass
 
 
   def subject_description
-    'Claimant Contact'
+    'claimant contact'
+  end
+
+  def possessive_subject_description
+    "#{subject_description}'s"
   end
 
 

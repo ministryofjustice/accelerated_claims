@@ -19,7 +19,7 @@ shared_examples 'address validation' do
     it 'is invalid' do
       subject.postcode = "n1 12dt"
       expect(subject).not_to be_valid
-      expect(subject.errors.full_messages).to eq(["Postcode Enter a valid postcode for property address"])
+      expect(subject.errors.full_messages).to eq(["Postcode Enter a valid postcode for property"])
     end
   end
 
@@ -27,7 +27,7 @@ shared_examples 'address validation' do
     it 'is invalid' do
       subject.postcode = "n1"
       expect(subject).not_to be_valid
-      expect(subject.errors.full_messages).to eq(["Postcode property address's postcode is not a full postcode"])
+      expect(subject.errors.full_messages).to eq(["Postcode Property postcode is not a full postcode"])
     end
   end
 

@@ -17,13 +17,22 @@ module ApplicationHelper
       field
     end
   end
+  
 
   def add_optional text
     %Q[#{text}<span class="hint"> (Optional)</span>].html_safe
   end
 
+
   def add_optional_nonjs text
     %Q[#{text}<span class="hint nonjs"> (Optional)</span>].html_safe
+  end
+
+
+  def address_error_message(attribute_name)
+    %Q|<div class="row js-only"><span class="error hide" id="claim_#{attribute_name}_street-error-message">
+      The address can’t be longer than 4 lines.
+    </span></div>|.html_safe
   end
 
   def defendant_class_helper(defendant_id)
@@ -34,6 +43,7 @@ module ApplicationHelper
     end
   end
 
+
   def defendant_header defendant_id
     if defendant_id == 1
       "<h3>Defendant #{defendant_id}</h3>".html_safe
@@ -41,6 +51,7 @@ module ApplicationHelper
       "<h3>Defendant #{defendant_id} <span class='hint hide js-claimanttype'>(optional)</span></h3>".html_safe
     end
   end
+
 
   def claimant_header claimant_id
     if claimant_id == 1

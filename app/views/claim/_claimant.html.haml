@@ -16,6 +16,7 @@
       
     .sub-panel.rel.address
       = form.text_area_row  :street,   label: 'Full address', class: 'rel street'
+      = address_error_message("claimant_#{claimant_id}")
       = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'
 
 

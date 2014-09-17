@@ -92,6 +92,10 @@ class Defendant < BaseClass
     end
   end
 
+  def possessive_subject_description
+    "#{subject_description}'s"
+  end
+
   def numbered_header
     "Defendant #{defendant_num}:\n"
   end
