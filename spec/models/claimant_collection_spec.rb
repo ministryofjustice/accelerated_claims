@@ -38,8 +38,9 @@ describe ClaimantCollection do
       {
         "title" => "Mr",
         "full_name" => "John Smith 4th",
-        "street" => "2 Brown St\nCwmbran",
-        "postcode" => "SW4W 4LU"
+        "address_same_as_first_claimant" => 'Yes',
+        "street" => nil,
+        "postcode" => nil
       }
     }
   end
@@ -240,6 +241,15 @@ describe ClaimantCollection do
     subject { claimants }
     its(:size) { is_expected.to eq 4 }
     its(:further_participants) { is_expected.to eq [ claimants[3], claimants[4] ] }
+
+    context 'and last claimant has address same as first claimant' do
+      it { is_expected.to be_valid }
+
+      it 'should have first claimants address set on last claimant' do
+        expect(claimants[4].street).to eq claimants[1].street
+        expect(claimants[4].postcode).to eq claimants[1].postcode
+      end
+    end
   end
 
 end

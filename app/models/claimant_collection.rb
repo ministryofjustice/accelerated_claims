@@ -7,7 +7,8 @@ class ClaimantCollection < ParticipantCollection
     @num_participants = claim_params['num_claimants'].to_i || 0
     @claimant_type = claim_params['claimant_type']
     super
-    populate_claimants(claim_params)
+    validate_address_same_as_first_claimant = claim_params.key?('javascript_enabled')
+    populate_claimants(claim_params, validate_address_same_as_first_claimant)
     @max_participants = MAX_CLAIMANTS
     @first_extra_participant = 3
   end
@@ -26,15 +27,23 @@ class ClaimantCollection < ParticipantCollection
 
   private
 
-  def populate_claimants(claim_params)
-    validate_address_same_as_first_claimant = claim_params.key?('javascript_enabled')
-
+  def populate_claimants(claim_params, validate_address_same_as_first_claimant)
     ( 1 .. ClaimantCollection.max_claimants ).each do |index|
       if claim_params.nil? || claim_params.empty?
         @participants[index] = Claimant.new( 'claimant_num' => index,
           'validate_address_same_as_first_claimant' => validate_address_same_as_first_claimant )
       else
         populate_claimant(index, claim_params, validate_address_same_as_first_claimant)
+      end
+    end
+    populate_same_addresses
+  end
+
+  def populate_same_addresses
+    @participants.select { |i, c| c.address_same_as_first_claimant == 'Yes'}.each do |i, c|
+      if first_claimant = @participants[1]
+        c.street = first_claimant.street
+        c.postcode = first_claimant.postcode
       end
     end
   end
