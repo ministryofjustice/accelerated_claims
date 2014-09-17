@@ -295,7 +295,6 @@ feature 'Filling in claim form' do
             expect(page).to have_content( non_js_address_error_message("Claimant contact's") )
         end
 
-
         scenario 'defendant_1 address is invalid' do
             visit '/'
             fill_in('claim_defendant_1_street', with: invalid_address)
