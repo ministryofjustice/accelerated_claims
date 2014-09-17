@@ -29,7 +29,7 @@ class ParticipantCollection < BaseClass
     @num_participants
   end
 
-  # returns an array of participants 2 to 4
+  # returns an array of participants indexed @first_extra_participant to @max_participants
   def further_participants
     arr = []
     (@first_extra_participant .. @max_participants).each do |i|
