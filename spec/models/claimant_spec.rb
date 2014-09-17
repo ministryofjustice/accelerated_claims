@@ -7,7 +7,8 @@ describe Claimant, :type => :model do
       street: "Streety Street\nLondon",
       postcode: "SW1H9AJ",
       claimant_type: 'individual',
-      claimant_num: 1
+      claimant_num: 1,
+      validate_address_same_as_first_claimant: true
     )
   end
 
@@ -111,11 +112,27 @@ describe Claimant, :type => :model do
       it { is_expected.to_not be_valid }
     end
 
+    context 'address_same_as_first_claimant nil and validate_address_same_as_first_claimant is false' do
+      let(:claimant_params) { individual_params.merge(claimant_num: 2, address_same_as_first_claimant: nil, validate_address_same_as_first_claimant: false) }
+
+      subject { claimant }
+      it { is_expected.to be_valid }
+    end
+
     context 'address_same_as_first_claimant true' do
       let(:claimant_params) { individual_params.merge(claimant_num: 2, address_same_as_first_claimant: 'Yes') }
 
       subject { claimant }
       it { is_expected.to be_valid }
+
+      context 'address fields blank' do
+        it 'should be valid' do
+          claimant.street = ''
+          claimant.postcode = ''
+          expect(claimant).to be_valid
+        end
+      end
+
     end
 
     context 'address_same_as_first_claimant false' do

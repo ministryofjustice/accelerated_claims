@@ -27,16 +27,19 @@ class ClaimantCollection < ParticipantCollection
   private
 
   def populate_claimants(claim_params)
+    validate_address_same_as_first_claimant = claim_params.key?('javascript_enabled')
+
     ( 1 .. ClaimantCollection.max_claimants ).each do |index|
       if claim_params.nil? || claim_params.empty?
-        @participants[index] = Claimant.new( 'claimant_num' => index )
+        @participants[index] = Claimant.new( 'claimant_num' => index,
+          'validate_address_same_as_first_claimant' => validate_address_same_as_first_claimant )
       else
-        populate_claimant(index, claim_params)
+        populate_claimant(index, claim_params, validate_address_same_as_first_claimant)
       end
     end
   end
 
-  def populate_claimant(index, claim_params)
+  def populate_claimant(index, claim_params, validate_address_same_as_first_claimant)
     claimant_params = claim_params["claimant_#{index}"]
     claimant_params = ActiveSupport::HashWithIndifferentAccess.new if claimant_params.nil?
     claimant_params['claimant_type'] = @claimant_type
@@ -49,7 +52,7 @@ class ClaimantCollection < ParticipantCollection
       claimant_params['validate_presence'] = true
     end
 
-    @participants[index] = Claimant.new(claimant_params)
+    @participants[index] = Claimant.new( claimant_params.merge('validate_address_same_as_first_claimant' => validate_address_same_as_first_claimant) )
   end
 
 end

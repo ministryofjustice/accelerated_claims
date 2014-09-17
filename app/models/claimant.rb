@@ -23,6 +23,7 @@ class Claimant < BaseClass
     unless params.include?(:validate_presence)
       @validate_presence = true unless params[:validate_absence] == true
     end
+    @check_address_same_as_first_claimant = params['validate_address_same_as_first_claimant']
     @claimant_type = params['claimant_type']
   end
 
@@ -117,25 +118,34 @@ class Claimant < BaseClass
   end
 
   def validate_address_same_as_first_claimant
-    if address_same_as_first_claimant.blank? && !first_claimant?
+    if @check_address_same_as_first_claimant && address_same_as_first_claimant.blank? && !first_claimant?
       errors.add(:address_same_as_first_claimant, 'You must specify whether the address is the same as the first claimant')
     end
   end
 
   def validate_organisation_fields_are_present
-    validate_are_present(:organization_name, :street, :postcode)
-    validate_address_same_as_first_claimant
+    validate_are_present(:organization_name)
+    validate_address
   end
 
   def validate_individual_fields_are_present
-    validate_are_present(:title, :full_name, :street, :postcode)
+    validate_are_present(:title, :full_name)
+    validate_address
+  end
+
+  def validate_address
     validate_address_same_as_first_claimant
+    validate_are_present(:street, :postcode) if check_address_fields?
   end
 
   def validate_are_present(*fields)
     fields.each do |field|
       errors.add(field, "Enter #{subject_description}'s #{display_name(field)}") if self.send(field).blank?
     end
+  end
+
+  def check_address_fields?
+    address_same_as_first_claimant != 'Yes'
   end
 
 end

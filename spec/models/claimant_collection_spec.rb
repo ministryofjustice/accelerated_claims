@@ -4,6 +4,7 @@ describe ClaimantCollection do
     HashWithIndifferentAccess.new(
       { "num_claimants" => 3,
         "claimant_type" => 'individual',
+        'javascript_enabled' => true,
         "claimant_1" =>
         {
           "title" => "Mr",
@@ -57,9 +58,9 @@ describe ClaimantCollection do
         expected_errors = [
               "Claimant 4 title Enter claimant 4's title",
               "Claimant 4 full name Enter claimant 4's full name",
+              "Claimant 4 address same as first claimant You must specify whether the address is the same as the first claimant",
               "Claimant 4 street Enter claimant 4's full address",
-              "Claimant 4 postcode Enter claimant 4's postcode",
-              "Claimant 4 address same as first claimant You must specify whether the address is the same as the first claimant"
+              "Claimant 4 postcode Enter claimant 4's postcode"
             ]
         expect(claimants.errors.full_messages).to eq expected_errors
       end
@@ -164,10 +165,10 @@ describe ClaimantCollection do
 
     it 'should intantiate a collection of 4 empty objects' do
       expect(claimants.size).to eq 0
-      expect(claimants[1]).to eq Claimant.new('claimant_num' => 1)
-      expect(claimants[2]).to eq Claimant.new('claimant_num' => 2)
-      expect(claimants[3]).to eq Claimant.new('claimant_num' => 3)
-      expect(claimants[4]).to eq Claimant.new('claimant_num' => 4)
+      expect(claimants[1]).to eq Claimant.new('claimant_num' => 1, 'validate_address_same_as_first_claimant' => false)
+      expect(claimants[2]).to eq Claimant.new('claimant_num' => 2, 'validate_address_same_as_first_claimant' => false)
+      expect(claimants[3]).to eq Claimant.new('claimant_num' => 3, 'validate_address_same_as_first_claimant' => false)
+      expect(claimants[4]).to eq Claimant.new('claimant_num' => 4, 'validate_address_same_as_first_claimant' => false)
     end
   end
 
