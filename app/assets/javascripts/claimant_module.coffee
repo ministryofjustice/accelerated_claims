@@ -1,6 +1,6 @@
 root = exports ? this
 
-ClaimantModule = 
+ClaimantModule =
   hideClaimantSections: ->
     $('.sub-panel.claimant').hide()
 
@@ -17,8 +17,7 @@ ClaimantModule =
           id = "#claimant_#{i}_subpanel"
           $(id).show()
 
-
-  bindToNumberClaimantsInput: ->   
+  bindToNumberClaimantsInput: ->
     $('#claim_num_claimants').on 'keyup', ->
       string = $(this).val()
       ClaimantModule.showClaimants(string)
@@ -33,6 +32,14 @@ ClaimantModule =
       if $( this ).is( ':checked' )
         ClaimantModule.showClaimants $('#claim_num_claimants').val()
 
+  hideAddresses: ->
+    $( '.same-address' ).each ->
+      block = $( this )
+      name = block.find('input[value="No"]').attr('name')
+      sameAddress = block.find('input[name="' + name + '"]').filter(':checked').val()
+      if( sameAddress == 'Yes' || !sameAddress)
+        address = $( this ).find( '.sub-panel.address' )
+        address.hide()
 
   setup: ->
     ClaimantModule.hideClaimantSections()
@@ -40,7 +47,7 @@ ClaimantModule =
     ClaimantModule.bindOrganisationLandlordSelectToShowFirstClaimant()
     ClaimantModule.bindIndividualLandlordSelectToShowClaimants()
     ClaimantModule.showClaimants($('#claim_num_claimants').val())
-
+    ClaimantModule.hideAddresses()
 
 root.ClaimantModule = ClaimantModule
 

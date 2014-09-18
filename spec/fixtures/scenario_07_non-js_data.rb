@@ -27,22 +27,15 @@
       title: "Miss",
       organization_name: nil,
       full_name: "Heather Heath",
+      address_same_as_first_claimant: nil,
       street: "13 Princess Square\nMilton",
       postcode: "RT12 1LS"
-    },
-    javascript: {
-      claimant_2_same_address: nil,
-      claimant_3_same_address: nil,
-      claimant_4_same_address: nil,
-      any_legal_costs: "No",
-      separate_correspondence_address: "No",
-      other_contact_details: "No",
-      add_reference_number: nil
     },
     claimant_3: {
       title: nil,
       organization_name: nil,
       full_name: nil,
+      address_same_as_first_claimant: nil,
       street: nil,
       postcode: nil
     },
@@ -50,8 +43,15 @@
       title: nil,
       organization_name: nil,
       full_name: nil,
+      address_same_as_first_claimant: nil,
       street: nil,
       postcode: nil
+    },
+    javascript: {
+      any_legal_costs: "No",
+      separate_correspondence_address: "No",
+      other_contact_details: "No",
+      add_reference_number: nil
     },
     legal_cost: {
       legal_costs: nil

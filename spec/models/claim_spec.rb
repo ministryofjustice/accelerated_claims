@@ -352,28 +352,62 @@ describe Claim, :type => :model do
         expect(claim).to be_valid
       end
 
-      it 'should not be valid when no details are present for claimant 2' do
-        data.delete(:claimant_2)
-        expect(claim).to_not be_valid
-        expect(claim.errors.full_messages).to eq [
-          ["claim_claimant_2_title_error", "Enter claimant 2's title"],
-          ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"],
-          ["claim_claimant_2_street_error", "Enter claimant 2's full address"],
-          ["claim_claimant_2_postcode_error", "Enter claimant 2's postcode"],
-          ["claim_claimant_2_address_same_as_first_claimant_error", "You must specify whether the address is the same as the first claimant"]
-        ]
+      context 'when no details are present for claimant 2' do
+        before do
+          data.delete(:claimant_2)
+        end
+
+        context 'javascript disabled' do
+          it 'should not be valid' do
+            expect(claim).to_not be_valid
+            expect(claim.errors.full_messages).to eq [
+              ["claim_claimant_2_title_error", "Enter claimant 2's title"],
+              ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"],
+              ["claim_claimant_2_street_error", "Enter claimant 2's full address"],
+              ["claim_claimant_2_postcode_error", "Enter claimant 2's postcode"]
+            ]
+          end
+        end
+
+        context 'javascript enabled' do
+          it 'should not be valid' do
+            data['javascript_enabled'] = 'true'
+            expect(claim).to_not be_valid
+            expect(claim.errors.full_messages).to eq [
+              ["claim_claimant_2_title_error", "Enter claimant 2's title"],
+              ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"],
+              ["claim_claimant_2_address_same_as_first_claimant_error", "You must specify whether the address is the same as the first claimant"]
+            ]
+          end
+        end
       end
 
-      it 'should not be valid when the details for claimant 2 are blank' do
-        data["claimant_2"].each { |k, v| data["claimant_2"][k] = '' }
-        expect(claim).to_not be_valid
-        expect(claim.errors.full_messages).to eq [
-            ["claim_claimant_2_title_error", "Enter claimant 2's title"],
-            ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"],
-            ["claim_claimant_2_street_error", "Enter claimant 2's full address"],
-            ["claim_claimant_2_postcode_error", "Enter claimant 2's postcode"],
-            ["claim_claimant_2_address_same_as_first_claimant_error", "You must specify whether the address is the same as the first claimant"]
-          ]
+      context 'when the details for claimant 2 are blank' do
+        before do
+          data["claimant_2"].each { |k, v| data["claimant_2"][k] = '' }
+        end
+        context 'javascript disabled' do
+          it 'should not be valid' do
+            expect(claim).to_not be_valid
+            expect(claim.errors.full_messages).to eq [
+                ["claim_claimant_2_title_error", "Enter claimant 2's title"],
+                ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"],
+                ["claim_claimant_2_street_error", "Enter claimant 2's full address"],
+                ["claim_claimant_2_postcode_error", "Enter claimant 2's postcode"]
+              ]
+          end
+        end
+        context 'javascript enabled' do
+          it 'should not be valid' do
+            data['javascript_enabled'] = 'true'
+            expect(claim).to_not be_valid
+            expect(claim.errors.full_messages).to eq [
+              ["claim_claimant_2_title_error", "Enter claimant 2's title"],
+              ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"],
+              ["claim_claimant_2_address_same_as_first_claimant_error", "You must specify whether the address is the same as the first claimant"]
+            ]
+          end
+        end
       end
     end
 

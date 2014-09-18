@@ -22,7 +22,6 @@
 //= require property_module
 //= require select_state
 //= require yes_no
-//= require claimant_address
 //= require claimant_contact
 //= require claimant_module
 //= require defendant_module
@@ -67,4 +66,5 @@ $.fn.scrollStopped = function(callback) {
 };
 
 $('body').append("<div id='javascript_done'></div>");
-$('form#claimForm').append('<input type="hidden" id="javascript-enabled" name="claim[javascript_enabled]" value="Yes">')
+$('form#claimForm').append('<input type="hidden" id="javascript-enabled" name="claim[javascript_enabled]" value="Yes">');
+

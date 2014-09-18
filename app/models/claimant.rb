@@ -145,7 +145,8 @@ class Claimant < BaseClass
   end
 
   def check_address_fields?
-    address_same_as_first_claimant != 'Yes'
+    check = (address_same_as_first_claimant != 'Yes') && errors[:address_same_as_first_claimant].empty?
+    check
   end
 
 end

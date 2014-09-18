@@ -218,11 +218,14 @@ feature 'Filling in claim form' do
         choose('claim_claimant_type_individual')
         fill_in('claim_num_claimants', with: '4')
         fill_in('claim_claimant_1_street', with: valid_address)
-        choose('claimant2address-no')
+
+        choose('claim_claimant_2_address_same_as_first_claimant_no')
         fill_in('claim_claimant_2_street', with: valid_address)
-        choose('claimant3address-no')
+
+        choose('claim_claimant_3_address_same_as_first_claimant_no')
         fill_in('claim_claimant_3_street', with: valid_address)
-        choose('claimant4address-no')
+
+        choose('claim_claimant_4_address_same_as_first_claimant_no')
         expect(page).not_to have_content(invalid_address)
         fill_in('claim_claimant_4_street', with: invalid_address)
         expect(page).to have_content(address_js_error_message)
