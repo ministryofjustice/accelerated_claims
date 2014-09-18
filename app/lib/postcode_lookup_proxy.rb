@@ -14,13 +14,15 @@ class PostcodeLookupProxy
 
 
   def lookup
-    if Rails.env.production?
-      production_lookup
-      
+    if valid?
+      if Rails.env.production?
+        production_lookup
+      else
+        development_lookup
+      end
     else
-      development_lookup
+      :bad_request
     end
-
   end
   
 
@@ -28,11 +30,17 @@ class PostcodeLookupProxy
   private
 
   def production_lookup
-    raise "Postcode lookup in Production not yet implemented"
+    raise NotImplementedError.new("Postcode lookup not yet implemented")
   end
 
 
+  # returns dummy postcode result based on the first character of the second part of the postcode.
+  # if zero - returns an empty array, indicating no entries of the postcode, otherwise a dummy result set
+  #
   def development_lookup
+    if @postcode.incode.first.to_i == 0
+      return []
+    end
     index = @postcode.incode.first.to_i % @@dummy_postcode_results.size 
     @@dummy_postcode_results[index]
   end
