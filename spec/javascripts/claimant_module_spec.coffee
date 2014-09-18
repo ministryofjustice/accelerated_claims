@@ -93,6 +93,7 @@ describe 'ClaimantModule', ->
         $('#claim_num_claimants').val('2')
         $('#claim_num_claimants').trigger 'keyup'
         expect(window.ClaimantModule.showClaimants).toHaveBeenCalledWith('2')
+        
 
   describe 'switching claimant type', ->
 

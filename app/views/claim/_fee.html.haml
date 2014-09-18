@@ -1,8 +1,8 @@
 = claim_form.fields_for fee, builder: LabellingFormBuilder do |form|
   .row
-    = 'Court fee <span class=\'hint block\'>Enclose a cheque with the completed claim form</span>'.html_safe
+    %label{for: "claim_fee_court_fee", class: "visuallyhidden"}= "Court fee - There is a fixed fee of two hundred and eighty pounds and no pence.  Enclose a check with the completed claim form.  This is not an editable text field." 
+    = 'Court fee <span class=\'hint block\', aria-hidden="true">Enclose a cheque with the completed claim form</span>'.html_safe
     = form.text_field :court_fee, class: 'fee pound', readonly: true
-
   - if false # hide link to PDF while fee is hardcoded
     .row
       %p See the latest #{link_to 'court fees', 'http://hmctsformfinder.justice.gov.uk/courtfinder/forms/ex050-eng.pdf', class: 'external', rel: 'external', target: '_blank'}
