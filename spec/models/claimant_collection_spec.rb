@@ -71,7 +71,7 @@ describe ClaimantCollection do
         expected_errors = [
               "Claimant 4 title Enter claimant 4's title",
               "Claimant 4 full name Enter claimant 4's full name",
-              "Claimant 4 address same as first claimant You must specify whether the address is the same as the first claimant"
+              "Claimant 4 address same as first claimant You must specify whether claimant 4's address is the same as the first claimant"
             ]
         expect(claimants.errors.full_messages).to eq expected_errors
       end

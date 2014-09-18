@@ -181,7 +181,7 @@ feature 'Filling in claim form' do
     fill_in 'How many claimants are there?', with: '2'
     click_button 'Continue'
 
-    check_focus_after_click 'You must specify whether the address is the same as the first claimant', 'claim_claimant_2_address_same_as_first_claimant_yes'
+    check_focus_after_click "You must specify whether claimant 2's address is the same as the first claimant", 'claim_claimant_2_address_same_as_first_claimant_yes'
   end
 
   context 'address validation' do
