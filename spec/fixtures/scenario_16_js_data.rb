@@ -27,7 +27,7 @@
       title: "Ms",
       organization_name: nil,
       full_name: "Diedre Smith",
-      address_same_as_first_claimant: nil,
+      address_same_as_first_claimant: "No",
       street: "7 Main Street\nAlfreton",
       postcode: "FX1W 0LU"
     },
@@ -35,7 +35,7 @@
       title: "Mrs",
       organization_name: nil,
       full_name: "Jane Smith",
-      address_same_as_first_claimant: nil,
+      address_same_as_first_claimant: "No",
       street: "2 Brown St\nBwlchllydd",
       postcode: "FX1W 0LU"
     },
