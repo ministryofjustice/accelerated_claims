@@ -240,48 +240,4 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     @object.class.validators_on(attribute)
   end
 
-  def presence_required? attribute
-    required = required_by_presence_validator? attribute
-
-    if @object.respond_to?(:validate_presence)
-      if @object.validate_presence
-        required
-      else
-        if @object.respond_to?(:first_defendant) && @object.first_defendant
-          required
-        else
-          false
-        end
-      end
-    else
-      required
-    end
-  end
-
-  def required_by_presence_validator? attribute
-    validators(attribute).any? do |v|
-      if v.is_a?(ActiveModel::Validations::PresenceValidator)
-        if if_condition = v.options[:if]
-          evaluate_condition(if_condition)
-        elsif unless_condition = v.options[:unless]
-          !evaluate_condition(unless_condition)
-        elsif attribute == :court_fee
-          false
-        else
-          true
-        end
-      else
-        false
-      end
-    end
-  end
-
-  def evaluate_condition condition
-    if condition.is_a?(Proc)
-      condition.call(@object)
-    else
-      @object.send(condition)
-    end
-  end
-
 end
