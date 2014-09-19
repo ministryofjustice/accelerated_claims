@@ -376,7 +376,7 @@ describe Claim, :type => :model do
             expect(claim.errors.full_messages).to eq [
               ["claim_claimant_2_title_error", "Enter claimant 2's title"],
               ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"],
-              ["claim_claimant_2_address_same_as_first_claimant_error", "You must specify whether the address is the same as the first claimant"]
+              ["claim_claimant_2_address_same_as_first_claimant_error", "You must specify whether claimant 2's address is the same as the first claimant"]
             ]
           end
         end
@@ -404,7 +404,7 @@ describe Claim, :type => :model do
             expect(claim.errors.full_messages).to eq [
               ["claim_claimant_2_title_error", "Enter claimant 2's title"],
               ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"],
-              ["claim_claimant_2_address_same_as_first_claimant_error", "You must specify whether the address is the same as the first claimant"]
+              ["claim_claimant_2_address_same_as_first_claimant_error", "You must specify whether claimant 2's address is the same as the first claimant"]
             ]
           end
         end
