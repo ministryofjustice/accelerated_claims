@@ -1,10 +1,22 @@
+# PostcodeLookupProxy API
+
+# pclp = PostcodeLookupProxy.new("AB126FG")
+# pclp.valid?       # => true
+# pclp.lookup       # => true, if result found, false if timeout or bad response
+# pclp.empty?       # => false if any addresses returned
+# pclp.result_set   # => array of addresses
+#
+
 class PostcodeLookupProxy
 
   @@dummy_postcode_results = YAML.load_file("#{Rails.root}/config/dummy_postcode_results.yml")
 
+  attr_reader :result_set
+
   def initialize(postcode)
-    @postcode = UKPostcode.new(postcode)
-    @valid = @postcode.valid?
+    @postcode   = UKPostcode.new(postcode)
+    @valid      = @postcode.valid?
+    @result_set = nil
   end
 
 
@@ -12,18 +24,21 @@ class PostcodeLookupProxy
     @valid
   end
 
+  def invalid?
+    !valid?
+  end
+
+  def empty?
+    raise "Call PostcodeProxyLookup#lookup before PostcodeProxyLookup.empty?" if @result_set.nil?
+    @result_set.empty?
+  end
+
 
   def lookup
-    if valid?
-      if Rails.env.production?
-        production_lookup
-      else
-        development_lookup
-      end
-    else
-      :bad_request
-    end
+    raise "Invalid Postcode" unless valid?
+    Rails.env.production? ? production_lookup : development_lookup
   end
+
   
 
 
@@ -35,14 +50,20 @@ class PostcodeLookupProxy
 
 
   # returns dummy postcode result based on the first character of the second part of the postcode.
-  # if zero - returns an empty array, indicating no entries of the postcode, otherwise a dummy result set
-  #
+  # if 0 - returns an empty array, indicating no entries of the postcode, otherwise a dummy result set
+  # if 9 - returns false to simulate a timeout or other remote service error
   def development_lookup
-    if @postcode.incode.first.to_i == 0
-      return []
+    case @postcode.incode.first.to_i
+    when 0
+      @result_set =  []
+      return true
+    when 9 
+      return false
+    else
+      index = @postcode.incode.first.to_i % @@dummy_postcode_results.size 
+      @result_set = @@dummy_postcode_results[index]
+      return true
     end
-    index = @postcode.incode.first.to_i % @@dummy_postcode_results.size 
-    @@dummy_postcode_results[index]
   end
 
 end

@@ -3,8 +3,8 @@ describe PostcodeLookupProxy do
   describe '.new' do
     context 'a valid postcode' do
       it 'should return be valid' do
-        pc = PostcodeLookupProxy.new('WC1B5HA')
-        expect(pc).to be_valid
+        pclp = PostcodeLookupProxy.new('WC1B5HA')
+        expect(pclp).to be_valid
       end
     end
 
@@ -12,15 +12,18 @@ describe PostcodeLookupProxy do
       it 'should not be valid' do
         pc = PostcodeLookupProxy.new('WCX1B5HA')
         expect(pc).not_to be_valid
+        expect(pc).to be_invalid
       end
     end
   end
 
 
   describe '#lookup' do
-    it 'should return bad request if invalid postcode' do
-      pc = PostcodeLookupProxy.new('WCX1B5HA')
-      expect(pc.lookup).to eq :bad_request
+    it 'should raise if postcode invalid' do
+      pclp = PostcodeLookupProxy.new('WCX1B5HA')
+      expect{
+        pclp.lookup
+      }.to raise_error RuntimeError, "Invalid Postcode"
     end
 
     it 'should call development lookup if not production' do
@@ -38,6 +41,29 @@ describe PostcodeLookupProxy do
   end
 
 
+
+  describe '#empty?' do
+    it 'should raise error if called before lookup' do
+      pclp = PostcodeLookupProxy.new('RG2 7PU')
+      expect {
+        pclp.empty?
+      }.to raise_error RuntimeError, "Call PostcodeProxyLookup#lookup before PostcodeProxyLookup.empty?"
+    end
+
+    it 'should return true if result_set empty' do
+      pclp = PostcodeLookupProxy.new('RG2 0PP')
+      expect(pclp.lookup).to be true
+      expect(pclp.empty?).to be true
+    end
+
+    it 'should return false if result set not empty' do
+      pclp = PostcodeLookupProxy.new('RG2 8PP')
+      expect(pclp.lookup).to be true
+      expect(pclp.empty?).to be false
+    end
+  end
+
+
   describe 'private method production_lookup' do
     it 'should raise an error' do
       expect {
@@ -47,15 +73,22 @@ describe PostcodeLookupProxy do
 
 
     describe 'private method development_lookup' do
-      it 'should return and empty array if the first digit of the 2nd part of the postcode is zero' do
+      it 'should return true and populate result set with an empty array if the first digit of the 2nd part of the postcode is zero' do
         pc = PostcodeLookupProxy.new('SW150HG')
-        expect(pc.send(:development_lookup)).to eq []
+        expect(pc.send(:development_lookup)).to be true
+        expect(pc.result_set).to eq []
+      end
+
+      it 'should return false if first digit of 2nd part of postcode is 9' do
+        pc = PostcodeLookupProxy.new('SW159HG')
+        expect(pc.send(:development_lookup)).to be false
       end
 
 
       it 'should return the 2nd element of the dummy postcode results with a first digit of 2nd part of postcode is 1' do
         pc = PostcodeLookupProxy.new('BR31ES')
-        expect(pc.send(:development_lookup)).to eq PostcodeLookupProxy.class_variable_get(:@@dummy_postcode_results)[1]
+        expect(pc.send(:development_lookup)).to be true
+        expect(pc.result_set).to eq PostcodeLookupProxy.class_variable_get(:@@dummy_postcode_results)[1]
       end
     end
   end

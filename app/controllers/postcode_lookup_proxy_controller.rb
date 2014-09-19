@@ -1,21 +1,24 @@
 class PostcodeLookupProxyController < ApplicationController
 
   def show
-    @postcode = PostcodeLookupProxy.new(params[:pc])
+    @pclp = PostcodeLookupProxy.new(params[:pc])
 
-    if @postcode.valid?
 
-      respond_to do |format|
-        format.json  { render json: @postcode.lookup }
-      end
-    else
-      respond_to do |format|
+    
+    respond_to do |format|
+      if @pclp.invalid?
         format.json { render json: "Invalid postcode" }
+      elsif @pclp.lookup == true
+        if @pclp.empty?
+          format.json { render json: "No matching postcodes" }
+        else
+          format.json { render json: @pclp.result_set }
+        end
+      else
+        format.json { render json: "Service not available", status: :service_unavailable}
       end
     end
+
   end
-
-
-
 
 end
