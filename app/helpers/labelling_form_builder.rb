@@ -29,17 +29,21 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 
+  # Defaults to "Yes" "No" labels on radio inputs
   def radio_button_fieldset attribute, legend, options={}
     virtual_pageview = options[:data] ? options[:data].delete('virtual-pageview') : nil
+    input_class = options.delete(:input_class)
 
     set_class_and_id attribute, options
 
     options[:choice] ||= {'Yes'=>'Yes', 'No'=>'No'}
 
+    data_reverse = options.delete(:toggle_fieldset) ? ' data-reverse="true"' : ''
+
     fieldset_tag attribute, legend, options do
-      @template.surround("<div class='options'>".html_safe, "</div>".html_safe) do
+      @template.surround("<div class='options'#{data_reverse}>".html_safe, "</div>".html_safe) do
         options[:choice].map do |label, choice|
-          radio_button_row(attribute, label, choice, virtual_pageview)
+          radio_button_row(attribute, label, choice, virtual_pageview, input_class)
         end.join("\n")
       end
     end
@@ -78,16 +82,13 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     @template.surround(" <span class='error'>".html_safe, "</span>".html_safe) { message }
   end
 
-
   def error_id_for attribute
     "#{@object_name.tr('[]','_')}_#{attribute}_error".squeeze('_')
   end
 
-
   def id_for attribute, default=nil
     error_for?(attribute) ? error_id_for(attribute) : (default || '')
   end
-
 
   def labelled_check_box attribute, label, yes='Yes', no='No', options={}
     set_class_and_id attribute, options
@@ -162,14 +163,13 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     html.html_safe
   end
 
+  def radio_button_row attribute, label, choice, virtual_pageview, input_class
+    options = {}
+    options.merge!(class: input_class) if input_class
+    options.merge!(data: { 'virtual_pageview' => virtual_pageview }) if virtual_pageview
 
+    input = radio_button(attribute, choice, options)
 
-  def radio_button_row attribute, label, choice, virtual_pageview
-    input = if virtual_pageview
-              radio_button(attribute, choice, data: { 'virtual_pageview' => virtual_pageview })
-            else
-              radio_button(attribute, choice)
-            end
     id = input[/id="([^"]+)"/,1]
 
     @template.surround("<div class='option'>".html_safe, "</div>".html_safe) do
@@ -223,7 +223,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
     [ label, value ].join("\n").html_safe
   end
-
 
   def max_length attribute
     if validator = validators(attribute).detect{|x| x.is_a?(ActiveModel::Validations::LengthValidator)}

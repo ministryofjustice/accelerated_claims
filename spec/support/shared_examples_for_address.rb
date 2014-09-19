@@ -48,5 +48,3 @@ shared_examples 'address validation' do
   end
 end
 
-
-

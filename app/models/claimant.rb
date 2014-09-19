@@ -5,14 +5,15 @@ class Claimant < BaseClass
   include Comparable
 
   attr_accessor :validate_presence, :validate_absence
-  attr_accessor :num_claimants
   attr_accessor :claimant_num
   attr_accessor :title
   attr_accessor :full_name
   attr_accessor :organization_name
   attr_accessor :claimant_type
+  attr_accessor :address_same_as_first_claimant
 
   validate :validate_claimant_state
+
   validates :claimant_num, presence: { message: 'Claimant number not specified' }, allow_nil: false
   validates :title, length: { maximum: 8 }
   validates :full_name, length: { maximum: 40 }
@@ -22,7 +23,7 @@ class Claimant < BaseClass
     unless params.include?(:validate_presence)
       @validate_presence = true unless params[:validate_absence] == true
     end
-    @num_claimants = @num_claimants.nil? ? 1 : @num_claimants.to_i
+    @check_address_same_as_first_claimant = params['validate_address_same_as_first_claimant']
     @claimant_type = params['claimant_type']
   end
 
@@ -62,6 +63,10 @@ class Claimant < BaseClass
       "postcode1" => "#{postcode1}",
       "postcode2" => "#{postcode2}"
     }
+  end
+
+  def first_claimant?
+    @claimant_num == 1
   end
 
   def subject_description
@@ -104,7 +109,7 @@ class Claimant < BaseClass
   def validate_fields_are_present
     case @claimant_type
     when 'organization'
-      validate_organization_fields_are_present
+      validate_organisation_fields_are_present
     when 'individual'
       validate_individual_fields_are_present
     else
@@ -112,18 +117,36 @@ class Claimant < BaseClass
     end
   end
 
-  def validate_organization_fields_are_present
-    validate_are_present(:organization_name, :street, :postcode)
+  def validate_address_same_as_first_claimant
+    if @check_address_same_as_first_claimant && address_same_as_first_claimant.blank? && !first_claimant?
+      errors.add(:address_same_as_first_claimant, "You must specify whether #{subject_description}'s address is the same as the first claimant")
+    end
+  end
+
+  def validate_organisation_fields_are_present
+    validate_are_present(:organization_name)
+    validate_address
   end
 
   def validate_individual_fields_are_present
-    validate_are_present(:title, :full_name, :street, :postcode)
+    validate_are_present(:title, :full_name)
+    validate_address
+  end
+
+  def validate_address
+    validate_address_same_as_first_claimant
+    validate_are_present(:street, :postcode) if check_address_fields?
   end
 
   def validate_are_present(*fields)
     fields.each do |field|
       errors.add(field, "Enter #{subject_description}'s #{display_name(field)}") if self.send(field).blank?
     end
+  end
+
+  def check_address_fields?
+    check = (address_same_as_first_claimant != 'Yes') && errors[:address_same_as_first_claimant].empty?
+    check
   end
 
 end

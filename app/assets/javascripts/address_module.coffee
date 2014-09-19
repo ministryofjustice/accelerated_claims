@@ -1,6 +1,6 @@
 root = exports ? this
 
-AddressModule = 
+AddressModule =
   countNewlines: (str) ->
     n = 0
     i = 0
@@ -9,11 +9,9 @@ AddressModule =
       i = pos + 1
     n
 
-
   bindToAddressBoxes: ->
     _.each $('div.street textarea'), (el) ->
       AddressModule.checkNewlines(el)
-      
 
   checkNewlines: (element) ->
     $(element).on 'keyup', ->
@@ -21,10 +19,8 @@ AddressModule =
       AddressModule.hideErrorFor(element_id)
       string = $(this).val()
       num_newlines = AddressModule.countNewlines(string)
-      if ( num_newlines == 4 && AddressModule.lastLineIsntWhiteSpace(string) ) || (num_newlines > 4) 
+      if ( num_newlines == 4 && AddressModule.lastLineIsntWhiteSpace(string) ) || (num_newlines > 4)
         AddressModule.showErrorFor(element_id)
-        
-
 
   showErrorFor: (address_box) ->
     $("##{address_box}-error-message").show()
@@ -32,23 +28,15 @@ AddressModule =
   hideErrorFor: (address_box) ->
     $("##{address_box}-error-message").hide()
 
-
-
   setup: ->
     AddressModule.bindToAddressBoxes()
-
 
   lastLineIsntWhiteSpace: (str) ->
     match = /\n\s*$/.test(str)
     !match
-    
-
 
 root.AddressModule = AddressModule
 
 jQuery ->
   AddressModule.setup()
-
-
-
 

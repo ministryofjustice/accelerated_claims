@@ -32,7 +32,7 @@ moj.Modules.jsState = (function() {
   init = function() {
     cacheEls();
 
-    // DISCLAIMER: The approach of passing about js-state appears to be bad; suggestion - moved all data into the model and remove js-state. An example of a js-only attribute is "Is the address the same as the first claimant?" for claimant 2.
+    // DISCLAIMER: The approach of passing about js-state appears to be bad; suggestion - moved all data into the model and remove js-state.
     //
     // This call to checkState uses the form_data populated with the page to
     // fill in js-only fields

@@ -1,117 +1,175 @@
 describe ClaimantCollection do
 
-  let(:cc)        { ClaimantCollection.new(test_claim_params) }
+  def claim_params
+    HashWithIndifferentAccess.new(
+      { "num_claimants" => 3,
+        "claimant_type" => 'individual',
+        'javascript_enabled' => true,
+        "claimant_1" =>
+        {
+          "title" => "Mr",
+          "full_name" => "John Smith 1st",
+          "street" => "2 Brown St\nCwmbran",
+          "postcode" => "SW1W 0LU"
+        },
+        "claimant_2" =>
+        {
+          "title" => "Mr",
+          "full_name" => "John Smith 2nd",
+          "street" => "2 Brown St\nCwmbran",
+          "postcode" => "SW1W 0LU",
+          "address_same_as_first_claimant" => 'No'
+        },
+        "claimant_3" =>
+        {
+          "title" => "Mr",
+          "full_name" => "John Smith 3rd",
+          "street" => "2 Brown St\nCwmbran",
+          "postcode" => "SW1W 0LU",
+          "address_same_as_first_claimant" => 'No'
+        }
+      }
+    )
+  end
+
+  def test_claimant_4
+    {
+      "claimant_4" =>
+      {
+        "title" => "Mr",
+        "full_name" => "John Smith 4th",
+        "address_same_as_first_claimant" => 'Yes',
+        "street" => nil,
+        "postcode" => nil
+      }
+    }
+  end
+
+  let(:params) { claim_params }
+  let(:claimants) { ClaimantCollection.new(params) }
 
   describe '.new' do
     it 'should instantiate a collection with the correct number of claimants' do
-      expect(cc).to be_instance_of ClaimantCollection
-      expect(cc.size).to eq 3
+      expect(claimants).to be_instance_of ClaimantCollection
+      expect(claimants.size).to eq 3
     end
 
-    it 'should fail if the number of claimants in the params is less than the number given in the initializer' do
-        params = test_claim_params
-        params[:num_claimants] = 4
-        cc2 = ClaimantCollection.new(params)
-        expect(cc2).not_to be_valid
+    it 'first claimant has first_claimant set true' do
+      expect(claimants[1].first_claimant?).to eq true
+    end
+
+    it 'second and third claimant has first_claimant set false' do
+      expect(claimants[2].first_claimant?).to eq false
+      expect(claimants[3].first_claimant?).to eq false
+    end
+
+    context 'with number of claimants in the params less than the number given in the initializer' do
+      let(:params) { claim_params.merge(num_claimants: 4) }
+
+      it 'should fail' do
+        expect(claimants).not_to be_valid
         expected_errors = [
               "Claimant 4 title Enter claimant 4's title",
               "Claimant 4 full name Enter claimant 4's full name",
-              "Claimant 4 street Enter claimant 4's full address",
-              "Claimant 4 postcode Enter claimant 4's postcode"
+              "Claimant 4 address same as first claimant You must specify whether claimant 4's address is the same as the first claimant"
             ]
-        expect(cc2.errors.full_messages).to eq expected_errors
+        expect(claimants.errors.full_messages).to eq expected_errors
+      end
     end
 
-    it 'should return size of zero with 1 empty claimant if instantiated with empty params' do
-      cc2 = ClaimantCollection.new({})
-      expect(cc2.size).to eq 0
+    context 'with empty params' do
+      let(:params) { {} }
+      it 'should return size of zero with 1 empty claimant' do
+        expect(claimants.size).to eq 0
+      end
     end
 
-    it 'should insert claimant with validate absence = true if more than the num_claimants' do
-      params = test_claim_params
-      params['num_claimants'] = 2
-      cc2 = ClaimantCollection.new(params)
-      valid_claimant = cc2[1]
-      expect(valid_claimant.validate_absence?).to be false
-      expect(valid_claimant.valid?).to be true
+    context 'with number of claimants 2' do
+      let(:params) do
+        params = claim_params
+        params['num_claimants'] = 2
+        params
+      end
 
-      valid_claimant = cc2[2]
-      expect(valid_claimant.validate_absence?).to be false
-      expect(valid_claimant.valid?).to be true
-      
+      it 'has size equal to 2' do
+        expect(claimants.size).to eq 2
+      end
 
-      invalid_claimant = cc2[3]
-      expect(invalid_claimant.validate_absence?).to be true
-      expect(invalid_claimant.valid?).to be false
-      expect(cc2.size).to eq 2
+      describe 'first two claimants' do
+        it 'have validate absence set to false' do
+          expect(claimants[1].validate_absence?).to be false
+          expect(claimants[2].validate_absence?).to be false
+        end
+
+        it 'are valid' do
+          expect(claimants[1].valid?).to be true
+          expect(claimants[2].valid?).to be true
+        end
+      end
+
+      describe 'remaining claimants' do
+        it 'have validate absence set to true' do
+          expect(claimants[3].validate_absence?).to be true
+          expect(claimants[4].validate_absence?).to be true
+        end
+
+        it 'is not valid if details are provided' do
+          expect(claimants[3].valid?).to be false
+        end
+
+        it 'is valid if details are blank' do
+          expect(claimants[4].valid?).to be true
+        end
+      end
     end
-
   end
-
 
   describe '#[]' do
     it 'should return the claimant of the given index' do
-      claimant = cc[2]
+      claimant = claimants[2]
       expect(claimant).to be_instance_of(Claimant)
       expect(claimant.full_name).to eq "John Smith 2nd"
     end
 
     it 'should raise error if index 0 is given' do
       expect {
-        cc[0]
+        claimants[0]
       }.to raise_error ArgumentError, "No such index: 0"
     end
-  
 
     it 'should return empty claimant if the index is higher than the number of claimants' do
-      claimant = cc[4]
+      claimant = claimants[4]
       expect(claimant.empty?).to be true
     end
   end
-
 
   describe '#[]=' do
 
     let(:claimant)   { Claimant.new( { "title" => "Mrs", "full_name" => "Maggie Thatcher", "street" => "10 Downing Street St\nLondon", "postcode" => "SW1W 0LU"} ) }
     it 'should raise error if index is zero' do
       expect {
-        cc[0] = claimant
+        claimants[0] = claimant
       }.to raise_error ArgumentError, "Invalid index: 0"
     end
 
     it 'should raise error if index is greater than number of claimants' do
       expect {
-        cc[4] = claimant
+        claimants[4] = claimant
       }.to raise_error ArgumentError, "Invalid index: 4"
     end
 
     it 'should replace the specified claimant with the new claimant' do
-      cc[3] = claimant
-      c = cc[3]
+      claimants[3] = claimant
+      c = claimants[3]
       expect(c.full_name).to eq 'Maggie Thatcher'
     end
   end
 
-
   describe 'as_json' do
     it 'should produce a json representation of the contacts' do
-      expect(cc.as_json).to eq expected_claimant_collected_json(cc)
+      expect(claimants.as_json).to eq expected_claimant_collected_json(claimants)
     end
   end
-
-
-
-  context 'instantiating with an empty array' do
-    it 'should intantiate a collection of 4 empty objects' do
-      cc = ClaimantCollection.new( HashWithIndifferentAccess.new )
-      expect(cc.size).to eq 0
-      expect(cc[1]).to eq Claimant.new
-      expect(cc[2]).to eq Claimant.new
-      expect(cc[3]).to eq Claimant.new
-      expect(cc[4]).to eq Claimant.new
-    end
-  end
-
 
   describe '.max_claimants' do
     it 'should return the maximum number of claimants' do
@@ -119,103 +177,82 @@ describe ClaimantCollection do
     end
   end
 
-
   describe '.participant_type' do
     it 'should return claimant' do
       expect(ClaimantCollection.participant_type).to eq 'claimant'
     end
   end
 
+  context 'instantiating with an empty array' do
+    let(:params) { HashWithIndifferentAccess.new }
 
-  describe '#further_participants' do
-    it 'should return an emtpy array if empty collection' do
-      cc = ClaimantCollection.new( HashWithIndifferentAccess.new )
-      expect(cc.further_participants).to be_empty
-    end
+    subject { claimants }
+    its(:size) { is_expected.to eq 0 }
+    its(:further_participants) { is_expected.to be_empty}
 
-    it 'should return an empty array if only one claimant' do
-      params = test_claim_params
-      params.delete('claimant_2')
-      params.delete('claimant_3')
-      params['num_claimants'] = 1
-      cc2 = ClaimantCollection.new(params)
-      expect(cc2.size).to eq 1
-      expect(cc2.further_participants).to be_empty
-    end
-
-    it 'should return an array of just second claimant if two claimants' do
-      params = test_claim_params
-      params.delete('claimant_3')
-      params['num_claimants'] = 2
-      cc2 = ClaimantCollection.new(params)
-      expect(cc2.size).to eq 2
-      expect(cc2.further_participants).to be_empty
-    end
-
-    it 'should return an arry of claimant 3 if 3 claimants' do
-      expect(cc.further_participants).to eq [ cc[3] ]
-    end
-
-    it 'should return an array of claimants 3, 4 if 4 claimants' do
-      params = test_claim_params
-      params.merge!(test_claimant_4)
-      params['num_claimants'] = 4
-      cc2 = ClaimantCollection.new(params)
-      expect(cc2.size).to eq 4
-      expect(cc2.further_participants).to eq [ cc2[3], cc2[4] ]
+    it 'should intantiate a collection of 4 empty objects' do
+      expect(claimants[1]).to eq Claimant.new('claimant_num' => 1, 'validate_address_same_as_first_claimant' => false)
+      expect(claimants[2]).to eq Claimant.new('claimant_num' => 2, 'validate_address_same_as_first_claimant' => false)
+      expect(claimants[3]).to eq Claimant.new('claimant_num' => 3, 'validate_address_same_as_first_claimant' => false)
+      expect(claimants[4]).to eq Claimant.new('claimant_num' => 4, 'validate_address_same_as_first_claimant' => false)
     end
   end
 
+  context 'one claimant' do
+    let(:params) do
+      params = claim_params
+      params.delete('claimant_2')
+      params.delete('claimant_3')
+      params['num_claimants'] = 1
+      params
+    end
+    subject { claimants }
+    its(:size) { is_expected.to eq 1 }
+    its(:further_participants) { is_expected.to be_empty}
+  end
 
-  
+  context 'two claimants' do
+    let(:params) do
+      params = claim_params
+      params.delete('claimant_3')
+      params['num_claimants'] = 2
+      params
+    end
+    subject { claimants }
+    its(:size) { is_expected.to eq 2 }
+    its(:further_participants) { is_expected.to be_empty}
+  end
+
+  context 'three claimants' do
+    subject { claimants }
+    its(:size) { is_expected.to eq 3 }
+    its(:further_participants) { is_expected.to eq [ claimants[3] ] }
+  end
+
+  context 'four claimants' do
+    let(:params) do
+      params = claim_params
+      params.merge!(test_claimant_4)
+      params['num_claimants'] = 4
+      params
+    end
+    subject { claimants }
+    its(:size) { is_expected.to eq 4 }
+    its(:further_participants) { is_expected.to eq [ claimants[3], claimants[4] ] }
+
+    context 'and last claimant has address same as first claimant' do
+      it { is_expected.to be_valid }
+
+      it 'should have first claimants address set on last claimant' do
+        expect(claimants[4].street).to eq claimants[1].street
+        expect(claimants[4].postcode).to eq claimants[1].postcode
+      end
+    end
+  end
+
 end
 
-
-def expected_claimant_collected_json(cc)
-  {'claimant_1' => cc[1].as_json, 'claimant_2' => cc[2].as_json, 'claimant_3' => cc[3].as_json }.as_json
-end
-
-
-
-def test_claim_params
-  HashWithIndifferentAccess.new(
-    { "num_claimants" => 3,
-      "claimant_type" => 'individual',
-      "claimant_1" =>
-      {
-        "title" => "Mr",
-        "full_name" => "John Smith 1st",
-        "street" => "2 Brown St\nCwmbran",
-        "postcode" => "SW1W 0LU"
-      },
-      "claimant_2" =>
-      {
-        "title" => "Mr",
-        "full_name" => "John Smith 2nd",
-        "street" => "2 Brown St\nCwmbran",
-        "postcode" => "SW1W 0LU"
-      },
-      "claimant_3" =>
-      {
-        "title" => "Mr",
-        "full_name" => "John Smith 3rd",
-        "street" => "2 Brown St\nCwmbran",
-        "postcode" => "SW1W 0LU"
-      }
-    }
-  )
-end
-
-
-def test_claimant_4
-  {
-    "claimant_4" =>
-    {
-      "title" => "Mr",
-      "full_name" => "John Smith 4th",
-      "street" => "2 Brown St\nCwmbran",
-      "postcode" => "SW4W 4LU"
-    }
-  }
+def expected_claimant_collected_json(claimants)
+  {'claimant_1' => claimants[1].as_json, 'claimant_2' => claimants[2].as_json, 'claimant_3' => claimants[3].as_json }.as_json
 end
 
