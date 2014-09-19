@@ -35,6 +35,26 @@ if ENV['CODECLIMATE_REPO_TOKEN']
   WebMock.disable_net_connect!(:allow => /codeclimate.com/)
 end
 
+
+
+# fix to avoid undefined method `valid_request_keys' for Excon::Utils:Module
+#
+class WebMock::HttpLibAdapters::ExconAdapter
+
+  def self.request_params_from(hash)
+    hash = hash.dup
+    if Excon::VERSION >= '0.27.5'
+      request_keys = Excon::VALID_REQUEST_KEYS
+      hash.reject! {|key,_| !request_keys.include?(key) }
+    end
+    PARAMS_TO_DELETE.each { |key| hash.delete(key) }
+    hash
+  end
+end
+
+
+
+
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 if ENV['BS_USERNAME']

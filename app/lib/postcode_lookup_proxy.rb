@@ -1,3 +1,5 @@
+require 'yaml'
+
 # PostcodeLookupProxy API
 
 # pclp = PostcodeLookupProxy.new("AB126FG")
@@ -12,11 +14,14 @@ class PostcodeLookupProxy
   @@dummy_postcode_results = YAML.load_file("#{Rails.root}/config/dummy_postcode_results.yml")
 
   attr_reader :result_set
-
   def initialize(postcode)
     @postcode   = UKPostcode.new(postcode)
     @valid      = @postcode.valid?
     @result_set = nil
+    config      = YAML.load_file("#{Rails.root}/config/ideal_postcodes.yml")
+    @url        = config['url']
+    @api_key    = config['api_key']
+    @timeout    = config['timeout']
   end
 
 
@@ -44,8 +49,48 @@ class PostcodeLookupProxy
 
   private
 
+  def form_url
+    "#{@url}#{@postcode.outcode}#{@postcode.incode}?api_key=#{@api_key}"
+  end
+
+
   def production_lookup
-    raise NotImplementedError.new("Postcode lookup not yet implemented")
+    result = true
+    api_response = nil
+    
+    begin
+      Timeout::timeout(@timeout) do
+        api_response = Excon.get(form_url())
+        result = false if api_response.status != 200
+      end
+    rescue Timeout::Error
+      result = false
+    end
+
+    if result == true
+      @result_set = transform_api_response(api_response)
+    end
+    result
+  end
+
+
+  def transform_api_response(api_response)
+    api_results = ActiveSupport::JSON.decode(api_response.body)['result']
+    api_results.map { |res| transform_api_address(res) }
+  end
+
+  def transform_api_address(res)
+    address = res['line_1']
+    address += add_unless_blank(res, 'line_2')
+    address += add_unless_blank(res, 'line_3')
+    address += add_unless_blank(res, 'post_town')
+    postcode = res['postcode']
+    { 'address' => address, 'postcode' => postcode }
+  end
+
+
+  def add_unless_blank(res, key)
+    res[key].blank? ? '' : ";;#{res[key]}"
   end
 
 
