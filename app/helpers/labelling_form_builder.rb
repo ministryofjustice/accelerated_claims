@@ -65,9 +65,11 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   def error_for? attribute
     if @object.is_a?(Claim)
       subkey = "claim_#{attribute}_error"
-      @object.errors.messages.key?(:base) && @object.errors.messages[:base].to_h.key?(subkey) && !@object.errors.messages[:base].to_h[subkey].empty?
+      base_errors = error_message_for(:base)
+      base_errors && base_errors.to_h.key?(subkey) && !base_errors.to_h[subkey].empty?
     else
-      @object.errors.messages.key?(attribute) && !@object.errors.messages[attribute].empty?
+      attribute_errors = error_message_for(attribute)
+      attribute_errors && !attribute_errors.empty?
     end
   end
 
@@ -150,6 +152,10 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   private
+
+  def error_message_for symbol
+    @object.errors.messages[symbol]
+  end
 
   def check_box_input attribute, options, yes, no
     html = check_box(attribute, options, yes, no)
@@ -235,30 +241,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def presence_required? attribute
-
-    required = validators(attribute).any? do |v|
-      if v.is_a?(ActiveModel::Validations::PresenceValidator)
-        if conditional = v.options[:if]
-          if conditional.is_a?(Proc)
-            conditional.call(@object)
-          else
-            @object.send(conditional)
-          end
-        elsif conditional = v.options[:unless]
-          if conditional.is_a?(Proc)
-            !conditional.call(@object)
-          else
-            !@object.send(conditional)
-          end
-        elsif attribute == :court_fee
-          false
-        else
-          true
-        end
-      else
-        false
-      end
-    end
+    required = required_by_presence_validator? attribute
 
     if @object.respond_to?(:validate_presence)
       if @object.validate_presence
@@ -272,6 +255,32 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
       end
     else
       required
+    end
+  end
+
+  def required_by_presence_validator? attribute
+    validators(attribute).any? do |v|
+      if v.is_a?(ActiveModel::Validations::PresenceValidator)
+        if if_condition = v.options[:if]
+          evaluate_condition(if_condition)
+        elsif unless_condition = v.options[:unless]
+          !evaluate_condition(unless_condition)
+        elsif attribute == :court_fee
+          false
+        else
+          true
+        end
+      else
+        false
+      end
+    end
+  end
+
+  def evaluate_condition condition
+    if condition.is_a?(Proc)
+      condition.call(@object)
+    else
+      @object.send(condition)
     end
   end
 
