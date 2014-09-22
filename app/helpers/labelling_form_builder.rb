@@ -29,17 +29,21 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 
+  # Defaults to "Yes" "No" labels on radio inputs
   def radio_button_fieldset attribute, legend, options={}
     virtual_pageview = options[:data] ? options[:data].delete('virtual-pageview') : nil
+    input_class = options.delete(:input_class)
 
     set_class_and_id attribute, options
 
     options[:choice] ||= {'Yes'=>'Yes', 'No'=>'No'}
 
+    data_reverse = options.delete(:toggle_fieldset) ? ' data-reverse="true"' : ''
+
     fieldset_tag attribute, legend, options do
-      @template.surround("<div class='options'>".html_safe, "</div>".html_safe) do
+      @template.surround("<div class='options'#{data_reverse}>".html_safe, "</div>".html_safe) do
         options[:choice].map do |label, choice|
-          radio_button_row(attribute, label, choice, virtual_pageview)
+          radio_button_row(attribute, label, choice, virtual_pageview, input_class)
         end.join("\n")
       end
     end
@@ -61,9 +65,11 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   def error_for? attribute
     if @object.is_a?(Claim)
       subkey = "claim_#{attribute}_error"
-      @object.errors.messages.key?(:base) && @object.errors.messages[:base].to_h.key?(subkey) && !@object.errors.messages[:base].to_h[subkey].empty?
+      base_errors = error_message_for(:base)
+      base_errors && base_errors.to_h.key?(subkey) && !base_errors.to_h[subkey].empty?
     else
-      @object.errors.messages.key?(attribute) && !@object.errors.messages[attribute].empty?
+      attribute_errors = error_message_for(attribute)
+      attribute_errors && !attribute_errors.empty?
     end
   end
 
@@ -78,16 +84,13 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     @template.surround(" <span class='error'>".html_safe, "</span>".html_safe) { message }
   end
 
-
   def error_id_for attribute
     "#{@object_name.tr('[]','_')}_#{attribute}_error".squeeze('_')
   end
 
-
   def id_for attribute, default=nil
     error_for?(attribute) ? error_id_for(attribute) : (default || '')
   end
-
 
   def labelled_check_box attribute, label, yes='Yes', no='No', options={}
     set_class_and_id attribute, options
@@ -150,6 +153,10 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
   private
 
+  def error_message_for symbol
+    @object.errors.messages[symbol]
+  end
+
   def check_box_input attribute, options, yes, no
     html = check_box(attribute, options, yes, no)
     html.gsub!(/<[^<]*type="hidden"[^>]*>/,'')
@@ -162,14 +169,13 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     html.html_safe
   end
 
+  def radio_button_row attribute, label, choice, virtual_pageview, input_class
+    options = {}
+    options.merge!(class: input_class) if input_class
+    options.merge!(data: { 'virtual_pageview' => virtual_pageview }) if virtual_pageview
 
+    input = radio_button(attribute, choice, options)
 
-  def radio_button_row attribute, label, choice, virtual_pageview
-    input = if virtual_pageview
-              radio_button(attribute, choice, data: { 'virtual_pageview' => virtual_pageview })
-            else
-              radio_button(attribute, choice)
-            end
     id = input[/id="([^"]+)"/,1]
 
     @template.surround("<div class='option'>".html_safe, "</div>".html_safe) do
@@ -224,7 +230,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     [ label, value ].join("\n").html_safe
   end
 
-
   def max_length attribute
     if validator = validators(attribute).detect{|x| x.is_a?(ActiveModel::Validations::LengthValidator)}
       validator.options[:maximum]
@@ -233,47 +238,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
   def validators attribute
     @object.class.validators_on(attribute)
-  end
-
-  def presence_required? attribute
-
-    required = validators(attribute).any? do |v|
-      if v.is_a?(ActiveModel::Validations::PresenceValidator)
-        if conditional = v.options[:if]
-          if conditional.is_a?(Proc)
-            conditional.call(@object)
-          else
-            @object.send(conditional)
-          end
-        elsif conditional = v.options[:unless]
-          if conditional.is_a?(Proc)
-            !conditional.call(@object)
-          else
-            !@object.send(conditional)
-          end
-        elsif attribute == :court_fee
-          false
-        else
-          true
-        end
-      else
-        false
-      end
-    end
-
-    if @object.respond_to?(:validate_presence)
-      if @object.validate_presence
-        required
-      else
-        if @object.respond_to?(:first_defendant) && @object.first_defendant
-          required
-        else
-          false
-        end
-      end
-    else
-      required
-    end
   end
 
 end

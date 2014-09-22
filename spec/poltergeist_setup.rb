@@ -9,4 +9,4 @@ Capybara.register_driver :poltergeist do |app|
 end
 
 Capybara.javascript_driver = :poltergeist
-Capybara.default_wait_time = 15
+Capybara.default_wait_time = 5

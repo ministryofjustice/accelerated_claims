@@ -49,11 +49,10 @@ class ClaimForm
     end
 
     number_of_defendants = select_number_of_defendants
-    (1 .. number_of_defendants.to_i).each do |i|  
+    (1 .. number_of_defendants.to_i).each do |i|
       address_to_be_completed = choose_defendant_living_in_property(i)           # selects the defendent living in property yes/no button according to the data
       fill_in_defendant(i, complete_address: address_to_be_completed)
     end
-    
 
     fill_claimant_contact_with_js
 
@@ -74,13 +73,11 @@ class ClaimForm
     num_claimants
   end
 
-
   def select_number_of_defendants
     num_defendants = get_data('claim', 'num_defendants')
     fill_in "How many defendants are there?", with: num_defendants
     num_defendants
   end
-
 
   def choose_claimant_2_address_the_same
     case get_data('javascript','claimant_2_same_address')
@@ -91,7 +88,6 @@ class ClaimForm
     end
   end
 
-  
   def choose_defendant_living_in_property(index)
     address_to_be_completed = nil
     defendant = "defendant_#{index}"
@@ -105,8 +101,6 @@ class ClaimForm
     end
     address_to_be_completed
   end
-
-
 
   def fill_claimant_contact_with_js
     if get_data('javascript','separate_correspondence_address') == 'Yes'
@@ -142,7 +136,6 @@ class ClaimForm
     fill_in_text_field_if_present('reference_number', 'reference_number')
   end
 
-
   def fill_reference_number_with_js
     unless get_data('reference_number', 'reference_number').blank?
       find('#reference-number').click
@@ -159,7 +152,6 @@ class ClaimForm
     page.all('.error-summary li').each { |li| errors << "#{li.text}: #{li.find('a')['href']}" }
     errors.join("\n\t")
   end
-
 
   def fill_in_text_field(prefix, key)
     fill_in("claim_#{prefix}_#{key}", with: get_data(prefix, key))
@@ -210,14 +202,11 @@ class ClaimForm
     end
   end
 
-
   def fill_organizational_claimant
     fill_in_text_field('claimant_1', 'organization_name')
     fill_in_text_field('claimant_1', 'street')
     fill_in_text_field('claimant_1', 'postcode')
   end
-
-
 
   def complete_details_of_person(prefix, options={})
     options = { complete_address: true }.merge(options)
@@ -248,16 +237,16 @@ class ClaimForm
     choose_radio(prefix, 'house')
   end
 
-
   def fill_claimant(claimant_id, options = {use_javascript: true} )
+    claimant_prefix = "claimant_#{claimant_id}"
+
     fill_in_address = true
     if claimant_id != 1  && options[:use_javascript] == true
-      fill_in_address = get_data('javascript', "claimant_#{claimant_id}_same_address") == 'Yes' ? false : true
-      fill_in_address == true ? choose("claimant#{claimant_id}address-no") : choose("claimant#{claimant_id}address-yes")
+      choose_radio claimant_prefix, 'address_same_as_first_claimant'
+      fill_in_address = false if get_data(claimant_prefix, 'address_same_as_first_claimant') == 'Yes'
     end
-    complete_details_of_person("claimant_#{claimant_id}", complete_address: fill_in_address)
+    complete_details_of_person(claimant_prefix, complete_address: fill_in_address)
   end
-
 
   def fill_in_defendant(defendant_number, options)
     defendant = "defendant_#{defendant_number}"
@@ -269,8 +258,6 @@ class ClaimForm
       fill_in_text_field(defendant, 'postcode')
     end
   end
-
-
 
   def fill_tenancy
     prefix = 'tenancy'

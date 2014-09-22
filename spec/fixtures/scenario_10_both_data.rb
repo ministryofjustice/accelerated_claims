@@ -27,22 +27,15 @@
       title: "Ms",
       organization_name: nil,
       full_name: "Jane Smith",
+      address_same_as_first_claimant: "No",
       street: "7 Main Street\nAlfreton",
       postcode: "FX1W 0LU"
-    },
-    javascript: {
-      claimant_2_same_address: "No",
-      claimant_3_same_address: nil,
-      claimant_4_same_address: nil,
-      any_legal_costs: "Yes",
-      separate_correspondence_address: "Yes",
-      other_contact_details: "Yes",
-      add_reference_number: nil
     },
     claimant_3: {
       title: nil,
       organization_name: nil,
       full_name: nil,
+      address_same_as_first_claimant: nil,
       street: nil,
       postcode: nil
     },
@@ -50,8 +43,15 @@
       title: nil,
       organization_name: nil,
       full_name: nil,
+      address_same_as_first_claimant: nil,
       street: nil,
       postcode: nil
+    },
+    javascript: {
+      any_legal_costs: "Yes",
+      separate_correspondence_address: "Yes",
+      other_contact_details: "Yes",
+      add_reference_number: nil
     },
     legal_cost: {
       legal_costs: "123.34"

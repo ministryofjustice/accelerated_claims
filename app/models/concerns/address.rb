@@ -16,16 +16,15 @@ module Address
 
     if @do_partial_address_completion_validation
       with_options if: -> address { address.postcode.present? } do |a|
-        a.validates :street, presence: { message: 'must be entered' }
+        a.validates :street, presence: { message: 'Enter the full address' }
       end
 
       with_options if: -> address { address.street.present? } do |a|
-        a.validates :postcode, presence: { message: 'must be entered' }
+        a.validates :postcode, presence: { message: 'Enter the postcode' }
       end
     end
 
   end
-
 
   def maximum_number_of_newlines
     unless street.nil?
@@ -34,8 +33,6 @@ module Address
       end
     end
   end
-
-
 
   def full_postcode
     if postcode.present?

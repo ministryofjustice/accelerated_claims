@@ -9,7 +9,8 @@ def claim_post_data
         "title" => "Mr",
         "full_name" => "John Smith",
         "street" => "2 Brown St\nCwmbran",
-        "postcode" => "SW1W 0LU"
+        "postcode" => "SW1W 0LU",
+        claimant_num: 1
       },
       "claimant_contact" =>
       {
@@ -36,7 +37,9 @@ def claim_post_data
         "title" => "Ms",
         "full_name" => "Jane Smith",
         "street" => "7 Main St\nAlfreton",
-        "postcode" => "SW1W 0LU"
+        "postcode" => "SW1W 0LU",
+        claimant_num: 2,
+        address_same_as_first_claimant: 'No'
       },
       "property" =>
       { "street" => "Mucho Gracias Road\nLondon",
@@ -147,7 +150,6 @@ def demoted_claim_post_data
   data
 end
 
-
 def claim_with_3_claimants_formatted_data
   data = claim_formatted_data
   data['claimant_3_address'] = "Miss Ann Chovey\n2 High Street\nAnytown"
@@ -156,7 +158,6 @@ def claim_with_3_claimants_formatted_data
   data
 end
 
-
 def claim_with_4_claimants_formatted_data
   data = claim_with_3_claimants_formatted_data
   data['claimant_4_address'] = "Mr Mark Atteer\n2 High Street\nAnytown"
@@ -164,8 +165,6 @@ def claim_with_4_claimants_formatted_data
   data['claimant_4_postcode2'] = '9ZZ'
   data
 end
-
-
 
 def claim_formatted_data
   {

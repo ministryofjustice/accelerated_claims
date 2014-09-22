@@ -27,7 +27,6 @@ feature 'Filling in claim form' do
     expect(active_element).to eq(selector)
   end
 
-
   scenario "submitting an incomplete deposit information given date", js: true do
     visit '/'
     choose('claim_deposit_received_yes')
@@ -44,7 +43,6 @@ feature 'Filling in claim form' do
     expect(find_field('claim_deposit_information_given_date_1i').value).to eq('2014')
   end
 
-
   scenario "submitting incomplete form", js: true do
     visit '/'
     click_button 'Continue'
@@ -57,7 +55,6 @@ feature 'Filling in claim form' do
 
     click_button 'Continue'
   end
-
 
   scenario "submitting form with only claimant type selected", js: true do
     visit '/'
@@ -101,7 +98,6 @@ feature 'Filling in claim form' do
     expect(page).not_to have_content('Enter the date notice ended')
   end
 
-
   def select_tenancy_start_date date
     day = date.day.to_s
     month = Date::MONTHNAMES[date.month]
@@ -131,7 +127,6 @@ feature 'Filling in claim form' do
     expect(page).to have_content("Carefully read the statements below:")
     expect(page).to_not have_content("You didn’t tell the defendant that the agreement was likely to change")
     expect(page).to have_content("The tenancy agreement was for 6 months (or more)")
-
 
     expect(page).to have_content("Carefully read the statements below:")
     click_button 'Continue'
@@ -179,9 +174,20 @@ feature 'Filling in claim form' do
     expect(page.has_no_checked_field?('claim_deposit_as_property')).to eq(true)
   end
 
+  scenario 'user specifies 2 claimants but doesnt provide details', js: true do
+    visit '/'
+    choose 'A private landlord (individual)'
+
+    fill_in 'How many claimants are there?', with: '2'
+    click_button 'Continue'
+
+    check_focus_after_click "You must specify whether claimant 2's address is the same as the first claimant",
+      'claim_claimant_2_address_same_as_first_claimant_yes'
+  end
+
   context 'address validation' do
     context 'javascript enabled' do
-      
+
       scenario 'property address with too many lines', js: true do
         visit '/'
         expect(page).not_to have_content(address_js_error_message)
@@ -213,11 +219,14 @@ feature 'Filling in claim form' do
         choose('claim_claimant_type_individual')
         fill_in('claim_num_claimants', with: '4')
         fill_in('claim_claimant_1_street', with: valid_address)
-        choose('claimant2address-no')
+
+        choose('claim_claimant_2_address_same_as_first_claimant_no')
         fill_in('claim_claimant_2_street', with: valid_address)
-        choose('claimant3address-no')
+
+        choose('claim_claimant_3_address_same_as_first_claimant_no')
         fill_in('claim_claimant_3_street', with: valid_address)
-        choose('claimant4address-no')
+
+        choose('claim_claimant_4_address_same_as_first_claimant_no')
         expect(page).not_to have_content(invalid_address)
         fill_in('claim_claimant_4_street', with: invalid_address)
         expect(page).to have_content(address_js_error_message)
@@ -255,7 +264,6 @@ feature 'Filling in claim form' do
         expect(page).to have_content(address_js_error_message)
       end
 
-
       scenario 'defendant 19 address invalid', js: true do
         visit '/'
         fill_in 'claim_num_defendants', with: 20
@@ -268,65 +276,58 @@ feature 'Filling in claim form' do
     context 'javascript disabled' do
       unless remote_test?
         scenario 'property address is invalid' do
-            visit '/'
-            fill_in('claim_property_street', with: invalid_address)
-            click_button 'Continue'
-            expect(page).to have_content( non_js_address_error_message('Property') )
+          visit '/'
+          fill_in('claim_property_street', with: invalid_address)
+          click_button 'Continue'
+          expect(page).to have_content( non_js_address_error_message('Property') )
         end
 
         scenario 'claimant_1 address is invalid' do
-            visit '/'
-            fill_in('claim_claimant_1_street', with: invalid_address)
-            click_button 'Continue'
-            expect(page).to have_content( non_js_address_error_message("Claimant 1's") )
+          visit '/'
+          fill_in('claim_claimant_1_street', with: invalid_address)
+          click_button 'Continue'
+          expect(page).to have_content( non_js_address_error_message("Claimant 1's") )
         end
 
         scenario 'claimant_4 address is invalid' do
-            visit '/'
-            fill_in('claim_claimant_4_street', with: invalid_address)
-            click_button 'Continue'
-            expect(page).to have_content( non_js_address_error_message("Claimant 4's") )
+          visit '/'
+          fill_in('claim_claimant_4_street', with: invalid_address)
+          click_button 'Continue'
+          expect(page).to have_content( non_js_address_error_message("Claimant 4's") )
         end
 
         scenario 'claimant contact address is invalid' do
-            visit '/'
-            fill_in('claim_claimant_contact_street', with: invalid_address)
-            click_button 'Continue'
-            expect(page).to have_content( non_js_address_error_message("Claimant contact's") )
+          visit '/'
+          fill_in('claim_claimant_contact_street', with: invalid_address)
+          click_button 'Continue'
+          expect(page).to have_content( non_js_address_error_message("Claimant contact's") )
         end
 
         scenario 'defendant_1 address is invalid' do
-            visit '/'
-            fill_in('claim_defendant_1_street', with: invalid_address)
-            click_button 'Continue'
-            expect(page).to have_content( non_js_address_error_message("Defendant 1's") )
+          visit '/'
+          fill_in('claim_defendant_1_street', with: invalid_address)
+          click_button 'Continue'
+          expect(page).to have_content( non_js_address_error_message("Defendant 1's") )
         end
       end
     end
   end
 
-
 end
-
 
 def invalid_address
   "line 1\nline 2\nline 3\nline 4\nline 5\n"
 end
 
-
 def valid_address
   "line 1\nline 2\nline 3\nline 4"
 end
-
 
 def address_js_error_message
   "The address can’t be longer than 4 lines."
 end
 
-
 def non_js_address_error_message(attribute)
   "#{attribute} address can’t be longer than 4 lines."
 end
-
-
 

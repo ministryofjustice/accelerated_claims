@@ -3,10 +3,7 @@
 //= require jasmine-jquery
 //= require address_module
 
-
-
 describe 'AddressModule', ->
-
 
   beforeEach ->
     html =  '''
@@ -22,7 +19,6 @@ describe 'AddressModule', ->
       </div>
     '''
     $(document.body).append($(html))
-  
 
   describe 'setup', ->
     it 'should call bindToAddressBoxes', ->
@@ -30,16 +26,11 @@ describe 'AddressModule', ->
       window.AddressModule.setup()
       expect(window.AddressModule.bindToAddressBoxes).toHaveBeenCalled()
 
-
     # don't understand why this is being called 4 times and not 2
     it 'should call checkNewlines once for each address box', ->
       spyOn window.AddressModule, 'checkNewlines'
       window.AddressModule.setup()
       expect(window.AddressModule.checkNewlines.calls.count()).toBe 4
-
-
-
-
 
   describe 'lastLineIsntWhiteSpace', ->
     it 'should return false if the last character is a newline', ->
@@ -48,16 +39,15 @@ describe 'AddressModule', ->
 
     it 'should return false if the last characters is a newline followed by a space', ->
       string = "andhc\n "
-      expect(AddressModule.lastLineIsntWhiteSpace(string)).toBe false      
+      expect(AddressModule.lastLineIsntWhiteSpace(string)).toBe false
 
     it 'should return false if the last characters are newline, tabs and spaces', ->
       string = 'abdbdn\nkjdfkkd\n\t\t '
-      expect(AddressModule.lastLineIsntWhiteSpace(string)).toBe false            
+      expect(AddressModule.lastLineIsntWhiteSpace(string)).toBe false
 
     it 'should return true if there is anything other than whitespace after the last newline', ->
       string = 'abdbdn\nkjdfkkd\n xx  '
       expect(AddressModule.lastLineIsntWhiteSpace(string)).toBe true
-
 
   describe 'countNewlines', ->
     it 'should return 0 for text with no new lines', ->
@@ -66,4 +56,4 @@ describe 'AddressModule', ->
 
     it 'should return 4 for text with 4 newlines', ->
       string = "abdd\n\ndsdf\nsdf\n"
-      expect(AddressModule.countNewlines(string)).toBe 4  
+      expect(AddressModule.countNewlines(string)).toBe 4

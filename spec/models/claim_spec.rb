@@ -52,7 +52,6 @@ describe Claim, :type => :model do
       expect(claim.defendant_20).to be_instance_of(Defendant)
     end
 
-
     it 'should respond to magic mehods defendant_n=' do
       expect(claim.defendants).to receive(:[]=).with(3, nil)
       claim.defendants[3] = nil
@@ -63,10 +62,9 @@ describe Claim, :type => :model do
     let(:data) { claim_post_data['claim'] }
 
     it "creates a valid claim" do
-      expect(claim).to be_valid
+      expect(claim).to be_valid, claim.errors.full_messages
     end
   end
-
 
   describe '#javascript_enabled?' do
     context 'with javascript' do
@@ -83,9 +81,6 @@ describe Claim, :type => :model do
       end
     end
   end
-
-
-
 
   describe '#as_json' do
     context "when both claim fee & legal cost are known" do
@@ -312,7 +307,6 @@ describe Claim, :type => :model do
       end
     end
 
-
     context 'num_claimants is 1' do
       let(:data) do
         mydata = claim_post_data['claim']
@@ -332,9 +326,9 @@ describe Claim, :type => :model do
         data[:claimant_1] = { "title"=>"", "full_name"=>"", "street"=>"", "postcode"=>"", 'claimant_type' => 'individual'}
         claim = Claim.new(data)
         expect(claim).to_not be_valid
-        expect(claim.claimant_1.errors.messages[:full_name]).to eq ["Enter the claimant's full name"]
-        expect(claim.claimant_1.errors.messages[:street]).to eq ["Enter the claimant's full address"]
-        expect(claim.claimant_1.errors.messages[:postcode]).to eq ["Enter the claimant's postcode"]
+        expect(claim.claimant_1.errors.messages[:full_name]).to eq ["Enter claimant 1's full name"]
+        expect(claim.claimant_1.errors.messages[:street]).to eq ["Enter claimant 1's full address"]
+        expect(claim.claimant_1.errors.messages[:postcode]).to eq ["Enter claimant 1's postcode"]
       end
 
       it 'should be valid if there is claimant 1 data and no claimant 2 data' do
@@ -358,30 +352,64 @@ describe Claim, :type => :model do
         expect(claim).to be_valid
       end
 
+      context 'when no details are present for claimant 2' do
+        before do
+          data.delete(:claimant_2)
+        end
 
-      it 'should not be valid when no details are present for claimant 2' do
-        data.delete(:claimant_2)
-        expect(claim).to_not be_valid
-        expect(claim.errors.full_messages).to eq [
-          ["claim_claimant_2_title_error", "Enter claimant 2's title"],
-          ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"],
-          ["claim_claimant_2_street_error", "Enter claimant 2's full address"],
-          ["claim_claimant_2_postcode_error", "Enter claimant 2's postcode"]
-        ]
+        context 'javascript disabled' do
+          it 'should not be valid' do
+            expect(claim).to_not be_valid
+            expect(claim.errors.full_messages).to eq [
+              ["claim_claimant_2_title_error", "Enter claimant 2's title"],
+              ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"],
+              ["claim_claimant_2_street_error", "Enter claimant 2's full address"],
+              ["claim_claimant_2_postcode_error", "Enter claimant 2's postcode"]
+            ]
+          end
+        end
+
+        context 'javascript enabled' do
+          it 'should not be valid' do
+            data['javascript_enabled'] = 'true'
+            expect(claim).to_not be_valid
+            expect(claim.errors.full_messages).to eq [
+              ["claim_claimant_2_title_error", "Enter claimant 2's title"],
+              ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"],
+              ["claim_claimant_2_address_same_as_first_claimant_error", "You must specify whether claimant 2's address is the same as the first claimant"]
+            ]
+          end
+        end
       end
 
-      it 'should not be valid when the details for claimant 2 are blank' do
-        data["claimant_2"].each { |k, v| data["claimant_2"][k] = '' }
-        expect(claim).to_not be_valid
-        expect(claim.errors.full_messages).to eq [
-            ["claim_claimant_2_title_error", "Enter claimant 2's title"],
-            ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"],
-            ["claim_claimant_2_street_error", "Enter claimant 2's full address"],
-            ["claim_claimant_2_postcode_error", "Enter claimant 2's postcode"]
-          ]
+      context 'when the details for claimant 2 are blank' do
+        before do
+          data["claimant_2"].each { |k, v| data["claimant_2"][k] = '' }
+        end
+        context 'javascript disabled' do
+          it 'should not be valid' do
+            expect(claim).to_not be_valid
+            expect(claim.errors.full_messages).to eq [
+                ["claim_claimant_2_title_error", "Enter claimant 2's title"],
+                ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"],
+                ["claim_claimant_2_street_error", "Enter claimant 2's full address"],
+                ["claim_claimant_2_postcode_error", "Enter claimant 2's postcode"]
+              ]
+          end
+        end
+        context 'javascript enabled' do
+          it 'should not be valid' do
+            data['javascript_enabled'] = 'true'
+            expect(claim).to_not be_valid
+            expect(claim.errors.full_messages).to eq [
+              ["claim_claimant_2_title_error", "Enter claimant 2's title"],
+              ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"],
+              ["claim_claimant_2_address_same_as_first_claimant_error", "You must specify whether claimant 2's address is the same as the first claimant"]
+            ]
+          end
+        end
       end
     end
-
 
     context 'claimant_type_validation' do
       let(:data) {
@@ -519,10 +547,9 @@ describe Claim, :type => :model do
       end
     end
 
-
     describe 'validation of number of defendants' do
       context 'with javascript enabled' do
-        
+
         let(:javascript_enabled_params) do
           data = claim_post_data['claim']
           data['javascript_enabled'] = 'Yes'
@@ -561,7 +588,6 @@ describe Claim, :type => :model do
           expect(claim.errors[:base]).to be_empty
         end
       end
-
 
       context('with javascript disabled') do
         let(:javascript_disabled_params) do
@@ -602,7 +628,6 @@ describe Claim, :type => :model do
 
       end
     end
-
 
   end
 end
