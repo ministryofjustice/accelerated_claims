@@ -72,10 +72,13 @@ describe PostcodeLookupProxy do
         response = double('Http Repsonse')
         expect(Excon).to receive(:get).and_return(response)
         expect(response).to receive(:status).and_return(200)
-        expect(pclp).to receive(:transform_api_response).with(response).and_return("transformed response")
+        expect(response).to receive(:body).and_return(api_response)
 
         expect(pclp.send(:production_lookup)).to be true
-        expect(pclp.result_set).to eq 'transformed response'
+        expect(pclp.result_set).to eq [
+          {"address"=>"2 Barons Court Road;;LONDON", "postcode"=>"ID1 1QD"}, 
+          {"address"=>"Basement Flat;;2 Barons Court Road;;LONDON", "postcode"=>"ID1 1QD"}
+        ]
       end
     end
 
@@ -84,17 +87,6 @@ describe PostcodeLookupProxy do
         pclp = PostcodeLookupProxy.new('SW10 9LN')
         expect(Excon).to receive(:get).and_raise Timeout::Error
         expect(pclp.send(:production_lookup)).to be false
-      end
-    end
-
-
-    context "real call to ideal postcocdes" do
-      it 'should produce nowt' do
-        WebMock.disable_net_connect!(:allow => [/ideal-postcodes/])
-        expect(Rails.env).to receive(:production?).and_return(true)
-        pclp = PostcodeLookupProxy.new('ID1 1QD')
-        expect(pclp.valid?).to be true
-        expect(pclp.lookup).to be true
       end
     end
   end
@@ -158,9 +150,64 @@ describe PostcodeLookupProxy do
     it 'should return the 2nd element of the dummy postcode results with a first digit of 2nd part of postcode is 1' do
       pc = PostcodeLookupProxy.new('BR31ES')
       expect(pc.send(:development_lookup)).to be true
-      expect(pc.result_set).to eq PostcodeLookupProxy.class_variable_get(:@@dummy_postcode_results)[1]
+      expect(pc.result_set).to eq expected_result_set
     end
   end
+
+  context 'error reporting' do
+    it 'should return false if remote service returns http status 200' do
+      expect(Rails.env).to receive(:production?).and_return(true)
+      http_response = double('HTTPResponse')
+      expect(Excon).to receive(:get).and_return(http_response)
+      expect(http_response).to receive(:status).and_return(200)
+      expect(http_response).to receive(:body).and_return(api_response)
+
+      pclp = PostcodeLookupProxy.new('BR31ES')
+      expect(pclp.lookup).to be true
+      expect(pclp.errors?).to be false
+    end
+
+    it 'should return true if remote service returns anything other than 200' do
+      expect(Rails.env).to receive(:production?).and_return(true)
+      http_response = double('HTTP Response')
+      expect(Excon).to receive(:get).and_return(http_response)
+      expect(http_response).to receive(:status).and_return(404).at_least(1)
+
+      pclp = PostcodeLookupProxy.new('BR31ES')
+      expect(pclp.lookup).to be false
+      expect(pclp.errors?).to be true
+    end
+    
+
+    it 'should return true if remote service returns anything other than 2000' do
+      expect(Rails.env).to receive(:production?).and_return(true)
+      http_response = double('HTTPResponse')
+      expect(Excon).to receive(:get).and_return(http_response)
+      expect(http_response).to receive(:status).and_return(200)
+      expect(http_response).to receive(:body).and_return(api_response_bad_code)
+
+      pclp = PostcodeLookupProxy.new('BR31ES')
+      expect(pclp.lookup).to be true
+      expect(pclp.errors?).to be true
+    end
+  end
+
+
+  ##### - A test to check that we can connect to the real remote service - don't use in day-to-day testing
+  
+  describe 'a real lookup to the api' do
+    it 'should return a result' do
+      WebMock.disable_net_connect!(:allow => /api.ideal-postcodes.co.uk/)
+      expect(Rails.env).to receive(:production?).and_return(true)
+      pclp = PostcodeLookupProxy.new('SW109LB')
+      expect(pclp).to be_valid
+      expect(pclp.lookup).to be true
+      expect(pclp.empty?).to be false
+    end
+  end
+
+
+
 end
 
 
@@ -241,4 +288,29 @@ end
 
 def api_response
   %Q/{"result":[{"postcode":"ID1 1QD","postcode_inward":"1QD","postcode_outward":"ID1","post_town":"LONDON","dependant_locality":"","double_dependant_locality":"","thoroughfare":"Barons Court Road","dependant_thoroughfare":"","building_number":"2","building_name":"","sub_building_name":"","po_box":"","department_name":"","organisation_name":"","udprn":25962203,"postcode_type":"S","su_organisation_indicator":"","delivery_point_suffix":"1G","line_1":"2 Barons Court Road","line_2":"","line_3":"","premise":"2","country":"England","county":"","district":"Hammersmith and Fulham","ward":"North End","longitude":-0.208644362766368,"latitude":51.4899488390558,"eastings":524466,"northings":178299},{"postcode":"ID1 1QD","postcode_inward":"1QD","postcode_outward":"ID1","post_town":"LONDON","dependant_locality":"","double_dependant_locality":"","thoroughfare":"Barons Court Road","dependant_thoroughfare":"","building_number":"2","building_name":"Basement Flat","sub_building_name":"","po_box":"","department_name":"","organisation_name":"","udprn":52618355,"postcode_type":"S","su_organisation_indicator":"","delivery_point_suffix":"3A","line_1":"Basement Flat","line_2":"2 Barons Court Road","line_3":"","premise":"Basement Flat, 2","country":"England","county":"","district":"Hammersmith and Fulham","ward":"North End","longitude":-0.208644362766368,"latitude":51.4899488390558,"eastings":524466,"northings":178299}],"code":2000,"message":"Success"}/
+end
+
+
+def api_response_bad_code
+  %Q/{"result":[{"postcode":"ID1 1QD","postcode_inward":"1QD","postcode_outward":"ID1","post_town":"LONDON","dependant_locality":"","double_dependant_locality":"","thoroughfare":"Barons Court Road","dependant_thoroughfare":"","building_number":"2","building_name":"","sub_building_name":"","po_box":"","department_name":"","organisation_name":"","udprn":25962203,"postcode_type":"S","su_organisation_indicator":"","delivery_point_suffix":"1G","line_1":"2 Barons Court Road","line_2":"","line_3":"","premise":"2","country":"England","county":"","district":"Hammersmith and Fulham","ward":"North End","longitude":-0.208644362766368,"latitude":51.4899488390558,"eastings":524466,"northings":178299},{"postcode":"ID1 1QD","postcode_inward":"1QD","postcode_outward":"ID1","post_town":"LONDON","dependant_locality":"","double_dependant_locality":"","thoroughfare":"Barons Court Road","dependant_thoroughfare":"","building_number":"2","building_name":"Basement Flat","sub_building_name":"","po_box":"","department_name":"","organisation_name":"","udprn":52618355,"postcode_type":"S","su_organisation_indicator":"","delivery_point_suffix":"3A","line_1":"Basement Flat","line_2":"2 Barons Court Road","line_3":"","premise":"Basement Flat, 2","country":"England","county":"","district":"Hammersmith and Fulham","ward":"North End","longitude":-0.208644362766368,"latitude":51.4899488390558,"eastings":524466,"northings":178299}],"code":4010,"message":"invalid key"}/
+end
+
+
+
+def expected_result_set
+  [
+      {"address"=>"1 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}, 
+      {"address"=>"3 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}, 
+      {"address"=>"5 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}, 
+      {"address"=>"7 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}, 
+      {"address"=>"9 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}, 
+      {"address"=>"11 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}, 
+      {"address"=>"13 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}, 
+      {"address"=>"15 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}, 
+      {"address"=>"17 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}, 
+      {"address"=>"19 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}, 
+      {"address"=>"121 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}, 
+      {"address"=>"22 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8H"}, 
+      {"address"=>"23 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}
+  ]
 end

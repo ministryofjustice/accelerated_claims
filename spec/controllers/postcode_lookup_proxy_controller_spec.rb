@@ -10,7 +10,7 @@ describe PostcodeLookupProxyController, :type => :controller do
       it "should render the result set" do
         get :show, format: :json, pc: "SW10 2LB"
         expect(response.status).to eq(200)
-        expect(response.body).to eq @result_set[2].to_json
+        expect(response.body).to eq expected_response
       end
     end
 
@@ -45,4 +45,33 @@ describe PostcodeLookupProxyController, :type => :controller do
   end
 
 
+end
+
+
+
+def expected_response
+  [
+    {"address"=>"150 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
+    {"address"=>"152 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
+    {"address"=>"154 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
+    {"address"=>"156 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
+    {"address"=>"158 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
+    {"address"=>"160 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
+    {"address"=>"162 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
+    {"address"=>"164 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
+    {"address"=>"166 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
+    {"address"=>"168 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
+    {"address"=>"170 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
+    {"address"=>"172 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
+    {"address"=>"174 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
+    {"address"=>"176 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
+    {"address"=>"178 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
+    {"address"=>"180 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
+    {"address"=>"182 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
+    {"address"=>"184 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
+    {"address"=>"186 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
+    {"address"=>"188 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
+    {"address"=>"190 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
+    {"address"=>"192 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"}
+  ].to_json
 end
