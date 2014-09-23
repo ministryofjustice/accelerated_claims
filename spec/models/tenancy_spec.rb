@@ -291,7 +291,7 @@ describe Tenancy, :type => :model do
         it { is_expected.not_to be_valid }
         it 'should have error message' do
           subject.valid?
-          expect(subject.errors.full_messages).to eq(["Start date must be blank if more than one tenancy agreement"])
+          expect(subject.errors.full_messages).to eq(["Start date If you have more than one tenancy agreement, please answer 'not applicable' to this question."])
         end
       end
 
@@ -307,7 +307,7 @@ describe Tenancy, :type => :model do
           "Latest agreement date You must say when the most recent tenancy agreement started",
           "Agreement reissued for same property You must say whether the tenancy agreement is for the same property",
           "Agreement reissued for same landlord and tenant You must say whether the tenancy agreement is between the same landlord and tenant",
-          "Start date must be blank if more than one tenancy agreement"].each do |msg|
+          "Start date If you have more than one tenancy agreement, please answer 'not applicable' to this question."].each do |msg|
             expect(subject.errors.full_messages).to include msg
           end
         end
