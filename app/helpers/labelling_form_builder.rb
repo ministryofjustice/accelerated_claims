@@ -1,3 +1,4 @@
+
 class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   include ActionView::Helpers::CaptureHelper
   include ActionView::Helpers::TagHelper
@@ -14,6 +15,12 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   def moj_date_fieldset attribute, legend, options = {}, example_date = Date.today, explanatory_text = nil
     df = MojDateFieldset.new(self, attribute, legend, options, example_date, explanatory_text)
     df.emit
+  end
+
+
+  def moj_postcode_picker postcode_attr, address_attr
+    pp = MojPostcodePicker.new(self, postcode_attr, address_attr)
+    pp.emit
   end
 
   def date_select_field_set attribute, legend, options={}

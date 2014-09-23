@@ -85,6 +85,11 @@ select
   &.date-month, &.month, &.small
     width: 130px
 
+select.address-picker-select
+  font-size: 12px
+  
+
+
 textarea
   width: 100%
   max-width: 300px
@@ -93,6 +98,9 @@ textarea
     height: 300px
   @include media(mobile)
     max-width: 280px
+
+textarea.postcode-textarea-reveal
+  font-size:  12px
 
 fieldset, legend
   @include clearfix
@@ -320,6 +328,11 @@ fieldset.plain
       margin-top: 15px
       &:first-child
         margin-top: 0
+
+    &.postcode
+      margin-top: 0px
+      margin-right: 25px
+      display: inline-block
 
     h3 + .row, h3 + .sub-panel
       margin-top: 0
