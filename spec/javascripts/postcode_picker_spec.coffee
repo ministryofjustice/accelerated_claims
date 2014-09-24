@@ -9,12 +9,13 @@ describe 'PostcodePicker', ->
 
   beforeEach ->
     element = $(
-      '<input 
+      '<div class="row rel postcode postcode-picker-container">
+      <input 
         type="text"
         size="8"
         name="claim[property][postcode]"
         maxlength="8"
-        id="first_postcode_edit_field"
+        id="claim_property_postcode_edit_field"
         class="smalltext postcode-picker-edit-field">
       <span
         type="submit"
@@ -22,7 +23,8 @@ describe 'PostcodePicker', ->
         id="claim_property_postcode_picker_button"
         class="button primary postcode-picker-button">
           Find UK Postcode
-        </span>' 
+        </span>
+      </div>' 
     )
     $(document.body).append(element)
     
@@ -30,12 +32,14 @@ describe 'PostcodePicker', ->
     element.remove()
     element = null
 
-  describe 'find postcode button clicked', ->
+  describe 'enter postcode and find postcode button clicked', ->
     it 'looks up postcode', ->
       spyOn window.PostcodeLookup, 'lookup'
-      
-      button = $('#claim_property_postcode_picker_button')
-      new window.PostcodePicker( button )
-      button.click()
 
-      expect(window.PostcodeLookup.lookup).toHaveBeenCalled()
+      picker = $( $('.postcode-picker-container')[0] )
+      picker.find('.postcode-picker-edit-field').val('SW106AJ')
+      
+      view = new window.PostcodePicker( picker )
+      picker.find('.postcode-picker-button').click()
+
+      expect(window.PostcodeLookup.lookup).toHaveBeenCalledWith('SW106AJ', view)
