@@ -1,11 +1,11 @@
 //= require underscore
 //= require jquery
 //= require jasmine-jquery
-//= require postcode_picker_module
+//= require postcode_picker
 
 
 
-describe 'PostcodePickerModule', ->
+describe 'PostcodePicker', ->
   element = null
 
   beforeEach ->
@@ -21,16 +21,16 @@ describe 'PostcodePickerModule', ->
 
   describe 'setup', ->
     it 'should call bindToFindPostcodeButton', ->
-      spyOn window.PostcodePickerModule, 'bindToFindPostcodeButton'
-      window.PostcodePickerModule.setup()
-      expect(window.PostcodePickerModule.bindToFindPostcodeButton).toHaveBeenCalled()
+      spyOn window.PostcodePicker, 'bindToFindPostcodeButton'
+      window.PostcodePicker.setup()
+      expect(window.PostcodePicker.bindToFindPostcodeButton).toHaveBeenCalled()
       # expect(1).toBe 2
 
   describe 'bindToFindPostcodeButton', ->
     it 'should call actionFindPostcodeButton for each postcode-picker-button', ->
-      spyOn window.PostcodePickerModule, 'actionFindPostcodeClicked'
-      window.PostcodePickerModule.bindToFindPostcodeButton()
-      expect(window.PostcodePickerModule.actionFindPostcodeClicked).toHaveBeenCalled()
+      spyOn window.PostcodePicker, 'actionFindPostcodeClicked'
+      window.PostcodePicker.bindToFindPostcodeButton()
+      expect(window.PostcodePicker.actionFindPostcodeClicked).toHaveBeenCalled()
 
 
 
