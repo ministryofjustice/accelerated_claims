@@ -19,6 +19,7 @@ class PostcodeLookupProxy
   attr_reader :result_set, :result_code, :result_message
 
   def initialize(postcode)
+
     @postcode       = UKPostcode.new(postcode)
     @valid          = @postcode.valid?
     @result_set     = nil

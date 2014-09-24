@@ -24,7 +24,6 @@ checkVisible = (panel_number) ->
     x = expect(element).toBeVisible()
 
 checkHidden = (panel_number) ->
-  console.log "expecting subpanel #{panel_number} to be hidden"
   unless panel_number == 0
     element = $("#defendant_#{panel_number}_subpanel")[0]
     expect(element).toBeHidden()
