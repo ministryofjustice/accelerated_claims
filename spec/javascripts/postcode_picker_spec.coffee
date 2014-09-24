@@ -26,7 +26,10 @@ describe 'PostcodePicker', ->
         </span>
       </div>' 
     )
+    @results = [{"address":"1 Melbury Close;;FERNDOWN","postcode":"BH22 8HR"},{"address":"3 Melbury Close;;FERNDOWN","postcode":"BH22 8HR"}]
+
     $(document.body).append(element)
+    @picker = $( $('.postcode-picker-container')[0] )
     
   afterEach ->
     element.remove()
@@ -36,10 +39,13 @@ describe 'PostcodePicker', ->
     it 'looks up postcode', ->
       spyOn window.PostcodeLookup, 'lookup'
 
-      picker = $( $('.postcode-picker-container')[0] )
-      picker.find('.postcode-picker-edit-field').val('SW106AJ')
+      @picker.find('.postcode-picker-edit-field').val('SW106AJ')
       
-      view = new window.PostcodePicker( picker )
-      picker.find('.postcode-picker-button').click()
+      view = new window.PostcodePicker( @picker )
+      @picker.find('.postcode-picker-button').click()
 
       expect(window.PostcodeLookup.lookup).toHaveBeenCalledWith('SW106AJ', view)
+
+  describe 'displayAddresses called with array of addresses', ->
+    it 'renders list of addresses in select box', ->
+      @picker
