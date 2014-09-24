@@ -2,16 +2,27 @@
 //= require jquery
 //= require jasmine-jquery
 //= require postcode_picker
-
-
+//= require postcode_lookup
 
 describe 'PostcodePicker', ->
   element = null
 
   beforeEach ->
     element = $(
-      '<input type="text" size="8" name="claim[property][postcode]" maxlength="8" id="first_postcode_edit_field" class="smalltext postcode-picker-edit-field">' +
-      '<span type="submit" name="FindUkPostcode" id="claim_property_postcode_picker_button" class="button primary postcode-picker-button">Find UK Postcode</span>' 
+      '<input 
+        type="text"
+        size="8"
+        name="claim[property][postcode]"
+        maxlength="8"
+        id="first_postcode_edit_field"
+        class="smalltext postcode-picker-edit-field">
+      <span
+        type="submit"
+        name="FindUkPostcode"
+        id="claim_property_postcode_picker_button"
+        class="button primary postcode-picker-button">
+          Find UK Postcode
+        </span>' 
     )
     $(document.body).append(element)
     
@@ -19,19 +30,12 @@ describe 'PostcodePicker', ->
     element.remove()
     element = null
 
-  describe 'setup', ->
-    it 'should call bindToFindPostcodeButton', ->
-      spyOn window.PostcodePicker, 'bindToFindPostcodeButton'
-      window.PostcodePicker.setup()
-      expect(window.PostcodePicker.bindToFindPostcodeButton).toHaveBeenCalled()
-      # expect(1).toBe 2
+  describe 'find postcode button clicked', ->
+    it 'looks up postcode', ->
+      spyOn window.PostcodeLookup, 'lookup'
+      
+      button = $('#claim_property_postcode_picker_button')
+      new window.PostcodePicker( button )
+      button.click()
 
-  describe 'bindToFindPostcodeButton', ->
-    it 'should call actionFindPostcodeButton for each postcode-picker-button', ->
-      spyOn window.PostcodePicker, 'actionFindPostcodeClicked'
-      window.PostcodePicker.bindToFindPostcodeButton()
-      expect(window.PostcodePicker.actionFindPostcodeClicked).toHaveBeenCalled()
-
-
-
-
+      expect(window.PostcodeLookup.lookup).toHaveBeenCalled()

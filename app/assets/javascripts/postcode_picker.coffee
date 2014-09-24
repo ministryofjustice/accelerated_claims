@@ -1,21 +1,15 @@
 root = exports ? this
 
-PostcodePicker =
+class PostcodePicker
 
-  bindToFindPostcodeButton: ->
-    console.log("PostcodePicker bindToFindPostcodeButton")
-    _.each $('.postcode-picker-button'), (el) ->
-      PostcodePicker.actionFindPostcodeClicked()
-
-  actionFindPostcodeClicked: ->
-    console.log('on click' + $(this))
-
-  setup: ->
-    # console.log("PostcodePickerModule setup")
-    PostcodePicker.bindToFindPostcodeButton()
-
+  constructor: (findButton) ->
+    findButton.on('click', ->
+      window.PostcodeLookup.lookup()
+    )
 
 root.PostcodePicker = PostcodePicker
 
+
 jQuery ->
-  PostcodePicker.setup()
+   _.each $('.postcode-picker-button'), (findButton) ->
+     new PostcodePicker(findButton)
