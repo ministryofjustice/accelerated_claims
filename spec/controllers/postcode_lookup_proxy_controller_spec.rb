@@ -17,7 +17,7 @@ describe PostcodeLookupProxyController, :type => :controller do
     context 'an invalid postcode' do
       it "should render 'invalid postcode'" do
         get :show, format: :json, pc: 'Sw10XX6ete'
-        expect(response.status).to eq 200
+        expect(response.status).to eq 422
         expect(response.body).to eq "Invalid postcode"
       end
     end
@@ -26,7 +26,7 @@ describe PostcodeLookupProxyController, :type => :controller do
     context 'an empty dataset' do
       it "should render 'No matching postcodes'" do
         get :show, format: :json, pc: 'RG2 0PU'
-        expect(response.status).to eq 200
+        expect(response.status).to eq 404
         expect(response.body).to eq "No matching postcodes"
       end
     end
