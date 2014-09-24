@@ -46,6 +46,8 @@ feature "submit claim" do
     end
   end
 
+  pending "waiting for postcode picker to be completed" do
+
   JOURNEY = ENV['JOURNEY'] || ''
 
   Dir.glob("spec/fixtures/scenario_#{JOURNEY}*_data.rb") do |data_file|
@@ -70,5 +72,6 @@ feature "submit claim" do
         end
       |)
     end
+  end
   end
 end
