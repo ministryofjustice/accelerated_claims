@@ -15,7 +15,11 @@ class PostcodePicker
     )
 
   displayAddresses: (addresses) ->
-
+    selectElement = @picker.find('.address-picker-select')
+    $.each addresses, (index, address) ->
+      address = address.address.replace(/;;/g, ", ")
+      option = "<option value=\"#{index}\">#{address}</option>"
+      selectElement.append option
 
 root.PostcodePicker = PostcodePicker
 
