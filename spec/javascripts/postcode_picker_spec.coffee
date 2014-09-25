@@ -104,20 +104,35 @@ describe 'PostcodePicker', ->
       expect( options.eq(2).text() ).toEqual '3 Melbury Close, FERNDOWN'
 
       expect(@pickerDiv.find('.property-postcode-select-container').hasClass('hide') ).toBe(false)
-
   
   describe 'invalid postcode', ->
     it 'should display an error message', ->
       @view.displayInvalidPostcodeMessage() 
       expect( @pickerDiv.find('span.error.postcode').text() ).toEqual 'That is an invalid postcode!'    
 
+    it 'clears existing error message', ->
+      @view.displayInvalidPostcodeMessage() 
+      @view.displayInvalidPostcodeMessage() 
+      expect( @pickerDiv.find('span.error.postcode').size() ).toEqual 1
+
     it 'should remove a previously-displayed error message on edit field keyup', ->
       @view.displayInvalidPostcodeMessage() 
       @postcodeEditField.trigger('keyup')
       expect( @pickerDiv.find('span.error.postcode').size() ).toEqual 0
 
+  describe 'displayNoResultsFound', ->
+    it 'should display an error message', ->
+      @view.displayNoResultsFound() 
+      expect( @pickerDiv.find('span.error.postcode').text() ).toEqual 'No addresses for that postcode!'    
 
+    it 'should remove a previously-displayed error message on edit field keyup', ->
+      @view.displayNoResultsFound() 
+      @postcodeEditField.trigger('keyup')
+      expect( @pickerDiv.find('span.error.postcode').size() ).toEqual 0
 
-
+    it 'clears existing error message', ->
+      @view.displayNoResultsFound() 
+      @view.displayNoResultsFound() 
+      expect( @pickerDiv.find('span.error.postcode').size() ).toEqual 1
 
 

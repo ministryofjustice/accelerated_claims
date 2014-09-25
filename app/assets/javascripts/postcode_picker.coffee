@@ -10,13 +10,12 @@ class PostcodePicker
     @button = picker.find('.postcode-picker-button')
     input = picker.find('.postcode-picker-edit-field')
 
-    @button.on('click', =>
+    @button.on 'click', =>
       postcode = input.val()
       window.PostcodeLookup.lookup(postcode, this)
-    )
 
     input.on 'keyup', =>
-      @picker.find('.error.postcode').detach()
+      @clearPostcodeErrorMessage()
 
   displayAddresses: (addresses) ->
     @selectElement.empty()
@@ -28,8 +27,17 @@ class PostcodePicker
     @picker.find('.property-postcode-select-container').removeClass('hide')
 
   displayInvalidPostcodeMessage: ->
-    @button.after('<span class="error postcode">That is an invalid postcode!</span>')
+    @addErrorMessage('That is an invalid postcode!')
 
+  displayNoResultsFound: ->
+    @addErrorMessage('No addresses for that postcode!')
+
+  clearPostcodeErrorMessage: ->
+    @picker.find('.error.postcode').detach()
+
+  addErrorMessage: (text) ->
+    @clearPostcodeErrorMessage()
+    @button.after("<span class=\"error postcode\">#{text}</span>")
 
 
 root.PostcodePicker = PostcodePicker
