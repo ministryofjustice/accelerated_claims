@@ -110,27 +110,27 @@
     post_town: READING
     postcode: RG2 7PU
 -
-  - line_1: "1st Floor Studios,"
-    line_2: "17 Montpellier Parade,"
+  - line_1: "1st Floor Studios"
+    line_2: "17 Montpellier Parade"
     post_town: HARROGATE
     postcode: HG1 2TG
-  - line_1: "Catwalk Cafe,"
-    line_2: "18 Montpellier Parade,"
+  - line_1: "Catwalk Cafe"
+    line_2: "18 Montpellier Parade"
     post_town: HARROGATE
     postcode: HG1 2TG
-  - line_1: "Farrahs Food Hall,"
+  - line_1: "Farrahs Food Hall"
     line_2: "29 Montpellier Parade"
     post_town: HARROGATE
     postcode: HG1 2TG
-  - line_1: "Hawick Cashmere Retail Ltd,"
+  - line_1: "Hawick Cashmere Retail Ltd"
     line_2: "20 Montpellier Parade"
     post_town: HARROGATE
     postcode: HG1 2TG
-  - line_1: "Lavender Court,"
+  - line_1: "Lavender Court"
     line_2: "15 Montpellier Parade"
     post_town: HARROGATE
     postcode: HG1 2TG
-  - line_1: "Page Opticians,"
+  - line_1: "Page Opticians"
     line_2: "28 Montpellier Parade"
     post_town: HARROGATE
     postcode: HG1 2TG
