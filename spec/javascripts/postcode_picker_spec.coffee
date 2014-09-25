@@ -133,6 +133,23 @@ describe 'PostcodePicker', ->
       @postcodeEditField.trigger('keyup')
       expect( @pickerDiv.find('span.error.postcode').size() ).toEqual 0
 
+
+  describe 'service not available', ->
+    it 'should display an error message', ->
+      @view.displayServiceUnavailable()
+      expect( @pickerDiv.find('span.error.postcode').size() ).toEqual 1
+      expect( @pickerDiv.find('span.error.postcode').text() ).toEqual 'Postcode lookup service not available. Please enter address manually.'
+
+    it 'should hide postcode picker', ->
+      @view.displayServiceUnavailable()
+      expect( @pickerDiv.find('.postcode-select-container') ).toBeHidden()
+
+    it 'should display address box', ->
+      @view.displayServiceUnavailable()
+      expect( @pickerDiv.find('.address') ).toBeVisible()
+
+
+
   describe 'clicking add address manually link', ->
     it 'should hide postcode picker', ->
       @pickerDiv.find('.postcode-picker-manual-link').click()

@@ -16,9 +16,7 @@ class PostcodePicker
       window.PostcodeLookup.lookup(postcode, this)
 
     manualLink.on 'click', =>
-      @picker.find('.postcode-lookup').hide()
-      address = @picker.find('.address')
-      address.show()
+      @displayAddressFields()
       false
 
     input.on 'keyup', =>
@@ -33,11 +31,19 @@ class PostcodePicker
       @selectElement.append option
     @picker.find('.postcode-select-container').show()
 
+  displayAddressFields: ->
+    @picker.find('.postcode-lookup').hide()
+    @picker.find('.address').show()
+
   displayInvalidPostcodeMessage: ->
     @addErrorMessage('That is an invalid postcode!')
 
   displayNoResultsFound: ->
     @addErrorMessage('No addresses for that postcode!')
+
+  displayServiceUnavailable: ->
+    @displayAddressFields()
+    @picker.find('.street').before("<div class='row'><span class=\"error postcode\">Postcode lookup service not available. Please enter address manually.</span></div>")
 
   clearPostcodeErrorMessage: ->
     @picker.find('.error.postcode').detach()
