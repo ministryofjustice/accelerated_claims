@@ -92,7 +92,18 @@ describe 'PostcodePicker', ->
 
       expect(@pickerDiv.find('.property-postcode-select-container').hasClass('hide') ).toBe(false)
       
+    it 'clears the existing contents of the select box before adding in new ones', ->
+      @view.displayAddresses(@results)
+      @view.displayAddresses(@results)
+      options = @pickerDiv.find('.address-picker-select').find('option')
+      expect( options.size() ).toEqual 3
+      
+      expect( options.eq(0).text() ).toEqual 'Please select an address'
+      expect( options.eq(1).text() ).toEqual 'Flat 1, 1 Melbury Close, FERNDOWN'
+      expect( options.eq(2).text() ).toEqual '3 Melbury Close, FERNDOWN'
 
+      expect(@pickerDiv.find('.property-postcode-select-container').hasClass('hide') ).toBe(false)
+      
 
 
 

@@ -6,6 +6,7 @@ class PostcodePicker
 
   constructor: (picker) ->
     @picker = picker
+    @selectElement = @picker.find('.address-picker-select')
     button = picker.find('.postcode-picker-button')
     input = picker.find('.postcode-picker-edit-field')
 
@@ -15,12 +16,14 @@ class PostcodePicker
     )
 
   displayAddresses: (addresses) ->
-    selectElement = @picker.find('.address-picker-select')
-    $.each addresses, (index, address) ->
+    @selectElement.empty()
+    @selectElement.append '<option disabled="disabled" value="">Please select an address</option>'
+    $.each addresses, (index, address) =>
       address = address.address.replace(/;;/g, ", ")
       option = "<option value=\"#{index}\">#{address}</option>"
-      selectElement.append option
+      @selectElement.append option
     @picker.find('.property-postcode-select-container').removeClass('hide')
+
 
 root.PostcodePicker = PostcodePicker
 
