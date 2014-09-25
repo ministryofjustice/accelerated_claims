@@ -27,7 +27,8 @@
         %fieldset#property-address-picker.postcode-picker-address-list
           %select#sel-address.address-picker-select{:name => "sel-address", :size => "6", :width => "50"}
             %option{:disabled => "disabled", :value => ""} Please select an address
-      %input#select-address.button.primary.postcode-picker-cta{:name => "SelectAddress", :type => "submit", :value => "Select Address"}
+      %a#select-address.button.primary.postcode-picker-cta{name: "SelectAddress", href: "#"}
+        Select Address
     
 
   .address.extra.no.sub-panel.hide

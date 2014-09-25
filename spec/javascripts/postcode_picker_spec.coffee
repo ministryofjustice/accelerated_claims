@@ -9,6 +9,14 @@ describe 'PostcodePicker', ->
 
   beforeEach ->
     element = $("
+<head>
+<style type='text/css'>
+.js-enabled .hide {
+    display: none;
+}
+</style>
+</head>
+<body class='js-enabled'>
 <div class='row rel postcode postcode-picker-container'>
   <div class='postcode-lookup'>
     <label class='postcode-picker-label' for='claim_property_postcode_edit_field'>Postcode</label>
@@ -35,7 +43,7 @@ describe 'PostcodePicker', ->
           </select>
         </fieldset>
       </div>
-      <input class='button primary postcode-picker-cta' id='select-address' name='SelectAddress' type='submit' value='Select Address'>
+      <a class='button primary postcode-picker-cta' id='select-address' href='#'>Select Address</a>
     </div>
   </div>
   <div class='address extra no sub-panel hide'>
@@ -53,7 +61,8 @@ describe 'PostcodePicker', ->
       <input class='smalltext' id='claim_property_postcode hide' maxlength='8' name='claim[defendant_1][postcode]' size='8' type='text'>
     </div>
   </div>
-</div>")
+</div>
+</body>")
 
     @results = [
       {"address":"Flat 1;;1 Melbury Close;;FERNDOWN","postcode":"BH22 8HR"},
@@ -135,17 +144,19 @@ describe 'PostcodePicker', ->
 
 
   describe 'service not available', ->
-    it 'should display an error message', ->
+    beforeEach ->
       @view.displayServiceUnavailable()
+
+    it 'should display an error message', ->
       expect( @pickerDiv.find('span.error.postcode').size() ).toEqual 1
-      expect( @pickerDiv.find('span.error.postcode').text() ).toEqual 'Postcode lookup service not available. Please enter address manually.'
+      expect( @pickerDiv.find('span.error.postcode').text() ).toEqual(
+        'Postcode lookup service not available. Please enter address manually.'
+      )
 
     it 'should hide postcode picker', ->
-      @view.displayServiceUnavailable()
       expect( @pickerDiv.find('.postcode-select-container') ).toBeHidden()
 
     it 'should display address box', ->
-      @view.displayServiceUnavailable()
       expect( @pickerDiv.find('.address') ).toBeVisible()
 
 
@@ -158,6 +169,20 @@ describe 'PostcodePicker', ->
     it 'should display address box', ->
       @pickerDiv.find('.postcode-picker-manual-link').click()
       expect( @pickerDiv.find('.address') ).toBeVisible()
+
+  describe 'selecting address from select box', ->
+    beforeEach ->
+      @pickerDiv.find('option').eq(1).prop('selected', true)
+      @pickerDiv.find('#postcode-picker-cta').click()
+
+    it 'should make the address box visible', ->
+      # expect( @pickerDiv.find('.address').hasClass('hide') ).toBe(false)
+      expect( @pickerDiv.find('.address') ).toBeVisible()
+
+    it 'should populate address box'
+
+
+    it 'should hide postcode picker'
 
 
 
