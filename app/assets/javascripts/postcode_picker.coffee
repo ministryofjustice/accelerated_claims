@@ -20,10 +20,11 @@ class PostcodePicker
       address = address.address.replace(/;;/g, ", ")
       option = "<option value=\"#{index}\">#{address}</option>"
       selectElement.append option
+    @picker.find('.property-postcode-select-container').removeClass('hide')
 
 root.PostcodePicker = PostcodePicker
 
 
 jQuery ->
    _.each $('.postcode-picker-container'), (picker) ->
-     new PostcodePicker(picker)
+     new PostcodePicker( $(picker) )
