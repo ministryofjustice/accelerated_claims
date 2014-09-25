@@ -8,6 +8,7 @@
       data: { 'virtual-pageview' => '/accelerated/property-section' }
 
   .sub-panel.address#property
-    = form.moj_postcode_picker(:postcode, :street)
+    = render partial: 'shared/postcode_picker'
+    -# = form.moj_postcode_picker(:postcode, :street)
 
  

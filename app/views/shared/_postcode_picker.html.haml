@@ -1,0 +1,42 @@
+.row.rel.postcode.postcode-picker-container
+  .postcode-lookup
+    
+    %label.postcode-picker-label{:for => "claim_property_postcode_edit_field"} Postcode
+    
+    %input#claim_property_postcode_edit_field.smalltext.postcode-picker-edit-field{:maxlength => "8", 
+            :name => "claim[property][postcode]", 
+            :size => "8", 
+            :type => "text"}
+      
+    %a#claim_property_postcode_picker_button.button.primary.postcode-picker-button{:href => "#property_postcode_picker", 
+        :name => "FindUkPostcode"}
+      Find UK Postcode
+    
+    %a#claim_property_postcode_picker_manual_link.caption.postcode-picker-manual-link{:href => "#claim_property_postcode_picker_manual_link"}
+      I want to add an address myself
+    
+    #claim_property_postcode_hourglass.postcode-picker-hourglass.hide
+      Finding address....
+    
+    #property_postcode_select_container.postcode-select-container.hide
+      #property-postcode-reveal.postcode-picker-display_container
+        %label.postcode-picker-label{:for => "claim_property_postcode_display"} Postcode
+        %span.postcode-picker-display N4 4EB
+        %a.caption.postcode-picker-change-link{:href => "#property_postcode_change"} Change
+      #claim-property-postcode-picker-address-list
+        %fieldset#property-address-picker.postcode-picker-address-list
+          %select#sel-address.address-picker-select{:name => "sel-address", :size => "6", :width => "50"}
+            %option{:disabled => "disabled", :value => ""} Please select an address
+      %input#select-address.button.primary.postcode-picker-cta{:name => "SelectAddress", :type => "submit", :value => "Select Address"}
+    
+
+.address.extra.no.sub-panel.hide
+  .row.rel.street
+    %label{:for => "claim_property_street"} Full address
+    %textarea#claim_property_street{:maxlength => "70", :name => "claim[property][street]"}
+  .row.js-only
+    %span#claim_property_street-error-message.error.hide
+      The address can’t be longer than 4 lines.
+  .row.rel.postcode
+    %label{:for => "claim_defendant_1_postcode"} Postcode
+    %input.smalltext{:id => "claim_property_postcode hide", :maxlength => "8", :name => "claim[defendant_1][postcode]", :size => "8", :type => "text"}

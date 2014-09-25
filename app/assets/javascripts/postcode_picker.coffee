@@ -24,7 +24,7 @@ class PostcodePicker
       address = address.address.replace(/;;/g, ", ")
       option = "<option value=\"#{index}\">#{address}</option>"
       @selectElement.append option
-    @picker.find('.property-postcode-select-container').removeClass('hide')
+    @picker.find('.postcode-select-container').show()
 
   displayInvalidPostcodeMessage: ->
     @addErrorMessage('That is an invalid postcode!')
