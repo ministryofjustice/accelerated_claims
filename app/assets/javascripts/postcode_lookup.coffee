@@ -4,7 +4,7 @@ PostcodeLookup =
 
   lookup: (postcode, view) ->
     jQuery.ajax(
-      url: 'http://localhost:3000/postcode.json?pc=SW106LV',
+      url: "http://localhost:3000/postcode.json?pc=#{ encodeURI(postcode) }",
       success: (data) ->
         view.displayAddresses(data)
       statusCode:
