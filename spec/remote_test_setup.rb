@@ -20,4 +20,4 @@ Capybara.app_host = "https://#{remote_host}/accelerated-possession-eviction"
 puts "Running tests remotely against " + Capybara.app_host
 Capybara.default_driver = Capybara.javascript_driver
 WebMock.disable! if defined? WebMock
-
+Capybara.default_wait_time = 30
