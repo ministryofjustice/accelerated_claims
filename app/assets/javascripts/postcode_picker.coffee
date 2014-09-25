@@ -9,10 +9,17 @@ class PostcodePicker
     @selectElement = @picker.find('.address-picker-select')
     @button = picker.find('.postcode-picker-button')
     input = picker.find('.postcode-picker-edit-field')
+    manualLink = picker.find('.postcode-picker-manual-link')
 
     @button.on 'click', =>
       postcode = input.val()
       window.PostcodeLookup.lookup(postcode, this)
+
+    manualLink.on 'click', =>
+      @picker.find('.postcode-lookup').hide()
+      address = @picker.find('.address')
+      address.show()
+      false
 
     input.on 'keyup', =>
       @clearPostcodeErrorMessage()

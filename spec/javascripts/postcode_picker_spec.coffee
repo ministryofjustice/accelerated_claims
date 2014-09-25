@@ -38,20 +38,20 @@ describe 'PostcodePicker', ->
       <input class='button primary postcode-picker-cta' id='select-address' name='SelectAddress' type='submit' value='Select Address'>
     </div>
   </div>
-</div>
-<div class='address extra no sub-panel hide'>
-  <div class='row rel street'>
-    <label for='claim_property_street'>Full address</label>
-    <textarea id='claim_property_street' maxlength='70' name='claim[property][street]'></textarea>
-  </div>
-  <div class='row js-only'>
-    <span class='error hide' id='claim_property_street-error-message'>
-      The address can’t be longer than 4 lines.
-    </span>
-  </div>
-  <div class='row rel postcode'>
-    <label for='claim_defendant_1_postcode'>Postcode</label>
-    <input class='smalltext' id='claim_property_postcode hide' maxlength='8' name='claim[defendant_1][postcode]' size='8' type='text'>
+  <div class='address extra no sub-panel hide'>
+    <div class='row rel street'>
+      <label for='claim_property_street'>Full address</label>
+      <textarea id='claim_property_street' maxlength='70' name='claim[property][street]'></textarea>
+    </div>
+    <div class='row js-only'>
+      <span class='error hide' id='claim_property_street-error-message'>
+        The address can’t be longer than 4 lines.
+      </span>
+    </div>
+    <div class='row rel postcode'>
+      <label for='claim_defendant_1_postcode'>Postcode</label>
+      <input class='smalltext' id='claim_property_postcode hide' maxlength='8' name='claim[defendant_1][postcode]' size='8' type='text'>
+    </div>
   </div>
 </div>")
 
@@ -136,11 +136,11 @@ describe 'PostcodePicker', ->
   describe 'clicking add address manually link', ->
     it 'should hide postcode picker', ->
       @pickerDiv.find('.postcode-picker-manual-link').click()
-      expect( @pickerDiv.find('.postcode-select-container').hasClass('hide') ).toBe(true)
+      expect( @pickerDiv.find('.postcode-select-container') ).toBeHidden()
 
-    # it 'should display address box', ->
-    #   @pickerDiv.find('.postcode-picker-manual-link').click()
-    #   expect( @pickerDiv.find('.address').hasClass('hide') ).toBe(false)
+    it 'should display address box', ->
+      @pickerDiv.find('.postcode-picker-manual-link').click()
+      expect( @pickerDiv.find('.address') ).toBeVisible()
 
 
 
