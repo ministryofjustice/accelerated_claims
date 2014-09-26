@@ -114,7 +114,7 @@ describe 'PostcodePicker', ->
   describe 'invalid postcode', ->
     it 'should display an error message', ->
       @view.displayInvalidPostcodeMessage()
-      expect( @pickerDiv.find('span.error.postcode').text() ).toEqual 'That is an invalid postcode!'
+      expect( @pickerDiv.find('span.error.postcode').text() ).toEqual 'Please enter a valid UK postcode'
 
     it 'clears existing error message', ->
       @view.displayInvalidPostcodeMessage()
@@ -129,7 +129,7 @@ describe 'PostcodePicker', ->
   describe 'displayNoResultsFound', ->
     it 'should display an error message', ->
       @view.displayNoResultsFound()
-      expect( @pickerDiv.find('span.error.postcode').text() ).toEqual 'No addresses for that postcode!'
+      expect( @pickerDiv.find('span.error.postcode').text() ).toEqual 'No address found. Please enter the address manually'
 
     it 'clears existing error message', ->
       @view.displayNoResultsFound()
@@ -148,7 +148,7 @@ describe 'PostcodePicker', ->
     it 'should display an error message', ->
       expect( @pickerDiv.find('span.error.postcode').size() ).toEqual 1
       expect( @pickerDiv.find('span.error.postcode').text() ).toEqual(
-        'Postcode lookup service not available. Please enter address manually.'
+        'Postcode lookup service not available. Please enter the address manually.'
       )
 
     it 'should hide postcode picker', ->

@@ -32,14 +32,14 @@ class PostcodePicker
     @picker.find('.address').show()
 
   displayInvalidPostcodeMessage: ->
-    @addErrorMessage('That is an invalid postcode!')
+    @addErrorMessage('Please enter a valid UK postcode')
 
   displayNoResultsFound: ->
-    @addErrorMessage('No addresses for that postcode!')
+    @addErrorMessage('No address found. Please enter the address manually')
 
   displayServiceUnavailable: ->
     @displayAddressFields()
-    @picker.find('.street').before("<div class='row'><span class=\"error postcode\">Postcode lookup service not available. Please enter address manually.</span></div>")
+    @picker.find('.street').before("<div class='row'><span class=\"error postcode\">Postcode lookup service not available. Please enter the address manually.</span></div>")
 
   clearPostcodeErrorMessage: ->
     @picker.find('.error.postcode').detach()
