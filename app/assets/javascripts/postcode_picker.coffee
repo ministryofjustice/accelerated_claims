@@ -32,7 +32,7 @@ class PostcodePicker
     @picker.find('.postcode input').val(postcode)
     @picker.find('.postcode-picker-address-list').hide()
     @picker.find('.postcode-picker-manual-link').hide()
-    @picker.find( '.address.details' ).addClass('open')
+    @picker.find( '.address.extra' ).show()
 
   displayAddresses: (addresses) ->
     @addresses = addresses

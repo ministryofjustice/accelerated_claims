@@ -153,17 +153,25 @@ describe 'PostcodePicker', ->
       @picker.find('option').eq(1).attr('selected', 'selected')
       @picker.find('.postcode-picker-cta').click()
 
-    it 'adds open class to address details', ->
-      expect( @picker.find( '.address.details' ).hasClass('open') ).toBe(true)
-
-    it 'should populate address street', ->
+    it 'populates address street', ->
       expect( @picker.find('.street textarea').val() ).toEqual "Flat 1\n1 Melbury Close\nFERNDOWN"
 
-    it 'should populate address postcode', ->
+    it 'populates address postcode', ->
       expect( @picker.find('.postcode input').val() ).toEqual "BH22 8HR"
 
-    it 'should hide address list', ->
+    it 'hides address list', ->
       expect( @picker.find('.postcode-picker-address-list') ).toBeHidden()
 
     it 'hides manual edit link', ->
       expect( @picker.find('.postcode-picker-manual-link') ).toBeHidden()
+
+  describe 'displaying results after selection', ->
+    beforeEach ->
+      @view.displayAddresses(@results)
+      @picker.find('option').eq(1).attr('selected', 'selected')
+      @picker.find('.postcode-picker-cta').click()
+      @view.displayAddresses(@results)
+
+    it 'shows address list', ->
+      expect(@picker.find('.postcode-select-container')).toBeVisible()
+
