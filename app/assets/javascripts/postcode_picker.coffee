@@ -15,10 +15,6 @@ class PostcodePicker
       postcode = input.val()
       window.PostcodeLookup.lookup(postcode, this)
 
-    manualLink.on 'click', =>
-      @displayAddressFields()
-      false
-
     input.on 'keyup', =>
       @clearPostcodeErrorMessage()
 
@@ -52,9 +48,7 @@ class PostcodePicker
     @clearPostcodeErrorMessage()
     @button.after("<span class=\"error postcode\">#{text}</span>")
 
-
 root.PostcodePicker = PostcodePicker
-
 
 jQuery ->
    _.each $('.postcode-picker-container'), (picker) ->
