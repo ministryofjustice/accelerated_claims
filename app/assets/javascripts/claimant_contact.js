@@ -53,7 +53,7 @@ moj.Modules.claimantContact = (function() {
   toggleDetailsBlock = function( $el ) {
     $el.toggleClass( 'open' );
     if( $el.hasClass( 'open' ) ) {
-      $( 'input', $el ).eq( 0 ).trigger( 'focus' );
+      $( 'input', $el ).add('textarea', $el).eq( 0 ).trigger( 'focus' );
     }
   };
 
