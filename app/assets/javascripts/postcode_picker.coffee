@@ -50,11 +50,14 @@ class PostcodePicker
   toggleAddressFields: ->
     if @picker.find('.address').is(':visible')
       @picker.find('.address').hide()
+      @picker.find('.postcode-picker-manual-link').parent().removeClass('open')
     else
       @displayAddressFields()
 
   displayAddressFields: ->
     @picker.find('.address').show()
+    @picker.find('.postcode-picker-manual-link').parent().addClass('open')
+    @picker.find('.street textarea').focus()
 
   displayInvalidPostcodeMessage: ->
     @addErrorMessage('Please enter a valid UK postcode')

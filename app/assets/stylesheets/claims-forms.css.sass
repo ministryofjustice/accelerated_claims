@@ -623,23 +623,26 @@ fieldset.plain
       display: none
       &:first-child
         display: block
-    .caption
-      padding-left: 20px
-      background: image-url('summary-arrow-sprite.gif') 0 5px no-repeat
-      color: $link-colour
-      cursor: pointer
-      &:hover
-        text-decoration: underline
-      &:focus
-        background: rgb(254, 188, 64) image-url('summary-arrow-sprite.gif') 0 5px no-repeat
     &.open
       .row
         display: block
-      .caption
-        background-position: -1000px 5px
-        color: $link-active-colour
-        &:focus
-          background: rgb(254, 188, 64) image-url('summary-arrow-sprite.gif') 0 5px no-repeat
+
+
+a.caption
+  padding-left: 20px
+  background: image-url('summary-arrow-sprite.gif') 0 5px no-repeat
+  color: $link-colour
+  cursor: pointer
+  &:hover
+    text-decoration: underline
+  &:focus
+    background: rgb(254, 188, 64) image-url('summary-arrow-sprite.gif') 0 5px no-repeat
+.open
+  a.caption
+    background-position: -1000px 5px
+    color: $link-active-colour
+    &:focus
+      background: rgb(254, 188, 64) image-url('summary-arrow-sprite.gif') 0 5px no-repeat
 
 
 .noticeStatement
