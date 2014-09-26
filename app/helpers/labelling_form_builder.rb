@@ -85,7 +85,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def error_id_for attribute
-    "#{@object_name.tr('[]','_')}_#{attribute}_error".squeeze('_')
+    "#{@object_name.to_s.tr('[]','_')}_#{attribute}_error".squeeze('_')
   end
 
   def id_for attribute, default=nil

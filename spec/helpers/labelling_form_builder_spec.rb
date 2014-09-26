@@ -11,8 +11,14 @@ describe 'LabellingFormBuilder', :type => :helper  do
   let(:form)        { LabellingFormBuilder.new(:notice, notice, template, {}) }
 
   describe '#text_field_row' do
-    it 'should output regular text_field_row' do
+    it 'outputs regular text_field_row' do
       expect(form.text_field_row(:expiry_date)).to eq(expected_text_field_html.chomp)
+    end
+
+    it 'shows errors inside the label' do
+      messages = double('error_messages', messages: { expiry_date: ['date cannot be blank'] })
+      expect(notice).to receive(:errors).at_least(:once).and_return(messages)
+      expect(form.text_field_row(:expiry_date)).to eq(expected_text_field_with_error_html.chomp)
     end
   end
 
@@ -46,3 +52,10 @@ def expected_text_field_html
 EOHTML
 end
 
+def expected_text_field_with_error_html
+  str = <<-EOHTML
+<div id='notice_expiry_date_error' class='row error'>
+<label for="notice_expiry_date">Expiry date  <span class='error'>date cannot be blank</span></label>
+<input id="notice_expiry_date" name="notice[expiry_date]" type="text" /></div>
+EOHTML
+end
