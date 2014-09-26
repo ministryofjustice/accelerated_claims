@@ -16,6 +16,9 @@ class PostcodePicker
       postcode = input.val()
       window.PostcodeLookup.lookup(postcode, this)
 
+    manualLink.on 'click', =>
+      @toggleAddressFields()
+
     input.on 'keyup', =>
       @clearPostcodeErrorMessage()
 
@@ -44,8 +47,13 @@ class PostcodePicker
       @selectElement.append option
     @picker.find('.postcode-select-container').show()
 
+  toggleAddressFields: ->
+    if @picker.find('.address').is(':visible')
+      @picker.find('.address').hide()
+    else
+      @displayAddressFields()
+
   displayAddressFields: ->
-    @picker.find('.postcode-lookup').hide()
     @picker.find('.address').show()
 
   displayInvalidPostcodeMessage: ->

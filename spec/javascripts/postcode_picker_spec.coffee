@@ -15,30 +15,30 @@ describe 'PostcodePicker', ->
 <div class='postcode postcode-picker-container'>
   <div class='postcode-lookup row rel'>
     <label class='postcode-picker-label' for='claim_property_postcode_edit_field'>Postcode</label>
-    <input class='smalltext postcode-picker-edit-field' maxlength='8' name='claim[property][postcode]' size='8' type='text'>
+    <input class='smalltext postcode-picker-edit-field' id='claim_property_postcode_edit_field' maxlength='8' name='claim[property][postcode]' size='8' type='text'>
     <a class='button primary postcode-picker-button' href='#property_postcode_picker' name='FindUkPostcode'>
       Find UK Postcode
     </a>
     <div class='postcode-picker-hourglass hide'>
       Finding address....
     </div>
-    <div class='postcode-select-container hide'>
+    <div class='postcode-select-container sub-panel hide'>
       <fieldset class='postcode-picker-address-list'>
         <select class='address-picker-select' name='sel-address' size='6' width='50'>
           <option disabled='disabled' value=''>Please select an address</option>
         </select>
-        <a class='button primary postcode-picker-cta' href='#' name='SelectAddress'>
+        <a class='button primary postcode-picker-cta' href='#claim_property_postcode_picker_manual_link' id='claim_propery_selectaddress' name='SelectAddress'>
           Select Address
         </a>
       </fieldset>
     </div>
-  </div>
-  <div class='address details extra no sub-panel'>
-    <div class='row js-only'>
+    <div class='js-only'>
       <a class='caption postcode-picker-manual-link' href='#claim_property_postcode_picker_manual_link'>
         I want to add an address myself
       </a>
     </div>
+  </div>
+  <div class='address extra no sub-panel hide'>
     <div class='row rel street'>
       <label for='claim_property_street'>Full address</label>
       <textarea id='claim_property_street' maxlength='70' name='claim[property][street]'></textarea>
@@ -50,7 +50,7 @@ describe 'PostcodePicker', ->
     </div>
     <div class='row rel postcode'>
       <label for='claim_defendant_1_postcode'>Postcode</label>
-      <input class='smalltext' id='claim_property_postcode hide' maxlength='8' name='claim[defendant_1][postcode]' size='8' type='text'>
+      <input class='smalltext' id='claim_property_postcode' maxlength='8' name='claim[defendant_1][postcode]' size='8' type='text'>
     </div>
   </div>
 </div>
@@ -143,9 +143,6 @@ describe 'PostcodePicker', ->
       expect( @picker.find('span.error.postcode').text() ).toEqual(
         'Postcode lookup service not available. Please enter the address manually.'
       )
-
-    it 'should hide postcode picker', ->
-      expect( @picker.find('.postcode-select-container') ).toBeHidden()
 
   describe 'selecting address from select box', ->
     beforeEach ->
