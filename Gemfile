@@ -60,6 +60,7 @@ group :development, :test do
   gem 'timecop'
   gem 'pry'
   gem 'foreman'
+  gem 'fuubar' # Rspec formatter with fast fail.
 end
 
 group :test do
