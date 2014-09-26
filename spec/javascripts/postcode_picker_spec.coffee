@@ -69,9 +69,9 @@ describe 'PostcodePicker', ->
     ]
     $(document.body).append(element)
     pickerDivs = $('.postcode-picker-container')
-    @pickerDiv = pickerDivs.eq(0)
-    @postcodeEditField = @pickerDiv.find('.postcode-picker-edit-field')
-    @view = new window.PostcodePicker( @pickerDiv )
+    @picker = pickerDivs.eq(0)
+    @postcodeEditField = @picker.find('.postcode-picker-edit-field')
+    @view = new window.PostcodePicker( @picker )
 
   afterEach ->
     element.remove()
@@ -82,7 +82,7 @@ describe 'PostcodePicker', ->
       spyOn window.PostcodeLookup, 'lookup'
 
       @postcodeEditField.val('SW106AJ')
-      @pickerDiv.find('.postcode-picker-button').click()
+      @picker.find('.postcode-picker-button').click()
 
       expect(window.PostcodeLookup.lookup).toHaveBeenCalledWith('SW106AJ', @view)
 
@@ -90,76 +90,82 @@ describe 'PostcodePicker', ->
 
     it 'renders list of addresses in select box', ->
       @view.displayAddresses(@results)
-      options = @pickerDiv.find('.address-picker-select').find('option')
+      options = @picker.find('.address-picker-select').find('option')
       expect( options.size() ).toEqual 3
 
       expect( options.eq(0).text() ).toEqual 'Please select an address'
       expect( options.eq(1).text() ).toEqual 'Flat 1, 1 Melbury Close, FERNDOWN'
       expect( options.eq(2).text() ).toEqual '3 Melbury Close, FERNDOWN'
 
-      expect(@pickerDiv.find('.postcode-select-container')).toBeVisible()
+      expect(@picker.find('.postcode-select-container')).toBeVisible()
 
     it 'clears the existing contents of the select box before adding in new ones', ->
       @view.displayAddresses(@results)
       @view.displayAddresses(@results)
-      options = @pickerDiv.find('.address-picker-select').find('option')
+      options = @picker.find('.address-picker-select').find('option')
       expect( options.size() ).toEqual 3
 
       expect( options.eq(0).text() ).toEqual 'Please select an address'
       expect( options.eq(1).text() ).toEqual 'Flat 1, 1 Melbury Close, FERNDOWN'
       expect( options.eq(2).text() ).toEqual '3 Melbury Close, FERNDOWN'
 
-      expect(@pickerDiv.find('.postcode-select-container')).toBeVisible()
+      expect(@picker.find('.postcode-select-container')).toBeVisible()
 
   describe 'invalid postcode', ->
     it 'should display an error message', ->
       @view.displayInvalidPostcodeMessage()
-      expect( @pickerDiv.find('span.error.postcode').text() ).toEqual 'Please enter a valid UK postcode'
+      expect( @picker.find('span.error.postcode').text() ).toEqual 'Please enter a valid UK postcode'
 
     it 'clears existing error message', ->
       @view.displayInvalidPostcodeMessage()
       @view.displayInvalidPostcodeMessage()
-      expect( @pickerDiv.find('span.error.postcode').size() ).toEqual 1
+      expect( @picker.find('span.error.postcode').size() ).toEqual 1
 
     it 'should remove a previously-displayed error message on edit field keyup', ->
       @view.displayInvalidPostcodeMessage()
       @postcodeEditField.trigger('keyup')
-      expect( @pickerDiv.find('span.error.postcode').size() ).toEqual 0
+      expect( @picker.find('span.error.postcode').size() ).toEqual 0
 
   describe 'displayNoResultsFound', ->
     it 'should display an error message', ->
       @view.displayNoResultsFound()
-      expect( @pickerDiv.find('span.error.postcode').text() ).toEqual 'No address found. Please enter the address manually'
+      expect( @picker.find('span.error.postcode').text() ).toEqual 'No address found. Please enter the address manually'
 
     it 'clears existing error message', ->
       @view.displayNoResultsFound()
       @view.displayNoResultsFound()
-      expect( @pickerDiv.find('span.error.postcode').size() ).toEqual 1
+      expect( @picker.find('span.error.postcode').size() ).toEqual 1
 
     it 'should remove a previously-displayed error message on edit field keyup', ->
       @view.displayNoResultsFound()
       @postcodeEditField.trigger('keyup')
-      expect( @pickerDiv.find('span.error.postcode').size() ).toEqual 0
+      expect( @picker.find('span.error.postcode').size() ).toEqual 0
 
   describe 'service not available', ->
     beforeEach ->
       @view.displayServiceUnavailable()
 
     it 'should display an error message', ->
-      expect( @pickerDiv.find('span.error.postcode').size() ).toEqual 1
-      expect( @pickerDiv.find('span.error.postcode').text() ).toEqual(
+      expect( @picker.find('span.error.postcode').size() ).toEqual 1
+      expect( @picker.find('span.error.postcode').text() ).toEqual(
         'Postcode lookup service not available. Please enter the address manually.'
       )
 
     it 'should hide postcode picker', ->
-      expect( @pickerDiv.find('.postcode-select-container') ).toBeHidden()
+      expect( @picker.find('.postcode-select-container') ).toBeHidden()
 
   describe 'selecting address from select box', ->
     beforeEach ->
-      @pickerDiv.find('option').eq(1).prop('selected', true)
-      @pickerDiv.find('#postcode-picker-cta').click()
+      @view.displayAddresses(@results)
+      @picker.find('option').eq(1).attr('selected', 'selected')
+      @picker.find('.postcode-picker-cta').click()
 
-    it 'should populate address box'
+    it 'adds open class to address details', ->
+      expect( @picker.find( '.address.details' ).hasClass('open') ).toBe(true)
 
-    it 'should hide postcode picker'
+    it 'should populate address street', ->
+      expect( @picker.find('.street textarea').val() ).toEqual "Flat 1\n1 Melbury Close\nFERNDOWN"
+
+    it 'should populate address postcode', ->
+      expect( @picker.find('.postcode input').val() ).toEqual "BH22 8HR"
 
