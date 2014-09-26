@@ -6,7 +6,7 @@ feature 'Session timeout' do
 
   if remote_test?
     scenario "extend session dialog shown before session expires", js: true do
-      using_wait_time(5) do
+      using_wait_time(10) do
         start = Time.now
         visit '/?quick=very' # this causes extend session dialog to show after 3 secs
         expect(page).to have_content('Your session will expire')
@@ -18,7 +18,7 @@ feature 'Session timeout' do
     end
 
     scenario "session expires if you wait long enough", js: true do
-      using_wait_time(12) do
+      using_wait_time(20) do
         start = Time.now
         visit '/?quick=very' # this causes client session to expire in 9 secs
         expect(page).to have_content('Session expired')

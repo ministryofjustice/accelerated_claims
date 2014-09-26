@@ -73,7 +73,7 @@ class Tenancy < BaseClass
     t.validates_with DateValidator, fields: [:start_date]
 
     t.validates *MULTIPLE_TENANCY_FIELDS,
-      absence: { message: 'must be blank if one tenancy agreement'}
+      absence: { message: "If you only have one tenancy agreement, please answer 'not applicable' to this question."}
   end
 
   with_options if: :multiple_tenancy_agreements? do |t|
@@ -86,7 +86,7 @@ class Tenancy < BaseClass
       [:original_assured_shorthold_tenancy_agreement_date, :latest_agreement_date]
 
     t.validates *ONE_TENANCY_FIELDS,
-      absence: { message: "must be blank if more than one tenancy agreement" }
+      absence: { message: "If you have more than one tenancy agreement, please answer 'not applicable' to this question." }
   end
 
   with_options if: :only_in_first_rules_period? do |t|
