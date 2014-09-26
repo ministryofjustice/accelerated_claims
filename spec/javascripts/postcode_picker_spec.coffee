@@ -15,34 +15,27 @@ describe 'PostcodePicker', ->
 <div class='postcode postcode-picker-container'>
   <div class='postcode-lookup row rel'>
     <label class='postcode-picker-label' for='claim_property_postcode_edit_field'>Postcode</label>
-    <input class='smalltext postcode-picker-edit-field' id='claim_property_postcode_edit_field' maxlength='8' name='claim[property][postcode]' size='8' type='text'>
-    <a class='button primary postcode-picker-button' href='#property_postcode_picker' id='claim_property_postcode_picker_button' name='FindUkPostcode'>
+    <input class='smalltext postcode-picker-edit-field' maxlength='8' name='claim[property][postcode]' size='8' type='text'>
+    <a class='button primary postcode-picker-button' href='#property_postcode_picker' name='FindUkPostcode'>
       Find UK Postcode
     </a>
-    <div class='postcode-picker-hourglass hide' id='claim_property_postcode_hourglass'>
+    <div class='postcode-picker-hourglass hide'>
       Finding address....
     </div>
-    <div class='postcode-select-container hide' id='property_postcode_select_container'>
-      <div class='postcode-picker-display_container' id='property-postcode-reveal'>
-        <label class='postcode-picker-label' for='claim_property_postcode_display'>Postcode</label>
-        <span class='postcode-picker-display'>N4 4EB</span>
-        <a class='caption postcode-picker-change-link' href='#property_postcode_change'>Change</a>
-      </div>
-      <div id='claim-property-postcode-picker-address-list'>
-        <fieldset class='postcode-picker-address-list' id='property-address-picker'>
-          <select class='address-picker-select' id='sel-address' name='sel-address' size='6' width='50'>
-            <option disabled='disabled' value=''>Please select an address</option>
-          </select>
-        </fieldset>
-        <a class='button primary postcode-picker-cta' href='#' id='select-address' name='SelectAddress'>
+    <div class='postcode-select-container hide'>
+      <fieldset class='postcode-picker-address-list'>
+        <select class='address-picker-select' name='sel-address' size='6' width='50'>
+          <option disabled='disabled' value=''>Please select an address</option>
+        </select>
+        <a class='button primary postcode-picker-cta' href='#' name='SelectAddress'>
           Select Address
         </a>
-      </div>
+      </fieldset>
     </div>
   </div>
   <div class='address details extra no sub-panel'>
     <div class='row js-only'>
-      <a class='caption postcode-picker-manual-link' href='#claim_property_postcode_picker_manual_link' id='claim_property_postcode_picker_manual_link'>
+      <a class='caption postcode-picker-manual-link' href='#claim_property_postcode_picker_manual_link'>
         I want to add an address myself
       </a>
     </div>
@@ -171,3 +164,6 @@ describe 'PostcodePicker', ->
 
     it 'should hide address list', ->
       expect( @picker.find('.postcode-picker-address-list') ).toBeHidden()
+
+    it 'hides manual edit link', ->
+      expect( @picker.find('.postcode-picker-manual-link') ).toBeHidden()

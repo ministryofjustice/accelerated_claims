@@ -31,6 +31,7 @@ class PostcodePicker
     @picker.find('.street textarea').val(street)
     @picker.find('.postcode input').val(postcode)
     @picker.find('.postcode-picker-address-list').hide()
+    @picker.find('.postcode-picker-manual-link').hide()
     @picker.find( '.address.details' ).addClass('open')
 
   displayAddresses: (addresses) ->
