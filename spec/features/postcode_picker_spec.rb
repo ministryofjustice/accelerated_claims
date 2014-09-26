@@ -48,4 +48,35 @@ feature 'Postcode address lookup' do
     expect(page).to have_field('claim_property_street', with: "5 Melbury Close\nFERNDOWN")
   end
 
+  scenario "click manual edit and then search for postcode", js: true do
+    visit '/'
+    click_link 'I want to add an address myself'
+
+    fill_in 'claim_property_postcode_edit_field', with: 'SW10 6GG'
+    click_link 'Find UK Postcode'
+
+    expect(page).not_to have_field('claim_property_postcode')
+    expect(page).not_to have_field('claim_property_street')
+  end
+
+  scenario "search for postcode no addresses found opens for manual edit", js: true do
+    visit '/'
+    fill_in 'claim_property_postcode_edit_field', with: 'SW10 0GG' # 0 trigger no results found
+    click_link 'Find UK Postcode'
+
+    expect(page).to have_content('No address found. Please enter the address manually')
+    expect(page).to have_field('claim_property_postcode')
+    expect(page).to have_field('claim_property_street')
+  end
+
+  scenario 'search successfully, then search resulting in error hides select list', js: true do
+    visit '/'
+    fill_in 'claim_property_postcode_edit_field', with: 'SW10 6GG'
+    click_link 'Find UK Postcode'
+
+    fill_in 'claim_property_postcode_edit_field', with: 'SW10 0GG' # 0 trigger no results found
+    click_link 'Find UK Postcode'
+
+    expect(page).not_to have_field('sel-address')
+  end
 end

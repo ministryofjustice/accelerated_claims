@@ -8,22 +8,26 @@ class PostcodePicker
     @picker = picker
     @selectElement = @picker.find('.address-picker-select')
     @button = picker.find('.postcode-picker-button')
-    input = picker.find('.postcode-picker-edit-field')
+    @input = picker.find('.postcode-picker-edit-field')
     manualLink = picker.find('.postcode-picker-manual-link')
     selectButton = picker.find('.postcode-picker-cta')
 
     @button.on 'click', =>
-      postcode = input.val()
-      window.PostcodeLookup.lookup(postcode, this)
+      @lookupPostcode()
 
     manualLink.on 'click', =>
       @toggleAddressFields()
 
-    input.on 'keyup', =>
+    @input.on 'keyup', =>
       @clearPostcodeErrorMessage()
 
     selectButton.on 'click', =>
       @selectAddress()
+
+  lookupPostcode: =>
+    postcode = @input.val()
+    @picker.find('.postcode-select-container').hide()
+    window.PostcodeLookup.lookup(postcode, this)
 
   selectAddress: =>
     index = parseInt @picker.find('option:selected').val()
@@ -38,6 +42,7 @@ class PostcodePicker
     @picker.find( '.address.extra' ).show()
 
   displayAddresses: (addresses) ->
+    @hideAddressFields()
     @addresses = addresses
     @selectElement.empty()
     @selectElement.append '<option disabled="disabled" value="">Please select an address</option>'
@@ -49,10 +54,13 @@ class PostcodePicker
 
   toggleAddressFields: ->
     if @picker.find('.address').is(':visible')
-      @picker.find('.address').hide()
-      @picker.find('.postcode-picker-manual-link').parent().removeClass('open')
+      @hideAddressFields()
     else
       @displayAddressFields()
+
+  hideAddressFields: ->
+    @picker.find('.address').hide()
+    @picker.find('.postcode-picker-manual-link').parent().removeClass('open')
 
   displayAddressFields: ->
     @picker.find('.address').show()
@@ -61,13 +69,15 @@ class PostcodePicker
 
   displayInvalidPostcodeMessage: ->
     @addErrorMessage('Please enter a valid UK postcode')
+    @hideAddressFields()
 
   displayNoResultsFound: ->
     @addErrorMessage('No address found. Please enter the address manually')
+    @displayAddressFields()
 
   displayServiceUnavailable: ->
     @displayAddressFields()
-    @picker.find('.street').before("<div class='row'><span class=\"error postcode\">Postcode lookup service not available. Please enter the address manually.</span></div>")
+    @addErrorMessage('Postcode lookup service not available. Please enter the address manually.')
 
   clearPostcodeErrorMessage: ->
     @picker.find('.error.postcode').detach()
