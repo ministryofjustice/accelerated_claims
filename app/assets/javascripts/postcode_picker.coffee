@@ -28,9 +28,10 @@ class PostcodePicker
     street = selectedAddress.address.replace(/;;/g, "\n")
     postcode = selectedAddress.postcode
 
-    @picker.find( '.address.details' ).addClass('open')
     @picker.find('.street textarea').val(street)
     @picker.find('.postcode input').val(postcode)
+    @picker.find('.postcode-picker-address-list').hide()
+    @picker.find( '.address.details' ).addClass('open')
 
   displayAddresses: (addresses) ->
     @addresses = addresses

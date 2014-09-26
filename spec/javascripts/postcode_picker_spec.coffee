@@ -34,10 +34,10 @@ describe 'PostcodePicker', ->
             <option disabled='disabled' value=''>Please select an address</option>
           </select>
         </fieldset>
+        <a class='button primary postcode-picker-cta' href='#' id='select-address' name='SelectAddress'>
+          Select Address
+        </a>
       </div>
-      <a class='button primary postcode-picker-cta' href='#' id='select-address' name='SelectAddress'>
-        Select Address
-      </a>
     </div>
   </div>
   <div class='address details extra no sub-panel'>
@@ -169,3 +169,5 @@ describe 'PostcodePicker', ->
     it 'should populate address postcode', ->
       expect( @picker.find('.postcode input').val() ).toEqual "BH22 8HR"
 
+    it 'should hide address list', ->
+      expect( @picker.find('.postcode-picker-address-list') ).toBeHidden()
