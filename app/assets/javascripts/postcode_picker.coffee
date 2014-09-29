@@ -46,6 +46,7 @@ class PostcodePicker
     @addresses = addresses
     @selectElement.empty()
     @selectElement.append '<option disabled="disabled" value="">Please select an address</option>'
+    @input.val(addresses[1].postcode)
     $.each addresses, (index, address) =>
       address = address.address.replace(/;;/g, ", ")
       option = "<option value=\"#{index}\">#{address}</option>"

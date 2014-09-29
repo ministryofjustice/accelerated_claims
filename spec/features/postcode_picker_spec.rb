@@ -93,6 +93,15 @@ feature 'Postcode address lookup' do
     click_link 'claim_propery_selectaddress'
     expect(page).to have_field('claim_property_street', with: "50 Tregunter Road\nLONDON")
   end
+
+
+  scenario 'entering unformatted postcode repopulates edit box with formatted postcode', js: true  do
+    visit '/'
+    fill_in 'claim_property_postcode_edit_field', with: 'rg27pu'
+    click_link 'Find UK Postcode'
+    expect(page).to have_selector('input#claim_property_postcode_edit_field')
+    expect(find_field('claim_property_postcode_edit_field').value).to eq 'RG2 7PU'
+  end
 end
 
 
