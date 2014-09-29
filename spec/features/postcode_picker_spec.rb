@@ -79,4 +79,24 @@ feature 'Postcode address lookup' do
 
     expect(page).not_to have_field('sel-address')
   end
+
+  scenario 'search successfully then search different postcode results in new results', js: true do
+    visit '/'
+    fill_in 'claim_property_postcode_edit_field', with: 'SW10 6GG'
+    click_link 'Find UK Postcode'
+
+    select "5 Melbury Close, FERNDOWN", from: "sel-address"
+    fill_in 'claim_property_postcode_edit_field', with: 'SW10 5GG'
+    click_link 'Find UK Postcode'
+
+    select "50 Tregunter Road, LONDON", from: "sel-address"
+    click_link 'claim_propery_selectaddress'
+    expect(page).to have_field('claim_property_street', with: "50 Tregunter Road\nLONDON")
+  end
 end
+
+
+
+
+
+
