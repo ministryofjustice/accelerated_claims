@@ -75,13 +75,16 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
   def error_span attribute, opts = {}
     added_classes = ' visuallyhidden' if opts[:hidden]
+    span_id = opts.has_key?(:id)? " id='#{opts[:id]}'" : nil
+
     if @object.is_a?(Claim)
       message_key = "claim_#{attribute}_error"
       message = @object.errors.messages[:base].to_h[message_key]
     else
       message = @object.errors.messages[attribute][0]
     end
-    @template.surround(" <span class='error#{added_classes}'>".html_safe, "</span>".html_safe) { message }
+
+    @template.surround(" <span class='error#{added_classes}'#{span_id}>".html_safe, "</span>".html_safe) { message }
   end
 
   def error_id_for attribute

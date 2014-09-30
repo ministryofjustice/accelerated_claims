@@ -44,6 +44,10 @@ describe 'LabellingFormBuilder', :type => :helper  do
     it 'can be hidden' do
       expect(form.error_span(:notice, { hidden: true })).to have_css('span.visuallyhidden')
     end
+
+    it 'has an id for use with aria-labelledby' do
+      expect(form.error_span(:notice, { id: 'id_for_screenreader_to_target' })).to have_css('span#id_for_screenreader_to_target')
+    end
   end
 
   describe '#text_field_row' do
