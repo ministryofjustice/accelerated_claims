@@ -2,27 +2,29 @@ require_relative '../mocks/mock_template'
 
 RSpec::Matchers.define :only_show_errors_inside do |expected|
   match do |actual|
-    doc = Nokogiri::HTML(actual)
-    count_of_all_error_messages = doc.css(".row.error span.error").count
-    count_of_correct_error_messages = doc.css(".row.error span.error").count{ |elem| elem.parent.name == expected.to_s }
-    @total_failures = count_of_all_error_messages - count_of_correct_error_messages
-    @total_failures == 0
+    doc                             = Nokogiri::HTML(actual)
+    @count_of_all_error_messages    = doc.css("span.error").count
+    count_of_correct_error_messages = doc.css("span.error").count{ |elem| elem.parent.name == expected.to_s }
+    @total_failures                 = @count_of_all_error_messages - count_of_correct_error_messages
+    (@total_failures == 0) && (@count_of_all_error_messages > 0)
   end
   failure_message do |actual|
-    "expected all errors to appear inside a #{expected} tag. #{@total_failures} did not."
+    if @total_failures > 0
+      "expected #{pluralize(@count_of_all_error_messages, 'error')} to appear inside a #{expected} tag. #{@total_failures} did not."
+    elsif @count_of_all_error_messages <= 0
+      "expected error messages, but did not find any."
+    end
   end
 end
 
-RSpec::Matchers.define :have_a_correctly_structured_form_for do |expected, form_element_type, model_name|
+RSpec::Matchers.define :have_a_form_with_these_css_elements do |expected_elements|
   match do |actual|
-    id_attrib = "#{model_name.to_s}_#{expected.to_s}"
-    doc = Nokogiri::HTML(actual)
+    doc     = Nokogiri::HTML(actual)
     @errors = []
-    @errors << 'missing div.row' if doc.css(".row").blank?
-    label_css = ".row label[for=#{id_attrib}]"
-    @errors << "expected css ``, but did not find it " if doc.css(label_css).blank?
-    @errors << "expected css `.row #{form_element_type}[id=#{id_attrib}]`, but did not find it" if doc.css(".row #{form_element_type}[id=#{id_attrib}]").blank?
-    @errors.compact.blank? == true
+    [expected_elements].flatten.each do |element|
+      @errors << "expected `#{element}`, but did not find it" if doc.css(element).blank?
+    end
+    @errors.empty?
   end
   failure_message do |actual|
     'generated form had the following errors: ' + @errors.compact.join(", ")
@@ -32,15 +34,21 @@ end
 
 describe 'LabellingFormBuilder', :type => :helper  do
 
-  let(:notice)      { double('model', class: double('class').as_null_object).as_null_object }
-  let(:template)    { MockTemplate.new }
-  let(:form)        { LabellingFormBuilder.new(:notice, notice, template, {}) }
+  let(:notice)   { double('model', class: double('class').as_null_object).as_null_object }
+  let(:template) { MockTemplate.new }
+  let(:form)     { LabellingFormBuilder.new(:notice, notice, template, { }) }
+
+  describe '#error_span' do
+    it 'can be hidden' do
+      expect(form.error_span(:notice, { hidden: true })).to have_css('span.visuallyhidden')
+    end
+  end
 
   describe '#text_field_row' do
     subject { form.text_field_row(:expiry_date) }
 
-    it 'outputs regular text_field_row' do
-      expect(subject).to have_a_correctly_structured_form_for(:expiry_date, 'input[type=text]', :notice)
+    it 'outputs the correct form element' do
+      expect(subject).to have_a_form_with_these_css_elements(['.row input[type=text]', '.row label'])
     end
 
     it 'shows errors inside the label' do
@@ -50,17 +58,20 @@ describe 'LabellingFormBuilder', :type => :helper  do
     end
   end
 
-  describe '#date_select_field_set' do
-    subject { form.moj_date_fieldset :date_served, 'Date notice served', { class: 'date-picker' }, 9.weeks.ago }
-    #subject { form.date_select_field_set(:date, 'date', Date.today) }
+  describe '#radio_button_field_set' do
+    subject {
+      form.radio_button_fieldset :house,
+      'property',
+      class: 'radio',
+      choice: { house: 'yes', room: 'no' }
+    }
 
-    it 'outputs regular text_field_row' do
-      expect(subject).to eq('bongo')
-      expect(subject).to have_a_correctly_structured_form_for(:expiry_date, 'input[type=text]', :notice)
+    it 'outputs the correct form element' do
+      expect(subject).to have_a_form_with_these_css_elements('fieldset.radio', 'fieldset legend', 'input[type=radio, id=notice-house-yes]')
     end
 
-    it 'shows errors inside the label' do
-      messages = double('error_messages', messages: { expiry_date: ['date cannot be blank'] })
+    it 'shows errors inside the legend' do
+      messages = double('error_messages', messages: { house: ['please select what kind of property it is.'] })
       expect(notice).to receive(:errors).at_least(:once).and_return(messages)
       expect(subject).to only_show_errors_inside(:label)
     end
@@ -70,8 +81,7 @@ describe 'LabellingFormBuilder', :type => :helper  do
     subject { form.text_area_row(:full_address) }
 
     it 'outputs regular text_area_row' do
-      expect(subject).to have_a_correctly_structured_form_for(:full_address, 'textarea', :notice)
-      expect(subject).to have_css('.row textarea#notice_full_address')
+      expect(subject).to have_a_form_with_these_css_elements(['.row textarea#notice_full_address', '.row label'])
     end
 
     it 'shows errors inside the label' do

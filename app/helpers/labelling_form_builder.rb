@@ -73,7 +73,8 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 
-  def error_span attribute
+  def error_span attribute, opts = {}
+    added_classes = ' visuallyhidden' if opts[:hidden]
     if @object.is_a?(Claim)
       message_key = "claim_#{attribute}_error"
       message_hash = @object.errors.messages[:base].to_h
@@ -81,7 +82,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     else
       message = @object.errors.messages[attribute][0]
     end
-    @template.surround(" <span class='error'>".html_safe, "</span>".html_safe) { message }
+    @template.surround(" <span class='error#{added_classes}'>".html_safe, "</span>".html_safe) { message }
   end
 
   def error_id_for attribute
@@ -180,10 +181,12 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
     @template.surround("<div class='option'>".html_safe, "</div>".html_safe) do
       @template.surround("<label for='#{id}'>".html_safe, "</label>".html_safe) do
+        errors = error_span(attribute, {hidden: true}) if error_for?(attribute)
         [
+          errors,
           input,
           label
-        ].join("\n")
+        ].compact.join("\n")
       end
     end
 
