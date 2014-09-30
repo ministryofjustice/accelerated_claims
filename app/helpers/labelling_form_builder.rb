@@ -77,7 +77,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     added_classes = ' visuallyhidden' if opts[:hidden]
     if @object.is_a?(Claim)
       message_key = "claim_#{attribute}_error"
-      message_hash = @object.errors.messages[:base].to_h
       message = @object.errors.messages[:base].to_h[message_key]
     else
       message = @object.errors.messages[attribute][0]
