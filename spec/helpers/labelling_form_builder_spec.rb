@@ -1,10 +1,12 @@
 require_relative '../mocks/mock_template'
 
-RSpec::Matchers.define :only_show_errors_inside do |expected|
+RSpec::Matchers.define :only_show_errors_inside do |expected, opts|
+  opts = opts || {}
+  opts = { error_css: 'span.error' }.merge(opts)
   match do |actual|
     doc                             = Nokogiri::HTML(actual)
-    @count_of_all_error_messages    = doc.css("span.error").count
-    count_of_correct_error_messages = doc.css("span.error").count{ |elem| elem.parent.name == expected.to_s }
+    @count_of_all_error_messages    = doc.css(opts[:error_css]).count
+    count_of_correct_error_messages = doc.css(opts[:error_css]).count{ |elem| elem.parent.name == expected.to_s }
     @total_failures                 = @count_of_all_error_messages - count_of_correct_error_messages
     (@total_failures == 0) && (@count_of_all_error_messages > 0)
   end
@@ -73,7 +75,7 @@ describe 'LabellingFormBuilder', :type => :helper  do
     it 'shows errors inside the legend' do
       messages = double('error_messages', messages: { house: ['please select what kind of property it is.'] })
       expect(notice).to receive(:errors).at_least(:once).and_return(messages)
-      expect(subject).to only_show_errors_inside(:label)
+      expect(subject).to only_show_errors_inside(:label, error_css: 'span.error.visuallyhidden')
     end
   end
 
