@@ -11,6 +11,7 @@ class PostcodePicker
     @input = picker.find('.postcode-picker-edit-field')
     manualLink = picker.find('.postcode-picker-manual-link')
     selectButton = picker.find('.postcode-picker-cta')
+    changePostcodeLink = picker.find('.change-postcode-link')
 
     @button.on 'click', =>
       @lookupPostcode()
@@ -23,6 +24,11 @@ class PostcodePicker
 
     selectButton.on 'click', =>
       @selectAddress()
+
+    changePostcodeLink.on 'click', =>
+      @hideAddressFields()
+      @input.val('')
+      @input.focus()
 
   lookupPostcode: =>
     postcode = @input.val()
@@ -46,7 +52,7 @@ class PostcodePicker
     @addresses = addresses
     @selectElement.empty()
     @selectElement.append '<option disabled="disabled" value="">Please select an address</option>'
-    @input.val(addresses[1].postcode)
+    @input.val(addresses[0].postcode)
     $.each addresses, (index, address) =>
       address = address.address.replace(/;;/g, ", ")
       option = "<option value=\"#{index}\">#{address}</option>"
