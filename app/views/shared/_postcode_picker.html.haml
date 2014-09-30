@@ -32,12 +32,12 @@
 
     .row.rel.street
       %label{:for => "claim_property_street"} Full address
-      %textarea#claim_property_street{:maxlength => "70", :name => "claim[property][street]"}
+      %textarea.street#claim_property_street{:maxlength => "70", :name => "claim[property][street]"}
     .row.js-only
       %span#claim_property_street-error-message.error.hide
         The address can’t be longer than 4 lines.
     .row.rel.postcode
       %label{:for => "claim_defendant_1_postcode"} Postcode
       %div{style: "overflow: hidden; width: 100%"}
-        %input.smalltext{:id => "claim_property_postcode", :maxlength => "8", :name => "claim[defendant_1][postcode]", :size => "8", :type => "text", style: 'float: left;  margin-right: 20px;'}
+        %input.smalltext.postcode{:id => "claim_property_postcode", :maxlength => "8", :name => "claim[defendant_1][postcode]", :size => "8", :type => "text", style: 'float: left;  margin-right: 20px;'}
         %a.change-postcode-link{href: "#claim_property_postcode_picker_manual_link", style: 'float: left;'} Change 

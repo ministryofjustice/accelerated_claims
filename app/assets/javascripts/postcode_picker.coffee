@@ -74,6 +74,8 @@ class PostcodePicker
     @picker.find('.postcode-picker-manual-link').parent().removeClass('open')
 
   displayAddressFields: ->
+    @picker.find('.street').val('')
+    @picker.find('.postcode').val('')
     @picker.find('.address').show()
     @picker.find('.postcode-picker-manual-link').parent().addClass('open')
     @picker.find('.street textarea').focus()

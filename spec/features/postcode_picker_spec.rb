@@ -98,6 +98,20 @@ feature 'Postcode address lookup' do
 
       expect(page).not_to have_field('sel-address')
     end
+
+    scenario 'select an address and then enter another address with no results and edit box should be empty', js: true do
+      visit '/'
+      fill_in 'claim_property_postcode_edit_field', with: 'rg27pu'
+      click_link 'Find UK Postcode'
+      select "160 Northumberland Avenue, READING", from: "sel-address"
+      click_link "claim_propery_selectaddress"
+      click_link 'Change'
+      fill_in 'claim_property_postcode_edit_field', with: 'sw109lb'
+      click_link 'Find UK Postcode'
+      expect(page).to have_content("Postcode lookup service not available. Please enter the address manually.")
+      expect(page).to have_field('claim_property_street', with: '')
+      expect(page).to have_field('claim_property_postcode', with: '')
+    end
   end
 
 
