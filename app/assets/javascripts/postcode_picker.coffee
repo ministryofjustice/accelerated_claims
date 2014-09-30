@@ -48,6 +48,7 @@ class PostcodePicker
     @picker.find('.postcode-picker-manual-link').hide()
     @picker.find('.address.extra' ).show()
     @picker.find('.postcode-selection-els').hide()
+    @picker.find('.street textarea').focus()
 
   displayAddresses: (addresses) ->
     @hideAddressFields()
@@ -61,6 +62,7 @@ class PostcodePicker
       @selectElement.append option
     @picker.find('.postcode-select-container').show()
     @picker.find('.postcode-picker-address-list').show()
+
     
 
   toggleAddressFields: ->
