@@ -50,7 +50,19 @@ feature 'Postcode address lookup' do
       click_link "claim_propery_selectaddress"
 
       click_link 'Change'
+      expect(page).to have_field('claim_property_postcode_edit_field')
       expect(page).not_to have_field('claim_property_street')
+    end
+
+
+    scenario 'selecting a postcode hides the postcode entry box and find button', js: true do
+      visit '/'
+      fill_in 'claim_property_postcode_edit_field', with: 'rg27pu'
+      click_link 'Find UK Postcode'
+      select "156 Northumberland Avenue, READING", from: "sel-address"
+      click_link "claim_propery_selectaddress"
+
+      expect(page).not_to have_field('claim_property_postcode_edit_field')
     end
   end
 

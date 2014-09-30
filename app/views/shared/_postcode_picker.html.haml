@@ -1,16 +1,18 @@
 .postcode.postcode-picker-container
   .postcode-lookup.row.rel
 
-    %label.postcode-picker-label{:for => "claim_property_postcode_edit_field"} Postcode
+    .postcode-selection-els
 
-    %input#claim_property_postcode_edit_field.smalltext.postcode-picker-edit-field{:maxlength => "8",
-            :name => "claim[property][postcode]",
-            :size => "8",
-            :type => "text"}
+      %label.postcode-picker-label{:for => "claim_property_postcode_edit_field"} Postcode
 
-    %a.button.primary.postcode-picker-button{:href => "#property_postcode_picker",
-        :name => "FindUkPostcode"}
-      Find UK Postcode
+      %input#claim_property_postcode_edit_field.smalltext.postcode-picker-edit-field{:maxlength => "8",
+              :name => "claim[property][postcode]",
+              :size => "8",
+              :type => "text"}
+
+      %a.button.primary.postcode-picker-button{:href => "#property_postcode_picker",
+          :name => "FindUkPostcode"}
+        Find UK Postcode
 
     .postcode-picker-hourglass.hide
       Finding address....

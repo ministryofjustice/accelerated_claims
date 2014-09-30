@@ -27,6 +27,7 @@ class PostcodePicker
 
     changePostcodeLink.on 'click', =>
       @hideAddressFields()
+      @picker.find('.postcode-selection-els').show()
       @input.val('')
       @input.focus()
 
@@ -45,7 +46,8 @@ class PostcodePicker
     @picker.find('.postcode input').val(postcode)
     @picker.find('.postcode-picker-address-list').hide()
     @picker.find('.postcode-picker-manual-link').hide()
-    @picker.find( '.address.extra' ).show()
+    @picker.find('.address.extra' ).show()
+    @picker.find('.postcode-selection-els').hide()
 
   displayAddresses: (addresses) ->
     @hideAddressFields()
