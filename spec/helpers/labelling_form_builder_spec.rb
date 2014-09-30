@@ -50,6 +50,20 @@ describe 'LabellingFormBuilder', :type => :helper  do
     end
   end
 
+  describe '#moj_date_fieldset' do
+    subject { form.moj_date_fieldset :date_served, 'Date notice served', { class: 'date-picker' }, 9.weeks.ago }
+
+    it 'outputs the correct form elements' do
+      expect(subject).to have_a_form_with_these_css_elements(['input.moj-date-day[type=text]', 'input.moj-date-month[type=text]', 'input.moj-date-year[type=text]'])
+    end
+
+    it 'associates the error span via aria-labelledby' do
+      messages = double('error_messages', messages: { date_served: ['date cannot be blank'] })
+      expect(notice).to receive(:errors).at_least(:once).and_return(messages)
+      expect(subject).to have_a_form_with_these_css_elements(['span.error', 'span.error#moj-date-fieldset-error'])
+    end
+  end
+
   describe '#text_field_row' do
     subject { form.text_field_row(:expiry_date) }
 

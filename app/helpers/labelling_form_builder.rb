@@ -74,6 +74,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def error_span attribute, opts = {}
+    binding.pry
     added_classes = ' visuallyhidden' if opts[:hidden]
     span_id = opts.has_key?(:id)? " id='#{opts[:id]}'" : nil
 
