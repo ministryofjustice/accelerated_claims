@@ -1,5 +1,13 @@
 class ClaimController < ApplicationController
 
+  # set the live_postcode_lookup flag as a class variable so that it can be queried from the PostcodeLookupProxyController
+  @@live_postcode_lookup = false
+
+
+  def self.live_postcode_lookup?
+    @@live_postcode_lookup
+  end
+
   def new
     reset_session if referrer_is_landing_page?
     session[:test] = params[:test]
@@ -14,7 +22,15 @@ class ClaimController < ApplicationController
       end_year: Tenancy::APPLICABLE_FROM_DATE.year
     }
 
+
+    # use live postcode lookup database if running on productionserver or url param livepc set to 1
     production = ENV["ENV_NAME"] == "production"
+    if production == true || params[:livepc] == '1'
+      @@live_postcode_lookup = true
+    else
+      @@live_postcode_lookup = false
+    end
+
 
     @claim = if !production && params.has_key?(:journey)
       force_reload = params.has_key?(:reload)

@@ -1,7 +1,8 @@
 class PostcodeLookupProxyController < ApplicationController
 
   def show
-    @pclp = PostcodeLookupProxy.new(params[:pc])
+
+    @pclp = PostcodeLookupProxy.new(params[:pc], ClaimController.live_postcode_lookup?)
     
     respond_to do |format|
       if @pclp.invalid?
