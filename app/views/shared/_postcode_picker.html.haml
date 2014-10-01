@@ -1,3 +1,4 @@
+
 .postcode.postcode-picker-container
   .postcode-lookup.row.rel
 
@@ -19,8 +20,9 @@
 
     .postcode-select-container.sub-panel.hide
       %fieldset.postcode-picker-address-list
-        %select.address-picker-select{:name => "sel-address", :size => "6", :width => "50"}
-          %option{:disabled => "disabled", :value => ""} Please select an address
+        %label.hint{ for: "claim_property_address_select"} Please select an address
+        %select.address-picker-select#claim_property_address_select{name: "sel-address", size: "6", width: "50"}
+          %option#listbox-0{role: "option", disabled: "disabled", :value => ""} Please select an address
         %a.button.primary.postcode-picker-cta#claim_propery_selectaddress{name: "SelectAddress", href: "#claim_property_postcode_picker_manual_link"}
           Select Address
     .js-only

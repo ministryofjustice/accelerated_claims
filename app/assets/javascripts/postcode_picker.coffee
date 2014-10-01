@@ -54,7 +54,6 @@ class PostcodePicker
     @hideAddressFields()
     @addresses = addresses
     @selectElement.empty()
-    @selectElement.append '<option disabled="disabled" value="">Please select an address</option>'
     @input.val(addresses[0].postcode)
     $.each addresses, (index, address) =>
       address = address.address.replace(/;;/g, ", ")
@@ -62,6 +61,7 @@ class PostcodePicker
       @selectElement.append option
     @picker.find('.postcode-select-container').show()
     @picker.find('.postcode-picker-address-list').show()
+    @picker.find('.postcode-picker-address_list').focus()
 
     
 
