@@ -14,11 +14,11 @@ require 'yaml'
 
 class PostcodeLookupProxy
 
-  @@dummy_postcode_results = YAML.load_file("#{Rails.root}/config/dummy_postcode_results.yml") unless Rails.env.production?
+  @@dummy_postcode_results = YAML.load_file("#{Rails.root}/config/dummy_postcode_results.yml") 
 
   attr_reader :result_set, :result_code, :result_message
 
-  def initialize(postcode)
+  def initialize(postcode, use_live_data = false)
 
     @postcode       = UKPostcode.new(postcode)
     @valid          = @postcode.valid?
@@ -29,6 +29,7 @@ class PostcodeLookupProxy
     @timeout        = config['timeout']
     @result_code    = nil
     @result_message = nil
+    @use_live_data  = use_live_data
   end
 
 
@@ -48,7 +49,7 @@ class PostcodeLookupProxy
 
   def lookup
     raise "Invalid Postcode" unless valid?
-    Rails.env.production? ? production_lookup : development_lookup
+    @use_live_data == true ? production_lookup : development_lookup
   end
 
   def errors?

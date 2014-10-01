@@ -3,7 +3,7 @@ describe PostcodeLookupProxy do
   describe '.new' do
     context 'a valid postcode' do
       it 'should return be valid' do
-        pclp = PostcodeLookupProxy.new('WC1B5HA')
+        pclp = PostcodeLookupProxy.new('WC1B5HA', false)
         expect(pclp).to be_valid
       end
     end
@@ -32,9 +32,8 @@ describe PostcodeLookupProxy do
       pc.lookup
     end
 
-    it 'should call production lookup if production environment' do
-      pc = PostcodeLookupProxy.new('WC1B5HA')
-      expect(Rails.env).to receive(:production?).and_return(true)
+    it 'should call production lookup if use_live_data true' do
+      pc = PostcodeLookupProxy.new('WC1B5HA', true)
       expect(pc).to receive(:production_lookup)
       pc.lookup
     end
@@ -156,37 +155,34 @@ describe PostcodeLookupProxy do
 
   context 'error reporting' do
     it 'should return false if remote service returns http status 200' do
-      expect(Rails.env).to receive(:production?).and_return(true)
       http_response = double('HTTPResponse')
       expect(Excon).to receive(:get).and_return(http_response)
       expect(http_response).to receive(:status).and_return(200)
       expect(http_response).to receive(:body).and_return(api_response)
 
-      pclp = PostcodeLookupProxy.new('BR31ES')
+      pclp = PostcodeLookupProxy.new('BR31ES', true)
       expect(pclp.lookup).to be true
       expect(pclp.errors?).to be false
     end
 
     it 'should return true if remote service returns anything other than 200' do
-      expect(Rails.env).to receive(:production?).and_return(true)
       http_response = double('HTTP Response')
       expect(Excon).to receive(:get).and_return(http_response)
       expect(http_response).to receive(:status).and_return(404).at_least(1)
 
-      pclp = PostcodeLookupProxy.new('BR31ES')
+      pclp = PostcodeLookupProxy.new('BR31ES', true)
       expect(pclp.lookup).to be false
       expect(pclp.errors?).to be true
     end
     
 
     it 'should return true if remote service returns anything other than 2000' do
-      expect(Rails.env).to receive(:production?).and_return(true)
       http_response = double('HTTPResponse')
       expect(Excon).to receive(:get).and_return(http_response)
       expect(http_response).to receive(:status).and_return(200)
       expect(http_response).to receive(:body).and_return(api_response_bad_code)
 
-      pclp = PostcodeLookupProxy.new('BR31ES')
+      pclp = PostcodeLookupProxy.new('BR31ES', true)
       expect(pclp.lookup).to be true
       expect(pclp.errors?).to be true
     end
@@ -198,8 +194,7 @@ describe PostcodeLookupProxy do
   describe 'a real lookup to the api' do
     it 'should return a result' do
       WebMock.disable_net_connect!(:allow => /api.ideal-postcodes.co.uk/)
-      expect(Rails.env).to receive(:production?).and_return(true)
-      pclp = PostcodeLookupProxy.new('SW109LB')
+      pclp = PostcodeLookupProxy.new('SW109LB', true)
       expect(pclp).to be_valid
       expect(pclp.lookup).to be true
       expect(pclp.empty?).to be false
