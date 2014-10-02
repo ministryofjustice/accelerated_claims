@@ -73,19 +73,10 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 
-  def error_span attribute, opts = {}
-    binding.pry
-    added_classes = ' visuallyhidden' if opts[:hidden]
-    span_id = opts.has_key?(:id)? " id='#{opts[:id]}'" : nil
-
-    if @object.is_a?(Claim)
-      message_key = "claim_#{attribute}_error"
-      message = @object.errors.messages[:base].to_h[message_key]
-    else
-      message = @object.errors.messages[attribute][0]
+  def error_span attribute, options={}
+    @template.surround(error_span_open_tag(options), "</span>".html_safe) do
+      error_span_message(attribute)
     end
-
-    @template.surround(" <span class='error#{added_classes}'#{span_id}>".html_safe, "</span>".html_safe) { message }
   end
 
   def error_id_for attribute
@@ -109,6 +100,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     if error_for?(attribute)
       id = error_id_for(attribute)
       labeled_input.sub!(%Q[id="#{id}"], %Q[id="#{id.sub('_error','')}"])
+      list << hidden_fullstop
       list << error_span(attribute)
     end
 
@@ -122,40 +114,74 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     options[:id] = id_for(attribute) unless id_for(attribute).blank?
   end
 
-  def label_for attribute, label, hint=nil
+  def label_for attribute, label, options={}
     label ||= attribute.to_s.humanize
-    label = [label]
-    label << "<span class='hint block'>#{hint}</span>".html_safe if hint
-    label << error_span(attribute) if error_for?(attribute)
+    label = ["#{label}"]
+    label << "<span class='hint block'>#{options[:hint]}</span>".html_safe if options[:hint]
+    if error_for?(attribute)
+      last = label.pop
+      label << ( ends_with_punctuation?(last) ? last : (last + hidden_fullstop) )
+      label << error_span(attribute, options)
+    end
     label.join(" ").html_safe
   end
 
+  def ends_with_punctuation? span
+    span[/\?<\/span/]
+  end
+
   def fieldset_tag(attribute, legend, options = {}, &block)
-    hint = options.delete(:hint)
+    fieldset = tag(:fieldset, options_for_fieldset(options), true)
+
+    # use visually hidden legend for screen reader accessibility
+    fieldset.safe_concat content_tag(:legend, legend, class: 'visuallyhidden') unless legend.blank?
 
     # hide repeated legend text from screen readers using aria-hidden='true'
-    label = label_for(attribute, "<span aria-hidden='true'>#{legend}</span>".html_safe, hint)
+    label = label_for(attribute, "<span aria-hidden='true'>#{legend}</span>".html_safe, hint: options.delete(:hint), aria_hidden: true)
+    fieldset.safe_concat content_tag(:div, label) unless label.blank?
 
-    options.delete(:class) if options[:class].blank?
-    options_for_fieldset = {}.merge(options)
-    options_for_fieldset.delete(:choice)
-    options_for_fieldset.delete(:date_select_options)
-
-    output = tag(:fieldset, options_for_fieldset, true)
-
-    unless legend.blank?
-      # use visually hidden legend for screen reader accessibility
-      output.safe_concat content_tag(:legend, legend, class: 'visuallyhidden')
-    end
-    unless label.blank?
-      output.safe_concat content_tag(:div, label)
-    end
-
-    output.concat(capture(&block)) if block_given?
-    output.safe_concat("</fieldset>")
+    fieldset.concat(capture(&block)) if block_given?
+    fieldset.safe_concat("</fieldset>")
   end
 
   private
+
+  def hidden_fullstop
+    '<span class="visuallyhidden">.</span>'.html_safe
+  end
+
+  def error_span_message attribute
+    if @object.is_a? Claim
+      error_message_for(:base).to_h["claim_#{attribute}_error"]
+    else
+      error_message_for(attribute)[0]
+    end
+  end
+
+  def error_span_open_tag options
+    " <span class='error#{error_classes(options)}'#{error_span_id(options)}#{aria_hidden(options)}>".html_safe
+  end
+
+  def error_span_id options
+    options.has_key?(:id)? " id='#{options[:id]}'" : nil
+  end
+
+  def error_classes options
+    ' visuallyhidden' if options[:hidden]
+  end
+
+  def aria_hidden options
+    ' aria-hidden="true"' if options[:aria_hidden]
+  end
+
+  def options_for_fieldset options
+    options.delete(:class) if options[:class].blank?
+    options = {}.merge(options)
+    options.delete(:hint)
+    options.delete(:choice)
+    options.delete(:date_select_options)
+    options
+  end
 
   def error_message_for symbol
     @object.errors.messages[symbol]
@@ -184,9 +210,9 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
     @template.surround("<div class='option'>".html_safe, "</div>".html_safe) do
       @template.surround("<label for='#{id}'>".html_safe, "</label>".html_safe) do
-        errors = error_span(attribute, {hidden: true}) if error_for?(attribute)
+        # errors = error_span(attribute, {hidden: true}) if error_for?(attribute)
         [
-          errors,
+          # errors,
           input,
           label
         ].compact.join("\n")

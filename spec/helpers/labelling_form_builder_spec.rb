@@ -19,7 +19,7 @@ RSpec::Matchers.define :only_show_errors_inside do |expected, opts|
   end
 end
 
-RSpec::Matchers.define :have_a_form_with_these_css_elements do |expected_elements|
+RSpec::Matchers.define :contain_css_selectors do |expected_elements|
   match do |actual|
     doc     = Nokogiri::HTML(actual)
     @errors = []
@@ -32,7 +32,6 @@ RSpec::Matchers.define :have_a_form_with_these_css_elements do |expected_element
     'generated form had the following errors: ' + @errors.compact.join(", ")
   end
 end
-
 
 describe 'LabellingFormBuilder', :type => :helper  do
 
@@ -51,16 +50,23 @@ describe 'LabellingFormBuilder', :type => :helper  do
   end
 
   describe '#moj_date_fieldset' do
-    subject { form.moj_date_fieldset :date_served, 'Date notice served', { class: 'date-picker' }, 9.weeks.ago }
+    let(:date_fieldset) { form.moj_date_fieldset :date_served, 'Date notice served', { class: 'date-picker' }, 9.weeks.ago }
 
     it 'outputs the correct form elements' do
-      expect(subject).to have_a_form_with_these_css_elements(['input.moj-date-day[type=text]', 'input.moj-date-month[type=text]', 'input.moj-date-year[type=text]'])
+      expect(date_fieldset).to contain_css_selectors([
+          'input.moj-date-day[type=text]',
+          'input.moj-date-month[type=text]',
+          'input.moj-date-year[type=text]'
+      ])
     end
 
     it 'associates the error span via aria-labelledby' do
       messages = double('error_messages', messages: { date_served: ['date cannot be blank'] })
       expect(notice).to receive(:errors).at_least(:once).and_return(messages)
-      expect(subject).to have_a_form_with_these_css_elements(['span.error', 'span.error#moj-date-fieldset-error'])
+      expect(date_fieldset).to contain_css_selectors([
+        'span.error',
+        'span.error#moj-date-fieldset-error'
+      ])
     end
   end
 
@@ -68,7 +74,7 @@ describe 'LabellingFormBuilder', :type => :helper  do
     subject { form.text_field_row(:expiry_date) }
 
     it 'outputs the correct form element' do
-      expect(subject).to have_a_form_with_these_css_elements(['.row input[type=text]', '.row label'])
+      expect(subject).to contain_css_selectors(['.row input[type=text]', '.row label'])
     end
 
     it 'shows errors inside the label' do
@@ -87,7 +93,11 @@ describe 'LabellingFormBuilder', :type => :helper  do
     }
 
     it 'outputs the correct form element' do
-      expect(subject).to have_a_form_with_these_css_elements('fieldset.radio', 'fieldset legend', 'input[type=radio, id=notice-house-yes]')
+      expect(subject).to contain_css_selectors(
+        'fieldset.radio',
+        'fieldset legend',
+        'input[type=radio, id=notice-house-yes]'
+      )
     end
 
     it 'shows errors inside the legend' do
@@ -101,7 +111,9 @@ describe 'LabellingFormBuilder', :type => :helper  do
     subject { form.text_area_row(:full_address) }
 
     it 'outputs regular text_area_row' do
-      expect(subject).to have_a_form_with_these_css_elements(['.row textarea#notice_full_address', '.row label'])
+      expect(subject).to contain_css_selectors([
+        '.row textarea#notice_full_address', '.row label'
+      ])
     end
 
     it 'shows errors inside the label' do
@@ -120,7 +132,6 @@ describe 'LabellingFormBuilder', :type => :helper  do
 
       form.moj_date_fieldset(:date_served, "Date Served")
     end
-
 
     it 'instantiates an moj_date_fieldset opject with a specific date' do
       mdf = double MojDateFieldset
