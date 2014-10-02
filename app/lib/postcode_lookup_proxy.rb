@@ -19,7 +19,8 @@ class PostcodeLookupProxy
   attr_reader :result_set, :result_code, :result_message
 
   def initialize(postcode, use_live_data = false)
-
+    puts "++++++ DEBUG PostcodeLookupProxy instantiated with #{postcode.inspect}, #{use_live_data.inspect} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
     @postcode       = UKPostcode.new(postcode)
     @valid          = @postcode.valid?
     @result_set     = nil
@@ -48,7 +49,10 @@ class PostcodeLookupProxy
 
 
   def lookup
+    puts "++++++ DEBUG LOOKUP POSTCODE @use_live_data = #{@use_live_data.inspect} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
     raise "Invalid Postcode" unless valid?
+    puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
     @use_live_data == true ? production_lookup : development_lookup
   end
 
@@ -68,6 +72,8 @@ class PostcodeLookupProxy
   # if 0 - returns an empty array, indicating no entries of the postcode, otherwise a dummy result set
   # if 9 - returns false to simulate a timeout or other remote service error
   def development_lookup
+    puts "++++++ DEBUG DEVELOPMNET LOOKUP ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
     case @postcode.incode.first.to_i
     when 0
       transform_api_response(dummy_postcode_not_found_result_set)
@@ -96,6 +102,8 @@ class PostcodeLookupProxy
 
 
   def production_lookup
+    puts "++++++ DEBUG PRODUCTION LOOKUP ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
     result = true
     api_response = nil
     
