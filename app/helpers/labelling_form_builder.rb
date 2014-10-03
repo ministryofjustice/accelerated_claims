@@ -1,4 +1,5 @@
 class LabellingFormBuilder < ActionView::Helpers::FormBuilder
+
   include ActionView::Helpers::CaptureHelper
   include ActionView::Helpers::TagHelper
   include ActionView::Context
@@ -100,7 +101,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     if error_for?(attribute)
       id = error_id_for(attribute)
       labeled_input.sub!(%Q[id="#{id}"], %Q[id="#{id.sub('_error','')}"])
-      list << hidden_fullstop
+      list << hidden_fullstop(options)
       list << error_span(attribute)
     end
 
@@ -117,17 +118,17 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   def label_for attribute, label, options={}
     label ||= attribute.to_s.humanize
     label = ["#{label}"]
-    label << "<span class='hint block'>#{options[:hint]}</span>".html_safe if options[:hint]
+    label << "<span class='hint block'#{aria_hidden(options)}>#{options[:hint]}</span>".html_safe if options[:hint]
     if error_for?(attribute)
       last = label.pop
-      label << ( ends_with_punctuation?(last) ? last : (last + hidden_fullstop) )
+      label << ( ends_with_punctuation?(last) ? last : (last + hidden_fullstop(options)) )
       label << error_span(attribute, options)
     end
     label.join(" ").html_safe
   end
 
   def ends_with_punctuation? span
-    span[/\?<\/span/]
+    span[/\?<\/span/] || span[/\.<\/span>/]
   end
 
   def fieldset_tag(attribute, legend, options = {}, &block)
@@ -146,8 +147,8 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
   private
 
-  def hidden_fullstop
-    '<span class="visuallyhidden">.</span>'.html_safe
+  def hidden_fullstop options
+    '<span class="visuallyhidden">.</span>'.html_safe unless options[:aria_hidden]
   end
 
   def error_span_message attribute
