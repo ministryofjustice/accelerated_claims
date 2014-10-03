@@ -70,7 +70,7 @@ describe PostcodeLookupProxy do
 
         response = double('Http Repsonse')
         expect(Excon).to receive(:get).and_return(response)
-        expect(response).to receive(:status).and_return(200)
+        expect(response).to receive(:status).and_return(200).at_least(1)
         expect(response).to receive(:body).and_return(api_response)
 
         expect(pclp.send(:production_lookup)).to be true
@@ -157,7 +157,7 @@ describe PostcodeLookupProxy do
     it 'should return false if remote service returns http status 200' do
       http_response = double('HTTPResponse')
       expect(Excon).to receive(:get).and_return(http_response)
-      expect(http_response).to receive(:status).and_return(200)
+      expect(http_response).to receive(:status).and_return(200).at_least(1)
       expect(http_response).to receive(:body).and_return(api_response)
 
       pclp = PostcodeLookupProxy.new('BR31ES', true)
@@ -169,9 +169,10 @@ describe PostcodeLookupProxy do
       http_response = double('HTTP Response')
       expect(Excon).to receive(:get).and_return(http_response)
       expect(http_response).to receive(:status).and_return(404).at_least(1)
+      expect(http_response).to receive(:body).and_return(api_response_bad_code)
 
       pclp = PostcodeLookupProxy.new('BR31ES', true)
-      expect(pclp.lookup).to be false
+      expect(pclp.lookup).to be true
       expect(pclp.errors?).to be true
     end
     
@@ -179,7 +180,7 @@ describe PostcodeLookupProxy do
     it 'should return true if remote service returns anything other than 2000' do
       http_response = double('HTTPResponse')
       expect(Excon).to receive(:get).and_return(http_response)
-      expect(http_response).to receive(:status).and_return(200)
+      expect(http_response).to receive(:status).and_return(200).at_least(1)
       expect(http_response).to receive(:body).and_return(api_response_bad_code)
 
       pclp = PostcodeLookupProxy.new('BR31ES', true)
