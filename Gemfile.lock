@@ -42,6 +42,8 @@ GEM
     addressable (2.3.6)
     arel (5.0.1.20140414130214)
     awesome_print (1.2.0)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
     brakeman (2.6.2)
       erubis (~> 2.6)
       fastercsv (~> 1.5)
@@ -84,6 +86,7 @@ GEM
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     curb (0.8.5)
+    debug_inspector (0.0.2)
     debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
     docile (1.1.5)
@@ -103,6 +106,9 @@ GEM
       dotenv (~> 0.11.1)
       thor (~> 0.19.1)
     formatador (0.2.5)
+    fuubar (2.0.0)
+      rspec (~> 3.0)
+      ruby-progressbar (~> 1.4)
     govuk_frontend_toolkit (1.5.0)
       rails (>= 3.1.0)
       sass (>= 3.2.0)
@@ -184,6 +190,9 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-stack_explorer (0.4.9.1)
+      binding_of_caller (>= 0.7)
+      pry (>= 0.9.11)
     quiet_assets (1.0.3)
       railties (>= 3.1, < 5.0)
     rack (1.5.2)
@@ -257,6 +266,7 @@ GEM
       builder (< 4)
       rspec (>= 2, < 4)
       rspec-core (!= 2.12.0)
+    ruby-progressbar (1.6.0)
     ruby2ruby (2.1.1)
       ruby_parser (~> 3.1)
       sexp_processor (~> 4.0)
@@ -352,6 +362,7 @@ DEPENDENCIES
   excon
   faraday
   foreman
+  fuubar
   govuk_frontend_toolkit (= 1.5.0)
   guard-coffeescript
   guard-jasmine!
@@ -370,6 +381,7 @@ DEPENDENCIES
   pdf-forms (= 0.5.5)
   poltergeist
   pry
+  pry-stack_explorer
   quiet_assets
   rails (= 4.1.5)
   redis-rails

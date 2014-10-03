@@ -2,6 +2,7 @@ def remote_hosts
   {
   'dev' => 'civilclaims.local',
   'demo'  => 'civilclaims.dsd.io',
+  'demo1' => 'civilclaims.54.171.65.59.xip.io',
   'staging' => 'civil:mojcivil@civilclaimsstaging.dsd.io',
   'production' => 'civilclaims.service.gov.uk'
   }

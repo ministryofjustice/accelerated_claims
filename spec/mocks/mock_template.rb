@@ -5,7 +5,7 @@ class MockTemplate
   attr_accessor :output_buffer
 
   def surround(start_html, end_html, &block)
-    "#{start_html}#{block.call}#{end_html}"
+    "#{start_html}#{block.call}#{end_html}".html_safe
   end
 
 

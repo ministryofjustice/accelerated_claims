@@ -38,14 +38,16 @@ describe 'MojPostcodePicker' do
   end
 
 
-  describe 'emit' do
-    it 'substitutes its own variables' do
-      mpp = MojPostcodePicker.new(form, 'claim_property', address_attr: 'street')
-      output = mpp.emit
-      File.open("/Users/stephen/tmp/new.html", "w") do |fp|
-        fp.puts(output)
+  pending "need to write up expected output" do
+    describe 'emit' do
+      it 'substitutes its own variables' do
+        mpp = MojPostcodePicker.new(form, 'claim_property', address_attr: 'street')
+        output = mpp.emit
+        File.open("/Users/stephen/tmp/new.html", "w") do |fp|
+          fp.puts(output)
+        end
+        expect(output).to eq expected_output
       end
-      expect(output).to eq expected_output
     end
   end
 
