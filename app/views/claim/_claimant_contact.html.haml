@@ -2,7 +2,7 @@
   .sub-panel.claimant-solicitor.js-claimanttype.individual.organization
     .sub-panel.details
       .row.js-only
-        %a.caption#contact-details{ href: '#contact-details' }
+        %a.caption#contact-details{ href: '#contact-details', 'aria-expanded' => 'false' }
           = 'Add phone and email'
         %span.hint (Optional)
 
@@ -19,7 +19,7 @@
 
     .sub-panel.details
       .row.js-only
-        %a.caption#correspondence-address{ href: '#correspondence-address' }
+        %a.caption#correspondence-address{ href: '#correspondence-address', 'aria-expanded' => 'false' }
           = 'Add alternative address'.html_safe
         %span.hint (Optional)
       = form.text_field_row :title, label: add_optional_nonjs('Title'),    class: 'rel title', input_class: 'smalltext'
@@ -31,7 +31,7 @@
 
     .sub-panel.details.js-claimanttype.organization
       .row.js-only
-        %a.caption#reference-number{ href: '#reference-number' }
+        %a.caption#reference-number{ href: '#reference-number', 'aria-expanded' => 'false' }
           = 'Add a reference number'
         %span.hint (Optional)
       = render partial: 'reference_number', object: @claim.reference_number, locals: { claim_form: claim_form }
