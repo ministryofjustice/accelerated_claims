@@ -115,10 +115,11 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     options[:id] = id_for(attribute) unless id_for(attribute).blank?
   end
 
-  def label_for attribute, label, options={}
+  def label_content_for attribute, label, options={}
     label ||= attribute.to_s.humanize
     label = ["#{label}"]
-    label << "<span class='hint block'#{aria_hidden(options)}>#{options[:hint]}</span>".html_safe if options[:hint]
+    hint = hint_span(options)
+    label << hint if hint
     if error_for?(attribute)
       last = label.pop
       label << ( ends_with_punctuation?(last) ? last : (last + hidden_fullstop(options)) )
@@ -127,18 +128,22 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     label.join(" ").html_safe
   end
 
-  def ends_with_punctuation? span
-    span[/\?<\/span/] || span[/\.<\/span>/]
+  def hint_span options
+    options[:hint] ? "<span class='hint block'#{aria_hidden(options)}>#{options[:hint]}</span>".html_safe : nil
   end
 
-  def fieldset_tag(attribute, legend, options = {}, &block)
+  def ends_with_punctuation? span
+    span[/\?<\/span/] || span[/\.<\/span>/] || span[/\.|\?$/]
+  end
+
+  def fieldset_tag(attribute, legend_text, options = {}, &block)
     fieldset = tag(:fieldset, options_for_fieldset(options), true)
 
-    # use visually hidden legend for screen reader accessibility
-    fieldset.safe_concat content_tag(:legend, legend, class: 'visuallyhidden') unless legend.blank?
+    # use visually hidden legend text for screen reader accessibility
+    fieldset.safe_concat legend_for(attribute, legend_text, options) unless legend_text.blank?
 
     # hide repeated legend text from screen readers using aria-hidden='true'
-    label = label_for(attribute, "<span aria-hidden='true'>#{legend}</span>".html_safe, hint: options.delete(:hint), aria_hidden: true)
+    label = label_content_for(attribute, "<span aria-hidden='true'>#{legend_text}</span>".html_safe, hint: options[:hint], aria_hidden: true)
     fieldset.safe_concat content_tag(:div, label) unless label.blank?
 
     fieldset.concat(capture(&block)) if block_given?
@@ -146,6 +151,11 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   private
+
+  def legend_for attribute, legend_text, options
+    label = label_content_for(attribute, legend_text, hint: options[:hint])
+    content_tag(:legend, label, class: 'visuallyhidden')
+  end
 
   def hidden_fullstop options
     options[:aria_hidden] ? '' : '<span class="visuallyhidden">.</span>'.html_safe
@@ -252,7 +262,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def labelled_input attribute, input, input_options, label=nil
-    label = label(attribute, label_for(attribute, label))
+    label = label(attribute, label_content_for(attribute, label))
 
     if max_length = max_length(attribute)
       input_options.merge!(maxlength: max_length)
