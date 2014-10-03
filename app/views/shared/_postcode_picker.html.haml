@@ -4,14 +4,15 @@
 
     .postcode-selection-els
 
-      %label.postcode-picker-label{:for => "claim_property_postcode_edit_field"} Postcode
+      %label.postcode-picker-label{:for => "#{@prefix}_#{@postcode_attr}_edit_field"} Postcode
 
-      %input#claim_property_postcode_edit_field.smalltext.postcode-picker-edit-field{:maxlength => "8",
-              :name => "claim[property][postcode]",
+      %input.smalltext.postcode-picker-edit-field{:maxlength => "8",
+              :id => "#{@prefix}_#{@postcode_attr}_edit_field",
+              :name => "#{@name_prefix}[#{@postcode_attr}]",   
               :size => "8",
               :type => "text"}
 
-      %a.button.primary.postcode-picker-button{:href => "#property_postcode_picker",
+      %a.button.primary.postcode-picker-button{:href => "##{@prefix}_postcode_picker",
           :name => "FindUkPostcode"}
         Find UK Postcode
 
@@ -20,26 +21,27 @@
 
     .postcode-select-container.sub-panel.hide
       %fieldset.postcode-picker-address-list
-        %label.hint{ for: "claim_property_address_select"} Please select an address
-        %select.address-picker-select#claim_property_address_select{name: "sel-address", size: "6", width: "50"}
+        %label.hint{ for: "#{@prefix}_address_select"} Please select an address
+        %select.address-picker-select{id: "#{@prefix}_address_select", name: "sel-address", size: "6", width: "50"}
           %option#listbox-0{role: "option", disabled: "disabled", :value => ""} Please select an address
-        %a.button.primary.postcode-picker-cta#claim_propery_selectaddress{name: "SelectAddress", href: "#claim_property_postcode_picker_manual_link"}
+        %a.button.primary.postcode-picker-cta{id: "#{@prefix}_selectaddress", name: "SelectAddress", href: "#claim_property_postcode_picker_manual_link"}
           Select Address
     .js-only
-      %a.caption.postcode-picker-manual-link{ href: "#claim_property_postcode_picker_manual_link"}
+      %a.caption.postcode-picker-manual-link{ href: "##{@prefix}_postcode_picker_manual_link"}
         I want to add an address myself
 
 
   .address.extra.no.sub-panel.hide
 
     .row.rel.street
-      %label{:for => "claim_property_street"} Full address
-      %textarea.street#claim_property_street{:maxlength => "70", :name => "claim[property][street]"}
+      %label{:for => "#{@prefix}_#{@address_attr}"} Full address
+      %textarea.street{id: "#{@prefix}_#{@address_attr}", :maxlength => "70", :name => "claim[property][street]"}
     .row.js-only
-      %span#claim_property_street-error-message.error.hide
+      %span.error.hide{id: "#{@prefix}_#{@address_attr}-error-message"}
         The address can’t be longer than 4 lines.
+      
     .row.rel.postcode
-      %label{:for => "claim_defendant_1_postcode"} Postcode
+      %label{:for => "#{@prefix}_#{@postcode_attr}"} Postcode
       %div{style: "overflow: hidden; width: 100%"}
-        %input.smalltext.postcode{:id => "claim_property_postcode", :maxlength => "8", :name => "claim[defendant_1][postcode]", :size => "8", :type => "text", style: 'float: left;  margin-right: 20px;'}
-        %a.change-postcode-link{href: "#claim_property_postcode_picker_manual_link", style: 'float: left;'} Change 
+        %input.smalltext.postcode{:id => "#{@prefix}_#{@postcode_attr}", :maxlength => "8", :name => "#{@name_prefix}[#{@postcode_attr}]", :size => "8", :type => "text", style: 'float: left;  margin-right: 20px;'}
+        %a.change-postcode-link{href: "##{@prefix}_postcode_picker_manual_link", style: 'float: left;'} Change 
