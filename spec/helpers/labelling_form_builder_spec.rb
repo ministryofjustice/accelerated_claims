@@ -60,32 +60,34 @@ describe 'LabellingFormBuilder', :type => :helper  do
       ])
     end
 
-    it 'associates the error span via aria-labelledby' do
+    it 'includes error spans' do
       messages = double('error_messages', messages: { date_served: ['date cannot be blank'] })
       expect(notice).to receive(:errors).at_least(:once).and_return(messages)
-      expect(date_fieldset).to contain_css_selectors([
-        'span.error',
-        'span.error#moj-date-fieldset-error'
-      ])
+
+      expect(date_fieldset).to include("<span class='error' aria-hidden='true'>date cannot be blank</span>")
+      expect(date_fieldset).to include("<span class='error'>date cannot be blank</span>")
+
+      expect(date_fieldset).to only_show_errors_inside(:legend, "legend span.error")
+      expect(date_fieldset).to only_show_errors_inside(:div, "div span.error")
     end
   end
 
   describe '#text_field_row' do
-    subject { form.text_field_row(:expiry_date) }
+    let(:row) { form.text_field_row(:expiry_date) }
 
     it 'outputs the correct form element' do
-      expect(subject).to contain_css_selectors(['.row input[type=text]', '.row label'])
+      expect(row).to contain_css_selectors(['.row input[type=text]', '.row label'])
     end
 
     it 'shows errors inside the label' do
       messages = double('error_messages', messages: { expiry_date: ['date cannot be blank'] })
       expect(notice).to receive(:errors).at_least(:once).and_return(messages)
-      expect(subject).to only_show_errors_inside(:label)
+      expect(row).to only_show_errors_inside(:label)
     end
   end
 
   describe '#radio_button_field_set' do
-    subject {
+    let(:fieldset) {
       form.radio_button_fieldset :house,
       'property',
       class: 'radio',
@@ -93,17 +95,24 @@ describe 'LabellingFormBuilder', :type => :helper  do
     }
 
     it 'outputs the correct form element' do
-      expect(subject).to contain_css_selectors(
+      expect(fieldset).to contain_css_selectors(
         'fieldset.radio',
         'fieldset legend',
         'input[type=radio, id=notice-house-yes]'
       )
     end
 
-    it 'shows errors inside the legend' do
+    before do
       messages = double('error_messages', messages: { house: ['please select what kind of property it is.'] })
-      expect(notice).to receive(:errors).at_least(:once).and_return(messages)
-      expect(subject).to only_show_errors_inside(:label, error_css: 'span.error.visuallyhidden')
+      allow(notice).to receive(:errors) { messages }
+    end
+
+    it 'shows errors inside the legend' do
+      expect(fieldset).to only_show_errors_inside(:legend, error_css: 'legend span.error')
+    end
+
+    it 'shows errors inside div' do
+      expect(fieldset).to only_show_errors_inside(:div, error_css: 'div span.error')
     end
   end
 

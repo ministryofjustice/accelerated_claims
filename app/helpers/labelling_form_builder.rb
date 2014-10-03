@@ -182,7 +182,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def aria_hidden options
-    ' aria-hidden="true"' if options[:aria_hidden]
+    " aria-hidden='true'" if options[:aria_hidden]
   end
 
   def options_for_fieldset options
