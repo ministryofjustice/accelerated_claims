@@ -67,8 +67,8 @@ describe 'LabellingFormBuilder', :type => :helper  do
       expect(date_fieldset).to include("<span class='error' aria-hidden='true'>date cannot be blank</span>")
       expect(date_fieldset).to include("<span class='error'>date cannot be blank</span>")
 
-      expect(date_fieldset).to only_show_errors_inside(:legend, "legend span.error")
-      expect(date_fieldset).to only_show_errors_inside(:div, "div span.error")
+      expect(date_fieldset).to only_show_errors_inside(:legend, error_css: "legend span.error")
+      expect(date_fieldset).to only_show_errors_inside(:div, error_css: "div span.error")
     end
   end
 
