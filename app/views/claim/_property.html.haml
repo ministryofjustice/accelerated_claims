@@ -4,13 +4,13 @@
       'What kind of property do you want to take back?',
       class: 'radio',
       choice: { 'A self-contained house, flat or bedsit'.html_safe => 'Yes',
-          'Room(s) in a property <span class="hint">Tenants may share kitchen or bathroom</span>'.html_safe => 'No' },
+          'Room or rooms in a property. <span class="hint">Tenants may share kitchen or bathroom</span>'.html_safe => 'No' },
       data: { 'virtual-pageview' => '/accelerated/property-section' }
 
   .sub-panel.address#property
-    - room_hint_js = '<div class="hint js-only" style="display: none" id="room_number">Include the room number</div>'
-    - room_hint_nonjs = '<div class="hint nonjs" id="room_number-non-js">If "Room(s) in a property" was selected above, include the room number</div>'
-    - street_label = %Q|Full Address #{room_hint_js} #{room_hint_nonjs}|
+    - room_hint_js = '<span class="hint js-only" style="display: none" id="room_number">Include the room number<span class="visuallyhidden">.</span></span>'
+    - room_hint_nonjs = '<div class="hint nonjs" id="room_number-non-js">If "Room or rooms in a property" was selected above, include the room number<span class="visuallyhidden">.</span></div>'
+    - street_label = %Q|Full Address<span class="visuallyhidden">.</span> #{room_hint_js} #{room_hint_nonjs}|
     = form.text_area_row  :street,   label: street_label, class: 'street'
     = address_error_message("property")
     = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'

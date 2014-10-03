@@ -59,7 +59,9 @@ group :development, :test do
   gem 'awesome_print'
   gem 'timecop'
   gem 'pry'
+  gem 'pry-stack_explorer'
   gem 'foreman'
+  gem 'fuubar' # Rspec formatter with fast fail.
 end
 
 group :test do

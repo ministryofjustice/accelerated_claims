@@ -8,7 +8,7 @@ feature 'Filling in property section' do
   unless remote_test?
     scenario "see room number hint", js: false do
       visit '/'
-      expect(page).to have_content('If "Room(s) in a property" was selected above, include the room number')
+      expect(page).to have_content('If "Room or rooms in a property" was selected above, include the room number')
     end
   end
 
