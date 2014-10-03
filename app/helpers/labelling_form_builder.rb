@@ -148,7 +148,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   private
 
   def hidden_fullstop options
-    '<span class="visuallyhidden">.</span>'.html_safe unless options[:aria_hidden]
+    options[:aria_hidden] ? '' : '<span class="visuallyhidden">.</span>'.html_safe
   end
 
   def error_span_message attribute
