@@ -83,7 +83,7 @@ GEM
       execjs
     coffee-script-source (1.7.0)
     columnize (0.8.9)
-    courtfinder-client (0.0.1)
+    courtfinder-client (0.0.2)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     curb (0.8.5)
@@ -354,7 +354,7 @@ DEPENDENCIES
   ci_reporter
   codeclimate-test-reporter
   coffee-rails
-  courtfinder-client (= 0.0.1)
+  courtfinder-client (= 0.0.2)
   curb
   dotenv-rails
   excon
