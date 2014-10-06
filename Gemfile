@@ -92,4 +92,4 @@ gem 'logstasher'
 # statsd client
 gem 'statsd-ruby'
 
-gem 'courtfinder-client', '0.0.1'
+gem 'courtfinder-client', '0.0.2'
