@@ -30,7 +30,6 @@ class Deposit < BaseClass
     deposit.validates :ref_number, absence: { message: 'You should not give a deposit scheme reference number if the deposit was given as property' }
     deposit.validates :information_given_date, absence: { message: 'You should not give an information given date if the deposit was given as property' }
   end
-    
 
   def as_json
     begin
@@ -52,11 +51,10 @@ class Deposit < BaseClass
   def money_or_property_must_be_selected_if_received
     if received && received == 'Yes'
       if as_money == 'No' && as_property == 'No'
-        errors[:as_money] << 'You must say what kind of deposit the defendant paid'
+        errors[:deposit_type] << 'You must say what kind of deposit the defendant paid'
       end
     end
   end
-
 
   def information_given_date_must_not_be_invalid
     if self.information_given_date.is_a?(InvalidDate)
