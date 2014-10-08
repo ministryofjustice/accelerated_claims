@@ -15,6 +15,4 @@
     .sub-panel.extra.address.hide.no{ class: 'js-inhabitproperty_' + defendant_field.to_s }
       .row.nonjs
         Defendant’s address if they’re <strong>not</strong> living in the property
-      = form.text_area_row  :street,   label: 'Full address', class: 'rel street'
-      = address_error_message("defendant_#{defendant_id}")
-      = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'
+      = form.moj_postcode_picker "defendant_#{defendant_id}"

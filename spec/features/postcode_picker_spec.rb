@@ -12,7 +12,7 @@ feature 'Postcode address lookup' do
       click_link 'Find UK Postcode'
 
       select "5 Melbury Close, FERNDOWN", from: "sel-address"
-      click_link "claim_propery_selectaddress"
+      click_link "claim_property_selectaddress"
 
       expect(page).to have_field('claim_property_postcode', with: "BH22 8HR")
       expect(page).to have_field('claim_property_street', with: "5 Melbury Close\nFERNDOWN")
@@ -29,7 +29,7 @@ feature 'Postcode address lookup' do
       click_link 'Find UK Postcode'
 
       select "50 Tregunter Road, LONDON", from: "sel-address"
-      click_link 'claim_propery_selectaddress'
+      click_link 'claim_property_selectaddress'
       expect(page).to have_field('claim_property_street', with: "50 Tregunter Road\nLONDON")
     end
 
@@ -47,7 +47,7 @@ feature 'Postcode address lookup' do
       fill_in 'claim_property_postcode_edit_field', with: 'rg27pu'
       click_link 'Find UK Postcode'
       select "156 Northumberland Avenue, READING", from: "sel-address"
-      click_link "claim_propery_selectaddress"
+      click_link "claim_property_selectaddress"
 
       click_link 'Change'
       expect(page).to have_field('claim_property_postcode_edit_field')
@@ -60,7 +60,7 @@ feature 'Postcode address lookup' do
       fill_in 'claim_property_postcode_edit_field', with: 'rg27pu'
       click_link 'Find UK Postcode'
       select "156 Northumberland Avenue, READING", from: "sel-address"
-      click_link "claim_propery_selectaddress"
+      click_link "claim_property_selectaddress"
 
       expect(page).not_to have_field('claim_property_postcode_edit_field')
     end
@@ -104,7 +104,7 @@ feature 'Postcode address lookup' do
       fill_in 'claim_property_postcode_edit_field', with: 'rg27pu'
       click_link 'Find UK Postcode'
       select "160 Northumberland Avenue, READING", from: "sel-address"
-      click_link "claim_propery_selectaddress"
+      click_link "claim_property_selectaddress"
       click_link 'Change'
       fill_in 'claim_property_postcode_edit_field', with: 'sw109lb'
       click_link 'Find UK Postcode'

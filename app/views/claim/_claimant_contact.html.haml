@@ -25,10 +25,9 @@
       = form.text_field_row :title, label: add_optional_nonjs('Title'),    class: 'rel title', input_class: 'smalltext'
       = form.text_field_row :full_name, label: add_optional_nonjs('Full name'), class: 'rel '
       = form.text_field_row :company_name, label: add_optional_nonjs('Company name'),  class: 'rel company_name'
-      = form.text_area_row  :street, label: add_optional_nonjs('Full address'), class: 'rel street'
+      = form.moj_postcode_picker 'claimant_contact'
       = address_error_message('claimant_contact')
-      = form.text_field_row :postcode, label: add_optional_nonjs('Postcode'), class: 'rel postcode', input_class: 'smalltext'
-
+     
     .sub-panel.details.js-claimanttype.organization
       .row.js-only
         %a.caption#reference-number{ href: '#reference-number' }
