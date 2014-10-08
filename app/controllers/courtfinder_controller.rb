@@ -2,12 +2,13 @@ require 'courtfinder/client'
 
 class CourtfinderController < ApplicationController
   def address
-    client = Courtfinder::Client::HousingPossession.new
+    result = Courtfinder::Client::HousingPossession.new.get(params['postcode'])
 
-    begin
-      render json: client.get(params["postcode"])
-    rescue JSON::ParserError
-      render json: "No court found for #{params["postcode"]} postcode", status: :not_found
+    if result.empty?
+      render json: "No court found for #{params['postcode']} postcode", \
+             status: :not_found
+    else
+      render json: result
     end
   end
 end
