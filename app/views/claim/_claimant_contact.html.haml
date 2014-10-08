@@ -6,10 +6,10 @@
           = 'Add phone and email'
         %span.hint (Optional)
 
-      = form.text_field_row :email, label: add_optional('Email'), class: 'rel email'
-      = form.text_field_row :phone, label: add_optional('Phone'), class: 'rel phone'
-      = form.text_field_row :fax, label: add_optional('Fax'), class: 'rel fax'
-      = form.text_field_row :dx_number, label: add_optional('DX number'), class: 'rel dx_number'
+      = form.text_field_row :email, label: add_optional_nonjs('Email'), class: 'rel email'
+      = form.text_field_row :phone, label: add_optional_nonjs('Phone'), class: 'rel phone'
+      = form.text_field_row :fax, label: add_optional_nonjs('Fax'), class: 'rel fax'
+      = form.text_field_row :dx_number, label: add_optional_nonjs('DX number'), class: 'rel dx_number'
     .row
       If you want us to send correspondence about the case to a different address, enter it here.
       %span.hint.block.js-claimanttype.individual.js-only
