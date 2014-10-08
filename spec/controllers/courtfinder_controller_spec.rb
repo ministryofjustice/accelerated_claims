@@ -1,11 +1,4 @@
 describe CourtfinderController, type: :controller do
-
-  def do_stub_with(postcode, body: '', code: 200)
-    url = "#{Courtfinder::SERVER}#{Courtfinder::Client::HousingPossession::PATH}#{postcode}"
-    stub_request(:get, url)
-      .to_return(:status => 200, :body => body, :headers => {})
-  end
-
   describe '#address' do
     context 'when a valid postcode is given' do
       let(:postcode) { 'SG8 0LT' }
@@ -25,7 +18,7 @@ describe CourtfinderController, type: :controller do
         ].to_json
       end
 
-      before { do_stub_with(postcode, body: json) }
+      before { court_finder_stub(postcode, body: json) }
 
       it 'should return the correct response code' do
         get :address, postcode: postcode
@@ -41,7 +34,7 @@ describe CourtfinderController, type: :controller do
     context 'when a invalid postcode is given' do
       let(:postcode) { 'broken' }
 
-      before { do_stub_with(postcode, body: '', code: 404) }
+      before { court_finder_stub(postcode, body: '', code: 404) }
 
       it 'should return error status code' do
         get :address, postcode: postcode
