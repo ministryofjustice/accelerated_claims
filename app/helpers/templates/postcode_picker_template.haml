@@ -1,6 +1,6 @@
 
-.postcode.postcode-picker-container
-  .postcode-lookup.row.rel
+.row.postcode.postcode-picker-container
+  .postcode-lookup.rel.js-only
 
     .postcode-selection-els
 
@@ -40,8 +40,8 @@
       %span.error.hide{id: "#{@prefix}_#{@address_attr}-error-message"}
         The address can’t be longer than 4 lines.
       
-    .row.rel.postcode
+    .postcode
       %label{:for => "#{@prefix}_#{@postcode_attr}"} Postcode
       %div{style: "overflow: hidden; width: 100%"}
         %input.smalltext.postcode{:id => "#{@prefix}_#{@postcode_attr}", :maxlength => "8", :name => "#{@name_prefix}[#{@postcode_attr}]", :size => "8", :type => "text", style: 'float: left;  margin-right: 20px;'}
-        %a.change-postcode-link{href: "##{@prefix}_postcode_picker_manual_link", style: 'float: left;'} Change 
+        %a.change-postcode-link.js-only{href: "##{@prefix}_postcode_picker_manual_link", style: 'float: left;'} Change 
