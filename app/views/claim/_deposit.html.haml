@@ -5,18 +5,21 @@
       class: 'radio inline js-depend',
       data: { depend: 'deposit', 'virtual-pageview' => '/accelerated/deposit-section' }
 
-  %fieldset.hide.js-deposit.yes.radio.js-depend{ class: (form.error_for?(:deposit_type) ? 'error' : ''), id: (form.error_for?(:deposit_type) ? form.error_id_for(:deposit_type) : 'deposit_type_fieldset') }
+  - deposit_type_error = form.error_for?(:deposit_type)
+  - fieldset_class = deposit_type_error ? 'error' : ''
+  - fieldset_id = deposit_type_error ? form.error_id_for(:deposit_type) : 'deposit_type_fieldset'
+
+  %fieldset.hide.js-deposit.yes.radio.js-depend{ class: fieldset_class, id: fieldset_id }
     %legend
       %span.nonjs(data-jsalt='What') If <strong>yes</strong>, what
       kind of deposit?
-      - if form.error_for?(:deposit_type)
-        %span.error must be answered
+      - if deposit_type_error
+        %span.error You must say what kind of deposit the defendant paid
     .options
       - form.row :as_money do
         = form.labelled_check_box :as_money, 'A money deposit <span class="hint block">For example cash or cheque</span>'.html_safe, 'Yes', 'No', data: {depend: 'depositTypeMoney'}
       - form.row :as_property do
         = form.labelled_check_box :as_property, 'A deposit in the form of a valuable item <span class="hint block">For example jewellery</span>'.html_safe, 'Yes', 'No', data: { depend: 'depositTypeProperty'}
-
 
   .row.money-deposit-type.hide.js-depositTypeMoney.yes
     %h4.strong

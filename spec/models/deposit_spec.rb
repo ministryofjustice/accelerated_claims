@@ -24,8 +24,6 @@ describe Deposit, :type => :model do
                                 as_property: 'No',
                                 as_money: 'Yes') }
 
-
-
     context 'as money' do
       describe "when given all valid values" do
         it "should be valid" do
@@ -129,7 +127,8 @@ describe Deposit, :type => :model do
                             as_property: 'No',
                             as_money: 'No')
       expect(deposit).not_to be_valid
-      expect(deposit.errors[:as_money]).to eq(['You must say what kind of deposit the defendant paid'])
+
+      expect(deposit.errors[:deposit_type]).to eq(['You must say what kind of deposit the defendant paid'])
     end
 
     it 'should validate if both money and property are selected' do
