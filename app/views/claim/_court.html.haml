@@ -1,0 +1,18 @@
+= claim_form.fields_for court, builder: LabellingFormBuilder do |form|
+  .row
+    You need to post this claim to the court nearest the property you’re taking back:
+
+    #court-name
+
+    %p
+
+    %a.caption#court-details{ href: '#court-details' }
+      Choose to send this claim to a different court
+
+  #court-address
+
+    = form.text_field_row :court_name, label: 'Name of court'
+    = form.text_area_row  :address, label: 'Address'
+    = form.text_field_row :postcode, label: 'Postcode'
+
+  .divider

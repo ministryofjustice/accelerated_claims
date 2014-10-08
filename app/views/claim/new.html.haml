@@ -102,6 +102,7 @@
   %section
     = section_header 'court'
     .moj-panel
+      = render partial: 'court',      object: @claim.court,      locals: { claim_form: claim_form }
       = render partial: 'possession', object: @claim.possession, locals: { claim_form: claim_form }
 
     .action-buttons.cf

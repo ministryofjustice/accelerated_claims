@@ -1,15 +1,51 @@
 feature 'Court address lookup' do
-
   before do
     WebMock.disable_net_connect!(:allow => ["127.0.0.1", /codeclimate.com/])
   end
 
+  context 'when the page is loaded' do
+    scenario 'should not show the court address form', js: true do
+      visit '/'
+      expect(page).to have_css('#court-address', visible: false)
+    end
+  end
+
+  context 'court address form' do
+    scenario 'when the form is hidden' do
+      visit '/'
+      find('#court-details').click
+      expect(page).to have_css('#court-address', visible: true)
+    end
+
+    scenario 'when the form is shown' do
+      visit '/'
+      2.times { find('#court-details').click }
+      expect(page).to have_css('#court-address', visible: false)
+    end
+  end
+
   context 'when property address is populated' do
     scenario 'it should find and populate court name', js: true do
-      visit '/'
-      fill_in 'claim_property_postcode', with: 'SG8 0LT'
+      postcode = 'SG8 0LT'
+      json = [
+              {
+                'name' => 'Cambridge County Court and Family Court',
+                'address' => {
+                  'town' => 'Cambridge',
+                  'address_lines' => ['Cambridge County Court and Family Court Hearing Centre',
+                                      '197 East Road'],
+                  'type' => 'Postal',
+                  'postcode' => 'CB1 1BA',
+                  'county' => 'Cambridgeshire'
+                }
+              }
+             ].to_json
 
-      expect(page).to have_text 'Cambridge County Court and Family Court Hearing Centre'
+      court_finder_stub(postcode, body: json)
+      visit '/'
+      fill_in 'claim_property_postcode', with: postcode
+
+      expect(page).to have_text 'Cambridge County Court and Family Court'
     end
   end
 end

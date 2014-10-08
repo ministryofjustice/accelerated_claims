@@ -1,10 +1,21 @@
 
+hideCourtAddressInitially = () ->
+  $("#court-address").hide()
+
+hideCourtAddressInitially()
+
+toggleCourtAddressForm = () ->
+  $("#court-details").click ->
+    $("#court-address").toggle()
+    return
+
+toggleCourtAddressForm()
+
 findCourtName = (postcode) ->
   url = '/court-address/' + postcode
   jQuery.ajax url,
     type: 'GET'
     success: (data) ->
-      console.log 'data returned is: ' + data[0]
       court_name_element = document.getElementById('court-name')
       court_name_element.innerHTML = '<b>' + data[0].name + '</b>'
     error: (jqXHR, textStatus, errorThrown) ->
