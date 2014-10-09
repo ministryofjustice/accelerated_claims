@@ -17,34 +17,42 @@ feature "moj date fieldset" do
     let(:form)        { LabellingFormBuilder.new(:notice, notice, template, {}) }
 
     it 'should emit plain vanilla html when no options given' do
-      mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', {} )
-      html = mdf.emit
-      expect_equal html, expected_vanilla_moj_date_fieldset
+      Timecop.freeze(Date.new(2014,10,3)) do
+        mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', {} )
+        html = mdf.emit
+        expect_equal html, expected_vanilla_moj_date_fieldset
+      end
     end
 
     it 'should emit html with fieldset and span css classes added' do
-      mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', class: 'date-picker conditional' )
-      html = mdf.emit
-      expect_equal html, html_with_fieldset_classes
+      Timecop.freeze(Date.new(2014,10,3)) do
+        mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', class: 'date-picker conditional' )
+        html = mdf.emit
+        expect_equal html, html_with_fieldset_classes
+      end
     end
 
     it 'should emit html with id and css span classes added' do
-      mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', class: 'date-picker conditional', id: 'claim_notice_date_served_error' )
-      html = mdf.emit
-      expect_equal html, html_with_fieldset_classes_and_id
+      Timecop.freeze(Date.new(2014,10,3)) do
+        mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', class: 'date-picker conditional', id: 'claim_notice_date_served_error' )
+        html = mdf.emit
+        expect_equal html, html_with_fieldset_classes_and_id
+      end
     end
 
     it 'should emit html with day month year css classes added' do
-      options = {
-        :class    => 'date-picker conditional',
-        :id       => 'xxxxx',
-        '_day'    => {class: 'my-special-day mydate'},
-        '_month'  => {class: 'my-special-month mydate'},
-        '_year'   => {class: 'my-special-year mydate'}
-      }
-      mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', options )
-      html = mdf.emit
-      expect_equal html, html_with_day_month_year_classes
+      Timecop.freeze(Date.new(2014,10,3)) do
+        options = {
+          :class    => 'date-picker conditional',
+          :id       => 'xxxxx',
+          '_day'    => {class: 'my-special-day mydate'},
+          '_month'  => {class: 'my-special-month mydate'},
+          '_year'   => {class: 'my-special-year mydate'}
+        }
+        mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', options )
+        html = mdf.emit
+        expect_equal html, html_with_day_month_year_classes
+      end
     end
 
     it 'should emit html with other options added' do
@@ -54,9 +62,11 @@ feature "moj date fieldset" do
         '_month'  => {class: 'my-special-month mydate', placeholder: 'month'},
         '_year'   => {class: 'my-special-year mydate'}
       }
-      mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', options )
-      html = mdf.emit
-      expect_equal html, html_with_other_options
+      Timecop.freeze(Date.new(2014,10,3)) do
+        mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', options )
+        html = mdf.emit
+        expect_equal html, html_with_other_options
+      end
     end
 
     it 'should emit html with a specific example date' do
