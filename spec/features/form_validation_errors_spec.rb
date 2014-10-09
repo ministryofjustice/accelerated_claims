@@ -248,7 +248,8 @@ feature 'Filling in claim form' do
       scenario 'claimant_contact_address invalid', js: true do
         visit '/'
         choose('claim_claimant_type_individual')
-        click_link 'correspondence-address'
+        click_link 'Add alternative address'
+        click_link 'claim_claimant_contact_postcode_picker_manual_link'
         fill_in('claim_claimant_contact_street', with: invalid_address)
         expect(page).to have_content(address_js_error_message)
       end
