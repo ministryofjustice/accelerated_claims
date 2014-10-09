@@ -205,6 +205,7 @@ feature 'Filling in claim form' do
         expect(page).not_to have_content(address_js_error_message)
         choose('claim_claimant_type_individual')
         fill_in('claim_num_claimants', with: '4')
+        click_link 'claim_claimant_1_postcode_picker_manual_link'
         fill_in('claim_claimant_1_street', with: valid_address)
         expect(page).not_to have_content(address_js_error_message)
       end
@@ -214,6 +215,7 @@ feature 'Filling in claim form' do
         expect(page).not_to have_content(address_js_error_message)
         choose('claim_claimant_type_individual')
         fill_in('claim_num_claimants', with: '4')
+        click_link 'claim_claimant_1_postcode_picker_manual_link'
         fill_in('claim_claimant_1_street', with: invalid_address)
         expect(page).to have_content(address_js_error_message)
       end
@@ -223,17 +225,22 @@ feature 'Filling in claim form' do
         expect(page).not_to have_content(address_js_error_message)
         choose('claim_claimant_type_individual')
         fill_in('claim_num_claimants', with: '4')
+        click_link 'claim_claimant_1_postcode_picker_manual_link'
         fill_in('claim_claimant_1_street', with: valid_address)
 
         choose('claim_claimant_2_address_same_as_first_claimant_no')
+        click_link 'claim_claimant_2_postcode_picker_manual_link'
         fill_in('claim_claimant_2_street', with: valid_address)
 
         choose('claim_claimant_3_address_same_as_first_claimant_no')
+        click_link 'claim_claimant_3_postcode_picker_manual_link'
         fill_in('claim_claimant_3_street', with: valid_address)
 
         choose('claim_claimant_4_address_same_as_first_claimant_no')
-        expect(page).not_to have_content(invalid_address)
+        click_link 'claim_claimant_4_postcode_picker_manual_link'
         fill_in('claim_claimant_4_street', with: invalid_address)
+
+        expect(page).not_to have_content(invalid_address)
         expect(page).to have_content(address_js_error_message)
       end
 
@@ -249,7 +256,7 @@ feature 'Filling in claim form' do
         visit '/'
         choose('claim_claimant_type_individual')
         click_link 'Add alternative address'
-        click_link 'claim_claimant_contact_postcode_picker_manual_link'
+        # click_link 'claim_claimant_contact_postcode_picker_manual_link'
         fill_in('claim_claimant_contact_street', with: invalid_address)
         expect(page).to have_content(address_js_error_message)
       end
@@ -258,6 +265,7 @@ feature 'Filling in claim form' do
         visit '/'
         fill_in 'claim_num_defendants', with: 1
         choose 'claim_defendant_1_inhabits_property_no'
+        click_link 'claim_defendant_1_postcode_picker_manual_link'
         fill_in 'claim_defendant_1_street', with: valid_address
         expect(page).not_to have_content(address_js_error_message)
       end
@@ -266,6 +274,7 @@ feature 'Filling in claim form' do
         visit '/'
         fill_in 'claim_num_defendants', with: 1
         choose 'claim_defendant_1_inhabits_property_no'
+        click_link 'claim_defendant_1_postcode_picker_manual_link'
         fill_in 'claim_defendant_1_street', with: invalid_address
         expect(page).to have_content(address_js_error_message)
       end
@@ -274,6 +283,7 @@ feature 'Filling in claim form' do
         visit '/'
         fill_in 'claim_num_defendants', with: 20
         choose 'claim_defendant_19_inhabits_property_no'
+        click_link 'claim_defendant_19_postcode_picker_manual_link'
         fill_in 'claim_defendant_19_street', with: invalid_address
         expect(page).to have_content(address_js_error_message)
       end
@@ -290,6 +300,8 @@ feature 'Filling in claim form' do
 
         scenario 'claimant_1 address is invalid' do
           visit '/'
+          choose 'claim_claimant_type_individual'
+          fill_in 'claim_num_claimants', with: '1'
           fill_in('claim_claimant_1_street', with: invalid_address)
           click_button 'Continue'
           expect(page).to have_content( non_js_address_error_message("Claimant 1's") )
@@ -297,6 +309,8 @@ feature 'Filling in claim form' do
 
         scenario 'claimant_4 address is invalid' do
           visit '/'
+          choose 'claim_claimant_type_individual'
+          fill_in 'claim_num_claimants', with: '4'
           fill_in('claim_claimant_4_street', with: invalid_address)
           click_button 'Continue'
           expect(page).to have_content( non_js_address_error_message("Claimant 4's") )
@@ -314,7 +328,6 @@ feature 'Filling in claim form' do
           fill_in('claim_num_defendants', with: '1')
           fill_in('claim_defendant_1_street', with: invalid_address)
           click_button 'Continue'
-          save_and_open_page
           expect(page).to have_content( non_js_address_error_message("Defendant 1's") )
         end
       end

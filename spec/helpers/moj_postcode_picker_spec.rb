@@ -60,8 +60,8 @@ end
 
 def expected_output
   str =<<EOF
-<div class='postcode postcode-picker-container'>
-  <div class='postcode-lookup row rel'>
+<div class='row postcode postcode-picker-container'>
+  <div class='postcode-lookup rel js-only'>
     <div class='postcode-selection-els'>
       <label class='postcode-picker-label' for='claim_property_postcode_edit_field'>Postcode</label>
       <input class='smalltext postcode-picker-edit-field' id='claim_property_postcode_edit_field' maxlength='8' name='[postcode]' size='8' type='text'>
@@ -84,13 +84,13 @@ def expected_output
       </fieldset>
     </div>
     <div class='js-only'>
-      <a class='caption postcode-picker-manual-link' href='#claim_property_postcode_picker_manual_link'>
+      <a class='caption postcode-picker-manual-link' href='#claim_property_postcode_picker_manual_link' id='claim_property_postcode_picker_manual_link'>
         I want to add an address myself
       </a>
     </div>
   </div>
   <div class='address extra no sub-panel hide'>
-    <div class='row rel street'>
+    <div class='street'>
       <label for='claim_property_street'>Full address</label>
       <textarea class='street' id='claim_property_street' maxlength='70' name='claim[property][street]'></textarea>
     </div>
@@ -99,11 +99,11 @@ def expected_output
         The address can’t be longer than 4 lines.
       </span>
     </div>
-    <div class='row rel postcode'>
+    <div class='postcode'>
       <label for='claim_property_postcode'>Postcode</label>
       <div style='overflow: hidden; width: 100%'>
-        <input class='smalltext postcode' id='claim_property_postcode' maxlength='8' name='[postcode]' size='8' style='float: left;  margin-right: 20px;' type='text'>
-        <a class='change-postcode-link' href='#claim_property_postcode_picker_manual_link' style='float: left;'>Change</a>
+        <input class='smalltext postcode' id='claim_property_postcode' maxlength='8' name='claim[property][postcode]' size='8' style='float: left;  margin-right: 20px;' type='text'>
+        <a class='change-postcode-link js-only' href='#claim_property_postcode_picker_manual_link' style='float: left;'>Change</a>
       </div>
     </div>
   </div>
