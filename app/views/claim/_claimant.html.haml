@@ -23,7 +23,7 @@
               toggle_fieldset: true
 
     .sub-panel.rel.address
-      = form.moj_postcode_picker "claimant_#{claimant_id}"      
+      = form.moj_postcode_picker "claimant_#{claimant_id}", name: "claim[claimant_#{claimant_id}]", address_attr: 'street'    
 
 
 

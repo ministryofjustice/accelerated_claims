@@ -311,8 +311,10 @@ feature 'Filling in claim form' do
 
         scenario 'defendant_1 address is invalid' do
           visit '/'
+          fill_in('claim_num_defendants', with: '1')
           fill_in('claim_defendant_1_street', with: invalid_address)
           click_button 'Continue'
+          save_and_open_page
           expect(page).to have_content( non_js_address_error_message("Defendant 1's") )
         end
       end

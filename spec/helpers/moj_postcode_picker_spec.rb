@@ -35,6 +35,14 @@ describe 'MojPostcodePicker' do
       expect(mpp.instance_variable_get(:@address_attr)).to eq 'street'
     end
 
+    it 'generates non-default name' do
+      mpp = MojPostcodePicker.new(form, prefix: "claim_claimant_1", name: "claim[claimant_1]", address_attr: 'street')
+      expect(mpp.instance_variable_get(:@prefix)).to eq 'claim_claimant_1'
+      expect(mpp.instance_variable_get(:@name)).to eq 'claim[claimant_1]'
+      expect(mpp.instance_variable_get(:@postcode_attr)).to eq 'postcode'
+      expect(mpp.instance_variable_get(:@address_attr)).to eq 'street'
+    end
+
   end
 
 

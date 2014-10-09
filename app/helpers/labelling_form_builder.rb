@@ -19,8 +19,9 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
 
-  def moj_postcode_picker attribute, postcode_attr = :postcode, address_attr = :street
-    mpp = MojPostcodePicker.new(self, prefix: "claim_#{attribute}", address_attr: 'street')
+  def moj_postcode_picker attribute, postcode_attr = :postcode, address_attr = :street, name = nil
+    name = name.nil? ? "claim[#{attribute}]" : name
+    mpp = MojPostcodePicker.new(self, prefix: "claim_#{attribute}", name: name, address_attr: 'street')
     mpp.emit
   end
 
