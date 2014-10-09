@@ -39,7 +39,7 @@ moj.Modules.claimantContact = (function() {
   bindEvents = function() {
     $captions.on( 'click', function( e ) {
       e.preventDefault();
-      toggleDetailsBlock( $( this ).closest( '.details' ) );
+      toggleDetailsBlock( $( this ).closest( '.details' ), $(this) );
     } );
   };
 
@@ -50,10 +50,13 @@ moj.Modules.claimantContact = (function() {
     $panel.toggle(claimantType==='organization' || claimantType==='individual' && isSetNumberOfClaimants);
   };
 
-  toggleDetailsBlock = function( $el ) {
+  toggleDetailsBlock = function( $el, link ) {
     $el.toggleClass( 'open' );
     if( $el.hasClass( 'open' ) ) {
-      $( 'input', $el ).add('textarea', $el).eq( 0 ).trigger( 'focus' );
+      link.attr('aria-expanded','true');
+      $( 'input', $el ).eq( 0 ).trigger( 'focus' );
+    } else {
+      link.attr('aria-expanded','false');
     }
   };
 

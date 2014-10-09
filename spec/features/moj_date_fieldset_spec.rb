@@ -17,62 +17,49 @@ feature "moj date fieldset" do
     let(:form)        { LabellingFormBuilder.new(:notice, notice, template, {}) }
 
     it 'should emit plain vanilla html when no options given' do
-      Timecop.freeze(Date.new(2014,10,3)) do
-        mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', {} )
-        html = mdf.emit
-        expect_equal html, expected_vanilla_moj_date_fieldset
-      end
+      mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', {} )
+      html = mdf.emit
+      expect_equal html, expected_date_fieldset
     end
 
     it 'should emit html with fieldset and span css classes added' do
-      Timecop.freeze(Date.new(2014,10,3)) do
-        mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', class: 'date-picker conditional' )
-        html = mdf.emit
-        expect_equal html, html_with_fieldset_classes
-      end
+      mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', class: 'date-picker conditional' )
+      html = mdf.emit
+      expect_equal html, expected_date_fieldset(fieldset_class: ' class="date-picker conditional"')
     end
 
     it 'should emit html with id and css span classes added' do
-      Timecop.freeze(Date.new(2014,10,3)) do
-        mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', class: 'date-picker conditional', id: 'claim_notice_date_served_error' )
-        html = mdf.emit
-        expect_equal html, html_with_fieldset_classes_and_id
-      end
+      mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', class: 'date-picker conditional', id: 'claim_notice_date_served_error' )
+      html = mdf.emit
+      expect_equal html, expected_date_fieldset(fieldset_class: ' class="date-picker conditional"', fieldset_id: ' id="claim_notice_date_served_error"')
     end
 
     it 'should emit html with day month year css classes added' do
-      Timecop.freeze(Date.new(2014,10,3)) do
-        options = {
-          :class    => 'date-picker conditional',
-          :id       => 'xxxxx',
-          '_day'    => {class: 'my-special-day mydate'},
-          '_month'  => {class: 'my-special-month mydate'},
-          '_year'   => {class: 'my-special-year mydate'}
-        }
-        mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', options )
-        html = mdf.emit
-        expect_equal html, html_with_day_month_year_classes
-      end
+      options = {
+        '_day'    => {class: 'my-special-day mydate'},
+        '_month'  => {class: 'my-special-month mydate'},
+        '_year'   => {class: 'my-special-year mydate'}
+      }
+      mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', options )
+      html = mdf.emit
+      expect_equal html, expected_date_fieldset(input_class: ' mydate', input_class_prefix: 'my-special')
     end
 
     it 'should emit html with other options added' do
       options = {
-        :class    => 'date-picker conditional',
-        '_day'    => {class: 'my-special-day mydate', placeholder: 'dd'},
-        '_month'  => {class: 'my-special-month mydate', placeholder: 'month'},
-        '_year'   => {class: 'my-special-year mydate'}
+        '_day'    => { placeholder: 'dd'},
+        '_month'  => { placeholder: 'dd'},
+        '_year'   => { placeholder: 'dd'}
       }
-      Timecop.freeze(Date.new(2014,10,3)) do
-        mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', options )
-        html = mdf.emit
-        expect_equal html, html_with_other_options
-      end
+      mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', options )
+      html = mdf.emit
+      expect_equal html, expected_date_fieldset(input_options: ' placeholder="dd"')
     end
 
     it 'should emit html with a specific example date' do
       mdf = MojDateFieldset.new(form, :date_served, 'Date Notice Served', {}, Date.new(2013, 1, 5))
       html = mdf.emit
-      expect_equal html, expected_vanilla_moj_date_fieldset_with_specific_date
+      expect_equal html, expected_date_fieldset(date_example: '05&nbsp;&nbsp;01&nbsp;&nbsp;2013')
     end
 
   end
@@ -87,268 +74,66 @@ feature "moj date fieldset" do
     [data, expected_data]
   end
 
- def expected_vanilla_moj_date_fieldset
+ def expected_date_fieldset options={}
+  date_example = options[:date_example] || Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')
+  fieldset_class = options[:fieldset_class] || ''
+  fieldset_id = options[:fieldset_id] || ''
+  input_class = options[:input_class] || ''
+  input_class_prefix = options[:input_class_prefix] || 'moj-date'
+  input_options = options[:input_options] || ''
+
   str = <<-EOHTML
-<fieldset>
+<fieldset#{fieldset_class}#{fieldset_id}>
   <legend class="visuallyhidden">
     Date Notice Served
-    <span class='hint block'>For example,&nbsp;&nbsp;03&nbsp;&nbsp;10&nbsp;&nbsp;2014</span>
+    <span class='hint block'>For example,&nbsp;&nbsp;#{date_example}</span>
   </legend>
   <div>
-    <span aria-hidden='true'>Date Notice Served</span> <span class='hint block' aria-hidden='true'>For example,&nbsp;&nbsp;#{Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')}</span>
+    <span aria-hidden='true'>Date Notice Served</span> <span class='hint block' aria-hidden='true'>For example,&nbsp;&nbsp;#{date_example}</span>
   </div>
   <div class="moj-date-day-div">
     <label for="claim_notice_date_served_3i">Day</label>
-    <input  class="moj-date-day"
+    <input  class="#{input_class_prefix}-day#{input_class}"
             id="claim_notice_date_served_3i"
             maxlength="2"
             name="claim[notice][date_served(3i)]"
+            #{input_options}
             size="2"
             type="text" />
   </div>
   <div class="moj-date-month-div">
     <label for="claim_notice_date_served_2i">Month</label>
-    <input  class="moj-date-month"
+    <input  class="#{input_class_prefix}-month#{input_class}"
             id="claim_notice_date_served_2i"
             maxlength="9"
             name="claim[notice][date_served(2i)]"
+            #{input_options}
             size="9"
             type="text" />
   </div>
   <div class="moj-date-year-div">
     <label for="claim_notice_date_served_1i">Year</label>
-    <input  class="moj-date-year"
+    <input  class="#{input_class_prefix}-year#{input_class}"
           id="claim_notice_date_served_1i"
           maxlength="4"
           name="claim[notice][date_served(1i)]"
+          #{input_options}
           size="4"
           type="text" />
   </div>
 </fieldset>
 EOHTML
-  squash(str)
-end
+    squash(str)
+  end
 
-def expected_vanilla_moj_date_fieldset_with_specific_date
-  str = <<-EOHTML
-<fieldset>
-  <legend class="visuallyhidden">
-    Date Notice Served
-    <span class='hint block'>For example,&nbsp;&nbsp;05&nbsp;&nbsp;01&nbsp;&nbsp;2013</span>
-  </legend>
-  <div>
-    <span aria-hidden='true'>Date Notice Served</span> <span class='hint block' aria-hidden='true'>For example,&nbsp;&nbsp;05&nbsp;&nbsp;01&nbsp;&nbsp;2013</span>
-  </div>
-  <div class="moj-date-day-div">
-    <label for="claim_notice_date_served_3i">Day</label>
-    <input  class="moj-date-day"
-            id="claim_notice_date_served_3i"
-            maxlength="2"
-            name="claim[notice][date_served(3i)]"
-            size="2"
-            type="text" />
-  </div>
-  <div class="moj-date-month-div">
-    <label for="claim_notice_date_served_2i">Month</label>
-    <input  class="moj-date-month"
-            id="claim_notice_date_served_2i"
-            maxlength="9"
-            name="claim[notice][date_served(2i)]"
-            size="9"
-            type="text" />
-  </div>
-  <div class="moj-date-year-div">
-    <label for="claim_notice_date_served_1i">Year</label>
-    <input  class="moj-date-year"
-          id="claim_notice_date_served_1i"
-          maxlength="4"
-          name="claim[notice][date_served(1i)]"
-          size="4"
-          type="text" />
-  </div>
-</fieldset>
-EOHTML
-  squash(str)
-end
-
-def html_with_fieldset_classes
-  str = <<-EOHTML
-<fieldset class="date-picker conditional">
-  <legend class="visuallyhidden">
-    Date Notice Served
-    <span class='hint block'>For example,&nbsp;&nbsp;03&nbsp;&nbsp;10&nbsp;&nbsp;2014</span>
-  </legend>
-  <div>
-    <span aria-hidden='true'>Date Notice Served</span> <span class='hint block' aria-hidden='true'>For example,&nbsp;&nbsp;#{Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')}</span>
-  </div>
-  <div class="moj-date-day-div">
-    <label for="claim_notice_date_served_3i">Day</label>
-    <input  class="moj-date-day"
-            id="claim_notice_date_served_3i"
-            maxlength="2"
-            name="claim[notice][date_served(3i)]"
-            size="2"
-            type="text" />
-  </div>
-  <div class="moj-date-month-div">
-    <label for="claim_notice_date_served_2i">Month</label>
-    <input  class="moj-date-month"
-            id="claim_notice_date_served_2i"
-            maxlength="9"
-            name="claim[notice][date_served(2i)]"
-            size="9"
-            type="text" />
-  </div>
-  <div class="moj-date-year-div">
-    <label for="claim_notice_date_served_1i">Year</label>
-    <input  class="moj-date-year"
-            id="claim_notice_date_served_1i"
-            maxlength="4"
-            name="claim[notice][date_served(1i)]"
-            size="4"
-            type="text" />
-  </div>
-</fieldset>
-EOHTML
-  squash(str)
-end
-
-def html_with_fieldset_classes_and_id
-  str = <<-EOHTML
-<fieldset class="date-picker conditional" id="claim_notice_date_served_error">
-  <legend class="visuallyhidden">
-    Date Notice Served
-    <span class='hint block'>For example,&nbsp;&nbsp;03&nbsp;&nbsp;10&nbsp;&nbsp;2014</span>
-  </legend>
-  <div>
-    <span aria-hidden='true'>Date Notice Served</span> <span class='hint block' aria-hidden='true'>For example,&nbsp;&nbsp;#{Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')}</span>
-  </div>
-  <div class="moj-date-day-div">
-    <label for="claim_notice_date_served_3i">Day</label>
-    <input  class="moj-date-day"
-            id="claim_notice_date_served_3i"
-            maxlength="2"
-            name="claim[notice][date_served(3i)]"
-            size="2"
-            type="text" />
-  </div>
-  <div class="moj-date-month-div">
-    <label for="claim_notice_date_served_2i">Month</label>
-    <input  class="moj-date-month"
-            id="claim_notice_date_served_2i"
-            maxlength="9"
-            name="claim[notice][date_served(2i)]"
-            size="9"
-            type="text" />
-  </div>
-  <div class="moj-date-year-div">
-    <label for="claim_notice_date_served_1i">Year</label>
-    <input  class="moj-date-year"
-            id="claim_notice_date_served_1i"
-            maxlength="4"
-            name="claim[notice][date_served(1i)]"
-            size="4"
-            type="text" />
-  </div>
-</fieldset>
-EOHTML
-  squash(str)
-end
-
-def html_with_day_month_year_classes
-  str = <<-EOHTML
-<fieldset class="date-picker conditional" id="xxxxx">
-  <legend class="visuallyhidden">
-    Date Notice Served
-    <span class='hint block'>For example,&nbsp;&nbsp;03&nbsp;&nbsp;10&nbsp;&nbsp;2014</span>
-  </legend>
-  <div>
-    <span aria-hidden='true'>Date Notice Served</span> <span class='hint block' aria-hidden='true'>For example,&nbsp;&nbsp;#{Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')}</span>
-  </div>
-  <div class="moj-date-day-div">
-    <label for="claim_notice_date_served_3i">Day</label>
-  <input  class="my-special-day mydate"
-          id="claim_notice_date_served_3i"
-          maxlength="2"
-          name="claim[notice][date_served(3i)]"
-          size="2"
-          type="text" />
-  </div>
-  <div class="moj-date-month-div">
-    <label for="claim_notice_date_served_2i">Month</label>
-    <input  class="my-special-month mydate"
-            id="claim_notice_date_served_2i"
-            maxlength="9"
-            name="claim[notice][date_served(2i)]"
-            size="9"
-            type="text" />
-  </div>
-  <div class="moj-date-year-div">
-    <label for="claim_notice_date_served_1i">Year</label>
-    <input  class="my-special-year mydate"
-          id="claim_notice_date_served_1i"
-          maxlength="4"
-          name="claim[notice][date_served(1i)]"
-          size="4"
-          type="text" />
-  </div>
-</fieldset>
-EOHTML
-  squash(str)
-end
-
-def html_with_other_options
-    str = <<-EOHTML
-<fieldset class="date-picker conditional">
-  <legend class="visuallyhidden">
-    Date Notice Served
-    <span class='hint block'>For example,&nbsp;&nbsp;03&nbsp;&nbsp;10&nbsp;&nbsp;2014</span>
-  </legend>
-  <div>
-    <span aria-hidden='true'>Date Notice Served</span> <span class='hint block' aria-hidden='true'>For example,&nbsp;&nbsp;#{Date.today.strftime('%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y')}</span>
-  </div>
-  <div class="moj-date-day-div">
-    <label for="claim_notice_date_served_3i">Day</label>
-    <input  class="my-special-day mydate"
-            id="claim_notice_date_served_3i"
-            maxlength="2"
-            name="claim[notice][date_served(3i)]"
-            placeholder="dd"
-            size="2"
-            type="text" />
-  </div>
-  <div class="moj-date-month-div">
-    <label for="claim_notice_date_served_2i">Month</label>
-    <input  class="my-special-month mydate"
-            id="claim_notice_date_served_2i"
-            maxlength="9"
-            name="claim[notice][date_served(2i)]"
-            placeholder="month"
-            size="9"
-            type="text" />
-  </div>
-  <div class="moj-date-year-div">
-    <label for="claim_notice_date_served_1i">Year</label>
-    <input  class="my-special-year mydate"
-            id="claim_notice_date_served_1i"
-            maxlength="4"
-            name="claim[notice][date_served(1i)]"
-            size="4"
-            type="text" />
-  </div>
-</fieldset>
-EOHTML
-  squash(str)
-end
-
-def squash(str)
-  str.gsub!("\n", "")
-  str.gsub!(/\s+/," ")
-  str.gsub!(" <", "<")
-  str.gsub!("> ", ">")
-  str.gsub!('span><span','span> <span')
-  str.gsub!('Served<span', 'Served <span')
-  str
-end
+  def squash(str)
+    str.gsub!("\n", "")
+    str.gsub!(/\s+/," ")
+    str.gsub!(" <", "<")
+    str.gsub!("> ", ">")
+    str.gsub!('span><span','span> <span')
+    str.gsub!('Served<span', 'Served <span')
+    str
+  end
 
 end
