@@ -31,7 +31,7 @@ class MojPostcodePicker
     @name          = generate_name
     @postcode_attr = options[:postcode_attr] || 'postcode'
     @address_attr  = options[:address_attr] || 'address_lines'
-    @@haml         = load_haml if @@haml.nil?
+    @@haml         = load_haml if @@haml.nil? || Rails.env.development?
   end
   
 
@@ -67,9 +67,7 @@ class MojPostcodePicker
 
 
   def load_haml
-    if @@haml.nil?
-      @@haml = File.open(TEMPLATE_FILE, "r") { |fp| fp.read }
-    end
+    @@haml = File.open(TEMPLATE_FILE, "r") { |fp| fp.read }
   end
 
 
