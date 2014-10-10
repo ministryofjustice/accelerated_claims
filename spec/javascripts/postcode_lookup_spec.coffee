@@ -1,8 +1,8 @@
-//= require jasmine-jquery
+//= require 'jasmine-jquery'
 //= require 'postcode_lookup'
 
 testViewCallback = (view, statusCode, callback) ->
-  spyOn(jQuery, 'ajax').and.callFake (options) ->
+  spyOn(jQuery, 'ajax').and.callFake (url, options) ->
     options.statusCode[statusCode]()
 
   PostcodeLookup.lookup 'SW16AJ', view
@@ -14,7 +14,7 @@ describe 'PostcodeLookup', ->
   describe 'successful lookup', ->
 
     it 'should call displayAddresses on view', ->
-      spyOn(jQuery, 'ajax').and.callFake (options) ->
+      spyOn(jQuery, 'ajax').and.callFake (url, options) ->
         options.success('dummy')
 
       view = jasmine.createSpyObj('view', ['displayAddresses'])

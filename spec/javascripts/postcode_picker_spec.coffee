@@ -84,11 +84,10 @@ describe 'PostcodePicker', ->
     it 'renders list of addresses in select box', ->
       @view.displayAddresses(@results)
       options = @picker.find('.address-picker-select').find('option')
-      expect( options.size() ).toEqual 3
+      expect( options.size() ).toEqual 2
 
-      expect( options.eq(0).text() ).toEqual 'Please select an address'
-      expect( options.eq(1).text() ).toEqual 'Flat 1, 1 Melbury Close, FERNDOWN'
-      expect( options.eq(2).text() ).toEqual '3 Melbury Close, FERNDOWN'
+      expect( options.eq(0).text() ).toEqual 'Flat 1, 1 Melbury Close, FERNDOWN'
+      expect( options.eq(1).text() ).toEqual '3 Melbury Close, FERNDOWN'
 
       expect(@picker.find('.postcode-select-container')).toBeVisible()
 
@@ -96,11 +95,10 @@ describe 'PostcodePicker', ->
       @view.displayAddresses(@results)
       @view.displayAddresses(@results)
       options = @picker.find('.address-picker-select').find('option')
-      expect( options.size() ).toEqual 3
+      expect( options.size() ).toEqual 2
 
-      expect( options.eq(0).text() ).toEqual 'Please select an address'
-      expect( options.eq(1).text() ).toEqual 'Flat 1, 1 Melbury Close, FERNDOWN'
-      expect( options.eq(2).text() ).toEqual '3 Melbury Close, FERNDOWN'
+      expect( options.eq(0).text() ).toEqual 'Flat 1, 1 Melbury Close, FERNDOWN'
+      expect( options.eq(1).text() ).toEqual '3 Melbury Close, FERNDOWN'
 
       expect(@picker.find('.postcode-select-container')).toBeVisible()
 
@@ -147,7 +145,7 @@ describe 'PostcodePicker', ->
   describe 'selecting address from select box', ->
     beforeEach ->
       @view.displayAddresses(@results)
-      @picker.find('option').eq(1).attr('selected', 'selected')
+      @picker.find('option').eq(0).attr('selected', 'selected')
       @picker.find('.postcode-picker-cta').click()
 
     it 'populates address street', ->

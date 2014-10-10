@@ -6,8 +6,6 @@ PostcodeLookup =
     separator = "/"
     if window.location.pathname.match(/\/$/)
       separator = ""
-    else
-      console.log "doesn't end with a slash"
 
 
     myUrl =  window.location.pathname + separator + "postcode.json?pc=#{ encodeURI(postcode) }"
