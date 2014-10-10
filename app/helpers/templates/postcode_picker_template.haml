@@ -2,9 +2,16 @@
 .row.postcode.postcode-picker-container
   .postcode-lookup.rel.js-only
 
+    .postcode-display.hide
+      Postcode: 
+      %span.postcode-display-detail
+        XJJ1 7GG
+
     .postcode-selection-els
 
       %label.postcode-picker-label{:for => "#{@prefix}_#{@postcode_attr}_edit_field"} Postcode
+
+      
 
       %input.smalltext.postcode-picker-edit-field{:maxlength => "8",
               :id => "#{@prefix}_#{@postcode_attr}_edit_field",

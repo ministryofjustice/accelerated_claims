@@ -62,11 +62,17 @@ def expected_output
   str =<<EOF
 <div class='row postcode postcode-picker-container'>
   <div class='postcode-lookup rel js-only'>
+    <div class='postcode-display hide'>
+      Postcode:
+      <span class='postcode_display_detail'>
+        XJJ1 7GG
+      </span>
+    </div>
     <div class='postcode-selection-els'>
       <label class='postcode-picker-label' for='claim_property_postcode_edit_field'>Postcode</label>
       <input class='smalltext postcode-picker-edit-field' id='claim_property_postcode_edit_field' maxlength='8' name='[postcode]' size='8' type='text'>
       <a class='button primary postcode-picker-button' href='#claim_property_postcode_picker' name='FindUkPostcode'>
-        Find UK Postcode
+        Find UK Address
       </a>
     </div>
     <div class='postcode-picker-hourglass hide'>

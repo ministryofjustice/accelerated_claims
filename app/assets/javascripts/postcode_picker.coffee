@@ -52,9 +52,11 @@ class PostcodePicker
 
   displayAddresses: (addresses) ->
     @hideAddressFields()
+    @hidePostcodeSearchComponent()
     @addresses = addresses
     @selectElement.empty()
-    @input.val(addresses[0].postcode)
+    @picker.find('.postcode-display').removeClass('hide')
+    @picker.find('.postcode-display-detail').html(addresses[0].postcode)
     $.each addresses, (index, address) =>
       address = address.address.replace(/;;/g, ", ")
       option = "<option value=\"#{index}\">#{address}</option>"
@@ -64,6 +66,9 @@ class PostcodePicker
     @picker.find('.postcode-picker-address_list').focus()
 
     
+  hidePostcodeSearchComponent: ->
+    @picker.find('.postcode-selection-els').hide()
+
 
   toggleAddressFields: ->
     if @picker.find('.address').is(':visible')

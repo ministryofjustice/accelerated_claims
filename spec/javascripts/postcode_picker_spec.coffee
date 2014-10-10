@@ -8,53 +8,65 @@ describe 'PostcodePicker', ->
   element = null
 
   beforeEach ->
-    element = $("
+    element = $("""
 <head>
 </head>
 <body class='js-enabled'>
-<div class='postcode postcode-picker-container'>
-  <div class='postcode-lookup row rel'>
-    <label class='postcode-picker-label' for='claim_property_postcode_edit_field'>Postcode</label>
-    <input class='smalltext postcode-picker-edit-field' id='claim_property_postcode_edit_field' maxlength='8' name='claim[property][postcode]' size='8' type='text'>
-    <a class='button primary postcode-picker-button' href='#property_postcode_picker' name='FindUkPostcode'>
-      Find UK Postcode
-    </a>
-    <div class='postcode-picker-hourglass hide'>
+<div class="row postcode postcode-picker-container">
+  <div class="postcode-lookup rel js-only">
+    <div class="postcode-display hide">
+      Postcode:
+      <span class="postcode-display-detail">
+        XJJ1 7GG
+      </span>
+    </div>
+    <div class="postcode-selection-els">
+      <label class="postcode-picker-label" for="claim_property_postcode_edit_field">Postcode</label>
+      <input class="smalltext postcode-picker-edit-field" id="claim_property_postcode_edit_field" maxlength="8" name="[postcode]" size="8" type="text">
+      <a class="button primary postcode-picker-button" href="#claim_property_postcode_picker" name="FindUkPostcode">
+        Find UK Address
+      </a>
+    </div>
+    <div class="postcode-picker-hourglass hide">
       Finding address....
     </div>
-    <div class='postcode-select-container sub-panel hide'>
-      <fieldset class='postcode-picker-address-list'>
-        <select class='address-picker-select' name='sel-address' size='6' width='50'>
-          <option disabled='disabled' value=''>Please select an address</option>
+    <div class="postcode-select-container sub-panel hide">
+      <fieldset class="postcode-picker-address-list">
+        <label class="hint" for="claim_property_address_select">Please select an address</label>
+        <select class="address-picker-select" id="claim_property_address_select" name="sel-address" size="6" width="50">
+          <option disabled="disabled" id="listbox-0" role="option" value="">Please select an address</option>
         </select>
-        <a class='button primary postcode-picker-cta' href='#claim_property_postcode_picker_manual_link' id='claim_propery_selectaddress' name='SelectAddress'>
+        <a class="button primary postcode-picker-cta" href="#claim_property_postcode_picker_manual_link" id="claim_property_selectaddress" name="SelectAddress">
           Select Address
         </a>
       </fieldset>
     </div>
-    <div class='js-only'>
-      <a class='caption postcode-picker-manual-link' href='#claim_property_postcode_picker_manual_link'>
+    <div class="js-only">
+      <a class="caption postcode-picker-manual-link" href="#claim_property_postcode_picker_manual_link" id="claim_property_postcode_picker_manual_link">
         I want to add an address myself
       </a>
     </div>
   </div>
-  <div class='address extra no sub-panel hide'>
-    <div class='row rel street'>
-      <label for='claim_property_street'>Full address</label>
-      <textarea id='claim_property_street' maxlength='70' name='claim[property][street]'></textarea>
+  <div class="address extra no sub-panel hide">
+    <div class="street">
+      <label for="claim_property_street">Full address</label>
+      <textarea class="street" id="claim_property_street" maxlength="70" name="claim[property][street]"></textarea>
     </div>
-    <div class='row js-only'>
-      <span class='error hide' id='claim_property_street-error-message'>
+    <div class="row js-only">
+      <span class="error hide" id="claim_property_street-error-message">
         The address can’t be longer than 4 lines.
       </span>
     </div>
-    <div class='row rel postcode'>
-      <label for='claim_defendant_1_postcode'>Postcode</label>
-      <input class='smalltext' id='claim_property_postcode' maxlength='8' name='claim[defendant_1][postcode]' size='8' type='text'>
+    <div class="postcode">
+      <label for="claim_property_postcode">Postcode</label>
+      <div style="overflow: hidden; width: 100%">
+        <input class="smalltext postcode" id="claim_property_postcode" maxlength="8" name="claim[property][postcode]" size="8" style="float: left;  margin-right: 20px;" type="text">
+        <a class="change-postcode-link js-only" href="#claim_property_postcode_picker_manual_link" style="float: left;">Change</a>
+      </div>
     </div>
   </div>
 </div>
-</body>")
+</body>""")
 
     @results = [
       {"address":"Flat 1;;1 Melbury Close;;FERNDOWN","postcode":"BH22 8HR"},
@@ -64,6 +76,7 @@ describe 'PostcodePicker', ->
     pickerDivs = $('.postcode-picker-container')
     @picker = pickerDivs.eq(0)
     @postcodeEditField = @picker.find('.postcode-picker-edit-field')
+    @postcodeSearchComponent = @picker.find('.postcode-selection-els')
     @view = new window.PostcodePicker( @picker )
 
   afterEach ->
@@ -101,6 +114,21 @@ describe 'PostcodePicker', ->
       expect( options.eq(1).text() ).toEqual '3 Melbury Close, FERNDOWN'
 
       expect(@picker.find('.postcode-select-container')).toBeVisible()
+
+    it 'hides the postcode entry box', ->
+      @view.displayAddresses(@results)
+      expect( @postcodeSearchComponent ).not.toBeVisible()
+
+    it 'displays the selected postcode as fixed text', ->
+      console.log 'displays the selected postcode as fixed text'
+      @view.displayAddresses(@results)
+      pcd = @picker.find('.postcode-display')
+      expect(pcd).toBeVisible()
+      expect(@picker.find('.postcode-display-detail').html()).toEqual 'BH22 8HR'
+
+    it 'displays a change link', ->
+       console.log 'DEBUG HOLD displays the selected postcode as fixed text'
+        
 
   describe 'invalid postcode', ->
     it 'should display an error message', ->
@@ -159,6 +187,9 @@ describe 'PostcodePicker', ->
 
     it 'hides manual edit link', ->
       expect( @picker.find('.postcode-picker-manual-link') ).toBeHidden()
+
+
+
 
   describe 'displaying results after selection', ->
     beforeEach ->
