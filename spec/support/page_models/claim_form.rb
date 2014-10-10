@@ -105,7 +105,7 @@ class ClaimForm
   def fill_claimant_contact_with_js
     if get_data('javascript','separate_correspondence_address') == 'Yes'
       find('#correspondence-address').click
-      complete_details_of_person('claimant_contact')
+      complete_details_of_person('claimant_contact', claimant_contact: true)
       fill_in_text_field('claimant_contact', 'company_name')
     end
     if get_data('javascript','other_contact_details') == 'Yes'
@@ -115,7 +115,7 @@ class ClaimForm
   end
 
   def fill_claimant_contact
-    complete_details_of_person('claimant_contact')
+    complete_details_of_person('claimant_contact', js: false)
     fill_in_text_field('claimant_contact', 'company_name')
     fill_claimant_contact_details
   end
@@ -204,6 +204,7 @@ class ClaimForm
 
   def fill_organizational_claimant
     fill_in_text_field('claimant_1', 'organization_name')
+    click_manual_address_link('claimant_1')
     fill_in_text_field('claimant_1', 'street')
     fill_in_text_field('claimant_1', 'postcode')
   end
@@ -214,6 +215,7 @@ class ClaimForm
     fill_in_text_field(prefix, 'full_name')
 
     if options[:complete_address]
+      click_manual_address_link(prefix) unless options[:claimant_contact]  || options[:js] == false
       fill_in_text_field(prefix, 'street')
       fill_in_text_field(prefix, 'postcode')
 
@@ -229,8 +231,14 @@ class ClaimForm
     claimant_type
   end
 
+
+  def click_manual_address_link(prefix)
+    click_link("claim_#{prefix}_postcode_picker_manual_link")
+  end
+
   def fill_property_details
     prefix = 'property'
+    click_link 'claim_property_postcode_picker_manual_link'
     fill_in_text_field(prefix, 'street')
     fill_in_text_field(prefix, 'postcode')
 
@@ -254,6 +262,7 @@ class ClaimForm
     fill_in_text_field(defendant, 'full_name')
     choose_radio defendant, 'inhabits_property'
     if options[:complete_address] == true
+      click_manual_address_link(defendant)
       fill_in_text_field(defendant, 'street')
       fill_in_text_field(defendant, 'postcode')
     end
