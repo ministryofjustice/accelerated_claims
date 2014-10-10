@@ -56,7 +56,7 @@ feature 'Filling in claim form' do
     click_button 'Continue'
   end
 
-  pending "wait until postcode-picker finishsed" do
+  pending "work on error messages for postcode/addresses to be fixed" do
     scenario "submitting form with only claimant type selected", js: true do
       visit '/'
       choose('claim_claimant_type_individual')
