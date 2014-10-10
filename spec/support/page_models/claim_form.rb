@@ -1,3 +1,5 @@
+require 'nokogiri'
+
 class ClaimForm
   include Capybara::DSL
 
@@ -153,8 +155,16 @@ class ClaimForm
     errors.join("\n\t")
   end
 
+  def fill_in_value element, id, value
+    find(:xpath, "//#{element}[@id='#{id}']").set value
+  end
+
   def fill_in_text_field(prefix, key)
-    fill_in("claim_#{prefix}_#{key}", with: get_data(prefix, key))
+    fill_in_value 'input', "claim_#{prefix}_#{key}", get_data(prefix, key)
+  end
+
+  def fill_in_text_area(prefix, key)
+    fill_in_value 'textarea', "claim_#{prefix}_#{key}", get_data(prefix, key)
   end
 
   def fill_in_text_field_if_present(prefix, key)
@@ -196,15 +206,15 @@ class ClaimForm
       month = $2
       year = $1
 
-      fill_in("claim_#{prefix}_#{key}_3i", with: day)
-      fill_in("claim_#{prefix}_#{key}_2i", with: month)
-      fill_in("claim_#{prefix}_#{key}_1i", with: year)
+      fill_in_value 'input', "claim_#{prefix}_#{key}_3i", day
+      fill_in_value 'input', "claim_#{prefix}_#{key}_2i", month
+      fill_in_value 'input', "claim_#{prefix}_#{key}_1i", year
     end
   end
 
   def fill_organizational_claimant
     fill_in_text_field('claimant_1', 'organization_name')
-    fill_in_text_field('claimant_1', 'street')
+    fill_in_text_area('claimant_1', 'street')
     fill_in_text_field('claimant_1', 'postcode')
   end
 
@@ -214,12 +224,12 @@ class ClaimForm
     fill_in_text_field(prefix, 'full_name')
 
     if options[:complete_address]
-      fill_in_text_field(prefix, 'street')
+      fill_in_text_area(prefix, 'street')
       fill_in_text_field(prefix, 'postcode')
 
     elsif !@js_on && (prefix == 'claimant_2') && get_data('javascript', 'claimant_2_same_address').to_s[/Yes/]
-      fill_in("claim_claimant_2_street", with: get_data('claimant_1', 'street'))
-      fill_in("claim_claimant_2_postcode", with: get_data('claimant_1', 'postcode'))
+      fill_in_value 'textarea', "claim_claimant_2_street", get_data('claimant_1', 'street')
+      fill_in_value 'input',    "claim_claimant_2_postcode", get_data('claimant_1', 'postcode')
     end
   end
 
@@ -231,7 +241,7 @@ class ClaimForm
 
   def fill_property_details
     prefix = 'property'
-    fill_in_text_field(prefix, 'street')
+    fill_in_text_area(prefix, 'street')
     fill_in_text_field(prefix, 'postcode')
 
     choose_radio(prefix, 'house')
@@ -254,7 +264,7 @@ class ClaimForm
     fill_in_text_field(defendant, 'full_name')
     choose_radio defendant, 'inhabits_property'
     if options[:complete_address] == true
-      fill_in_text_field(defendant, 'street')
+      fill_in_text_area(defendant, 'street')
       fill_in_text_field(defendant, 'postcode')
     end
   end
