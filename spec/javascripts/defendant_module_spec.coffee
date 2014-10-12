@@ -103,4 +103,3 @@ describe 'DefendantModule', ->
 
         window.window.DefendantModule.showDefendants('1')
         expectSubpanelsVisible(1)
-
