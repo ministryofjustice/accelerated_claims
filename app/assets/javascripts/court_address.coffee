@@ -1,27 +1,63 @@
+root = exports ? this
 
-hideCourtAddressInitially = () ->
-  $("#court-address").hide()
+CourtAddressModule =
 
-hideCourtAddressInitially()
+  flipTextareaToInputField: ->
+    if $('#claim_court_address').is("textarea")
+      text_area = $('#claim_court_address')
+      input_element = $("<input type='hidden'></input>")
+      console.log "the value of #claim_court_address: #{text_area.val()}"
+      input_element.attr({ 'name': "#{text_area.attr('name')}" })
+      input_element.val("#{text_area.val()}")
+      id = "#{text_area.attr('id')}"
+      input_element.insertBefore(text_area)
+      text_area.remove()
+      input_element.attr({ 'id': "#{id}" })
 
-toggleCourtAddressForm = () ->
-  $("#court-details").click ->
-    $("#court-address").toggle()
-    return
+  hideCourtAddressInitially: ->
+    $('#claim_court_court_name').attr({ 'type': 'hidden' })
+    $('#claim_court_postcode').attr({ 'type': 'hidden' })
+    $("#court-address").hide()
 
-toggleCourtAddressForm()
+  toggleCourtAddressForm: ->
+    $("#court-details").click ->
+      for attr_name in ['court_name', 'address', 'postcode']
+        form_field = "#claim_court_#{attr_name}"
+        $(form_field).attr({ 'type': 'text' }) if $(form_field).attr('type') == 'hidden'
+      $("#court-address").toggle()
 
-findCourtName = (postcode) ->
-  url = '/court-address/' + postcode
-  jQuery.ajax url,
-    type: 'GET'
-    success: (data) ->
-      court_name_element = document.getElementById('court-name')
-      court_name_element.innerHTML = '<b>' + data[0].name + '</b>'
-    error: (jqXHR, textStatus, errorThrown) ->
-      console.log 'ERROR:' + textStatus
 
-$ ->
-  $('#claim_property_postcode').bind 'blur', ->
-    postcode = document.getElementById('claim_property_postcode')
-    findCourtName postcode.value
+  findCourtName: (postcode) ->
+    url = "/court-address/#{postcode}"
+    jQuery.ajax url,
+      type: 'GET'
+      success: (data) ->
+        court_name = data[0].name
+        court_address = data[0].address.address_lines
+        court_postcode = data[0].address.postcode
+        court_name_element = $('#court-name')[0]
+        court_name_element.innerHTML = "<b>#{court_name}</b>"
+        CourtAddressModule.populateCourtAddressForm(court_name, court_address, court_postcode)
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log 'ERROR:' + textStatus
+
+  populateCourtAddressForm: (court_name, court_address, court_postcode) ->
+    $('#claim_court_court_name').val(court_name)
+    $('#claim_court_address').val(court_address)
+    $('#claim_court_postcode').val(court_postcode)
+
+  sendPostcodeForLookup: ->
+    $('#claim_property_postcode').bind 'blur', ->
+      postcode = document.getElementById('claim_property_postcode')
+      CourtAddressModule.findCourtName postcode.value
+
+  setup: ->
+    CourtAddressModule.hideCourtAddressInitially()
+    CourtAddressModule.sendPostcodeForLookup()
+    CourtAddressModule.toggleCourtAddressForm()
+    CourtAddressModule.flipTextareaToInputField()
+
+root.CourtAddressModule = CourtAddressModule
+
+jQuery ->
+  CourtAddressModule.setup()
