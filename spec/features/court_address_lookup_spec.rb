@@ -60,13 +60,13 @@ feature 'Court address lookup' do
 
     before { court_finder_stub(postcode, body: json) }
 
-    scenario 'it should find and populate court name', js: true do
+    scenario 'should find and populate court name', js: true do
       visit '/'
       fill_in 'claim_property_postcode', with: postcode
       expect(page).to have_text 'Cambridge County Court and Family Court'
     end
 
-    scenario 'it should find and populate court address details in the hidden form', js: true do
+    scenario 'should find and populate court address details in the hidden form', js: true do
       visit '/'
       fill_in 'claim_property_postcode', with: postcode
       json_address = JSON.parse(json)[0]['address']['address_lines'].join(',')
