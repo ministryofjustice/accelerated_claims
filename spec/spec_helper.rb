@@ -83,3 +83,5 @@ def diffmerge(actual, expected)
   end
   puts "**** HTML written to actual.html and expected.html in #{home}/tmp for comparison in diffmerge"
 end
+
+Capybara.ignore_hidden_elements = false
