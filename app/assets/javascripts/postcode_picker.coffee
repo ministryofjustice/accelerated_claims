@@ -12,6 +12,7 @@ class PostcodePicker
     manualLink = picker.find('.postcode-picker-manual-link')
     selectButton = picker.find('.postcode-picker-cta')
     changePostcodeLink = picker.find('.change-postcode-link')
+    changePostcodeLink2 = picker.find('.change-postcode-link2')
 
     @button.on 'click', =>
       @lookupPostcode()
@@ -27,13 +28,29 @@ class PostcodePicker
 
     changePostcodeLink.on 'click', =>
       @hideAddressFields()
+      @showManualLink()
       @picker.find('.postcode-selection-els').show()
       @input.val('')
       @input.focus()
+      
+
+    changePostcodeLink2.on 'click', =>
+      @picker.find('.postcode-display').addClass('hide')
+      @picker.find('.postcode-select-container').hide()
+      @showPostcodeSearchComponent()
+   
+
+  hideManualLink: =>
+    @picker.find('.postcode-picker-manual-link').hide()
+
+  showManualLink: =>
+    @picker.find('.postcode-picker-manual-link').show()
 
   lookupPostcode: =>
     postcode = @input.val()
+    @picker.find('.postcode-display').show()
     @picker.find('.postcode-select-container').hide()
+    @showManualLink()
     window.PostcodeLookup.lookup(postcode, this)
 
   selectAddress: =>
@@ -45,9 +62,11 @@ class PostcodePicker
     @picker.find('.street textarea').val(street)
     @picker.find('.postcode input').val(postcode)
     @picker.find('.postcode-picker-address-list').hide()
-    @picker.find('.postcode-picker-manual-link').hide()
+    
     @picker.find('.address.extra' ).show()
     @picker.find('.postcode-selection-els').hide()
+    @picker.find('.postcode-display').hide()
+    @hideManualLink()
     @picker.find('.street textarea').focus()
 
   displayAddresses: (addresses) ->
@@ -68,6 +87,12 @@ class PostcodePicker
     
   hidePostcodeSearchComponent: ->
     @picker.find('.postcode-selection-els').hide()
+
+  showPostcodeSearchComponent: ->
+    @picker.find('.postcode-selection-els').show()
+    @input.focus()
+    true
+
 
 
   toggleAddressFields: ->

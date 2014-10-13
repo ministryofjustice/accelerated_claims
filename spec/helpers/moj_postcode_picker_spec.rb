@@ -64,9 +64,10 @@ def expected_output
   <div class='postcode-lookup rel js-only'>
     <div class='postcode-display hide'>
       Postcode:
-      <span class='postcode_display_detail'>
-        XJJ1 7GG
+      <span class='postcode-display-detail'>
+        &nbsp;
       </span>
+      <a class='change-postcode-link2 js-only' href='#dummy_anchor' id='claim_property-manual_change-link-2' style='float: right;'>Change</a>
     </div>
     <div class='postcode-selection-els'>
       <label class='postcode-picker-label' for='claim_property_postcode_edit_field'>Postcode</label>
@@ -89,11 +90,11 @@ def expected_output
         </a>
       </fieldset>
     </div>
-    <div class='js-only'>
-      <a class='caption postcode-picker-manual-link' href='#claim_property_postcode_picker_manual_link' id='claim_property_postcode_picker_manual_link'>
-        I want to add an address myself
-      </a>
-    </div>
+  </div>
+  <div class='js-only'>
+    <a class='caption postcode-picker-manual-link' href='#claim_property_postcode_picker_manual_link' id='claim_property_postcode_picker_manual_link'>
+      I want to add an address myself
+    </a>
   </div>
   <div class='address extra no sub-panel hide'>
     <div class='street'>
@@ -109,7 +110,7 @@ def expected_output
       <label for='claim_property_postcode'>Postcode</label>
       <div style='overflow: hidden; width: 100%'>
         <input class='smalltext postcode' id='claim_property_postcode' maxlength='8' name='claim[property][postcode]' size='8' style='float: left;  margin-right: 20px;' type='text'>
-        <a class='change-postcode-link js-only' href='#claim_property_postcode_picker_manual_link' style='float: left;'>Change</a>
+        <a class='change-postcode-link js-only' href='#dummy_anchor' style='float: left;'>Change</a>
       </div>
     </div>
   </div>

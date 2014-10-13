@@ -5,7 +5,9 @@
     .postcode-display.hide
       Postcode: 
       %span.postcode-display-detail
-        XJJ1 7GG
+        &nbsp;
+      %a.change-postcode-link2.js-only{id: "#{@prefix}-manual_change-link-2", href: "#dummy_anchor", style: 'float: right;'} Change                       
+
 
     .postcode-selection-els
 
@@ -33,9 +35,9 @@
           %option#listbox-0{role: "option", disabled: "disabled", :value => ""} Please select an address
         %a.button.primary.postcode-picker-cta{id: "#{@prefix}_selectaddress", name: "SelectAddress", href: "##{@prefix}_postcode_picker_manual_link"}
           Select Address
-    .js-only
-      %a.caption.postcode-picker-manual-link{ href: "##{@prefix}_postcode_picker_manual_link", id: "#{@prefix}_postcode_picker_manual_link" }
-        I want to add an address myself
+  .js-only
+    %a.caption.postcode-picker-manual-link{ href: "##{@prefix}_postcode_picker_manual_link", id: "#{@prefix}_postcode_picker_manual_link" }
+      I want to add an address myself
 
 
   .address.extra.no.sub-panel.hide
@@ -51,4 +53,4 @@
       %label{:for => "#{@prefix}_#{@postcode_attr}"} Postcode
       %div{style: "overflow: hidden; width: 100%"}
         %input.smalltext.postcode{:id => "#{@prefix}_#{@postcode_attr}", :maxlength => "8", :name => "#{@name}[#{@postcode_attr}]", :size => "8", :type => "text", style: 'float: left;  margin-right: 20px;'}
-        %a.change-postcode-link.js-only{href: "##{@prefix}_postcode_picker_manual_link", style: 'float: left;'} Change 
+        %a.change-postcode-link.js-only{href: "#dummy_anchor", style: 'float: left;'} Change 
