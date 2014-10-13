@@ -54,5 +54,5 @@
     .postcode
       %label{:for => "#{@prefix}_#{@postcode_attr}"} Postcode
       %div{style: "overflow: hidden; width: 100%"}
-        %input.smalltext.postcode{:id => "#{@prefix}_#{@postcode_attr}", :maxlength => "8", :name => "#{@name}[#{@postcode_attr}]", value: "#{@postcode_value}", :size => "8", :type => "text", style: 'float: left;  margin-right: 20px;'}
+        %input.smalltext.postcode{:id => "#{@prefix}_#{@postcode_attr}", :maxlength => "8", :name => "#{@name}[#{@postcode_attr}]", value: "#{@postcode_value}", :size => "8", :type => "text", style: 'float: left;  margin-right: 20px;', disabled: 1}
         %a.change-postcode-link.js-only{href: "#dummy_anchor", style: 'float: left;'} Change 

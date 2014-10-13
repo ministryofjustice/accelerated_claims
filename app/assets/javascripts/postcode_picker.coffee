@@ -14,6 +14,15 @@ class PostcodePicker
     changePostcodeLink = picker.find('.change-postcode-link')
     changePostcodeLink2 = picker.find('.change-postcode-link2')
 
+    # if the postcode is populated, then it means that the address was correctly selected earlier
+    # and we want to display it.
+    @picker.find('.address.extra' ).show()
+    @picker.find('.postcode-selection-els').hide()
+    @picker.find('.postcode-display').hide()
+    @hideManualLink()
+
+
+
     @button.on 'click', =>
       @lookupPostcode()
 
