@@ -25,13 +25,16 @@ class MojPostcodePicker
   #
   #
   def initialize(form, options)
-    @form          = form
-    @options       = options
-    @prefix        = options[:prefix]
-    @name          = generate_name
-    @postcode_attr = options[:postcode_attr] || 'postcode'
-    @address_attr  = options[:address_attr] || 'address_lines'
-    @@haml         = load_haml if @@haml.nil? || Rails.env.development?
+    @form           = form
+    @options        = options
+    @prefix         = options[:prefix]
+    @name           = generate_name
+    @postcode_attr  = options[:postcode_attr] || 'postcode'
+    @address_attr   = options[:address_attr] || 'address_lines'
+    @@haml          = load_haml if @@haml.nil? || Rails.env.development?
+    @postcode_value = form.object.send(@postcode_attr.to_sym)
+    @address_value  = form.object.send(@address_attr.to_sym)
+    @address_value.gsub!("\r\n", "&#x000A;")
   end
   
 

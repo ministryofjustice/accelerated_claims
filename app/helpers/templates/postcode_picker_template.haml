@@ -45,6 +45,8 @@
     .street
       %label{:for => "#{@prefix}_#{@address_attr}"} Full address
       %textarea.street{id: "#{@prefix}_#{@address_attr}", :maxlength => "70", :name => "#{@name}[street]"}
+        = "#{@address_value}"
+
     .row.js-only
       %span.error.hide{id: "#{@prefix}_#{@address_attr}-error-message"}
         The address can’t be longer than 4 lines.
@@ -52,5 +54,5 @@
     .postcode
       %label{:for => "#{@prefix}_#{@postcode_attr}"} Postcode
       %div{style: "overflow: hidden; width: 100%"}
-        %input.smalltext.postcode{:id => "#{@prefix}_#{@postcode_attr}", :maxlength => "8", :name => "#{@name}[#{@postcode_attr}]", :size => "8", :type => "text", style: 'float: left;  margin-right: 20px;'}
+        %input.smalltext.postcode{:id => "#{@prefix}_#{@postcode_attr}", :maxlength => "8", :name => "#{@name}[#{@postcode_attr}]", value: "#{@postcode_value}", :size => "8", :type => "text", style: 'float: left;  margin-right: 20px;'}
         %a.change-postcode-link.js-only{href: "#dummy_anchor", style: 'float: left;'} Change 
