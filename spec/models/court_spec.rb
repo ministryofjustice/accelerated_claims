@@ -2,7 +2,7 @@ RSpec.describe Court, :type => :model do
 
   let(:court) do
     Court.new(court_name: 'Good Court',
-              address: '1 Good Road',
+              street: '1 Good Road',
               town: 'Goodtown',
               postcode: 'GT1 2XX')
   end
@@ -17,8 +17,8 @@ RSpec.describe Court, :type => :model do
     expect(court).not_to be_valid
   end
 
-  it 'should not be valid without the address' do
-    court.address = ''
+  it 'should not be valid without the street' do
+    court.street = ''
     expect(court).not_to be_valid
   end
 
