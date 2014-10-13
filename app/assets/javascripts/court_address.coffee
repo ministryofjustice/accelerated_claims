@@ -4,9 +4,9 @@ CourtAddressModule =
 
   flipTextareaToInputField: ->
     if $('#claim_court_address').is("textarea")
-      text_area = $('#claim_court_address')
+      text_area = $('#claim_court_street')
       input_element = $("<input type='hidden'></input>")
-      console.log "the value of #claim_court_address: #{text_area.val()}"
+      console.log "the value of #claim_court_street: #{text_area.val()}"
       input_element.attr({ 'name': "#{text_area.attr('name')}" })
       input_element.val("#{text_area.val()}")
       id = "#{text_area.attr('id')}"
@@ -21,7 +21,7 @@ CourtAddressModule =
 
   toggleCourtAddressForm: ->
     $("#court-details").click ->
-      for attr_name in ['court_name', 'address', 'postcode']
+      for attr_name in ['court_name', 'street', 'postcode']
         form_field = "#claim_court_#{attr_name}"
         $(form_field).attr({ 'type': 'text' }) if $(form_field).attr('type') == 'hidden'
       $("#court-address").toggle()
@@ -33,17 +33,17 @@ CourtAddressModule =
       type: 'GET'
       success: (data) ->
         court_name = data[0].name
-        court_address = data[0].address.address_lines
+        court_street = data[0].address.address_lines
         court_postcode = data[0].address.postcode
         court_name_element = $('#court-name')[0]
         court_name_element.innerHTML = "<b>#{court_name}</b>"
-        CourtAddressModule.populateCourtAddressForm(court_name, court_address, court_postcode)
+        CourtAddressModule.populateCourtAddressForm(court_name, court_street, court_postcode)
       error: (jqXHR, textStatus, errorThrown) ->
         console.log 'ERROR:' + textStatus
 
-  populateCourtAddressForm: (court_name, court_address, court_postcode) ->
+  populateCourtAddressForm: (court_name, court_street, court_postcode) ->
     $('#claim_court_court_name').val(court_name)
-    $('#claim_court_address').val(court_address)
+    $('#claim_court_street').val(court_street)
     $('#claim_court_postcode').val(court_postcode)
 
   sendPostcodeForLookup: ->
