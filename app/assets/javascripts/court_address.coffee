@@ -2,6 +2,10 @@ root = exports ? this
 
 CourtAddressModule =
 
+  addCourtAddressFormLabel: ->
+    label = "You need to post this claim to the court nearest the property you're taking back:"
+    $('#court-address-label').text(label)
+
   flipTextareaToInputField: ->
     if $('#claim_court_address').is("textarea")
       text_area = $('#claim_court_street')
@@ -52,6 +56,7 @@ CourtAddressModule =
       CourtAddressModule.findCourtName postcode.value
 
   setup: ->
+    CourtAddressModule.addCourtAddressFormLabel()
     CourtAddressModule.hideCourtAddressInitially()
     CourtAddressModule.sendPostcodeForLookup()
     CourtAddressModule.toggleCourtAddressForm()
