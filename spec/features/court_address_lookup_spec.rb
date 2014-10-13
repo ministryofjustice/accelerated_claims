@@ -8,6 +8,22 @@ feature 'Court address lookup' do
       visit '/'
       expect(page).to have_css('#court-address', visible: false)
     end
+
+    context 'when JavaScript is not enabled' do
+      scenario 'should have the correct form title' do
+        visit '/'
+        non_js_form_label = 'Enter the name and address of the court you want to send this claim to.'
+        expect(page).to have_text non_js_form_label
+      end
+    end
+
+    context 'when JavaScript is enabled' do
+      scenario 'should have the correct form title', js: true do
+        visit '/'
+        js_form_label = "You need to post this claim to the court nearest the property you're taking back:"
+        expect(page).to have_text js_form_label
+      end
+    end
   end
 
   context 'court address form' do
