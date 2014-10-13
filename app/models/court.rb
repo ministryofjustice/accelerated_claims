@@ -12,4 +12,11 @@ class Court < BaseClass
   attr_accessor :postcode
   validates :postcode, presence: { message: 'You must provide the postcode for the court' }
 
+  def as_json
+    {
+      'court_name' => court_name,
+      'street' => "#{address}, #{town}",
+      'postcode' => postcode
+    }
+  end
 end

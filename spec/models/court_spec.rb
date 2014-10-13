@@ -32,4 +32,17 @@ RSpec.describe Court, :type => :model do
     expect(court).not_to be_valid
   end
 
+  describe '#as_json' do
+    let(:json) do
+      {
+        'court_name' => 'Good Court',
+        'street' => '1 Good Road, Goodtown',
+        'postcode' => 'GT1 2XX'
+      }
+    end
+    it 'should return correct JSON' do
+      expect(court.as_json).to eq json
+    end
+  end
+
 end
