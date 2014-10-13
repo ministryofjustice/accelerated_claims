@@ -51,12 +51,10 @@ feature 'Court address lookup' do
     end
 
     scenario 'it should find and populate court address details in the hidden form', js: true do
-      pending "can't read the #claim_court_address hidden field's value"
-      # TODO: fix this
       visit '/'
       fill_in 'claim_property_postcode', with: postcode
       json_address = JSON.parse(json)[0]['address']['address_lines'].join(',')
-      address = find("#claim_court_address", visible: false).value
+      address = find("#claim_court_street", visible: false).value
       expect(address).to eq json_address
     end
   end
