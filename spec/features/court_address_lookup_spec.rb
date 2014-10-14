@@ -3,6 +3,10 @@ feature 'Court address lookup' do
     WebMock.disable_net_connect!(:allow => ["127.0.0.1", /codeclimate.com/])
   end
 
+  let(:original_form_label) do
+    'Enter the name and address of the court you want to send this claim to.'
+  end
+
   context 'when the page is loaded' do
     scenario 'should not show the court address form', js: true do
       visit '/'
@@ -12,8 +16,7 @@ feature 'Court address lookup' do
     context 'when JavaScript is not enabled' do
       scenario 'should have the correct form title' do
         visit '/'
-        non_js_form_label = 'Enter the name and address of the court you want to send this claim to.'
-        expect(page).to have_text non_js_form_label
+        expect(page).to have_text original_form_label
       end
     end
 
@@ -72,6 +75,28 @@ feature 'Court address lookup' do
       json_address = JSON.parse(json)[0]['address']['address_lines'].join(',')
       address = find("#claim_court_street", visible: false).value
       expect(address).to eq json_address
+    end
+
+    context 'with an invalid postcode' do
+      let(:postcode) { 'fake' }
+
+      before { court_finder_stub(postcode, body: {}.to_json) }
+
+      before(:each) do
+        visit '/'
+        fill_in 'claim_property_postcode', with: postcode
+      end
+
+      scenario 'should change the court name form label', js: true do
+        label = find('#court-address-label').text
+        expect(label).to eq original_form_label
+      end
+
+      scenario 'display the expanded form', js: true do
+        court_address = find('#claim_court_street', visible: true)
+        expect(court_address.visible?).to be true
+      end
+
     end
   end
 end
