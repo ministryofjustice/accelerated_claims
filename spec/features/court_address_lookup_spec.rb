@@ -105,10 +105,8 @@ feature 'Court address lookup' do
 
       context 'form toggle link' do
         scenario 'have a toggle link on load', js: true do
-          # label = find('#court-details').text
-          # text = 'Choose to send this claim to a different court'
-          # expect(label).to eq text
-          # expect(label).to eq original_form_label
+          text = 'Choose to send this claim to a different court'
+          expect(page.has_content?(text)).not_to be true
         end
 
         scenario 'remove the form toggle link', js: true do
