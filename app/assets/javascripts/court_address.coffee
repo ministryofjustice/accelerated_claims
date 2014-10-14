@@ -23,13 +23,19 @@ CourtAddressModule =
     $('#claim_court_postcode').attr({ 'type': 'hidden' })
     $("#court-address").hide()
 
-  toggleCourtAddressForm: ->
-    $("#court-details").click ->
-      for attr_name in ['court_name', 'street', 'postcode']
+  flipVisibilityOfCourtAddressForm: ->
+    for attr_name in ['court_name', 'street', 'postcode']
         form_field = "#claim_court_#{attr_name}"
         $(form_field).attr({ 'type': 'text' }) if $(form_field).attr('type') == 'hidden'
+
+  toggleCourtAddressForm: ->
+    $("#court-details").click ->
+      CourtAddressModule.flipVisibilityOfCourtAddressForm()
       $("#court-address").toggle()
 
+  showCourtAddressForm: ->
+    CourtAddressModule.flipVisibilityOfCourtAddressForm()
+    $("#court-address").show()
 
   findCourtName: (postcode) ->
     url = "/court-address/#{postcode}"
@@ -43,7 +49,12 @@ CourtAddressModule =
         court_name_element.innerHTML = "<b>#{court_name}</b>"
         CourtAddressModule.populateCourtAddressForm(court_name, court_street, court_postcode)
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log 'ERROR:' + textStatus
+        CourtAddressModule.addOriginalFormLabelText()
+        CourtAddressModule.showCourtAddressForm()
+
+  addOriginalFormLabelText: ->
+    label = 'Enter the name and address of the court you want to send this claim to.'
+    $('#court-address-label').text(label)
 
   populateCourtAddressForm: (court_name, court_street, court_postcode) ->
     $('#claim_court_court_name').val(court_name)
