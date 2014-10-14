@@ -23,7 +23,8 @@ feature 'Court address lookup' do
     context 'when JavaScript is enabled' do
       scenario 'should have the correct form title', js: true do
         visit '/'
-        js_form_label = "You need to post this claim to the court nearest the property you're taking back:"
+        js_form_label = "You haven't entered a postcode for the property you \
+want to take back. To see the court you need to send this claim to, enter the postcode now"
         expect(page).to have_text js_form_label
       end
     end
