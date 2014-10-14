@@ -184,6 +184,10 @@ describe 'PostcodePicker', ->
     it 'hides the postcode-disply element', ->
       expect( @picker.find('.postcode-display')).toBeHidden()
 
+    it 'should mark the postcode field as readonly', ->
+      expect( @picker.find('#claim_property_postcode')).toHaveAttr('readonly', 'readonly')
+
+
   describe 'clicking on change-postcode-link2', ->
     beforeEach ->
       @view.displayServiceUnavailable()
@@ -192,12 +196,6 @@ describe 'PostcodePicker', ->
       expect(@picker.find('.postcode-display')).toBeVisible()
       @picker.find('.change-postcode-link2').trigger('click')
       expect(@picker.find('.postcode-display').hasClass('hide')).toBe true
-
-    it 'should hide address select box'
-
-    it 'should place focus on postcode edit box'
-    
-
 
 
   describe 'displaying results after selection', ->
