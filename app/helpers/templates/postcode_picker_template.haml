@@ -7,7 +7,7 @@
       %span.postcode-display-detail{style: "font-weight: bold"}
         &nbsp;
       %span
-        %a.change-postcode-link2.js-only{id: "#{@prefix}-manual_change-link-2", href: "#dummy_anchor", style: "display: inline"} Change                       
+        %a.change-postcode-link2.js-only{id: "#{@prefix}-manual_change-link-2", href: "#dummy_anchor", style: "display: inline; margin-left: 10px;"} Change                       
 
 
     .postcode-selection-els
@@ -29,19 +29,20 @@
     .postcode-picker-hourglass.hide
       Finding address....
 
-    .postcode-select-container.sub-panel.hide
+    .postcode-select-container.sub-panel.hide{style: "margin-top: 0px;"}
       %fieldset.postcode-picker-address-list
         %label.hint{ for: "#{@prefix}_address_select"} Please select an address
         %select.address-picker-select{id: "#{@prefix}_address_select", name: "sel-address", size: "6", width: "50"}
           %option#listbox-0{role: "option", disabled: "disabled", :value => ""} Please select an address
-        %a.button.primary.postcode-picker-cta{id: "#{@prefix}_selectaddress", name: "SelectAddress", href: "##{@prefix}_postcode_picker_manual_link"}
+        %a.button.primary.postcode-picker-cta{id: "#{@prefix}_selectaddress", name: "SelectAddress", href: "##{@prefix}_postcode_picker_manual_link", style: "margin-bottom: 20px;"}
           Select Address
+    
   .js-only
     %a.caption.postcode-picker-manual-link{ href: "##{@prefix}_postcode_picker_manual_link", id: "#{@prefix}_postcode_picker_manual_link" }
       I want to add an address myself
 
 
-  .address.extra.no.sub-panel.hide
+  .address.extra.no.sub-panel.hide{style: "margin-top: 10px;"}
 
     .street
       %label{:for => "#{@prefix}_#{@address_attr}"} Full address
@@ -54,6 +55,7 @@
       
     .postcode
       %label{:for => "#{@prefix}_#{@postcode_attr}"} Postcode
+      %br
       %div{style: "overflow: hidden; width: 100%"}
         %input.smalltext.postcode{:id => "#{@prefix}_#{@postcode_attr}", :maxlength => "8", :name => "#{@name}[#{@postcode_attr}]", value: "#{@postcode_value}", :size => "8", :type => "text", style: 'float: left;  margin-right: 20px;'}
         %a.change-postcode-link.js-only{href: "#dummy_anchor", style: 'float: left;'} Change 
