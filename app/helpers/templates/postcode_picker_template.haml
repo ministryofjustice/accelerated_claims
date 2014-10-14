@@ -2,7 +2,7 @@
 .row.postcode.postcode-picker-container
   .postcode-lookup.rel.js-only
 
-    .postcode-display.hide
+    .postcode-display.hide{style: "margin-bottom: 20px;"}
       Postcode: 
       %span.postcode-display-detail{style: "font-weight: bold"}
         &nbsp;
@@ -38,7 +38,7 @@
           Select Address
     
   .js-only
-    %a.caption.postcode-picker-manual-link{ href: "##{@prefix}_postcode_picker_manual_link", id: "#{@prefix}_postcode_picker_manual_link" }
+    %a.caption.postcode-picker-manual-link{ href: "##{@prefix}_postcode_picker_manual_link", id: "#{@prefix}_postcode_picker_manual_link", style: "margin-top: 20px;"}
       I want to add an address myself
 
 

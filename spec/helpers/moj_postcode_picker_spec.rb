@@ -88,7 +88,7 @@ def expected_output
         &nbsp;
       </span>
       <span>
-        <a class='change-postcode-link2 js-only' href='#dummy_anchor' id='claim_property-manual_change-link-2' style='display: inline'>Change</a>
+        <a class='change-postcode-link2 js-only' href='#dummy_anchor' id='claim_property-manual_change-link-2' style='display: inline; margin-left: 10px;'>Change</a>
       </span>
     </div>
     <div class='postcode-selection-els'>
@@ -101,13 +101,13 @@ def expected_output
     <div class='postcode-picker-hourglass hide'>
       Finding address....
     </div>
-    <div class='postcode-select-container sub-panel hide'>
+    <div class='postcode-select-container sub-panel hide' style='margin-top: 0px;'>
       <fieldset class='postcode-picker-address-list'>
         <label class='hint' for='claim_property_address_select'>Please select an address</label>
         <select class='address-picker-select' id='claim_property_address_select' name='sel-address' size='6' width='50'>
           <option disabled='disabled' id='listbox-0' role='option' value=''>Please select an address</option>
         </select>
-        <a class='button primary postcode-picker-cta' href='#claim_property_postcode_picker_manual_link' id='claim_property_selectaddress' name='SelectAddress'>
+        <a class='button primary postcode-picker-cta' href='#claim_property_postcode_picker_manual_link' id='claim_property_selectaddress' name='SelectAddress' style='margin-bottom: 20px;'>
           Select Address
         </a>
       </fieldset>
@@ -118,7 +118,7 @@ def expected_output
       I want to add an address myself
     </a>
   </div>
-  <div class='address extra no sub-panel hide'>
+  <div class='address extra no sub-panel hide' style='margin-top: 10px;'>
     <div class='street'>
       <label for='claim_property_street'>Full address</label>
       <textarea class='street' id='claim_property_street' maxlength='70' name='claim[property][street]'>50 Tregunter Road&#x000A;London</textarea>
@@ -130,6 +130,7 @@ def expected_output
     </div>
     <div class='postcode'>
       <label for='claim_property_postcode'>Postcode</label>
+      <br>
       <div style='overflow: hidden; width: 100%'>
         <input class='smalltext postcode' id='claim_property_postcode' maxlength='8' name='claim[property][postcode]' size='8' style='float: left;  margin-right: 20px;' type='text' value='RG2 7PU'>
         <a class='change-postcode-link js-only' href='#dummy_anchor' style='float: left;'>Change</a>
