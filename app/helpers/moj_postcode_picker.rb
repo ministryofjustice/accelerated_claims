@@ -34,7 +34,7 @@ class MojPostcodePicker
     @@haml          = load_haml if @@haml.nil? || Rails.env.development?
     @postcode_value = form.object.send(@postcode_attr.to_sym)
     @address_value  = form.object.send(@address_attr.to_sym)
-    @address_value.gsub!("\r\n", "&#x000A;")
+    @address_value.gsub!("\r\n", "&#x000A;") unless @address_value.nil?
   end
   
 

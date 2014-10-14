@@ -16,10 +16,11 @@ class PostcodePicker
 
     # if the postcode is populated, then it means that the address was correctly selected earlier
     # and we want to display it.
-    @picker.find('.address.extra' ).show()
-    @picker.find('.postcode-selection-els').hide()
-    @picker.find('.postcode-display').hide()
-    @hideManualLink()
+    if @picker.find('input.smalltext.postcode').val() != ''
+      @picker.find('.address.extra' ).show()
+      @picker.find('.postcode-selection-els').hide()
+      @picker.find('.postcode-display').hide()
+      @hideManualLink()
 
 
 
@@ -90,8 +91,8 @@ class PostcodePicker
       option = "<option value=\"#{index}\">#{address}</option>"
       @selectElement.append option
     @picker.find('.postcode-select-container').show()
-    @picker.find('.postcode-picker-address-list').show()
-    @picker.find('.postcode-picker-address_list').focus()
+    @picker.find('.address-picker-select').focus()
+    true
 
     
   hidePostcodeSearchComponent: ->
