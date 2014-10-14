@@ -91,6 +91,7 @@ class PostcodePicker
       option = "<option value=\"#{index}\">#{address}</option>"
       @selectElement.append option
     @picker.find('.postcode-select-container').show()
+    @picker.find('.postcode-picker-address-list').show()
     @picker.find('.address-picker-select').focus()
     true
 
