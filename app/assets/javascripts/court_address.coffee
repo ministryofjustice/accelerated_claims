@@ -3,8 +3,7 @@ root = exports ? this
 CourtAddressModule =
 
   addCourtAddressFormLabel: ->
-    label = "You haven't entered a postcode for the property you want to take back.<br/>
-      To see the court you need to send this claim to, enter the postcode now"
+    label = "You haven't entered a postcode for the property you want to take back.<br/> To see the court you need to send this claim to, <a href=\"#property\">enter the postcode now</a>"
     $('#court-address-label').html(label)
 
   flipTextareaToInputField: ->
