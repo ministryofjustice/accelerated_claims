@@ -8,24 +8,29 @@ feature 'Court address lookup' do
   end
 
   context 'when the page is loaded' do
+
+    before(:each) { visit '/' }
+
     scenario 'should not show the court address form', js: true do
-      visit '/'
       expect(page).to have_css('#court-address', visible: false)
     end
 
     context 'when JavaScript is not enabled' do
       scenario 'should have the correct form title' do
-        visit '/'
         expect(page).to have_text original_form_label
       end
     end
 
     context 'when JavaScript is enabled' do
       scenario 'should have the correct form title', js: true do
-        visit '/'
-        js_form_label = "You haven't entered a postcode for the property you \
-want to take back. To see the court you need to send this claim to, enter the postcode now"
+        js_form_label = "You haven't entered a postcode for the property you want to take back. To see the court you need to send this claim to, enter the postcode now"
         expect(page).to have_text js_form_label
+      end
+
+      scenario 'should have the link back to property section', js: true do
+        form_title = 'You haven\'t entered a postcode for the property you want to take back.<br> To see the court you need to send this claim to, <a href="#property">enter the postcode now</a>'
+        element = page.evaluate_script("$('#court-address-label').html()")
+        expect(element).to eq form_title
       end
     end
   end
@@ -98,6 +103,17 @@ want to take back. To see the court you need to send this claim to, enter the po
         expect(court_address.visible?).to be true
       end
 
+      context 'form toggle link' do
+        scenario 'have a toggle link on load', js: true do
+          # label = find('#court-details').text
+          # text = 'Choose to send this claim to a different court'
+          # expect(label).to eq text
+          # expect(label).to eq original_form_label
+        end
+
+        scenario 'remove the form toggle link', js: true do
+        end
+      end
     end
   end
 end
