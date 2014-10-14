@@ -4,9 +4,10 @@
 
     .postcode-display.hide
       Postcode: 
-      %span.postcode-display-detail
+      %span.postcode-display-detail{style: "font-weight: bold"}
         &nbsp;
-      %a.change-postcode-link2.js-only{id: "#{@prefix}-manual_change-link-2", href: "#dummy_anchor", style: 'float: right;'} Change                       
+      %span
+        %a.change-postcode-link2.js-only{id: "#{@prefix}-manual_change-link-2", href: "#dummy_anchor", style: "display: inline"} Change                       
 
 
     .postcode-selection-els

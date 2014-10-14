@@ -46,7 +46,7 @@ class PostcodePicker
       
 
     changePostcodeLink2.on 'click', =>
-      @picker.find('.postcode-display').addClass('hide')
+      @picker.find('.postcode-display').hide()
       @picker.find('.postcode-select-container').hide()
       @showPostcodeSearchComponent()
    

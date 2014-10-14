@@ -3,10 +3,18 @@ describe 'MojPostcodePicker' do
 
 
   let(:form)      { double LabellingFormBuilder }
+  let(:object)    { double Object }
+
+  before(:each) do
+    allow(form).to receive(:object).and_return( object )
+  end
   
   describe 'new' do
     it 'calls load_haml just once the first time the class is instantiated' do
       # given an instantiated class of MojPostcodePicker with @@haml populated
+      allow(object).to receive(:postcode).and_return('RG2 7PU')
+      allow(object).to receive(:address_lines).and_return("50 Tregunter Road\r\nLondon")
+
       mpp = MojPostcodePicker.new(form, prefix: 'claim_property')
       expected_haml = File.open(MojPostcodePicker::TEMPLATE_FILE) { |fp| fp.read }
       expect(mpp.haml).to eq expected_haml
@@ -19,6 +27,9 @@ describe 'MojPostcodePicker' do
 
 
     it 'generates default prefixes and attribute names if no options specified' do
+      allow(object).to receive(:postcode).and_return('RG2 7PU')
+      allow(object).to receive(:address_lines).and_return("50 Tregunter Road\r\nLondon")
+
       mpp = MojPostcodePicker.new(form, prefix: 'claim_property')
       expect(mpp.instance_variable_get(:@prefix)).to eq 'claim_property'
       expect(mpp.instance_variable_get(:@name)).to eq 'claim[property]'
@@ -28,6 +39,9 @@ describe 'MojPostcodePicker' do
 
 
     it 'generates non-default prefixes and attribute names if options are specified' do
+      allow(object).to receive(:pc).and_return('RG2 7PU')
+      allow(object).to receive(:street).and_return("50 Tregunter Road\r\nLondon")
+
       mpp = MojPostcodePicker.new(form, prefix: 'claim_defendant_1', name: 'claim[defendant_1]', postcode_attr: 'pc', address_attr: 'street')
       expect(mpp.instance_variable_get(:@prefix)).to eq 'claim_defendant_1'
       expect(mpp.instance_variable_get(:@name)).to eq 'claim[defendant_1]'
@@ -36,7 +50,10 @@ describe 'MojPostcodePicker' do
     end
 
     it 'generates non-default name' do
+      allow(object).to receive(:postcode).and_return('RG2 7PU')
+      allow(object).to receive(:street).and_return("50 Tregunter Road\r\nLondon")
       mpp = MojPostcodePicker.new(form, prefix: "claim_claimant_1", name: "claim[claimant_1]", address_attr: 'street')
+
       expect(mpp.instance_variable_get(:@prefix)).to eq 'claim_claimant_1'
       expect(mpp.instance_variable_get(:@name)).to eq 'claim[claimant_1]'
       expect(mpp.instance_variable_get(:@postcode_attr)).to eq 'postcode'
@@ -48,6 +65,9 @@ describe 'MojPostcodePicker' do
 
   describe 'emit' do
     it 'substitutes its own variables' do
+      allow(object).to receive(:postcode).and_return('RG2 7PU')
+      allow(object).to receive(:street).and_return("50 Tregunter Road\r\nLondon")
+
       mpp = MojPostcodePicker.new(form, prefix: 'claim_property', address_attr: 'street')
       expect(mpp.emit).to eq expected_output
     end
@@ -64,10 +84,12 @@ def expected_output
   <div class='postcode-lookup rel js-only'>
     <div class='postcode-display hide'>
       Postcode:
-      <span class='postcode-display-detail'>
+      <span class='postcode-display-detail' style='font-weight: bold'>
         &nbsp;
       </span>
-      <a class='change-postcode-link2 js-only' href='#dummy_anchor' id='claim_property-manual_change-link-2' style='float: right;'>Change</a>
+      <span>
+        <a class='change-postcode-link2 js-only' href='#dummy_anchor' id='claim_property-manual_change-link-2' style='display: inline'>Change</a>
+      </span>
     </div>
     <div class='postcode-selection-els'>
       <label class='postcode-picker-label' for='claim_property_postcode_edit_field'>Postcode</label>
@@ -99,7 +121,7 @@ def expected_output
   <div class='address extra no sub-panel hide'>
     <div class='street'>
       <label for='claim_property_street'>Full address</label>
-      <textarea class='street' id='claim_property_street' maxlength='70' name='claim[property][street]'></textarea>
+      <textarea class='street' id='claim_property_street' maxlength='70' name='claim[property][street]'>50 Tregunter Road&#x000A;London</textarea>
     </div>
     <div class='row js-only'>
       <span class='error hide' id='claim_property_street-error-message'>
@@ -109,7 +131,7 @@ def expected_output
     <div class='postcode'>
       <label for='claim_property_postcode'>Postcode</label>
       <div style='overflow: hidden; width: 100%'>
-        <input class='smalltext postcode' id='claim_property_postcode' maxlength='8' name='claim[property][postcode]' size='8' style='float: left;  margin-right: 20px;' type='text'>
+        <input class='smalltext postcode' id='claim_property_postcode' maxlength='8' name='claim[property][postcode]' size='8' style='float: left;  margin-right: 20px;' type='text' value='RG2 7PU'>
         <a class='change-postcode-link js-only' href='#dummy_anchor' style='float: left;'>Change</a>
       </div>
     </div>
