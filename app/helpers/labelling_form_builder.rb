@@ -9,9 +9,11 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     row_input attribute, :text_field, options
   end
 
+
   def text_area_row(attribute, options={})
     row_input attribute, :text_area, options
   end
+
 
   def moj_date_fieldset attribute, legend, options = {}, example_date = Date.today, explanatory_text = nil
     df = MojDateFieldset.new(self, attribute, legend, options, example_date, explanatory_text)
@@ -24,6 +26,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     mpp = MojPostcodePicker.new(self, prefix: "claim_#{attribute}", name: name, address_attr: 'street')
     mpp.emit
   end
+
 
   # Defaults to "Yes" "No" labels on radio inputs
   def radio_button_fieldset attribute, legend, options={}
@@ -45,18 +48,13 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 
+  
   def row attribute, options={}
     @template.haml_tag haml_tag_text('div option', attribute, options) do
       yield
     end
   end
 
-  def fieldset attribute, options={}
-    options.delete(:id) unless options[:id].present?
-    @template.haml_tag haml_tag_text('fieldset', attribute, options) do
-      yield
-    end
-  end
 
   def error_for? attribute
     if @object.is_a?(Claim)
@@ -69,19 +67,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 
-  def error_span attribute, options={}
-    @template.surround(error_span_open_tag(options), "</span>".html_safe) do
-      error_span_message(attribute)
-    end
-  end
-
-  def error_id_for attribute
-    "#{@object_name.to_s.tr('[]','_')}_#{attribute}_error".squeeze('_')
-  end
-
-  def id_for attribute, default=nil
-    error_for?(attribute) ? error_id_for(attribute) : (default || '')
-  end
 
   def labelled_check_box attribute, label, yes='Yes', no='No', options={}
     set_class_and_id attribute, options
@@ -105,10 +90,54 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     list.join("\n").html_safe
   end
 
+
   def set_class_and_id attribute, options
     options[:class] = css_for(attribute, options)
     options[:id] = id_for(attribute) unless id_for(attribute).blank?
   end
+
+
+  def error_id_for attribute
+    "#{@object_name.to_s.tr('[]','_')}_#{attribute}_error".squeeze('_')
+  end
+
+
+  def fieldset_tag(attribute, legend_text, options = {}, &block)
+    fieldset = tag(:fieldset, options_for_fieldset(options), true)
+
+    # use visually hidden legend text for screen reader accessibility
+    fieldset.safe_concat legend_for(attribute, legend_text, options) unless legend_text.blank?
+
+    # hide repeated legend text from screen readers using aria-hidden='true'
+    label = label_content_for(attribute, "<span aria-hidden='true'>#{legend_text}</span>".html_safe, hint: options[:hint], aria_hidden: true)
+    fieldset.safe_concat content_tag(:div, label) unless label.blank?
+
+    fieldset.concat(capture(&block)) if block_given?
+    fieldset.safe_concat("</fieldset>")
+  end
+
+  def error_span attribute, options={}
+    @template.surround(error_span_open_tag(options), "</span>".html_safe) do
+      error_span_message(attribute)
+    end
+  end
+
+
+
+  private
+
+  def fieldset attribute, options={}
+    options.delete(:id) unless options[:id].present?
+    @template.haml_tag haml_tag_text('fieldset', attribute, options) do
+      yield
+    end
+  end
+
+
+  def id_for attribute, default=nil
+    error_for?(attribute) ? error_id_for(attribute) : (default || '')
+  end
+
 
   def label_content_for attribute, label, options={}
     label ||= attribute.to_s.humanize
@@ -131,21 +160,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     span[/\?<\/span/] || span[/\.<\/span>/] || span[/\.|\?$/]
   end
 
-  def fieldset_tag(attribute, legend_text, options = {}, &block)
-    fieldset = tag(:fieldset, options_for_fieldset(options), true)
-
-    # use visually hidden legend text for screen reader accessibility
-    fieldset.safe_concat legend_for(attribute, legend_text, options) unless legend_text.blank?
-
-    # hide repeated legend text from screen readers using aria-hidden='true'
-    label = label_content_for(attribute, "<span aria-hidden='true'>#{legend_text}</span>".html_safe, hint: options[:hint], aria_hidden: true)
-    fieldset.safe_concat content_tag(:div, label) unless label.blank?
-
-    fieldset.concat(capture(&block)) if block_given?
-    fieldset.safe_concat("</fieldset>")
-  end
-
-  private
 
   def legend_for attribute, legend_text, options
     label = label_content_for(attribute, legend_text, hint: options[:hint])
@@ -241,9 +255,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
   def row_input attribute, input, options
     virtual_pageview = options[:data] ? options[:data].delete('virtual-pageview') : nil
-
     css = "row #{css_for(attribute, options)}".strip
-
     id = id_for(attribute).blank? ? '' : "id='#{id_for(attribute)}' "
 
     @template.surround("<div #{id}class='#{css}'>".html_safe, "</div>".html_safe) do
