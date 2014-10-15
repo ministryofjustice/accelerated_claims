@@ -82,7 +82,7 @@ def expected_output
   str =<<EOF
 <div class='row postcode postcode-picker-container'>
   <div class='postcode-lookup rel js-only'>
-    <div class='postcode-display hide'>
+    <div class='postcode-display hide' style='margin-bottom: 20px;'>
       Postcode:
       <span class='postcode-display-detail' style='font-weight: bold'>
         &nbsp;
@@ -114,7 +114,7 @@ def expected_output
     </div>
   </div>
   <div class='js-only'>
-    <a class='caption postcode-picker-manual-link' href='#claim_property_postcode_picker_manual_link' id='claim_property_postcode_picker_manual_link'>
+    <a class='caption postcode-picker-manual-link' href='#claim_property_postcode_picker_manual_link' id='claim_property_postcode_picker_manual_link' style='margin-top: 20px;'>
       I want to add an address myself
     </a>
   </div>

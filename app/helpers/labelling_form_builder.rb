@@ -25,19 +25,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     mpp.emit
   end
 
-  def date_select_field_set attribute, legend, options={}
-    set_class_and_id attribute, options
-
-    fieldset_tag attribute, legend, options do
-      @template.surround("<div class='row'>".html_safe, "</div>".html_safe) do
-        if @object.send(attribute).is_a?(InvalidDate)
-          @object.send("#{attribute}=", nil) # nil date to avoid exception on date_select call
-        end
-        date_select(attribute, options[:date_select_options])
-      end
-    end
-  end
-
   # Defaults to "Yes" "No" labels on radio inputs
   def radio_button_fieldset attribute, legend, options={}
     virtual_pageview = options[:data] ? options[:data].delete('virtual-pageview') : nil
