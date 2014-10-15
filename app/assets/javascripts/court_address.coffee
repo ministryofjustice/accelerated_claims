@@ -25,10 +25,10 @@ CourtAddressModule =
 
   flipVisibilityOfCourtAddressForm: ->
     for attr_name in ['court_name', 'street', 'postcode']
-        form_field = "#claim_court_#{attr_name}"
-        $(form_field).attr({ 'type': 'text' }) if $(form_field).attr('type') == 'hidden'
+      form_field = "#claim_court_#{attr_name}"
+      $(form_field).attr({ 'type': 'text' }) if $(form_field).attr('type') == 'hidden'
 
-  toggleCourtAddressForm: ->
+  enableTogglingOfCourtAddressForm: ->
     $("#court-details").click ->
       CourtAddressModule.flipVisibilityOfCourtAddressForm()
       $("#court-address").toggle()
@@ -48,6 +48,8 @@ CourtAddressModule =
         court_name_element = $('#court-name')[0]
         court_name_element.innerHTML = "<b>#{court_name}</b>"
         CourtAddressModule.populateCourtAddressForm(court_name, court_street, court_postcode)
+        CourtAddressModule.linkForFormToggling()
+        CourtAddressModule.enableTogglingOfCourtAddressForm()
       error: (jqXHR, textStatus, errorThrown) ->
         CourtAddressModule.addOriginalFormLabelText()
         CourtAddressModule.showCourtAddressForm()
@@ -61,6 +63,10 @@ CourtAddressModule =
     $('#claim_court_street').val(court_street)
     $('#claim_court_postcode').val(court_postcode)
 
+  linkForFormToggling: ->
+    link = "<p/><a id='court-details' class='caption' href='#court-details'>Choose to send this claim to a different court</a>"
+    $(link).insertBefore('#court-name')
+
   sendPostcodeForLookup: ->
     $('#claim_property_postcode').bind 'blur', ->
       postcode = document.getElementById('claim_property_postcode')
@@ -70,7 +76,7 @@ CourtAddressModule =
     CourtAddressModule.addCourtAddressFormLabel()
     CourtAddressModule.hideCourtAddressInitially()
     CourtAddressModule.sendPostcodeForLookup()
-    CourtAddressModule.toggleCourtAddressForm()
+    CourtAddressModule.enableTogglingOfCourtAddressForm()
     CourtAddressModule.flipTextareaToInputField()
 
 root.CourtAddressModule = CourtAddressModule
