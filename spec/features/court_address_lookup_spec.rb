@@ -35,20 +35,6 @@ feature 'Court address lookup' do
     end
   end
 
-  context 'court address form' do
-    scenario 'when the form is hidden' do
-      visit '/'
-      find('#court-details').click
-      expect(page).to have_css('#court-address', visible: true)
-    end
-
-    scenario 'when the form is shown' do
-      visit '/'
-      2.times { find('#court-details').click }
-      expect(page).to have_css('#court-address', visible: false)
-    end
-  end
-
   context 'when property address is populated' do
     let(:postcode) { 'SG8 0LT' }
     let(:json) {
@@ -81,6 +67,28 @@ feature 'Court address lookup' do
       json_address = JSON.parse(json)[0]['address']['address_lines'].join(',')
       address = find("#claim_court_street", visible: false).value
       expect(address).to eq json_address
+    end
+
+    scenario 'should add a link to populate the form manually', js: true do
+      visit '/'
+      fill_in 'claim_property_postcode', with: postcode
+      expect(page).to have_xpath('//*[@id="court-details"]')
+    end
+
+    context 'court address form visibility' do
+      scenario 'should unhide the form', js: true do
+        visit '/'
+        fill_in 'claim_property_postcode', with: postcode
+        find('#court-details').click
+        expect(page).to have_css('#court-address', visible: true)
+      end
+
+      scenario 'the form should be togglable', js: true do
+        visit '/'
+        fill_in 'claim_property_postcode', with: postcode
+        2.times { find('#court-details').click }
+        expect(page).to have_css('#court-address', visible: false)
+      end
     end
 
     context 'with an invalid postcode' do
