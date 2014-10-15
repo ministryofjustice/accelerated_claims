@@ -44,8 +44,12 @@
 
   .address.extra.no.sub-panel.hide{style: "margin-top: 10px;"}
 
-    .row.street
-      %label{:for => "#{@prefix}_#{@address_attr}"} Full address
+    - options = @form.object.errors[:street].any? ? {id: "#{@prefix}_#{@address_attr}_error", class: 'error'} : {}
+    .row.street{options}
+      %label{:for => "#{@prefix}_#{@address_attr}"} 
+        Full address
+        - unless @form.object.errors[:street].empty?
+          %span.error Enter the full address
       %textarea.street{id: "#{@prefix}_#{@address_attr}", :maxlength => "70", :name => "#{@name}[street]"}
         = "#{@address_value}"
 
@@ -54,7 +58,7 @@
         The address can’t be longer than 4 lines.
       
 
-    - options = @form.object.errors[:postcode].any? ? {id: 'claim_property_postcode_error', class: 'error'} : {}
+    - options = @form.object.errors[:postcode].any? ? {id: "#{@prefix}_#{@postcode_attr}_error", class: 'error'} : {}
 
     .row.address-postcode{options}
       %label{:for => "#{@prefix}_#{@postcode_attr}"} 
