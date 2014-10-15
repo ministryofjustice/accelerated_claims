@@ -30,7 +30,7 @@ class PostcodePicker
     manualLink.on 'click', =>
       @toggleAddressFields()
       changePostcodeLink.css('display', 'none')
-      @picker.find('.postcode input').removeAttr('readonly')
+      @picker.find('.address-postcode input').removeAttr('readonly')
 
     @input.on 'keyup', =>
       @clearPostcodeErrorMessage()
@@ -71,8 +71,8 @@ class PostcodePicker
     street = selectedAddress.address.replace(/;;/g, "\n")
     postcode = selectedAddress.postcode
     @picker.find('.street textarea').val(street)
-    @picker.find('.postcode input').val(postcode)
-    @picker.find('.postcode input').attr('readonly', '1')
+    @picker.find('.address-postcode input').val(postcode)
+    @picker.find('.address-postcode input').attr('readonly', '1')
 
     @picker.find('.postcode-picker-address-list').hide()
     

@@ -1,5 +1,5 @@
 
-.row.postcode.postcode-picker-container
+.postcode.postcode-picker-container
   .postcode-lookup.rel.js-only
 
     .postcode-display.hide{style: "margin-bottom: 20px;"}
@@ -44,7 +44,7 @@
 
   .address.extra.no.sub-panel.hide{style: "margin-top: 10px;"}
 
-    .street
+    .row.street
       %label{:for => "#{@prefix}_#{@address_attr}"} Full address
       %textarea.street{id: "#{@prefix}_#{@address_attr}", :maxlength => "70", :name => "#{@name}[street]"}
         = "#{@address_value}"
@@ -53,8 +53,14 @@
       %span.error.hide{id: "#{@prefix}_#{@address_attr}-error-message"}
         The address can’t be longer than 4 lines.
       
-    .postcode
-      %label{:for => "#{@prefix}_#{@postcode_attr}"} Postcode
+
+    - options = @form.object.errors[:postcode].any? ? {id: 'claim_property_postcode_error', class: 'error'} : {}
+
+    .row.address-postcode{options}
+      %label{:for => "#{@prefix}_#{@postcode_attr}"} 
+        Postcode
+        - unless @form.object.errors[:postcode].empty?
+          %span.error Enter the postcode
       %br
       %div{style: "overflow: hidden; width: 100%"}
         %input.smalltext.postcode{:id => "#{@prefix}_#{@postcode_attr}", :maxlength => "8", :name => "#{@name}[#{@postcode_attr}]", value: "#{@postcode_value}", :size => "8", :type => "text", style: 'float: left;  margin-right: 20px;'}
