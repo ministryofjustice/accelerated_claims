@@ -55,37 +55,29 @@ feature 'Court address lookup' do
 
     before { court_finder_stub(postcode, body: json) }
 
-    scenario 'should find and populate court name', js: true do
+    scenario 'find and populate court name, address, show manual edit link', js: true do
       visit '/'
-      fill_in 'claim_property_postcode', with: postcode
+      fill_text_field 'claim_property_postcode', postcode
+
       expect(page).to have_text 'Cambridge County Court and Family Court'
-    end
 
-    scenario 'should find and populate court address details in the hidden form', js: true do
-      visit '/'
-      fill_in 'claim_property_postcode', with: postcode
-      json_address = JSON.parse(json)[0]['address']['address_lines'].join(',')
-      address = find("#claim_court_street", visible: false).value
-      expect(address).to eq json_address
-    end
+      address = JSON.parse(json)[0]['address']['address_lines'].join(',')
+      expect( page.find("#claim_court_street", visible: false).value ).to eq(address)
 
-    scenario 'should add a link to populate the form manually', js: true do
-      visit '/'
-      fill_in 'claim_property_postcode', with: postcode
       expect(page).to have_xpath('//*[@id="court-details"]')
     end
 
     context 'court address form visibility' do
       scenario 'should unhide the form', js: true do
         visit '/'
-        fill_in 'claim_property_postcode', with: postcode
+        fill_text_field 'claim_property_postcode', postcode
         find('#court-details').click
         expect(page).to have_css('#court-address', visible: true)
       end
 
       scenario 'the form should be togglable', js: true do
         visit '/'
-        fill_in 'claim_property_postcode', with: postcode
+        fill_text_field 'claim_property_postcode', postcode
         2.times { find('#court-details').click }
         expect(page).to have_css('#court-address', visible: false)
       end
@@ -98,7 +90,7 @@ feature 'Court address lookup' do
 
       before(:each) do
         visit '/'
-        fill_in 'claim_property_postcode', with: postcode
+        fill_text_field 'claim_property_postcode', postcode
       end
 
       scenario 'should change the court name form label', js: true do
