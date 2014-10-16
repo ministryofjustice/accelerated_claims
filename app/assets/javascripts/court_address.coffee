@@ -38,21 +38,21 @@ CourtAddressModule =
     $("#court-address").show()
 
   findCourtName: (postcode) ->
-    url = "/court-address/#{postcode}"
-    jQuery.ajax url,
-      type: 'GET'
-      success: (data) ->
-        court_name = data[0].name
-        court_street = data[0].address.address_lines
-        court_postcode = data[0].address.postcode
-        court_name_element = $('#court-name')[0]
-        court_name_element.innerHTML = "<b>#{court_name}</b>"
-        CourtAddressModule.populateCourtAddressForm(court_name, court_street, court_postcode)
-        CourtAddressModule.linkForFormToggling()
-        CourtAddressModule.enableTogglingOfCourtAddressForm()
-      error: (jqXHR, textStatus, errorThrown) ->
-        CourtAddressModule.addOriginalFormLabelText()
-        CourtAddressModule.showCourtAddressForm()
+    CourtLookup.lookup(postcode, CourtAddressModule)
+
+  populateCourtDetails: (data) ->
+    court_name = data[0].name
+    court_street = data[0].address.address_lines
+    court_postcode = data[0].address.postcode
+    court_name_element = $('#court-name')[0]
+    court_name_element.innerHTML = "<b>#{court_name}</b>"
+    CourtAddressModule.populateCourtAddressForm(court_name, court_street, court_postcode)
+    CourtAddressModule.linkForFormToggling()
+    CourtAddressModule.enableTogglingOfCourtAddressForm()
+
+  displayNoResultsFound: ->
+    CourtAddressModule.addOriginalFormLabelText()
+    CourtAddressModule.showCourtAddressForm()
 
   addOriginalFormLabelText: ->
     label = 'Enter the name and address of the court you want to send this claim to.'
