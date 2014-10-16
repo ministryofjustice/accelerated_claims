@@ -22,11 +22,11 @@ describe Feedback, :type => :model do
 
     it { is_expected.to be_valid }
 
-    its(:email_or_anonymous_placeholder) { should == email }
-    its(:name_for_feedback) { should == 'Unknown' }
-    its(:test?) { should be false }
+    it { expect(feedback.email_or_anonymous_placeholder).to eq email  }
+    it { expect(feedback.name_for_feedback).to eq 'Unknown'  }
+    it { expect(feedback.test?).to be false }
 
-    its(:text) { should == "difficulty_feedback: It was difficult
+    it do expect(feedback.text).to eq "difficulty_feedback: It was difficult
 
 improvement_feedback: But no improvement needed
 
@@ -34,7 +34,8 @@ satisfaction_feedback: Dissatisfied
 
 help_feedback: No, I filled in this form myself
 
-other_help: Searched for court address"}
+other_help: Searched for court address"
+    end
   end
 
   context 'without email' do
@@ -42,9 +43,9 @@ other_help: Searched for court address"}
 
     it { is_expected.to be_valid }
 
-    its(:email_or_anonymous_placeholder) { should == ENV['ANONYMOUS_PLACEHOLDER_EMAIL'] }
-    its(:name_for_feedback) { should == 'anonymous feedback' }
-    its(:test?) { should be false }
+    it { expect(feedback.email_or_anonymous_placeholder).to eq ENV['ANONYMOUS_PLACEHOLDER_EMAIL']  }
+    it { expect(feedback.name_for_feedback).to eq 'anonymous feedback'  }
+    it { expect(feedback.test?).to be false }
   end
 
   context 'with invalid email' do
@@ -59,7 +60,7 @@ other_help: Searched for court address"}
 
     it { is_expected.to be_valid }
 
-    its(:test?) { should be true }
+    it { expect(feedback.test?).to be true }
   end
 
 end

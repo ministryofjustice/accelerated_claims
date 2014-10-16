@@ -44,7 +44,6 @@ end
 group :development, :test do
   gem 'simplecov', require: false
   gem 'rspec-rails', '3.0.1'
-  gem 'rspec-its'
   gem 'rspec-legacy_formatters'
   gem 'jasmine-core', '~> 2.0.0'
   gem 'jasmine', '~> 2.0.2'

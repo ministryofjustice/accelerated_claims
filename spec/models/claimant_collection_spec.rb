@@ -187,8 +187,8 @@ describe ClaimantCollection do
     let(:params) { HashWithIndifferentAccess.new }
 
     subject { claimants }
-    its(:size) { is_expected.to eq 0 }
-    its(:further_participants) { is_expected.to be_empty}
+    it { expect(claimants.size).to eq 0  }
+    it { expect(claimants.further_participants).to be_empty }
 
     it 'should intantiate a collection of 4 empty objects' do
       expect(claimants[1]).to eq Claimant.new('claimant_num' => 1, 'validate_address_same_as_first_claimant' => false)
@@ -207,8 +207,8 @@ describe ClaimantCollection do
       params
     end
     subject { claimants }
-    its(:size) { is_expected.to eq 1 }
-    its(:further_participants) { is_expected.to be_empty}
+    it { expect(claimants.size).to eq 1  }
+    it { expect(claimants.further_participants).to be_empty }
   end
 
   context 'two claimants' do
@@ -219,14 +219,14 @@ describe ClaimantCollection do
       params
     end
     subject { claimants }
-    its(:size) { is_expected.to eq 2 }
-    its(:further_participants) { is_expected.to be_empty}
+    it { expect(claimants.size).to eq 2  }
+    it { expect(claimants.further_participants).to be_empty }
   end
 
   context 'three claimants' do
     subject { claimants }
-    its(:size) { is_expected.to eq 3 }
-    its(:further_participants) { is_expected.to eq [ claimants[3] ] }
+    it { expect(claimants.size).to eq 3  }
+    it { expect(claimants.further_participants).to eq [ claimants[3] ]  }
   end
 
   context 'four claimants' do
@@ -237,8 +237,8 @@ describe ClaimantCollection do
       params
     end
     subject { claimants }
-    its(:size) { is_expected.to eq 4 }
-    its(:further_participants) { is_expected.to eq [ claimants[3], claimants[4] ] }
+    it { expect(claimants.size).to eq 4  }
+    it { expect(claimants.further_participants).to eq [ claimants[3], claimants[4] ]  }
 
     context 'and last claimant has address same as first claimant' do
       it { is_expected.to be_valid }

@@ -5,8 +5,8 @@ describe Tenancy, :type => :model do
 
   shared_examples_for 'assured_shorthold_tenancy_type unset' do
     it { is_expected.not_to be_valid }
-    its(:one_tenancy_agreement?) { should be false }
-    its(:multiple_tenancy_agreements?) { should be false }
+    it { expect(subject.one_tenancy_agreement?).to be false  }
+    it { expect(subject.multiple_tenancy_agreements?).to be false  }
 
     it "should have error message" do
       subject.valid?
@@ -23,8 +23,8 @@ describe Tenancy, :type => :model do
     subject { demoted_tenancy }
 
     it { is_expected.to be_valid }
-    its(:demoted_tenancy?) { should be true }
-    its(:assured_tenancy?) { should be false }
+    it { expect(subject.demoted_tenancy?).to be true  }
+    it { expect(subject.assured_tenancy?).to be false  }
 
     context 'when assured_shorthold_tenancy_type "one"' do
       before { subject.assured_shorthold_tenancy_type = 'one' }
@@ -38,12 +38,12 @@ describe Tenancy, :type => :model do
 
     describe 'as_json' do
       subject { demoted_tenancy.as_json }
-      its(['demoted_tenancy']) { should == 'Yes'}
-      its(['demotion_order_date_day']) { should eq '01' }
-      its(['demotion_order_date_month']) { should eq '01' }
-      its(['demotion_order_date_year']) { should eq '2010' }
-      its(['demotion_order_court']) { should eq 'Brighton' }
-      its(['previous_tenancy_type']) { should == 'assured' }
+      it { expect(subject['demoted_tenancy']).to eq 'Yes' }
+      it { expect(subject['demotion_order_date_day']).to eq '01'  }
+      it { expect(subject['demotion_order_date_month']).to eq '01'  }
+      it { expect(subject['demotion_order_date_year']).to eq '2010'  }
+      it { expect(subject['demotion_order_court']).to eq 'Brighton'  }
+      it { expect(subject['previous_tenancy_type']).to eq 'assured'  }
     end
 
     context 'and required fields are blank' do
@@ -86,8 +86,8 @@ describe Tenancy, :type => :model do
     ['Blah', ''].each do |answer|
       subject { Tenancy.new(tenancy_type: answer) }
       it { is_expected.not_to be_valid }
-      its(:demoted_tenancy?) { should be false }
-      its(:assured_tenancy?) { should be false }
+      it { expect(subject.demoted_tenancy?).to be false  }
+      it { expect(subject.assured_tenancy?).to be false  }
     end
 
     describe "when no value is provided" do
@@ -123,14 +123,14 @@ describe Tenancy, :type => :model do
     context 'one tenancy agreement' do
       describe 'as_json' do
         subject { assured_tenancy.as_json }
-        its(['demoted_tenancy']) { should == 'No'}
-        its(['start_date_day']) { should == '05' }
-        its(['start_date_month']) { should == '01' }
-        its(['start_date_year']) { should == '2010' }
-        its(['latest_agreement_date_day']) { should == '' }
-        its(['latest_agreement_date_month']) { should == '' }
-        its(['latest_agreement_date_year']) { should == '' }
-        its(['assured_shorthold_tenancy_type']) { should == 'one' }
+        it { expect(subject['demoted_tenancy']).to eq 'No' }
+        it { expect(subject['start_date_day']).to eq '05'  }
+        it { expect(subject['start_date_month']).to eq '01'  }
+        it { expect(subject['start_date_year']).to eq '2010'  }
+        it { expect(subject['latest_agreement_date_day']).to eq ''  }
+        it { expect(subject['latest_agreement_date_month']).to eq ''  }
+        it { expect(subject['latest_agreement_date_year']).to eq ''  }
+        it { expect(subject['assured_shorthold_tenancy_type']).to eq 'one'  }
       end
     end
   end
@@ -139,8 +139,8 @@ describe Tenancy, :type => :model do
     subject { assured_tenancy }
 
     it { is_expected.to be_valid }
-    its(:demoted_tenancy?) { should be false }
-    its(:assured_tenancy?) { should be true }
+    it { expect(subject.demoted_tenancy?).to be false  }
+    it { expect(subject.assured_tenancy?).to be true  }
   end
 
   context "when 'assured'" do
@@ -152,14 +152,14 @@ describe Tenancy, :type => :model do
           assured_tenancy({'assured_shorthold_tenancy_type' => 'multiple'}).as_json
         }
 
-        its(['demoted_tenancy']) { should == 'No'}
-        its(['start_date_day']) { should == '05' }
-        its(['start_date_month']) { should == '01' }
-        its(['start_date_year']) { should == '2010' }
-        its(['latest_agreement_date_day']) { should == '' }
-        its(['latest_agreement_date_month']) { should == '' }
-        its(['latest_agreement_date_year']) { should == '' }
-        its(['assured_shorthold_tenancy_type']) { should == 'multiple' }
+        it { expect(subject['demoted_tenancy']).to eq 'No' }
+        it { expect(subject['start_date_day']).to eq '05'  }
+        it { expect(subject['start_date_month']).to eq '01'  }
+        it { expect(subject['start_date_year']).to eq '2010'  }
+        it { expect(subject['latest_agreement_date_day']).to eq ''  }
+        it { expect(subject['latest_agreement_date_month']).to eq ''  }
+        it { expect(subject['latest_agreement_date_year']).to eq ''  }
+        it { expect(subject['assured_shorthold_tenancy_type']).to eq 'multiple'  }
       end
     end
 
@@ -191,11 +191,11 @@ describe Tenancy, :type => :model do
       subject{ assured_tenancy(assured_shorthold_tenancy_type: 'one') }
       it { is_expected.to be_valid }
 
-      its(:one_tenancy_agreement?) { should be true }
-      its(:multiple_tenancy_agreements?) { should be false }
-      its(:start_date) { should == Date.parse("2010-01-05") }
-      its(:latest_agreement_date) { should be_nil }
-      its(:only_start_date_present?) { should be true }
+      it { expect(subject.one_tenancy_agreement?).to be true  }
+      it { expect(subject.multiple_tenancy_agreements?).to be false  }
+      it { expect(subject.start_date).to eq Date.parse("2010-01-05")  }
+      it { expect(subject.latest_agreement_date).to be_nil  }
+      it { expect(subject.only_start_date_present?).to be true  }
 
       context 'and start date is blank' do
         subject { assured_tenancy(start_date: nil) }
@@ -261,20 +261,20 @@ describe Tenancy, :type => :model do
 
       describe 'as_json' do
         subject { multiple_tenancy.as_json }
-        its(['agreement_reissued_for_same_landlord_and_tenant']) { should == 'Yes' }
-        its(['agreement_reissued_for_same_property']) { should == 'No' }
-        its(['assured_shorthold_tenancy_notice_served_date_day']) { should eq '01' }
-        its(['assured_shorthold_tenancy_notice_served_date_month']) { should eq '10' }
-        its(['assured_shorthold_tenancy_notice_served_date_year']) { should eq '2010' }
-        its(['original_assured_shorthold_tenancy_agreement_date_day']) { should eq '01' }
-        its(['original_assured_shorthold_tenancy_agreement_date_month']) { should eq '02' }
-        its(['original_assured_shorthold_tenancy_agreement_date_year']) { should eq '2009' }
+        it { expect(subject['agreement_reissued_for_same_landlord_and_tenant']).to eq 'Yes'  }
+        it { expect(subject['agreement_reissued_for_same_property']).to eq 'No'  }
+        it { expect(subject['assured_shorthold_tenancy_notice_served_date_day']).to eq '01'  }
+        it { expect(subject['assured_shorthold_tenancy_notice_served_date_month']).to eq '10'  }
+        it { expect(subject['assured_shorthold_tenancy_notice_served_date_year']).to eq '2010'  }
+        it { expect(subject['original_assured_shorthold_tenancy_agreement_date_day']).to eq '01'  }
+        it { expect(subject['original_assured_shorthold_tenancy_agreement_date_month']).to eq '02'  }
+        it { expect(subject['original_assured_shorthold_tenancy_agreement_date_year']).to eq '2009'  }
       end
 
       it { is_expected.to be_valid }
-      its(:one_tenancy_agreement?) { should be false }
-      its(:multiple_tenancy_agreements?) { should be true }
-      its(:only_start_date_present?) { should be false }
+      it { expect(subject.one_tenancy_agreement?).to be false  }
+      it { expect(subject.multiple_tenancy_agreements?).to be true  }
+      it { expect(subject.only_start_date_present?).to be false  }
 
       describe "agreement_reissued_for_same_property" do
         let(:field) { :agreement_reissued_for_same_property }
@@ -313,7 +313,7 @@ describe Tenancy, :type => :model do
         end
 
         context 'but start date present' do
-          its(:only_start_date_present?) { should be true }
+          it { expect(subject.only_start_date_present?).to be true  }
         end
       end
 

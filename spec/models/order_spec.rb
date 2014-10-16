@@ -15,7 +15,7 @@ describe Order, :type => :model do
 
     context 'after validation' do
       before { order.valid? }
-      its(:possession) { should == 'Yes' }
+      it { expect(order.possession).to eq 'Yes'  }
     end
   end
 
@@ -25,7 +25,7 @@ describe Order, :type => :model do
 
     context 'after validation' do
       before { order.valid? }
-      its(:possession) { should == 'Yes' }
+      it { expect(order.possession).to eq 'Yes'  }
     end
   end
 
