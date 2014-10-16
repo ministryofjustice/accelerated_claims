@@ -27,3 +27,20 @@ describe 'CourtAddressModule', ->
       address = $('#court-address')
       expect(address).not.toBeVisible()
 
+  describe 'enableTogglingOfCourtAddressForm', ->
+    link = null
+
+    beforeEach ->
+      link = $('<a id="court-details" class="caption" href="#court-details">Choose to send this claim to a different court</a>')
+      $(document.body).append(link)
+
+    afterEach ->
+      link.remove()
+      link = null
+
+    it 'should toggle the court address form', ->
+      address = $('#court-address')
+      window.CourtAddressModule.enableTogglingOfCourtAddressForm()
+      $('#court-details').trigger 'click'
+      expect(address).not.toBeVisible()
+
