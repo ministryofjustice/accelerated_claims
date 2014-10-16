@@ -4,24 +4,26 @@
 //= require court_address
 
 describe 'CourtAddressModule', ->
+  element = null
 
-  describe 'hideCourtAddressInitially', ->
-    it 'should not show the court address form on load', ->
-      window.CourtAddressModule.hideCourtAddressInitially()
-      element = $('#court-address')
-      expect(element).not.toBeVisible()
+  beforeEach ->
+    element = $('<div style="display: block;" id="court-address">' +
+        '<div class="row"><label for="claim_court_court_name">Name of court</label>' +
+        '<input id="claim_court_court_name" name="claim[court][court_name]" type="hidden"></div>' +
+        '<div class="row"><label for="claim_court_street">Full address</label>' +
+        '<textarea id="claim_court_street" name="claim[court][street]"></textarea></div>' +
+        '<div class="row"><label for="claim_court_postcode">Postcode</label>' +
+        '<input id="claim_court_postcode" name="claim[court][postcode]" type="hidden"></div>' +
+      '</div>')
+    $(document.body).append(element)
 
-  describe 'toggleCourtAddressForm', ->
-    it 'should toggle the court address form', ->
-      window.CourtAddressModule.toggleCourtAddressForm()
-      $('#court-details').trigger 'click'
-      # TODO: address this
-      # expect('#claim_court_court_name').toBeVisible()
+  afterEach ->
+    element.remove()
+    element = null
 
-  describe 'findCourtName', ->
-    it 'should return JSON data', ->
-      window.CourtAddressModule.findCourtName('SG8 0LT')
-      # TODO: expect ?
+  describe 'hideCourtAddress', ->
+    it 'hides the court address', ->
+      window.CourtAddressModule.hideCourtAddress()
+      address = $('#court-address')
+      expect(address).not.toBeVisible()
 
-  describe 'sendPostcodeForLookup': ->
-    it 'should send the postcode provided to be used for court lookup', ->

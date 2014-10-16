@@ -18,7 +18,7 @@ CourtAddressModule =
       text_area.remove()
       input_element.attr({ 'id': "#{id}" })
 
-  hideCourtAddressInitially: ->
+  hideCourtAddress: ->
     $('#claim_court_court_name').attr({ 'type': 'hidden' })
     $('#claim_court_postcode').attr({ 'type': 'hidden' })
     $("#court-address").hide()
@@ -74,7 +74,7 @@ CourtAddressModule =
 
   setup: ->
     CourtAddressModule.addCourtAddressFormLabel()
-    CourtAddressModule.hideCourtAddressInitially()
+    CourtAddressModule.hideCourtAddress()
     CourtAddressModule.sendPostcodeForLookup()
     CourtAddressModule.enableTogglingOfCourtAddressForm()
     CourtAddressModule.flipTextareaToInputField()
