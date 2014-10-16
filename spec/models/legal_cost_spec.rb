@@ -9,7 +9,7 @@ describe LegalCost, :type => :model do
     subject { legal_cost }
     it { is_expected.to be_valid }
 
-    its(:as_json) { should == { 'legal_costs' => '123.34' } }
+    it { expect(legal_cost.as_json).to eq 'legal_costs' => '123.34' }
   end
 
   context 'non-number supplied' do

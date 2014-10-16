@@ -91,7 +91,7 @@ describe Claimant, :type => :model do
       subject { claimant }
 
       it { is_expected.to be_valid }
-      its(:numbered_header) { is_expected.to eq "Claimant 1:\n" }
+      it { expect(claimant.numbered_header).to eq "Claimant 1:\n"  }
 
       describe '#indented_details' do
         it 'should return a string containing name and address with each line indented by the required number of spaces'  do
@@ -140,7 +140,7 @@ describe Claimant, :type => :model do
 
       subject { claimant }
       it { is_expected.to be_valid }
-      its(:numbered_header) { is_expected.to eq "Claimant 2:\n" }
+      it { expect(claimant.numbered_header).to eq "Claimant 2:\n"  }
 
       it 'should set the validate_presence attribute to true if missing' do
         expect(claimant.validate_presence).to be true

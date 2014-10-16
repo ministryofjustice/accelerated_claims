@@ -20,16 +20,15 @@ describe License, :type => :model do
     let(:issued_by)                     { '' }
     let(:issued_date)                   { '' }
 
-    context 'no part 2 or part 3 selected' do 
+    context 'no part 2 or part 3 selected' do
       let(:issued_under_act_part_applied) { '' }
       it { should_not be_valid }
     end
 
-
     context 'and licensed under part 2 of act' do
       let(:issued_under_act_part_applied)   { 'Part2' }
       it { should be_valid }
-      its(:as_json) { should == {
+      it { expect(license.as_json).to eq(
           "multiple_occupation" => 'Yes',
           "part2_authority"     => '',
           "part2_day"           => '',
@@ -40,14 +39,14 @@ describe License, :type => :model do
           "part3_day"           => '',
           "part3_month"         => '',
           "part3_year"          => ''
-        }
+        )
       }
     end
 
     context 'and licensed under part 3 of act' do
       let(:issued_under_act_part_applied)   { 'Part3' }
       it { should be_valid }
-      its(:as_json) { should == {
+      it { expect(license.as_json).to eq(
           "multiple_occupation" => 'No',
           "part2_authority"     => '',
           "part2_day"           => '',
@@ -58,24 +57,21 @@ describe License, :type => :model do
           "part3_day"           => '',
           "part3_month"         => '',
           "part3_year"          => ''
-        }
+        )
       }
     end
 
     context 'and issued_under_act_part_applied invalid' do
       let(:issued_under_act_part_applied) { 'Part100' }
       it { should_not be_valid }
-    end   
-
+    end
 
     context 'and issued_under_act_part_applied blank' do
       let(:issued_under_act_part_applied) { '' }
       it { should_not be_valid }
     end
 
-
   end
-
 
   context 'in multiple occupation' do
     let(:multiple_occupation)             { 'Yes' }
@@ -87,7 +83,7 @@ describe License, :type => :model do
 
     context 'and licensed under part 2 of act' do
       it { is_expected.to be_valid }
-      its(:as_json) { should == {
+      it { expect(license.as_json).to eq(
           "multiple_occupation" => 'Yes',
           "part2_authority"     => issued_by,
           "part2_day"           => '12',
@@ -98,14 +94,14 @@ describe License, :type => :model do
           "part3_day"           => '',
           "part3_month"         => '',
           "part3_year"          => ''
-        }
+        )
       }
     end
 
     context 'and licensed under part 3 of act' do
       let(:issued_under_act_part_yes) { 'Part3' }
       it { should be_valid }
-      its(:as_json) { should == {
+      it { expect(license.as_json).to eq(
           "multiple_occupation" => 'No',
           "part2_authority"     => '',
           "part2_day"           => '',
@@ -116,7 +112,7 @@ describe License, :type => :model do
           "part3_day"           => '12',
           "part3_month"         => '01',
           "part3_year"          => '2013'
-        }
+        )
       }
     end
 
@@ -124,8 +120,6 @@ describe License, :type => :model do
       let(:issued_under_act_part_yes) { 'Part100' }
       it { should_not be_valid }
     end
-
- 
 
     context 'and issued_under_act_part blank' do
       let(:issued_under_act_part_yes) { '' }
@@ -152,7 +146,7 @@ describe License, :type => :model do
 
     it { is_expected.to be_valid }
 
-    its(:as_json) { should == {
+    it { expect(license.as_json).to eq(
         "multiple_occupation" => 'No',
         "part2_authority"     => '',
         "part2_day"           => '',
@@ -163,7 +157,7 @@ describe License, :type => :model do
         "part3_day"           => '',
         "part3_month"         => '',
         "part3_year"          => ''
-      }
+      )
     }
   end
 

@@ -13,7 +13,7 @@ describe Claim, :type => :model do
       claim_post_data['claim'].merge( 'form_state' => 'some state' )
     end
 
-    its(:form_state) { should == 'some state' }
+    it { expect(claim.form_state).to eq 'some state' }
   end
 
   describe '#initialize' do
