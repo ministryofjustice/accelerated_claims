@@ -36,8 +36,8 @@ class ClaimController < ApplicationController
   end
 
   def confirmation
-    claim = session[:claim]
-    if claim.nil? || !Claim.new(claim).valid?
+    @claim = session[:claim]
+    if @claim.nil? || !Claim.new(@claim).valid?
       redirect_to_with_protocol(:new)
     end
     @page_title = 'Make a claim to evict tenants: accelerated possession'
@@ -108,7 +108,6 @@ class ClaimController < ApplicationController
     end
   end
 
-
   def move_claimant_address_params_into_the_model
     (2 .. ClaimantCollection.max_claimants).each do |i|
       key = "claimant#{i}address"
@@ -118,8 +117,6 @@ class ClaimController < ApplicationController
       end
     end
   end
-
-
 
   def delete_all_pdfs
     FileUtils.rm Dir.glob('/tmp/*pdf')

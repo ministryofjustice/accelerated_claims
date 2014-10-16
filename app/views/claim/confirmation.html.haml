@@ -3,6 +3,21 @@
 
 #activateModalSessionTimer
 
+%section.summary
+  - @claim.each do |k, v|
+    - unless ['form_state'].include? k
+      %h2.section-header
+        = k.humanize
+      .row
+        - if v.is_a?(Hash)
+          - v.each do |k,v|
+            %p
+              %span.hint
+                =k.humanize
+              %span
+                =v
+        - else
+          =v
 %section.confirmation
   .moj-panel
     .row
