@@ -160,11 +160,11 @@ class ClaimForm
   end
 
   def fill_in_text_field(prefix, key)
-    fill_in_value 'input', "claim_#{prefix}_#{key}", get_data(prefix, key)
+    fill_text_field "claim_#{prefix}_#{key}", get_data(prefix, key)
   end
 
   def fill_in_text_area(prefix, key)
-    fill_in_value 'textarea', "claim_#{prefix}_#{key}", get_data(prefix, key)
+    fill_text_area "claim_#{prefix}_#{key}", get_data(prefix, key)
   end
 
   def fill_in_text_field_if_present(prefix, key)
