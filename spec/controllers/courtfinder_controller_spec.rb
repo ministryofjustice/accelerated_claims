@@ -2,21 +2,7 @@ describe CourtfinderController, type: :controller do
   describe '#address' do
     context 'when a valid postcode is given' do
       let(:postcode) { 'SG8 0LT' }
-      let(:json) do
-        [
-         {
-           'name' => 'Cambridge County Court and Family Court',
-           'address' => {
-             'town' => 'Cambridge',
-             'address_lines' => ['Cambridge County Court and Family Court Hearing Centre',
-                                 '197 East Road'],
-             'type' => 'Postal',
-             'postcode' => 'CB1 1BA',
-             'county' => 'Cambridgeshire'
-           }
-         }
-        ].to_json
-      end
+      let(:json) { CourtfinderController::TEST_RESPONSE_DATA.to_json }
 
       before { court_finder_stub(postcode, body: json) }
 
