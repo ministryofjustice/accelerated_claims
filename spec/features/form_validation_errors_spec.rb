@@ -54,11 +54,10 @@ feature 'Filling in claim form' do
       click_button 'Continue'
     end
 
-    scenario "submitting form with only claimant type selected", js: true do
+    scenario 'clicking on the error message takes you to section', js: true do
       visit '/'
       choose('claim_claimant_type_individual')
       click_button 'Continue'
-
       expect(page).to have_content('Please say how many claimants there are')
 
       check_focus_after_click 'Please say how many claimants there are', 'claim_num_claimants'
@@ -344,4 +343,3 @@ end
 def non_js_address_error_message(attribute)
   "#{attribute} address can’t be longer than 4 lines."
 end
-
