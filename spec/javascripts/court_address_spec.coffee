@@ -7,7 +7,8 @@ describe 'CourtAddressModule', ->
   element = null
 
   beforeEach ->
-    element = $('<div style="display: block;" id="court-address">' +
+    element = $('<input id="claim_property_postcode" name="claim[property][postcode]" type="text"/>' +
+        '<div style="display: block;" id="court-address">' +
         '<div class="row"><label for="claim_court_court_name">Name of court</label>' +
         '<input id="claim_court_court_name" name="claim[court][court_name]" type="hidden"></div>' +
         '<div class="row"><label for="claim_court_street">Full address</label>' +
@@ -44,3 +45,16 @@ describe 'CourtAddressModule', ->
       $('#court-details').trigger 'click'
       expect(address).not.toBeVisible()
 
+  describe 'changing the postcode of the property value', ->
+
+    beforeEach ->
+      window.CourtAddressModule.sendPostcodeForLookup()
+
+    describe 'with a postcode provided', ->
+      it 'should do Court address lookup', ->
+        spyOn(window.CourtLookup, 'lookup')
+        postcode = 'SG8 0LT'
+        postcode_field = $('#claim_property_postcode')
+        postcode_field.val('SG8 0LT')
+        postcode_field.focusout()
+        expect(window.CourtLookup.lookup).toHaveBeenCalledWith(postcode, window.CourtAddressModule)
