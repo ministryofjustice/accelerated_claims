@@ -55,6 +55,23 @@ describe 'CourtAddressModule', ->
         spyOn(window.CourtLookup, 'lookup')
         postcode = 'SG8 0LT'
         postcode_field = $('#claim_property_postcode')
-        postcode_field.val('SG8 0LT')
+        postcode_field.val(postcode)
         postcode_field.focusout()
         expect(window.CourtLookup.lookup).toHaveBeenCalledWith(postcode, window.CourtAddressModule)
+
+    describe 'with no postcode provided', ->
+      it 'should not do Court address lookup', ->
+        spyOn(window.CourtLookup, 'lookup')
+        postcode = ''
+        postcode_field = $('#claim_property_postcode')
+        postcode_field.val(postcode)
+        postcode_field.focusout()
+        expect(window.CourtLookup.lookup).not.toHaveBeenCalled()
+
+      it 'should call displayNoResultsFound', ->
+        spyOn(window.CourtAddressModule, 'displayNoResultsFound')
+        postcode = ''
+        postcode_field = $('#claim_property_postcode')
+        postcode_field.val(postcode)
+        postcode_field.focusout()
+        expect(window.CourtAddressModule.displayNoResultsFound).toHaveBeenCalled()

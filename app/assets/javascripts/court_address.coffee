@@ -69,8 +69,11 @@ CourtAddressModule =
 
   sendPostcodeForLookup: ->
     $('#claim_property_postcode').bind 'focusout', ->
-      postcode = document.getElementById('claim_property_postcode').value
-      CourtAddressModule.findCourtName(postcode) unless postcode == ''
+      postcode = $('#claim_property_postcode').val()
+      if postcode
+        CourtAddressModule.findCourtName postcode
+      else
+        CourtAddressModule.displayNoResultsFound()
 
   setup: ->
     CourtAddressModule.addCourtAddressFormLabel()
