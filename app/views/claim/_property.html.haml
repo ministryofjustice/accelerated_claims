@@ -3,8 +3,7 @@
   = form.radio_button_fieldset :house,
       'What kind of property do you want to take back?',
       class: 'radio',
-      choice: { 'A self-contained house, flat or bedsit'.html_safe => 'Yes',
-          'Room or rooms in a property. <span class="hint">Tenants may share kitchen or bathroom</span>'.html_safe => 'No' },
+      choice: { 'y' => 'Yes', 'x'.html_safe => 'No' },
       data: { 'virtual-pageview' => '/accelerated/property-section' }
 
   .sub-panel.address#property

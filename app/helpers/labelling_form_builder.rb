@@ -80,8 +80,19 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 
+  def t_id attribute, options={}
+    id = "#{ @object_name.to_s.tr('[]','_').gsub('_','.') }.#{attribute}".squeeze('.')
+    id.gsub!(/\.\d+\./, '.')
+    id += "_#{options[:choice].downcase}" if options[:choice]
+    id
+  end
+
+  def field_id_for attribute
+    "#{@object_name.to_s.tr('[]','_')}_#{attribute}".squeeze('_')
+  end
+
   def error_id_for attribute
-    "#{@object_name.to_s.tr('[]','_')}_#{attribute}_error".squeeze('_')
+    "#{field_id_for(attribute)}_error"
   end
 
   def id_for attribute, default=nil
@@ -211,6 +222,11 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def radio_button_row attribute, label, choice, virtual_pageview, input_class
+    t_id = t_id(attribute, choice: choice)
+
+    translation = I18n.t(t_id)
+    label = translation unless translation[/translation missing/]
+
     options = {}
     options.merge!(class: input_class) if input_class
     options.merge!(data: { 'virtual_pageview' => virtual_pageview }) if virtual_pageview
