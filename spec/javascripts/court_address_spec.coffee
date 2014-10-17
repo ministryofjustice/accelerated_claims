@@ -3,6 +3,11 @@
 //= require jasmine-jquery
 //= require court_address
 
+enterPostcode = (postcode) ->
+  postcode_field = $('#claim_property_postcode')
+  postcode_field.val(postcode)
+  postcode_field.focusout()
+
 describe 'CourtAddressModule', ->
   element = null
 
@@ -53,25 +58,16 @@ describe 'CourtAddressModule', ->
     describe 'with a postcode provided', ->
       it 'should do Court address lookup', ->
         spyOn(window.CourtLookup, 'lookup')
-        postcode = 'SG8 0LT'
-        postcode_field = $('#claim_property_postcode')
-        postcode_field.val(postcode)
-        postcode_field.focusout()
-        expect(window.CourtLookup.lookup).toHaveBeenCalledWith(postcode, window.CourtAddressModule)
+        enterPostcode('SG8 0LT')
+        expect(window.CourtLookup.lookup).toHaveBeenCalledWith('SG8 0LT', window.CourtAddressModule)
 
     describe 'with no postcode provided', ->
       it 'should not do Court address lookup', ->
         spyOn(window.CourtLookup, 'lookup')
-        postcode = ''
-        postcode_field = $('#claim_property_postcode')
-        postcode_field.val(postcode)
-        postcode_field.focusout()
+        enterPostcode('')
         expect(window.CourtLookup.lookup).not.toHaveBeenCalled()
 
       it 'should call displayNoResultsFound', ->
         spyOn(window.CourtAddressModule, 'displayNoResultsFound')
-        postcode = ''
-        postcode_field = $('#claim_property_postcode')
-        postcode_field.val(postcode)
-        postcode_field.focusout()
+        enterPostcode('')
         expect(window.CourtAddressModule.displayNoResultsFound).toHaveBeenCalled()
