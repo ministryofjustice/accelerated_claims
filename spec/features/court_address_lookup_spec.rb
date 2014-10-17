@@ -37,21 +37,7 @@ feature 'Court address lookup' do
 
   context 'when property address is populated' do
     let(:postcode) { 'SG8 0LT' }
-    let(:json) {
-      [
-       {
-         'name' => 'Cambridge County Court and Family Court',
-         'address' => {
-           'town' => 'Cambridge',
-           'address_lines' => ['Cambridge County Court and Family Court Hearing Centre',
-                               '197 East Road'],
-           'type' => 'Postal',
-           'postcode' => 'CB1 1BA',
-           'county' => 'Cambridgeshire'
-         }
-       }
-      ].to_json
-    }
+    let(:json) { CourtfinderController::TEST_RESPONSE_DATA.to_json }
 
     before { court_finder_stub(postcode, body: json) }
 
