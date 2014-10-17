@@ -8,7 +8,7 @@ guard :jasmine, server: :webrick, server_mount: '/specs', server_env: :developme
   watch(%r{app/assets/javascripts/(.+?)\.(js\.coffee|js|coffee)(?:\.\w+)*$}) { |m| "spec/javascripts/#{ m[1] }_spec.#{ m[2] }" }
 end
 
-guard :rspec, all_on_start: false, cmd: 'bundle exec rspec' do
+guard :rspec, cmd: 'bundle exec rspec', all_on_start: false do
   watch(%r{^spec/.+_spec\.rb$})
 
   watch(%r{^spec/models/(.+)_spec\.rb$}) { |m| "spec/models/#{m[1]}_spec.rb" }
@@ -44,4 +44,3 @@ guard :rspec, all_on_start: false, cmd: 'bundle exec rspec' do
   watch(%r{^app/views/claim/new\.html\.haml$}) { |m| "spec/features/submit_claim_spec.rb" }
 
 end
-
