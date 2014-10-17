@@ -7,7 +7,7 @@ CourtAddressModule =
     $('#court-address-label').html(label)
 
   flipTextareaToInputField: ->
-    if $('#claim_court_address').is("textarea")
+    if $('#claim_court_street').is("textarea")
       text_area = $('#claim_court_street')
       input_element = $("<input type='hidden'></input>")
       console.log "the value of #claim_court_street: #{text_area.val()}"
