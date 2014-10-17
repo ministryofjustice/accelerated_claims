@@ -68,7 +68,7 @@ CourtAddressModule =
     $(link).insertBefore('#court-name')
 
   sendPostcodeForLookup: ->
-    $('#claim_property_postcode').bind 'blur', ->
+    $('#claim_property_postcode').bind 'focusout', ->
       postcode = document.getElementById('claim_property_postcode').value
       CourtAddressModule.findCourtName(postcode) unless postcode == ''
 
