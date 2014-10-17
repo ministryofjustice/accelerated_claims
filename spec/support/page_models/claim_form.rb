@@ -35,6 +35,13 @@ class ClaimForm
     fill_fee_account
     fill_legal_costs
     fill_reference_number
+    fill_court_details
+  end
+
+  def fill_court_details
+    fill_in_text_field('court', 'court_name')
+    fill_in_text_area('court', 'street')
+    fill_in_text_field('court', 'postcode')
   end
 
   def complete_form_with_javascript
