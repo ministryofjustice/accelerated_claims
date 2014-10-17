@@ -25,7 +25,7 @@ feature 'Filling in claim form' do
 
       expect(page).to have_content("Please select what kind of property it is")
     end
-  
+
     scenario "submitting an incomplete deposit information given date", js: true do
       visit '/'
       choose('claim_deposit_received_yes')
@@ -45,7 +45,7 @@ feature 'Filling in claim form' do
     scenario "submitting incomplete form", js: true do
       visit '/'
       click_button 'Continue'
-      
+
       expect(page).to have_content('Please select what kind of claimant you are')
 
       check_focus_after_click 'You must say whether the defendant paid a deposit', 'claim_deposit_received_yes'
@@ -55,11 +55,10 @@ feature 'Filling in claim form' do
       click_button 'Continue'
     end
 
-    scenario "submitting form with only claimant type selected", js: true do
+    scenario 'clicking on the error message takes you to section', js: true do
       visit '/'
       choose('claim_claimant_type_individual')
       click_button 'Continue'
-
       expect(page).to have_content('Please say how many claimants there are')
 
       check_focus_after_click 'Please say how many claimants there are', 'claim_num_claimants'
@@ -84,7 +83,6 @@ feature 'Filling in claim form' do
       check_focus_after_click 'You must have given 2 months notice to make an accelerated possession claim', 'claim_notice_notice_served_yes'
     end
   end
-
 
   scenario "submitting form without notice checked, the hidden errors should not be shown", js: true do
     visit '/'
@@ -346,4 +344,3 @@ end
 def non_js_address_error_message(attribute)
   "#{attribute} address can’t be longer than 4 lines."
 end
-
