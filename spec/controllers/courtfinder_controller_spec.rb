@@ -18,16 +18,16 @@ describe CourtfinderController, type: :controller do
     end
 
     context 'when a invalid postcode is given' do
-      let(:postcode) { 'broken' }
+      let(:postcode) { 'fake' }
 
       before { court_finder_stub(postcode, body: '', code: 404) }
 
-      pending 'should return error status code' do
+      it 'should return error status code' do
         get :address, postcode: postcode
         expect(response.status).to eq 404
       end
 
-      pending 'should return error message' do
+      it 'should return error message' do
         get :address, postcode: postcode
         expect(response.body).to eq "No court found for #{postcode} postcode"
       end
