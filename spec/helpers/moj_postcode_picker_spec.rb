@@ -67,6 +67,7 @@ describe 'MojPostcodePicker' do
     it 'substitutes its own variables' do
       allow(object).to receive(:postcode).and_return('RG2 7PU')
       allow(object).to receive(:street).and_return("50 Tregunter Road\r\nLondon")
+      allow(object).to receive(:errors).and_return( {:street => [], :postcode => [] } )
 
       mpp = MojPostcodePicker.new(form, prefix: 'claim_property', address_attr: 'street')
       expect(mpp.emit).to eq expected_output
@@ -80,8 +81,8 @@ end
 
 def expected_output
   str =<<EOF
-<div class='row postcode postcode-picker-container'>
-  <div class='postcode-lookup rel js-only'>
+<div class='postcode postcode-picker-container'>
+  <div class='row postcode-lookup rel js-only'>
     <div class='postcode-display hide' style='margin-bottom: 20px;'>
       Postcode:
       <span class='postcode-display-detail' style='font-weight: bold'>
@@ -119,8 +120,10 @@ def expected_output
     </a>
   </div>
   <div class='address extra no sub-panel hide' style='margin-top: 10px;'>
-    <div class='street'>
-      <label for='claim_property_street'>Full address</label>
+    <div class='row street'>
+      <label for='claim_property_street'>
+        Full address
+      </label>
       <textarea class='street' id='claim_property_street' maxlength='70' name='claim[property][street]'>50 Tregunter Road&#x000A;London</textarea>
     </div>
     <div class='row js-only'>
@@ -128,8 +131,10 @@ def expected_output
         The address can’t be longer than 4 lines.
       </span>
     </div>
-    <div class='postcode'>
-      <label for='claim_property_postcode'>Postcode</label>
+    <div class='row address-postcode'>
+      <label for='claim_property_postcode'>
+        Postcode
+      </label>
       <br>
       <div style='overflow: hidden; width: 100%'>
         <input class='smalltext postcode' id='claim_property_postcode' maxlength='8' name='claim[property][postcode]' size='8' style='float: left;  margin-right: 20px;' type='text' value='RG2 7PU'>

@@ -1,6 +1,6 @@
 
 .postcode.postcode-picker-container
-  .postcode-lookup.rel.js-only
+  .row.postcode-lookup.rel.js-only
 
     .postcode-display.hide{style: "margin-bottom: 20px;"}
       Postcode: 
@@ -10,9 +10,13 @@
         %a.change-postcode-link2.js-only{id: "#{@prefix}-manual_change-link-2", href: "#dummy_anchor", style: "display: inline; margin-left: 10px;"} Change                       
 
 
-    .postcode-selection-els
 
+    .postcode-selection-els
       %label.postcode-picker-label{:for => "#{@prefix}_#{@postcode_attr}_edit_field"} Postcode
+
+      -# use @form.object.missing_address? once implementd in all models that have address
+      - if @form.object.postcode.blank? && @form.object.street.blank?
+        %span.error Enter Postcode and select address
 
       
 
