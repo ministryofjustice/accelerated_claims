@@ -77,6 +77,16 @@ describe 'CourtAddressModule', ->
         it 'should populate the court postcode', ->
           expect($('#claim_court_postcode').val()).toMatch(postcode)
 
+    describe 'on form on expansion', ->
+        beforeEach ->
+          window.CourtAddressModule.populateCourtAddressForm('court_name', 'street', 'postcode')
+          window.CourtAddressModule.flipVisibilityOfCourtAddressForm()
+
+        it 'should blank out the form', ->
+          for attr_name in ['court_name', 'street', 'postcode']
+            field = $("#claim_court_#{attr_name}").val()
+            expect(field).toEqual('')
+
       describe 'form label', ->
         it 'should change the label text', ->
           text = "You need to post this claim to the court nearest to \
