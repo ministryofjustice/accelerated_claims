@@ -9,7 +9,7 @@ feature 'Filling in claim form' do
     scenario "submitting incomplete form", js: false do
       visit '/'
       click_button 'Continue'
-      expect(page).to have_content("Enter the full address")
+      expect(page).to have_content("Enter Postcode and select address")
 
       expect(page).to have_content("Enter the name of the person who gave the notice")
 

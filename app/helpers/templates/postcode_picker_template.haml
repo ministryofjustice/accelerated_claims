@@ -15,8 +15,8 @@
       %label.postcode-picker-label{:for => "#{@prefix}_#{@postcode_attr}_edit_field"} Postcode
 
       -# use @form.object.missing_address? once implementd in all models that have address
-      - if @form.object.postcode.blank? && @form.object.street.blank?
-        %span.error Enter Postcode and select address
+      - if @form.object.errors[:postcode_picker]
+        %span.error{id: "#{@prefix}_postcode_picker_error"} Enter Postcode and select address
 
       
 
