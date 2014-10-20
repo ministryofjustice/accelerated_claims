@@ -15,9 +15,6 @@ if ENV['COVERAGE'] == '1'
   end
 end
 
-
-
-
 ENV["RAILS_ENV"] ||= 'test'
 ENV["PDFTK"] ||= `which pdftk`.strip
 ENV["ANONYMOUS_PLACEHOLDER_EMAIL"] ||= 'anon@example.com'

@@ -7,14 +7,17 @@ describe ClaimController, :type => :controller do
       expect(response).to render_template("new")
     end
 
-    describe 'HTTP response headers set to blank (we set values in nginx conf)' do
+    describe 'HTTP response headers' do
       subject { response }
-      its(['X-Frame-Options']) { should == '' }
-      its(['X-Content-Type-Options']) { should == '' }
-      its(['X-XSS-Protection']) { should == '' }
-      its(['Pragma']) { should == '' }
-      its(['Cache-Control']) { should == '' }
-      its(['Expires']) { should == '' }
+
+      it 'set to blank (we set values in nginx conf)' do
+        expect(response['X-Frame-Options']).to eq ''
+        expect(response['X-Content-Type-Options']).to eq ''
+        expect(response['X-XSS-Protection']).to eq ''
+        expect(response['Pragma']).to eq ''
+        expect(response['Cache-Control']).to eq ''
+        expect(response['Expires']).to eq ''
+      end
     end
 
     shared_examples 'session mantained' do
@@ -125,7 +128,6 @@ describe ClaimController, :type => :controller do
         expect(response).to redirect_to('/')
       end
     end
-
 
     context 'with expired session' do
       it 'should log and call app signal' do
