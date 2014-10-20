@@ -8,7 +8,7 @@ feature 'Filling in claim form' do
   unless remote_test?
     scenario "submitting incomplete form", js: false do
       visit '/'
-      click_continue
+      click_button 'Continue'
       expect(page).to have_content("Enter the full address")
 
       expect(page).to have_content("Enter the name of the person who gave the notice")
@@ -34,7 +34,7 @@ feature 'Filling in claim form' do
     fill_in('claim_deposit_ref_number', with: 'ABC123')
     fill_in('claim_deposit_information_given_date_2i', with: '7')
     fill_in('claim_deposit_information_given_date_1i', with: '14')
-    click_continue
+    click_button 'Continue'
 
     expect(page).to have_selector('#claim_deposit_information_given_date_error')
     expect(find_field('claim_deposit_ref_number').value).to eq('ABC123')
@@ -45,20 +45,20 @@ feature 'Filling in claim form' do
 
   scenario "submitting incomplete form", js: true do
     visit '/'
-    click_continue
+    click_button 'Continue'
     expect(page).to have_content('Please select what kind of claimant you are')
 
     check_focus_after_click 'You must say whether the defendant paid a deposit', 'claim_deposit_received_yes'
     check_focus_after_click 'You must choose whether you wish to attend the possible court hearing', 'claim_possession_hearing_no'
     check_focus_after_click 'You must say what kind of tenancy agreement you have', 'claim_tenancy_tenancy_type_assured'
 
-    click_continue
+    click_button 'Continue'
   end
 
   scenario "submitting form with only claimant type selected", js: true do
     visit '/'
     choose('claim_claimant_type_individual')
-    click_continue
+    click_button 'Continue'
 
     expect(page).to have_content('Please say how many claimants there are')
 
@@ -76,17 +76,17 @@ feature 'Filling in claim form' do
     check_focus_after_click 'You must choose whether you wish to attend the possible court hearing', 'claim_possession_hearing_no'
     check_focus_after_click 'You must say what kind of tenancy agreement you have', 'claim_tenancy_tenancy_type_assured'
 
-    click_continue
+    click_button 'Continue'
 
     choose('claim_notice_notice_served_no')
     expect(page).to have_content('You cannot continue with this claim')
-    click_continue
+    click_button 'Continue'
     check_focus_after_click 'You must have given 2 months notice to make an accelerated possession claim', 'claim_notice_notice_served_yes'
   end
 
   scenario "submitting form without notice checked, the hidden errors should not be shown", js: true do
     visit '/'
-    click_continue
+    click_button 'Continue'
 
     expect(page).to have_content('You must say whether or not you gave notice to the defendant')
 
@@ -128,14 +128,14 @@ feature 'Filling in claim form' do
     expect(page).to have_content("The tenancy agreement was for 6 months (or more)")
 
     expect(page).to have_content("Carefully read the statements below:")
-    click_continue
+    click_button 'Continue'
     check_focus_after_click 'Please read the statements and tick if they apply', 'claim_tenancy_confirmed_first_rules_period_applicable_statements'
 
     check_focus_after_click 'You must say who told the defendant about their tenancy agreement', 'claim_tenancy_assured_shorthold_tenancy_notice_served_by'
     check_focus_after_click 'You must say when the defendant was told about their tenancy agreement', 'claim_tenancy_assured_shorthold_tenancy_notice_served_date_3i'
 
     check('claim_tenancy_confirmed_first_rules_period_applicable_statements')
-    click_continue
+    click_button 'Continue'
 
     check_focus_after_click 'You must say who told the defendant about their tenancy agreement', 'claim_tenancy_assured_shorthold_tenancy_notice_served_by'
     check_focus_after_click 'You must say when the defendant was told about their tenancy agreement', 'claim_tenancy_assured_shorthold_tenancy_notice_served_date_3i'
@@ -151,7 +151,7 @@ feature 'Filling in claim form' do
     expect(page).to have_content("You didn’t tell the defendant that the agreement was likely to change")
 
     expect(page).to have_content("Carefully read the statements below:")
-    click_continue
+    click_button 'Continue'
     check_focus_after_click 'Please read the statements and tick if they apply', 'claim_tenancy_confirmed_second_rules_period_applicable_statements'
   end
 
@@ -178,7 +178,7 @@ feature 'Filling in claim form' do
     choose 'A private landlord (individual)'
 
     fill_in 'How many claimants are there?', with: '2'
-    click_continue
+    click_button 'Continue'
 
     check_focus_after_click "You must specify whether claimant 2's address is the same as the first claimant",
       'claim_claimant_2_address_same_as_first_claimant_yes'
@@ -277,35 +277,35 @@ feature 'Filling in claim form' do
         scenario 'property address is invalid' do
           visit '/'
           fill_in('claim_property_street', with: invalid_address)
-          click_continue
+          click_button 'Continue'
           expect(page).to have_content( non_js_address_error_message('Property') )
         end
 
         scenario 'claimant_1 address is invalid' do
           visit '/'
           fill_in('claim_claimant_1_street', with: invalid_address)
-          click_continue
+          click_button 'Continue'
           expect(page).to have_content( non_js_address_error_message("Claimant 1's") )
         end
 
         scenario 'claimant_4 address is invalid' do
           visit '/'
           fill_in('claim_claimant_4_street', with: invalid_address)
-          click_continue
+          click_button 'Continue'
           expect(page).to have_content( non_js_address_error_message("Claimant 4's") )
         end
 
         scenario 'claimant contact address is invalid' do
           visit '/'
           fill_in('claim_claimant_contact_street', with: invalid_address)
-          click_continue
+          click_button 'Continue'
           expect(page).to have_content( non_js_address_error_message("Claimant contact's") )
         end
 
         scenario 'defendant_1 address is invalid' do
           visit '/'
           fill_in('claim_defendant_1_street', with: invalid_address)
-          click_continue
+          click_button 'Continue'
           expect(page).to have_content( non_js_address_error_message("Defendant 1's") )
         end
       end
@@ -331,8 +331,5 @@ def non_js_address_error_message(attribute)
 end
 
 
-def click_continue
-  click_button 'Continue'
-  sleep 1
-end
+
 
