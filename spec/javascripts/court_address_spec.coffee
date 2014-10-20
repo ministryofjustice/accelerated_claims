@@ -71,3 +71,9 @@ describe 'CourtAddressModule', ->
         spyOn(window.CourtAddressModule, 'displayNoResultsFound')
         enterPostcode('')
         expect(window.CourtAddressModule.displayNoResultsFound).toHaveBeenCalled()
+
+  describe 'on page load', ->
+    it 'should change the textarea into input field', ->
+    window.CourtAddressModule.flipTextareaToInputField()
+    street = $('#claim_court_street').prop('tagName').toLowerCase()
+    expect(street).toMatch('input')
