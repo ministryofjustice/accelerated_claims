@@ -12,7 +12,8 @@ describe 'CourtAddressModule', ->
   element = null
 
   beforeEach ->
-    element = $('<input id="claim_property_postcode" name="claim[property][postcode]" type="text"/>' +
+    element = $('<div id="court-address-label"/>' +
+        '<input id="claim_property_postcode" name="claim[property][postcode]" type="text"/>' +
         '<div style="display: block;" id="court-address">' +
         '<div class="row"><label for="claim_court_court_name">Name of court</label>' +
         '<input id="claim_court_court_name" name="claim[court][court_name]" type="hidden"></div>' +
@@ -77,3 +78,10 @@ describe 'CourtAddressModule', ->
       window.CourtAddressModule.flipTextareaToInputField()
       street = $('#claim_court_street').prop('tagName').toLowerCase()
       expect(street).toMatch('input')
+
+    it 'should add court address form label', ->
+      window.CourtAddressModule.addCourtAddressFormLabel()
+      label = $('#court-address-label').html()
+      html = "You haven't entered a postcode for the property you want to take back.<br> \
+        To see the court you need to send this claim to, <a href=\"#property\">enter the postcode now</a>"
+      expect(label).toMatch(html)
