@@ -87,6 +87,11 @@ describe 'CourtAddressModule', ->
             field = $("#claim_court_#{attr_name}").val()
             expect(field).toEqual('')
 
+        it 'should display the address field as text area', ->
+          window.CourtAddressModule.changeInputFieldToTextarea()
+          field = $('#claim_court_street').prop('tagName').toLowerCase()
+          expect(field).toEqual('textarea')
+
       describe 'form label', ->
         it 'should change the label text', ->
           text = "You need to post this claim to the court nearest to \

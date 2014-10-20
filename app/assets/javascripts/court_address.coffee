@@ -17,6 +17,17 @@ CourtAddressModule =
       text_area.remove()
       input_element.attr({ 'id': "#{id}" })
 
+  changeInputFieldToTextarea: ->
+    if $('#claim_court_street').is('input')
+      input_element = $('#claim_court_street')
+      text_area = $('<textarea></textarea>')
+      text_area.attr({ 'name': "#{input_element.attr('name')}" })
+      text_area.val("#{input_element.val()}")
+      id = "#{input_element.attr('id')}"
+      text_area.insertBefore(input_element)
+      input_element.remove()
+      text_area.attr({ 'id': "#{id}" })
+
   hideCourtAddress: ->
     $('#claim_court_court_name').attr({ 'type': 'hidden' })
     $('#claim_court_postcode').attr({ 'type': 'hidden' })
@@ -50,6 +61,7 @@ CourtAddressModule =
     CourtAddressModule.linkForFormToggling()
     CourtAddressModule.enableTogglingOfCourtAddressForm()
     CourtAddressModule.labelForKnownCourt()
+    CourtAddressModule.changeInputFieldToTextarea()
 
   labelForKnownCourt: ->
     label = "You need to post this claim to the court nearest to \
