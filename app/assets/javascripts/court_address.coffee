@@ -6,27 +6,22 @@ CourtAddressModule =
     label = "You haven't entered a postcode for the property you want to take back.<br> To see the court you need to send this claim to, <a href=\"#property\">enter the postcode now</a>"
     $('#court-address-label').html(label)
 
+  changeElement:(id, tag, new_element) ->
+    if $(id).is(tag)
+      old_element = $(id)
+      new_element = $(new_element)
+      new_element.attr({ 'name': "#{old_element.attr('name')}" })
+      new_element.val(old_element.val())
+      id = old_element.attr('id')
+      new_element.insertBefore(old_element)
+      old_element.remove()
+      new_element.attr({ 'id': id })
+
   flipTextareaToInputField: ->
-    if $('#claim_court_street').is("textarea")
-      text_area = $('#claim_court_street')
-      input_element = $("<input type='hidden'></input>")
-      input_element.attr({ 'name': "#{text_area.attr('name')}" })
-      input_element.val("#{text_area.val()}")
-      id = "#{text_area.attr('id')}"
-      input_element.insertBefore(text_area)
-      text_area.remove()
-      input_element.attr({ 'id': "#{id}" })
+    CourtAddressModule.changeElement('#claim_court_street', 'textarea', "<input type='hidden'></input>")
 
   changeInputFieldToTextarea: ->
-    if $('#claim_court_street').is('input')
-      input_element = $('#claim_court_street')
-      text_area = $('<textarea></textarea>')
-      text_area.attr({ 'name': "#{input_element.attr('name')}" })
-      text_area.val("#{input_element.val()}")
-      id = "#{input_element.attr('id')}"
-      text_area.insertBefore(input_element)
-      input_element.remove()
-      text_area.attr({ 'id': "#{id}" })
+    CourtAddressModule.changeElement('#claim_court_street', 'input', '<textarea></textarea>')
 
   hideCourtAddress: ->
     $('#claim_court_court_name').attr({ 'type': 'hidden' })
