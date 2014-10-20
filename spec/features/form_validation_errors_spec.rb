@@ -47,7 +47,6 @@ feature 'Filling in claim form' do
     visit '/'
     click_button 'Continue'
     expect(page).to have_content('Please select what kind of claimant you are')
-
     check_focus_after_click 'You must say whether the defendant paid a deposit', 'claim_deposit_received_yes'
     check_focus_after_click 'You must choose whether you wish to attend the possible court hearing', 'claim_possession_hearing_no'
     check_focus_after_click 'You must say what kind of tenancy agreement you have', 'claim_tenancy_tenancy_type_assured'
@@ -329,7 +328,3 @@ end
 def non_js_address_error_message(attribute)
   "#{attribute} address can’t be longer than 4 lines."
 end
-
-
-
-
