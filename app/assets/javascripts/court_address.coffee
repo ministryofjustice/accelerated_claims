@@ -25,7 +25,8 @@ CourtAddressModule =
   flipVisibilityOfCourtAddressForm: ->
     for attr_name in ['court_name', 'street', 'postcode']
       form_field = "#claim_court_#{attr_name}"
-      $(form_field).attr({ 'type': 'text' }) if $(form_field).attr('type') == 'hidden'
+      $(form_field).val('') if $(form_field).not(':visible')
+      $(form_field).attr({ 'type': 'text' })
 
   enableTogglingOfCourtAddressForm: ->
     $("#court-details").click ->
@@ -48,6 +49,7 @@ CourtAddressModule =
     CourtAddressModule.populateCourtAddressForm(court_name, court_street, court_postcode)
     CourtAddressModule.linkForFormToggling()
     CourtAddressModule.enableTogglingOfCourtAddressForm()
+    CourtAddressModule.labelForKnownCourt()
 
   labelForKnownCourt: ->
     label = "You need to post this claim to the court nearest to \
