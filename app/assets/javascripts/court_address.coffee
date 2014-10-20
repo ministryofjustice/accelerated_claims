@@ -49,6 +49,11 @@ CourtAddressModule =
     CourtAddressModule.linkForFormToggling()
     CourtAddressModule.enableTogglingOfCourtAddressForm()
 
+  labelForKnownCourt: ->
+    label = "You need to post this claim to the court nearest to \
+    the property you're taking back:"
+    $('#court-address-label').html(label)
+
   displayNoResultsFound: ->
     CourtAddressModule.addOriginalFormLabelText()
     CourtAddressModule.showCourtAddressForm()
