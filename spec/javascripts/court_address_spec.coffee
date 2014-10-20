@@ -56,6 +56,27 @@ describe 'CourtAddressModule', ->
         enterPostcode('SG8 0LT')
         expect(window.CourtLookup.lookup).toHaveBeenCalledWith('SG8 0LT', window.CourtAddressModule)
 
+    describe 'once the court finder lookup happened successfully', ->
+      court_name = null
+      street = null
+      postcode = null
+
+      beforeEach ->
+        court_name = 'court_name'
+        street = 'court_street'
+        postcode = 'court_postcode'
+        window.CourtAddressModule.populateCourtAddressForm(court_name, street, postcode)
+
+      it 'should populate the court name', ->
+        expect($('#claim_court_court_name').val()).toMatch(court_name)
+
+      it 'should populate the court address', ->
+        expect($('#claim_court_street').val()).toMatch(street)
+
+      it 'should populate the court postcode', ->
+        expect($('#claim_court_postcode').val()).toMatch(postcode)
+
+
     describe 'with no postcode provided', ->
       it 'should not do Court address lookup', ->
         spyOn(window.CourtLookup, 'lookup')
