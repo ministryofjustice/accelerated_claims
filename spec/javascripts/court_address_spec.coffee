@@ -28,12 +28,6 @@ describe 'CourtAddressModule', ->
     element.remove()
     element = null
 
-  describe 'hideCourtAddress', ->
-    it 'hides the court address', ->
-      window.CourtAddressModule.hideCourtAddress()
-      address = $('#court-address')
-      expect(address).not.toBeVisible()
-
   describe 'enableTogglingOfCourtAddressForm', ->
     link = null
 
@@ -85,3 +79,8 @@ describe 'CourtAddressModule', ->
       html = "You haven't entered a postcode for the property you want to take back.<br> \
         To see the court you need to send this claim to, <a href=\"#property\">enter the postcode now</a>"
       expect(label).toMatch(html)
+
+    it 'should hide the court address form', ->
+      window.CourtAddressModule.hideCourtAddress()
+      address = $('#court-address')
+      expect(address).not.toBeVisible()
