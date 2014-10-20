@@ -18,11 +18,14 @@
 
 - content_for :cookie_message, ""
 
+
+
 - content_for :content do
   .phase-banner
     %p 
       %span This is a new service - #{link_to "your feedback", config_item(:feedback_url)} will help us to improve it
   =yield
+
 
 - content_for :proposition_links do
   %ul#proposition-links
@@ -34,4 +37,11 @@
     %li= link_to 'Help', :help
     %li= link_to 'Cookies', :cookies
 
+- if Rails.env.production?
+  - content_for :body_end do
+    %script{type: 'text/javascript', charset: 'utf-8', src: 'https://cdn3.userzoom.com/uz.js?cuid=13AFA5DAF5D9E311BEDA0022196C4538'}
+
+
 = render template: "layouts/moj_template"
+
+  
