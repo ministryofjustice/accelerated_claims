@@ -36,8 +36,8 @@ describe Property, :type => :model do
     end
 
     subject { property }
-    include_examples 'address presence validation'
-    include_examples 'address validation'
+    # include_examples 'address presence validationaddress presence validation'
+    # include_examples 'address validation'
 
     describe "house" do
       it "when blank" do
@@ -51,6 +51,43 @@ describe Property, :type => :model do
       it 'should generate an error message' do
         property.postcode = 'ABC4545'
         expect(property).not_to be_valid
+      end
+    end
+
+    context 'missing postcode' do
+      it 'should generate an error message' do
+        property.postcode = nil
+        expect(property.valid?).not_to be true
+        expect(property.errors[:postcode]).to eq ['Enter the postcode']
+      end
+    end
+
+
+    context 'invalid address' do
+      it 'should generate an error message of the street is missing' do
+        property.street = nil
+        expect(property.valid?).not_to be true
+        expect(property.errors[:street]).to eq ['Enter the full address']
+      end
+    end
+
+    context 'no address or postcode' do
+      let(:property_with_no_address) { Property.new(:house => 'Yes') }
+      
+      it 'should return true for address_blank?' do
+        expect(property_with_no_address).not_to be_valid
+        expect(property_with_no_address.address_blank?).to be true
+      end
+
+      it 'should have an error for postcode picker' do
+        expect(property_with_no_address).not_to be_valid
+        expect(property_with_no_address.errors[:postcode_picker]).to eq ['Enter a postcode and select an address or manually enter the address']
+      end
+
+      it 'should not have errors for street or postcode' do
+        expect(property_with_no_address).not_to be_valid
+        expect(property_with_no_address.errors[:street]).to be_empty
+        expect(property_with_no_address.errors[:postcode]).to be_empty
       end
     end
   end
