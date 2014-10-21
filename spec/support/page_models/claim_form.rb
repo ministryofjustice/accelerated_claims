@@ -39,6 +39,7 @@ class ClaimForm
   end
 
   def fill_court_details
+    find('#court-details').click if @js_on == true
     fill_in_text_field('court', 'court_name')
     fill_in_text_area('court', 'street')
     fill_in_text_field('court', 'postcode')
@@ -76,6 +77,7 @@ class ClaimForm
     fill_legal_costs
     fill_reference_number_with_js unless claimant_type == 'individual'
     fill_fee_account_with_js
+    fill_court_details
   end
 
   def select_number_of_claimants
