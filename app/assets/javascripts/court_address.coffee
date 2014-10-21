@@ -56,7 +56,6 @@ CourtAddressModule =
     CourtAddressModule.linkForFormToggling()
     CourtAddressModule.enableTogglingOfCourtAddressForm()
     CourtAddressModule.labelForKnownCourt()
-    CourtAddressModule.changeInputFieldToTextarea()
 
   labelForKnownCourt: ->
     label = "You need to post this claim to the court nearest to \
