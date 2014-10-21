@@ -28,7 +28,7 @@ describe 'CourtAddressModule', ->
     element.remove()
     element = null
 
-  describe 'enableTogglingOfCourtAddressForm', ->
+  describe 'enable toggling of court address form', ->
     link = null
 
     beforeEach ->
