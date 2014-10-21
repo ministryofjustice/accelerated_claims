@@ -12,7 +12,8 @@ describe 'CourtAddressModule', ->
   element = null
 
   beforeEach ->
-    element = $('<div id="court-address-label"/>' +
+    element = $( '<div id="court-address-label"/>' +
+        '<div id="court-name"/>' +
         '<input id="claim_property_postcode" name="claim[property][postcode]" type="text"/>' +
         '<div style="display: block;" id="court-address">' +
         '<div class="row"><label for="claim_court_court_name">Name of court</label>' +
@@ -76,6 +77,15 @@ describe 'CourtAddressModule', ->
 
         it 'should populate the court postcode', ->
           expect($('#claim_court_postcode').val()).toMatch(postcode)
+
+      describe 'form link for manual court address entry', ->
+        beforeEach ->
+          window.CourtAddressModule.linkForFormToggling()
+
+        it 'should add the link only once', ->
+          window.CourtAddressModule.linkForFormToggling()
+          details = $("[id^=court-details]").length
+          expect(details).toEqual(1)
 
     describe 'on form on expansion', ->
         beforeEach ->
