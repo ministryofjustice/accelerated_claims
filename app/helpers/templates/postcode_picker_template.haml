@@ -14,8 +14,7 @@
     .postcode-selection-els
       %label.postcode-picker-label{:for => "#{@prefix}_#{@postcode_attr}_edit_field"} Postcode
 
-      -# use @form.object.missing_address? once implementd in all models that have address
-      - if @form.object.errors[:postcode_picker]
+      - if @form.object.postcode_picker_error?
         %span.error{id: "#{@prefix}_postcode_picker_error"} Enter Postcode and select address
 
       
@@ -38,10 +37,10 @@
         %label.hint{ for: "#{@prefix}_address_select"} Please select an address
         %select.address-picker-select{id: "#{@prefix}_address_select", name: "sel-address", size: "6", width: "50"}
           %option#listbox-0{role: "option", disabled: "disabled", :value => ""} Please select an address
-        %a.button.primary.postcode-picker-cta{id: "#{@prefix}_selectaddress", name: "SelectAddress", href: "##{@prefix}_postcode_picker_manual_link", style: "margin-bottom: 20px;"}
+        %a.row.button.primary.postcode-picker-cta{id: "#{@prefix}_selectaddress", name: "SelectAddress", href: "##{@prefix}_postcode_picker_manual_link", style: "margin-bottom: 20px;"}
           Select Address
     
-  .js-only
+  .js-only.row
     %a.caption.postcode-picker-manual-link{ href: "##{@prefix}_postcode_picker_manual_link", id: "#{@prefix}_postcode_picker_manual_link", style: "margin-top: 20px;"}
       I want to add an address myself
 

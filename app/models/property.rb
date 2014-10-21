@@ -36,4 +36,8 @@ class Property < BaseClass
     subject_description
   end
 
+  def postcode_picker_error?
+    errors[:postcode_picker].any?
+  end
+
 end

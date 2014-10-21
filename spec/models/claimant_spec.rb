@@ -71,16 +71,27 @@ describe Claimant, :type => :model do
         expect(claimant.errors[:organization_name]).to eq ["Enter claimant 1's company name or local authority name"]
       end
 
+      it 'should not be valid if both street and postcode are missing' do
+        claimant.street = nil
+        claimant.postcode = nil
+        expect(claimant).not_to be_valid
+        expect(claimant.errors[:postcode_picker]).to eq ['Enter a postcode and select an address or manually enter the address for claimant 1']
+        expect(claimant.errors[:postcode]).to be_empty
+        expect(claimant.errors[:street]).to be_empty
+      end
+
       it 'should not be valid if street is missing' do
         claimant.street = nil
         expect(claimant).not_to be_valid
         expect(claimant.errors[:street]).to eq ["Enter claimant 1's full address"]
+        expect(claimant.errors[:postcode_picker]).to be_empty
       end
 
       it 'should not be valid if the postcocde is missing' do
         claimant.postcode = nil
         expect(claimant).not_to be_valid
         expect(claimant.errors[:postcode]).to eq ["Enter claimant 1's postcode"]
+        expect(claimant.errors[:postcode_picker]).to be_empty
       end
     end
   end
@@ -162,8 +173,9 @@ describe Claimant, :type => :model do
         expect(claimant).to_not be_valid
         expect(claimant.errors[:title]).to eq ["Enter claimant 2's title"]
         expect(claimant.errors[:full_name]).to eq ["Enter claimant 2's full name"]
-        expect(claimant.errors[:street]).to eq ["Enter claimant 2's full address"]
-        expect(claimant.errors[:postcode]).to eq ["Enter claimant 2's postcode"]
+        expect(claimant.errors[:postcode_picker]).to eq ['Enter a postcode and select an address or manually enter the address for claimant 2']
+        expect(claimant.errors[:street]).to be_empty
+        expect(claimant.errors[:postcode]).to be_empty
       end
 
       describe 'address validation' do
