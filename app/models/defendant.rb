@@ -47,10 +47,6 @@ class Defendant < BaseClass
     end
   end
 
-  def postcode_picker_error?
-    false
-  end
-
   def validate_presence?
     self.validate_presence == true
   end

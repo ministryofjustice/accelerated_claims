@@ -38,11 +38,6 @@ class Claimant < BaseClass
     title.blank? && full_name.blank? && organization_name.blank? && street.blank? && postcode.blank?
   end
 
-
-  def postcode_picker_error?
-    false
-  end
-
   # main validation for claimant state
   def validate_claimant_state
     if validate_absence?
@@ -141,12 +136,8 @@ class Claimant < BaseClass
   def validate_address
     validate_address_same_as_first_claimant
     if check_address_fields?
-      if street.blank? && postcode.blank?
-        errors[:postcode_picker] << "Enter a postcode and select an address or manually enter the address for #{subject_description}"
-      else
-        errors[:street] << "Enter #{possessive_subject_description} full address" if street.blank?
-        errors[:postcode] << "Enter #{possessive_subject_description} postcode" if postcode.blank?
-      end
+      errors[:street] << "Enter #{possessive_subject_description} full address" if street.blank?
+      errors[:postcode] << "Enter #{possessive_subject_description} postcode" if postcode.blank?
     end
   end
 

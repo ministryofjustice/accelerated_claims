@@ -14,10 +14,6 @@
     .postcode-selection-els
       %label.postcode-picker-label{:for => "#{@prefix}_#{@postcode_attr}_edit_field"} Postcode
 
-      - if @form.object.postcode_picker_error?
-        %span.error{id: "#{@prefix}_postcode_picker_error"} Enter Postcode and select address
-
-      
 
       %input.smalltext.postcode-picker-edit-field{:maxlength => "8",
               :id => "#{@prefix}_#{@postcode_attr}_edit_field",

@@ -108,13 +108,13 @@ def expected_output
         <select class='address-picker-select' id='claim_property_address_select' name='sel-address' size='6' width='50'>
           <option disabled='disabled' id='listbox-0' role='option' value=''>Please select an address</option>
         </select>
-        <a class='button primary postcode-picker-cta' href='#claim_property_postcode_picker_manual_link' id='claim_property_selectaddress' name='SelectAddress' style='margin-bottom: 20px;'>
+        <a class='row button primary postcode-picker-cta' href='#claim_property_postcode_picker_manual_link' id='claim_property_selectaddress' name='SelectAddress' style='margin-bottom: 20px;'>
           Select Address
         </a>
       </fieldset>
     </div>
   </div>
-  <div class='js-only'>
+  <div class='js-only row'>
     <a class='caption postcode-picker-manual-link' href='#claim_property_postcode_picker_manual_link' id='claim_property_postcode_picker_manual_link' style='margin-top: 20px;'>
       I want to add an address myself
     </a>
