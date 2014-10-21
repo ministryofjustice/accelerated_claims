@@ -39,10 +39,17 @@ class ClaimForm
   end
 
   def fill_court_details
-    find('#court-details').click if @js_on == true
-    fill_in_text_field('court', 'court_name')
-    fill_in_text_area('court', 'street')
-    fill_in_text_field('court', 'postcode')
+    prefix = 'claim_court_'
+
+    if @js_on == true
+      find('#court-details').click
+      fill_in_value('input', "#{prefix}street", 'court_street')
+    else
+      fill_text_area("#{prefix}street", 'court_street')
+    end
+
+    fill_text_field("#{prefix}court_name", 'court_name')
+    fill_text_field("#{prefix}postcode", 'postcode')
   end
 
   def complete_form_with_javascript
