@@ -10,12 +10,16 @@
         = k.humanize
       .row
         - if v.is_a?(Hash)
-          - v.each do |k,v|
+          - v.each do |k1, v1|
             %p
               %span.hint
-                =k.humanize
+                = k1.humanize
               %span
-                =v
+                - (key = "claim.#{k}.#{k1}.#{v1.to_s.downcase}")
+                - if I18n.t(key)[/translation missing/]
+                  = v1
+                - else
+                  = I18n.t(key)
         - else
           =v
 %section.confirmation
