@@ -9,6 +9,34 @@ The Journey Data for the feature specs is held externally in a spreadsheet at ht
 
 Therefore, if the data in these files needs to change, update the spreadsheet and refresh - do not update the scenario data files directly.
 
+## Running the Journey Data
+
+For all the examples below, **XX** is a journey number.
+
+There are two ways of using the Journey Data:
+
+* in the manual tests
+* in the automated tests
+
+### Manual test usage
+
+When you wish to populate the form with data, instead of doing it manually, just load:
+
+     http://localhost:3000/?journey=XX
+
+### Automated test usage
+
+The Journey data can be run manually by typing out the full command
+
+    JOURNEY=XX bundle exec rspec spec/features/submit_claim_spec.rb
+
+There is also a Rake command that is easier to remember:
+
+    rake journey:run JOURNEY=XX
+
+If **JOURNEY** is omitted, it will run all the journeys.
+
+
 ## Running the tests locally
 
 Several options:
