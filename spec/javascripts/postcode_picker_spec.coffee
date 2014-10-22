@@ -12,14 +12,18 @@ describe 'PostcodePicker', ->
 <head>
 </head>
 <body class='js-enabled'>
-<div class="row postcode postcode-picker-container">
-  <div class="postcode-lookup rel js-only">
-    <div class="postcode-display hide">
+<div class="postcode postcode-picker-container">
+  <div class="row postcode-lookup rel js-only">
+    <div class="postcode-display hide" style="margin-bottom: 20px;">
       Postcode:
-      <span class="postcode-display-detail">RG2 7PU</span>
-      <a class="change-postcode-link2 js-only" href="#dummy_anchor" style="float: right;">Change</a>
+      <span class="postcode-display-detail" style="font-weight: bold">
+        &nbsp;
+      </span>
+      <span>
+        <a class="change-postcode-link2 js-only" href="#dummy_anchor" id="claim_property-manual_change-link-2" style="display: inline; margin-left: 10px;">Change</a>
+      </span>
     </div>
-    <div class="postcode-selection-els" style="display: block;">
+    <div class="postcode-selection-els">
       <label class="postcode-picker-label" for="claim_property_postcode_edit_field">Postcode</label>
       <input class="smalltext postcode-picker-edit-field" id="claim_property_postcode_edit_field" maxlength="8" name="[postcode]" size="8" type="text">
       <a class="button primary postcode-picker-button" href="#claim_property_postcode_picker" name="FindUkPostcode">
@@ -29,24 +33,28 @@ describe 'PostcodePicker', ->
     <div class="postcode-picker-hourglass hide">
       Finding address....
     </div>
-    <div class="postcode-select-container sub-panel hide" style="display: none;">
+    <div class="postcode-select-container sub-panel hide" style="margin-top: 0px;">
       <fieldset class="postcode-picker-address-list">
         <label class="hint" for="claim_property_address_select">Please select an address</label>
-        <select class="address-picker-select" id="claim_property_address_select" name="sel-address" size="6" width="50"><option value="0">150 Northumberland Avenue, READING</option><option value="1">152 Northumberland Avenue, READING</option><option value="2">154 Northumberland Avenue, READING</option><option value="3">156 Northumberland Avenue, READING</option><option value="4">158 Northumberland Avenue, READING</option><option value="5">160 Northumberland Avenue, READING</option><option value="6">162 Northumberland Avenue, READING</option><option value="7">164 Northumberland Avenue, READING</option><option value="8">166 Northumberland Avenue, READING</option><option value="9">168 Northumberland Avenue, READING</option><option value="10">170 Northumberland Avenue, READING</option><option value="11">172 Northumberland Avenue, READING</option><option value="12">174 Northumberland Avenue, READING</option><option value="13">176 Northumberland Avenue, READING</option><option value="14">178 Northumberland Avenue, READING</option><option value="15">180 Northumberland Avenue, READING</option><option value="16">182 Northumberland Avenue, READING</option><option value="17">184 Northumberland Avenue, READING</option><option value="18">186 Northumberland Avenue, READING</option><option value="19">188 Northumberland Avenue, READING</option><option value="20">190 Northumberland Avenue, READING</option><option value="21">192 Northumberland Avenue, READING</option></select>
-        <a class="button primary postcode-picker-cta" href="#claim_property_postcode_picker_manual_link" id="claim_property_selectaddress" name="SelectAddress">
+        <select class="address-picker-select" id="claim_property_address_select" name="sel-address" size="6" width="50">
+          <option disabled="disabled" id="listbox-0" role="option" value="">Please select an address</option>
+        </select>
+        <a class="row button primary postcode-picker-cta" href="#claim_property_postcode_picker_manual_link" id="claim_property_selectaddress" name="SelectAddress" style="margin-bottom: 20px;">
           Select Address
         </a>
       </fieldset>
     </div>
-    <div class="js-only">
-      <a class="caption postcode-picker-manual-link" href="#claim_property_postcode_picker_manual_link" id="claim_property_postcode_picker_manual_link">
-        I want to add an address myself
-      </a>
-    </div>
   </div>
-  <div class="address extra no sub-panel hide" style="display: none;">
-    <div class="street">
-      <label for="claim_property_street">Full address</label>
+  <div class="js-only row">
+    <a class="caption postcode-picker-manual-link" href="#claim_property_postcode_picker_manual_link" id="claim_property_postcode_picker_manual_link" style="margin-top: 20px;">
+      I want to add an address myself
+    </a>
+  </div>
+  <div class="address extra no sub-panel hide" style="margin-top: 10px;">
+    <div class="row street">
+      <label for="claim_property_street">
+        Full address
+      </label>
       <textarea class="street" id="claim_property_street" maxlength="70" name="claim[property][street]"></textarea>
     </div>
     <div class="row js-only">
@@ -54,10 +62,13 @@ describe 'PostcodePicker', ->
         The address can’t be longer than 4 lines.
       </span>
     </div>
-    <div class="postcode">
-      <label for="claim_property_postcode">Postcode</label>
+    <div class="row address-postcode">
+      <label for="claim_property_postcode">
+        Postcode
+      </label>
+      <br>
       <div style="overflow: hidden; width: 100%">
-        <input class="smalltext postcode" id="claim_property_postcode" maxlength="8" name="claim[property][postcode]" size="8" style="float: left;  margin-right: 20px;" type="text">
+        <input class="smalltext postcode" id="claim_property_postcode" maxlength="8" name="claim[property][postcode]" size="8" style="float: left;  margin-right: 20px;" type="text" value="">
         <a class="change-postcode-link js-only" href="#dummy_anchor" style="float: left;">Change</a>
       </div>
     </div>
@@ -173,7 +184,7 @@ describe 'PostcodePicker', ->
       expect( @picker.find('.street textarea').val() ).toEqual "Flat 1\n1 Melbury Close\nFERNDOWN"
 
     it 'populates address postcode', ->
-      expect( @picker.find('.postcode input').val() ).toEqual "BH22 8HR"
+      expect( @picker.find('input.postcode').val() ).toEqual "BH22 8HR"
 
     it 'hides address list', ->
       expect( @picker.find('.postcode-picker-address-list') ).toBeHidden()
