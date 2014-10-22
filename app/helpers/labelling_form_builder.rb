@@ -85,11 +85,14 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
   # Creates key for lookup of translation text.
   # E.g. translation_key(hearing, {:choice=>"No"}) when in possession form
-  #      returns "claim.possession.hearing_no"
+  #      returns "claim.possession.hearing.no"
   def translation_key attribute, options={}
     key = "#{ parent_id.gsub('_','.') }.#{attribute}".squeeze('.')
     key.gsub!(/\.\d+\./, '.')
-    key += "_#{options[:choice].downcase}" if options[:choice]
+    if choice = options[:choice]
+      choice = 'na' if choice == ''
+      key += ".#{choice.downcase}"
+    end
     key
   end
 
