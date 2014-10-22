@@ -6,7 +6,6 @@
   = form.radio_button_fieldset :hearing,
       'Do you want to be at court if there is a hearing?',
       class: 'radio inline',
-      choice: {'Yes' => 'No',
-          'No' => 'Yes'},
+      choice: [ 'No', 'Yes' ],
       data: { 'virtual-pageview' => '/accelerated/court-section' }
 

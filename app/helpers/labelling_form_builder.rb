@@ -32,19 +32,22 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
   # Defaults to "Yes" "No" labels on radio inputs
   def radio_button_fieldset attribute, legend, options={}
+    translation_key = translation_key(attribute)
+    raise "TBD: #{translation_key} #{options[:choice]}" if options[:choice].is_a?(Hash)
+
     virtual_pageview = options[:data] ? options[:data].delete('virtual-pageview') : nil
     input_class = options.delete(:input_class)
 
     set_class_and_id attribute, options
 
-    options[:choice] ||= {'Yes'=>'Yes', 'No'=>'No'}
+    options[:choice] ||= [ 'Yes', 'No' ]
 
     data_reverse = options.delete(:toggle_fieldset) ? ' data-reverse="true"' : ''
 
     fieldset_tag attribute, legend, options do
       @template.surround("<div class='options'#{data_reverse}>".html_safe, "</div>".html_safe) do
-        options[:choice].map do |label, choice|
-          radio_button_row(attribute, label, choice, virtual_pageview, input_class)
+        options[:choice].map do |choice|
+          radio_button_row(attribute, choice, virtual_pageview, input_class)
         end.join("\n")
       end
     end
@@ -225,10 +228,11 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     html.html_safe
   end
 
-  def radio_button_row attribute, label, choice, virtual_pageview, input_class
+  def radio_button_row attribute, choice, virtual_pageview, input_class
     translation_key = translation_key(attribute, choice: choice)
 
     translation = I18n.t(translation_key)
+    raise "translation missing: #{translation_key}" if translation[/translation missing/]
     label = translation unless translation[/translation missing/]
 
     options = {}
@@ -249,7 +253,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
         ].compact.join("\n")
       end
     end
-
   end
 
   def css_for attribute, options
