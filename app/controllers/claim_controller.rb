@@ -24,10 +24,17 @@ class ClaimController < ApplicationController
 
 
     # use live postcode lookup database if running on productionserver or url param livepc set to 1
+
+    Rails.logger.info ">>>>>>>>> ENV['ENV_NAME']:  #{ENV['ENV_NAME']}"
+
+
     production = ENV["ENV_NAME"] == "production"
+    Rails.logger.info ">>>>>>>>> production: #{production.inspect}"
     if production == true || params[:livepc] == '1'
+      Rails.logger.info ">>>>>>>>> setting live postcode lookup to true"
       @@live_postcode_lookup = true
     else
+      Rails.logger.info ">>>>>>>>> setting live postcode lookup to false"
       @@live_postcode_lookup = false
     end
 

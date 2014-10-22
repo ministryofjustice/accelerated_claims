@@ -1,7 +1,7 @@
 class PostcodeLookupProxyController < ApplicationController
 
   def show
-
+    Rails.logger.info ">>>>>>>>>>>> ClaimController.live_postcode_lookup?  #{ClaimController.live_postcode_lookup?}"
     @pclp = PostcodeLookupProxy.new(params[:pc], ClaimController.live_postcode_lookup?)
     
     respond_to do |format|
