@@ -5,6 +5,14 @@ feature 'Filling in claim form' do
     WebMock.disable_net_connect!(:allow => ["127.0.0.1", /codeclimate.com/])
   end
 
+   def check_focus_after_click link_text, selector
+    expect(page).to have_content(link_text)
+    expect(page).to have_css('div#javascript_done')
+    click_link link_text
+    active_element = page.evaluate_script('document.activeElement.id')
+    expect(active_element).to eq(selector)
+  end
+
   unless remote_test?
     scenario "submitting incomplete form", js: false do
       visit '/'
@@ -17,73 +25,65 @@ feature 'Filling in claim form' do
 
       expect(page).to have_content("Please select what kind of property it is")
     end
-  end
-
-  def check_focus_after_click link_text, selector
-    expect(page).to have_content(link_text)
-    expect(page).to have_css('div#javascript_done')
-    click_link link_text
-    active_element = page.evaluate_script('document.activeElement.id')
-    expect(active_element).to eq(selector)
-  end
-
-  scenario "submitting an incomplete deposit information given date", js: true do
-    visit '/'
-    choose('claim_deposit_received_yes')
-    check('claim_deposit_as_money')
-    fill_in('claim_deposit_ref_number', with: 'ABC123')
-    fill_in('claim_deposit_information_given_date_2i', with: '7')
-    fill_in('claim_deposit_information_given_date_1i', with: '14')
-    click_button 'Continue'
-
-    expect(page).to have_selector('#claim_deposit_information_given_date_error')
-    expect(find_field('claim_deposit_ref_number').value).to eq('ABC123')
-    expect(find_field('claim_deposit_information_given_date_3i').value).to eq('')
-    expect(find_field('claim_deposit_information_given_date_2i').value).to eq('7')
-    expect(find_field('claim_deposit_information_given_date_1i').value).to eq('2014')
-  end
-
-  scenario "submitting incomplete form", js: true do
-    visit '/'
-    click_button 'Continue'
-    
-    expect(page).to have_content('Please select what kind of claimant you are')
-
-    check_focus_after_click 'You must say whether the defendant paid a deposit', 'claim_deposit_received_yes'
-    check_focus_after_click 'You must choose whether you wish to attend the possible court hearing', 'claim_possession_hearing_no'
-    check_focus_after_click 'You must say what kind of tenancy agreement you have', 'claim_tenancy_tenancy_type_assured'
-
-    click_button 'Continue'
-  end
-
-  pending "work on error messages for postcode/addresses to be fixed" do
-    scenario "submitting form with only claimant type selected", js: true do
+  
+    scenario "submitting an incomplete deposit information given date", js: true do
       visit '/'
-      choose('claim_claimant_type_individual')
+      choose('claim_deposit_received_yes')
+      check('claim_deposit_as_money')
+      fill_in('claim_deposit_ref_number', with: 'ABC123')
+      fill_in('claim_deposit_information_given_date_2i', with: '7')
+      fill_in('claim_deposit_information_given_date_1i', with: '14')
       click_button 'Continue'
 
-      expect(page).to have_content('Please say how many claimants there are')
+      expect(page).to have_selector('#claim_deposit_information_given_date_error')
+      expect(find_field('claim_deposit_ref_number').value).to eq('ABC123')
+      expect(find_field('claim_deposit_information_given_date_3i').value).to eq('')
+      expect(find_field('claim_deposit_information_given_date_2i').value).to eq('7')
+      expect(find_field('claim_deposit_information_given_date_1i').value).to eq('2014')
+    end
 
-      check_focus_after_click 'Please say how many claimants there are', 'claim_num_claimants'
-      check_focus_after_click 'Please enter a valid number of defendants between 1 and 20', 'claim_num_defendants'
+    scenario "submitting incomplete form", js: true do
+      visit '/'
+      click_button 'Continue'
+      
+      expect(page).to have_content('Please select what kind of claimant you are')
 
-      check_focus_after_click 'Please select what kind of property it is', 'claim_property_house_yes'
-      check_focus_after_click 'Enter the full address', 'claim_property_street'
-      check_focus_after_click 'Enter the postcode', 'claim_property_postcode'
-
-      check_focus_after_click 'You must say whether or not you gave notice to the defendant', 'claim_notice_notice_served_yes'
-
-      check_focus_after_click 'You must say whether or not you have an HMO licence', 'claim_license_multiple_occupation_yes'
       check_focus_after_click 'You must say whether the defendant paid a deposit', 'claim_deposit_received_yes'
       check_focus_after_click 'You must choose whether you wish to attend the possible court hearing', 'claim_possession_hearing_no'
       check_focus_after_click 'You must say what kind of tenancy agreement you have', 'claim_tenancy_tenancy_type_assured'
 
       click_button 'Continue'
+    end
 
-      choose('claim_notice_notice_served_no')
-      expect(page).to have_content('You cannot continue with this claim')
-      click_button 'Continue'
-      check_focus_after_click 'You must have given 2 months notice to make an accelerated possession claim', 'claim_notice_notice_served_yes'
+    pending "work on error messages for postcode/addresses to be fixed" do
+      scenario "submitting form with only claimant type selected", js: true do
+        visit '/'
+        choose('claim_claimant_type_individual')
+        click_button 'Continue'
+
+        expect(page).to have_content('Please say how many claimants there are')
+
+        check_focus_after_click 'Please say how many claimants there are', 'claim_num_claimants'
+        check_focus_after_click 'Please enter a valid number of defendants between 1 and 20', 'claim_num_defendants'
+
+        check_focus_after_click 'Please select what kind of property it is', 'claim_property_house_yes'
+        check_focus_after_click 'Enter the full address', 'claim_property_street'
+        check_focus_after_click 'Enter the postcode', 'claim_property_postcode'
+
+        check_focus_after_click 'You must say whether or not you gave notice to the defendant', 'claim_notice_notice_served_yes'
+
+        check_focus_after_click 'You must say whether or not you have an HMO licence', 'claim_license_multiple_occupation_yes'
+        check_focus_after_click 'You must say whether the defendant paid a deposit', 'claim_deposit_received_yes'
+        check_focus_after_click 'You must choose whether you wish to attend the possible court hearing', 'claim_possession_hearing_no'
+        check_focus_after_click 'You must say what kind of tenancy agreement you have', 'claim_tenancy_tenancy_type_assured'
+
+        click_button 'Continue'
+
+        choose('claim_notice_notice_served_no')
+        expect(page).to have_content('You cannot continue with this claim')
+        click_button 'Continue'
+        check_focus_after_click 'You must have given 2 months notice to make an accelerated possession claim', 'claim_notice_notice_served_yes'
+      end
     end
   end
 
@@ -333,7 +333,6 @@ feature 'Filling in claim form' do
       end
     end
   end
-
 end
 
 def invalid_address
