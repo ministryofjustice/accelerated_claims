@@ -61,4 +61,3 @@ describe "DefendantModule", ->
       $('#defendant_1_resident_details').trigger('click')
       $('#defendant_1_resident_details').trigger('click')
       expect(@detail).not.toHaveClass('open')
-     

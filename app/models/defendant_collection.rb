@@ -47,7 +47,7 @@ class DefendantCollection < ParticipantCollection
     defendant_params = claim_params["defendant_#{index}"]
     defendant_params = ActiveSupport::HashWithIndifferentAccess.new if defendant_params.nil?
     defendant_params['defendant_num'] = index
-    copy_cached_property_address(defendant_params) if defendant_params['inhabits_property'].try(:downcase) == 'yes'
+    copy_cached_property_address_if_blank(defendant_params)
 
     # we need to populate the defendant with the params even if > than number of defendants so that we can re-display that data on the error page
     if index > num_defendants
@@ -66,9 +66,10 @@ class DefendantCollection < ParticipantCollection
     end
   end
 
-  def copy_cached_property_address(params)
-    params['street']   = @property_street
-    params['postcode'] = @property_postcode
+  def copy_cached_property_address_if_blank(params)
+    if params['street'].blank? && params['postcode'].blank?
+      params['street']   = @property_street
+      params['postcode'] = @property_postcode
+    end
   end
-
 end
