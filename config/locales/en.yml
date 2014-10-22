@@ -23,15 +23,26 @@ en:
   claim:
     property:
       house:
+        label: Type of property
         'yes': A self-contained house, flat or bedsit
         'no': 'Room or rooms in a property. <span class="hint">Tenants may share kitchen or bathroom</span>'
+      street:
+        label: Full address
     claimant_type:
+      label: Type of claimant
       individual: A private landlord (individual)
       organization: A private landlord (company), a local authority or a housing association
+    num_claimants:
+      label: Number of claimants
     claimant:
+      street:
+        label: Full address
       address_same_as_first_claimant:
         'yes': 'Yes'
         'no': 'No'
+    claimant_contact:
+      street:
+        label: Full address
     defendant:
       inhabits_property:
         'yes': 'Yes'
@@ -40,6 +51,10 @@ en:
       notice_served:
         'yes': 'Yes'
         'no': 'No'
+      served_by_name:
+        label: Person who gave the notice
+      served_method:
+        label: How the notice was given
     tenancy:
       tenancy_type:
         assured: 'Assured shorthold tenancy <span class="hint">This is the most common form of tenancy</span>'
@@ -75,8 +90,12 @@ en:
         na: Not applicable
     deposit:
       received:
+        label: Deposit paid
         'yes': 'Yes'
         'no': 'No'
+      ref_number:
+        label:
+          Tenancy deposit scheme reference number
     order:
       cost:
         'yes': 'Yes'
