@@ -80,19 +80,23 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 
-  def t_id attribute, options={}
-    id = "#{ @object_name.to_s.tr('[]','_').gsub('_','.') }.#{attribute}".squeeze('.')
-    id.gsub!(/\.\d+\./, '.')
-    id += "_#{options[:choice].downcase}" if options[:choice]
-    id
-  end
-
-  def field_id_for attribute
-    "#{@object_name.to_s.tr('[]','_')}_#{attribute}".squeeze('_')
+  # Creates key for lookup of translation text.
+  # E.g. translation_key(hearing, {:choice=>"No"}) when in possession form
+  #      returns "claim.possession.hearing_no"
+  def translation_key attribute, options={}
+    key = "#{ parent_id.gsub('_','.') }.#{attribute}".squeeze('.')
+    key.gsub!(/\.\d+\./, '.')
+    key += "_#{options[:choice].downcase}" if options[:choice]
+    key
   end
 
   def error_id_for attribute
-    "#{field_id_for(attribute)}_error"
+    field_id = "#{parent_id}_#{attribute}".squeeze('_')
+    "#{field_id}_error"
+  end
+
+  def parent_id
+    @object_name.to_s.tr('[]','_').squeeze('_')
   end
 
   def id_for attribute, default=nil
@@ -222,9 +226,9 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def radio_button_row attribute, label, choice, virtual_pageview, input_class
-    t_id = t_id(attribute, choice: choice)
+    translation_key = translation_key(attribute, choice: choice)
 
-    translation = I18n.t(t_id)
+    translation = I18n.t(translation_key)
     label = translation unless translation[/translation missing/]
 
     options = {}
