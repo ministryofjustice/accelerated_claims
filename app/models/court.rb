@@ -11,9 +11,8 @@ class Court < BaseClass
 
   def as_json
     {
-      'court_name' => court_name,
-      'street' => "#{street}",
-      'postcode' => postcode
+      'name' => court_name,
+      'address' => "#{street}, #{postcode}"
     }
   end
 end
