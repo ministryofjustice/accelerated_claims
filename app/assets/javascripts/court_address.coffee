@@ -36,6 +36,7 @@ CourtAddressModule =
 
   enableTogglingOfCourtAddressForm: ->
     $("#court-details").click ->
+      CourtAddressModule.changeInputFieldToTextarea() if $('#claim_court_street').not(':visible')
       CourtAddressModule.flipVisibilityOfCourtAddressForm()
       $("#court-address").toggle()
 

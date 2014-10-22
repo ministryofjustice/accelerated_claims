@@ -87,6 +87,19 @@ describe 'CourtAddressModule', ->
           details = $("[id^=court-details]").length
           expect(details).toEqual(1)
 
+      describe 'when street field is visible', ->
+
+        beforeEach ->
+          $('#court-address').hide()
+          window.CourtAddressModule.flipTextareaToInputField()
+          window.CourtAddressModule.linkForFormToggling()
+          window.CourtAddressModule.enableTogglingOfCourtAddressForm()
+
+        it 'should be a textarea', ->
+          $('#court-details').trigger 'click'
+          street_field = $('#claim_court_street').prop('tagName').toLowerCase()
+          expect(street_field).toEqual('textarea')
+
     describe 'on form on expansion', ->
         beforeEach ->
           window.CourtAddressModule.populateCourtAddressForm('court_name', 'street', 'postcode')
