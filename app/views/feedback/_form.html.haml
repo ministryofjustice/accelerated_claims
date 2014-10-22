@@ -15,19 +15,19 @@
     = f.radio_button_fieldset :satisfaction_feedback,
       'Overall, how did you feel about the service you received today?',
       class: 'radio',
-      choice: { 'Very satisfied' => 'Very satisfied',
-        'Satisfied' => 'Satisfied',
-        'Neither satisfied or dissatisfied' => 'Neither satisfied or dissatisfied',
-        'Dissatisfied' => 'Dissatisfied',
-        'Very dissatisfied' => 'Very dissatisfied'}
+      choice: [ 'very_satisfied',
+        'satisfied',
+        'neither_satisfied_or_dissatisfied',
+        'dissatisfied',
+        'very_dissatisfied' ]
 
     = f.radio_button_fieldset :help_feedback,
       'Did you have any help filling in this form?',
       class: 'radio',
-      choice: { 'No, I filled in this form myself' => 'No, I filled in this form myself',
-        'I have difficulty using computers so someone filled in this form for me' => 'I have difficulty using computers so someone filled in this form for me',
-        'I used an accessibility tool such as a screen reader' => 'I used an accessibility tool such as a screen reader',
-        'I had some other kind of help - please specify' => 'I had some other kind of help'}
+      choice: [ 'filled_in_myself',
+         'filled_in_for_me',
+         'used_accessibility_tool',
+         'other_help' ]
     = f.text_field :other_help
 
     .row

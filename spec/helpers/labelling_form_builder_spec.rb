@@ -37,7 +37,7 @@ describe 'LabellingFormBuilder', :type => :helper  do
 
   let(:notice)   { double('model', class: double('class').as_null_object).as_null_object }
   let(:template) { MockTemplate.new }
-  let(:form)     { LabellingFormBuilder.new(:notice, notice, template, { }) }
+  let(:form)     { LabellingFormBuilder.new('claim[notice]', notice, template, { }) }
 
   describe '#error_span' do
     it 'can be hidden' do
@@ -88,11 +88,15 @@ describe 'LabellingFormBuilder', :type => :helper  do
 
   describe '#radio_button_field_set' do
     let(:fieldset) {
-      form.radio_button_fieldset :house,
+      form.radio_button_fieldset :notice_served,
       'property',
-      class: 'radio',
-      choice: { house: 'yes', room: 'no' }
+      class: 'radio'
     }
+
+    before do
+      messages = double('error_messages', messages: { notice_served: ['please select whether notice was served'] })
+      allow(notice).to receive(:errors) { messages }
+    end
 
     it 'outputs the correct form element' do
       expect(fieldset).to contain_css_selectors(
@@ -100,11 +104,6 @@ describe 'LabellingFormBuilder', :type => :helper  do
         'fieldset legend',
         'input[type=radio, id=notice-house-yes]'
       )
-    end
-
-    before do
-      messages = double('error_messages', messages: { house: ['please select what kind of property it is.'] })
-      allow(notice).to receive(:errors) { messages }
     end
 
     it 'shows errors inside the legend' do
@@ -121,7 +120,7 @@ describe 'LabellingFormBuilder', :type => :helper  do
 
     it 'outputs regular text_area_row' do
       expect(subject).to contain_css_selectors([
-        '.row textarea#notice_full_address', '.row label'
+        '.row textarea#claim_notice_full_address', '.row label'
       ])
     end
 
