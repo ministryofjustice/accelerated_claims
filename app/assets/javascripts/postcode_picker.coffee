@@ -16,7 +16,7 @@ class PostcodePicker
 
     # if the postcode is populated, then it means that the address was correctly selected earlier
     # and we want to display it.
-    if @picker.find('input.smalltext.postcode').val() != ''
+    if @addressSuccessfullySelectedOnPreviousPage() || @errorsExistForStreetOrPostcode()
       @picker.find('.address.extra' ).show()
       @picker.find('.postcode-selection-els').hide()
       @picker.find('.postcode-display').hide()
@@ -51,6 +51,13 @@ class PostcodePicker
       @picker.find('.postcode-select-container').hide()
       @showPostcodeSearchComponent()
    
+
+  addressSuccessfullySelectedOnPreviousPage: =>
+    @picker.find('input.smalltext.postcode').val() != ''
+
+
+  errorsExistForStreetOrPostcode: =>
+    @picker.find('.street.error').size() != 0 || @picker.find('.address-postcode.error').size() != 0
 
   hideManualLink: =>
     @picker.find('.postcode-picker-manual-link').hide()
