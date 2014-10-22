@@ -29,9 +29,8 @@ RSpec.describe Court, :type => :model do
   describe '#as_json' do
     let(:json) do
       {
-        'court_name' => 'Good Court',
-        'street' => '1 Good Road, Goodtown',
-        'postcode' => 'GT1 2XX'
+        'name' => 'Good Court',
+        'address' => '1 Good Road, Goodtown, GT1 2XX'
       }
     end
     it 'should return correct JSON' do
