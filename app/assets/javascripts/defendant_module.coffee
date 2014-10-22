@@ -27,14 +27,14 @@ DefendantModule =
     $('.show-hide').on 'click', ->
       DefendantModule.toggleAddress($(this))
 
-
-#      fixme refactor out
+#fixme refactor out
   showAddressIfStarted: (defendant_id) ->
-    id = "#defendant_#{defendant_id}_resident_address"
-    $id = $(id)
-    $link = $(id + ' a.caption')
-    add = $(id + ' textarea').val()
-    postcode = $(id + 'input').val()
+    $id = $("#defendant_#{defendant_id}_resident_address")
+    $link = $id.find('a.caption')
+    add = $id.find('textarea').val()
+    postcode = $id.find('input').val()
+
+    # panel will be hidden by default
     if add!='' || postcode!=''
       $id.toggleClass( 'open' )
 
@@ -43,10 +43,16 @@ DefendantModule =
     else
       $link.attr('aria-expanded','false')
 
-
-  toggleAddress: ($panel) ->
+  toggleAddress: ($area) ->
+    # get parent
+    $panel = $area.parents('div.sub-panel').first()
+    # show hide panel
     $panel.toggleClass('open')
-
+    # and link
+    if $panel.hasClass( 'open' )
+      $area.attr('aria-expanded','true')
+    else
+      $area.attr('aria-expanded','false')
 
   setup: ->
     DefendantModule.hideDefendantSections()
