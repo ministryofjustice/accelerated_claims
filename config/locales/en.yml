@@ -22,61 +22,79 @@
 en:
   claim:
     property:
-      house_yes: A self-contained house, flat or bedsit
-      house_no: 'Room or rooms in a property. <span class="hint">Tenants may share kitchen or bathroom</span>'
-    claimant_type_individual: A private landlord (individual)
-    claimant_type_organization: A private landlord (company), a local authority or a housing association
+      house:
+        "yes": A self-contained house, flat or bedsit
+        "no": 'Room or rooms in a property. <span class="hint">Tenants may share kitchen or bathroom</span>'
+    claimant_type:
+      individual: A private landlord (individual)
+      organization: A private landlord (company), a local authority or a housing association
     claimant:
-      address_same_as_first_claimant_yes: 'Yes'
-      address_same_as_first_claimant_no: 'No'
+      address_same_as_first_claimant:
+        "yes": 'Yes'
+        "no": 'No'
     defendant:
-      inhabits_property_yes: 'Yes'
-      inhabits_property_no: 'No'
+      inhabits_property:
+        "yes": 'Yes'
+        "no": 'No'
     notice:
-      notice_served_yes: 'Yes'
-      notice_served_no: 'No'
+      notice_served:
+        "yes": 'Yes'
+        "no": 'No'
     tenancy:
-      tenancy_type_assured: 'Assured shorthold tenancy <span class="hint">This is the most common form of tenancy</span>'
-      tenancy_type_demoted: 'Demoted assured shorthold tenancy <span class="hint">This is a tenancy agreement that the court has ‘demoted’. For example because tenants behaved anti-socially or used the property for illegal activity</span>'
-      assured_shorthold_tenancy_type_one: 1 tenancy agreement
-      assured_shorthold_tenancy_type_multiple: More than 1 tenancy agreement
-      assured_shorthold_tenancy_type_: Not applicable
-      agreement_reissued_for_same_property_yes: 'Yes'
-      agreement_reissued_for_same_property_no: 'No'
-      agreement_reissued_for_same_property_: Not applicable
-      agreement_reissued_for_same_landlord_and_tenant_yes: 'Yes'
-      agreement_reissued_for_same_landlord_and_tenant_no: 'No'
-      agreement_reissued_for_same_landlord_and_tenant_: Not applicable
-      previous_tenancy_type_assured: Assured
-      previous_tenancy_type_secure: Secure
-      previous_tenancy_type_: Not applicable
+      tenancy_type:
+        assured: 'Assured shorthold tenancy <span class="hint">This is the most common form of tenancy</span>'
+        demoted: 'Demoted assured shorthold tenancy <span class="hint">This is a tenancy agreement that the court has ‘demoted’. For example because tenants behaved anti-socially or used the property for illegal activity</span>'
+      assured_shorthold_tenancy_type:
+        one: 1 tenancy agreement
+        multiple: More than 1 tenancy agreement
+        na: Not applicable
+      agreement_reissued_for_same_property:
+        "yes": 'Yes'
+        "no": 'No'
+        na: Not applicable
+      agreement_reissued_for_same_landlord_and_tenant:
+        "yes": 'Yes'
+        "no": 'No'
+        na: Not applicable
+      previous_tenancy_type:
+        assured: Assured
+        secure: Secure
+        na: Not applicable
     license:
-      multiple_occupation_yes: 'Yes'
-      multiple_occupation_applied: "I've applied for one"
-      multiple_occupation_no: Not applicable
-      issued_under_act_part_yes_part2: 'Licence for properties that are <strong>3 or more storeys high</strong> and occupied by <strong>5 or more people</strong> (issued under part 2 of the Housing Act 2004)'
-      issued_under_act_part_yes_part3: 'Licence for properties that are <strong>within an area</strong> defined by a local council (issued under part 3 of the Housing act 2004)'
-      issued_under_act_part_yes_: Not applicable
-      issued_under_act_part_applied_part2: 'Licence for properties that are <strong>3 or more storeys high</strong> and occupied by <strong>5 or more people</strong> (issued under part 2 of the Housing Act 2004)'
-      issued_under_act_part_applied_part3: 'Licence for properties that are <strong>within an area</strong> defined by a local council (issued under part 3 of the Housing act 2004)'
-      issued_under_act_part_applied_: Not applicable
+      multiple_occupation:
+        "yes": 'Yes'
+        applied: "I've applied for one"
+        "no": Not applicable
+      issued_under_act_part_yes:
+        part2: 'Licence for properties that are <strong>3 or more storeys high</strong> and occupied by <strong>5 or more people</strong> (issued under part 2 of the Housing Act 2004)'
+        part3: 'Licence for properties that are <strong>within an area</strong> defined by a local council (issued under part 3 of the Housing act 2004)'
+        na: Not applicable
+      issued_under_act_part_applied:
+        part2: 'Licence for properties that are <strong>3 or more storeys high</strong> and occupied by <strong>5 or more people</strong> (issued under part 2 of the Housing Act 2004)'
+        part3: 'Licence for properties that are <strong>within an area</strong> defined by a local council (issued under part 3 of the Housing act 2004)'
+        na: Not applicable
     deposit:
-      received_yes: 'Yes'
-      received_no: 'No'
+      received:
+        "yes": 'Yes'
+        "no": 'No'
     order:
-      cost_yes: 'Yes'
-      cost_no: 'No'
+      cost:
+        "yes": 'Yes'
+        "no": 'No'
     possession:
-      hearing_yes: 'Yes'
-      hearing_no: 'No'
+      hearing:
+        "yes": 'Yes'
+        "no": 'No'
   feedback:
-    satisfaction_feedback_very_satisfied: 'Very satisfied'
-    satisfaction_feedback_satisfied: 'Satisfied'
-    satisfaction_feedback_neither_satisfied_or_dissatisfied: 'Neither satisfied or dissatisfied'
-    satisfaction_feedback_dissatisfied: 'Dissatisfied'
-    satisfaction_feedback_very_dissatisfied: 'Very dissatisfied'
-    help_feedback_filled_in_myself: 'No, I filled in this form myself'
-    help_feedback_filled_in_for_me: 'I have difficulty using computers so someone filled in this form for me'
-    help_feedback_used_accessibility_tool: 'I used an accessibility tool such as a screen reader'
-    help_feedback_other_help: 'I had some other kind of help'
+    satisfaction_feedback:
+      very_satisfied: 'Very satisfied'
+      satisfied: 'Satisfied'
+      neither_satisfied_or_dissatisfied: 'Neither satisfied or dissatisfied'
+      dissatisfied: 'Dissatisfied'
+      very_dissatisfied: 'Very dissatisfied'
+    help_feedback:
+      filled_in_myself: 'No, I filled in this form myself'
+      filled_in_for_me: 'I have difficulty using computers so someone filled in this form for me'
+      used_accessibility_tool: 'I used an accessibility tool such as a screen reader'
+      other_help: 'I had some other kind of help'
 
