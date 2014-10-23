@@ -40,12 +40,13 @@ class ClaimForm
 
   def fill_court_details
     prefix = 'claim_court_'
+    street = "\##{prefix}street"
 
     if @js_on == true
       find('#court-details').click
-      fill_in_value('input', "#{prefix}street", 'court_street')
+      page.all(street, visible: false).first.set('court_street')
     else
-      fill_text_area("#{prefix}street", 'court_street')
+      page.all(street).first.set('court_street')
     end
 
     fill_text_field("#{prefix}court_name", 'court_name')
