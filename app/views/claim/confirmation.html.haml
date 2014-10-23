@@ -3,7 +3,8 @@
 
 #activateModalSessionTimer
 
-= render partial: 'claim_summary'
+- if @show_summary
+  = render partial: 'claim_summary'
 
 %section.confirmation
   .moj-panel
