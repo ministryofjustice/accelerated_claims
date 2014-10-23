@@ -1,12 +1,6 @@
 class ClaimController < ApplicationController
 
-  # set the live_postcode_lookup flag as a class variable so that it can be queried from the PostcodeLookupProxyController
-  @@live_postcode_lookup = false
-
-
-  def self.live_postcode_lookup?
-    @@live_postcode_lookup
-  end
+  before_filter :set_live_postcode_lookup_flag    
 
   def new
     reset_session if referrer_is_landing_page?
@@ -24,17 +18,10 @@ class ClaimController < ApplicationController
 
 
     # use live postcode lookup database if running on productionserver or url param livepc set to 1
-
-    Rails.logger.info ">>>>>>>>> ENV['ENV_NAME']:  #{ENV['ENV_NAME']}"
-
-
     production = ENV["ENV_NAME"] == "production"
-    Rails.logger.info ">>>>>>>>> production: #{production.inspect}"
     if production == true || params[:livepc] == '1'
-      Rails.logger.info ">>>>>>>>> setting live postcode lookup to true"
       @@live_postcode_lookup = true
     else
-      Rails.logger.info ">>>>>>>>> setting live postcode lookup to false"
       @@live_postcode_lookup = false
     end
 
@@ -66,7 +53,6 @@ class ClaimController < ApplicationController
   def download
     if session[:claim].nil?
       msg = "User attepmted to download PDF from an expired session - redirected to #{expired_path}"
-      Rails.logger.warn msg
       redirect_to expired_path
     else
       @claim = Claim.new(session[:claim])
@@ -108,12 +94,24 @@ class ClaimController < ApplicationController
     end
   end
 
+
   def raise_exception
     session[:special_values] = "session variable"
     raise "This exception has been deliberately raised"
   end
 
+
+
   private
+
+  def set_live_postcode_lookup_flag
+    if ENV['ENV_NAME'] == 'production' || params[:livepc] 
+      session[:postcode_lookup_mode] = 'live'
+    else
+      session[:postcode_lookup_mode] = 'dummy'
+    end
+  end
+
 
   def move_defendant_address_params_into_model
     nums = { '1' => 'one', '2' => 'two' }

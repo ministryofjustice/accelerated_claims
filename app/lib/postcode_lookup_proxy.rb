@@ -19,7 +19,6 @@ class PostcodeLookupProxy
   attr_reader :result_set, :result_code, :result_message
 
   def initialize(postcode, use_live_data = false)
-    Rails.logger.info ">>>>>>>>>>>>>> PostcodeLookupProxy initialize #{postcode}, #{use_live_data.inspect}"
     @postcode       = UKPostcode.new(postcode)
     @valid          = @postcode.valid?
     @result_set     = nil

@@ -1,8 +1,7 @@
 class PostcodeLookupProxyController < ApplicationController
 
   def show
-    Rails.logger.info ">>>>>>>>>>>> ClaimController.live_postcode_lookup?  #{ClaimController.live_postcode_lookup?}"
-    @pclp = PostcodeLookupProxy.new(params[:pc], ClaimController.live_postcode_lookup?)
+    @pclp = PostcodeLookupProxy.new(params[:pc], live_postcode_lookup?)
     
     respond_to do |format|
       if @pclp.invalid?
@@ -18,6 +17,13 @@ class PostcodeLookupProxyController < ApplicationController
       end
     end
 
+  end
+
+
+  private
+
+  def live_postcode_lookup?
+    session[:postcode_lookup_mode] == 'live'
   end
 
 end
