@@ -46,7 +46,7 @@ feature 'Filling in claim form' do
   scenario "submitting incomplete form", js: true do
     visit '/'
     click_button 'Continue'
-
+    
     expect(page).to have_content('Please select what kind of claimant you are')
 
     check_focus_after_click 'You must say whether the defendant paid a deposit', 'claim_deposit_received_yes'

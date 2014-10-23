@@ -20,4 +20,81 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  claim:
+    property:
+      house:
+        'yes': A self-contained house, flat or bedsit
+        'no': 'Room or rooms in a property. <span class="hint">Tenants may share kitchen or bathroom</span>'
+    claimant_type:
+      individual: A private landlord (individual)
+      organization: A private landlord (company), a local authority or a housing association
+    claimant:
+      address_same_as_first_claimant:
+        'yes': 'Yes'
+        'no': 'No'
+    defendant:
+      inhabits_property:
+        'yes': 'Yes'
+        'no': 'No'
+    notice:
+      notice_served:
+        'yes': 'Yes'
+        'no': 'No'
+    tenancy:
+      tenancy_type:
+        assured: 'Assured shorthold tenancy <span class="hint">This is the most common form of tenancy</span>'
+        demoted: 'Demoted assured shorthold tenancy <span class="hint">This is a tenancy agreement that the court has ‘demoted’. For example because tenants behaved anti-socially or used the property for illegal activity</span>'
+      assured_shorthold_tenancy_type:
+        one: 1 tenancy agreement
+        multiple: More than 1 tenancy agreement
+        na: Not applicable
+      agreement_reissued_for_same_property:
+        'yes': 'Yes'
+        'no': 'No'
+        na: Not applicable
+      agreement_reissued_for_same_landlord_and_tenant:
+        'yes': 'Yes'
+        'no': 'No'
+        na: Not applicable
+      previous_tenancy_type:
+        assured: Assured
+        secure: Secure
+        na: Not applicable
+    license:
+      multiple_occupation:
+        'yes': 'Yes'
+        applied: "I've applied for one"
+        'no': Not applicable
+      issued_under_act_part_yes:
+        part2: 'Licence for properties that are <strong>3 or more storeys high</strong> and occupied by <strong>5 or more people</strong> (issued under part 2 of the Housing Act 2004)'
+        part3: 'Licence for properties that are <strong>within an area</strong> defined by a local council (issued under part 3 of the Housing act 2004)'
+        na: Not applicable
+      issued_under_act_part_applied:
+        part2: 'Licence for properties that are <strong>3 or more storeys high</strong> and occupied by <strong>5 or more people</strong> (issued under part 2 of the Housing Act 2004)'
+        part3: 'Licence for properties that are <strong>within an area</strong> defined by a local council (issued under part 3 of the Housing act 2004)'
+        na: Not applicable
+    deposit:
+      received:
+        'yes': 'Yes'
+        'no': 'No'
+    order:
+      cost:
+        'yes': 'Yes'
+        'no': 'No'
+    possession:
+      hearing:
+        'yes': 'Yes'
+        'no': 'No'
+  feedback:
+    satisfaction_feedback:
+      very_satisfied: 'Very satisfied'
+      satisfied: 'Satisfied'
+      neither_satisfied_or_dissatisfied: 'Neither satisfied or dissatisfied'
+      dissatisfied: 'Dissatisfied'
+      very_dissatisfied: 'Very dissatisfied'
+    help_feedback:
+      filled_in_myself: 'No, I filled in this form myself'
+      filled_in_for_me: 'I have difficulty using computers so someone filled in this form for me'
+      used_accessibility_tool: 'I used an accessibility tool such as a screen reader'
+      other_help: 'I had some other kind of help'
+
