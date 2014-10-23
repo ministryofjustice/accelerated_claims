@@ -1,9 +1,7 @@
 %section.summary
-  %h2.section-header Property
-  .moj-panel
-    = render partial: 'section_summary', locals: { section: 'property' }
+  = render partial: 'section_summary', locals: { section: 'property' }
 
-  %h2.section-header Claimants
+  = section_header 'claimant'
   .moj-panel
     .row
       %p
@@ -15,17 +13,22 @@
     - @claim.keys.select{|x| x[/^claimant_\d/]}.each do |claimant|
       - blank_claimant = @claim[claimant]['validate_absence']
       - unless blank_claimant
-        = render partial: 'section_summary', locals: { section: claimant }
+        .row
+          - @claim[claimant].each do |label, value|
+            = render partial: 'field_summary', locals: { section: claimant, label: label, value: value }
 
   %h2.section-header Claimant contact
   .moj-panel
-    = render partial: 'section_summary', locals: { section: 'claimant_contact' }
+    .row
+      - @claim['claimant_contact'].each do |label, value|
+        = render partial: 'field_summary', locals: { section: 'claimant_contact', label: label, value: value }
+
     - unless @claim['reference_number']['reference_number'].blank?
       %p
         %span.summary-label= I18n.t 'claim.reference_number.label'
         %span= @claim['reference_number']['reference_number']
 
-  %h2.section-header Defendants
+  = section_header 'defendant'
   .moj-panel
     .row
       %p
@@ -34,32 +37,26 @@
     - @claim.keys.select{|x| x[/^defendant_\d/]}.each do |defendant|
       - blank_defendant = @claim[defendant]['validate_absence']
       - unless blank_defendant
-        = render partial: 'section_summary', locals: { section: defendant }
+        .row
+          - @claim[defendant].each do |label, value|
+            = render partial: 'field_summary', locals: { section: defendant, label: label, value: value }
 
-  %h2.section-header#notice Notice
-  .moj-panel
-    = render partial: 'section_summary', locals: { section: 'notice' }
+  = render partial: 'section_summary', locals: { section: 'notice' }
 
-  %h2.section-header#tenancy Tenancy agreement
-  .moj-panel
-    = render partial: 'section_summary', locals: { section: 'tenancy' }
+  = render partial: 'section_summary', locals: { section: 'tenancy' }
 
-  %h2.section-header#licence Licences
-  .moj-panel
-    = render partial: 'section_summary', locals: { section: 'license' }
+  = render partial: 'section_summary', locals: { section: 'license' }
 
-  %h2.section-header#deposit Deposit
-  .moj-panel
-    = render partial: 'section_summary', locals: { section: 'deposit' }
+  = render partial: 'section_summary', locals: { section: 'deposit' }
 
-  %h2.section-header#costs Claim costs
+  = section_header 'fee'
   .moj-panel
     .row
       = render partial: 'field_summary', locals: { section: 'fee', label: 'court_fee', value: '£' + @claim['fee']['court_fee'] }
       = render partial: 'field_summary', locals: { section: 'legal_cost', label: 'legal_costs', value: '£' + @claim['legal_cost']['legal_costs'] }
       = render partial: 'field_summary', locals: { section: 'order', label: 'cost', value: @claim['order']['cost'] }
 
-  %h2.section-header#costs Court
+  = section_header 'court'
   .moj-panel
     .row
       = render partial: 'field_summary', locals: { section: 'possession', label: 'hearing', value: @claim['possession']['hearing'] }

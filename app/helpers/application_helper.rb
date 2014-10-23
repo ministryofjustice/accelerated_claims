@@ -1,5 +1,14 @@
 module ApplicationHelper
 
+  # Returns h2 heading with label for section_key
+  def section_header section_key
+    capture_haml do
+      haml_tag 'h2.section-header' do
+        haml_concat I18n.t "claim.#{section_key}.label"
+      end
+    end
+  end
+
   def link_reference_for_error field
     case field
     # links applicable statement errors to top of applicable statement section

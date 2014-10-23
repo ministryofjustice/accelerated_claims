@@ -1,5 +1,5 @@
-- (key_base = "claim.#{section}.#{label}")
-- key_base.sub!(/_\d+/,'')
+- key_base = "claim.#{section}.#{label.sub(/_\d+/,'')}"
+
 %p.summary-field
   %span.summary-label
     - (key = "#{key_base}.label")
