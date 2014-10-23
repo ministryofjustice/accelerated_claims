@@ -47,7 +47,7 @@ describe 'PostcodePicker', ->
   </div>
   <div class="js-only row">
     <a class="caption postcode-picker-manual-link" href="#claim_property_postcode_picker_manual_link" id="claim_property_postcode_picker_manual_link" style="margin-top: 20px;">
-      I want to add an address myself
+      Enter address manually
     </a>
   </div>
   <div class="address extra no sub-panel hide" style="margin-top: 10px;">
