@@ -78,7 +78,7 @@ CourtAddressModule =
 
   linkForFormToggling: ->
     if $("[id^=court-details]").length == 0
-      link = "<p/><a id='court-details' class='caption' href='#court-details'>Choose to send this claim to a different court</a>"
+      link = "<p/><a id='court-details' class='caption'>Choose to send this claim to a different court</a>"
       $(link).insertAfter('#court-name')
 
   sendPostcodeForLookup: ->
