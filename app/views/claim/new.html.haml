@@ -105,11 +105,9 @@
     .moj-panel
       = render partial: 'possession', object: @claim.possession, locals: { claim_form: claim_form }
 
-  %section
     .action-buttons.cf
       %input.button.primary.large.chevron.left#submit{name: 'Continue', value: 'Continue', type: 'submit'}
 
-  %section
     %p
       = link_to 'Terms and conditions and privacy policy', :terms, class: 't-n-c'
 

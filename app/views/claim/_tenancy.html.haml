@@ -55,7 +55,7 @@
             %li The defendant is not living in the property as an agricultural worker in connection with their work (so Schedule 3, Housing Act 1988 does not apply)
 
 
-        %fieldset.statements.hide.current.radio{ id: (form.error_for?(:confirmed_second_rules_period_applicable_statements) ? form.error_id_for(:confirmed_second_rules_period_applicable_statements) : '') }
+        %fieldset.statements.hide.current.radio{ id: (form.error_for?(:confirmed_second_rules_period_applicable_statements) ? form.error_id_for(:confirmed_second_rules_period_applicable_statements) : 'second_rule_placeholder') }
           - form.row :confirmed_second_rules_period_applicable_statements do
             = form.labelled_check_box :confirmed_second_rules_period_applicable_statements, '<strong>Yes</strong>, all these statements apply'.html_safe
 
@@ -70,7 +70,7 @@
               = form.moj_date_fieldset :assured_shorthold_tenancy_notice_served_date, 'When?', class: 'date-picker rel'
             %li You couldn’t have ended the tenancy agreement in the first 6 months
 
-        %fieldset.statements.hide.older.radio{ id: (form.error_for?(:confirmed_first_rules_period_applicable_statements) ? form.error_id_for(:confirmed_first_rules_period_applicable_statements) : '') }
+        %fieldset.statements.hide.older.radio{ id: (form.error_for?(:confirmed_first_rules_period_applicable_statements) ? form.error_id_for(:confirmed_first_rules_period_applicable_statements) : 'first_rule_placeholder') }
           - form.row :confirmed_first_rules_period_applicable_statements do
             = form.labelled_check_box :confirmed_first_rules_period_applicable_statements, '<strong>Yes</strong>, all these statements apply'.html_safe
 
