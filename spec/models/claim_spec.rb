@@ -62,7 +62,7 @@ describe Claim, :type => :model do
     let(:data) { claim_post_data['claim'] }
 
     it "creates a valid claim" do
-      expect(claim).to be_valid, claim.errors.full_messages
+      expect(claim).to be_valid, "expected claim to be valid, but was invalid: #{claim.errors.full_messages}"
     end
   end
 
