@@ -3,9 +3,8 @@
     Ask for technical help
 
 %header.content-header
-  %p
-  %p
-    %strong Please note: we cannot offer legal advice.
+  %div
+    %p.strong Please note: we cannot offer legal advice.
 
     = render partial: 'shared/flash'
 
@@ -34,6 +33,5 @@
       = f.text_field_row :phone, label: 'Telephone number', class: 'rel'
       = f.text_area_row :description, label: "Describe what you'd like to talk about"
 
-  %section
     .action-buttons.cf
       = f.submit 'Send', :class => 'button button-primary large chevron left', :id => 'submit-button'
