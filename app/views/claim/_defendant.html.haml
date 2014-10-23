@@ -12,6 +12,7 @@
       .row.js-only
         %a.caption{ id: "defendant_#{defendant_id}_resident_details", class: "js-inhabitproperty show-hide" , href: "#defendant-#{defendant_id}-resident-details", 'aria-expanded' => 'false' }
           = 'If the defendant is not living in the property, enter the address'
-      = form.text_area_row  :street,   label: 'Full address', class: 'rel street'
+      .row.hide.nonjs If the defendant is not living in the property, enter the address
+      = form.text_area_row  :street, label: 'Full address', class: 'rel street'
       = address_error_message("defendant_#{defendant_id}")
       = form.text_field_row :postcode, class: 'rel postcode', input_class: 'smalltext'
