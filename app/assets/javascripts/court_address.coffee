@@ -59,7 +59,7 @@ CourtAddressModule =
     CourtAddressModule.labelForKnownCourt()
 
   labelForKnownCourt: ->
-    label = "You need to post this claim to the court nearest to \
+    label = "You need to post this claim to the court nearest \
     the property you're taking back:"
     $('#court-address-label').html(label)
 
