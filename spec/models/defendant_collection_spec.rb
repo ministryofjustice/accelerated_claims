@@ -14,7 +14,6 @@ describe DefendantCollection do
         dc2 = DefendantCollection.new(params)
         expect(dc2).not_to be_valid
         expected_errors = [
-              # "Defendant 4 inhabits property Please select whether or not defendant 4 lives in the property",
               "Defendant 4 title Enter defendant 4's title",
               "Defendant 4 full name Enter defendant 4's full name"
             ]
