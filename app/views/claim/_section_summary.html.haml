@@ -1,0 +1,19 @@
+.row
+  - values = values || @claim[section]
+  - if values.is_a?(Hash)
+    - values.each do |label, value|
+      - unless label[/\((2|1)i\)/] || ['claimant_type',
+            'num_claimants',
+            'claimant_num',
+            'defendant_num',
+            'validate_presence',
+            'notice_served',
+            'confirmed_second_rules_period_applicable_statements',
+            'confirmed_first_rules_period_applicable_statements'].include?(label) || value.blank?
+        - if label[/(.+)\((3)i\)/]
+          - label = $1
+          - value = [values["#{label}(3i)"], values["#{label}(2i)"], values["#{label}(1i)"] ].join(' ')
+        = render partial: 'field_summary', locals: { section: section, label: label, value: value }
+  - else
+    = values
+

@@ -1,0 +1,16 @@
+- (key_base = "claim.#{section}.#{label}")
+- key_base.sub!(/_\d+/,'')
+%p.summary-field
+  %span.summary-label
+    - (key = "#{key_base}.label")
+    - if I18n.t(key)[/translation missing/]
+      = label.humanize
+    - else
+      = I18n.t(key)
+  %span
+    - (key = "#{key_base}.#{value.to_s.downcase}")
+    - if I18n.t(key)[/translation missing/]
+      = value
+    - else
+      = I18n.t(key).html_safe
+

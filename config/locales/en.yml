@@ -43,6 +43,10 @@ en:
     claimant_contact:
       street:
         label: Full address
+    reference_number:
+      label: Reference number
+    num_defendants:
+      label: Number of defendants
     defendant:
       inhabits_property:
         'yes': 'Yes'
@@ -55,14 +59,22 @@ en:
         label: Person who gave the notice
       served_method:
         label: How the notice was given
+      date_served:
+        label: Date notice served
+      expiry_date:
+        label: Date notice ended
     tenancy:
       tenancy_type:
+        label: Type of tenancy agreement
         assured: 'Assured shorthold tenancy <span class="hint">This is the most common form of tenancy</span>'
         demoted: 'Demoted assured shorthold tenancy <span class="hint">This is a tenancy agreement that the court has ‘demoted’. For example because tenants behaved anti-socially or used the property for illegal activity</span>'
       assured_shorthold_tenancy_type:
+        label: Number of tenancy agreements
         one: 1 tenancy agreement
         multiple: More than 1 tenancy agreement
         na: Not applicable
+      start_date:
+        label: Start date of the tenancy agreement
       agreement_reissued_for_same_property:
         'yes': 'Yes'
         'no': 'No'
@@ -96,12 +108,20 @@ en:
       ref_number:
         label:
           Tenancy deposit scheme reference number
+      as_money:
+        label: Money deposit
+      as_property:
+        label: Property deposit
+      information_given_date:
+        label: Date defendant was informed
     order:
       cost:
+        label: Defendant to pay costs
         'yes': 'Yes'
         'no': 'No'
     possession:
       hearing:
+        label: "Claimant to be at court if there's a hearing"
         'yes': 'Yes'
         'no': 'No'
     fee:
@@ -109,6 +129,8 @@ en:
         description: 'Fee account number<span class="hint block">Organisations can now set up an account to pay court fees, rather than pay by cheque. <a href="http://www.justice.gov.uk/courts/fees/payment-by-account" class="external" rel="external" target="_blank">More about fee account</a></span>'
         prompt: If you have a fee account number, enter it here
         guidance: Fee account number, numeric only
+      court_fee:
+        label: Court fee
   feedback:
     satisfaction_feedback:
       very_satisfied: 'Very satisfied'

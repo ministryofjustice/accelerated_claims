@@ -1,0 +1,109 @@
+%section.summary
+  %h2.section-header Property
+  .moj-panel
+    = render partial: 'section_summary', locals: { section: 'property' }
+
+  %h2.section-header Claimants
+  .moj-panel
+    .row
+      %p
+        %span.summary-label= I18n.t 'claim.claimant_type.label'
+        %span= I18n.t "claim.claimant_type.#{@claim['claimant_type']}"
+      %p
+        %span.summary-label= I18n.t 'claim.num_claimants.label'
+        %span= @claim['num_claimants']
+    - @claim.keys.select{|x| x[/^claimant_\d/]}.each do |claimant|
+      - blank_claimant = @claim[claimant]['validate_absence']
+      - unless blank_claimant
+        = render partial: 'section_summary', locals: { section: claimant }
+
+  %h2.section-header Claimant contact
+  .moj-panel
+    = render partial: 'section_summary', locals: { section: 'claimant_contact' }
+    - unless @claim['reference_number']['reference_number'].blank?
+      %p
+        %span.summary-label= I18n.t 'claim.reference_number.label'
+        %span= @claim['reference_number']['reference_number']
+
+  %h2.section-header Defendants
+  .moj-panel
+    .row
+      %p
+        %span.summary-label= I18n.t 'claim.num_defendants.label'
+        %span= @claim['num_defendants']
+    - @claim.keys.select{|x| x[/^defendant_\d/]}.each do |defendant|
+      - blank_defendant = @claim[defendant]['validate_absence']
+      - unless blank_defendant
+        = render partial: 'section_summary', locals: { section: defendant }
+
+  %h2.section-header#notice Notice
+  .moj-panel
+    = render partial: 'section_summary', locals: { section: 'notice' }
+
+  %h2.section-header#tenancy Tenancy agreement
+  .moj-panel
+    = render partial: 'section_summary', locals: { section: 'tenancy' }
+
+  %h2.section-header#licence Licences
+  .moj-panel
+    = render partial: 'section_summary', locals: { section: 'license' }
+
+  %h2.section-header#deposit Deposit
+  .moj-panel
+    = render partial: 'section_summary', locals: { section: 'deposit' }
+
+  %h2.section-header#costs Claim costs
+  .moj-panel
+    .row
+      = render partial: 'field_summary', locals: { section: 'fee', label: 'court_fee', value: '£' + @claim['fee']['court_fee'] }
+      = render partial: 'field_summary', locals: { section: 'legal_cost', label: 'legal_costs', value: '£' + @claim['legal_cost']['legal_costs'] }
+      = render partial: 'field_summary', locals: { section: 'order', label: 'cost', value: @claim['order']['cost'] }
+
+  %h2.section-header#costs Court
+  .moj-panel
+    .row
+      = render partial: 'field_summary', locals: { section: 'possession', label: 'hearing', value: @claim['possession']['hearing'] }
+
+  - @claim.each do |k, v|
+    - unless k[/(claimant|defendant)_\d/] || ['property',
+        'notice',
+        'tenancy',
+        'licence',
+        'deposit',
+        'license',
+        'fee',
+        'possession',
+        'legal_cost',
+        'order',
+        'form_state',
+        'claimant_type',
+        'num_claimants',
+        'num_defendants',
+        'reference_number',
+        'claimant_contact',
+        'javascript_enabled'].include?(k)
+      - case k
+      - when 'claimant_1'
+        %h2.section-header
+          = 'Claimants'
+      - when 'defendant_1'
+        %h2.section-header
+          = 'Defendants'
+      - when /(claimant|defendant)_\d/
+        - if v['validate_absence']
+          - v = nil
+        - else
+          %hr
+      - else
+        %h2.section-header
+          = k.humanize
+      .row
+        - if k == 'claimant_1'
+          %p
+            %span.hint= I18n.t 'claim.claimant_type.label'
+            %span= I18n.t "claim.claimant_type.#{@claim['claimant_type']}"
+          %p
+            %span.hint= I18n.t 'claim.num_claimants.label'
+            %span= @claim['num_claimants']
+        = render partial: 'section_summary', locals: { section: k, values: v }
+

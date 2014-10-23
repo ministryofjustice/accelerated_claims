@@ -3,52 +3,8 @@
 
 #activateModalSessionTimer
 
-%section.summary
-  - @claim.each do |k, v|
-    - unless ['form_state', 'claimant_type', 'num_claimants', 'num_defendants', 'javascript_enabled'].include? k
-      - case k
-      - when 'claimant_1'
-        %h2.section-header
-          = 'Claimants'
-      - when 'defendant_1'
-        %h2.section-header
-          = 'Defendants'
-      - when /(claimant|defendant)_\d/
-        - if v['validate_absence']
-          - v = nil
-        - else
-          %hr
-      - else
-        %h2.section-header
-          = k.humanize
-      .row
-        - if k == 'claimant_1'
-          %p
-            %span.hint= I18n.t 'claim.claimant_type.label'
-            %span= I18n.t "claim.claimant_type.#{@claim['claimant_type']}"
-          %p
-            %span.hint= I18n.t 'claim.num_claimants.label'
-            %span= @claim['num_claimants']
-        - if v.is_a?(Hash)
-          - v.each do |k1, v1|
-            - unless ['claimant_type', 'num_claimants', 'claimant_num', 'defendant_num', 'validate_presence', 'notice_served'].include?(k1) || v1.blank?
-              - (key_base = "claim.#{k}.#{k1}")
-              - key_base.sub!(/_\d+/,'')
-              %p
-                %span.hint
-                  - (key = "#{key_base}.label")
-                  - if I18n.t(key)[/translation missing/]
-                    = k1.humanize
-                  - else
-                    = I18n.t(key)
-                %span
-                  - (key = "#{key_base}.#{v1.to_s.downcase}")
-                  - if I18n.t(key)[/translation missing/]
-                    = v1
-                  - else
-                    = I18n.t(key)
-        - else
-          =v
+= render partial: 'claim_summary'
+
 %section.confirmation
   .moj-panel
     .row
@@ -78,9 +34,6 @@
         'virtual-pageview' => '/accelerated/satisfaction-survey' }) + '.'
     Your feedback helps us improve the service.
 
-
-
-
 / handlebars templates
 
-= render :partial => 'shared/hbtemplates'
+= render partial: 'shared/hbtemplates'
