@@ -22,6 +22,9 @@ class PostcodePicker
       @picker.find('.postcode-display').hide()
       @hideManualLink()
 
+    if @streetAndPostcodeAlreadyEntered()
+      @picker.find('.address-postcode input').attr('readonly', '1')
+
 
 
     @button.on 'click', =>
@@ -51,6 +54,10 @@ class PostcodePicker
       @picker.find('.postcode-select-container').hide()
       @showPostcodeSearchComponent()
    
+
+  streetAndPostcodeAlreadyEntered: =>
+    @picker.find('input.smalltext.postcode').val() != '' && @picker.find('.street textarea').val() != ''
+
 
   addressSuccessfullySelectedOnPreviousPage: =>
     @picker.find('input.smalltext.postcode').val() != ''
