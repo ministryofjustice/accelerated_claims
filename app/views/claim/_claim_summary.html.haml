@@ -13,12 +13,21 @@
     - @claim.keys.select{|x| x[/^claimant_\d/]}.each do |claimant|
       - blank_claimant = @claim[claimant]['validate_absence']
       - unless blank_claimant
+        .row.divider
+        .row
+          %h3= claimant.humanize
         .row
           - @claim[claimant].each do |label, value|
-            = render partial: 'field_summary', locals: { section: claimant, label: label, value: value }
+            - unless label[/\((2|1)i\)/] || ['claimant_type',
+                  'num_claimants',
+                  'claimant_num',
+                  'validate_presence',
+                  'address_same_as_first_claimant'].include?(label)
+              = render partial: 'field_summary', locals: { section: claimant.sub(/_\d+/,''), label: label, value: value }
 
-  %h2.section-header Claimant contact
-  .moj-panel
+    .row.divider
+    .row
+      %h3 Claimant contact
     .row
       - @claim['claimant_contact'].each do |label, value|
         = render partial: 'field_summary', locals: { section: 'claimant_contact', label: label, value: value }
@@ -37,9 +46,17 @@
     - @claim.keys.select{|x| x[/^defendant_\d/]}.each do |defendant|
       - blank_defendant = @claim[defendant]['validate_absence']
       - unless blank_defendant
+        .row.divider
+        .row
+          %h3= defendant.humanize
         .row
           - @claim[defendant].each do |label, value|
-            = render partial: 'field_summary', locals: { section: defendant, label: label, value: value }
+            - unless label[/\((2|1)i\)/] || [ 'defendant_num',
+                  'validate_presence',
+                  'inhabits_property',
+                  'street',
+                  'postcode'].include?(label)
+              = render partial: 'field_summary', locals: { section: defendant, label: label, value: value }
 
   = render partial: 'section_summary', locals: { section: 'notice' }
 
@@ -53,7 +70,8 @@
   .moj-panel
     .row
       = render partial: 'field_summary', locals: { section: 'fee', label: 'court_fee', value: '£' + @claim['fee']['court_fee'] }
-      = render partial: 'field_summary', locals: { section: 'legal_cost', label: 'legal_costs', value: '£' + @claim['legal_cost']['legal_costs'] }
+      - fixed_legal_fee = @claim['legal_cost']['legal_costs']
+      = render partial: 'field_summary', locals: { section: 'legal_cost', label: 'legal_costs', value: '£' + (fixed_legal_fee.blank? ? '0' : fixed_legal_fee) }
       = render partial: 'field_summary', locals: { section: 'order', label: 'cost', value: @claim['order']['cost'] }
 
   = section_header 'court'

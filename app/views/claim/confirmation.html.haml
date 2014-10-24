@@ -1,4 +1,15 @@
-= render partial: 'shared/header_message'
+%header.page-header.group
+  %h1
+    Review the details of your claim
+
+%section
+  .row
+    %p
+      %span.strong You have not yet completed your claim.
+      %br
+      Check all the information on this page before clicking ‘continue’.
+
+
 = render partial: 'shared/flash'
 
 #activateModalSessionTimer

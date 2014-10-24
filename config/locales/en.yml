@@ -46,6 +46,8 @@ en:
       label: Claimant contact
       street:
         label: Full address
+      dx_number:
+        label: DX number
     reference_number:
       label: Reference number
     num_defendants:
@@ -96,6 +98,7 @@ en:
     license:
       label: Licences
       multiple_occupation:
+        label: HMO licence held
         'yes': 'Yes'
         applied: "I've applied for one"
         'no': Not applicable
@@ -140,6 +143,9 @@ en:
       label: Claim costs
       court_fee:
         label: Court fee
+    legal_cost:
+      legal_costs:
+        label: Fixed legal fees
     court:
       label: Court
   feedback:

@@ -6,9 +6,6 @@
       - values.each do |label, value|
         - unless label[/\((2|1)i\)/] || ['claimant_type',
               'num_claimants',
-              'claimant_num',
-              'defendant_num',
-              'validate_presence',
               'notice_served',
               'confirmed_second_rules_period_applicable_statements',
               'confirmed_first_rules_period_applicable_statements'].include?(label) || value.blank?
