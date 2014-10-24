@@ -25,7 +25,7 @@
       = claim_form.radio_button_fieldset :claimant_type,
         'What kind of claimant are you?'.html_safe,
         class: 'radio js-depend',
-        choice: {'A private landlord (individual)' => 'individual', 'A private landlord (company), a local authority or a housing association' => 'organization'},
+        choice: [ 'individual', 'organization' ],
         data: { depend: 'claimanttype', 'virtual-pageview' => '/accelerated/claimants-section' }
 
       = claim_form.text_field_row :num_claimants,

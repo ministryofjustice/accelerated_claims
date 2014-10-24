@@ -30,19 +30,22 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
   # Defaults to "Yes" "No" labels on radio inputs
   def radio_button_fieldset attribute, legend, options={}
+    translation_key = translation_key(attribute)
+    raise "TBD: #{translation_key} #{options[:choice]}" if options[:choice].is_a?(Hash)
+
     virtual_pageview = options[:data] ? options[:data].delete('virtual-pageview') : nil
     input_class = options.delete(:input_class)
 
     set_class_and_id attribute, options
 
-    options[:choice] ||= {'Yes'=>'Yes', 'No'=>'No'}
+    options[:choice] ||= [ 'Yes', 'No' ]
 
     data_reverse = options.delete(:toggle_fieldset) ? ' data-reverse="true"' : ''
 
     fieldset_tag attribute, legend, options do
       @template.surround("<div class='options'#{data_reverse}>".html_safe, "</div>".html_safe) do
-        options[:choice].map do |label, choice|
-          radio_button_row(attribute, label, choice, virtual_pageview, input_class)
+        options[:choice].map do |choice|
+          radio_button_row(attribute, choice, virtual_pageview, input_class)
         end.join("\n")
       end
     end
@@ -65,6 +68,34 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
       attribute_errors = error_message_for(attribute)
       attribute_errors && !attribute_errors.empty?
     end
+  end
+
+  def error_span attribute, options={}
+    @template.surround(error_span_open_tag(options), "</span>".html_safe) do
+      error_span_message(attribute)
+    end
+  end
+
+  # Creates key for lookup of translation text.
+  # E.g. translation_key(hearing, {:choice=>"No"}) when in possession form
+  #      returns "claim.possession.hearing.no"
+  def translation_key attribute, options={}
+    key = "#{ parent_id.gsub('_','.') }.#{attribute}".squeeze('.')
+    key.gsub!(/\.\d+\./, '.')
+    if choice = options[:choice]
+      choice = 'na' if choice == ''
+      key += ".#{choice.downcase}"
+    end
+    key
+  end
+
+  def error_id_for attribute
+    field_id = "#{parent_id}_#{attribute}".squeeze('_')
+    "#{field_id}_error"
+  end
+
+  def parent_id
+    @object_name.to_s.tr('[]','_').squeeze('_')
   end
 
 
@@ -97,11 +128,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
 
-  def error_id_for attribute
-    "#{@object_name.to_s.tr('[]','_')}_#{attribute}_error".squeeze('_')
-  end
-
-
   def fieldset_tag(attribute, legend_text, options = {}, &block)
     fieldset = tag(:fieldset, options_for_fieldset(options), true)
 
@@ -116,13 +142,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     fieldset.safe_concat("</fieldset>")
   end
 
-  def error_span attribute, options={}
-    @template.surround(error_span_open_tag(options), "</span>".html_safe) do
-      error_span_message(attribute)
-    end
-  end
-
-
+  
 
   private
 
@@ -219,7 +239,13 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     html.html_safe
   end
 
-  def radio_button_row attribute, label, choice, virtual_pageview, input_class
+  def radio_button_row attribute, choice, virtual_pageview, input_class
+    translation_key = translation_key(attribute, choice: choice)
+
+    translation = I18n.t(translation_key)
+    raise "translation missing: #{translation_key}" if translation[/translation missing/]
+    label = translation unless translation[/translation missing/]
+
     options = {}
     options.merge!(class: input_class) if input_class
     options.merge!(data: { 'virtual_pageview' => virtual_pageview }) if virtual_pageview
@@ -238,7 +264,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
         ].compact.join("\n")
       end
     end
-
   end
 
   def css_for attribute, options
