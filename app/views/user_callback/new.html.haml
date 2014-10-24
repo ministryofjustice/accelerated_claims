@@ -3,8 +3,8 @@
     Ask for technical help
 
 %header.content-header
-  %div
-    %p.strong Please note: we cannot offer legal advice.
+  %section
+    %h2 Please note: we cannot offer legal advice.
 
     = render partial: 'shared/flash'
 
@@ -25,8 +25,7 @@
     %p We’ll only use your details to call you back. Don’t include any personal information, for example address or date of birth.
 
 
-= form_for @user_callback, url: user_callback_request_path, html: { novalidate: 'novalidate' }, builder: LabellingFormBuilder do |f|
-  %section
+  = form_for @user_callback, url: user_callback_request_path, html: { novalidate: 'novalidate' }, builder: LabellingFormBuilder do |f|
     .moj-panel
       = f.text_field_row :name, label: 'Name'
       .row
