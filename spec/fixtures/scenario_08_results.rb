@@ -19,7 +19,7 @@
   property_postcode1: "GO5",
   property_postcode2: "4BB",
   order_cost: "Yes",
-  fee_court_fee: "280.00",
+  fee_court_fee: "280",
   claimant_contact_legal_costs: "450",
   total_cost: "730.0",
   IssueDateDay: nil,

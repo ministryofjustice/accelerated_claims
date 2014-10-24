@@ -8,9 +8,9 @@ describe Fee, :type => :model do
     let(:account) { '' }
 
     it { is_expected.to be_valid }
-    it { expect(fee.court_fee).to eq "280.00"  }
+    it { expect(fee.court_fee).to eq "280"  }
 
-    it { expect(fee.as_json).to eq("court_fee" => "280.00", "account"=>"") }
+    it { expect(fee.as_json).to eq("court_fee" => "280", "account"=>"") }
   end
 
   context "with a random court fee" do
@@ -18,9 +18,9 @@ describe Fee, :type => :model do
     let(:account) { '' }
 
     it { is_expected.to be_valid }
-    it { expect(fee.court_fee).to eq "280.00"  }
+    it { expect(fee.court_fee).to eq "280"  }
 
-    it { expect(fee.as_json).to eq("court_fee" => "280.00", "account"=>"") }
+    it { expect(fee.as_json).to eq("court_fee" => "280", "account"=>"") }
   end
 
   context 'with a fee account number' do
@@ -57,6 +57,7 @@ describe Fee, :type => :model do
       expect(fee.errors[:account]).to eq ["Your fee account number should contain numbers only"]
     end
   end
+
   context 'with partially non numeric account number' do
     let(:court_fee) { "" }
     let(:account) { '123bob' }

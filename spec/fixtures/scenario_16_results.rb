@@ -2,13 +2,11 @@ def left_panel0
   "Additional Claimants
 ====================
 
-
 Claimant 3:
     Mrs Jane Smith
     2 Brown St
     Bwlchllydd
     FX1W 0LU
-
 
 Claimant 4:
     Ms Tammy Wynette
@@ -16,10 +14,8 @@ Claimant 4:
     Bwlchllydd
     FX1W 0LU
 
-
 Additional Defendants
 =====================
-
 
 Defendant 1 name and address for service:
     Miss Augusta Wind
@@ -34,20 +30,17 @@ Defendant 2 name and address for service:
     Anytown
     EY99 1XX
 
-
 Defendant 3 name and address for service:
     Mr Defendant Three
     23 Mock St
     Anytown
     EY99 1XX
 
-
 Defendant 4 name and address for service:
     Mr Defendant Four
     44 Fourth Street
     Fourville
     FY4 4VV
-
 
 Defendant 5 name and address for service:
     Mr Defendant Five
@@ -70,13 +63,11 @@ Defendant 7 name and address for service:
     Anytown
     EY99 1XX
 
-
 Defendant 8 name and address for service:
     Mr Defendant Eight
     88 Eighth Street
     Eightown
     EY12 7FF
-
 
 Defendant 9 name and address for service:
     Mr Defendant Nine
@@ -84,13 +75,11 @@ Defendant 9 name and address for service:
     Anytown
     EY99 1XX
 
-
 Defendant 10 name and address for service:
     Mr Defendant Ten
     23 Mock St
     Anytown
     EY99 1XX
-
 
 Defendant 11 name and address for service:
     Mr Defendant Eleven
@@ -98,13 +87,11 @@ Defendant 11 name and address for service:
     Anytown
     EY99 1XX
 
-
 Defendant 12 name and address for service:
     Mr Defendant Twelve
     23 Mock St
     Anytown
     EY99 1XX
-
 
 Defendant 13 name and address for service:
     Mr Defendant Thirteen
@@ -113,7 +100,6 @@ Defendant 13 name and address for service:
     EY99 1XX"
 end
 
-
 def left_panel1
 "Defendant 14 name and address for service:
     Mr Defendant Fourteen
@@ -121,13 +107,11 @@ def left_panel1
     Anytown
     EY99 1XX
 
-
 Defendant 15 name and address for service:
     Mr Defendant Fifteen
     23 Mock St
     Anytown
     EY99 1XX
-
 
 Defendant 16 name and address for service:
     Mr Defendant Sixteen
@@ -135,13 +119,11 @@ Defendant 16 name and address for service:
     Anytown
     EY99 1XX
 
-
 Defendant 17 name and address for service:
     Mr Defendant Seventeen
     23 Mock St
     Anytown
     EY99 1XX
-
 
 Defendant 18 name and address for service:
     Mr Defendant Eighteen
@@ -149,13 +131,11 @@ Defendant 18 name and address for service:
     Anytown
     EY99 1XX
 
-
 Defendant 19 name and address for service:
     Mr Defendant Nineteen
     23 Mock St
     Anytown
     EY99 1XX
-
 
 Defendant 20 name and address for service:
     Mr Defendant Twenty
@@ -163,7 +143,6 @@ Defendant 20 name and address for service:
     Twentieth Century City
     TY77 8HH"
 end
-
 
 {
   Button94: nil,
@@ -177,7 +156,7 @@ end
   defendant_2_address: "Mr John Dorey\n23 Mock St\nAnytown",
   defendant_2_postcode1: "EY99",
   defendant_2_postcode2: "1XX",
-  fee_court_fee: "280.00",
+  fee_court_fee: "280",
   claimant_contact_legal_costs: "332.45",
   total_cost: "612.45",
   IssueDateDay: nil,
