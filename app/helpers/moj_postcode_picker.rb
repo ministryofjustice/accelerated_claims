@@ -31,6 +31,7 @@ class MojPostcodePicker
     @name           = generate_name
     @postcode_attr  = options[:postcode_attr] || 'postcode'
     @address_attr   = options[:address_attr] || 'address_lines'
+    @street_hint    = options[:street_hint] || ''
     @@haml          = load_haml if @@haml.nil? || Rails.env.development?
     @postcode_value = form.object.send(@postcode_attr.to_sym)
     @address_value  = form.object.send(@address_attr.to_sym)

@@ -47,8 +47,10 @@
     .row.street{options}
       %label{:for => "#{@prefix}_#{@address_attr}"} 
         Full address
+        
         - unless @form.object.errors[:street].empty?
           %span.error Enter the full address
+
       %textarea.street{id: "#{@prefix}_#{@address_attr}", :maxlength => "70", :name => "#{@name}[street]"}
         = "#{@address_value}"
 
