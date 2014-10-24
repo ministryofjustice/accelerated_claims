@@ -96,7 +96,7 @@ def expected_output
       <label class='postcode-picker-label' for='claim_property_postcode_edit_field'>Postcode</label>
       <input class='smalltext postcode-picker-edit-field' id='claim_property_postcode_edit_field' maxlength='8' name='[postcode]' size='8' type='text'>
       <a class='button primary postcode-picker-button' href='#claim_property_postcode_picker' name='FindUkPostcode'>
-        Find UK Address
+        Find address
       </a>
     </div>
     <div class='postcode-picker-hourglass hide'>
@@ -109,7 +109,7 @@ def expected_output
           <option disabled='disabled' id='listbox-0' role='option' value=''>Please select an address</option>
         </select>
         <a class='row button primary postcode-picker-cta' href='#claim_property_postcode_picker_manual_link' id='claim_property_selectaddress' name='SelectAddress' style='margin-bottom: 20px;'>
-          Select Address
+          Select address
         </a>
       </fieldset>
     </div>

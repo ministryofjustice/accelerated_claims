@@ -23,7 +23,7 @@
 
       %a.button.primary.postcode-picker-button{:href => "##{@prefix}_postcode_picker",
           :name => "FindUkPostcode"}
-        Find UK Address
+        Find address
 
     .postcode-picker-hourglass.hide
       Finding address....
@@ -34,7 +34,7 @@
         %select.address-picker-select{id: "#{@prefix}_address_select", name: "sel-address", size: "6", width: "50"}
           %option#listbox-0{role: "option", disabled: "disabled", :value => ""} Please select an address
         %a.row.button.primary.postcode-picker-cta{id: "#{@prefix}_selectaddress", name: "SelectAddress", href: "##{@prefix}_postcode_picker_manual_link", style: "margin-bottom: 20px;"}
-          Select Address
+          Select address
     
   .js-only.row
     %a.caption.postcode-picker-manual-link{ href: "##{@prefix}_postcode_picker_manual_link", id: "#{@prefix}_postcode_picker_manual_link", style: "margin-top: 20px;"}

@@ -18,12 +18,13 @@ class ClaimController < ApplicationController
 
 
     # use live postcode lookup database if running on productionserver or url param livepc set to 1
-    production = ENV["ENV_NAME"] == "production"
-    if production == true || params[:livepc] == '1'
-      @@live_postcode_lookup = true
-    else
-      @@live_postcode_lookup = false
-    end
+    production = ['staging', 'production'].include?(ENV["ENV_NAME"])
+
+    # if production == true || params[:livepc] == '1'
+    #   @@live_postcode_lookup = true
+    # else
+    #   @@live_postcode_lookup = false
+    # end
 
 
     @claim = if !production && params.has_key?(:journey)

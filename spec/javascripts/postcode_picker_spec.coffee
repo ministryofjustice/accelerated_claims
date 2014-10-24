@@ -40,7 +40,7 @@ describe 'PostcodePicker', ->
           <option disabled="disabled" id="listbox-0" role="option" value="">Please select an address</option>
         </select>
         <a class="row button primary postcode-picker-cta" href="#claim_property_postcode_picker_manual_link" id="claim_property_selectaddress" name="SelectAddress" style="margin-bottom: 20px;">
-          Select Address
+          Select address
         </a>
       </fieldset>
     </div>
