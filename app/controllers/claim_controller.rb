@@ -40,7 +40,7 @@ class ClaimController < ApplicationController
     if @claim.nil? || !Claim.new(@claim).valid?
       redirect_to_with_protocol(:new)
     end
-    @show_summary = !!params[:summary]
+    @show_summary = true
 
     @page_title = 'Make a claim to evict tenants: accelerated possession'
   end
