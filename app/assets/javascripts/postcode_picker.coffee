@@ -148,7 +148,8 @@ class PostcodePicker
 
   displayNoResultsFound: ->
     @addErrorMessage('No address found. Please enter the address manually')
-    @displayAddressFields()
+    @picker.find('.postcode-display').hide()
+    @hideAddressFields()
 
   displayServiceUnavailable: ->
     @displayAddressFields()
