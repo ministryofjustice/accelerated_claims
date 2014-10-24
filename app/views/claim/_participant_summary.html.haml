@@ -1,0 +1,25 @@
+.row
+  %p
+    %span.summary-label= I18n.t "claim.num_#{type}s.label"
+    %span= @claim["num_#{type}s"]
+- @claim.keys.select{|x| x[pattern]}.each do |participant|
+  - blank_participant = @claim[participant]['validate_absence']
+  - unless blank_participant
+    .row.divider
+    .row
+      %h3= participant.humanize
+    .row
+      - @claim[participant].each do |label, value|
+        - unless label[/\((2|1)i\)/] || ['claimant_type',
+              "num_#{type}s",
+              "#{type}_num",
+              'validate_presence',
+              'address_same_as_first_claimant',
+              'inhabits_property',
+              'street',
+              'postcode'].include?(label)
+          = render partial: 'field_summary',
+              locals: { section: participant.sub(/_\d+/,''),
+                  label: label,
+                  value: value }
+

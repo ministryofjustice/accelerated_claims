@@ -7,23 +7,7 @@
       %p
         %span.summary-label= I18n.t 'claim.claimant_type.label'
         %span= I18n.t "claim.claimant_type.#{@claim['claimant_type']}"
-      %p
-        %span.summary-label= I18n.t 'claim.num_claimants.label'
-        %span= @claim['num_claimants']
-    - @claim.keys.select{|x| x[/^claimant_\d/]}.each do |claimant|
-      - blank_claimant = @claim[claimant]['validate_absence']
-      - unless blank_claimant
-        .row.divider
-        .row
-          %h3= claimant.humanize
-        .row
-          - @claim[claimant].each do |label, value|
-            - unless label[/\((2|1)i\)/] || ['claimant_type',
-                  'num_claimants',
-                  'claimant_num',
-                  'validate_presence',
-                  'address_same_as_first_claimant'].include?(label)
-              = render partial: 'field_summary', locals: { section: claimant.sub(/_\d+/,''), label: label, value: value }
+    = render partial: 'participant_summary', locals: { type: 'claimant', pattern: /^claimant_\d/ }
 
     .row.divider
     .row
@@ -39,24 +23,7 @@
 
   = section_header 'defendant'
   .moj-panel
-    .row
-      %p
-        %span.summary-label= I18n.t 'claim.num_defendants.label'
-        %span= @claim['num_defendants']
-    - @claim.keys.select{|x| x[/^defendant_\d/]}.each do |defendant|
-      - blank_defendant = @claim[defendant]['validate_absence']
-      - unless blank_defendant
-        .row.divider
-        .row
-          %h3= defendant.humanize
-        .row
-          - @claim[defendant].each do |label, value|
-            - unless label[/\((2|1)i\)/] || [ 'defendant_num',
-                  'validate_presence',
-                  'inhabits_property',
-                  'street',
-                  'postcode'].include?(label)
-              = render partial: 'field_summary', locals: { section: defendant, label: label, value: value }
+    = render partial: 'participant_summary', locals: { type: 'defendant', pattern: /^defendant_\d/ }
 
   = render partial: 'section_summary', locals: { section: 'notice' }
 
