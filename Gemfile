@@ -78,6 +78,7 @@ group :test do
   gem 'codeclimate-test-reporter', require: nil
   gem 'ruby-prof'
   gem 'w3c_validators'
+  gem 'capybara-screenshot'
 end
 
 gem 'pdf-forms', '0.5.5'
