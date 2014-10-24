@@ -10,7 +10,7 @@
       %h3= participant.humanize
     .row
       - @claim[participant].each do |label, value|
-        - unless label[/\((2|1)i\)/] || ['claimant_type',
+        - unless ['claimant_type',
               "num_#{type}s",
               "#{type}_num",
               'validate_presence',

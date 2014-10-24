@@ -119,6 +119,8 @@ en:
       ref_number:
         label:
           Tenancy deposit scheme reference number
+      type_of_deposit:
+        Type of deposit
       as_money:
         label: Money deposit
       as_property:
