@@ -194,6 +194,25 @@ describe ClaimController, :type => :controller do
         end
       end
 
+      context 'on staging server' do
+        it 'should set session variable to live even if there is no livepc paramter' do
+          cached_env_name = ENV['ENV_NAME']
+          ENV['ENV_NAME'] = 'staging'
+          get :new
+          expect(session[:postcode_lookup_mode]).to eq 'live'
+          ENV['ENV_NAME'] = cached_env_name
+        end
+
+        it 'should set session variable to live when there is a livepc paramter' do
+          cached_env_name = ENV['ENV_NAME']
+          ENV['ENV_NAME'] = 'staging'
+          get :new, livepc: '1'
+          expect(session[:postcode_lookup_mode]).to eq 'live'
+          ENV['ENV_NAME'] = cached_env_name
+        end
+      end
+
+
       context 'on demo server' do
         it 'should set session variable to live when there is a livepc parameter' do
           cached_env_name = ENV['ENV_NAME']

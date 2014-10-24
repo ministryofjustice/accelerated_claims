@@ -20,13 +20,6 @@ class ClaimController < ApplicationController
     # use live postcode lookup database if running on productionserver or url param livepc set to 1
     production = ['staging', 'production'].include?(ENV["ENV_NAME"])
 
-    # if production == true || params[:livepc] == '1'
-    #   @@live_postcode_lookup = true
-    # else
-    #   @@live_postcode_lookup = false
-    # end
-
-
     @claim = if !production && params.has_key?(:journey)
       force_reload = params.has_key?(:reload)
 
@@ -106,7 +99,7 @@ class ClaimController < ApplicationController
   private
 
   def set_live_postcode_lookup_flag
-    if ENV['ENV_NAME'] == 'production' || params[:livepc] 
+    if ['staging', 'production'].include?(ENV['ENV_NAME'])  || params[:livepc]
       session[:postcode_lookup_mode] = 'live'
     else
       session[:postcode_lookup_mode] = 'dummy'
