@@ -151,3 +151,19 @@ describe 'CourtAddressModule', ->
       window.CourtAddressModule.hideCourtAddress()
       address = $('#court-address')
       expect(address).not.toBeVisible()
+
+    describe 'populate court address if property details are present', ->
+      beforeEach ->
+        enterPostcode('SG8 0LT')
+
+      describe 'with a postcode provided', ->
+        it 'should do court address lookup', ->
+          spyOn(window.CourtLookup, 'lookup')
+          window.CourtAddressModule.getCourtIfPostcodePresent()
+          expect(window.CourtLookup.lookup).toHaveBeenCalledWith('SG8 0LT', window.CourtAddressModule)
+
+        it 'should not do court address lookup', ->
+          name = $('#claim_court_court_name').val('Some court')
+          spyOn(window.CourtLookup, 'lookup')
+          window.CourtAddressModule.getCourtIfPostcodePresent()
+          expect(window.CourtLookup.lookup).not.toHaveBeenCalledWith('SG8 0LT', window.CourtAddressModule)

@@ -89,7 +89,24 @@ CourtAddressModule =
       else
         CourtAddressModule.displayNoResultsFound()
 
+  getCourtIfPostcodePresent: ->
+    court_fields = ['#claim_court_court_name',
+                    '#claim_court_street',
+                    '#claim_court_postcode']
+    all_blank = true
+
+    for field in court_fields
+      if $(field).val() != ''
+        all_blank = false
+
+    if all_blank
+      postcode = $('#claim_property_postcode').val()
+      if postcode
+        CourtLookup.lookup(postcode, CourtAddressModule)
+
+
   setup: ->
+    CourtAddressModule.getCourtIfPostcodePresent()
     CourtAddressModule.addCourtAddressFormLabel()
     CourtAddressModule.hideCourtAddress()
     CourtAddressModule.sendPostcodeForLookup()
