@@ -136,6 +136,7 @@ class PostcodePicker
 
   displayInvalidPostcodeMessage: ->
     @addErrorMessage('Please enter a valid UK postcode')
+    @picker.find('.postcode-display').hide()
     @hideAddressFields()
 
   displayNoResultsFound: ->
