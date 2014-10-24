@@ -22,4 +22,8 @@
               locals: { section: participant.sub(/_\d+/,''),
                   label: label,
                   value: value }
+      - if type == 'defendant'
+        - if @claim[participant]['inhabits_property'] == 'No'
+          = render partial: 'field_summary', locals: { section: participant, label: 'street', value: @claim[participant]['street'] }
+          = render partial: 'field_summary', locals: { section: participant, label: 'postcode', value: @claim[participant]['postcode'] }
 
