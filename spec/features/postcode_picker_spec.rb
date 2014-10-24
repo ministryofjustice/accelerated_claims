@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
 
 
-def staging?
-  ENV['ENV_NAME'] == 'staging'
-end
-
-
 
 
 
@@ -18,7 +13,7 @@ feature 'Postcode address lookup' do
 
  
 
-  if staging?
+  if remote_test?
     context 'live lookup' do
       scenario "enter postcode and select address from list", js: true do
         visit '/'
