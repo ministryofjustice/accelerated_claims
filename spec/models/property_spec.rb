@@ -36,8 +36,6 @@ describe Property, :type => :model do
     end
 
     subject { property }
-    # include_examples 'address presence validationaddress presence validation'
-    # include_examples 'address validation'
 
     describe "house" do
       it "when blank" do

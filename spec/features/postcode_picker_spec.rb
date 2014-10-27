@@ -1,17 +1,11 @@
 # -*- coding: utf-8 -*-
 
-
-
-
-
 feature 'Postcode address lookup' do
 
   before do
     WebMock.disable_net_connect!(:allow => ["127.0.0.1", /codeclimate.com/])
   end
 
-
- 
 
   if remote_test?
     context 'live lookup' do
