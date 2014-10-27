@@ -135,7 +135,10 @@ class Claimant < BaseClass
 
   def validate_address
     validate_address_same_as_first_claimant
-    validate_are_present(:street, :postcode) if check_address_fields?
+    if check_address_fields?
+      errors[:street] << "Enter #{possessive_subject_description} full address" if street.blank?
+      errors[:postcode] << "Enter #{possessive_subject_description} postcode" if postcode.blank?
+    end
   end
 
   def validate_are_present(*fields)

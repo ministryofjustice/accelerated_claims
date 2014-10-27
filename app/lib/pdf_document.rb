@@ -191,7 +191,6 @@ class PDFDocument
   end
 
   def call_strike_through_service list, result_pdf, output_pdf
-    Rails.logger.debug "result_pdf: #{result_pdf.path} size: #{File.size?(result_pdf.path)}"
     connection = Faraday.new(url: 'http://localhost:4000')
     response = connection.post do |request|
       ActiveSupport::Notifications.instrument('add_strikes_via_service.pdf') do
@@ -201,8 +200,6 @@ class PDFDocument
         request.headers['Accept'] = 'application/json'
       end
     end
-    Rails.logger.debug "response: #{response.body}"
-    Rails.logger.debug "output_pdf: #{output_pdf.path} size: #{File.size?(output_pdf.path)}"
   end
 
   def use_strike_through_command list, result_pdf, output_pdf, instrumentation_label

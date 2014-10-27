@@ -45,6 +45,7 @@ feature "submit claim" do
     end
   end
 
+
   JOURNEY = ENV['JOURNEY'] || ''
 
   Dir.glob("spec/fixtures/scenario_#{JOURNEY}*_data.rb") do |data_file|

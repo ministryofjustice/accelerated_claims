@@ -1,0 +1,35 @@
+// Weird selectors used here to overpower the moj-panel row selectors which have a very high weighting
+.js-enabled .postcode.postcode-picker-container
+
+  .postcode-picker-label[for]
+    float: none
+ 
+  .postcode-picker-edit-field[type=text]
+    display: inline
+    margin-right: 10px
+
+  .postcode-picker-manual-link[href]
+    display: block
+    margin-bottom: 10px
+    margin-top: 10px
+
+  .postcode-picker-change-link
+    margin-left: 20px
+
+  .postcode-picker-address-list
+    padding-left: 0
+    padding-right: 0
+
+    select
+      width: 100%
+      max-width: none
+
+  .postcode-picker-cta
+    margin-top: 10px
+
+  .postcode-picker-hourglass
+    color: $grey-1
+    font-style: italic
+
+  .postcode-picker-display
+    font-weight: bold
