@@ -105,8 +105,8 @@ def expected_output
     <div class='postcode-select-container sub-panel hide' style='margin-top: 0px;'>
       <fieldset class='postcode-picker-address-list'>
         <label class='hint' for='claim_property_address_select'>Please select an address</label>
-        <select class='address-picker-select' id='claim_property_address_select' name='sel-address' size='6' width='50'>
-          <option disabled='disabled' id='listbox-0' role='option' value=''>Please select an address</option>
+        <select class='address-picker-select' id='claim_property_address_select' name='sel-address' role='listbox' size='6'>
+          <option disabled='disabled' id='claim_property-listbox' role='option' value=''>Please select an address</option>
         </select>
         <a class='row button primary postcode-picker-cta' href='#claim_property_postcode_picker_manual_link' id='claim_property_selectaddress' name='SelectAddress' style='margin-bottom: 20px;'>
           Select address

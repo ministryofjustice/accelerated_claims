@@ -6,4 +6,4 @@
       data: { 'virtual-pageview' => '/accelerated/property-section' }
 
   .sub-panel.address#property
-    = form.moj_postcode_picker 'property', street_hint: %Q{<span class="visuallyhidden">.</span><span class="hint js-only" style="display: none" id="room_number">Include the room number<span class="visuallyhidden">.</span></span><div class="hint nonjs" id="room_number-non-js">If "Room or rooms in a property" was selected above, include the room number<span class="visuallyhidden">.</span></div>}
+    = form.moj_postcode_picker 'property', street_hint: %Q{<span class="visuallyhidden">.</span><span class="hint js-only" style="display: none" id="room_number">Include the room number<span class="visuallyhidden">.</span></span><span class="hint nonjs block" id="room_number-non-js">If "Room or rooms in a property" was selected above, include the room number<span class="visuallyhidden">.</span></span>}
