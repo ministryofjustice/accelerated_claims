@@ -22,15 +22,10 @@
 
 - content_for :content do
   .phase-banner
-    %p 
-      %span This is a new service - #{link_to "your feedback", config_item(:feedback_url)} will help us to improve it
+    %p
+      %span This is a new service - #{link_to "your feedback", config_item(:feedback_url)} will help us to improve it.
+      %span If you need help with using the online service, we can offer #{link_to 'technical help', technical_help_path}.
   =yield
-
-
-- content_for :proposition_links do
-  %ul#proposition-links
-    %li= link_to 'Technical help', technical_help_path
-    %li= link_to 'Feedback', Rails.configuration.feedback_url
 
 - content_for :footer_app_links do
   %ul
