@@ -123,6 +123,7 @@ def expected_output
     <div class='row street'>
       <label for='claim_property_street'>
         Full address
+        
       </label>
       <textarea class='street' id='claim_property_street' maxlength='70' name='claim[property][street]'>50 Tregunter Road&#x000A;London</textarea>
     </div>

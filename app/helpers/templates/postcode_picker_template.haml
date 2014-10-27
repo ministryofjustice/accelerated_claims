@@ -47,7 +47,7 @@
     .row.street{options}
       %label{:for => "#{@prefix}_#{@address_attr}"} 
         Full address
-        
+        = @street_hint
         - unless @form.object.errors[:street].empty?
           %span.error Enter the full address
 

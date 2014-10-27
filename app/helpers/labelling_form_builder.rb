@@ -22,7 +22,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
 
   def moj_postcode_picker attribute, options = {}  
-    default_options = { :postcode_attr => :postcode, :address_attr => :street, :name =>  "claim[#{attribute}]" }
+    default_options = { :prefix => "claim_#{attribute}", :postcode_attr => :postcode, :address_attr => :street, :name =>  "claim[#{attribute}]" }
     options = default_options.merge(options)
     mpp = MojPostcodePicker.new(self, options)
     mpp.emit
