@@ -30,7 +30,8 @@ moj.Modules.claimantContact = (function() {
 
   cacheEls = function() {
     $panel = $( '.claimant-solicitor' );
-    $captions = $( '.caption', $panel );
+    $captions = $( '.caption', $panel ).add( '.caption', $( '.address' ) );
+
     $claimantTypeRadio = $('[name="claim[claimant_type]"]');
     $numberOfClaimants = $('#claim_num_claimants');
   };

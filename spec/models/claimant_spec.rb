@@ -71,16 +71,26 @@ describe Claimant, :type => :model do
         expect(claimant.errors[:organization_name]).to eq ["Enter claimant 1's company name or local authority name"]
       end
 
+      it 'should not be valid if both street and postcode are missing' do
+        claimant.street = nil
+        claimant.postcode = nil
+        expect(claimant).not_to be_valid
+        expect(claimant.errors[:street]).to eq ["Enter claimant 1's full address"]
+        expect(claimant.errors[:postcode]).to eq ["Enter claimant 1's postcode"]
+      end
+
       it 'should not be valid if street is missing' do
         claimant.street = nil
         expect(claimant).not_to be_valid
         expect(claimant.errors[:street]).to eq ["Enter claimant 1's full address"]
+        expect(claimant.errors[:postcode_picker]).to be_empty
       end
 
       it 'should not be valid if the postcocde is missing' do
         claimant.postcode = nil
         expect(claimant).not_to be_valid
         expect(claimant.errors[:postcode]).to eq ["Enter claimant 1's postcode"]
+        expect(claimant.errors[:postcode_picker]).to be_empty
       end
     end
   end

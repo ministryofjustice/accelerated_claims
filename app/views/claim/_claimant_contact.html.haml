@@ -28,7 +28,7 @@
       = form.text_area_row  :street, label: add_optional_nonjs('Full address'), class: 'rel street'
       = address_error_message('claimant_contact')
       = form.text_field_row :postcode, label: add_optional_nonjs('Postcode'), class: 'rel postcode', input_class: 'smalltext'
-
+     
     .sub-panel.details.js-claimanttype.organization
       .row.js-only
         %a.caption#reference-number{ href: '#reference-number', 'aria-expanded' => 'false' }

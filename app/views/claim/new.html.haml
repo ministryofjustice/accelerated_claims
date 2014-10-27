@@ -9,7 +9,7 @@
   = claim_form.hidden_field(:form_state, id: 'js-state')
 
   %section
-    %h2.section-header Property
+    %h2.section-header#property-section Property
     .moj-panel
       = render partial: 'property', object: @claim.property, locals: { claim_form: claim_form }
 
