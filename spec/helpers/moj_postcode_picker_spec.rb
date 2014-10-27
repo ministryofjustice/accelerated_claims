@@ -95,7 +95,7 @@ def expected_output
     <div class='postcode-selection-els'>
       <label class='postcode-picker-label' for='claim_property_postcode_edit_field'>Postcode</label>
       <input class='smalltext postcode-picker-edit-field' id='claim_property_postcode_edit_field' maxlength='8' name='[postcode]' size='8' type='text'>
-      <a class='button primary postcode-picker-button' href='#claim_property_postcode_picker' name='FindUkPostcode'>
+      <a class='button primary postcode-picker-button' href='#claim_property_postcode_picker'>
         Find address
       </a>
     </div>
