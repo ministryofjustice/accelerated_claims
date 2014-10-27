@@ -33,7 +33,7 @@
         %label.hint{ for: "#{@prefix}_address_select"} Please select an address
         %select.address-picker-select{id: "#{@prefix}_address_select", name: "sel-address", size: "6", role:'listbox'}
           %option{id:"#{@prefix}-listbox", role: "option", disabled: "disabled", :value => ""} Please select an address
-        %a.row.button.primary.postcode-picker-cta{id: "#{@prefix}_selectaddress", name: "SelectAddress", href: "##{@prefix}_postcode_picker_manual_link", style: "margin-bottom: 20px;"}
+        %a.row.button.primary.postcode-picker-cta{id: "#{@prefix}_selectaddress", href: "##{@prefix}_postcode_picker_manual_link", style: "margin-bottom: 20px;"}
           Select address
     
   .js-only.row
