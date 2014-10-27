@@ -6,9 +6,10 @@ feature 'Filling in property section' do
   end
 
   
-  pending "wait for postcode picker to be finished before re-enabling" do
+  
 
-    unless remote_test?
+  unless remote_test?
+    pending "wait for postcode picker to be finished before re-enabling" do
       scenario "see room number hint", js: false do
         visit '/'
         expect(page).to have_content('If "Room(s) in a property" was selected above, include the room number')
