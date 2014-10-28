@@ -18,7 +18,6 @@ feature "submit claim" do
         claim_form.complete_form
       end
       claim_form.submit
-      File.open('output.html', 'w') { |fp| fp.puts page.body }
       expect(page).to have_text('After you’ve submitted your claim, complete our satisfaction survey'), claim_form.validation_error_text
 
       if Capybara.default_driver == :browserstack
