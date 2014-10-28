@@ -91,6 +91,8 @@ class Claim < BaseClass
     validity = false unless num_claimants_valid?
     validity = false unless num_defendants_valid?
 
+
+    # attributes_for_submodels returns an array of instance_variables and classes, e.g. [ [property, Property], .... ]
     attributes_for_submodels.each do |instance_var, model|
       result = transfer_errors_from_submodel_to_base(instance_var, model, collection: false)
       validity = false if result == false

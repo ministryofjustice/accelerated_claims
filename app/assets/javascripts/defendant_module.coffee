@@ -48,11 +48,15 @@ DefendantModule =
     $panel = $area.parents('div.sub-panel').first()
     # show hide panel
     $panel.toggleClass('open')
+    #toggle postcode picker
+    $pcp = $panel.find('.postcode-picker-container').first()
     # and link
     if $panel.hasClass( 'open' )
       $area.attr('aria-expanded','true')
+      $pcp.addClass('show').removeClass('hide');
     else
       $area.attr('aria-expanded','false')
+      $pcp.addClass('hide').removeClass('show');
 
   setup: ->
     DefendantModule.hideDefendantSections()

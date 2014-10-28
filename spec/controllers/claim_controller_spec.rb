@@ -133,11 +133,9 @@ describe ClaimController, :type => :controller do
       it 'should log and call app signal' do
         session[:claim] = nil
         env = double "Rails.env"
-        allow(Rails).to receive(:production?).and_return(true)
+        allow(Rails).to receive(:env).and_return(env)
+        allow(env).to receive(:production?).and_return(true)
         allow(env).to receive(:development?).and_return(false)
-        logger = double "Rails.logger"
-        allow(Rails).to receive(:logger).and_return(logger)
-        expect(logger).to receive(:warn).with('User attepmted to download PDF from an expired session - redirected to /expired')
 
         get :download
         expect(response).to redirect_to('/expired')
@@ -173,6 +171,64 @@ describe ClaimController, :type => :controller do
         post :submission, claim: data
         get :data
         expect(response).to redirect_to('/')
+      end
+    end
+
+
+    context 'live or dummy postcode lookup' do
+      context 'on production server' do
+        it 'should set session variable to live even if there is no livepc paramter' do
+          cached_env_name = ENV['ENV_NAME']
+          ENV['ENV_NAME'] = 'production'
+          get :new
+          expect(session[:postcode_lookup_mode]).to eq 'live'
+          ENV['ENV_NAME'] = cached_env_name
+        end
+
+        it 'should set session variable to live when there is a livepc paramter' do
+          cached_env_name = ENV['ENV_NAME']
+          ENV['ENV_NAME'] = 'production'
+          get :new, livepc: '1'
+          expect(session[:postcode_lookup_mode]).to eq 'live'
+          ENV['ENV_NAME'] = cached_env_name
+        end
+      end
+
+      context 'on staging server' do
+        it 'should set session variable to live even if there is no livepc paramter' do
+          cached_env_name = ENV['ENV_NAME']
+          ENV['ENV_NAME'] = 'staging'
+          get :new
+          expect(session[:postcode_lookup_mode]).to eq 'live'
+          ENV['ENV_NAME'] = cached_env_name
+        end
+
+        it 'should set session variable to live when there is a livepc paramter' do
+          cached_env_name = ENV['ENV_NAME']
+          ENV['ENV_NAME'] = 'staging'
+          get :new, livepc: '1'
+          expect(session[:postcode_lookup_mode]).to eq 'live'
+          ENV['ENV_NAME'] = cached_env_name
+        end
+      end
+
+
+      context 'on demo server' do
+        it 'should set session variable to live when there is a livepc parameter' do
+          cached_env_name = ENV['ENV_NAME']
+          ENV['ENV_NAME'] = 'demo'
+          get :new, livepc: '1'
+          expect(session[:postcode_lookup_mode]).to eq 'live'
+          ENV['ENV_NAME'] = cached_env_name
+        end
+
+        it 'should set session variable to dummy when there is no livepc parameter' do
+          cached_env_name = ENV['ENV_NAME']
+          ENV['ENV_NAME'] = 'demo'
+          get :new
+          expect(session[:postcode_lookup_mode]).to eq 'dummy'
+          ENV['ENV_NAME'] = cached_env_name
+        end
       end
     end
   end

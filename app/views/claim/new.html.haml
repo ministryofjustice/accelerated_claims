@@ -9,7 +9,7 @@
   = claim_form.hidden_field(:form_state, id: 'js-state')
 
   %section
-    %h2.section-header Property
+    %h2.section-header#property-section Property
     .moj-panel
       = render partial: 'property', object: @claim.property, locals: { claim_form: claim_form }
 
@@ -105,11 +105,9 @@
     .moj-panel
       = render partial: 'possession', object: @claim.possession, locals: { claim_form: claim_form }
 
-  %section
     .action-buttons.cf
       %input.button.primary.large.chevron.left#submit{name: 'Continue', value: 'Continue', type: 'submit'}
 
-  %section
     %p
       = link_to 'Terms and conditions and privacy policy', :terms, class: 't-n-c'
 

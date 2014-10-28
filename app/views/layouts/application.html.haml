@@ -33,9 +33,10 @@
     %li= link_to 'Feedback', Rails.configuration.feedback_url
 
 - content_for :footer_app_links do
-  %ul
-    %li= link_to 'Help', :help
-    %li= link_to 'Cookies', :cookies
+  %li
+    %ul
+      %li= link_to 'Help', :help
+      %li= link_to 'Cookies', :cookies
 
 - if Rails.env.production?
   - content_for :body_end do

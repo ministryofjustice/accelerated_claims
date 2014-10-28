@@ -36,8 +36,6 @@ describe Property, :type => :model do
     end
 
     subject { property }
-    include_examples 'address presence validation'
-    include_examples 'address validation'
 
     describe "house" do
       it "when blank" do
@@ -51,6 +49,23 @@ describe Property, :type => :model do
       it 'should generate an error message' do
         property.postcode = 'ABC4545'
         expect(property).not_to be_valid
+      end
+    end
+
+    context 'missing postcode' do
+      it 'should generate an error message' do
+        property.postcode = nil
+        expect(property.valid?).not_to be true
+        expect(property.errors[:postcode]).to eq ['Enter the property postcode']
+      end
+    end
+
+
+    context 'invalid address' do
+      it 'should generate an error message of the street is missing' do
+        property.street = nil
+        expect(property.valid?).not_to be true
+        expect(property.errors[:street]).to eq ['Enter the property address']
       end
     end
   end

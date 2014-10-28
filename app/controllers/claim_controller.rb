@@ -1,5 +1,7 @@
 class ClaimController < ApplicationController
 
+  before_filter :set_live_postcode_lookup_flag    
+
   def new
     reset_session if referrer_is_landing_page?
     session[:test] = params[:test]
@@ -14,7 +16,9 @@ class ClaimController < ApplicationController
       end_year: Tenancy::APPLICABLE_FROM_DATE.year
     }
 
-    production = ENV["ENV_NAME"] == "production"
+
+    # use live postcode lookup database if running on productionserver or url param livepc set to 1
+    production = ['staging', 'production'].include?(ENV["ENV_NAME"])
 
     @claim = if !production && params.has_key?(:journey)
       force_reload = params.has_key?(:reload)
@@ -43,7 +47,6 @@ class ClaimController < ApplicationController
   def download
     if session[:claim].nil?
       msg = "User attepmted to download PDF from an expired session - redirected to #{expired_path}"
-      Rails.logger.warn msg
       redirect_to expired_path
     else
       @claim = Claim.new(session[:claim])
@@ -85,12 +88,24 @@ class ClaimController < ApplicationController
     end
   end
 
+
   def raise_exception
     session[:special_values] = "session variable"
     raise "This exception has been deliberately raised"
   end
 
+
+
   private
+
+  def set_live_postcode_lookup_flag
+    if ['staging', 'production'].include?(ENV['ENV_NAME'])  || params[:livepc]
+      session[:postcode_lookup_mode] = 'live'
+    else
+      session[:postcode_lookup_mode] = 'dummy'
+    end
+  end
+
 
   def move_defendant_address_params_into_model
     nums = { '1' => 'one', '2' => 'two' }
