@@ -36,7 +36,3 @@ config/environments/history.txt
 # coverage files
 coverage
 coverage/*
-
-# rubymine idea folder
-.idea/
-.idea/*
