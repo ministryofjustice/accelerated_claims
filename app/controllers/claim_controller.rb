@@ -1,6 +1,5 @@
 class ClaimController < ApplicationController
 
-  before_filter :set_live_postcode_lookup_flag    
 
   def new
     reset_session if referrer_is_landing_page?
@@ -97,14 +96,6 @@ class ClaimController < ApplicationController
 
 
   private
-
-  def set_live_postcode_lookup_flag
-    if ['staging', 'production'].include?(ENV['ENV_NAME'])  || params[:livepc]
-      session[:postcode_lookup_mode] = 'live'
-    else
-      session[:postcode_lookup_mode] = 'dummy'
-    end
-  end
 
 
   def move_defendant_address_params_into_model

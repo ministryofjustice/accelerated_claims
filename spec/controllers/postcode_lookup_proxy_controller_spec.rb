@@ -1,11 +1,19 @@
 
 describe PostcodeLookupProxyController, :type => :controller do
 
-  before(:all) do
-    @result_set = YAML.load_file("#{Rails.root}/config/dummy_postcode_results.yml")
-  end
+
 
   describe "show" do
+
+    before(:all) do
+      @result_set = YAML.load_file("#{Rails.root}/config/dummy_postcode_results.yml")
+      setenv 'demo'
+    end
+
+    before(:example) do
+      allow(controller).to receive(:live_postcode_lookup?).and_return(false)
+    end
+    
     context 'a valid postcode' do
       it "should render the result set" do
         get :show, format: :json, pc: "SW10 2LB"
@@ -45,6 +53,85 @@ describe PostcodeLookupProxyController, :type => :controller do
   end
 
 
+
+  describe 'live_postcode_lookup' do
+
+    context 'with livepc in url' do
+
+      before(:each) do
+        allow(request).to receive(:referer).and_return('https://civilclaims.service.gov.uk/accelerated-possession-eviction?journey=4&livepc=1')
+      end
+
+      it 'should return true for demo environments' do
+        setenv 'demo'
+        expect_postcode_lookup_to_be_called_with(true)
+        get :show, format: :json, pc: 'RG2 7PU'
+      end
+
+
+      it 'should return true for staging environments' do
+        setenv 'staging'
+        expect_postcode_lookup_to_be_called_with(true)
+        get :show, format: :json, pc: 'RG2 7PU'
+      end
+      
+      it 'should return true for production environments' do
+        setenv 'staging'
+        expect_postcode_lookup_to_be_called_with(true)
+        get :show, format: :json, pc: 'RG2 7PU'
+      end
+
+    end
+
+    context 'with no livepc in the url' do
+
+      before(:each) do
+        allow(request).to receive(:referer).and_return('https://civilclaims.service.gov.uk/accelerated-possession-eviction?journey=4')
+      end
+
+      it 'should return false for demo environments' do
+        setenv 'demo1'
+        expect_postcode_lookup_to_be_called_with(false)
+        get :show, format: :json, pc: 'RG2 7PU'
+      end
+
+      it 'should return true for staging environments' do
+        setenv 'staging'
+        expect_postcode_lookup_to_be_called_with(true)
+        get :show, format: :json, pc: 'RG2 7PU'
+      end
+
+
+      it 'should return true for production environments' do
+        setenv 'production'
+        expect_postcode_lookup_to_be_called_with(true)
+        get :show, format: :json, pc: 'RG2 7PU'
+      end
+
+    end
+
+   
+  end
+
+end
+
+
+
+def setenv(env)
+  ENV['ENV_NAME'] = env
+end
+
+def set_referer_url_with_livepc_param
+  allow(request).to receive(:referer).and_return('https://civilclaims.service.gov.uk/accelerated-possession-eviction?journey=4&livepc=1')
+end
+
+def set_referer_url_without_livepc_param
+  allow(request).to receive(:referer).and_return('https://civilclaims.service.gov.uk/accelerated-possession-eviction?journey=4')
+end
+
+def expect_postcode_lookup_to_be_called_with(flag)
+  pclp = double(PostcodeLookupProxy).as_null_object
+  expect(PostcodeLookupProxy).to receive(:new).with('RG2 7PU', flag).and_return(pclp)
 end
 
 
