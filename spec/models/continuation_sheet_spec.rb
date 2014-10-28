@@ -182,7 +182,7 @@ def claimants_3_and_4_and_defendants_2_expected_results
 Additional Defendants
 =====================
 
-\nDefendant 2:
+\nDefendant 2 name and address for service:
     Mrs Defendant Number 2
     2 Downing Street
     London
@@ -194,7 +194,7 @@ end
 
 def claimants_3_and_4_and_defendants_2_and_3_expected_results
   defendant_3 =<<EOS
-\nDefendant 3:
+\nDefendant 3 name and address for service:
     Mrs Defendant Number 3
     3 Downing Street
     London
