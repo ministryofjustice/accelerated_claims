@@ -27,36 +27,38 @@ DefendantModule =
     $('.show-hide').on 'click', ->
       DefendantModule.toggleAddress($(this))
 
-#fixme refactor out
   showAddressIfStarted: (defendant_id) ->
-    $id = $("#defendant_#{defendant_id}_resident_address")
-    $link = $id.find('a.caption')
-    add = $id.find('textarea').val()
-    postcode = $id.find('input').val()
+    # get controls
+    $panel = $("#defendant_#{defendant_id}_resident_address")
+    $link = $panel.find('a.caption')
+    # get values
+    add = $panel.find('textarea').val()
+    postcode = $panel.find('input').val()
 
     # panel will be hidden by default
     if add!='' || postcode!=''
-      $id.toggleClass( 'open' )
+      $panel.toggleClass( 'open' )
+    # toggle address displays
+    DefendantModule.toggleAddressDisplay($panel, $link)
 
-    if $id.hasClass( 'open' )
+  toggleAddress: ($link) ->
+    # get control
+    $panel = $link.parents('div.sub-panel').first()
+    # show/hide panel
+    $panel.toggleClass('open')
+    # toggle address displays
+    DefendantModule.toggleAddressDisplay($panel, $link)
+
+  toggleAddressDisplay: ($panel, $link) ->
+    #find postcode picker
+    $pcp = $panel.find('.postcode-picker-container').first()
+    # show/hide link and postcode picker
+    if $panel.hasClass( 'open' )
       $link.attr('aria-expanded','true')
+      $pcp.addClass('show').removeClass('hide')
     else
       $link.attr('aria-expanded','false')
-
-  toggleAddress: ($area) ->
-    # get parent
-    $panel = $area.parents('div.sub-panel').first()
-    # show hide panel
-    $panel.toggleClass('open')
-    #toggle postcode picker
-    $pcp = $panel.find('.postcode-picker-container').first()
-    # and link
-    if $panel.hasClass( 'open' )
-      $area.attr('aria-expanded','true')
-      $pcp.addClass('show').removeClass('hide');
-    else
-      $area.attr('aria-expanded','false')
-      $pcp.addClass('hide').removeClass('show');
+      $pcp.addClass('hide').removeClass('show')
 
   setup: ->
     DefendantModule.hideDefendantSections()
