@@ -134,22 +134,56 @@ describe PostcodeLookupProxy do
 
 
   describe 'private method development_lookup' do
-    it 'should return true and populate result set with an empty array if the first digit of the 2nd part of the postcode is zero' do
-      pc = PostcodeLookupProxy.new('SW150HG')
-      expect(pc.send(:development_lookup)).to be true
-      expect(pc.result_set).to eq []
+    context 'all countries' do
+      it 'should return true and populate result set with an empty array if the first digit of the 2nd part of the postcode is zero' do
+        pc = PostcodeLookupProxy.new('SW150HG', [] )
+        expect(pc.send(:development_lookup)).to be true
+        expect(pc.result_set).to eq []
+      end
+
+      it 'should return false if first digit of 2nd part of postcode is 9' do
+        pc = PostcodeLookupProxy.new('SW159HG', [] )
+        expect(pc.send(:development_lookup)).to be false
+      end
+
+      it 'should return the 2nd element of the dummy postcode results with a first digit of 2nd part of postcode is 1' do
+        pc = PostcodeLookupProxy.new('BR31ES', [] )
+        expect(pc.send(:development_lookup)).to be true
+        expect(pc.result_set).to eq expected_result_set
+      end
+
+      it 'should return Scottish addresses OK' do
+        pc = PostcodeLookupProxy.new('BR35ES', [] )
+        expect(pc.send(:development_lookup)).to be true
+        expect(pc.result_set).to eq scottish_result_set
+      end
     end
 
-    it 'should return false if first digit of 2nd part of postcode is 9' do
-      pc = PostcodeLookupProxy.new('SW159HG')
-      expect(pc.send(:development_lookup)).to be false
-    end
+    context 'England and Wales Only' do
+      it 'should return true and populate result set with an empty array if the first digit of the 2nd part of the postcode is zero' do
+        pc = PostcodeLookupProxy.new('SW150HG', ['England', 'Wales'] )
+        expect(pc.send(:development_lookup)).to be true
+        expect(pc.result_set).to eq []
+      end
 
+      it 'should return false if first digit of 2nd part of postcode is 9' do
+        pc = PostcodeLookupProxy.new('SW159HG', ['England', 'Wales'] )
+        expect(pc.send(:development_lookup)).to be false
+      end
 
-    it 'should return the 2nd element of the dummy postcode results with a first digit of 2nd part of postcode is 1' do
-      pc = PostcodeLookupProxy.new('BR31ES')
-      expect(pc.send(:development_lookup)).to be true
-      expect(pc.result_set).to eq expected_result_set
+      it 'should return the 2nd element of the dummy postcode results with a first digit of 2nd part of postcode is 1' do
+        pc = PostcodeLookupProxy.new('BR31ES', ['England', 'Wales'])
+        expect(pc.send(:development_lookup)).to be true
+        expect(pc.result_set).to eq expected_result_set
+      end
+
+      it 'should return Scottish addresses OK' do
+        pc = PostcodeLookupProxy.new('BR35ES', ['England', 'Wales'] )
+        expect(pc.send(:development_lookup)).to be false
+        expect(pc.result_set).to be_nil
+        expect(pc.result_code).to eq 9404
+        expect(pc.result_message).to eq 'Scotland'
+      end
     end
   end
 
@@ -308,5 +342,13 @@ def expected_result_set
       {"address"=>"121 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}, 
       {"address"=>"22 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8H"}, 
       {"address"=>"23 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}
+  ]
+end
+
+
+def scottish_result_set
+  [
+      {"address"=>"134, Corstorphine Road;;EDINBURGH", "postcode"=>"EH12 6TS"}, 
+      {"address"=>"Royal Zoological Society of Scotland;;134, Corstorphine Road;;EDINBURGH", "postcode"=>"EH12 6TS"} 
   ]
 end

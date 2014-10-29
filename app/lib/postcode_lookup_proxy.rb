@@ -18,17 +18,18 @@ class PostcodeLookupProxy
 
   attr_reader :result_set, :result_code, :result_message
 
-  def initialize(postcode, use_live_data = false)
-    @postcode       = UKPostcode.new(postcode)
-    @valid          = @postcode.valid?
-    @result_set     = nil
-    config          = YAML.load_file("#{Rails.root}/config/ideal_postcodes.yml")
-    @url            = config['url']
-    @api_key        = config['api_key']
-    @timeout        = config['timeout']
-    @result_code    = nil
-    @result_message = nil
-    @use_live_data  = use_live_data
+  def initialize(postcode, valid_countries, use_live_data = false)
+    @postcode        = UKPostcode.new(postcode)
+    @valid           = @postcode.valid?
+    @result_set      = nil
+    config           = YAML.load_file("#{Rails.root}/config/ideal_postcodes.yml")
+    @url             = config['url']
+    @api_key         = config['api_key']
+    @timeout         = config['timeout']
+    @result_code     = nil
+    @result_message  = nil
+    @use_live_data   = use_live_data
+    @valid_countries = valid_countries
   end
 
 
@@ -79,9 +80,27 @@ class PostcodeLookupProxy
       return false
     else
       index = @postcode.incode.first.to_i % @@dummy_postcode_results.size 
-      transform_api_response(dummy_result_set(index))
-      return true
+      result_set = transform_api_response(dummy_result_set(index))
+      if country_valid?(result_set)
+        transform_api_response(result_set)
+        return true
+      else
+        @result_set = nil
+        @result_code = 9404
+        @result_message = country_from_result_set(result_set)
+        return false
+      end
     end
+  end
+
+
+  def country_from_result_set(result_set)
+    result_set.first['country']
+  end
+
+  def country_valid?(result_set)
+    return true if @valid_countries.empty?
+    @valid_countries.include?(country_from_result_set(result_set))
   end
 
 
@@ -147,7 +166,8 @@ class PostcodeLookupProxy
     address += add_unless_blank(res, 'line_3')
     address += add_unless_blank(res, 'post_town')
     postcode = res['postcode']
-    { 'address' => address, 'postcode' => postcode }
+    country = res['country']
+    { 'address' => address, 'postcode' => postcode, 'country' => country }
   end
 
 
