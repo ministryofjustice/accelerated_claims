@@ -40,7 +40,7 @@
     "Malcom Mauve"
   ],
   claim_defendant_1_street: [
-    "Street",
+    "Full address",
     "23c Piccalilly Rd Teds Heath, Londonville"
   ],
   claim_defendant_1_postcode: [

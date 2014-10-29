@@ -108,7 +108,7 @@
     "Defendant Four"
   ],
   claim_defendant_4_street: [
-    "Street",
+    "Full address",
     "44 Fourth Street Fourville"
   ],
   claim_defendant_4_postcode: [
@@ -148,7 +148,7 @@
     "Defendant Eight"
   ],
   claim_defendant_8_street: [
-    "Street",
+    "Full address",
     "88 Eighth Street Eightown"
   ],
   claim_defendant_8_postcode: [
@@ -252,7 +252,7 @@
     "Defendant Twenty"
   ],
   claim_defendant_20_street: [
-    "Street",
+    "Full address",
     "2020 Twentieth Avenue Twentieth Century City"
   ],
   claim_defendant_20_postcode: [

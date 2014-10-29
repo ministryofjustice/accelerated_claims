@@ -54,6 +54,8 @@ en:
       label: Number of defendants
     defendant:
       label: Defendants
+      street:
+        label: Full address
       inhabits_property:
         'yes': 'Yes'
         'no': 'No'

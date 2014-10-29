@@ -36,7 +36,7 @@
     "Jeevesthe Butler"
   ],
   claim_defendant_1_street: [
-    "Street",
+    "Full address",
     "13 Market St, Milton"
   ],
   claim_defendant_1_postcode: [

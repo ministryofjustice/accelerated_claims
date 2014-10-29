@@ -28,7 +28,7 @@
     "John Kapur"
   ],
   claim_defendant_1_street: [
-    "Street",
+    "Full address",
     "Endof Road London"
   ],
   claim_defendant_1_postcode: [
