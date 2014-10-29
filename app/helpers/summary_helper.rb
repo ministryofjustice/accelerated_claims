@@ -30,4 +30,14 @@ module SummaryHelper
     value
   end
 
+  def link_to_edit_section section_key
+    section_name = I18n.t "claim.#{section_key}.label"
+
+    capture_haml do
+      haml_tag "a", :<, href: "/accelerated-possession-eviction##{section_key}-section" do
+        haml_concat "Change #{section_name}"
+      end
+    end
+  end
+
 end

@@ -9,7 +9,7 @@ describe 'ApplicationHelper', type: :helper  do
   describe 'section_header' do
     it 'creates h2 header with id and localized text' do
       header = helper.section_header 'claimant'
-      expect(header).to eq "<h2 class='section-header' id='claimant-section'>\n  Claimants\n</h2>\n"
+      expect(header).to eq "<h2 class='section-header' id='claimant-section'>Claimants</h2>\n"
     end
   end
 

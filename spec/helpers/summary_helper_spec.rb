@@ -1,5 +1,11 @@
 describe 'SummaryHelper', type: :helper  do
 
+  before :each do
+    helper.extend Haml
+    helper.extend Haml::Helpers
+    helper.send :init_haml_helpers
+  end
+
   describe 'localization_key' do
     it 'creates key for locale file lookup' do
       key = helper.localization_key 'defendant_1', 'street', 'label'
@@ -43,6 +49,13 @@ describe 'SummaryHelper', type: :helper  do
         value = helper.summary_value 'defendant_1', 'street', '15 Yellow Brick Rd'
         expect(value).to eq '15 Yellow Brick Rd'
       end
+    end
+  end
+
+  describe 'link_to_edit_section' do
+    it 'returns link to section' do
+      link = helper.link_to_edit_section 'property'
+      expect(link).to eq "<a href='/accelerated-possession-eviction#property-section'>Change Property</a>\n"
     end
   end
 
