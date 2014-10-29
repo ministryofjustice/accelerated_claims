@@ -32,7 +32,7 @@ module ApplicationHelper
     if I18n.t(key)[/translation missing/]
       label.humanize
     else
-      I18n.t(key)
+      I18n.t(key).html_safe
     end
   end
 
