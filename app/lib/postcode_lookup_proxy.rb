@@ -65,6 +65,7 @@ class PostcodeLookupProxy
 
   # returns dummy postcode result based on the first character of the second part of the postcode.
   # if 0 - returns an empty array, indicating no entries of the postcode, otherwise a dummy result set
+  # if 1 - returns a dummy set of data relating to Scotland
   # if 9 - returns false to simulate a timeout or other remote service error
   def development_lookup
     case @postcode.incode.first.to_i
@@ -93,6 +94,7 @@ class PostcodeLookupProxy
     OpenStruct.new(status: 200, body: { 'code' => '4040', 'message' => 'postcode not found' }.to_json)
   end
 
+  
 
   def production_lookup
     result = true

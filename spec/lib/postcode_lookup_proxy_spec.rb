@@ -192,15 +192,15 @@ describe PostcodeLookupProxy do
 
   ##### - A test to check that we can connect to the real remote service - don't use in day-to-day testing
   
-  describe 'a real lookup to the api' do
-    it 'should return a result' do
-      WebMock.disable_net_connect!(:allow => [/api.ideal-postcodes.co.uk/, /codeclimate.com/] )
-      pclp = PostcodeLookupProxy.new('SW109LB', true)
-      expect(pclp).to be_valid
-      expect(pclp.lookup).to be true
-      expect(pclp.empty?).to be false
-    end
-  end
+  # describe 'a real lookup to the api' do
+  #   it 'should return a result' do
+  #     WebMock.disable_net_connect!(:allow => [/api.ideal-postcodes.co.uk/, /codeclimate.com/] )
+  #     pclp = PostcodeLookupProxy.new('SW109LB', true)
+  #     expect(pclp).to be_valid
+  #     expect(pclp.lookup).to be true
+  #     expect(pclp.empty?).to be false
+  #   end
+  # end
 
 
 

@@ -26,7 +26,7 @@ feature 'Postcode address lookup' do
     context 'normal usage' do
       scenario "enter postcode and select address from list", js: true do
         visit '/'
-        fill_in 'claim_property_postcode_edit_field', with: 'SW10 6GG'
+        fill_in 'claim_property_postcode_edit_field', with: 'SW10 7GG'
         click_link 'Find address'
 
         select "5 Melbury Close, FERNDOWN", from: "sel-address"
@@ -39,12 +39,12 @@ feature 'Postcode address lookup' do
 
       scenario 'search successfully then search different postcode results in new results', js: true do
         visit '/'
-        fill_in 'claim_property_postcode_edit_field', with: 'SW10 6GG'
+        fill_in 'claim_property_postcode_edit_field', with: 'SW10 7GG'
         click_link 'Find address'
 
         select "5 Melbury Close, FERNDOWN", from: "sel-address"
         click_link 'claim_property-manual_change-link-2'
-        fill_in 'claim_property_postcode_edit_field', with: 'SW10 5GG'
+        fill_in 'claim_property_postcode_edit_field', with: 'SW10 6GG'
         click_link 'Find address'
 
         select "50 Tregunter Road, LONDON", from: "sel-address"
@@ -55,7 +55,7 @@ feature 'Postcode address lookup' do
      
       scenario 'enter and select postcode and then click change link hides address and moves focus to edit box', js: true do
         visit '/'
-        fill_in 'claim_property_postcode_edit_field', with: 'rg27pu'
+        fill_in 'claim_property_postcode_edit_field', with: 'rg28pu'
         click_link 'Find address'
         select "156 Northumberland Avenue, READING", from: "sel-address"
         click_link "claim_property_selectaddress"
@@ -68,7 +68,7 @@ feature 'Postcode address lookup' do
 
       scenario 'selecting a postcode hides the postcode entry box and find button', js: true do
         visit '/'
-        fill_in 'claim_property_postcode_edit_field', with: 'rg27pu'
+        fill_in 'claim_property_postcode_edit_field', with: 'rg28pu'
         click_link 'Find address'
         select "156 Northumberland Avenue, READING", from: "sel-address"
         click_link "claim_property_selectaddress"
@@ -112,7 +112,7 @@ feature 'Postcode address lookup' do
 
       scenario 'select an address and then enter another address with no results and edit box should be empty', js: true do
         visit '/'
-        fill_in 'claim_property_postcode_edit_field', with: 'rg27pu'
+        fill_in 'claim_property_postcode_edit_field', with: 'rg28pu'
         click_link 'Find address'
         select "160 Northumberland Avenue, READING", from: "sel-address"
         click_link "claim_property_selectaddress"
