@@ -10,7 +10,7 @@ module ApplicationHelper
   end
 
   def localization_key section, label, suffix
-    ['claim', section, label.sub(/_\d+/,''), suffix].join('.')
+    ['claim', section.sub(/_\d+/,''), label.sub(/_\d+/,''), suffix].join('.')
   end
 
   def summary_id section, label
