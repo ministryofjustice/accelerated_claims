@@ -207,7 +207,7 @@ class Claim < BaseClass
 
   def defendant_for_service hash
     if @num_defendants > 1      
-      hash.merge!( {'service_address' => "   REFER TO CONTINUATION SHEET", 'service_postcode1' => '', 'service_postcode2' => ''} )
+      hash.merge!( {'service_address' => "  \n  \n\tREFER TO CONTINUATION SHEET", 'service_postcode1' => '', 'service_postcode2' => ''} )
     else
       hash.merge!( {'service_address' => hash['defendant_1_address'], 'service_postcode1' => hash['defendant_1_postcode1'], 'service_postcode2' => hash['defendant_1_postcode2'] })
     end
