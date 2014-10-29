@@ -16,7 +16,7 @@ feature 'Postcode address lookup' do
 
         select "Catwalk Cafe, 18 Montpellier Parade, HARROGATE", from: "sel-address"
         click_link "claim_property_selectaddress"
-puts page.body
+
         expect(page).to have_field('claim_property_postcode', with: "HG1 2TG")
         expect(page).to have_field('claim_property_street', with: "Catwalk Cafe\n18 Montpellier Parade\nHARROGATE")
       end
