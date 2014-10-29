@@ -82,7 +82,6 @@ moj.Modules.sessionTimeout = (function() {
         redirect:   false
       },
       success:  function( data, textStatus, jqXHR ) {
-        moj.log( textStatus );
         document.location.href = basePath + '/expired';
       },
       error:    function( jqXHR, textStatus, errorThrown ) {

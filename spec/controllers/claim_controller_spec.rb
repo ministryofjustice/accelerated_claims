@@ -133,11 +133,9 @@ describe ClaimController, :type => :controller do
       it 'should log and call app signal' do
         session[:claim] = nil
         env = double "Rails.env"
-        allow(Rails).to receive(:production?).and_return(true)
+        allow(Rails).to receive(:env).and_return(env)
+        allow(env).to receive(:production?).and_return(true)
         allow(env).to receive(:development?).and_return(false)
-        logger = double "Rails.logger"
-        allow(Rails).to receive(:logger).and_return(logger)
-        expect(logger).to receive(:warn).with('User attepmted to download PDF from an expired session - redirected to /expired')
 
         get :download
         expect(response).to redirect_to('/expired')
@@ -175,5 +173,6 @@ describe ClaimController, :type => :controller do
         expect(response).to redirect_to('/')
       end
     end
+
   end
 end
