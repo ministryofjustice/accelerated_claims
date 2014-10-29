@@ -19,7 +19,7 @@
               'street',
               'postcode'].include?(label)
           = render partial: 'field_summary',
-              locals: { section: participant.sub(/_\d+/,''),
+              locals: { section: participant,
                   label: label,
                   value: value }
       - if type == 'defendant'

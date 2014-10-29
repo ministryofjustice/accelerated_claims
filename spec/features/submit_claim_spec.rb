@@ -7,6 +7,7 @@ feature "submit claim" do
 
   def run_scenario data_file, options={}
     data = load_fixture_data(data_file)
+    expected_summary_data = load_expected_data(data_file)
     expected_data = load_expected_data(data_file)
 
     AppModel.new(data).exec do
@@ -21,6 +22,18 @@ feature "submit claim" do
 
       expect(page).to have_text('After you’ve submitted your claim, complete our satisfaction survey'), claim_form.validation_error_text
 
+      summary_values = find_summary_values page, data_file
+
+      expected_summary_values = load_expected_summary_values data_file
+
+      expect(summary_values.size).to eq(expected_summary_values.size),
+          "Expected #{expected_summary_values.size} summary fields, but summary page contained #{summary_values.size} summary fields"
+
+      expected_summary_values.each do |key, values|
+        expect(summary_values[key]).to eq(values),
+           "#{key} field on summary page expected:\n  #{values}\ngot:\n  #{summary_values[key]}"
+      end
+
       if Capybara.default_driver == :browserstack
         find('a#data').click
 
@@ -31,13 +44,12 @@ feature "submit claim" do
           generated = json[field].to_s.gsub("\r\n","\n").strip
           expect("#{field}: #{generated}").to eq("#{field}: #{value}")
         end
-
       else
         pdf_filename = confirmation_page.download_pdf
         pdf.load pdf_filename
         if(ENV.key? 'save_pdf')
           File.rename(pdf_filename, "spec/fixtures/pdfs/scenario_#{index}.pdf")
-          pdf.write_hash_to_file("spec/fixtures/scenario_#{index}_results.rb")
+          write_hash_to_file("spec/fixtures/scenario_#{index}_results.rb", pdf.generated_values)
         else
           pdf.assert_pdf_is_correct(expected_data)
         end

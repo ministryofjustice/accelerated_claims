@@ -13,14 +13,8 @@ class PdfModel
     end
   end
 
-  def write_hash_to_file(filename)
-    File.open(filename,'w') do |f|
-      data = JSON.pretty_generate(@generated_values)
-      data.gsub!(/"([^"]+)":/, '\1:')
-      data.gsub!('null','nil')
-
-      f.write data
-    end
+  def generated_values
+    @generated_values
   end
 
 private
