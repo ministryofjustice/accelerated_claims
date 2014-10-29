@@ -32,6 +32,9 @@ class ContinuationSheet
     @num_panels          = 0
     @current_panel_index = nil
     @pages               = [ ]
+
+    # we don't want to print the defendants details if there is only one
+    @defendants = [] if @defendants.size == 1
   end
 
   def generate
