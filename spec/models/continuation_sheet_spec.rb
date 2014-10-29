@@ -29,25 +29,35 @@ describe ContinuationSheet do
       expect(cs.empty?).to be false
     end
 
-    it 'should respend false if the second array is not empty' do
-      cs = ContinuationSheet.new(Array.new, [ mock_defendant] )
+    it 'should respend false if the second array has more than one defendant' do
+      cs = ContinuationSheet.new(Array.new, [ mock_defendant, mock_defendant] )
       expect(cs.empty?).to be false
     end
 
+    it 'should respond true if no claimants and only one defendant' do
+      cs = ContinuationSheet.new(Array.new, [ mock_defendant] )
+      expect(cs.empty?).to be true
+    end
+
     it 'should repsond false if both arrays are not empty' do
-       cs = ContinuationSheet.new([mock_claimant], [ mock_defendant] )
+       cs = ContinuationSheet.new([mock_claimant], [ mock_defendant, mock_defendant ] )
       expect(cs.empty?).to be false
     end
   end
 
   describe '#any_defendants?' do
-    it 'should return true if there are any defendants' do
-      cs = ContinuationSheet.new(Array.new, [ mock_defendant] )
+    it 'should return true if there are more than one defendant' do
+      cs = ContinuationSheet.new(Array.new, [ mock_defendant, mock_defendant ] )
       expect(cs.any_defendants?).to be true
     end
 
-    it 'should return flase if there are no defendants' do
+    it 'should return false if there are no defendants' do
       cs = ContinuationSheet.new([mock_claimant], Array.new)
+      expect(cs.any_defendants?).to be false
+    end
+
+    it 'should return false if there is just one defendants' do
+      cs = ContinuationSheet.new([mock_claimant], [mock_defendant])
       expect(cs.any_defendants?).to be false
     end
   end
