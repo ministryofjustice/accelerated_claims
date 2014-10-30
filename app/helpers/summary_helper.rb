@@ -23,6 +23,7 @@ module SummaryHelper
   end
 
   def summary_value section, label, value, values
+    return nil if ignore_field?(label)
     value = adjust_summary_value(label, value, values)
 
     key = localization_key(section, label, value.to_s.downcase)
@@ -44,7 +45,35 @@ module SummaryHelper
     end
   end
 
+  def show_participant_address? participant, values
+    if participant['claimant_1'] ||
+        (values['inhabits_property'] == 'No') ||
+        (values['address_same_as_first_claimant'] == 'No') ||
+        (participant[/claimant_\d+/] &&
+            (values['street'] &&
+            values['street'] != @claim['property']['street']) )
+      true
+    else
+      false
+    end
+  end
+
   private
+
+  def ignore_field? label
+    label[/\((2|1)i\)/] || ['claimant_type',
+    'num_claimants',
+    'num_defendants',
+    'claimant_num',
+    'defendant_num',
+    'validate_presence',
+    'notice_served',
+    'confirmed_second_rules_period_applicable_statements',
+    'confirmed_first_rules_period_applicable_statements',
+    'as_property',
+    'address_same_as_first_claimant',
+    'inhabits_property'].include?(label)
+  end
 
   def adjust_summary_label label
     label = 'type_of_deposit' if label['as_money']

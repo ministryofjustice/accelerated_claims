@@ -4,13 +4,7 @@
     - values = values || @claim[section]
     - if values.is_a?(Hash)
       - values.each do |label, value|
-        - unless label[/\((2|1)i\)/] || ['claimant_type',
-              'num_claimants',
-              'notice_served',
-              'confirmed_second_rules_period_applicable_statements',
-              'confirmed_first_rules_period_applicable_statements',
-              'as_property'].include?(label) || value.blank?
-
+        - unless value.blank?
           = render partial: 'field_summary',
               locals: { section: section, label: label, value: value, values: values }
     - else

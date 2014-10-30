@@ -11,13 +11,7 @@
     .row
       - values = @claim[participant]
       - values.each do |label, value|
-        - unless ['claimant_type',
-              "num_#{type}s",
-              "#{type}_num",
-              'validate_presence',
-              'address_same_as_first_claimant',
-              'inhabits_property',
-              'street',
+        - unless ['street',
               'postcode'].include?(label)
           = render partial: 'field_summary',
               locals: { section: participant,
@@ -25,7 +19,7 @@
                   value: value,
                   values: values }
 
-      - if (values['inhabits_property'] == 'No') || ( values['street'].present? && (values['street'] != @claim['property']['street']) )
+      - if show_participant_address?(participant, values)
         = render partial: 'field_summary',
             locals: { section: participant,
                 label: 'street',
