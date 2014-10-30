@@ -34,7 +34,6 @@ DefendantModule =
     postcode = $panel.find('input').val()
     if address!='' || postcode!=''
       $panel.toggleClass( 'open' )
-
     DefendantModule.toggleAddressDisplay($panel, $link)
 
   toggleAddress: ($link) ->
