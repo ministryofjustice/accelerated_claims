@@ -45,7 +45,6 @@ describe "DefendantModule", ->
   describe 'initial view', ->
     it 'should not expand address block', ->
       DefendantModule.showDefendants(1)
-      console.log(@detail.html())
       expect(@detail).not.toHaveClass('open')
       expect(@detail).toHaveClass('details')
 
