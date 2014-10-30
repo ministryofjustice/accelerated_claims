@@ -45,7 +45,7 @@ class Defendant < BaseClass
     unless params.include?(:validate_presence)
       @validate_presence = true unless params[:validate_absence] == true
     end
-    if @validate_presence==true
+    if @validate_presence
       @inhabits_property = address_blank? ? 'yes' : 'no'
     end
   end

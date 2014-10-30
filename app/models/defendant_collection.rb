@@ -67,7 +67,7 @@ class DefendantCollection < ParticipantCollection
   end
 
   def copy_cached_property_address_if_blank(params)
-    if params['validate_presence']==true && params['street'].blank? && params['postcode'].blank?
+    if params['validate_presence'] && params['street'].blank? && params['postcode'].blank?
       params['street']   = @property_street
       params['postcode'] = @property_postcode
     end
