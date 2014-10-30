@@ -53,46 +53,4 @@
       = render partial: 'field_summary',
           locals: { section: 'possession', label: 'hearing', value: @claim['possession']['hearing'] }
 
-  - @claim.each do |k, v|
-    - unless k[/(claimant|defendant)_\d/] || ['property',
-        'notice',
-        'tenancy',
-        'licence',
-        'deposit',
-        'license',
-        'fee',
-        'possession',
-        'legal_cost',
-        'order',
-        'form_state',
-        'claimant_type',
-        'num_claimants',
-        'num_defendants',
-        'reference_number',
-        'claimant_contact',
-        'javascript_enabled'].include?(k)
-      - case k
-      - when 'claimant_1'
-        %h2.section-header
-          = 'Claimants'
-      - when 'defendant_1'
-        %h2.section-header
-          = 'Defendants'
-      - when /(claimant|defendant)_\d/
-        - if v['validate_absence']
-          - v = nil
-        - else
-          %hr
-      - else
-        %h2.section-header
-          = k.humanize
-      .row
-        - if k == 'claimant_1'
-          %p
-            %span.hint= I18n.t 'claim.claimant_type.label'
-            %span= I18n.t "claim.claimant_type.#{@claim['claimant_type']}"
-          %p
-            %span.hint= I18n.t 'claim.num_claimants.label'
-            %span= @claim['num_claimants']
-        = render partial: 'section_summary', locals: { section: k, values: v }
 
