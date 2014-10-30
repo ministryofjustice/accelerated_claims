@@ -22,6 +22,7 @@ feature 'Filling in property section' do
 
       fill_in 'claim_property_postcode_edit_field', with: 'rg27pu'
       click_link 'Find address'
+      sleep 0.5
       select "160 Northumberland Avenue, READING", from: "sel-address"
       click_link "claim_property_selectaddress"
       expect(page).to have_content('Include the room number')
