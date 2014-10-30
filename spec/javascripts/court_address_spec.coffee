@@ -90,9 +90,6 @@ describe 'CourtAddressModule', ->
       describe 'when street field is visible', ->
 
         beforeEach ->
-          $('#court-address').hide()
-          window.CourtAddressModule.flipTextareaToInputField()
-          window.CourtAddressModule.linkForFormToggling()
           window.CourtAddressModule.enableTogglingOfCourtAddressForm()
 
         it 'should be a textarea', ->
@@ -103,7 +100,7 @@ describe 'CourtAddressModule', ->
     describe 'on form on expansion', ->
         beforeEach ->
           window.CourtAddressModule.populateCourtAddressForm('court_name', 'street', 'postcode')
-          window.CourtAddressModule.flipVisibilityOfCourtAddressForm()
+          window.CourtAddressModule.blankFormFields()
 
         it 'should blank out the form', ->
           for attr_name in ['court_name', 'street', 'postcode']
@@ -122,6 +119,21 @@ describe 'CourtAddressModule', ->
           window.CourtAddressModule.labelForKnownCourt()
           label = $('#court-address-label').html()
           expect(label).toMatch(text)
+
+    describe 'on form hiding', ->
+      beforeEach ->
+        window.CourtAddressModule.blankFormFields()
+        window.CourtAddressModule.flipTextareaToInputField()
+        enterPostcode('SG8 0LT')
+
+      it 'should turn textarea to input field', ->
+        street_field = $('#claim_court_street').prop('tagName').toLowerCase()
+        expect(street_field).toEqual('input')
+
+      it 'should try to re-populate the court address', ->
+        spyOn(window.CourtAddressModule, 'lookUpCourt')
+        $('#court-details').trigger 'click'
+        expect(window.CourtAddressModule.lookUpCourt).toHaveBeenCalled()
 
     describe 'with no postcode provided', ->
       it 'should not do Court address lookup', ->

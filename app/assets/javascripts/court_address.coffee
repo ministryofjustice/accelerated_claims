@@ -28,7 +28,7 @@ CourtAddressModule =
     $('#claim_court_postcode').attr({ 'type': 'hidden' })
     $("#court-address").hide()
 
-  flipVisibilityOfCourtAddressForm: ->
+  blankFormFields: ->
     for attr_name in ['court_name', 'street', 'postcode']
       form_field = "#claim_court_#{attr_name}"
       $(form_field).val('') if $(form_field).not(':visible')
@@ -36,12 +36,18 @@ CourtAddressModule =
 
   enableTogglingOfCourtAddressForm: ->
     $("#court-details").click ->
-      CourtAddressModule.changeInputFieldToTextarea() if $('#claim_court_street').not(':visible')
-      CourtAddressModule.flipVisibilityOfCourtAddressForm()
-      $("#court-address").toggle()
+      if $('#claim_court_street').is(':visible')
+        CourtAddressModule.flipTextareaToInputField()
+        CourtAddressModule.lookUpCourt()
+        $("#court-address").hide()
+      else
+        CourtAddressModule.populateCourtAddressForm('', '', '')
+        CourtAddressModule.changeInputFieldToTextarea()
+        CourtAddressModule.blankFormFields()
+        $("#court-address").show()
 
   showCourtAddressForm: ->
-    CourtAddressModule.flipVisibilityOfCourtAddressForm()
+    CourtAddressModule.blankFormFields()
     $("#court-address").show()
 
   findCourtName: (postcode) ->
@@ -55,7 +61,6 @@ CourtAddressModule =
     court_name_element.innerHTML = "<b>#{court_name}</b>"
     CourtAddressModule.populateCourtAddressForm(court_name, court_street, court_postcode)
     CourtAddressModule.linkForFormToggling()
-    CourtAddressModule.enableTogglingOfCourtAddressForm()
     CourtAddressModule.labelForKnownCourt()
 
   labelForKnownCourt: ->
@@ -80,14 +85,18 @@ CourtAddressModule =
     if $("[id^=court-details]").length == 0
       link = "<p/><a id='court-details' class='caption'>Choose to send this claim to a different court</a>"
       $(link).insertAfter('#court-name')
+      CourtAddressModule.enableTogglingOfCourtAddressForm()
 
   sendPostcodeForLookup: ->
     $('#claim_property_postcode').bind 'focusout', ->
-      postcode = $('#claim_property_postcode').val()
-      if postcode
-        CourtAddressModule.findCourtName postcode
-      else
-        CourtAddressModule.displayNoResultsFound()
+      CourtAddressModule.lookUpCourt()
+
+  lookUpCourt: ->
+    postcode = $('#claim_property_postcode').val()
+    if postcode
+      CourtAddressModule.findCourtName postcode
+    else
+      CourtAddressModule.displayNoResultsFound()
 
   getCourtIfPostcodePresent: ->
     court_fields = ['#claim_court_court_name',
@@ -110,7 +119,6 @@ CourtAddressModule =
     CourtAddressModule.addCourtAddressFormLabel()
     CourtAddressModule.hideCourtAddress()
     CourtAddressModule.sendPostcodeForLookup()
-    CourtAddressModule.enableTogglingOfCourtAddressForm()
     CourtAddressModule.flipTextareaToInputField()
 
 root.CourtAddressModule = CourtAddressModule
