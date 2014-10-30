@@ -82,7 +82,6 @@ class PostcodeLookupProxy
       index = @postcode.incode.first.to_i % @@dummy_postcode_results.size 
       result_set = transform_api_response(dummy_result_set(index))
       if country_valid?(result_set)
-        transform_api_response(result_set)
         return true
       else
         @result_set = nil
