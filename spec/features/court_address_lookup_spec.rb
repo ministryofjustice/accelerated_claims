@@ -36,14 +36,17 @@ feature 'Court address lookup' do
   end
 
   context 'when property address is populated' do
-    let(:postcode) { 'SG8 0LT' }
+    let(:postcode) { 'BH22 8HR' }
     let(:json) { CourtfinderController::TEST_RESPONSE_DATA.to_json }
 
     before { court_finder_stub(postcode, body: json) }
 
     scenario 'find and populate court name, address, show manual edit link', js: true do
       visit '/'
-      fill_text_field 'claim_property_postcode', postcode
+      fill_text_field 'claim_property_postcode_edit_field', postcode
+      click_link 'Find address'
+      find('#claim_property_address_select').find(:xpath, 'option[1]').select_option
+      click_link 'Select address'
 
       expect(page).to have_text 'Cambridge County Court and Family Court'
 
@@ -56,14 +59,22 @@ feature 'Court address lookup' do
     context 'court address form visibility' do
       scenario 'should unhide the form', js: true do
         visit '/'
-        fill_text_field 'claim_property_postcode', postcode
+        fill_text_field 'claim_property_postcode_edit_field', postcode
+        click_link 'Find address'
+        find('#claim_property_address_select').find(:xpath, 'option[1]').select_option
+        click_link 'Select address'
+
         find('#court-details').click
         expect(page).to have_css('#court-address', visible: true)
       end
 
       scenario 'the form should be togglable', js: true do
         visit '/'
-        fill_text_field 'claim_property_postcode', postcode
+        fill_text_field 'claim_property_postcode_edit_field', postcode
+        click_link 'Find address'
+        find('#claim_property_address_select').find(:xpath, 'option[1]').select_option
+        click_link 'Select address'
+
         2.times { find('#court-details').click }
         expect(page).to have_css('#court-address', visible: false)
       end
@@ -76,17 +87,24 @@ feature 'Court address lookup' do
 
       before(:each) do
         visit '/'
-        fill_text_field 'claim_property_postcode', postcode
+        fill_text_field 'claim_property_postcode_edit_field', postcode
+        click_link 'Find address'
       end
 
       scenario 'should change the court name form label', js: true do
+        no_postcode_label = <<-END.gsub(/(^\s+\||\n)/, '')
+          |You haven't entered a postcode for the property
+          | you want to take back. To see the court you need
+          | to send this claim to, enter the postcode now
+        END
+
         label = find('#court-address-label').text
-        expect(label).to eq original_form_label
+        expect(label).to eq no_postcode_label
       end
 
-      scenario 'display the expanded form', js: true do
-        court_address = find('#claim_court_street', visible: true)
-        expect(court_address.visible?).to be true
+      scenario "don't expanded the form", js: true do
+        court_address = find('#claim_court_street', visible: false)
+        expect(court_address.visible?).to_not be true
       end
 
       context 'form toggle link' do

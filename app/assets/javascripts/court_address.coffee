@@ -88,7 +88,7 @@ CourtAddressModule =
       CourtAddressModule.enableTogglingOfCourtAddressForm()
 
   sendPostcodeForLookup: ->
-    $('#claim_property_postcode').bind 'focusout', ->
+    $('#claim_property_postcode').change ->
       CourtAddressModule.lookUpCourt()
 
   lookUpCourt: ->
