@@ -10,7 +10,7 @@ feature 'Postcode address lookup' do
   if remote_test?
     context 'live lookup' do
       scenario "enter postcode and select address from list", js: true do
-        visit '/'
+        load_page
         fill_in 'claim_property_postcode_edit_field', with: 'BH22 8HR'
         click_link 'Find address'
 
@@ -25,7 +25,7 @@ feature 'Postcode address lookup' do
   else
     context 'normal usage' do
       scenario "enter postcode and select address from list", js: true do
-        visit '/'
+        load_page
         fill_in 'claim_property_postcode_edit_field', with: 'SW10 6GG'
         click_link 'Find address'
 
@@ -38,7 +38,7 @@ feature 'Postcode address lookup' do
 
 
       scenario 'search successfully then search different postcode results in new results', js: true do
-        visit '/'
+        load_page
         fill_in 'claim_property_postcode_edit_field', with: 'SW10 6GG'
         click_link 'Find address'
 
@@ -54,7 +54,7 @@ feature 'Postcode address lookup' do
 
      
       scenario 'enter and select postcode and then click change link hides address and moves focus to edit box', js: true do
-        visit '/'
+        load_page
         fill_in 'claim_property_postcode_edit_field', with: 'rg27pu'
         click_link 'Find address'
         select "156 Northumberland Avenue, READING", from: "sel-address"
@@ -67,7 +67,7 @@ feature 'Postcode address lookup' do
 
 
       scenario 'selecting a postcode hides the postcode entry box and find button', js: true do
-        visit '/'
+        load_page
         fill_in 'claim_property_postcode_edit_field', with: 'rg27pu'
         click_link 'Find address'
         select "156 Northumberland Avenue, READING", from: "sel-address"
@@ -80,7 +80,7 @@ feature 'Postcode address lookup' do
 
     context 'error messages' do
       scenario "service unavailable results in manual address entry", js: true do
-        visit '/'
+        load_page
         fill_in 'claim_property_postcode_edit_field', with: 'SW1 9AB' # 9 triggers service unavailable response
         click_link 'Find address'
 
@@ -90,7 +90,7 @@ feature 'Postcode address lookup' do
       end
 
       scenario "search for postcode no addresses found opens for manual edit", js: true do
-        visit '/'
+        load_page
         fill_in 'claim_property_postcode_edit_field', with: 'SW10 0GG' # 0 trigger no results found
         click_link 'Find address'
 
@@ -99,7 +99,7 @@ feature 'Postcode address lookup' do
       end
 
       scenario 'search successfully, then search resulting in error hides select list', js: true do
-        visit '/'
+        load_page
         fill_in 'claim_property_postcode_edit_field', with: 'SW10 6GG'
         click_link 'Find address'
 
@@ -111,7 +111,7 @@ feature 'Postcode address lookup' do
       end
 
       scenario 'select an address and then enter another address with no results and edit box should be empty', js: true do
-        visit '/'
+        load_page
         fill_in 'claim_property_postcode_edit_field', with: 'rg27pu'
         click_link 'Find address'
         select "160 Northumberland Avenue, READING", from: "sel-address"
@@ -128,7 +128,7 @@ feature 'Postcode address lookup' do
 
     context 'manual entry' do
       scenario "choose and do manual address entry", js: true do
-        visit '/'
+        load_page
         click_link 'Enter address manually'
 
         fill_in 'claim_property_street', with: "2 Smith Street\nREADING"
@@ -136,7 +136,7 @@ feature 'Postcode address lookup' do
       end
 
       scenario "choose and do manual address entry then toggle manual address closed", js: true do
-        visit '/'
+        load_page
         click_link 'Enter address manually'
 
         fill_in 'claim_property_street', with: "5 Melbury Close\nFERNDOWN"
@@ -150,7 +150,7 @@ feature 'Postcode address lookup' do
 
     
       scenario "click manual edit and then search for postcode", js: true do
-        visit '/'
+        load_page
         click_link 'Enter address manually'
 
         fill_in 'claim_property_postcode_edit_field', with: 'SW10 6GG'
@@ -161,6 +161,12 @@ feature 'Postcode address lookup' do
       end
     end
   end
+end
+
+
+def load_page
+  visit '/'
+  expect(page).to have_css('div#javascript_done')
 end
 
 

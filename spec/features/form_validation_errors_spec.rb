@@ -189,13 +189,12 @@ feature 'Filling in claim form' do
   context 'address validation' do
     context 'javascript enabled' do
 
-      pending "wait for postcode-picker to be finished" do
-        scenario 'property address with too many lines', js: true do
-          visit '/'
-          expect(page).not_to have_content(address_js_error_message)
-          fill_in('claim_property_street', with: invalid_address)
-          expect(page).to have_content(address_js_error_message)
-        end
+      scenario 'property address with too many lines', js: true do
+        visit '/'
+        expect(page).not_to have_content(address_js_error_message)
+        click_link 'claim_property_postcode_picker_manual_link'
+        fill_in('claim_property_street', with: invalid_address)
+        expect(page).to have_content(address_js_error_message)
       end
 
       scenario 'claimant 1 address with valid address', js: true do
