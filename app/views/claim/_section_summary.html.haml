@@ -1,12 +1,12 @@
 = section_header section
 .moj-panel{ id: "##{section}"}
   .row
-    - values = values || @claim[section]
+    - values = @claim[section]
     - if values.is_a?(Hash)
       - values.each do |label, value|
         - unless value.blank?
           = render partial: 'field_summary',
-              locals: { section: section, label: label, value: value, values: values }
+              locals: { section: section, label: label, value: value }
     - else
       = values
 

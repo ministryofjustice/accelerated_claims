@@ -1,5 +1,5 @@
-- values = @claim[section] unless defined? values
-- value = summary_value(section, label, value, values)
+- value = summary_value(section, label, value, @claim[section])
+
 - unless value.blank?
   %p.summary-field
     %span.summary-label= summary_label(section, label)
