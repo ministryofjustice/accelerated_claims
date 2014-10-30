@@ -19,6 +19,14 @@
     "Full name",
     "John Smith"
   ],
+  claim_claimant_1_street: [
+    "Full address",
+    "2 Brown St Bwlchllydd"
+  ],
+  claim_claimant_1_postcode: [
+    "Postcode",
+    "FX1W 0LU"
+  ],
   claim_claimant_2_title: [
     "Title",
     "Ms"
@@ -26,6 +34,14 @@
   claim_claimant_2_full_name: [
     "Full name",
     "Jane Smith"
+  ],
+  claim_claimant_2_street: [
+    "Full address",
+    "7 Main Street Alfreton"
+  ],
+  claim_claimant_2_postcode: [
+    "Postcode",
+    "FX1W 0LU"
   ],
   claim_claimant_contact_email: [
     "Email",

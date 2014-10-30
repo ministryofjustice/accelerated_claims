@@ -19,6 +19,14 @@
     "Full name",
     "Francis Coker"
   ],
+  claim_claimant_1_street: [
+    "Full address",
+    "13 Princess Square Milton"
+  ],
+  claim_claimant_1_postcode: [
+    "Postcode",
+    "RT12 1LS"
+  ],
   claim_claimant_2_title: [
     "Title",
     "Miss"

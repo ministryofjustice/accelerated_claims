@@ -9,7 +9,8 @@
     .row
       %h3= participant.humanize
     .row
-      - @claim[participant].each do |label, value|
+      - values = @claim[participant]
+      - values.each do |label, value|
         - unless ['claimant_type',
               "num_#{type}s",
               "#{type}_num",
@@ -21,9 +22,19 @@
           = render partial: 'field_summary',
               locals: { section: participant,
                   label: label,
-                  value: value }
-      - if type == 'defendant'
-        - if @claim[participant]['inhabits_property'] == 'No'
-          = render partial: 'field_summary', locals: { section: participant, label: 'street', value: @claim[participant]['street'] }
-          = render partial: 'field_summary', locals: { section: participant, label: 'postcode', value: @claim[participant]['postcode'] }
+                  value: value,
+                  values: values }
+
+      - if (values['inhabits_property'] == 'No') || ( values['street'].present? && (values['street'] != @claim['property']['street']) )
+        = render partial: 'field_summary',
+            locals: { section: participant,
+                label: 'street',
+                value: @claim[participant]['street'],
+                values: values }
+
+        = render partial: 'field_summary',
+            locals: { section: participant,
+                label: 'postcode',
+                value: @claim[participant]['postcode'],
+                values: values }
 

@@ -36,15 +36,22 @@
   = section_header 'fee'
   .moj-panel
     .row
-      = render partial: 'field_summary', locals: { section: 'fee', label: 'court_fee', value: '£' + @claim['fee']['court_fee'] }
+      = render partial: 'field_summary', locals: { section: 'fee',
+          label: 'court_fee', value: '£' + @claim['fee']['court_fee'] }
+
       - fixed_legal_fee = @claim['legal_cost']['legal_costs']
-      = render partial: 'field_summary', locals: { section: 'legal_cost', label: 'legal_costs', value: '£' + (fixed_legal_fee.blank? ? '0' : fixed_legal_fee) }
-      = render partial: 'field_summary', locals: { section: 'order', label: 'cost', value: @claim['order']['cost'] }
+
+      = render partial: 'field_summary', locals: { section: 'legal_cost',
+          label: 'legal_costs', value: '£' + (fixed_legal_fee.blank? ? '0' : fixed_legal_fee) }
+
+      = render partial: 'field_summary', locals: { section: 'order',
+          label: 'cost', value: @claim['order']['cost'] }
 
   = section_header 'court'
   .moj-panel
     .row
-      = render partial: 'field_summary', locals: { section: 'possession', label: 'hearing', value: @claim['possession']['hearing'] }
+      = render partial: 'field_summary',
+          locals: { section: 'possession', label: 'hearing', value: @claim['possession']['hearing'] }
 
   - @claim.each do |k, v|
     - unless k[/(claimant|defendant)_\d/] || ['property',

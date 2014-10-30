@@ -19,6 +19,14 @@
     "Full name",
     "John Smith"
   ],
+  claim_claimant_1_street: [
+    "Full address",
+    "2 Brown St Bwlchllydd"
+  ],
+  claim_claimant_1_postcode: [
+    "Postcode",
+    "FX1W 0LU"
+  ],
   claim_claimant_contact_email: [
     "Email",
     "jim@example.com"

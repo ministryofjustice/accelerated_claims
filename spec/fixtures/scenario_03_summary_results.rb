@@ -19,6 +19,14 @@
     "Full name",
     "Joe Peters"
   ],
+  claim_claimant_1_street: [
+    "Full address",
+    "553 Olympic Road Midtown"
+  ],
+  claim_claimant_1_postcode: [
+    "Postcode",
+    "AA11 4LP"
+  ],
   claim_claimant_contact_email: [
     "Email",
     "patty.ofurniture@sgh-molot.com"

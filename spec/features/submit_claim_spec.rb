@@ -27,7 +27,11 @@ feature "submit claim" do
       expected_summary_values = load_expected_summary_values data_file
 
       expect(summary_values.size).to eq(expected_summary_values.size),
-          "Expected #{expected_summary_values.size} summary fields, but summary page contained #{summary_values.size} summary fields"
+          "Expected #{expected_summary_values.size} summary fields on summary page,
+          got #{summary_values.size} summary fields,
+          difference: #{(expected_summary_values.keys - summary_values.keys).size > 0 ?
+            (expected_summary_values.keys - summary_values.keys) :
+            (summary_values.keys - expected_summary_values.keys) }".squeeze(' ')
 
       expected_summary_values.each do |key, values|
         expect(summary_values[key]).to eq(values),
@@ -64,7 +68,7 @@ feature "submit claim" do
     title = data['title']
     description = data['description']
 
-    unless remote_test?
+    unless remote_test? || ENV['browser']
       unless data['javascript'] == 'JS'
         eval(%Q|
           scenario "#{title}: #{description.first} (#{description.last})" do

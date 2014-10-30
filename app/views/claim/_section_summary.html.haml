@@ -10,21 +10,9 @@
               'confirmed_second_rules_period_applicable_statements',
               'confirmed_first_rules_period_applicable_statements',
               'as_property'].include?(label) || value.blank?
-          - if label[/(.+)\((3)i\)/]
-            - label = $1
-            - value = [values["#{label}(3i)"], values["#{label}(2i)"], values["#{label}(1i)"] ].join(' ')
-          - if label['as_money']
-            - label = 'type_of_deposit'
-            - money_deposit = (value == 'Yes')
-            - property_deposit = (@claim['deposit']['as_property'] == 'No')
-            - if money_deposit
-              - value = I18n.t 'claim.deposit.as_money.label'
-            - if money_deposit && property_deposit
-              - value += ' and ' + I18n.t('claim.deposit.as_property.label').downcase
-            - elsif property_deposit
-              - value += I18n.t 'claim.deposit.as_property.label'
 
-          = render partial: 'field_summary', locals: { section: section, label: label, value: value }
+          = render partial: 'field_summary',
+              locals: { section: section, label: label, value: value, values: values }
     - else
       = values
 

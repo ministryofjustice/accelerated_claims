@@ -15,6 +15,14 @@
     "Organization name",
     "Infinity Southwich"
   ],
+  claim_claimant_1_street: [
+    "Full address",
+    "Redleaf House, 157-159 Masonic Hall Southwich"
+  ],
+  claim_claimant_1_postcode: [
+    "Postcode",
+    "SH2 9HY"
+  ],
   claim_claimant_contact_email: [
     "Email",
     "amyturtle@infinitysouthwich.co.uk"

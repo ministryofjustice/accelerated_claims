@@ -19,6 +19,14 @@
     "Full name",
     "Teri Dactyl"
   ],
+  claim_claimant_1_street: [
+    "Full address",
+    "7 Bysea Rd Blacktown"
+  ],
+  claim_claimant_1_postcode: [
+    "Postcode",
+    "YY21 1JH"
+  ],
   claim_claimant_contact_email: [
     "Email",
     "terridactyl@yippee.co.uk"

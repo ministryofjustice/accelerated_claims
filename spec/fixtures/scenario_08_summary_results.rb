@@ -19,6 +19,14 @@
     "Full name",
     "Shirley Williams"
   ],
+  claim_claimant_1_street: [
+    "Full address",
+    "38 Llanwrchgog St Caedffyn"
+  ],
+  claim_claimant_1_postcode: [
+    "Postcode",
+    "GO31 1RJ"
+  ],
   claim_claimant_contact_email: [
     "Email",
     "enquiries@taffjonesevans-law.co.uk"

@@ -19,6 +19,14 @@
     "Full name",
     "Joe Blow"
   ],
+  claim_claimant_1_street: [
+    "Full address",
+    "9 Made-up Lane Anytown"
+  ],
+  claim_claimant_1_postcode: [
+    "Postcode",
+    "EY88 1ZZ"
+  ],
   claim_claimant_2_title: [
     "Title",
     "Mrs"

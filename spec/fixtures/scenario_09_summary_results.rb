@@ -19,6 +19,14 @@
     "Full name",
     "Willie Cox"
   ],
+  claim_claimant_1_street: [
+    "Full address",
+    "104 Babbage Rd Londonville"
+  ],
+  claim_claimant_1_postcode: [
+    "Postcode",
+    "SB24 9HE"
+  ],
   claim_claimant_2_title: [
     "Title",
     "Mr"
@@ -26,6 +34,14 @@
   claim_claimant_2_full_name: [
     "Full name",
     "Adam Ant"
+  ],
+  claim_claimant_2_street: [
+    "Full address",
+    "108 Rodnal Rd Londonville"
+  ],
+  claim_claimant_2_postcode: [
+    "Postcode",
+    "FX9 9NU"
   ],
   claim_claimant_contact_email: [
     "Email",

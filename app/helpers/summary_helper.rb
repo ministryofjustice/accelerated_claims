@@ -8,10 +8,12 @@ module SummaryHelper
 
   # creates attribute id
   def summary_id section, label
-    ['claim', section, label].join('_')
+    label = adjust_summary_label(label)
+    ['claim', section, label ].join('_')
   end
 
   def summary_label section, label
+    label = adjust_summary_label label
     key = localization_key(section, label, 'label')
     if I18n.t(key)[/translation missing/]
       label.humanize
@@ -20,7 +22,9 @@ module SummaryHelper
     end
   end
 
-  def summary_value section, label, value
+  def summary_value section, label, value, values
+    value = adjust_summary_value(label, value, values)
+
     key = localization_key(section, label, value.to_s.downcase)
     localized_value = I18n.t(key)
 
@@ -40,4 +44,42 @@ module SummaryHelper
     end
   end
 
+  private
+
+  def adjust_summary_label label
+    label = 'type_of_deposit' if label['as_money']
+
+    if date_label = date_label(label)
+      label = date_label
+    end
+
+    label
+  end
+
+  def adjust_summary_value label, value, values
+    if date_label = date_label(label)
+      value = date_value(date_label, values)
+    end
+    if label['as_money']
+      money_deposit = (value == 'Yes')
+      property_deposit = (@claim['deposit']['as_property'] == 'No')
+      if money_deposit
+        value = I18n.t 'claim.deposit.as_money.label'
+      end
+      if money_deposit && property_deposit
+        value += ' and ' + I18n.t('claim.deposit.as_property.label').downcase
+      elsif property_deposit
+        value += I18n.t 'claim.deposit.as_property.label'
+      end
+    end
+    value
+  end
+
+  def date_label label
+    label[/(.+)\(3i\)/, 1]
+  end
+
+  def date_value label, values
+    [values["#{label}(3i)"], values["#{label}(2i)"], values["#{label}(1i)"] ].join(' ')
+  end
 end

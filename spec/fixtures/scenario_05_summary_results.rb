@@ -15,6 +15,14 @@
     "Organization name",
     "Yammerton City Council"
   ],
+  claim_claimant_1_street: [
+    "Full address",
+    "Civic Centre, St. Peter's Square Yammerton"
+  ],
+  claim_claimant_1_postcode: [
+    "Postcode",
+    "AV1 1SH"
+  ],
   claim_claimant_contact_phone: [
     "Phone",
     "020 7946 0978"

@@ -19,6 +19,14 @@
     "Full name",
     "Mark Ateer"
   ],
+  claim_claimant_1_street: [
+    "Full address",
+    "26 Heath St Anytown"
+  ],
+  claim_claimant_1_postcode: [
+    "Postcode",
+    "FX9 1XX"
+  ],
   claim_claimant_contact_email: [
     "Email",
     "markateer@zzmail.com"
