@@ -28,31 +28,22 @@ DefendantModule =
       DefendantModule.toggleAddress($(this))
 
   showAddressIfStarted: (defendant_id) ->
-    # get controls
     $panel = $("#defendant_#{defendant_id}_resident_address")
     $link = $panel.find('a.caption')
-    # get values
-    add = $panel.find('textarea').val()
+    address = $panel.find('textarea').val()
     postcode = $panel.find('input').val()
-
-    # panel will be hidden by default
-    if add!='' || postcode!=''
+    if address!='' || postcode!=''
       $panel.toggleClass( 'open' )
-    # toggle address displays
+
     DefendantModule.toggleAddressDisplay($panel, $link)
 
   toggleAddress: ($link) ->
-    # get control
     $panel = $link.parents('div.sub-panel').first()
-    # show/hide panel
     $panel.toggleClass('open')
-    # toggle address displays
     DefendantModule.toggleAddressDisplay($panel, $link)
 
   toggleAddressDisplay: ($panel, $link) ->
-    #find postcode picker
     $pcp = $panel.find('.postcode-picker-container').first()
-    # show/hide link and postcode picker
     if $panel.hasClass( 'open' )
       $link.attr('aria-expanded','true')
       $pcp.addClass('show').removeClass('hide')
