@@ -1,9 +1,7 @@
-- id = summary_id(section, label)
-- label = label.sub(/_\d+/,'')
 - value = summary_value(section, label, value)
 
 - unless value.blank?
   %p.summary-field
     %span.summary-label= summary_label(section, label)
-    %span.summary-value{ id: "##{id}" }= value
+    %span.summary-value{ id: summary_id(section, label) }= value
 
