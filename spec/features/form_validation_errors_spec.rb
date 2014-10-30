@@ -54,6 +54,7 @@ feature 'Filling in claim form' do
       click_button 'Continue'
     end
 
+
     scenario 'clicking on the error message takes you to section', js: true do
       visit '/'
       choose('claim_claimant_type_individual')
