@@ -49,18 +49,18 @@ class PostcodePicker
       @picker.find('.postcode-selection-els').show()
       @input.val('')
       @input.focus()
-      
+
 
     changePostcodeLink2.on 'click', =>
       @picker.find('.postcode-display').hide()
       @picker.find('.postcode-select-container').hide()
       @showPostcodeSearchComponent()
-   
+
 
   normalizeCountry: (vc) =>
     if vc == 'all'
       result = 'UK'
-    else 
+    else
       # all of this crapola because IE 7 and 8 doesn't support the Array.map()  JS method
       countries = vc.split('+')
       capitalizedCountries = new Array
@@ -85,7 +85,7 @@ class PostcodePicker
       result = result + " and " + last_item
     else
       result = array[0]
-      
+
     result
 
 
@@ -120,10 +120,9 @@ class PostcodePicker
     postcode = selectedAddress.postcode
     @picker.find('.street textarea').val(street)
     @picker.find('.address-postcode input').val(postcode)
+    @picker.find('.address-postcode input').trigger('change')
     @picker.find('.address-postcode input').attr('readonly', '1')
-
     @picker.find('.postcode-picker-address-list').hide()
-    
     @picker.find('.address.extra' ).show()
     @picker.find('.postcode-selection-els').hide()
     @picker.find('.postcode-display').hide()
@@ -156,7 +155,7 @@ class PostcodePicker
     @picker.find('.postcode-picker-address-list').show()
     @picker.find('.address-picker-select').focus()
     true
-    
+
   hidePostcodeSearchComponent: ->
     @picker.find('.postcode-selection-els').hide()
 
@@ -208,4 +207,3 @@ root.PostcodePicker = PostcodePicker
 jQuery ->
    _.each $('.postcode-picker-container'), (picker) ->
      new PostcodePicker( $(picker) )
-
