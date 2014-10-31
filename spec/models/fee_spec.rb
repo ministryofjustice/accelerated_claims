@@ -37,4 +37,15 @@ describe Fee, :type => :model do
     it { is_expected.to be_valid }
     it { expect(fee.as_json).to eq("court_fee" => "280.00", "account"=>"0000001234") }
   end
+
+  context 'with non numeric account number' do
+    let(:court_fee) { "" }
+    let(:account) { 'bob' }
+
+    it "shouldn't be valid" do
+      expect(fee).not_to be_valid
+      expect(fee.errors[:account]).to eq ["Fee account must be a number"]
+    end
+  end
+
 end

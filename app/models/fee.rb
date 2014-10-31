@@ -4,7 +4,7 @@ class Fee < BaseClass
   attr_accessor :account
 
   validates :court_fee, presence: { message: 'must be entered' }, length: { maximum: 8 }
-  validates :account, length: { is: 10 }, allow_blank: true
+  validates :account, format: { with: /[0-9]+/, message: 'Fee account must be a number' }, length: { maximum: 10, message: 'Fee account number should only have 10 digits'}, allow_blank: true
 
 
   def court_fee
@@ -12,6 +12,10 @@ class Fee < BaseClass
   end
 
   def account
-    @account.blank? ? '' : @account.to_s.rjust(10, '0')
+    if @account =~ /^[0-9]+$/ || @account.is_a?(Numeric)
+      @account.to_s.rjust(10, '0')
+    else
+      @account
+    end
   end
 end
