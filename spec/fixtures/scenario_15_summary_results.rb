@@ -51,14 +51,6 @@
     "Full name",
     "Jane Smith"
   ],
-  claim_claimant_3_street: [
-    "Full address",
-    "2 Brown St Bwlchllydd"
-  ],
-  claim_claimant_3_postcode: [
-    "Postcode",
-    "FX1W 0LU"
-  ],
   claim_claimant_contact_email: [
     "Email",
     "jim@example.com"
