@@ -11,6 +11,7 @@ ShowHideModule =
     panel.toggleClass('open')
     if panel.hasClass( 'open' )
       link.attr('aria-expanded','true')
+      panel.find('input, textarea').first().focus()
     else
       link.attr('aria-expanded','false')
     false
