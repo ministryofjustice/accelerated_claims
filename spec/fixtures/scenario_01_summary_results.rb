@@ -35,14 +35,6 @@
     "Full name",
     "Jane Doe"
   ],
-  claim_claimant_2_street: [
-    "Full address",
-    "9 Made-up Lane Anytown"
-  ],
-  claim_claimant_2_postcode: [
-    "Postcode",
-    "EY88 1ZZ"
-  ],
   claim_claimant_contact_email: [
     "Email",
     "johndoe@suegrabbitandrun.org.eu"

@@ -84,7 +84,7 @@ feature "submit claim" do
       end
     end
 
-    unless true || data['javascript'] == 'NON-JS'
+    unless data['javascript'] == 'NON-JS'
       eval(%Q|
         scenario "#{title} with JS: #{description.first} (#{description.last})", js: true do
           run_scenario '#{data_file}', js: true
