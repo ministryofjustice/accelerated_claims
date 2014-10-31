@@ -1,3 +1,18 @@
+
+# This file contians 5 sets of dummy postcode results.  Unless in livepc, the first digit
+# of the second part of the postcode determines which set is returned:
+#
+#  0 - will return emtpy address set
+#  1 - Melbury Close, Ferndown
+#  2 - Northumberland Avenue, Reading
+#  3 - Montpellier Parade, Harrogate
+#  4 - Southampton Row, London
+#  5 - Corstorphine Road, Edinburgh (Scottish address)
+#  6 - 50 Tregunter Road, London (single address)
+#  7 - Melbury Close, Ferndown
+#  8 - Northumberland Avenue, Reading
+#  9 - Service Unavailable
+#
 - 
   - line_1: 50 Tregunter Road
     post_town: LONDON

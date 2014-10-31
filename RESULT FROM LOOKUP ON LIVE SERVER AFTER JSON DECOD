@@ -1,0 +1,45 @@
+RESULT FROM LOOKUP ON LIVE SERVER AFTER JSON DECODE
+
+
+{"result"=>
+  [{"postcode"=>"SW10 9LB",
+    "postcode_inward"=>"9LB",
+    "postcode_outward"=>"SW10",
+    "post_town"=>"LONDON",
+    "dependant_locality"=>"",
+    "double_dependant_locality"=>"",
+    "thoroughfare"=>"Tregunter Road",
+    "dependant_thoroughfare"=>"",
+    "building_number"=>"50",
+    "building_name"=>"",
+    "sub_building_name"=>"",
+    "po_box"=>"",
+    "department_name"=>"",
+    "organisation_name"=>"",
+    "udprn"=>23911113,
+    "postcode_type"=>"S",
+    "su_organisation_indicator"=>"",
+    "delivery_point_suffix"=>"1A",
+    "line_1"=>"50 Tregunter Road",
+    "line_2"=>"",
+    "line_3"=>"",
+    "premise"=>"50",
+    "longitude"=>-0.187376804557296,
+    "latitude"=>51.4861149301908,
+    "eastings"=>525953,
+    "northings"=>177909,
+    "country"=>"England",
+    "county"=>"",
+    "district"=>"Kensington and Chelsea",
+    "ward"=>""}],
+ "code"=>2000,
+ "message"=>"Success"}
+
+
+
+{"code"=>4040, "message"=>"Postcode Not Found"}
+
+
+
+{"code"=>9503, "message"=>"Service Unavailable"}
+

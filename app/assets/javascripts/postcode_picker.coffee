@@ -73,6 +73,7 @@ class PostcodePicker
     @picker.find('.postcode-picker-manual-link').show()
 
   lookupPostcode: =>
+    console.log '>>>>>>>> Looking up postcode ' + @input.val()
     postcode = @input.val()
     @picker.find('.postcode-display').show()
     @picker.find('.postcode-select-container').hide()
@@ -98,12 +99,16 @@ class PostcodePicker
     @picker.find('.street textarea').focus()
 
   displayAddresses: (addresses) ->
+    console.log "DISPLAY ADDRESS"
+    console.log addresses
     @hideAddressFields()
     @hidePostcodeSearchComponent()
     @addresses = addresses
     @selectElement.empty()
     @picker.find('.postcode-display').removeClass('hide')
+    console.log "AAAAAAAAAAAAAA"
     @picker.find('.postcode-display-detail').html(addresses[0].postcode)
+    console.log "CCCCCCCCCCCC"
     $.each addresses, (index, address) =>
       address = address.address.replace(/;;/g, ", ")
       option = "<option value=\"#{index}\">#{address}</option>"
@@ -142,16 +147,19 @@ class PostcodePicker
     @picker.find('.street textarea').focus()
 
   displayInvalidPostcodeMessage: ->
+    console.log "displayInvalidPostcodeMessage"
     @addErrorMessage('Please enter a valid UK postcode')
     @picker.find('.postcode-display').hide()
     @hideAddressFields()
 
   displayNoResultsFound: ->
+    console.log 'displayNoResultsFound'
     @addErrorMessage('No address found. Please enter the address manually')
     @picker.find('.postcode-display').hide()
     @hideAddressFields()
 
   displayServiceUnavailable: ->
+    console.log 'displayServiceUnavailable'
     @displayAddressFields()
     @addErrorMessage('Postcode lookup service not available. Please enter the address manually.')
 

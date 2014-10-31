@@ -26,15 +26,15 @@ feature 'Postcode address lookup' do
   else
     context 'normal usage' do
       scenario "enter postcode and select address from list", js: true do
+<<<<<<< HEAD
+        visit '/'
+        fill_in 'claim_property_postcode_edit_field', with: 'SW10 7GG'
+=======
         load_page
-
-        fill_in 'claim_property_postcode_edit_field', with: 'SW10 1GG'
-        puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-        
+        fill_in 'claim_property_postcode_edit_field', with: 'SW10 6GG'
+>>>>>>> master
         click_link 'Find address'
-        puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-        
-        expect(page).to have_css('option', text: '5 Melbury Close, FERNDOWN')
+        sleep 0.5
 
         select "5 Melbury Close, FERNDOWN", from: "sel-address"
         click_link "claim_property_selectaddress"
@@ -45,8 +45,13 @@ feature 'Postcode address lookup' do
 
 
       scenario 'search successfully then search different postcode results in new results', js: true do
+<<<<<<< HEAD
+        visit '/'
+        fill_in 'claim_property_postcode_edit_field', with: 'SW10 7GG'
+=======
         load_page
-        fill_in 'claim_property_postcode_edit_field', with: 'SW10 1GG'
+        fill_in 'claim_property_postcode_edit_field', with: 'SW10 6GG'
+>>>>>>> master
         click_link 'Find address'
         sleep 0.5
 
@@ -62,8 +67,13 @@ feature 'Postcode address lookup' do
 
      
       scenario 'enter and select postcode and then click change link hides address and moves focus to edit box', js: true do
+<<<<<<< HEAD
+        visit '/'
+        fill_in 'claim_property_postcode_edit_field', with: 'rg28pu'
+=======
         load_page
-        fill_in 'claim_property_postcode_edit_field', with: 'rg22pu'
+        fill_in 'claim_property_postcode_edit_field', with: 'rg27pu'
+>>>>>>> master
         click_link 'Find address'
         sleep 0.5
 
@@ -77,8 +87,13 @@ feature 'Postcode address lookup' do
 
 
       scenario 'selecting a postcode hides the postcode entry box and find button', js: true do
+<<<<<<< HEAD
+        visit '/'
+        fill_in 'claim_property_postcode_edit_field', with: 'rg28pu'
+=======
         load_page
-        fill_in 'claim_property_postcode_edit_field', with: 'rg22pu'
+        fill_in 'claim_property_postcode_edit_field', with: 'rg27pu'
+>>>>>>> master
         click_link 'Find address'
         sleep 0.5
 
@@ -126,8 +141,13 @@ feature 'Postcode address lookup' do
       end
 
       scenario 'select an address and then enter another address with no results and edit box should be empty', js: true do
+<<<<<<< HEAD
+        visit '/'
+        fill_in 'claim_property_postcode_edit_field', with: 'rg28pu'
+=======
         load_page
-        fill_in 'claim_property_postcode_edit_field', with: 'rg22pu'
+        fill_in 'claim_property_postcode_edit_field', with: 'rg27pu'
+>>>>>>> master
         click_link 'Find address'
         sleep 0.5
 

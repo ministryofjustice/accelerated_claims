@@ -3,14 +3,11 @@ require 'yaml'
 # PostcodeLookupProxy API
 
 # pclp = PostcodeLookupProxy.new("AB126FG")
-# pclp.valid?         # => true
-# pclp.lookup         # => true if http result was successful, otherwise false
-# pclp.empty?         # => false if any addresses returned
-# pclp.errors?        # => false if the result code from the remote service was successful, otherwise false
-# pclp.result_code    # => the result_code returned from the remote service
-# pclp.result_message # => the result message returned from the remote service
-# pclp.result_set     # => array of address hashes  [ { 'address' => 'line 1;;line 2;;line 3', 'postcode' => 'ID1 1QQ'}, ... ]
-#
+# pclp.valid?             # => true
+# pclp.lookup             # => true if http result was successful, otherwise false
+# pclp.result_set         # => The JSON that is to be returned by the controller
+# pclp.http_status_code   # => the HTTP status code that the controller should return
+
 
 class PostcodeLookupProxy
 
@@ -26,8 +23,9 @@ class PostcodeLookupProxy
     @url             = config['url']
     @api_key         = config['api_key']
     @timeout         = config['timeout']
-    @result_code     = nil
-    @result_message  = nil
+    @api_result_set  = nil
+    # @result_code     = nil
+    # @result_message  = nil
     @use_live_data   = use_live_data
     @valid_countries = valid_countries
   end
@@ -36,6 +34,46 @@ class PostcodeLookupProxy
   def valid?
     @valid
   end
+
+
+  def lookup
+    if valid?
+      if @use_live_data == true 
+        @api_result_set = production_lookup
+      else
+        @api_result_set = development_lookup
+      end
+    else
+      @api_result_set = invalid_postcode_result_set
+    end
+    transform_api_result_set
+  end
+
+  
+
+
+  private
+
+  # transforms the result set that the api returns to something that the controller can return
+
+  def transform_api_result_set
+    case @api_result_set['code']
+    when 2000
+      transform_successful_result_set
+    when 9404, 9422
+      transform_erroneous_response
+    else
+      raise "Unexpected response"
+    end
+  end
+
+
+  def transfor_successful_result_set
+    if country_valid?
+  end
+
+
+
 
   def invalid?
     !valid?
@@ -46,116 +84,74 @@ class PostcodeLookupProxy
     @result_set.empty?
   end
 
-
-  def lookup
-    raise "Invalid Postcode" unless valid?
-    @use_live_data == true ? production_lookup : development_lookup
+  def form_url
+    "#{@url}#{@postcode.outcode}#{@postcode.incode}?api_key=#{@api_key}"
   end
 
   def errors?
     @result_code != 2000
   end
-  
 
-
-  private
-
-  def form_url
-    "#{@url}#{@postcode.outcode}#{@postcode.incode}?api_key=#{@api_key}"
+  def production_lookup
+    begin
+      Timeout::timeout(@timeout) do
+        @api_response = ActiveSupport::JSON( Excon.get( form_url() ) )
+      end
+    rescue Timeout::Error
+      @api_response = service_unavailable_response
+    end
   end
 
   # returns dummy postcode result based on the first character of the second part of the postcode.
   # if 0 - returns an empty array, indicating no entries of the postcode, otherwise a dummy result set
-  # if 1 - returns a dummy set of data relating to Scotland
   # if 9 - returns false to simulate a timeout or other remote service error
+  # otherwise returns a data set as documented at the top of dummy_postcode_results.yml
+  #
   def development_lookup
     case @postcode.incode.first.to_i
     when 0
-      transform_api_response(dummy_postcode_not_found_result_set)
-      return true
+      return dummy_postcode_not_found_result_set
     when 9 
-      @result_set = nil
-      @result_code = 9001
-      @result_message = 'service not available'
-      return false
+      return servcie_unavailable_response
     else
       index = @postcode.incode.first.to_i % @@dummy_postcode_results.size 
-      result_set = transform_api_response(dummy_result_set(index))
-      if country_valid?(result_set)
-        return true
-      else
-        @result_set = []
-        @result_code = 9404
-        @result_message = country_from_result_set(result_set)
-        return true
-      end
+      wrap_dummy_result_set( dummy_result_set)[index] )
     end
   end
 
+
+  def wrap_dummy_result_set(result_set)
+    {
+      "result"=> result_set,
+      "code"=>2000,
+      "message"=>"Success"
+    }
+  end
+
+  def service_unavailable_response
+    {"code"=>9503, "message"=>"Service Unavailable"}
+  end
+
+  def invalid_postcode_response
+    {"code"=>9422, "message"=>"Invalid Postcode"}
+  end
 
   def country_from_result_set(result_set)
     result_set.first['country']
   end
 
-  def country_valid?(result_set)
+  def country_valid?
     return true if @valid_countries.empty?
-    @valid_countries.include?(country_from_result_set(result_set))
+    @valid_countries.include?(@api_result_set['result'].first['country'])
   end
-
-
-  def dummy_result_set(index)
-    OpenStruct.new(status: 200, body: { 'result' => @@dummy_postcode_results[index], 'code' => '2000', 'message' => 'Success' }.to_json)
-  end
-
 
   def dummy_postcode_not_found_result_set
-    OpenStruct.new(status: 200, body: { 'code' => '4040', 'message' => 'postcode not found' }.to_json)
+    {"code"=>9404, "message"=>"Postcode Not Found"}
   end
 
-  
-
-  def production_lookup
-    result = true
-    api_response = nil
-    
-    begin
-      Timeout::timeout(@timeout) do
-        api_response = Excon.get(form_url())
-      end
-      
-    rescue Timeout::Error
-      result = false
-      @result_code = 9001
-      @result_message = "Request timed out"
-      @result_set = ""
-    end
-
-    if result == true 
-      if api_response.status == 200 || api_response.status == 404
-        transform_api_response(api_response)
-      else
-        @result_code = "9#{api_response.status}".to_i
-        @result_message = "Error response from remote service"
-        @result_set = ""
-        result = false
-      end
-    end
-    result
-  end
-
-
-
-  def transform_api_response(api_response)
-    response_body = ActiveSupport::JSON.decode(api_response.body)
-    @result_code = response_body['code']
-    @result_message = response_body['message'].to_i
-    if @result_code.to_i == 4040
-      api_results = []
-    else
-      api_results = response_body['result']
-    end
-    @result_set = api_results.map { |res| transform_api_address(res) }
-  end
+  # def transform_api_response(api_response)
+  #   @result_set = api_results.map { |res| transform_api_address(res) }
+  # end
 
 
 
