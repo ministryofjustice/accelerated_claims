@@ -157,8 +157,6 @@ class ClaimForm
 
   def fill_in_value element, id, value
     find_it(element, id).set value
-
-    require_relative 'nokogiri_inspect' unless element['textarea']
   end
 
   def fill_in_text_field(prefix, key)
