@@ -18,7 +18,6 @@ feature 'Postcode address lookup' do
         load_page
         fill_in 'claim_property_postcode_edit_field', with: 'BH22 8HR'
         click_find_address
-        sleep 0.5
 
         select "5 Melbury Close, FERNDOWN", from: "sel-address"
         click_link "claim_property_selectaddress"
@@ -34,7 +33,6 @@ feature 'Postcode address lookup' do
         load_page
         fill_in 'claim_property_postcode_edit_field', with: 'SW10 6GG'
         click_find_address
-        sleep 0.5
 
         select "5 Melbury Close, FERNDOWN", from: "sel-address"
         click_link "claim_property_selectaddress"
@@ -47,7 +45,6 @@ feature 'Postcode address lookup' do
         load_page
         fill_in 'claim_property_postcode_edit_field', with: 'SW10 6GG'
         click_find_address
-        sleep 0.5
 
         select "5 Melbury Close, FERNDOWN", from: "sel-address"
         click_link 'claim_property-manual_change-link-2'
@@ -63,7 +60,6 @@ feature 'Postcode address lookup' do
         load_page
         fill_in 'claim_property_postcode_edit_field', with: 'rg27pu'
         click_find_address
-        sleep 0.5
 
         select "156 Northumberland Avenue, READING", from: "sel-address"
         click_link "claim_property_selectaddress"
@@ -77,7 +73,6 @@ feature 'Postcode address lookup' do
         load_page
         fill_in 'claim_property_postcode_edit_field', with: 'rg27pu'
         click_find_address
-        sleep 0.5
 
         select "156 Northumberland Avenue, READING", from: "sel-address"
         click_link "claim_property_selectaddress"
@@ -91,7 +86,6 @@ feature 'Postcode address lookup' do
         load_page
         fill_in 'claim_property_postcode_edit_field', with: 'SW1 9AB' # 9 triggers service unavailable response
         click_find_address
-        sleep 0.5
 
         expect(page).to have_content("Postcode lookup service not available. Please enter the address manually.")
         fill_in 'claim_property_street', with: "2 Smith Street\nREADING"
@@ -102,7 +96,6 @@ feature 'Postcode address lookup' do
         load_page
         fill_in 'claim_property_postcode_edit_field', with: 'SW10 0GG' # 0 trigger no results found
         click_find_address
-        sleep 0.5
 
         expect(page).to have_content('No address found. Please enter the address manually')
         expect(page).to have_field('claim_property_postcode_edit_field')
@@ -112,7 +105,6 @@ feature 'Postcode address lookup' do
         load_page
         fill_in 'claim_property_postcode_edit_field', with: 'SW10 6GG'
         click_find_address
-        sleep 0.5
 
         click_link 'claim_property-manual_change-link-2'
         fill_in 'claim_property_postcode_edit_field', with: 'SW10 0GG' # 0 trigger no results found
@@ -125,14 +117,12 @@ feature 'Postcode address lookup' do
         load_page
         fill_in 'claim_property_postcode_edit_field', with: 'rg27pu'
         click_find_address
-        sleep 0.5
 
         select "160 Northumberland Avenue, READING", from: "sel-address"
         click_link "claim_property_selectaddress"
         click_link 'Change'
         fill_in 'claim_property_postcode_edit_field', with: 'sw109lb'
         click_find_address
-        sleep 0.5
 
         expect(page).to have_content("Postcode lookup service not available. Please enter the address manually.")
         expect(page).to have_field('claim_property_street', with: '')
@@ -168,7 +158,6 @@ feature 'Postcode address lookup' do
 
         fill_in 'claim_property_postcode_edit_field', with: 'SW10 6GG'
         click_find_address
-        sleep 0.5
 
         expect(page).not_to have_field('claim_property_postcode')
         expect(page).not_to have_field('claim_property_street')
