@@ -28,16 +28,14 @@ describe Fee, :type => :model do
     let(:court_fee) { 250 }
 
     it { is_expected.to be_valid }
+    it { expect(fee.as_json).to eq("court_fee" => "280.00", "fee_account"=>"9876543210") }
   end
 
   context 'with a short account number' do
     let(:fee_account) { '1234' }
     let(:court_fee) { 250 }
-
-    it 'is expected to be zero padded' do
-      expect(fee).to be_valid
-      expect(fee.fee_account).to eq '0000001234'
-    end
+    it { is_expected.to be_valid }
+    it { expect(fee.as_json).to eq("court_fee" => "280.00", "fee_account"=>"0000001234") }
   end
 
 end
