@@ -144,6 +144,7 @@ describe 'CourtAddressModule', ->
       it 'should call displayNoResultsFound', ->
         spyOn(window.CourtAddressModule, 'displayNoResultsFound')
         enterPostcode('')
+        $('#claim_property_postcode').trigger('change')
         expect(window.CourtAddressModule.displayNoResultsFound).toHaveBeenCalled()
 
   describe 'on page load', ->
