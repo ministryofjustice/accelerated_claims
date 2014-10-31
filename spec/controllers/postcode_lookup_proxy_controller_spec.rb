@@ -30,7 +30,7 @@ describe PostcodeLookupProxyController, :type => :controller do
       end
     end
 
-
+    
     context 'an empty dataset' do
       it "should render 'No matching postcodes'" do
         get :show, format: :json, pc: 'RG2 0PU'
@@ -50,6 +50,25 @@ describe PostcodeLookupProxyController, :type => :controller do
         expect(response.body).to eq 'Service not available'
       end
     end
+
+    context 'a scottish postcode which is allowed' do
+      it 'should call proxy with and emtpy array and return a valid set of addresses' do
+        expect(PostcodeLookupProxy).to receive(:new).with('EH10 5LB', [], false).and_call_original
+        get :show, format: :json, pc: "EH10 5LB"
+        expect(response.status).to eq(200)
+        expect(response.body).to eq scottish_response
+      end
+    end
+
+
+    context 'a scottish postcode which is not allowed' do
+      it 'should return 404 with 9404 result code and scotland as message' do
+        expect(PostcodeLookupProxy).to receive(:new).with('EH10 5LB', ['England', 'Wales'], false).and_call_original
+        get :show, format: :json, pc: "EH10 5LB", vc: 'england wales'
+        expect(response.status).to eq(400)
+        expect(response.body).to eq "Postcode is in Scotland.  You can only use this form if the property is in England and Wales"
+      end
+    end
   end
 
 
@@ -64,20 +83,20 @@ describe PostcodeLookupProxyController, :type => :controller do
 
       it 'should return true for demo environments' do
         setenv 'demo'
-        expect_postcode_lookup_to_be_called_with(true)
+        expect_postcode_lookup_to_be_called_with( [], true )
         get :show, format: :json, pc: 'RG2 7PU'
       end
 
 
       it 'should return true for staging environments' do
         setenv 'staging'
-        expect_postcode_lookup_to_be_called_with(true)
+        expect_postcode_lookup_to_be_called_with( [], true )
         get :show, format: :json, pc: 'RG2 7PU'
       end
       
       it 'should return true for production environments' do
         setenv 'staging'
-        expect_postcode_lookup_to_be_called_with(true)
+        expect_postcode_lookup_to_be_called_with( [], true )
         get :show, format: :json, pc: 'RG2 7PU'
       end
 
@@ -91,27 +110,26 @@ describe PostcodeLookupProxyController, :type => :controller do
 
       it 'should return false for demo environments' do
         setenv 'demo1'
-        expect_postcode_lookup_to_be_called_with(false)
+        expect_postcode_lookup_to_be_called_with( [], false )
         get :show, format: :json, pc: 'RG2 7PU'
       end
 
       it 'should return true for staging environments' do
         setenv 'staging'
-        expect_postcode_lookup_to_be_called_with(true)
+        expect_postcode_lookup_to_be_called_with( [], true )
         get :show, format: :json, pc: 'RG2 7PU'
       end
 
 
       it 'should return true for production environments' do
         setenv 'production'
-        expect_postcode_lookup_to_be_called_with(true)
+        expect_postcode_lookup_to_be_called_with( [], true )
         get :show, format: :json, pc: 'RG2 7PU'
       end
-
     end
-
-   
   end
+
+  describe 
 
 end
 
@@ -129,36 +147,43 @@ def set_referer_url_without_livepc_param
   allow(request).to receive(:referer).and_return('https://civilclaims.service.gov.uk/accelerated-possession-eviction?journey=4')
 end
 
-def expect_postcode_lookup_to_be_called_with(flag)
+def expect_postcode_lookup_to_be_called_with(*flags)
   pclp = double(PostcodeLookupProxy).as_null_object
-  expect(PostcodeLookupProxy).to receive(:new).with('RG2 7PU', flag).and_return(pclp)
+  expect(PostcodeLookupProxy).to receive(:new).with('RG2 7PU', *flags).and_return(pclp)
 end
 
+
+def scottish_response
+  [
+      {'address'=>'134, Corstorphine Road;;EDINBURGH', 'postcode'=>'EH12 6TS', 'country' => 'Scotland'}, 
+      {'address'=>'Royal Zoological Society of Scotland;;134, Corstorphine Road;;EDINBURGH', 'postcode'=>'EH12 6TS', 'country' => 'Scotland'} 
+  ].to_json
+end
 
 
 def expected_response
   [
-    {"address"=>"150 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
-    {"address"=>"152 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
-    {"address"=>"154 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
-    {"address"=>"156 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
-    {"address"=>"158 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
-    {"address"=>"160 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
-    {"address"=>"162 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
-    {"address"=>"164 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
-    {"address"=>"166 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
-    {"address"=>"168 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
-    {"address"=>"170 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
-    {"address"=>"172 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
-    {"address"=>"174 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
-    {"address"=>"176 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
-    {"address"=>"178 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
-    {"address"=>"180 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
-    {"address"=>"182 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
-    {"address"=>"184 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
-    {"address"=>"186 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
-    {"address"=>"188 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
-    {"address"=>"190 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"},
-    {"address"=>"192 Northumberland Avenue;;READING", "postcode"=>"RG2 7PU"}
+    {'address'=>'150 Northumberland Avenue;;READING', 'postcode'=>'RG2 7PU', 'country' => 'England'},
+    {'address'=>'152 Northumberland Avenue;;READING', 'postcode'=>'RG2 7PU', 'country' => 'England'},
+    {'address'=>'154 Northumberland Avenue;;READING', 'postcode'=>'RG2 7PU', 'country' => 'England'},
+    {'address'=>'156 Northumberland Avenue;;READING', 'postcode'=>'RG2 7PU', 'country' => 'England'},
+    {'address'=>'158 Northumberland Avenue;;READING', 'postcode'=>'RG2 7PU', 'country' => 'England'},
+    {'address'=>'160 Northumberland Avenue;;READING', 'postcode'=>'RG2 7PU', 'country' => 'England'},
+    {'address'=>'162 Northumberland Avenue;;READING', 'postcode'=>'RG2 7PU', 'country' => 'England'},
+    {'address'=>'164 Northumberland Avenue;;READING', 'postcode'=>'RG2 7PU', 'country' => 'England'},
+    {'address'=>'166 Northumberland Avenue;;READING', 'postcode'=>'RG2 7PU', 'country' => 'England'},
+    {'address'=>'168 Northumberland Avenue;;READING', 'postcode'=>'RG2 7PU', 'country' => 'England'},
+    {'address'=>'170 Northumberland Avenue;;READING', 'postcode'=>'RG2 7PU', 'country' => 'England'},
+    {'address'=>'172 Northumberland Avenue;;READING', 'postcode'=>'RG2 7PU', 'country' => 'England'},
+    {'address'=>'174 Northumberland Avenue;;READING', 'postcode'=>'RG2 7PU', 'country' => 'England'},
+    {'address'=>'176 Northumberland Avenue;;READING', 'postcode'=>'RG2 7PU', 'country' => 'England'},
+    {'address'=>'178 Northumberland Avenue;;READING', 'postcode'=>'RG2 7PU', 'country' => 'England'},
+    {'address'=>'180 Northumberland Avenue;;READING', 'postcode'=>'RG2 7PU', 'country' => 'England'},
+    {'address'=>'182 Northumberland Avenue;;READING', 'postcode'=>'RG2 7PU', 'country' => 'England'},
+    {'address'=>'184 Northumberland Avenue;;READING', 'postcode'=>'RG2 7PU', 'country' => 'England'},
+    {'address'=>'186 Northumberland Avenue;;READING', 'postcode'=>'RG2 7PU', 'country' => 'England'},
+    {'address'=>'188 Northumberland Avenue;;READING', 'postcode'=>'RG2 7PU', 'country' => 'England'},
+    {'address'=>'190 Northumberland Avenue;;READING', 'postcode'=>'RG2 7PU', 'country' => 'England'},
+    {'address'=>'192 Northumberland Avenue;;READING', 'postcode'=>'RG2 7PU', 'country' => 'England'}
   ].to_json
 end

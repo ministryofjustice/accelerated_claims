@@ -84,10 +84,10 @@ class PostcodeLookupProxy
       if country_valid?(result_set)
         return true
       else
-        @result_set = nil
+        @result_set = []
         @result_code = 9404
         @result_message = country_from_result_set(result_set)
-        return false
+        return true
       end
     end
   end

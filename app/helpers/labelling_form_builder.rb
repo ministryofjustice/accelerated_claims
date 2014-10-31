@@ -28,7 +28,9 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   #  :address_attr - the name of the address attribute if not 'street'
   #  :name - the prefix of the name given to the street and postcode attributes if not 'claim['xxxx'] where xxxx is the attribute
   #  :street_hint -  and html which is to be inserted as a hint above the street textarea
-  #  :valid_countries - postcodes that return a country not in the supplied list will be marked as invalid
+  #  :vc - list of valid countries: postcodes that return a country not in the supplied list will be marked as invalid.  
+  #        If not supplied or blank, all countries are valid.  Countries should be joined by '+' and spaces in country names should be replaced 
+  #        by underscores, e.g "england+wales+channel_islands+isle_of_man"
   #
   def moj_postcode_picker attribute, options = {}  
     default_options = { :prefix => "claim_#{attribute}", :postcode_attr => :postcode, :address_attr => :street, :name =>  "claim[#{attribute}]" }

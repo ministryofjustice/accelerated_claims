@@ -177,10 +177,10 @@ describe PostcodeLookupProxy do
         expect(pc.result_set).to eq expected_result_set
       end
 
-      it 'should return Scottish addresses OK' do
+      it 'should return Scottish addresses as invalid' do
         pc = PostcodeLookupProxy.new('BR35ES', ['England', 'Wales'] )
-        expect(pc.send(:development_lookup)).to be false
-        expect(pc.result_set).to be_nil
+        expect(pc.send(:development_lookup)).to be true
+        expect(pc.result_set).to be_empty
         expect(pc.result_code).to eq 9404
         expect(pc.result_message).to eq 'Scotland'
       end
