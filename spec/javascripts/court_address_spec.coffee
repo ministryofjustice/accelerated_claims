@@ -6,7 +6,6 @@
 enterPostcode = (postcode) ->
   postcode_field = $('#claim_property_postcode')
   postcode_field.val(postcode)
-  postcode_field.focusout()
 
 describe 'CourtAddressModule', ->
   element = null
@@ -55,6 +54,7 @@ describe 'CourtAddressModule', ->
       it 'should do Court address lookup', ->
         spyOn(window.CourtLookup, 'lookup')
         enterPostcode('SG8 0LT')
+        $('#claim_property_postcode').trigger('change')
         expect(window.CourtLookup.lookup).toHaveBeenCalledWith('SG8 0LT', window.CourtAddressModule)
 
     describe 'once the court finder lookup happened successfully', ->
