@@ -1,0 +1,6 @@
+= claim_form.fields_for fee_account, builder: LabellingFormBuilder do |form|
+  .sub-panel.details#fee-account-panel
+    .row.js-only
+      %a.caption#fee-account{ href: '#fee-account', 'aria-expanded' => 'false', class: 'show-hide-panel' }
+        = 'If you have a fee account number, enter it here'.html_safe
+    = form.text_field_row :account, label: '<span class="visuallyhidden">Fee account number, numeric only</span> <span aria-hidden="true">Fee account number</span> <span class=\'hint block\'>Enter your Fee Account number (if applicable)</span>'.html_safe, maxlength: 10
