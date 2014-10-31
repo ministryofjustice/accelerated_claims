@@ -6,7 +6,6 @@ feature 'Postcode address lookup' do
     WebMock.disable_net_connect!(:allow => ["127.0.0.1", /codeclimate.com/])
   end
 
-
   if remote_test?
     context 'live lookup' do
       scenario "enter postcode and select address from list", js: true do
@@ -21,7 +20,7 @@ feature 'Postcode address lookup' do
         expect(page).to have_field('claim_property_postcode', with: "BH22 8HR")
         expect(page).to have_field('claim_property_street', with: "5 Melbury Close\nFERNDOWN")
       end
-      
+
     end
   else
     context 'normal usage' do
@@ -37,7 +36,6 @@ feature 'Postcode address lookup' do
         expect(page).to have_field('claim_property_postcode', with: "BH22 8HR")
         expect(page).to have_field('claim_property_street', with: "5 Melbury Close\nFERNDOWN")
       end
-
 
       scenario 'search successfully then search different postcode results in new results', js: true do
         load_page
@@ -55,7 +53,6 @@ feature 'Postcode address lookup' do
         expect(page).to have_field('claim_property_street', with: "50 Tregunter Road\nLONDON")
       end
 
-     
       scenario 'enter and select postcode and then click change link hides address and moves focus to edit box', js: true do
         load_page
         fill_in 'claim_property_postcode_edit_field', with: 'rg27pu'
@@ -70,7 +67,6 @@ feature 'Postcode address lookup' do
         expect(page).not_to have_field('claim_property_street')
       end
 
-
       scenario 'selecting a postcode hides the postcode entry box and find button', js: true do
         load_page
         fill_in 'claim_property_postcode_edit_field', with: 'rg27pu'
@@ -83,7 +79,6 @@ feature 'Postcode address lookup' do
         expect(page).not_to have_field('claim_property_postcode_edit_field')
       end
     end
-
 
     context 'error messages' do
       scenario "service unavailable results in manual address entry", js: true do
@@ -139,7 +134,6 @@ feature 'Postcode address lookup' do
       end
     end
 
-
     context 'manual entry' do
       scenario "choose and do manual address entry", js: true do
         load_page
@@ -162,7 +156,6 @@ feature 'Postcode address lookup' do
         expect(page).not_to have_field('claim_property_street', with: "5 Melbury Close\nFERNDOWN")
       end
 
-    
       scenario "click manual edit and then search for postcode", js: true do
         load_page
         click_link 'Enter address manually'
@@ -178,12 +171,8 @@ feature 'Postcode address lookup' do
   end
 end
 
-
 def load_page
   visit '/'
   expect(page).to have_css('div#javascript_done')
 end
-
-
-
 
