@@ -19,11 +19,11 @@ feature 'Postcode address lookup' do
         fill_in 'claim_property_postcode_edit_field', with: 'BH22 8HR'
         click_find_address
 
-        select "5 Melbury Close, FERNDOWN", from: "sel-address"
+        select "Catwalk Cafe, 18 Montpellier Parade, HARROGATE", from: "sel-address"
         click_link "claim_property_selectaddress"
 
-        expect(page).to have_field('claim_property_postcode', with: "BH22 8HR")
-        expect(page).to have_field('claim_property_street', with: "5 Melbury Close\nFERNDOWN")
+        expect(page).to have_field('claim_property_postcode', with: "HG1 2TG")
+        expect(page).to have_field('claim_property_street', with: "Catwalk Cafe\n18 Montpellier Parade\nHARROGATE")
       end
 
     end
