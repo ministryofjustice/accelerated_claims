@@ -187,3 +187,18 @@ describe 'CourtAddressModule', ->
           spyOn(window.CourtLookup, 'lookup')
           window.CourtAddressModule.getCourtIfPostcodePresent()
           expect(window.CourtLookup.lookup).not.toHaveBeenCalledWith('SG8 0LT', window.CourtAddressModule)
+
+  describe 'when there are errors present', ->
+
+    describe 'error on court name', ->
+      beforeEach ->
+        element = '<div id="claim_court_court_name_error" class="row error"/>'
+        $(document.body).append(element)
+
+    it 'should expand the court name field', ->
+      CourtAddressModule.showFormWhenErrors()
+      court_name = $('#claim_court_court_name')
+      expect(court_name).toBeVisible()
+
+    it 'should expand the court address field', ->
+    it 'should expand the court postcode field', ->
