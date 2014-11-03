@@ -44,3 +44,21 @@ def assert_hash_is_correct(generated_values, expected_values)
   end
 end
 
+def find_it element, id
+  @elements ||= {}
+  @elements[element] ||= page.all(:xpath, "/html/body//#{element}", visible: false).each_with_object({}) {|e, h| h[e['id']] = e if e['id'] }
+
+  if @elements[element][id].nil?
+    binding.pry
+    puts "#{id} #{element} cannot be found"
+  else
+    @elements[element][id]
+  end
+end
+
+def submit_claim
+  if input = find_it('input', 'submit')
+    input.click
+  end
+end
+
