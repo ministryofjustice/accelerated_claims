@@ -32,6 +32,7 @@ class ClaimForm
     fill_postponement
     choose_defendant_pay_costs
     fill_court_fee
+    fill_fee_account
     fill_legal_costs
     fill_reference_number
   end
@@ -67,6 +68,7 @@ class ClaimForm
     fill_court_fee
     fill_legal_costs
     fill_reference_number_with_js unless claimant_type == 'individual'
+    fill_fee_account_with_js
   end
 
   def select_number_of_claimants
@@ -407,6 +409,16 @@ class ClaimForm
     prefix = 'fee'
     # it is hardcoded value for now
     # fill_in_text_field(prefix, 'court_fee')
+  end
+
+  def fill_fee_account
+    fill_in_text_field('fee', 'account')
+  end
+  def fill_fee_account_with_js
+    if get_data('fee','account') != nil
+      find('#fee-account').click
+      fill_in_text_field('fee', 'account')
+      end
   end
 
 end
