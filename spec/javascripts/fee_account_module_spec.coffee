@@ -35,7 +35,7 @@ describe "FeeAccountModule", ->
               </a>
             </div>
             <div class='row'><label for="claim_fee_account"><span class="visuallyhidden">Fee account number, numeric only</span> <span aria-hidden="true">Fee account number</span> <span class='hint block'>Enter your Fee Account number (if applicable)</span></label>
-            <input id="claim_fee_account" maxlength="10" name="claim[fee][account]" size="10" type="text" value="0000123456" /></div>
+            <input id="claim_fee_account" maxlength="10" name="claim[fee][account]" size="10" type="text" value="" /></div>
           </div>
         </div>
       </section>
@@ -50,5 +50,12 @@ describe "FeeAccountModule", ->
 
   describe 'initial view', ->
     it 'should not expand fee account block', ->
+      FeeAccountModule.initialDisplay()
       expect(@detail).not.toHaveClass('open')
       expect(@detail).toHaveClass('details')
+
+  describe 'with data', ->
+    it 'should expand the fee block', ->
+      $('#claim_fee_account').val('1234')
+      FeeAccountModule.initialDisplay()
+      expect(@detail).toHaveClass('open')
