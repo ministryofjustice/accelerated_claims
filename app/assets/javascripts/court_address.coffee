@@ -116,6 +116,10 @@ CourtAddressModule =
       if postcode
         CourtLookup.lookup(postcode, CourtAddressModule)
 
+  showFormWhenErrors: ->
+    if $('#claim_court_court_name_error')
+      $("#court-address").show()
+      $("#claim_court_court_name").attr({ 'type': 'text' })
 
   setup: ->
     CourtAddressModule.getCourtIfPostcodePresent()
@@ -123,6 +127,7 @@ CourtAddressModule =
     CourtAddressModule.hideCourtAddress()
     CourtAddressModule.sendPostcodeForLookup()
     CourtAddressModule.flipTextareaToInputField()
+    CourtAddressModule.showFormWhenErrors()
 
 root.CourtAddressModule = CourtAddressModule
 
