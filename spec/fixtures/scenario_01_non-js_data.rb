@@ -122,12 +122,20 @@
       as_money: "Yes",
       as_property: "No"
     },
+    court: {
+      court_name: "Good Court",
+      street: "1 Good Road, Goodtown",
+      postcode: "GT1 2XX"
+    },
     order: {
       possession: "Yes",
       cost: "No"
     },
     possession: {
       hearing: "No"
+    },
+    fee: {
+      account: "1234"
     },
     defendant_3: {
       title: nil,

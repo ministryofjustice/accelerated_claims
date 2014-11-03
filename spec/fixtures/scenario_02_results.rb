@@ -11,6 +11,7 @@
   defendant_2_postcode1: nil,
   defendant_2_postcode2: nil,
   fee_court_fee: "280.00",
+  fee_account: "1234567890",
   claimant_contact_legal_costs: nil,
   total_cost: "280.00",
   IssueDateDay: nil,
