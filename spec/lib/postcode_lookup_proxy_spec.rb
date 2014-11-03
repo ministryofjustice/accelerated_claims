@@ -72,7 +72,7 @@ describe PostcodeLookupProxy do
       it 'should return 503 if timeout' do
         WebMock.disable_net_connect!(:allow => [/api.ideal-postcodes.co.uk/, /codeclimate.com/] )
         pclp = PostcodeLookupProxy.new('RG2 9PU', [], true)
-        pclp.instance_variable_set(:@timeout, 0.00001)
+        expct(Excon).to receive(:get).and_raise_error(Timeout::Error)
         pclp.lookup
         expect(pclp.result_set).to eq ( {"code"=>5030, "message"=>"Service Unavailable"} )
         expect(pclp.http_status).to eq 503
