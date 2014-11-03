@@ -45,6 +45,13 @@ describe 'CourtAddressModule', ->
       $('#court-details').trigger 'click'
       expect(address).not.toBeVisible()
 
+    it 'should add "open" class', ->
+      address = $('#court-details')
+      address.wrap('<div class="row"></div>')
+      window.CourtAddressModule.enableTogglingOfCourtAddressForm()
+      $('#court-details').trigger 'click'
+      expect(address.parent().attr('class')).toMatch('row open')
+
   describe 'changing the postcode of the property value', ->
 
     beforeEach ->

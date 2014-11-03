@@ -39,12 +39,15 @@ CourtAddressModule =
       if $('#claim_court_street').is(':visible')
         CourtAddressModule.flipTextareaToInputField()
         CourtAddressModule.lookUpCourt()
-        $("#court-address").hide()
+        $('#court-address').hide()
+        $('#court-details').parent().addClass('open')
       else
         CourtAddressModule.populateCourtAddressForm('', '', '')
         CourtAddressModule.changeInputFieldToTextarea()
         CourtAddressModule.blankFormFields()
-        $("#court-address").show()
+        $('#court-address').show()
+        $('#court-details').parent().removeClass('open')
+
 
   showCourtAddressForm: ->
     CourtAddressModule.blankFormFields()
