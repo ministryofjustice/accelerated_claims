@@ -52,7 +52,3 @@ describe "FeeAccountModule", ->
     it 'should not expand fee account block', ->
       expect(@detail).not.toHaveClass('open')
       expect(@detail).toHaveClass('details')
-
-#
-#  describe 'reloading after data entry', ->
-#
