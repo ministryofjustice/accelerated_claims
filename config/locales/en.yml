@@ -85,6 +85,11 @@ en:
       hearing:
         'yes': 'Yes'
         'no': 'No'
+    fee:
+      account:
+        description: Fee account number
+        prompt: If you have a fee account number, enter it here
+        guidance: Fee account number, numeric only
   feedback:
     satisfaction_feedback:
       very_satisfied: 'Very satisfied'
