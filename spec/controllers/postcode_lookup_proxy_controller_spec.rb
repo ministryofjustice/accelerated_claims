@@ -74,43 +74,34 @@ describe PostcodeLookupProxyController, :type => :controller do
 
 
   describe 'live_postcode_lookup' do
+    # This test queries the live server and so should be used in normal day to day usage, but is 
+    # here if there is a question over what the live server actually returns
+    #
+    if ENV['LIVEPC'] == 'idealpostcodes'
+      context 'with livepc in url' do
+        before(:each) do
+          allow(request).to receive(:referer).and_return('https://civilclaims.service.gov.uk/accelerated-possession-eviction?journey=4&livepc=1')
+        end
 
-    context 'with livepc in url' do
+        it 'should return true for demo environments' do
+          setenv 'demo'
+          expect_postcode_lookup_to_be_called_with(true)
+          get :show, format: :json, pc: 'RG2 7PU'
+        end
 
-      let(:postcode)        { 'RG2 7PU' }
-      let(:all_countries)   { [] }
-      let(:pclp)            { double PostcodeLookupProxy }
 
-      before(:each) do
-        allow(request).to receive(:referer).and_return('https://civilclaims.service.gov.uk/accelerated-possession-eviction?journey=4&livepc=1')
-        allow(PostcodeLookupProxy).to receive(:new).with(postcode, all_countries, true).and_return(pclp)
-        allow(pclp).to receive(:lookup).and_return(true)
-        allow(pclp).to receive(:result_set).and_return('xxxxx')
-        allow(pclp).to receive(:http_status).and_return(200)
+        it 'should return true for staging environments' do
+          setenv 'staging'
+          expect_postcode_lookup_to_be_called_with(true)
+          get :show, format: :json, pc: 'RG2 7PU'
+        end
+        
+        it 'should return true for production environments' do
+          setenv 'staging'
+          expect_postcode_lookup_to_be_called_with(true)
+          get :show, format: :json, pc: 'RG2 7PU'
+        end
       end
-
-      it 'should return true for demo environments' do
-        setenv 'demo'
-        get :show, format: :json, pc: postcode
-        expect(response.body).to eq 'xxxxx'
-        expect(response.status).to eq 200
-      end
-
-
-      it 'should return true for staging environments' do
-        setenv 'staging'
-        get :show, format: :json, pc: postcode
-        expect(response.body).to eq 'xxxxx'
-        expect(response.status).to eq 200
-      end
-      
-      it 'should return true for production environments' do
-        setenv 'production'
-        get :show, format: :json, pc: postcode
-        expect(response.body).to eq 'xxxxx'
-        expect(response.status).to eq 200
-      end
-
     end
 
     context 'with no livepc in the url' do
@@ -134,33 +125,27 @@ describe PostcodeLookupProxyController, :type => :controller do
         expect(response.status).to eq 200
       end
 
-      it 'should return true for staging environments' do
-        setenv 'staging'
-        allow(PostcodeLookupProxy).to receive(:new).with(postcode, all_countries, true).and_return(pclp)
-        allow(pclp).to receive(:lookup).and_return(true)
-        allow(pclp).to receive(:result_set).and_return('xxxxx')
-        allow(pclp).to receive(:http_status).and_return(200)
-        get :show, format: :json, pc: 'RG2 7PU'
-        expect(response.body).to eq 'xxxxx'
-        expect(response.status).to eq 200
-      end
+
+      # This test queries the live server and so should be used in normal day to day usage, but is 
+      # here if there is a question over what the live server actually returns
+      #
+      if ENV['LIVEPC'] == 'idealpostcodes'
+
+        it 'should return true for staging environments' do
+          setenv 'staging'
+          expect_postcode_lookup_to_be_called_with(true)
+          get :show, format: :json, pc: 'RG2 7PU'
+        end
 
 
-      it 'should return true for production environments' do
-        setenv 'production'
-        allow(PostcodeLookupProxy).to receive(:new).with(postcode, all_countries, true).and_return(pclp)
-        allow(pclp).to receive(:lookup).and_return(true)
-        allow(pclp).to receive(:result_set).and_return('xxxxx')
-        allow(pclp).to receive(:http_status).and_return(200)
-        get :show, format: :json, pc: 'RG2 7PU'
-        expect(response.body).to eq 'xxxxx'
-        expect(response.status).to eq 200
+        it 'should return true for production environments' do
+          setenv 'production'
+          expect_postcode_lookup_to_be_called_with(true)
+          get :show, format: :json, pc: 'RG2 7PU'
+        end
       end
     end
   end
-
-  describe 
-
 end
 
 

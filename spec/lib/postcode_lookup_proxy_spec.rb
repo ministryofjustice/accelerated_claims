@@ -67,16 +67,28 @@ describe PostcodeLookupProxy do
   end
 
 
-  # The following tests are not intended to be run on a daily basis, but if required can be run by setting the 
-  # environment variable 'LIVEPC=idealpostcodes'
-  #
-  if ENV['LIVEPC'] == 'idealpostcodes'
-    context 'lookup using live data' do
-      it 'should return 422 if postcode invalid' do
-        pclp = PostcodeLookupProxy.new('WCX1B5HA', [], true)
-        pclp.lookup
-        expect(pclp.result_set).to eq ( {"code"=>4220, "message"=>"Invalid Postcode"} )
-        expect(pclp.http_status).to eq 422
+
+  describe 'private method production_lookup' do
+
+    # This test queries the live server and so should be used in normal day to day usage, but is 
+    # here if there is a question over what the live server actually returns
+    #
+    if ENV['LIVEPC'] == 'idealpostcodes'
+      context 'timely lookup' do
+        it 'should call ideal-postcodes and return true, transforming the api into @result_set' do
+          pclp = PostcodeLookupProxy.new('SW10 9LN')
+
+          response = double('Http Repsonse')
+          expect(Excon).to receive(:get).and_return(response)
+          expect(response).to receive(:status).and_return(200).at_least(1)
+          expect(response).to receive(:body).and_return(api_response)
+
+          expect(pclp.send(:production_lookup)).to be true
+          expect(pclp.result_set).to eq [
+            {"address"=>"2 Barons Court Road;;LONDON", "postcode"=>"ID1 1QD"}, 
+            {"address"=>"Basement Flat;;2 Barons Court Road;;LONDON", "postcode"=>"ID1 1QD"}
+          ]
+        end
       end
 
       it 'should return 404 if postcode not found' do
@@ -122,17 +134,27 @@ describe PostcodeLookupProxy do
 
   end
 
+  ##### - A test to check that we can connect to the real remote service - don't use in day-to-day testing
+  
+  # describe 'a real lookup to the api' do
+  #   it 'should return a result or timeout' do
+  #     WebMock.disable_net_connect!(:allow => [/api.ideal-postcodes.co.uk/, /codeclimate.com/] )
+  #     pclp = PostcodeLookupProxy.new('SW109LB', true)
+  #     expect(pclp).to be_valid
+  #     result = pclp.lookup
+  #     if result == true
+  #       expect(pclp.empty?).to be false
+  #     else
+  #       expect(pclp.result_code).to eq 9001
+  #     end
+  #   end
+  # end
+
 end
-
-
-
 
 def api_response
   %Q/{"result":[{"postcode":"ID1 1QD","postcode_inward":"1QD","postcode_outward":"ID1","post_town":"LONDON","dependant_locality":"","double_dependant_locality":"","thoroughfare":"Barons Court Road","dependant_thoroughfare":"","building_number":"2","building_name":"","sub_building_name":"","po_box":"","department_name":"","organisation_name":"","udprn":25962203,"postcode_type":"S","su_organisation_indicator":"","delivery_point_suffix":"1G","line_1":"2 Barons Court Road","line_2":"","line_3":"","premise":"2","country":"England","county":"","district":"Hammersmith and Fulham","ward":"North End","longitude":-0.208644362766368,"latitude":51.4899488390558,"eastings":524466,"northings":178299},{"postcode":"ID1 1QD","postcode_inward":"1QD","postcode_outward":"ID1","post_town":"LONDON","dependant_locality":"","double_dependant_locality":"","thoroughfare":"Barons Court Road","dependant_thoroughfare":"","building_number":"2","building_name":"Basement Flat","sub_building_name":"","po_box":"","department_name":"","organisation_name":"","udprn":52618355,"postcode_type":"S","su_organisation_indicator":"","delivery_point_suffix":"3A","line_1":"Basement Flat","line_2":"2 Barons Court Road","line_3":"","premise":"Basement Flat, 2","country":"England","county":"","district":"Hammersmith and Fulham","ward":"North End","longitude":-0.208644362766368,"latitude":51.4899488390558,"eastings":524466,"northings":178299}],"code":2000,"message":"Success"}/
 end
-
-
-
 
 def expected_result_set
   [
