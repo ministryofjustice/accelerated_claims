@@ -100,7 +100,7 @@ class Defendant < BaseClass
   end
 
   def numbered_header
-    "Defendant #{defendant_num}:\n"
+    "Defendant #{defendant_num} name and address for service:\n"
   end
 
   private

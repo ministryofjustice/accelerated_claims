@@ -145,14 +145,14 @@ describe DefendantCollection do
       params['num_defendants'] = 2
       dc = DefendantCollection.new(params)
       expect(dc.size).to eq 2
-      expect(dc.further_participants).to eq [ dc[2] ]
+      expect(dc.further_participants).to eq [ dc[1], dc[2] ]
     end
 
     it 'should return an array of 5 defendants if 6 defendants in collection' do
       params = claim_params_for_six_defendants
       dc = DefendantCollection.new(params)
       expect(dc.size).to eq 6
-      expect(dc.further_participants).to eq [ dc[2], dc[3], dc[4], dc[5], dc[6] ]
+      expect(dc.further_participants).to eq [ dc[1], dc[2], dc[3], dc[4], dc[5], dc[6] ]
     end
   end
 

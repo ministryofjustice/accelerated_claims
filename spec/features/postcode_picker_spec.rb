@@ -16,7 +16,7 @@ feature 'Postcode address lookup' do
     context 'live lookup' do
       scenario "enter postcode and select address from list", js: true do
         load_page
-        fill_in 'claim_property_postcode_edit_field', with: 'BH22 8HR'
+        fill_in 'claim_property_postcode_edit_field', with: 'SW10 6GG'
         click_find_address
 
         select "Catwalk Cafe, 18 Montpellier Parade, HARROGATE", from: "sel-address"
