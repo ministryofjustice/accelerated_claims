@@ -13,7 +13,7 @@ describe PostcodeLookupProxyController, :type => :controller do
     before(:example) do
       allow(controller).to receive(:live_postcode_lookup?).and_return(false)
     end
-    
+
     context 'a valid postcode' do
       it "should render the result set" do
         get :show, format: :json, pc: "SW10 2LB"
@@ -56,7 +56,7 @@ describe PostcodeLookupProxyController, :type => :controller do
 
   describe 'live_postcode_lookup' do
 
-    # This test queries the live server and so should be used in normal day to day usage, but is 
+    # This test queries the live server and so should be used in normal day to day usage, but is
     # here if there is a question over what the live server actually returns
     #
     if ENV['LIVEPC'] == 'idealpostcodes'
@@ -77,7 +77,7 @@ describe PostcodeLookupProxyController, :type => :controller do
           expect_postcode_lookup_to_be_called_with(true)
           get :show, format: :json, pc: 'RG2 7PU'
         end
-        
+
         it 'should return true for production environments' do
           setenv 'staging'
           expect_postcode_lookup_to_be_called_with(true)
@@ -100,7 +100,7 @@ describe PostcodeLookupProxyController, :type => :controller do
 
 
 
-      # This test queries the live server and so should be used in normal day to day usage, but is 
+      # This test queries the live server and so should be used in normal day to day usage, but is
       # here if there is a question over what the live server actually returns
       #
       if ENV['LIVEPC'] == 'idealpostcodes'
