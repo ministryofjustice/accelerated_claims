@@ -64,20 +64,26 @@ describe PostcodeLookupProxy do
 
 
   describe 'private method production_lookup' do
-    context 'timely lookup' do
-      it 'should call ideal-postcodes and return true, transforming the api into @result_set' do
-        pclp = PostcodeLookupProxy.new('SW10 9LN')
 
-        response = double('Http Repsonse')
-        expect(Excon).to receive(:get).and_return(response)
-        expect(response).to receive(:status).and_return(200).at_least(1)
-        expect(response).to receive(:body).and_return(api_response)
+    # This test queries the live server and so should be used in normal day to day usage, but is 
+    # here if there is a question over what the live server actually returns
+    #
+    if ENV['LIVEPC'] == 'idealpostcodes'
+      context 'timely lookup' do
+        it 'should call ideal-postcodes and return true, transforming the api into @result_set' do
+          pclp = PostcodeLookupProxy.new('SW10 9LN')
 
-        expect(pclp.send(:production_lookup)).to be true
-        expect(pclp.result_set).to eq [
-          {"address"=>"2 Barons Court Road;;LONDON", "postcode"=>"ID1 1QD"}, 
-          {"address"=>"Basement Flat;;2 Barons Court Road;;LONDON", "postcode"=>"ID1 1QD"}
-        ]
+          response = double('Http Repsonse')
+          expect(Excon).to receive(:get).and_return(response)
+          expect(response).to receive(:status).and_return(200).at_least(1)
+          expect(response).to receive(:body).and_return(api_response)
+
+          expect(pclp.send(:production_lookup)).to be true
+          expect(pclp.result_set).to eq [
+            {"address"=>"2 Barons Court Road;;LONDON", "postcode"=>"ID1 1QD"}, 
+            {"address"=>"Basement Flat;;2 Barons Court Road;;LONDON", "postcode"=>"ID1 1QD"}
+          ]
+        end
       end
     end
 
@@ -192,19 +198,19 @@ describe PostcodeLookupProxy do
 
   ##### - A test to check that we can connect to the real remote service - don't use in day-to-day testing
   
-  describe 'a real lookup to the api' do
-    it 'should return a result or timeout' do
-      WebMock.disable_net_connect!(:allow => [/api.ideal-postcodes.co.uk/, /codeclimate.com/] )
-      pclp = PostcodeLookupProxy.new('SW109LB', true)
-      expect(pclp).to be_valid
-      result = pclp.lookup
-      if result == true
-        expect(pclp.empty?).to be false
-      else
-        expect(pclp.result_code).to eq 9001
-      end
-    end
-  end
+  # describe 'a real lookup to the api' do
+  #   it 'should return a result or timeout' do
+  #     WebMock.disable_net_connect!(:allow => [/api.ideal-postcodes.co.uk/, /codeclimate.com/] )
+  #     pclp = PostcodeLookupProxy.new('SW109LB', true)
+  #     expect(pclp).to be_valid
+  #     result = pclp.lookup
+  #     if result == true
+  #       expect(pclp.empty?).to be false
+  #     else
+  #       expect(pclp.result_code).to eq 9001
+  #     end
+  #   end
+  # end
 
 
 
