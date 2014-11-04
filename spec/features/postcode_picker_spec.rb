@@ -27,13 +27,8 @@ feature 'Postcode address lookup' do
     context 'normal usage' do
       scenario "enter postcode and select address from list", js: true do
         load_page
-
         fill_in 'claim_property_postcode_edit_field', with: 'SW10 1GG'
-        puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-        
         click_link 'Find address'
-        puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-        
         expect(page).to have_css('option', text: '5 Melbury Close, FERNDOWN')
 
         select "5 Melbury Close, FERNDOWN", from: "sel-address"
@@ -170,11 +165,13 @@ feature 'Postcode address lookup' do
     
       scenario "click manual edit and then search for postcode", js: true do
         load_page
+        wait_for_ajax
         click_link 'Enter address manually'
+        wait_for_ajax
 
         fill_in 'claim_property_postcode_edit_field', with: 'SW10 6GG'
         click_link 'Find address'
-        sleep 0.5
+        wait_for_ajax
 
         expect(page).not_to have_field('claim_property_postcode')
         expect(page).not_to have_field('claim_property_street')

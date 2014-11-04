@@ -3,7 +3,6 @@ root = exports ? this
 PostcodeLookup =
 
   lookup: (postcode, view) ->
-    console.log "LOOKING UP"
     separator = "/"
     if window.location.pathname.match(/\/$/)
       separator = ""

@@ -15,14 +15,16 @@ feature 'Filling in property section' do
     end
 
     scenario "selecting room in a property, then selecting self-contained house", js: true do
+      
       visit '/'
+      wait_for_ajax
       expect(page).to have_css('div#javascript_done')
       expect(page).not_to have_content('Include the room number')
       choose('claim_property_house_no')
 
       fill_in 'claim_property_postcode_edit_field', with: 'rg28pu'
       click_link 'Find address'
-      sleep 0.5
+      wait_for_ajax
       select "160 Northumberland Avenue, READING", from: "sel-address"
       click_link "claim_property_selectaddress"
       expect(page).to have_content('Include the room number')
