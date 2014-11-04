@@ -49,6 +49,24 @@ describe PostcodeLookupProxy do
   end
 
 
+  context 'country limited to England and Wales' do
+    it 'should return success for English Postcode' do
+      pclp = PostcodeLookupProxy.new('BH22 7HR', ['England', 'Wales'])
+      pclp.lookup
+      expect(pclp.result_set).to eq ( {"code"=>2000, "message"=>"Success", 'result' => expected_result_set } )
+      expect(pclp.http_status).to eq 200
+    end
+
+    it 'should return 404/4041 for Scottish Address' do
+      pclp = PostcodeLookupProxy.new('EH1 5HR', ['England', 'Wales'])
+      pclp.lookup
+      expect(pclp.result_set).to eq ( {"code"=>4041, "message"=>"Scotland"} )
+      expect(pclp.http_status).to eq 404
+    end
+
+  end
+
+
   # The following tests are not intended to be run on a daily basis, but if required can be run by setting the 
   # environment variable 'LIVEPC=idealpostcodes'
   #

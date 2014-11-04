@@ -98,6 +98,8 @@ class PostcodePicker
     @picker.find('.street textarea').focus()
 
   displayAddresses: (addresses) ->
+    console.log 'XXXXX'
+    console.log addresses
     @hideAddressFields()
     @hidePostcodeSearchComponent()
     @addresses = addresses.result
@@ -145,8 +147,12 @@ class PostcodePicker
     @picker.find('.postcode-display').hide()
     @hideAddressFields()
 
-  displayNoResultsFound: ->
-    @addErrorMessage('No address found. Please enter the address manually')
+  displayNoResultsFound: (results) ->
+    if results['code'] == 4041
+      @addErrorMessage("Postcode is in #{results['message']}. You can only use this service to regain possession of properties in England and Wales.")
+    else
+      @addErrorMessage('No address found. Please enter the address manually')
+      
     @picker.find('.postcode-display').hide()
     @hideAddressFields()
 

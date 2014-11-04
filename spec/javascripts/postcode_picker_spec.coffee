@@ -76,10 +76,14 @@ describe 'PostcodePicker', ->
 </div>
 </body>""")
 
-    @results = [
-      {"address":"Flat 1;;1 Melbury Close;;FERNDOWN","postcode":"BH22 8HR"},
-      {"address":"3 Melbury Close;;FERNDOWN","postcode":"BH22 8HR"}
-    ]
+    @results = {
+      'code':     2000,
+      'message':  'Success',
+      'results':  [
+        {"address":"Flat 1;;1 Melbury Close;;FERNDOWN","postcode":"BH22 8HR"},
+        {"address":"3 Melbury Close;;FERNDOWN","postcode":"BH22 8HR"}
+      ]
+    }
     $(document.body).append(element)
     pickerDivs = $('.postcode-picker-container')
     @picker = pickerDivs.eq(0)

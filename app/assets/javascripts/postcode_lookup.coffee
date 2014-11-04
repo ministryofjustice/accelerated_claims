@@ -15,8 +15,8 @@ PostcodeLookup =
       statusCode:
         422: ->
           view.displayInvalidPostcodeMessage()
-        404: ->
-          view.displayNoResultsFound()
+        404: (data) ->
+          view.displayNoResultsFound(data)
         503: ->
           view.displayServiceUnavailable()
     )
