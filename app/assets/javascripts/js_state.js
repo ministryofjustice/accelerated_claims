@@ -43,7 +43,11 @@ moj.Modules.jsState = (function() {
 
     bindEvents();
 
-    window.scrollTo( 0, 0 );
+    if ( window.location.hash === "" ) {
+      window.scrollTo( 0, 0 );
+    } else {
+      window.location.hash=window.location.hash; // resets location after show/hides
+    }
 
     // Trigger a change on the form in order for the js-state to be filled
     // (which is required for checkState to work correctly)
