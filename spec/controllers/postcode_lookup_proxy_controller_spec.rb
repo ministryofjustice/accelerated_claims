@@ -1,8 +1,6 @@
 
 describe PostcodeLookupProxyController, :type => :controller do
 
-
-
   describe "show" do
 
     before(:all) do
@@ -13,7 +11,7 @@ describe PostcodeLookupProxyController, :type => :controller do
     before(:example) do
       allow(controller).to receive(:live_postcode_lookup?).and_return(false)
     end
-    
+
     context 'a valid postcode' do
       it "should render the result set" do
         get :show, format: :json, pc: "SW10 2LB"
@@ -29,7 +27,6 @@ describe PostcodeLookupProxyController, :type => :controller do
         expect(response.body).to eq "Invalid postcode"
       end
     end
-
 
     context 'an empty dataset' do
       it "should render 'No matching postcodes'" do
@@ -52,35 +49,35 @@ describe PostcodeLookupProxyController, :type => :controller do
     end
   end
 
-
-
   describe 'live_postcode_lookup' do
 
-    context 'with livepc in url' do
+    # This test queries the live server and so should be used in normal day to day usage, but is
+    # here if there is a question over what the live server actually returns
+    #
+    if ENV['LIVEPC'] == 'idealpostcodes'
+      context 'with livepc in url' do
+        before(:each) do
+          allow(request).to receive(:referer).and_return('https://civilclaims.service.gov.uk/accelerated-possession-eviction?journey=4&livepc=1')
+        end
 
-      before(:each) do
-        allow(request).to receive(:referer).and_return('https://civilclaims.service.gov.uk/accelerated-possession-eviction?journey=4&livepc=1')
+        it 'should return true for demo environments' do
+          setenv 'demo'
+          expect_postcode_lookup_to_be_called_with(true)
+          get :show, format: :json, pc: 'RG2 7PU'
+        end
+
+        it 'should return true for staging environments' do
+          setenv 'staging'
+          expect_postcode_lookup_to_be_called_with(true)
+          get :show, format: :json, pc: 'RG2 7PU'
+        end
+
+        it 'should return true for production environments' do
+          setenv 'staging'
+          expect_postcode_lookup_to_be_called_with(true)
+          get :show, format: :json, pc: 'RG2 7PU'
+        end
       end
-
-      it 'should return true for demo environments' do
-        setenv 'demo'
-        expect_postcode_lookup_to_be_called_with(true)
-        get :show, format: :json, pc: 'RG2 7PU'
-      end
-
-
-      it 'should return true for staging environments' do
-        setenv 'staging'
-        expect_postcode_lookup_to_be_called_with(true)
-        get :show, format: :json, pc: 'RG2 7PU'
-      end
-      
-      it 'should return true for production environments' do
-        setenv 'staging'
-        expect_postcode_lookup_to_be_called_with(true)
-        get :show, format: :json, pc: 'RG2 7PU'
-      end
-
     end
 
     context 'with no livepc in the url' do
@@ -95,27 +92,26 @@ describe PostcodeLookupProxyController, :type => :controller do
         get :show, format: :json, pc: 'RG2 7PU'
       end
 
-      it 'should return true for staging environments' do
-        setenv 'staging'
-        expect_postcode_lookup_to_be_called_with(true)
-        get :show, format: :json, pc: 'RG2 7PU'
+      # This test queries the live server and so should be used in normal day to day usage, but is
+      # here if there is a question over what the live server actually returns
+      #
+      if ENV['LIVEPC'] == 'idealpostcodes'
+
+        it 'should return true for staging environments' do
+          setenv 'staging'
+          expect_postcode_lookup_to_be_called_with(true)
+          get :show, format: :json, pc: 'RG2 7PU'
+        end
+
+        it 'should return true for production environments' do
+          setenv 'production'
+          expect_postcode_lookup_to_be_called_with(true)
+          get :show, format: :json, pc: 'RG2 7PU'
+        end
       end
-
-
-      it 'should return true for production environments' do
-        setenv 'production'
-        expect_postcode_lookup_to_be_called_with(true)
-        get :show, format: :json, pc: 'RG2 7PU'
-      end
-
     end
-
-   
   end
-
 end
-
-
 
 def setenv(env)
   ENV['ENV_NAME'] = env
@@ -133,8 +129,6 @@ def expect_postcode_lookup_to_be_called_with(flag)
   pclp = double(PostcodeLookupProxy).as_null_object
   expect(PostcodeLookupProxy).to receive(:new).with('RG2 7PU', flag).and_return(pclp)
 end
-
-
 
 def expected_response
   [
