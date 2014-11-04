@@ -59,15 +59,13 @@ describe PostcodeLookupProxyController, :type => :controller do
       end
     end
 
-    pending 'implementation of scotland' do
     context 'a scottish postcode which is not allowed' do
       it 'should return 404 with 9404 result code and scotland as message' do
         expect(PostcodeLookupProxy).to receive(:new).with('EH10 5LB', ['England', 'Wales'], false).and_call_original
         get :show, format: :json, pc: "EH10 5LB", vc: 'england wales'
-        expect(response.status).to eq(400)
-        expect(response.body).to eq "Postcode is in Scotland.  You can only use this form if the property is in England and Wales"
+        expect(response.status).to eq(404)
+        expect(response.body).to eq({'code' => 4041, 'message' => 'Scotland' }.to_json)
       end
-    end
     end
   end
 

@@ -79,9 +79,17 @@ describe 'PostcodePicker', ->
     @results = {
       'code':     2000,
       'message':  'Success',
-      'results':  [
-        {"address":"Flat 1;;1 Melbury Close;;FERNDOWN","postcode":"BH22 8HR"},
-        {"address":"3 Melbury Close;;FERNDOWN","postcode":"BH22 8HR"}
+      'result':  [
+        {
+          "address":"Flat 1;;1 Melbury Close;;FERNDOWN", 
+          "postcode":"BH22 8HR", 
+          "country": "England"
+        },
+        {
+          "address":"3 Melbury Close;;FERNDOWN", 
+          "postcode":"BH22 8HR", 
+          "country": "England"
+        }
       ]
     }
     $(document.body).append(element)
@@ -154,17 +162,27 @@ describe 'PostcodePicker', ->
       expect( @picker.find('span.error.postcode').size() ).toEqual 0
 
   describe 'displayNoResultsFound', ->
-    it 'should display an error message', ->
-      @view.displayNoResultsFound()
+
+    it 'should display an error message if no result found', ->
+      response =  { "code": 4040, "message": "Postcode Not Found" }
+      @view.displayNoResultsFound(response)
       expect( @picker.find('span.error.postcode').text() ).toEqual 'No address found. Please enter the address manually'
 
+    it 'should display not England and Wales message if code 4041', ->
+      response =  { "code": 4041, "message": "Northern Ireland" }
+      @view.displayNoResultsFound(response)
+      expect( @picker.find('span.error.postcode').text() ).toEqual 'Postcode is in Northern Ireland. You can only use this service to regain possession of properties in England and Wales.'
+
     it 'clears existing error message', ->
-      @view.displayNoResultsFound()
-      @view.displayNoResultsFound()
+      response =  { "code": 4040, "message": "Postcode Not Found" }
+      @view.displayNoResultsFound(response)
+      response =  { "code": 4041, "message": "Northern Ireland" }
+      @view.displayNoResultsFound(response)
       expect( @picker.find('span.error.postcode').size() ).toEqual 1
 
     it 'should remove a previously-displayed error message on edit field keyup', ->
-      @view.displayNoResultsFound()
+      response =  { "code": 4040, "message": "Postcode Not Found" }
+      @view.displayNoResultsFound(response)
       @postcodeEditField.trigger('keyup')
       expect( @picker.find('span.error.postcode').size() ).toEqual 0
 

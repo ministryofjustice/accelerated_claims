@@ -12,14 +12,6 @@ template
   the lookup postcode link passes in the country_query value
 
 
-
-
-
-postcode_picker.coffee
-  displayNoResultsFound method to distinguish between genuine 404 and not in requested country
-
-
-
 DONE:
 
 postcode lookup proxy
@@ -32,3 +24,7 @@ the postcode_proxy_lookup_controller
 
 labelling form builder
   moj_postcode_picker to accept new option ('country' => ['England', 'Wales'])
+
+postcode_picker.coffee
+  displayNoResultsFound method to distinguish between genuine 404 and not in requested country
+
