@@ -39,7 +39,7 @@ feature 'Callback request' do
 
     scenario 'go back to form page' do
       visit '/'
-      click_link 'Technical help'
+      click_link 'technical help'
       expect(page).to have_content('Ask for technical help')
 
       fill_in_the_form_correctly
@@ -50,7 +50,7 @@ feature 'Callback request' do
 
     scenario 'go back to form page' do
       visit '/feedback/new'
-      click_link 'Technical help'
+      click_link 'technical help'
       expect(page).to have_content('Ask for technical help')
 
       fill_in_the_form_correctly
@@ -62,7 +62,7 @@ feature 'Callback request' do
 
     scenario 'go back to technical help page' do
       visit '/ask-for-technical-help'
-      click_link 'Technical help'
+      click_link 'technical help'
       expect(page).to have_content('Ask for technical help')
 
       fill_in_the_form_correctly

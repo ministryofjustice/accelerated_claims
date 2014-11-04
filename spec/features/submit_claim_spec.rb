@@ -44,7 +44,6 @@ feature "submit claim" do
     end
   end
 
-
   JOURNEY = ENV['JOURNEY'] || ''
 
   Dir.glob("spec/fixtures/scenario_#{JOURNEY}*_data.rb") do |data_file|
@@ -56,7 +55,13 @@ feature "submit claim" do
       unless data['javascript'] == 'JS'
         eval(%Q|
           scenario "#{title}: #{description.first} (#{description.last})" do
+            # require 'ruby-prof'
+            # RubyProf.start
             run_scenario '#{data_file}', js: false
+            # result = RubyProf.stop
+#
+            # printer = RubyProf::FlatPrinter.new(result)
+            # printer.print(STDOUT)
           end
         |)
       end
