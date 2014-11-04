@@ -1,6 +1,19 @@
 # Helper methods for confirmation summary display
 module SummaryHelper
 
+  def summary_section_header section
+    capture_haml do
+      haml_tag 'div.summary-header' do
+        haml_tag 'div.left', :< do
+          section_header section
+        end
+        haml_tag 'div.right', :< do
+          link_to_edit_section section
+        end
+      end
+    end
+  end
+
   # creates key for locale file lookup
   def localization_key section, label, suffix
     ['claim', section.sub(/_\d+/,''), label.sub(/_\d+/,''), suffix].join('.')
@@ -39,8 +52,8 @@ module SummaryHelper
     section_name = I18n.t "claim.#{section_key}.label"
 
     capture_haml do
-      haml_tag "a", :<, href: "/accelerated-possession-eviction##{section_key}-section" do
-        haml_concat "Change #{section_name}"
+      haml_tag "a", :<, href: "/##{section_key}-section" do
+        haml_concat "Change #{section_name.downcase}"
       end
     end
   end

@@ -6,8 +6,9 @@
   - blank_participant = @claim[participant]['validate_absence']
   - unless blank_participant
     .row.divider
-    .row
-      %h3= participant.humanize
+    - if @claim["num_#{type}s"].to_i != 1
+      .row
+        %h3= participant.humanize
     .row
       - values = @claim[participant]
       - values.each do |label, value|

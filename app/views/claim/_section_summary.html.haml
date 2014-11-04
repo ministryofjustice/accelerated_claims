@@ -1,5 +1,6 @@
-= section_header section
-.moj-panel{ id: "##{section}"}
+= summary_section_header section
+
+.moj-panel{ id: "##{section}", style: "clear: both;"}
   .row
     - values = @claim[section]
     - if values.is_a?(Hash)
@@ -9,4 +10,3 @@
               locals: { section: section, label: label, value: value }
     - else
       = values
-
