@@ -4,7 +4,7 @@ class Fee < BaseClass
   attr_accessor :account
 
   validates :court_fee, presence: { message: 'must be entered' }, length: { maximum: 8 }
-  validates :account, format: { with: /[0-9]+/, message: 'Fee account must be a number' }, length: { maximum: 10, message: 'Fee account number should only have 10 digits'}, allow_blank: true
+  validates :account, format: { with: /[0-9]+/, message: 'Your fee account number should contain numbers only' }, length: { maximum: 10, message: 'Fee account number should only have 10 digits'}, allow_blank: true
 
 
   def court_fee

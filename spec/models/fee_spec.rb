@@ -44,7 +44,7 @@ describe Fee, :type => :model do
 
     it "shouldn't be valid" do
       expect(fee).not_to be_valid
-      expect(fee.errors[:account]).to eq ["Fee account must be a number"]
+      expect(fee.errors[:account]).to eq ["Your fee account number should contain numbers only"]
     end
   end
 
