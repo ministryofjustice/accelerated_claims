@@ -71,13 +71,13 @@ class ClaimForm
 
   def select_number_of_claimants
     num_claimants = get_data('claim', 'num_claimants')
-    fill_in "How many claimants are there?", with: num_claimants
+    find_it('input', 'claim_num_claimants').set(num_claimants)
     num_claimants
   end
 
   def select_number_of_defendants
     num_defendants = get_data('claim', 'num_defendants')
-    fill_in "How many defendants are there?", with: num_defendants
+    find_it('input', 'claim_num_defendants').set(num_defendants)
     num_defendants
   end
 
@@ -146,7 +146,7 @@ class ClaimForm
   end
 
   def submit
-    click_button 'Continue'
+    submit_claim
   end
 
   def validation_error_text
@@ -156,7 +156,7 @@ class ClaimForm
   end
 
   def fill_in_value element, id, value
-    find(:xpath, "//#{element}[@id='#{id}']").set value
+    find_it(element, id).set value
   end
 
   def fill_in_text_field(prefix, key)
@@ -181,19 +181,23 @@ class ClaimForm
     end
   end
 
+  def select_claimant_type
+    claimant_type = get_data('claim', 'claimant_type')
+    id = "claim_claimant_type_#{claimant_type}"
+    find_it('input', id).set(true)
+    claimant_type
+  end
+
   def choose_radio(prefix, key)
-    choice = get_data(prefix,key)
-    selection = "claim_#{prefix}_#{key}_#{choice}".downcase
-    choose(selection) unless choice.nil?
+    if choice = get_data(prefix,key)
+      selection = "claim_#{prefix}_#{key}_#{choice}".downcase
+      find_it('input', selection).set(true)
+    end
   end
 
   def check_box(prefix, key)
     if(get_data(prefix, key).downcase == 'yes')
-      begin
-        check("claim_#{prefix}_#{key}")
-      rescue Capybara::ElementNotFound
-        check("claim_#{prefix}_#{key}", visible: false)
-      end
+      find_it('input', "claim_#{prefix}_#{key}").set(true)
     end
   end
 
@@ -235,15 +239,8 @@ class ClaimForm
     end
   end
 
-  def select_claimant_type
-    claimant_type = get_data('claim', 'claimant_type')
-    choose "claim_claimant_type_#{claimant_type}"
-    claimant_type
-  end
-
-
   def click_manual_address_link(prefix)
-    click_link("claim_#{prefix}_postcode_picker_manual_link")
+    find_it('a',"claim_#{prefix}_postcode_picker_manual_link").click
   end
 
   def fill_property_details
