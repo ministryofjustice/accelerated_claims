@@ -56,31 +56,34 @@ describe PostcodeLookupProxyController, :type => :controller do
 
   describe 'live_postcode_lookup' do
 
-    context 'with livepc in url' do
+    # This test queries the live server and so should be used in normal day to day usage, but is 
+    # here if there is a question over what the live server actually returns
+    #
+    if ENV['LIVEPC'] == 'idealpostcodes'
+      context 'with livepc in url' do
+        before(:each) do
+          allow(request).to receive(:referer).and_return('https://civilclaims.service.gov.uk/accelerated-possession-eviction?journey=4&livepc=1')
+        end
 
-      before(:each) do
-        allow(request).to receive(:referer).and_return('https://civilclaims.service.gov.uk/accelerated-possession-eviction?journey=4&livepc=1')
+        it 'should return true for demo environments' do
+          setenv 'demo'
+          expect_postcode_lookup_to_be_called_with(true)
+          get :show, format: :json, pc: 'RG2 7PU'
+        end
+
+
+        it 'should return true for staging environments' do
+          setenv 'staging'
+          expect_postcode_lookup_to_be_called_with(true)
+          get :show, format: :json, pc: 'RG2 7PU'
+        end
+        
+        it 'should return true for production environments' do
+          setenv 'staging'
+          expect_postcode_lookup_to_be_called_with(true)
+          get :show, format: :json, pc: 'RG2 7PU'
+        end
       end
-
-      it 'should return true for demo environments' do
-        setenv 'demo'
-        expect_postcode_lookup_to_be_called_with(true)
-        get :show, format: :json, pc: 'RG2 7PU'
-      end
-
-
-      it 'should return true for staging environments' do
-        setenv 'staging'
-        expect_postcode_lookup_to_be_called_with(true)
-        get :show, format: :json, pc: 'RG2 7PU'
-      end
-      
-      it 'should return true for production environments' do
-        setenv 'staging'
-        expect_postcode_lookup_to_be_called_with(true)
-        get :show, format: :json, pc: 'RG2 7PU'
-      end
-
     end
 
     context 'with no livepc in the url' do
@@ -95,24 +98,28 @@ describe PostcodeLookupProxyController, :type => :controller do
         get :show, format: :json, pc: 'RG2 7PU'
       end
 
-      it 'should return true for staging environments' do
-        setenv 'staging'
-        expect_postcode_lookup_to_be_called_with(true)
-        get :show, format: :json, pc: 'RG2 7PU'
+
+
+      # This test queries the live server and so should be used in normal day to day usage, but is 
+      # here if there is a question over what the live server actually returns
+      #
+      if ENV['LIVEPC'] == 'idealpostcodes'
+
+        it 'should return true for staging environments' do
+          setenv 'staging'
+          expect_postcode_lookup_to_be_called_with(true)
+          get :show, format: :json, pc: 'RG2 7PU'
+        end
+
+
+        it 'should return true for production environments' do
+          setenv 'production'
+          expect_postcode_lookup_to_be_called_with(true)
+          get :show, format: :json, pc: 'RG2 7PU'
+        end
       end
-
-
-      it 'should return true for production environments' do
-        setenv 'production'
-        expect_postcode_lookup_to_be_called_with(true)
-        get :show, format: :json, pc: 'RG2 7PU'
-      end
-
     end
-
-   
   end
-
 end
 
 
