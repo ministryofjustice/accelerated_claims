@@ -117,9 +117,19 @@ CourtAddressModule =
         CourtLookup.lookup(postcode, CourtAddressModule)
 
   showFormWhenErrors: ->
-    if $('#claim_court_court_name_error')
-      $("#court-address").show()
-      $("#claim_court_court_name").attr({ 'type': 'text' })
+    show = false
+    prefix = 'claim_court'
+    values = ['court_name', 'postcode', 'address']
+
+    for val in values
+      unless show
+        id = "\##{prefix}_#{val}_error"
+        if $('#form_errors').find("[data-id='#{id}']").length > 0
+          $('#claim_court_court_name').attr({ 'type': 'text' })
+          $('#claim_court_postcode').attr({ 'type': 'text' })
+          CourtAddressModule.changeInputFieldToTextarea()
+          $('#court-address').show()
+          show = true
 
   setup: ->
     CourtAddressModule.getCourtIfPostcodePresent()

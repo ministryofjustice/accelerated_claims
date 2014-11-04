@@ -190,15 +190,31 @@ describe 'CourtAddressModule', ->
 
   describe 'when there are errors present', ->
 
-    describe 'error on court name', ->
+    describe 'error on court section', ->
+
+      addErrorLink = (val) ->
+        error_link = "<a class=\"error-link\" data-id=\"#claim_court_#{val}_error\" href=\"#claim_court_#{val}_error\"></a>"
+        $('#form_errors').append(error_link)
+
       beforeEach ->
-        element = '<div id="claim_court_court_name_error" class="row error"/>'
-        $(document.body).append(element)
+        $(document.body).append('<section id="form_errors">')
 
-    it 'should expand the court name field', ->
-      CourtAddressModule.showFormWhenErrors()
-      court_name = $('#claim_court_court_name')
-      expect(court_name).toBeVisible()
+      afterEach ->
+        $('#form_errors').remove()
 
-    it 'should expand the court address field', ->
-    it 'should expand the court postcode field', ->
+      it 'should expand the court name field', ->
+        addErrorLink('court_name')
+        CourtAddressModule.showFormWhenErrors()
+        expect($('#claim_court_court_name')).toBeVisible()
+
+      it 'should expand the court street field', ->
+        addErrorLink('street')
+        CourtAddressModule.showFormWhenErrors()
+        court_street = $('#claim_court_street')
+        expect(court_street).toBeVisible()
+
+      it 'should expand the court postcode field', ->
+        addErrorLink('postcode')
+        CourtAddressModule.showFormWhenErrors()
+        court_postcode = $('#claim_court_postcode')
+        expect(court_postcode).toBeVisible()
