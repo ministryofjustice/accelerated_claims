@@ -23,7 +23,6 @@ Defendant 1 name and address for service:
     Anytown
     EY99 1XX
 
-
 Defendant 2 name and address for service:
     Mr John Dorey
     23 Mock St
@@ -55,7 +54,6 @@ def right_panel0
     23 Mock St
     Anytown
     EY99 1XX
-
 
 Defendant 7 name and address for service:
     Mr Defendant Seven

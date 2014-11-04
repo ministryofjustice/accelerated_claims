@@ -17,7 +17,6 @@ Defendant 1 name and address for service:
     Anytown
     EY99 1XX
 
-
 Defendant 2 name and address for service:
     Mr John Dorey
     23 Mock St
