@@ -47,9 +47,19 @@ describe Fee, :type => :model do
       expect(fee.errors[:account]).to eq ["Your fee account number should contain numbers only"]
     end
   end
+
   context 'with partially non numeric account number' do
     let(:court_fee) { "" }
     let(:account) { 'bob123' }
+
+    it "shouldn't be valid" do
+      expect(fee).not_to be_valid
+      expect(fee.errors[:account]).to eq ["Your fee account number should contain numbers only"]
+    end
+  end
+  context 'with partially non numeric account number' do
+    let(:court_fee) { "" }
+    let(:account) { '123bob' }
 
     it "shouldn't be valid" do
       expect(fee).not_to be_valid
