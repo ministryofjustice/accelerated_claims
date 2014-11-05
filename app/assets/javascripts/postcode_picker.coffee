@@ -98,14 +98,24 @@ class PostcodePicker
     @picker.find('.change-postcode-link').css('display', 'inline')
     @picker.find('.street textarea').focus()
 
+  handleSuccessfulResponse: (response) ->
+    if response.code == 2000
+      @displayAddresses(response.result)
+    else
+      console.log 'code is not 2000'
+      @displayInvalidCountryMessage(response)
+
+  displayInvalidCountryMessage: (response) ->
+     @addErrorMessage("Postcode is in #{response.message}. You can only use this service to regain possession of properties in England and Wales.")
+
   displayAddresses: (addresses) ->
+    @addresses = addresses
     @hideAddressFields()
     @hidePostcodeSearchComponent()
-    @addresses = addresses.result
     @selectElement.empty()
     @picker.find('.postcode-display').removeClass('hide')
-    @picker.find('.postcode-display-detail').html(@addresses[0].postcode)
-    $.each @addresses, (index, address) =>
+    @picker.find('.postcode-display-detail').html(addresses[0].postcode)
+    $.each addresses, (index, address) =>
       address = address.address.replace(/;;/g, ", ")
       option = "<option value=\"#{index}\">#{address}</option>"
       @selectElement.append option
@@ -113,7 +123,6 @@ class PostcodePicker
     @picker.find('.postcode-picker-address-list').show()
     @picker.find('.address-picker-select').focus()
     true
-
     
   hidePostcodeSearchComponent: ->
     @picker.find('.postcode-selection-els').hide()
@@ -122,8 +131,6 @@ class PostcodePicker
     @picker.find('.postcode-selection-els').show()
     @input.focus()
     true
-
-
 
   toggleAddressFields: ->
     if @picker.find('.address').is(':visible')
@@ -147,16 +154,8 @@ class PostcodePicker
     @picker.find('.postcode-display').hide()
     @hideAddressFields()
 
-  displayNoResultsFound: (response) ->
-    console.log "XXXXXX" 
-    console.log response
-    console.log ">>>>>>> "
-    console.log response.responseJSON
-    if response.responseJSON.code == 4041
-      @addErrorMessage("Postcode is in #{response.responseJSON.message}. You can only use this service to regain possession of properties in England and Wales.")
-    else
-      @addErrorMessage('No address found. Please enter the address manually')
-      
+  displayNoResultsFound: ->
+    @addErrorMessage('No address found. Please enter the address manually')
     @picker.find('.postcode-display').hide()
     @hideAddressFields()
 

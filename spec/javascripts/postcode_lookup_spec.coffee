@@ -17,9 +17,9 @@ describe 'PostcodeLookup', ->
       spyOn(jQuery, 'ajax').and.callFake (url, options) ->
         options.success('dummy')
 
-      view = jasmine.createSpyObj('view', ['displayAddresses'])
+      view = jasmine.createSpyObj('view', ['handleSuccessfulResponse'])
       PostcodeLookup.lookup 'SW16AJ', 'all', view
-      expect(view.displayAddresses).toHaveBeenCalledWith('dummy')
+      expect(view.handleSuccessfulResponse).toHaveBeenCalledWith('dummy')
 
 
   describe 'lookup fails due to invalid postcode', ->

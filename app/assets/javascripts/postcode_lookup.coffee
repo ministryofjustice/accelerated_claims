@@ -11,12 +11,12 @@ PostcodeLookup =
     myUrl =  window.location.pathname + separator + "postcode.json?pc=#{ encodeURI(postcode) }&vc=#{encodeURI(country)}"
     jQuery.ajax( myUrl,
       success: (data) ->
-        view.displayAddresses(data)
+        view.handleSuccessfulResponse(data)
       statusCode:
         422: ->
           view.displayInvalidPostcodeMessage()
-        404: (data) ->
-          view.displayNoResultsFound(data)
+        404: ->
+          view.displayNoResultsFound()
         503: ->
           view.displayServiceUnavailable()
     )

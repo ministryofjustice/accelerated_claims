@@ -105,17 +105,14 @@ class PostcodeLookupProxy
     if country_valid?
       addresses = @api_result_set['result'].map { |res| transform_api_address(res) }
       @result_set = { 'code' => 2000, 'message' => 'Success', 'result' => addresses }
-      @http_status = 200
     else
-      @result_set = { 'code' => 4041, 'message' => 'Scotland'}
-      @http_status = 404
+      @result_set = { 'code' => 4041, 'message' => api_result_set_country }
     end
+    @http_status = 200
   end
 
 
   def transform_erroneous_result_set
-
-    
     @result_set = @api_result_set
     @http_status = case @api_result_set['code']
     when 4040

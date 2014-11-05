@@ -112,10 +112,10 @@ describe 'PostcodePicker', ->
 
       expect(window.PostcodeLookup.lookup).toHaveBeenCalledWith('SW106AJ', 'all', @view)
 
-  describe 'displayAddresses called with array of addresses', ->
+  describe 'handleSuccessfulResponse called with array of addresses', ->
 
     it 'renders list of addresses in select box', ->
-      @view.displayAddresses(@results)
+      @view.handleSuccessfulResponse(@results)
       options = @picker.find('.address-picker-select').find('option')
       expect( options.size() ).toEqual 2
 
@@ -125,8 +125,8 @@ describe 'PostcodePicker', ->
       expect(@picker.find('.postcode-select-container')).toBeVisible()
 
     it 'clears the existing contents of the select box before adding in new ones', ->
-      @view.displayAddresses(@results)
-      @view.displayAddresses(@results)
+      @view.handleSuccessfulResponse(@results)
+      @view.handleSuccessfulResponse(@results)
       options = @picker.find('.address-picker-select').find('option')
       expect( options.size() ).toEqual 2
 
@@ -136,15 +136,19 @@ describe 'PostcodePicker', ->
       expect(@picker.find('.postcode-select-container')).toBeVisible()
 
     it 'hides the postcode entry box', ->
-      @view.displayAddresses(@results)
+      @view.handleSuccessfulResponse(@results)
       expect( @postcodeSearchComponent ).not.toBeVisible()
 
     it 'displays the selected postcode as fixed text', ->
-      @view.displayAddresses(@results)
+      @view.handleSuccessfulResponse(@results)
       pcd = @picker.find('.postcode-display')
       expect(pcd).toBeVisible()
       expect(@picker.find('.postcode-display-detail').html()).toEqual 'BH22 8HR'
 
+    it 'displays not England and Wales message if code = 4041', ->
+      response = { 'code': 4041, 'message': 'Northern Ireland' }
+      @view.handleSuccessfulResponse(response)
+      expect( @picker.find('span.error.postcode').text() ).toEqual 'Postcode is in Northern Ireland. You can only use this service to regain possession of properties in England and Wales.'
 
   describe 'invalid postcode', ->
     it 'should display an error message', ->
@@ -167,11 +171,6 @@ describe 'PostcodePicker', ->
       response =  {'responseJSON': { "code": 4040, "message": "Postcode Not Found" } }
       @view.displayNoResultsFound(response)
       expect( @picker.find('span.error.postcode').text() ).toEqual 'No address found. Please enter the address manually'
-
-    it 'should display not England and Wales message if code 4041', ->
-      response =  {'responseJSON':  { "code": 4041, "message": "Northern Ireland" } }
-      @view.displayNoResultsFound(response)
-      expect( @picker.find('span.error.postcode').text() ).toEqual 'Postcode is in Northern Ireland. You can only use this service to regain possession of properties in England and Wales.'
 
     it 'clears existing error message', ->
       response =  {'responseJSON':  { "code": 4040, "message": "Postcode Not Found" } }
@@ -198,7 +197,7 @@ describe 'PostcodePicker', ->
 
   describe 'selecting address from select box', ->
     beforeEach ->
-      @view.displayAddresses(@results)
+      @view.handleSuccessfulResponse(@results)
       @picker.find('option').eq(0).attr('selected', 'selected')
       @picker.find('.postcode-picker-cta').click()
 
@@ -233,10 +232,10 @@ describe 'PostcodePicker', ->
 
   describe 'displaying results after selection', ->
     beforeEach ->
-      @view.displayAddresses(@results)
+      @view.handleSuccessfulResponse(@results)
       @picker.find('option').eq(1).attr('selected', 'selected')
       @picker.find('.postcode-picker-cta').click()
-      @view.displayAddresses(@results)
+      @view.handleSuccessfulResponse(@results)
 
     it 'shows address list', ->
       expect(@picker.find('.postcode-select-container')).toBeVisible()

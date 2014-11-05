@@ -57,11 +57,11 @@ describe PostcodeLookupProxy do
       expect(pclp.http_status).to eq 200
     end
 
-    it 'should return 404/4041 for Scottish Address' do
+    it 'should return 200/4041 for Scottish Address' do
       pclp = PostcodeLookupProxy.new('EH1 5HR', ['England', 'Wales'])
       pclp.lookup
       expect(pclp.result_set).to eq ( {"code"=>4041, "message"=>"Scotland"} )
-      expect(pclp.http_status).to eq 404
+      expect(pclp.http_status).to eq 200
     end
 
   end
