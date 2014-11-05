@@ -5,9 +5,7 @@ class PostcodeLookupProxyController < ApplicationController
     @pclp.lookup
 
     respond_to do |format|
-      puts "++++++ DEBUG RETURNING   ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-      pp @pclp.result_set
-      
+      puts "++++++ DEBUG RETURNING #{@pclp.result_set.inspect}  ++++++ #{__FILE__}::#{__LINE__} ++++\n"
       format.json { render json: @pclp.result_set, status: @pclp.http_status }
     end
   end
