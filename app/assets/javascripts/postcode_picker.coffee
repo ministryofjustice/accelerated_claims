@@ -72,12 +72,13 @@ class PostcodePicker
   showManualLink: =>
     @picker.find('.postcode-picker-manual-link').show()
 
-  lookupPostcode: =>
+  lookupPostcode: (country) =>
     postcode = @input.val()
+    country = @button.data('country')
     @picker.find('.postcode-display').show()
     @picker.find('.postcode-select-container').hide()
     @showManualLink()
-    window.PostcodeLookup.lookup(postcode, this)
+    window.PostcodeLookup.lookup(postcode, country, this)
 
   selectAddress: =>
     index = parseInt @picker.find('option:selected').val()
@@ -146,9 +147,9 @@ class PostcodePicker
     @picker.find('.postcode-display').hide()
     @hideAddressFields()
 
-  displayNoResultsFound: (results) ->
-    if results.code == 4041
-      @addErrorMessage("Postcode is in #{results['message']}. You can only use this service to regain possession of properties in England and Wales.")
+  displayNoResultsFound: (response) ->
+    if response.responseJSON.code == 4041
+      @addErrorMessage("Postcode is in #{response.responseJSON.message}. You can only use this service to regain possession of properties in England and Wales.")
     else
       @addErrorMessage('No address found. Please enter the address manually')
       

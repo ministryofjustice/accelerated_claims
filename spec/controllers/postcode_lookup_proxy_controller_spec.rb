@@ -16,7 +16,7 @@ describe PostcodeLookupProxyController, :type => :controller do
     
     context 'a valid postcode' do
       it "should render the result set" do
-        get :show, format: :json, pc: "SW10 2LB"
+        get :show, format: :json, pc: "SW10 2LB", vc: 'all'
         expect(response.status).to eq(200)
         expect(response.body).to eq expected_response
       end
@@ -24,7 +24,7 @@ describe PostcodeLookupProxyController, :type => :controller do
 
     context 'an invalid postcode' do
       it "should render 'invalid postcode'" do
-        get :show, format: :json, pc: 'Sw10XX6ete'
+        get :show, format: :json, pc: 'Sw10XX6ete', vc: 'all'
         expect(response.status).to eq 422
         expect(response.body).to eq({'code' => 4220, 'message' => 'Invalid Postcode'}.to_json)
       end
@@ -33,7 +33,7 @@ describe PostcodeLookupProxyController, :type => :controller do
     
     context 'an empty dataset' do
       it "should render 'No matching postcodes'" do
-        get :show, format: :json, pc: 'RG2 0PU'
+        get :show, format: :json, pc: 'RG2 0PU', vc: 'all'
         expect(response.status).to eq 404
         expect(response.body).to eq({'code' => 4040, 'message' => 'Postcode Not Found'}.to_json) 
       end
@@ -44,7 +44,7 @@ describe PostcodeLookupProxyController, :type => :controller do
         # simulate a timeout on a live lookup
         allow(controller).to receive(:live_postcode_lookup?).and_return(true)
         expect(Excon).to receive(:get).and_raise(Timeout::Error)
-        get :show, format: :json, pc: 'RG2 7PU'
+        get :show, format: :json, pc: 'RG2 7PU', vc: 'all'
         expect(response.status).to eq 503
         expect(response.body).to eq({'code' => 5030, 'message' => 'Service Unavailable'}.to_json) 
       end
@@ -52,8 +52,8 @@ describe PostcodeLookupProxyController, :type => :controller do
 
     context 'a scottish postcode which is allowed' do
       it 'should call proxy with and emtpy array and return a valid set of addresses' do
-        expect(PostcodeLookupProxy).to receive(:new).with('EH10 5LB', [], false).and_call_original
-        get :show, format: :json, pc: "EH10 5LB"
+        expect(PostcodeLookupProxy).to receive(:new).with('EH10 5LB', ['All'], false).and_call_original
+        get :show, format: :json, pc: "EH10 5LB", vc: 'all'
         expect(response.status).to eq(200)
         expect(response.body).to eq scottish_response
       end
@@ -84,20 +84,20 @@ describe PostcodeLookupProxyController, :type => :controller do
         it 'should return true for demo environments' do
           setenv 'demo'
           expect_postcode_lookup_to_be_called_with(true)
-          get :show, format: :json, pc: 'RG2 7PU'
+          get :show, format: :json, pc: 'RG2 7PU', vc: 'all'
         end
 
 
         it 'should return true for staging environments' do
           setenv 'staging'
           expect_postcode_lookup_to_be_called_with(true)
-          get :show, format: :json, pc: 'RG2 7PU'
+          get :show, format: :json, pc: 'RG2 7PU', vc: 'all'
         end
         
         it 'should return true for production environments' do
           setenv 'staging'
           expect_postcode_lookup_to_be_called_with(true)
-          get :show, format: :json, pc: 'RG2 7PU'
+          get :show, format: :json, pc: 'RG2 7PU', vc: 'all'
         end
       end
     end
@@ -105,7 +105,7 @@ describe PostcodeLookupProxyController, :type => :controller do
     context 'with no livepc in the url' do
 
       let(:postcode)        { 'RG2 7PU' }
-      let(:all_countries)   { [] }
+      let(:all_countries)   { ['All'] }
       let(:pclp)            { double PostcodeLookupProxy }
 
       before(:each) do
@@ -118,7 +118,7 @@ describe PostcodeLookupProxyController, :type => :controller do
         allow(pclp).to receive(:lookup).and_return(true)
         allow(pclp).to receive(:result_set).and_return('xxxxx')
         allow(pclp).to receive(:http_status).and_return(200)
-        get :show, format: :json, pc: 'RG2 7PU'
+        get :show, format: :json, pc: 'RG2 7PU', vc: 'all'
         expect(response.body).to eq 'xxxxx'
         expect(response.status).to eq 200
       end
@@ -132,14 +132,14 @@ describe PostcodeLookupProxyController, :type => :controller do
         it 'should return true for staging environments' do
           setenv 'staging'
           expect_postcode_lookup_to_be_called_with(true)
-          get :show, format: :json, pc: 'RG2 7PU'
+          get :show, format: :json, pc: 'RG2 7PU', vc: 'all'
         end
 
 
         it 'should return true for production environments' do
           setenv 'production'
           expect_postcode_lookup_to_be_called_with(true)
-          get :show, format: :json, pc: 'RG2 7PU'
+          get :show, format: :json, pc: 'RG2 7PU', vc: 'all'
         end
       end
     end

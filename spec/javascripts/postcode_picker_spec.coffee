@@ -26,7 +26,7 @@ describe 'PostcodePicker', ->
     <div class="postcode-selection-els">
       <label class="postcode-picker-label" for="claim_property_postcode_edit_field">Postcode</label>
       <input class="smalltext postcode-picker-edit-field" id="claim_property_postcode_edit_field" maxlength="8" name="[postcode]" size="8" type="text">
-      <a class="button primary postcode-picker-button" href="#claim_property_postcode_picker" name="FindUkPostcode">
+      <a class="button primary postcode-picker-button" href="#claim_property_postcode_picker" data-country='all' name="FindUkPostcode">
         Find UK Address
       </a>
     </div>
@@ -110,7 +110,7 @@ describe 'PostcodePicker', ->
       @postcodeEditField.val('SW106AJ')
       @picker.find('.postcode-picker-button').click()
 
-      expect(window.PostcodeLookup.lookup).toHaveBeenCalledWith('SW106AJ', @view)
+      expect(window.PostcodeLookup.lookup).toHaveBeenCalledWith('SW106AJ', 'all', @view)
 
   describe 'displayAddresses called with array of addresses', ->
 
@@ -164,24 +164,24 @@ describe 'PostcodePicker', ->
   describe 'displayNoResultsFound', ->
 
     it 'should display an error message if no result found', ->
-      response =  { "code": 4040, "message": "Postcode Not Found" }
+      response =  {'responseJSON': { "code": 4040, "message": "Postcode Not Found" } }
       @view.displayNoResultsFound(response)
       expect( @picker.find('span.error.postcode').text() ).toEqual 'No address found. Please enter the address manually'
 
     it 'should display not England and Wales message if code 4041', ->
-      response =  { "code": 4041, "message": "Northern Ireland" }
+      response =  {'responseJSON':  { "code": 4041, "message": "Northern Ireland" } }
       @view.displayNoResultsFound(response)
       expect( @picker.find('span.error.postcode').text() ).toEqual 'Postcode is in Northern Ireland. You can only use this service to regain possession of properties in England and Wales.'
 
     it 'clears existing error message', ->
-      response =  { "code": 4040, "message": "Postcode Not Found" }
+      response =  {'responseJSON':  { "code": 4040, "message": "Postcode Not Found" } }
       @view.displayNoResultsFound(response)
-      response =  { "code": 4041, "message": "Northern Ireland" }
+      response =  {'responseJSON':  { "code": 4041, "message": "Northern Ireland" } }
       @view.displayNoResultsFound(response)
       expect( @picker.find('span.error.postcode').size() ).toEqual 1
 
     it 'should remove a previously-displayed error message on edit field keyup', ->
-      response =  { "code": 4040, "message": "Postcode Not Found" }
+      response =  {'responseJSON':  { "code": 4040, "message": "Postcode Not Found" } }
       @view.displayNoResultsFound(response)
       @postcodeEditField.trigger('keyup')
       expect( @picker.find('span.error.postcode').size() ).toEqual 0

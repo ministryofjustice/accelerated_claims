@@ -20,28 +20,28 @@ describe PostcodeLookupProxy do
 
   context '#lookup using dummy data' do
     it 'should return 422 if postcode invalid' do
-      pclp = PostcodeLookupProxy.new('WCX1B5HA', [])
+      pclp = PostcodeLookupProxy.new('WCX1B5HA', ['All'])
       pclp.lookup
       expect(pclp.result_set).to eq ( {"code"=>4220, "message"=>"Invalid Postcode"} )
       expect(pclp.http_status).to eq 422
     end
 
     it 'should return 404 if postcode not found' do
-      pclp = PostcodeLookupProxy.new('RG2 0PU', [])
+      pclp = PostcodeLookupProxy.new('RG2 0PU', ['All'])
       pclp.lookup
       expect(pclp.result_set).to eq ( {"code"=>4040, "message"=>"Postcode Not Found"} )
       expect(pclp.http_status).to eq 404
     end
 
     it 'should return 503 if timeout' do
-      pclp = PostcodeLookupProxy.new('RG2 9PU', [])
+      pclp = PostcodeLookupProxy.new('RG2 9PU', ['All'])
       pclp.lookup
       expect(pclp.result_set).to eq ( {"code"=>5030, "message"=>"Service Unavailable"} )
       expect(pclp.http_status).to eq 503
     end
 
     it 'should return valid data set if valid' do
-      pclp = PostcodeLookupProxy.new('BH22 7HR', [])
+      pclp = PostcodeLookupProxy.new('BH22 7HR', ['All'])
       pclp.lookup
       expect(pclp.result_set).to eq ( {"code"=>2000, "message"=>"Success", 'result' => expected_result_set } )
       expect(pclp.http_status).to eq 200

@@ -22,13 +22,14 @@ class MojPostcodePicker
   #   MojPostcodePicker.new(form, prefix: 'claim_defendant_2')                                      # generates an id of 'claim_defendant_2_street, and a name of claim[defendant][2][street]'
   #   MojPostcodePicker.new(form, prefix: 'claim_defendant_2', name_prefix: 'claim[defendant_2'])   # generates an id of 'claim_defendant_2_street, and a name of claim[defendant_2][street]'
   #   MojPostcodePicker.new(form, nil, name: 'address')                                             # generates an id of 'address_lines and a name of 'address'
+  #   MojPostcodePicker.new(form, prefix: 'claim_property', vc: 'england+wales'
   #
   #
   def initialize(form, options)
     @form            = form
     @options         = options
     @prefix          = options[:prefix]
-    @valid_countries = options[:vc]
+    @valid_countries = options[:vc] || 'all'
     @name            = generate_name
     @postcode_attr   = options[:postcode_attr] || 'postcode'
     @address_attr    = options[:address_attr] || 'address_lines'

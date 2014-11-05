@@ -3,6 +3,7 @@ class PostcodeLookupProxyController < ApplicationController
   def show
     @pclp = PostcodeLookupProxy.new(params[:pc], CountryNameNormalizer.new(params).normalize, live_postcode_lookup?)
     @pclp.lookup
+
     respond_to do |format|
       format.json { render json: @pclp.result_set, status: @pclp.http_status }
     end

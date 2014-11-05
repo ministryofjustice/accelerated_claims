@@ -114,6 +114,8 @@ class PostcodeLookupProxy
 
 
   def transform_erroneous_result_set
+
+    
     @result_set = @api_result_set
     @http_status = case @api_result_set['code']
     when 4040
@@ -129,7 +131,7 @@ class PostcodeLookupProxy
 
 
   def country_valid?
-    @valid_countries.empty? || @valid_countries.include?(api_result_set_country)
+    @valid_countries == ['All'] || @valid_countries.include?(api_result_set_country)
   end
 
 

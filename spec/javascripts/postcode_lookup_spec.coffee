@@ -5,7 +5,7 @@ testViewCallback = (view, statusCode, callback) ->
   spyOn(jQuery, 'ajax').and.callFake (url, options) ->
     options.statusCode[statusCode]()
 
-  PostcodeLookup.lookup 'SW16AJ', view
+  PostcodeLookup.lookup 'SW16AJ', 'all', view
   expect(callback).toHaveBeenCalled()
 
 
@@ -18,7 +18,7 @@ describe 'PostcodeLookup', ->
         options.success('dummy')
 
       view = jasmine.createSpyObj('view', ['displayAddresses'])
-      PostcodeLookup.lookup 'SW16AJ', view
+      PostcodeLookup.lookup 'SW16AJ', 'all', view
       expect(view.displayAddresses).toHaveBeenCalledWith('dummy')
 
 

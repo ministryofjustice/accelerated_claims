@@ -2,13 +2,13 @@ root = exports ? this
 
 PostcodeLookup =
 
-  lookup: (postcode, view) ->
+  lookup: (postcode, country, view) ->
     separator = "/"
     if window.location.pathname.match(/\/$/)
       separator = ""
 
 
-    myUrl =  window.location.pathname + separator + "postcode.json?pc=#{ encodeURI(postcode) }"
+    myUrl =  window.location.pathname + separator + "postcode.json?pc=#{ encodeURI(postcode) }&vc=#{encodeURI(country)}"
     jQuery.ajax( myUrl,
       success: (data) ->
         view.displayAddresses(data)
