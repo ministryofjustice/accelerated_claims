@@ -115,7 +115,7 @@
       issued_date: nil
     },
     deposit: {
-      received: "No",
+      received: "Yes",
       received_cert: nil,
       ref_number: nil,
       information_given_date: nil,
