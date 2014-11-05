@@ -128,18 +128,7 @@ describe DefendantCollection do
       expect(dc.further_participants).to be_empty
     end
 
-    it 'should return an empty array if only one defendant' do
-      params = claim_params
-      params.delete('defendant_1')
-      params.delete('defendant_2')
-      params.delete('defendant_3')
-      params['num_defendants'] = 1
-      dc = DefendantCollection.new(params)
-      expect(dc.size).to eq 1
-      expect(dc.further_participants).to be_empty
-    end
-
-    it 'should return an array of one defendant if two defendants in collection' do
+    it 'should return an array of two defendants if two defendants in collection' do
       params = claim_params
       params.delete('defendant_3')
       params['num_defendants'] = 2
@@ -148,7 +137,7 @@ describe DefendantCollection do
       expect(dc.further_participants).to eq [ dc[1], dc[2] ]
     end
 
-    it 'should return an array of 5 defendants if 6 defendants in collection' do
+    it 'should return an array of 6 defendants if 6 defendants in collection' do
       params = claim_params_for_six_defendants
       dc = DefendantCollection.new(params)
       expect(dc.size).to eq 6
