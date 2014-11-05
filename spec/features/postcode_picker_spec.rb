@@ -12,7 +12,7 @@ feature 'Postcode address lookup' do
     end
   end
 
-  if remote_test?
+  if remote_test? && ENV['LIVEPC'] == 'idealpostcodes'
     context 'live lookup' do
       scenario "enter postcode and select address from list", js: true do
         load_page
