@@ -45,7 +45,7 @@ class ClaimController < ApplicationController
 
   def download
     if session[:claim].nil?
-      msg = "User attepmted to download PDF from an expired session - redirected to #{expired_path}"
+      msg = "User attempted to download PDF from an expired session - redirected to #{expired_path}"
       redirect_to expired_path
     else
       @claim = Claim.new(session[:claim])
