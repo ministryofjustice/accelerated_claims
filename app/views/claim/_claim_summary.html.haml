@@ -18,10 +18,10 @@
           - if [ :email, :phone, :fax, :dx_number ].include? label.to_sym
             = render partial: 'field_summary', locals: { section: 'claimant_contact', label: label, value: value }
 
-      - unless @claim['reference_number']['reference_number'].blank?
-        %p
-          %span.summary-label= I18n.t 'claim.reference_number.label'
-          %span= @claim['reference_number']['reference_number']
+        - unless @claim['reference_number']['reference_number'].blank?
+          %p.summary-field
+            %span.summary-label= I18n.t 'claim.reference_number.label'
+            %span.summary-value= @claim['reference_number']['reference_number']
 
     - if alternate_address_present?
       .row.divider
