@@ -9,25 +9,28 @@
         %span= I18n.t "claim.claimant_type.#{@claim['claimant_type']}"
     = render partial: 'participant_summary', locals: { type: 'claimant', pattern: /^claimant_\d/ }
 
-    .row.divider
-    .row
-      %h3 Contact details
-    .row
-      - @claim['claimant_contact'].each do |label, value|
-        - if [ :email, :phone, :fax, :dx_number ].include? label.to_sym
-          = render partial: 'field_summary', locals: { section: 'claimant_contact', label: label, value: value }
+    - if contact_details_present?
+      .row.divider
+      .row
+        %h3 Contact details
+      .row
+        - @claim['claimant_contact'].each do |label, value|
+          - if [ :email, :phone, :fax, :dx_number ].include? label.to_sym
+            = render partial: 'field_summary', locals: { section: 'claimant_contact', label: label, value: value }
 
-    - unless @claim['reference_number']['reference_number'].blank?
-      %p
-        %span.summary-label= I18n.t 'claim.reference_number.label'
-        %span= @claim['reference_number']['reference_number']
+      - unless @claim['reference_number']['reference_number'].blank?
+        %p
+          %span.summary-label= I18n.t 'claim.reference_number.label'
+          %span= @claim['reference_number']['reference_number']
 
-    .row
-      %h3 Alternate address
-    .row
-      - @claim['claimant_contact'].each do |label, value|
-        - if [ :title, :full_name, :company_name, :street, :postcode ].include? label.to_sym
-          = render partial: 'field_summary', locals: { section: 'claimant_contact', label: label, value: value }
+    - if alternate_address_present?
+      .row.divider
+      .row
+        %h3 Alternate address
+      .row
+        - @claim['claimant_contact'].each do |label, value|
+          - if [ :title, :full_name, :company_name, :street, :postcode ].include? label.to_sym
+            = render partial: 'field_summary', locals: { section: 'claimant_contact', label: label, value: value }
 
   = summary_section_header 'defendant'
   .moj-panel

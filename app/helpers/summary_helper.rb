@@ -76,6 +76,19 @@ module SummaryHelper
     end
   end
 
+  def contact_details_present?
+    @claim['reference_number']['reference_number'].present? ||
+        [ :email, :phone, :fax, :dx_number ].any? do |a|
+          @claim['claimant_contact'][a].present?
+        end
+  end
+
+  def alternate_address_present?
+    [ :title, :full_name, :company_name, :street, :postcode ].any? do |a|
+      @claim['claimant_contact'][a].present?
+    end
+  end
+
   private
 
   def ignore_field? label
