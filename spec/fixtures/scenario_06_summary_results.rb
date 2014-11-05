@@ -31,6 +31,10 @@
     "Phone",
     "3001005392"
   ],
+  claim_reference_number_reference_number: [
+    "Reference number",
+    "T003900DF07"
+  ],
   claim_defendant_1_title: [
     "Title",
     "Ms"
@@ -77,7 +81,7 @@
   ],
   claim_deposit_type_of_deposit: [
     "Type of deposit",
-    "Money deposit and property deposit"
+    "Money deposit"
   ],
   claim_deposit_ref_number: [
     "Tenancy deposit scheme reference number",

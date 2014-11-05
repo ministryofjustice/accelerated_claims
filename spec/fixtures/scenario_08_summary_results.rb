@@ -105,11 +105,11 @@
   ],
   claim_deposit_received: [
     "Deposit paid",
-    "No"
+    "Yes"
   ],
   claim_deposit_type_of_deposit: [
     "Type of deposit",
-    "NoProperty deposit"
+    "Property deposit"
   ],
   claim_fee_court_fee: [
     "Court fee",

@@ -101,7 +101,7 @@
   ],
   claim_deposit_type_of_deposit: [
     "Type of deposit",
-    "Money deposit and property deposit"
+    "Money deposit"
   ],
   claim_deposit_ref_number: [
     "Tenancy deposit scheme reference number",

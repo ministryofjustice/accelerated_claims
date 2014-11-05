@@ -100,7 +100,7 @@ en:
     license:
       label: Licences
       multiple_occupation:
-        label: <abbr title="House in Multiple Occupation">HMO</abbr> licence held
+        label: '<abbr title="House in Multiple Occupation">HMO</abbr> licence held'
         'yes': 'Yes'
         applied: "I've applied for one"
         'no': Not applicable

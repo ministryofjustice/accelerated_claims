@@ -27,6 +27,10 @@
     "Phone",
     "020 7946 0978"
   ],
+  claim_reference_number_reference_number: [
+    "Reference number",
+    "T054PB7"
+  ],
   claim_claimant_contact_company_name: [
     "Company name",
     "Yammerton Homes"
@@ -89,7 +93,7 @@
   ],
   claim_deposit_type_of_deposit: [
     "Type of deposit",
-    "Money deposit and property deposit"
+    "Money deposit"
   ],
   claim_deposit_ref_number: [
     "Tenancy deposit scheme reference number",

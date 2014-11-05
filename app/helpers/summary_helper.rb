@@ -122,14 +122,17 @@ module SummaryHelper
     end
     if label['as_money']
       money_deposit = (value == 'Yes')
-      property_deposit = (@claim['deposit']['as_property'] == 'No')
+      property_deposit = (@claim['deposit']['as_property'] == 'Yes')
+
       if money_deposit
         value = I18n.t 'claim.deposit.as_money.label'
-      end
-      if money_deposit && property_deposit
-        value += ' and ' + I18n.t('claim.deposit.as_property.label').downcase
+        if property_deposit
+          value += ' and ' + I18n.t('claim.deposit.as_property.label').downcase
+        end
       elsif property_deposit
-        value += I18n.t 'claim.deposit.as_property.label'
+        value = I18n.t 'claim.deposit.as_property.label'
+      else
+        value = nil
       end
     end
     value

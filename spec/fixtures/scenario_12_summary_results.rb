@@ -79,10 +79,6 @@
     "Deposit paid",
     "No"
   ],
-  claim_deposit_type_of_deposit: [
-    "Type of deposit",
-    "NoProperty deposit"
-  ],
   claim_fee_court_fee: [
     "Court fee",
     "£280"
