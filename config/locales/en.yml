@@ -85,6 +85,11 @@ en:
       hearing:
         'yes': 'Yes'
         'no': 'No'
+    fee:
+      account:
+        description: 'Fee account number<span class="hint block">Organisations can now set up an account to pay court fees, rather than pay by cheque. <a href="http://www.justice.gov.uk/courts/fees/payment-by-account" class="external" rel="external" target="_blank">More about fee account</a></span>'
+        prompt: If you have a fee account number, enter it here
+        guidance: Fee account number, numeric only
   feedback:
     satisfaction_feedback:
       very_satisfied: 'Very satisfied'
