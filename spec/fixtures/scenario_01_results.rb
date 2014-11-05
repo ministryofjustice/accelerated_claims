@@ -20,6 +20,7 @@
   property_postcode2: "1XX",
   order_cost: "No",
   fee_court_fee: "280.00",
+  fee_account: "0000001234",
   claimant_contact_legal_costs: nil,
   total_cost: "280.00",
   IssueDateDay: nil,

@@ -99,7 +99,7 @@
       = render partial: 'fee',        object: @claim.fee,        locals: { claim_form: claim_form }
       = render partial: 'legal_cost', object: @claim.legal_cost, locals: { claim_form: claim_form }
       = render partial: 'order',      object: @claim.order,      locals: { claim_form: claim_form }
-
+      = render partial: 'fee_account',object: @claim.fee,        locals: { claim_form: claim_form }
   %section
     %h2.section-header Court
     .moj-panel
