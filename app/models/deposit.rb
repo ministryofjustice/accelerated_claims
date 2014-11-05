@@ -35,7 +35,14 @@ class Deposit < BaseClass
     begin
       json = super
       json = split_date :information_given_date, json
-      json['received_cert'] = (received? ? 'Yes' : '')
+
+      if only_as_property?
+        json['received'] = 'No' # ie answer to Q7a is No on PDF
+      end
+
+      # default answer Q.7a part 1 to Yes if money deposit
+      json['received_cert'] = money_received? ? 'Yes' : ''
+
       json
     rescue NoMethodError => err
       if err.message =~ /undefined method .strftime. for/
@@ -62,7 +69,11 @@ class Deposit < BaseClass
     end
   end
 
-  def received?
-    received == 'Yes'
+  def money_received?
+    received == 'Yes' && as_money == 'Yes'
+  end
+
+  def only_as_property?
+    as_property == 'Yes' && as_money == 'No'
   end
 end

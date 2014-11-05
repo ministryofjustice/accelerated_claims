@@ -83,6 +83,19 @@ describe Deposit, :type => :model do
         expect(deposit.errors[:ref_number]).to eq(["You should not give a deposit scheme reference number if the deposit was given as property"])
         expect(deposit.errors[:information_given_date]).to eq(["You should not give an information given date if the deposit was given as property"])
       end
+
+      it 'should return correct json' do
+        expect(deposit.as_json).to eq({
+          'as_property' => 'Yes',
+          'as_money' => 'No',
+          'received' => 'No',
+          'received_cert' => '',
+          'information_given_date_day' => '10',
+          'information_given_date_month' => '01',
+          'information_given_date_year' => '2010',
+          'ref_number' => 'x123'
+        })
+      end
     end
 
     describe 'as_json' do
