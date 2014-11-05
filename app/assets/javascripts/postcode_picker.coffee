@@ -148,6 +148,10 @@ class PostcodePicker
     @hideAddressFields()
 
   displayNoResultsFound: (response) ->
+    console.log "XXXXXX" 
+    console.log response
+    console.log ">>>>>>> "
+    console.log response.responseJSON
     if response.responseJSON.code == 4041
       @addErrorMessage("Postcode is in #{response.responseJSON.message}. You can only use this service to regain possession of properties in England and Wales.")
     else
