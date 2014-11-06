@@ -28,14 +28,14 @@ describe Fee, :type => :model do
     let(:account) { 9876543210 }
 
     it { is_expected.to be_valid }
-    it { expect(fee.as_json).to eq("court_fee" => "280.00", "account"=>"9876543210") }
+    it { expect(fee.as_json).to eq("court_fee" => "280", "account"=>"9876543210") }
   end
 
   context 'with a short account number' do
     let(:court_fee) { "" }
     let(:account) { '1234' }
     it { is_expected.to be_valid }
-    it { expect(fee.as_json).to eq("court_fee" => "280.00", "account"=>"0000001234") }
+    it { expect(fee.as_json).to eq("court_fee" => "280", "account"=>"0000001234") }
   end
 
   context 'with non numeric account number' do
