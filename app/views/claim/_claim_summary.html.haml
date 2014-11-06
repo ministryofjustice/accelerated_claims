@@ -56,6 +56,9 @@
       = render partial: 'field_summary', locals: { section: 'order',
           label: 'cost', value: @claim['order']['cost'] }
 
+      = render partial: 'field_summary', locals: { section: 'fee',
+          label: 'account', value: @claim['fee']['account'] }
+
   = summary_section_header 'court'
   .moj-panel
     .row

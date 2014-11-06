@@ -1,6 +1,5 @@
 class ClaimController < ApplicationController
 
-
   def new
     reset_session if referrer_is_landing_page?
     session[:test] = params[:test]
@@ -14,7 +13,6 @@ class ClaimController < ApplicationController
       start_year: Date.today.year,
       end_year: Tenancy::APPLICABLE_FROM_DATE.year
     }
-
 
     # use live postcode lookup database if running on productionserver or url param livepc set to 1
     production = ['staging', 'production'].include?(ENV["ENV_NAME"])
@@ -37,12 +35,19 @@ class ClaimController < ApplicationController
 
   def confirmation
     @claim = session[:claim]
-    if @claim.nil? || !Claim.new(@claim).valid?
-      redirect_to_with_protocol(:new)
-    end
-    @show_summary = true
 
-    @page_title = 'Make a claim to evict tenants: accelerated possession'
+    if @claim.nil?
+      redirect_to_with_protocol(:new)
+    else
+      claim_object = Claim.new(@claim)
+
+      if claim_object.valid?
+        @claim['fee']['account'] = claim_object.fee.account # set zero-padded account number
+        @page_title = 'Make a claim to evict tenants: accelerated possession'
+      else
+        redirect_to_with_protocol(:new)
+      end
+    end
   end
 
   def download
@@ -82,23 +87,19 @@ class ClaimController < ApplicationController
     move_defendant_address_params_into_model
     @claim = Claim.new(params['claim'])
 
-    unless @claim.valid?
-      redirect_to_with_protocol :new
-    else
+    if @claim.valid?
       redirect_to_with_protocol :confirmation
+    else
+      redirect_to_with_protocol :new
     end
   end
-
 
   def raise_exception
     session[:special_values] = "session variable"
     raise "This exception has been deliberately raised"
   end
 
-
-
   private
-
 
   def move_defendant_address_params_into_model
     nums = { '1' => 'one', '2' => 'two' }

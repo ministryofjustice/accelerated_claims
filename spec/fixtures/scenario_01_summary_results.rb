@@ -139,6 +139,10 @@
     "Defendant to pay costs",
     "No"
   ],
+  claim_fee_account: [
+    "Fee account number",
+    "0000001234"
+  ],
   claim_possession_hearing: [
     "Claimant to be at court if there's a hearing",
     "No"
