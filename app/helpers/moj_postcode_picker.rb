@@ -52,6 +52,10 @@ class MojPostcodePicker
   end
 
 
+  def country_name_for_messages
+    CountryNameNormalizer.new(@options).to_sentence
+  end
+
 
   private
 

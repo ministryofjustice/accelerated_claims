@@ -1,15 +1,21 @@
 class CountryNameNormalizer
 
   def initialize(params)
-    @country_params = params[:vc]
+    @country_params = params[:vc].gsub('+', ' ') if params.key?(:vc)
   end
   
 
   def normalize
-    return [] if @country_params.nil?
-    countries = @country_params.split(' ')
+    countries = @country_params.nil? ? [] : @country_params.split(' ')
     countries.map{ |c| normalize_country_name(c) }
   end
+
+  def to_sentence
+    result = normalize.to_sentence(last_word_connector: ' and ')
+    result = 'UK' if result.blank?
+    result
+  end
+
 
   private 
 

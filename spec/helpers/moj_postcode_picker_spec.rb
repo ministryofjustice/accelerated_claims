@@ -74,6 +74,31 @@ describe 'MojPostcodePicker' do
     end
   end
 
+  describe 'country_name_for_messages' do
+    before(:each) do
+      allow(object).to receive(:postcode).and_return('RG2 7PU')
+      allow(object).to receive(:street).and_return("50 Tregunter Road\r\nLondon")
+      allow(object).to receive(:errors).and_return( {:street => [], :postcode => [] } )
+    end
+    
+    it 'should return England and Wales' do
+      mpp = MojPostcodePicker.new(form, prefix: 'claim_property', address_attr: 'street', vc: 'england+wales')
+      expect(mpp.country_name_for_messages).to eq 'England and Wales'
+    end
+
+    it 'should return UK' do
+      mpp = MojPostcodePicker.new(form, prefix: 'claim_property', address_attr: 'street')
+      expect(mpp.country_name_for_messages).to eq 'UK'
+    end
+
+    it 'should return England, Wales, Northern Ireland and Isle of Man' do
+      mpp = MojPostcodePicker.new(form, prefix: 'claim_property', address_attr: 'street', vc: 'england+wales+northern_ireland+isle_of_man')
+      expect(mpp.country_name_for_messages).to eq 'England, Wales, Northern Ireland and Isle of Man'
+    end
+
+
+  end
+
 end
 
 
