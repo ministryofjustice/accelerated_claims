@@ -154,7 +154,7 @@ describe 'PostcodePicker', ->
   describe 'invalid postcode', ->
     it 'should display an error message', ->
       @view.displayInvalidPostcodeMessage()
-      expect( @picker.find('span.error.postcode').text() ).toEqual 'Please enter a valid UK postcode'
+      expect( @picker.find('span.error.postcode').text() ).toEqual 'Please enter a valid postcode in England and Wales'
 
     it 'clears existing error message', ->
       @view.displayInvalidPostcodeMessage()

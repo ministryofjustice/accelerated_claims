@@ -60,8 +60,18 @@ class PostcodePicker
     if vc == 'all'
       result = 'UK'
     else 
+      # all of this crapola because IE 7 and 8 doesn't support the Array.map()  JS method
       countries = vc.split('+')
-      @toSentence(countries.map (country) => @capitalizeCountry(country))
+      capitalizedCountries = new Array
+      x = 0
+      loop
+        console.log("DEBUG   x = " + x)
+        capitalizedCountries.push(@capitalizeCountry(countries[x]))
+        x = x + 1
+        break if x == countries.length
+
+      console.log("DEBUG   capitalizedCoutnries: " + JSON.stringify(capitalizedCountries))
+      @toSentence(capitalizedCountries)
 
   capitalizeCountry: (vc) =>
     words = vc.split('_')
