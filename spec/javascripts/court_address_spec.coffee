@@ -189,11 +189,9 @@ describe 'CourtAddressModule', ->
           expect(window.CourtLookup.lookup).not.toHaveBeenCalledWith('SG8 0LT', window.CourtAddressModule)
 
   describe 'when there are errors present', ->
-
     describe 'error on court section', ->
-
       addErrorLink = (val) ->
-        error_link = "<a class=\"error-link\" data-id=\"#claim_court_#{val}_error\" href=\"#claim_court_#{val}_error\"></a>"
+        error_link = "<a class='error-link' data-id='#claim_court_#{val}_error' href='#claim_court_#{val}_error'></a>"
         $('#form_errors').append(error_link)
 
       beforeEach ->
