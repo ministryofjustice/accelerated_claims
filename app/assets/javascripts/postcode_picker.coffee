@@ -9,6 +9,7 @@ class PostcodePicker
     @selectElement = @picker.find('.address-picker-select')
     @button = picker.find('.postcode-picker-button')
     @input = picker.find('.postcode-picker-edit-field')
+    @valid_countries = @normalizeCountry(@picker.data('vc'))
     manualLink = picker.find('.postcode-picker-manual-link')
     selectButton = picker.find('.postcode-picker-cta')
     changePostcodeLink = picker.find('.change-postcode-link')
@@ -56,12 +57,10 @@ class PostcodePicker
    
 
   normalizeCountry: (vc) =>
-    console.log 'Normalizing ' + vc
     if vc == 'all'
       result = 'UK'
     else 
       countries = vc.split('+')
-      console.log JSON.stringify(countries)
       @toSentence(countries.map (country) => @capitalizeCountry(country))
 
   capitalizeCountry: (vc) =>
@@ -174,12 +173,12 @@ class PostcodePicker
     @picker.find('.street textarea').focus()
 
   displayInvalidPostcodeMessage: ->
-    @addErrorMessage('Please enter a valid UK postcode')
+    @addErrorMessage("Please enter a valid postcode in " + @valid_countries)
     @picker.find('.postcode-display').hide()
     @hideAddressFields()
 
   displayNoResultsFound: ->
-    @addErrorMessage('No address found. Please enter the address manually')
+    @addErrorMessage("No address found. Please enter the address manually")
     @picker.find('.postcode-display').hide()
     @hideAddressFields()
 
