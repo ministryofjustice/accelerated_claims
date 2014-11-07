@@ -10,6 +10,7 @@
   defendant_2_address: nil,
   defendant_2_postcode1: nil,
   defendant_2_postcode2: nil,
+  service_address: "Mr Frank Furter\n64 Baxtergate\nBlacktown",
   fee_court_fee: "280",
   claimant_contact_legal_costs: nil,
   total_cost: "280",

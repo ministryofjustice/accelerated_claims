@@ -15,6 +15,7 @@
   defendant_2_address: "Miss Barb Akew\n23 Mock St\nAnytown",
   defendant_2_postcode1: "EY99",
   defendant_2_postcode2: "1XX",
+  service_address: ".\n \n \n \n    REFER TO CONTINUATION SHEET",
   property_address: "23 Mock St\nAnytown",
   property_postcode1: "EY99",
   property_postcode2: "1XX",

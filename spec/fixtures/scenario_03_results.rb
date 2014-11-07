@@ -15,6 +15,7 @@
   defendant_2_address: "Mr John Dorey\n280 Uncoventry Rd\nMidtown",
   defendant_2_postcode1: "AA10",
   defendant_2_postcode2: "0XA",
+  service_address: ".\n \n \n \n    REFER TO CONTINUATION SHEET",
   property_address: "280 Uncoventry Rd\nMidtown",
   property_postcode1: "AA10",
   property_postcode2: "0XA",

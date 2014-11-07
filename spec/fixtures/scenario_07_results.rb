@@ -15,6 +15,7 @@
   defendant_2_address: "Ms Donna Summer\n45 St Mary's Precinct Church St\nRiteing",
   defendant_2_postcode1: "RT4",
   defendant_2_postcode2: "8BA",
+  service_address: ".\n \n \n \n    REFER TO CONTINUATION SHEET",
   property_address: "45 St Mary's Precinct Church St\nRiteing",
   property_postcode1: "RT4",
   property_postcode2: "8BA",
