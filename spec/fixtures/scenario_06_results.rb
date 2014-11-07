@@ -10,6 +10,7 @@
   defendant_2_address: nil,
   defendant_2_postcode1: nil,
   defendant_2_postcode2: nil,
+  service_address: "Ms I.C. Yew\n78 City Close Road\nSouthwich",
   fee_court_fee: "280.00",
   claimant_contact_legal_costs: nil,
   total_cost: "280.00",
