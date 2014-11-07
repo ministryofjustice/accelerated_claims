@@ -68,7 +68,7 @@ class PostcodePicker
     result = (word[0].toUpperCase() + word[1..-1].toLowerCase() for word in vc.split('_')).join ' '
     result = result.replace('Of', 'of')
 
-  toSentence: (array) ->
+  toSentence: (array) =>
     if array.length > 1
       last_item = array.pop()
       result = array.join(', ')
