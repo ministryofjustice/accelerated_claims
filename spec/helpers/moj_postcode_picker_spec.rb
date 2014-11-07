@@ -106,7 +106,7 @@ end
 
 def expected_output
   str =<<EOF
-<div class='postcode postcode-picker-container'>
+<div class='postcode postcode-picker-container' data-vc='all'>
   <div class='row postcode-lookup rel js-only'>
     <div class='postcode-display hide' style='margin-bottom: 20px;'>
       Postcode:

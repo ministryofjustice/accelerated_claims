@@ -55,6 +55,31 @@ class PostcodePicker
       @showPostcodeSearchComponent()
    
 
+  normalizeCountry: (vc) =>
+    console.log 'Normalizing ' + vc
+    if vc == 'all'
+      result = 'UK'
+    else 
+      countries = vc.split('+')
+      console.log JSON.stringify(countries)
+      @toSentence(countries.map (country) => @capitalizeCountry(country))
+
+  capitalizeCountry: (vc) =>
+    words = vc.split('_')
+    result = (word[0].toUpperCase() + word[1..-1].toLowerCase() for word in vc.split('_')).join ' '
+    result = result.replace('Of', 'of')
+
+  toSentence: (array) ->
+    if array.length > 1
+      last_item = array.pop()
+      result = array.join(', ')
+      result = result + " and " + last_item
+    else
+      result = array[0]
+      
+    result
+
+
   streetAndPostcodeAlreadyEntered: =>
     @picker.find('input.smalltext.postcode').val() != '' && @picker.find('.street textarea').val() != ''
 
@@ -102,11 +127,11 @@ class PostcodePicker
     if response.code == 2000
       @displayAddresses(response.result)
     else
-      console.log 'code is not 2000'
       @displayInvalidCountryMessage(response)
 
   displayInvalidCountryMessage: (response) ->
-     @addErrorMessage("Postcode is in #{response.message}. You can only use this service to regain possession of properties in England and Wales.")
+    @picker.find('.postcode-display').hide()
+    @addErrorMessage("Postcode is in #{response.message}. You can only use this service to regain possession of properties in England and Wales.")
 
   displayAddresses: (addresses) ->
     @addresses = addresses
