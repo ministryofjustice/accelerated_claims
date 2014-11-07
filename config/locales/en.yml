@@ -22,32 +22,69 @@
 en:
   claim:
     property:
+      label: Property
       house:
+        label: Type of property
         'yes': A self-contained house, flat or bedsit
         'no': 'Room or rooms in a property. <span class="hint">Tenants may share kitchen or bathroom</span>'
+      street:
+        label: Full address
     claimant_type:
+      label: Type of claimant
       individual: A private landlord (individual)
       organization: A private landlord (company), a local authority or a housing association
+    num_claimants:
+      label: Number of claimants
     claimant:
+      label: Claimants
+      street:
+        label: Full address
       address_same_as_first_claimant:
         'yes': 'Yes'
         'no': 'No'
+    claimant_contact:
+      label: Claimant contact
+      street:
+        label: Full address
+      dx_number:
+        label: DX number
+    reference_number:
+      label: Reference number
+    num_defendants:
+      label: Number of defendants
     defendant:
+      label: Defendants
+      street:
+        label: Full address
       inhabits_property:
         'yes': 'Yes'
         'no': 'No'
     notice:
+      label: Notice
       notice_served:
         'yes': 'Yes'
         'no': 'No'
+      served_by_name:
+        label: Person who gave the notice
+      served_method:
+        label: How the notice was given
+      date_served:
+        label: Date notice served
+      expiry_date:
+        label: Date notice ended
     tenancy:
+      label: Tenancy agreement
       tenancy_type:
+        label: Type of tenancy agreement
         assured: 'Assured shorthold tenancy <span class="hint">This is the most common form of tenancy</span>'
         demoted: 'Demoted assured shorthold tenancy <span class="hint">This is a tenancy agreement that the court has ‘demoted’. For example because tenants behaved anti-socially or used the property for illegal activity</span>'
       assured_shorthold_tenancy_type:
+        label: Number of tenancy agreements
         one: 1 tenancy agreement
         multiple: More than 1 tenancy agreement
         na: Not applicable
+      start_date:
+        label: Start date of the tenancy agreement
       agreement_reissued_for_same_property:
         'yes': 'Yes'
         'no': 'No'
@@ -61,7 +98,9 @@ en:
         secure: Secure
         na: Not applicable
     license:
+      label: Licences
       multiple_occupation:
+        label: '<abbr title="House in Multiple Occupation">HMO</abbr> licence held'
         'yes': 'Yes'
         applied: "I've applied for one"
         'no': Not applicable
@@ -74,22 +113,46 @@ en:
         part3: 'Licence for properties that are <strong>within an area</strong> defined by a local council (issued under part 3 of the Housing act 2004)'
         na: Not applicable
     deposit:
+      label: Deposit
       received:
+        label: Deposit paid
         'yes': 'Yes'
         'no': 'No'
+      ref_number:
+        label:
+          Tenancy deposit scheme reference number
+      type_of_deposit:
+        Type of deposit
+      as_money:
+        label: Money deposit
+      as_property:
+        label: Property deposit
+      information_given_date:
+        label: Date defendant was informed
     order:
       cost:
+        label: Defendant to pay costs
         'yes': 'Yes'
         'no': 'No'
     possession:
       hearing:
+        label: "Claimant to be at court if there's a hearing"
         'yes': 'Yes'
         'no': 'No'
     fee:
       account:
+        label: Fee account number
         description: 'Fee account number<span class="hint block">Organisations can now set up an account to pay court fees, rather than pay by cheque. <a href="http://www.justice.gov.uk/courts/fees/payment-by-account" class="external" rel="external" target="_blank">More about fee account</a></span>'
         prompt: If you have a fee account number, enter it here
         guidance: Fee account number, numeric only
+      label: Claim costs
+      court_fee:
+        label: Court fee
+    legal_cost:
+      legal_costs:
+        label: Fixed legal fees
+    court:
+      label: Court
   feedback:
     satisfaction_feedback:
       very_satisfied: 'Very satisfied'

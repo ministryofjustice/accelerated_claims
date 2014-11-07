@@ -11,7 +11,7 @@
   defendant_2_postcode1: nil,
   defendant_2_postcode2: nil,
   service_address: "Mr Malcom Mauve\n23c Piccalilly Rd\nTeds Heath, Londonville",
-  fee_court_fee: "280.00",
+  fee_court_fee: "280",
   claimant_contact_legal_costs: "332.45",
   total_cost: "612.45",
   IssueDateDay: nil,

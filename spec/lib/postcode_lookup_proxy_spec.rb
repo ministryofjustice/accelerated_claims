@@ -65,7 +65,7 @@ describe PostcodeLookupProxy do
 
   describe 'private method production_lookup' do
 
-    # This test queries the live server and so should be used in normal day to day usage, but is 
+    # This test queries the live server and so should be used in normal day to day usage, but is
     # here if there is a question over what the live server actually returns
     #
     if ENV['LIVEPC'] == 'idealpostcodes'
@@ -80,7 +80,7 @@ describe PostcodeLookupProxy do
 
           expect(pclp.send(:production_lookup)).to be true
           expect(pclp.result_set).to eq [
-            {"address"=>"2 Barons Court Road;;LONDON", "postcode"=>"ID1 1QD"}, 
+            {"address"=>"2 Barons Court Road;;LONDON", "postcode"=>"ID1 1QD"},
             {"address"=>"Basement Flat;;2 Barons Court Road;;LONDON", "postcode"=>"ID1 1QD"}
           ]
         end
@@ -181,7 +181,7 @@ describe PostcodeLookupProxy do
       expect(pclp.lookup).to be true
       expect(pclp.errors?).to be true
     end
-    
+
 
     it 'should return true if remote service returns anything other than 2000' do
       http_response = double('HTTPResponse')
@@ -197,7 +197,7 @@ describe PostcodeLookupProxy do
 
 
   ##### - A test to check that we can connect to the real remote service - don't use in day-to-day testing
-  
+
   # describe 'a real lookup to the api' do
   #   it 'should return a result or timeout' do
   #     WebMock.disable_net_connect!(:allow => [/api.ideal-postcodes.co.uk/, /codeclimate.com/] )
@@ -307,18 +307,18 @@ end
 
 def expected_result_set
   [
-      {"address"=>"1 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}, 
-      {"address"=>"3 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}, 
-      {"address"=>"5 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}, 
-      {"address"=>"7 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}, 
-      {"address"=>"9 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}, 
-      {"address"=>"11 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}, 
-      {"address"=>"13 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}, 
-      {"address"=>"15 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}, 
-      {"address"=>"17 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}, 
-      {"address"=>"19 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}, 
-      {"address"=>"121 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}, 
-      {"address"=>"22 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8H"}, 
+      {"address"=>"1 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"},
+      {"address"=>"3 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"},
+      {"address"=>"5 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"},
+      {"address"=>"7 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"},
+      {"address"=>"9 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"},
+      {"address"=>"11 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"},
+      {"address"=>"13 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"},
+      {"address"=>"15 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"},
+      {"address"=>"17 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"},
+      {"address"=>"19 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"},
+      {"address"=>"121 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"},
+      {"address"=>"22 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8H"},
       {"address"=>"23 Melbury Close;;FERNDOWN", "postcode"=>"BH22 8HR"}
   ]
 end

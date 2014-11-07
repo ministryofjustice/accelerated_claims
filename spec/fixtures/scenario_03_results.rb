@@ -20,7 +20,7 @@
   property_postcode1: "AA10",
   property_postcode2: "0XA",
   order_cost: "Yes",
-  fee_court_fee: "280.00",
+  fee_court_fee: "280",
   claimant_contact_legal_costs: "600",
   total_cost: "880.0",
   IssueDateDay: nil,
