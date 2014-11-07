@@ -131,6 +131,13 @@ CourtAddressModule =
           $('#court-address').show()
           show = true
 
+  addressReEntry: ->
+    $('.change-postcode-link').click ->
+      CourtAddressModule.blankFormFields()
+      CourtAddressModule.addCourtAddressFormLabel()
+      $('#court-name').empty()
+      $('#court-details').remove()
+
   setup: ->
     CourtAddressModule.getCourtIfPostcodePresent()
     CourtAddressModule.addCourtAddressFormLabel()
@@ -138,6 +145,7 @@ CourtAddressModule =
     CourtAddressModule.sendPostcodeForLookup()
     CourtAddressModule.flipTextareaToInputField()
     CourtAddressModule.showFormWhenErrors()
+    CourtAddressModule.addressReEntry()
 
 root.CourtAddressModule = CourtAddressModule
 
