@@ -100,7 +100,6 @@ class PostcodePicker
   lookupPostcode: (country) =>
     postcode = @input.val()
     country = @button.data('country')
-    @picker.find('.postcode-display').show()
     @picker.find('.postcode-select-container').hide()
     @showManualLink()
     window.PostcodeLookup.lookup(postcode, country, this)
