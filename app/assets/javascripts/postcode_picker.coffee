@@ -65,12 +65,10 @@ class PostcodePicker
       capitalizedCountries = new Array
       x = 0
       loop
-        console.log("DEBUG   x = " + x)
         capitalizedCountries.push(@capitalizeCountry(countries[x]))
         x = x + 1
         break if x == countries.length
 
-      console.log("DEBUG   capitalizedCoutnries: " + JSON.stringify(capitalizedCountries))
       @toSentence(capitalizedCountries)
 
   capitalizeCountry: (vc) =>
