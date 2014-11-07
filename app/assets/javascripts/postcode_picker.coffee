@@ -73,7 +73,8 @@ class PostcodePicker
 
   capitalizeCountry: (vc) =>
     words = vc.split('_')
-    result = (word[0].toUpperCase() + word[1..-1].toLowerCase() for word in vc.split('_')).join ' '
+    result = (word.charAt(0).toUpperCase() + word.substr(1).toLowerCase() for word in words)
+    result = result.join(' ')
     result = result.replace('Of', 'of')
 
   toSentence: (array) =>
