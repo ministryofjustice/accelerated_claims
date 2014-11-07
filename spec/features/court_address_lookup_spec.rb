@@ -117,5 +117,27 @@ feature 'Court address lookup' do
         end
       end
     end
+
+    context 'and is subsequently removed' do
+      scenario 'the court address should be removed also', js: true do
+        visit '/'
+        fill_text_field 'claim_property_postcode_edit_field', postcode
+        # click the first 'Find address' button
+        find(:xpath, '//*[@id="property"]/div/div[1]/div[2]/a').click
+        find('#claim_property_address_select').find(:xpath, 'option[1]').select_option
+        # click the first  'Select address' button
+        find(:xpath, '//*[@id="claim_property_selectaddress"]').click
+        expect(page).to have_text "You need to post this claim to the court nearest the property you're taking back:"
+        find(:xpath, '//*[@id="property"]/div/div[3]/div[3]/div').click
+
+        # click 'Change'
+        find(:xpath, '//*[@id="property"]/div/div[3]/div[3]/div/a').click
+
+        ['court_name', 'street', 'postcode'].each do |value|
+          form_field_value = find(:xpath, "//*[@id='claim_court_#{value}']", visible: false).value
+          expect(form_field_value).to eq ''
+        end
+      end
+    end
   end
 end

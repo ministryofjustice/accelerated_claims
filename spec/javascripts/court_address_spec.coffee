@@ -216,3 +216,35 @@ describe 'CourtAddressModule', ->
         CourtAddressModule.showFormWhenErrors()
         court_postcode = $('#claim_court_postcode')
         expect(court_postcode).toBeVisible()
+
+  describe 'when the address re-entry is attempted', ->
+    beforeEach ->
+      elements = $(
+        "<a class='change-postcode-link' href='#dummy_anchor'>Change</a>" +
+        '<div id="court-name"><b>Cambridge County Court and Family Court</b></div>' +
+        '<a id="court-details" class="caption">Choose to send this claim to a different court</a>'
+      )
+      $(document.body).append(elements)
+
+    it 'should blank out the court address form', ->
+      spyOn(window.CourtAddressModule, 'blankFormFields')
+      CourtAddressModule.addressReEntry()
+      $('.change-postcode-link').trigger 'click'
+      expect(window.CourtAddressModule.blankFormFields).toHaveBeenCalled
+
+    it 'should re-display the original label text', ->
+      spyOn(window.CourtAddressModule, 'addCourtAddressFormLabel')
+      CourtAddressModule.addressReEntry()
+      $('.change-postcode-link').trigger 'click'
+      expect(window.CourtAddressModule.addCourtAddressFormLabel).toHaveBeenCalled
+
+    it 'should blank out court name', ->
+      CourtAddressModule.addressReEntry()
+      $('.change-postcode-link').trigger 'click'
+      court_name = $('#court-name')
+      expect(court_name).toMatch('')
+
+    it 'should hide the form completely', ->
+      CourtAddressModule.addressReEntry()
+      $('.change-postcode-link').trigger 'click'
+      expect($('#court-details')).not.toBeVisible()
