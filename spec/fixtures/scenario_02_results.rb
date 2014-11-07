@@ -10,6 +10,7 @@
   defendant_2_address: nil,
   defendant_2_postcode1: nil,
   defendant_2_postcode2: nil,
+  service_address: "Mr Chris P. Bacon\n94 East St\nAnyville",
   fee_court_fee: "280.00",
   fee_account: "1234567890",
   claimant_contact_legal_costs: nil,

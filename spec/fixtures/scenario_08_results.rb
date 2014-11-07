@@ -15,6 +15,7 @@
   defendant_2_address: "Mr Owen Alott\nUnit 11,\nWelsh Wood Park,\nGooselake",
   defendant_2_postcode1: "GO5",
   defendant_2_postcode2: "4BB",
+  service_address: ".\n \n \n \n    REFER TO CONTINUATION SHEET",
   property_address: "Unit 11,\nWelsh Wood Park,\nGooselake",
   property_postcode1: "GO5",
   property_postcode2: "4BB",

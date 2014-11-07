@@ -10,6 +10,7 @@
   defendant_2_address: nil,
   defendant_2_postcode1: nil,
   defendant_2_postcode2: nil,
+  service_address: "Mr John Kapur\nEndof Road\nLondon",
   fee_court_fee: "280.00",
   claimant_contact_legal_costs: "123.34",
   total_cost: "403.34",
