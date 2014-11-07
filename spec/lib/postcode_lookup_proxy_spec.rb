@@ -70,7 +70,7 @@ describe PostcodeLookupProxy do
 
   describe 'private method production_lookup' do
 
-    # This test queries the live server and so should be used in normal day to day usage, but is 
+    # This test queries the live server and so should be used in normal day to day usage, but is
     # here if there is a question over what the live server actually returns
     #
     if ENV['LIVEPC'] == 'idealpostcodes'
@@ -85,7 +85,7 @@ describe PostcodeLookupProxy do
 
           expect(pclp.send(:production_lookup)).to be true
           expect(pclp.result_set).to eq [
-            {"address"=>"2 Barons Court Road;;LONDON", "postcode"=>"ID1 1QD"}, 
+            {"address"=>"2 Barons Court Road;;LONDON", "postcode"=>"ID1 1QD"},
             {"address"=>"Basement Flat;;2 Barons Court Road;;LONDON", "postcode"=>"ID1 1QD"}
           ]
         end
@@ -135,7 +135,7 @@ describe PostcodeLookupProxy do
   end
 
   ##### - A test to check that we can connect to the real remote service - don't use in day-to-day testing
-  
+
   # describe 'a real lookup to the api' do
   #   it 'should return a result or timeout' do
   #     WebMock.disable_net_connect!(:allow => [/api.ideal-postcodes.co.uk/, /codeclimate.com/] )
@@ -214,10 +214,10 @@ def dummy_ideal_postcodes_result
 end
 
 
-# def scottish_result_set
-#   [
-#       {'address'=>'134, Corstorphine Road;;EDINBURGH', 'postcode'=>'EH12 6TS', 'country' => 'Scotland'}, 
-#       {'address'=>'Royal Zoological Society of Scotland;;134, Corstorphine Road;;EDINBURGH', 'postcode'=>'EH12 6TS', 'country' => 'Scotland'} 
-#   ]
-# end
+def scottish_result_set
+  [
+      {'address'=>'134, Corstorphine Road;;EDINBURGH', 'postcode'=>'EH12 6TS', 'country' => 'Scotland'}, 
+      {'address'=>'Royal Zoological Society of Scotland;;134, Corstorphine Road;;EDINBURGH', 'postcode'=>'EH12 6TS', 'country' => 'Scotland'} 
+  ]
+end
 

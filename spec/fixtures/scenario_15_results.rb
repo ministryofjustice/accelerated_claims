@@ -2,17 +2,14 @@ def left_panel0
   "Additional Claimants
 ====================
 
-
 Claimant 3:
     Mrs Jane Smith
     2 Brown St
     Bwlchllydd
     FX1W 0LU
 
-
 Additional Defendants
 =====================
-
 
 Defendant 1 name and address for service:
     Miss Augusta Wind
@@ -20,15 +17,12 @@ Defendant 1 name and address for service:
     Anytown
     EY99 1XX
 
-
 Defendant 2 name and address for service:
     Mr John Dorey
     23 Mock St
     Anytown
     EY99 1XX"
 end
-
-
 
 {
   Button94: nil,
@@ -43,7 +37,8 @@ end
   defendant_2_address: "Mr John Dorey\n23 Mock St\nAnytown",
   defendant_2_postcode1: "EY99",
   defendant_2_postcode2: "1XX",
-  fee_court_fee: "280.00",
+  service_address: ".\n \n \n \n    REFER TO CONTINUATION SHEET",
+  fee_court_fee: "280",
   claimant_contact_legal_costs: "332.45",
   total_cost: "612.45",
   IssueDateDay: nil,

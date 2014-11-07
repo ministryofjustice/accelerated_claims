@@ -8,18 +8,13 @@ class PdfModel
   def assert_pdf_is_correct(expected_values)
     expected_values.each do |field, value|
       generated = @generated_values[field]
+      generated = generated.gsub("\n\n","\n") if generated.is_a?(String)
       expect("#{field}: #{generated}").to eq("#{field}: #{value}")
     end
   end
 
-  def write_hash_to_file(filename)
-    File.open(filename,'w') do |f|
-      data = JSON.pretty_generate(@generated_values)
-      data.gsub!(/"([^"]+)":/, '\1:')
-      data.gsub!('null','nil')
-
-      f.write data
-    end
+  def generated_values
+    @generated_values
   end
 
 private

@@ -18,6 +18,9 @@ input, [type="text"], [type="password"], button, select, textarea
   font-size: 19px
   margin: 0
 
+.confirmation
+  font-size: 19px
+
 [type="text"], [type="password"], textarea
   padding: 5px 4px 2px
   border: 1px solid $grey-2
@@ -114,6 +117,17 @@ fieldset, legend
       display: none
       .js-enabled &
         display: block
+
+.summary-label
+  @extend .hint
+  clear: left
+  float: left
+  width: 250px
+  display: inline
+
+.summary-field
+  clear: left
+  float: left
 
 select, option, legend
   color: $black
@@ -260,6 +274,7 @@ fieldset.plain
 
 .moj-panel
   @include clearfix
+  clear: both
   background: $grey-4
   border:
     top: 1px solid $grey-2
@@ -541,7 +556,7 @@ fieldset.plain
       margin:
         left: 90px
         right: 90px
-        top: 15px
+        top: 0px
         bottom: 30px
       overflow: hidden
       border-bottom: 1px dotted #c2c2c2
