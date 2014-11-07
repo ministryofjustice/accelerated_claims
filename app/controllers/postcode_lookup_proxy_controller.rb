@@ -1,31 +1,27 @@
 class PostcodeLookupProxyController < ApplicationController
 
   def show
-    @pclp = PostcodeLookupProxy.new(params[:pc], live_postcode_lookup?)
-    
-    respond_to do |format|
-      if @pclp.invalid?
-        format.json { render json: "Invalid postcode", status: :unprocessable_entity }
-      elsif @pclp.lookup == true
-        if @pclp.empty?
-          format.json { render json: "No matching postcodes", status: :not_found }
-        else
-          format.json { render json: @pclp.result_set, status: :ok }
-        end
-      else
-        format.json { render json: "Service not available", status: :service_unavailable}
-      end
-    end
+    @pclp = PostcodeLookupProxy.new(params[:pc], CountryNameNormalizer.new(params).normalize, live_postcode_lookup?)
+    @pclp.lookup
 
+    respond_to do |format|
+      format.json { render json: @pclp.result_set, status: @pclp.http_status }
+    end
   end
 
 
   private
 
 
+  def country_params
+    if params[:vc].present?
+      transform_countries
+    else
+      []
+    end
+  end
 
-
-
+ 
   def live_postcode_lookup?
     production = ['staging', 'production'].include?( ENV['ENV_NAME'] )
     livepc = (URI(request.referer).query =~ /livepc=1/).nil? ? false : true

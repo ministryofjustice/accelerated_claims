@@ -12,7 +12,7 @@ describe 'PostcodePicker', ->
 <head>
 </head>
 <body class='js-enabled'>
-<div class="postcode postcode-picker-container">
+<div class="postcode postcode-picker-container" data-vc='england+wales'>
   <div class="row postcode-lookup rel js-only">
     <div class="postcode-display hide" style="margin-bottom: 20px;">
       Postcode:
@@ -26,7 +26,7 @@ describe 'PostcodePicker', ->
     <div class="postcode-selection-els">
       <label class="postcode-picker-label" for="claim_property_postcode_edit_field">Postcode</label>
       <input class="smalltext postcode-picker-edit-field" id="claim_property_postcode_edit_field" maxlength="8" name="[postcode]" size="8" type="text">
-      <a class="button primary postcode-picker-button" href="#claim_property_postcode_picker" name="FindUkPostcode">
+      <a class="button primary postcode-picker-button" href="#claim_property_postcode_picker" data-country='all' name="FindUkPostcode">
         Find UK Address
       </a>
     </div>
@@ -76,10 +76,22 @@ describe 'PostcodePicker', ->
 </div>
 </body>""")
 
-    @results = [
-      {"address":"Flat 1;;1 Melbury Close;;FERNDOWN","postcode":"BH22 8HR"},
-      {"address":"3 Melbury Close;;FERNDOWN","postcode":"BH22 8HR"}
-    ]
+    @results = {
+      'code':     2000,
+      'message':  'Success',
+      'result':  [
+        {
+          "address":"Flat 1;;1 Melbury Close;;FERNDOWN", 
+          "postcode":"BH22 8HR", 
+          "country": "England"
+        },
+        {
+          "address":"3 Melbury Close;;FERNDOWN", 
+          "postcode":"BH22 8HR", 
+          "country": "England"
+        }
+      ]
+    }
     $(document.body).append(element)
     pickerDivs = $('.postcode-picker-container')
     @picker = pickerDivs.eq(0)
@@ -98,12 +110,12 @@ describe 'PostcodePicker', ->
       @postcodeEditField.val('SW106AJ')
       @picker.find('.postcode-picker-button').click()
 
-      expect(window.PostcodeLookup.lookup).toHaveBeenCalledWith('SW106AJ', @view)
+      expect(window.PostcodeLookup.lookup).toHaveBeenCalledWith('SW106AJ', 'all', @view)
 
-  describe 'displayAddresses called with array of addresses', ->
 
+  describe 'handleSuccessfulResponse called with array of addresses', ->
     it 'renders list of addresses in select box', ->
-      @view.displayAddresses(@results)
+      @view.handleSuccessfulResponse(@results)
       options = @picker.find('.address-picker-select').find('option')
       expect( options.size() ).toEqual 2
 
@@ -113,8 +125,8 @@ describe 'PostcodePicker', ->
       expect(@picker.find('.postcode-select-container')).toBeVisible()
 
     it 'clears the existing contents of the select box before adding in new ones', ->
-      @view.displayAddresses(@results)
-      @view.displayAddresses(@results)
+      @view.handleSuccessfulResponse(@results)
+      @view.handleSuccessfulResponse(@results)
       options = @picker.find('.address-picker-select').find('option')
       expect( options.size() ).toEqual 2
 
@@ -124,20 +136,25 @@ describe 'PostcodePicker', ->
       expect(@picker.find('.postcode-select-container')).toBeVisible()
 
     it 'hides the postcode entry box', ->
-      @view.displayAddresses(@results)
+      @view.handleSuccessfulResponse(@results)
       expect( @postcodeSearchComponent ).not.toBeVisible()
 
     it 'displays the selected postcode as fixed text', ->
-      @view.displayAddresses(@results)
+      @view.handleSuccessfulResponse(@results)
       pcd = @picker.find('.postcode-display')
       expect(pcd).toBeVisible()
       expect(@picker.find('.postcode-display-detail').html()).toEqual 'BH22 8HR'
+
+    it 'displays not England and Wales message if code = 4041', ->
+      response = { 'code': 4041, 'message': 'Northern Ireland' }
+      @view.handleSuccessfulResponse(response)
+      expect( @picker.find('span.error.postcode').text() ).toEqual 'Postcode is in Northern Ireland. You can only use this service to regain possession of properties in England and Wales.'
 
 
   describe 'invalid postcode', ->
     it 'should display an error message', ->
       @view.displayInvalidPostcodeMessage()
-      expect( @picker.find('span.error.postcode').text() ).toEqual 'Please enter a valid UK postcode'
+      expect( @picker.find('span.error.postcode').text() ).toEqual 'Please enter a valid postcode in England and Wales'
 
     it 'clears existing error message', ->
       @view.displayInvalidPostcodeMessage()
@@ -149,20 +166,26 @@ describe 'PostcodePicker', ->
       @postcodeEditField.trigger('keyup')
       expect( @picker.find('span.error.postcode').size() ).toEqual 0
 
+
   describe 'displayNoResultsFound', ->
-    it 'should display an error message', ->
-      @view.displayNoResultsFound()
+    it 'should display an error message if no result found', ->
+      response =  {'responseJSON': { "code": 4040, "message": "Postcode Not Found" } }
+      @view.displayNoResultsFound(response)
       expect( @picker.find('span.error.postcode').text() ).toEqual 'No address found. Please enter the address manually'
 
     it 'clears existing error message', ->
-      @view.displayNoResultsFound()
-      @view.displayNoResultsFound()
+      response =  {'responseJSON':  { "code": 4040, "message": "Postcode Not Found" } }
+      @view.displayNoResultsFound(response)
+      response =  {'responseJSON':  { "code": 4041, "message": "Northern Ireland" } }
+      @view.displayNoResultsFound(response)
       expect( @picker.find('span.error.postcode').size() ).toEqual 1
 
     it 'should remove a previously-displayed error message on edit field keyup', ->
-      @view.displayNoResultsFound()
+      response =  {'responseJSON':  { "code": 4040, "message": "Postcode Not Found" } }
+      @view.displayNoResultsFound(response)
       @postcodeEditField.trigger('keyup')
       expect( @picker.find('span.error.postcode').size() ).toEqual 0
+
 
   describe 'service not available', ->
     beforeEach ->
@@ -174,9 +197,10 @@ describe 'PostcodePicker', ->
         'Postcode lookup service not available. Please enter the address manually.'
       )
 
+
   describe 'selecting address from select box', ->
     beforeEach ->
-      @view.displayAddresses(@results)
+      @view.handleSuccessfulResponse(@results)
       @picker.find('option').eq(0).attr('selected', 'selected')
       @picker.find('.postcode-picker-cta').click()
 
@@ -211,11 +235,48 @@ describe 'PostcodePicker', ->
 
   describe 'displaying results after selection', ->
     beforeEach ->
-      @view.displayAddresses(@results)
+      @view.handleSuccessfulResponse(@results)
       @picker.find('option').eq(1).attr('selected', 'selected')
       @picker.find('.postcode-picker-cta').click()
-      @view.displayAddresses(@results)
+      @view.handleSuccessfulResponse(@results)
 
     it 'shows address list', ->
       expect(@picker.find('.postcode-select-container')).toBeVisible()
+
+
+  describe 'toSentence', ->
+    it 'should return just the name of a country if only one in the array', ->
+      expect(@view.toSentence(['England'])).toEqual 'England'
+
+    it 'should separate a two element array by and', ->
+      expect(@view.toSentence(['England', 'Wales'])).toEqual 'England and Wales'      
+
+    it 'should separate a list by commas and the last by and', ->
+      expect(@view.toSentence(['England', 'Wales', 'Northern Ireland'])).toEqual 'England, Wales and Northern Ireland'            
+
+
+  describe 'capitalizeCountry', ->
+    it 'should capitalize single work country names', ->
+      expect(@view.capitalizeCountry('england')).toEqual 'England'
+
+    it 'should capitalize multi-workd country names', ->
+      expect(@view.capitalizeCountry('northern_ireland')).toEqual 'Northern Ireland'
+
+    it 'should lowercase of in country names', ->
+      expect(@view.capitalizeCountry('isle_of_man')).toEqual 'Isle of Man'
+
+
+  describe 'normalizeCountry', ->
+    it 'should return uk for all', ->
+      vc = @picker.data('vc')
+      expect(@view.normalizeCountry('all')).toEqual 'UK'
+
+    it 'should return England and Wales for england+wales', ->
+      expect(@view.normalizeCountry('england+wales')).toEqual 'England and Wales'
+
+    it 'should return England, Wales, Channel Islands, Northern Ireland and Isle of Man', ->
+      expect(@view.normalizeCountry('england+wales+channel_islands+northern_ireland+isle_of_man')).toEqual 'England, Wales, Channel Islands, Northern Ireland and Isle of Man'
+
+
+
 

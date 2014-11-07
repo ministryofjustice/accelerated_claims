@@ -22,19 +22,21 @@ class MojPostcodePicker
   #   MojPostcodePicker.new(form, prefix: 'claim_defendant_2')                                      # generates an id of 'claim_defendant_2_street, and a name of claim[defendant][2][street]'
   #   MojPostcodePicker.new(form, prefix: 'claim_defendant_2', name_prefix: 'claim[defendant_2'])   # generates an id of 'claim_defendant_2_street, and a name of claim[defendant_2][street]'
   #   MojPostcodePicker.new(form, nil, name: 'address')                                             # generates an id of 'address_lines and a name of 'address'
+  #   MojPostcodePicker.new(form, prefix: 'claim_property', vc: 'england+wales'
   #
   #
   def initialize(form, options)
-    @form           = form
-    @options        = options
-    @prefix         = options[:prefix]
-    @name           = generate_name
-    @postcode_attr  = options[:postcode_attr] || 'postcode'
-    @address_attr   = options[:address_attr] || 'address_lines'
-    @street_hint    = options[:street_hint] || ''
-    @@haml          = load_haml if @@haml.nil? || Rails.env.development?
-    @postcode_value = form.object.send(@postcode_attr.to_sym)
-    @address_value  = form.object.send(@address_attr.to_sym)
+    @form            = form
+    @options         = options
+    @prefix          = options[:prefix]
+    @valid_countries = options[:vc] || 'all'
+    @name            = generate_name
+    @postcode_attr   = options[:postcode_attr] || 'postcode'
+    @address_attr    = options[:address_attr] || 'address_lines'
+    @street_hint     = options[:street_hint] || ''
+    @@haml           = load_haml if @@haml.nil? || Rails.env.development?
+    @postcode_value  = form.object.send(@postcode_attr.to_sym)
+    @address_value   = form.object.send(@address_attr.to_sym)
     @address_value.gsub!("\r\n", "&#x000A;") unless @address_value.nil?
   end
   
@@ -50,8 +52,14 @@ class MojPostcodePicker
   end
 
 
+  def country_name_for_messages
+    CountryNameNormalizer.new(@options).to_sentence
+  end
+
 
   private
+
+
 
 
   def generate_name

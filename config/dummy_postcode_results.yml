@@ -1,173 +1,250 @@
+
+# This file contians 5 sets of dummy postcode results.  Unless in livepc, the first digit
+# of the second part of the postcode determines which set is returned:
+#
+#  0 - will return emtpy address set
+#  1 - Melbury Close, Ferndown
+#  2 - Northumberland Avenue, Reading
+#  3 - Montpellier Parade, Harrogate
+#  4 - Southampton Row, London
+#  5 - Corstorphine Road, Edinburgh (Scottish address)
+#  6 - 50 Tregunter Road, London (single address)
+#  7 - Melbury Close, Ferndown
+#  8 - Northumberland Avenue, Reading
+#  9 - Service Unavailable
+#
 - 
   - line_1: 50 Tregunter Road
     post_town: LONDON
+    country: England
     postcode: SW10 9LB
 - 
   - line_1: 1 Melbury Close
     post_town: FERNDOWN
     postcode: BH22 8HR
+    country: England
   - line_1: "3 Melbury Close"
     post_town: FERNDOWN
     postcode: BH22 8HR
+    country: England
   - line_1: "5 Melbury Close"
     post_town: FERNDOWN
     postcode: BH22 8HR
+    country: England
   - line_1: "7 Melbury Close"
     post_town: FERNDOWN
     postcode: BH22 8HR
+    country: England
   - line_1: "9 Melbury Close"
     post_town: FERNDOWN
     postcode: BH22 8HR
+    country: England
   - line_1: "11 Melbury Close"
     post_town: FERNDOWN
     postcode: BH22 8HR
+    country: England
   - line_1: "13 Melbury Close"
     post_town: FERNDOWN
     postcode: BH22 8HR
+    country: England
   - line_1: "15 Melbury Close"
     post_town: FERNDOWN
     postcode: BH22 8HR
+    country: England
   - line_1: "17 Melbury Close"
     post_town: FERNDOWN
     postcode: BH22 8HR
+    country: England
   - line_1: "19 Melbury Close"
     post_town: FERNDOWN
     postcode: BH22 8HR
+    country: England
   - line_1: "121 Melbury Close"
     post_town: FERNDOWN
     postcode: BH22 8HR
+    country: England
   - line_1: "22 Melbury Close"
     post_town: FERNDOWN
     postcode: BH22 8H
+    country: England
   - line_1: "23 Melbury Close"
     post_town: "FERNDOWN" 
     postcode: BH22 8HR
+    country: England
 - 
   - line_1: "150 Northumberland Avenue"
     post_town: READING
     postcode: RG2 7PU
+    country: England
   - line_1: "152 Northumberland Avenue"
     post_town: READING
     postcode: RG2 7PU
+    country: England
   - line_1: "154 Northumberland Avenue"
     post_town: READING
     postcode: RG2 7PU
+    country: England
   - line_1: "156 Northumberland Avenue"
     post_town: READING
     postcode: RG2 7PU
+    country: England
   - line_1: "158 Northumberland Avenue"
     post_town: READING
     postcode: RG2 7PU
+    country: England
   - line_1: "160 Northumberland Avenue"
     post_town: READING
     postcode: RG2 7PU
+    country: England
   - line_1: "162 Northumberland Avenue"
     post_town: READING
     postcode: RG2 7PU
+    country: England
   - line_1: "164 Northumberland Avenue"
     post_town: READING
     postcode: RG2 7PU
+    country: England
   - line_1: "166 Northumberland Avenue"
     post_town: READING
     postcode: RG2 7PU
+    country: England
   - line_1: "168 Northumberland Avenue"
     post_town: READING
     postcode: RG2 7PU
+    country: England
   - line_1: "170 Northumberland Avenue"
     post_town: READING
     postcode: RG2 7PU
+    country: England
   - line_1: "172 Northumberland Avenue"
     post_town: READING
     postcode: RG2 7PU
+    country: England
   - line_1: "174 Northumberland Avenue"
     post_town: READING
     postcode: RG2 7PU
+    country: England
   - line_1: "176 Northumberland Avenue"
     post_town: READING
     postcode: RG2 7PU
+    country: England
   - line_1: "178 Northumberland Avenue"
     post_town: READING
     postcode: RG2 7PU
+    country: England
   - line_1: "180 Northumberland Avenue"
     post_town: READING
     postcode: RG2 7PU
+    country: England
   - line_1: "182 Northumberland Avenue"
     post_town: READING
     postcode: RG2 7PU
+    country: England
   - line_1: "184 Northumberland Avenue"
     post_town: READING
     postcode: RG2 7PU
+    country: England
   - line_1: "186 Northumberland Avenue"
     post_town: READING
     postcode: RG2 7PU
+    country: England
   - line_1: "188 Northumberland Avenue"
     post_town: READING
     postcode: RG2 7PU
+    country: England
   - line_1: "190 Northumberland Avenue"
     post_town: READING
     postcode: RG2 7PU
+    country: England
   - line_1: "192 Northumberland Avenue"
     post_town: READING
     postcode: RG2 7PU
+    country: England
 -
   - line_1: "1st Floor Studios"
     line_2: "17 Montpellier Parade"
     post_town: HARROGATE
     postcode: HG1 2TG
+    country: England
   - line_1: "Catwalk Cafe"
     line_2: "18 Montpellier Parade"
     post_town: HARROGATE
     postcode: HG1 2TG
+    country: England
   - line_1: "Farrahs Food Hall"
     line_2: "29 Montpellier Parade"
     post_town: HARROGATE
     postcode: HG1 2TG
+    country: England
   - line_1: "Hawick Cashmere Retail Ltd"
     line_2: "20 Montpellier Parade"
     post_town: HARROGATE
     postcode: HG1 2TG
+    country: England
   - line_1: "Lavender Court"
     line_2: "15 Montpellier Parade"
     post_town: HARROGATE
     postcode: HG1 2TG
+    country: England
   - line_1: "Page Opticians"
     line_2: "28 Montpellier Parade"
     post_town: HARROGATE
     postcode: HG1 2TG
+    country: England
 -
   - line_1: "A P X Amsterdam Power Exchange (UK) Ltd"
     line_2: "1 Southampton Row"
     post_town: LONDON
     postcode: WC1B 5HA
+    country: England
   - line_1: "Afrikids"
     line_2: "1 Southampton Row"
     post_town: LONDON
     postcode: WC1B 5HA
+    country: England
   - line_1: "Carpmaels & Ransford"
     line_2: "1 Southampton Row"
     post_town: LONDON
     postcode: WC1B 5HA
+    country: England
   - line_1: "Claranet Ltd"
     line_2: "1 Southampton Row"
     post_town: LONDON
     postcode: WC1B 5HA
+    country: England
   - line_1: "Free State"
     line_2: "23 Southampton Row"
     post_town: LONDON
     postcode: WC1B 5HA
+    country: England
   - line_1: "Metro Bank plc"
     line_2: "Southampton Row"
     post_town: LONDON
     postcode: WC1B 5HA
+    country: England
   - line_1: "Sodexo"
     line_2: "Southampton Row"
     post_town: LONDON
     postcode: WC1B 5HA
+    country: England
   - line_1: "T M Lewin"
     line_2: "Southampton Row"
     post_town: LONDON
     postcode: WC1B 5HA
+    country: England
   - line_1: "17 Southampton Row"
     post_town: LONDON
+    postcode: WC1B 5HA
+    country: England
+-
+  - line_1: "134, Corstorphine Road"
+    post_town: "EDINBURGH"
+    postcode: EH12 6TS
+    country: Scotland
+  - line_1: Royal Zoological Society of Scotland
+    line_2: "134, Corstorphine Road"
+    post_town: "EDINBURGH"
+    postcode: EH12 6TS
+    country: Scotland
 
 
