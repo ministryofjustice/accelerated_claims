@@ -13,7 +13,7 @@ class Claim < BaseClass
 
   @@valid_claimant_types    = %w{ organization individual }
 
-  def initialize(claim_params={})
+  def initialize(claim_params={}, livepc = false)
     @javascript_enabled = claim_params.key?('javascript_enabled')
 
     @claimant_type  = claim_params.key?(:claimant_type) ? claim_params[:claimant_type] : nil
