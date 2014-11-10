@@ -18,8 +18,7 @@ class CourtfinderController < ApplicationController
     postcode = params['postcode']
 
     result = if ENV["ENV_NAME"] == "production"
-                # Courtfinder::Client::HousingPossession.new.get(params['postcode'])
-               []
+               Courtfinder::Client::HousingPossession.new.get(params['postcode'])
              else
                postcode == 'fake' ? [] : TEST_RESPONSE_DATA
              end
