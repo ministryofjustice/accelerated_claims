@@ -69,6 +69,13 @@ describe ClaimController, :type => :controller do
         get :confirmation
         expect(response).to render_template("confirmation")
       end
+
+      it 'should contain links to root_url' do
+        @controller.session['claim'] = claim_post_data['claim']
+        get :confirmation
+        url_root = root_path unless root_path=='/'
+        expect(response.body).to include("<a href='#{url_root}/#property-section'>Change property</a>") #('//*[@id="content"]/section[2]/div[1]/div[2]/a')
+      end
     end
 
     context 'with no claim data' do
