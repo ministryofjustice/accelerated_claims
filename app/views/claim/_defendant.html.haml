@@ -6,7 +6,7 @@
   = claim_form.fields_for defendant_field, defendant, builder: LabellingFormBuilder do |form|
     = form.text_field_row :title, class: 'title', input_class: 'smalltext'
     = form.text_field_row :full_name, class: 'rel'
-
+    = form.hidden_field :inhabits_property
     .sub-panel.details{id: "defendant_#{defendant_id}_resident_address"}
       .row.js-only
         %a.caption{ id: "defendant_#{defendant_id}_resident_details", class: "js-inhabitproperty show-hide" , href: "#defendant-#{defendant_id}-resident-details", 'aria-expanded' => 'false' }

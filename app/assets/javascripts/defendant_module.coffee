@@ -32,7 +32,8 @@ DefendantModule =
     link = panel.find('a.caption')
     address = panel.find('textarea').val()
     postcode = panel.find('input').val()
-    if address!='' || postcode!=''
+    inhabits_property = $("#claim_defendant_#{defendant_id}_inhabits_property").val()
+    if (address!='' || postcode!='') && inhabits_property=='no'
       panel.toggleClass( 'open' )
     DefendantModule.toggleAddressDisplay(panel, link)
 

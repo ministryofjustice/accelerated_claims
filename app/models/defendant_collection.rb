@@ -57,7 +57,11 @@ class DefendantCollection < ParticipantCollection
     end
     copy_cached_property_address_if_blank(defendant_params)
     @defendant = Defendant.new(defendant_params)
-    @defendant.inhabits_property = 'yes' if @defendant.street == @property_street && @defendant.postcode == @property_postcode
+    if @defendant.validate_presence
+      @defendant.inhabits_property = @defendant.street == @property_street && @defendant.postcode == @property_postcode ? 'yes' : 'no'
+    else
+      @defendant.inhabits_property=nil
+    end
     @participants[index] = @defendant
   end
 
