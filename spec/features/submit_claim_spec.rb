@@ -22,8 +22,10 @@ feature "submit claim" do
       click_button 'Continue'
 
       begin
-        find('section.confirmation') # raises exception if confirmation page not returned
-      rescue
+        # raises exception if confirmation page not returned
+        page.find(:xpath, '//*[@id="content"]/section[1]')
+      rescue => err
+        puts "ERROR: #{err.message} class: #{err.class}"
         fail validation_error_text(page)
       end
 
