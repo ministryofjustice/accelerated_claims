@@ -51,8 +51,9 @@ module SummaryHelper
   def link_to_edit_section section_key
     section_name = I18n.t "claim.#{section_key}.label"
 
+    url_root = root_path unless root_path=='/'
     capture_haml do
-      haml_tag "a", :<, href: "/##{section_key}-section" do
+      haml_tag "a", :<, href: "#{url_root}/##{section_key}-section" do
         haml_concat "Change #{section_name.downcase}"
       end
     end
