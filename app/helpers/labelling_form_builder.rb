@@ -20,7 +20,18 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     df.emit
   end
 
-
+  # produces an postcode picker widget - this will produce an address/street and postcode attributes for the given object type
+  # @param [String] attribute: the name of the attribute on Claim which is to have the street and postcode attributes (e.g. property, defendant_1)
+  # @param [Hash] options: options to control the way in which the potcode picker is displayed, and what html is generated in the form:
+  #  :prefix - the prefix to be applied to each element in the form
+  #  :postcode_attr - the name of the postcode attribute if not 'postcode'
+  #  :address_attr - the name of the address attribute if not 'street'
+  #  :name - the prefix of the name given to the street and postcode attributes if not 'claim['xxxx'] where xxxx is the attribute
+  #  :street_hint -  and html which is to be inserted as a hint above the street textarea
+  #  :vc - list of valid countries: postcodes that return a country not in the supplied list will be marked as invalid.  
+  #        If not supplied or blank, all countries are valid.  Countries should be joined by '+' and spaces in country names should be replaced 
+  #        by underscores, e.g "england+wales+channel_islands+isle_of_man"
+  #
   def moj_postcode_picker attribute, options = {}  
     default_options = { :prefix => "claim_#{attribute}", :postcode_attr => :postcode, :address_attr => :street, :name =>  "claim[#{attribute}]" }
     options = default_options.merge(options)

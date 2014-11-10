@@ -3,32 +3,28 @@ require 'yaml'
 # PostcodeLookupProxy API
 
 # pclp = PostcodeLookupProxy.new("AB126FG")
-# pclp.valid?         # => true
-# pclp.lookup         # => true if http result was successful, otherwise false
-# pclp.empty?         # => false if any addresses returned
-# pclp.errors?        # => false if the result code from the remote service was successful, otherwise false
-# pclp.result_code    # => the result_code returned from the remote service
-# pclp.result_message # => the result message returned from the remote service
-# pclp.result_set     # => array of address hashes  [ { 'address' => 'line 1;;line 2;;line 3', 'postcode' => 'ID1 1QQ'}, ... ]
+# pclp.lookup             # => true if http result was successful, otherwise false
+# pclp.result_set         # => The JSON that is to be returned by the controller
+# pclp.http_status_code   # => the HTTP status code that the controller should return
 #
-
 class PostcodeLookupProxy
 
   @@dummy_postcode_results = YAML.load_file("#{Rails.root}/config/dummy_postcode_results.yml") 
 
-  attr_reader :result_set, :result_code, :result_message
+  attr_reader :result_set, :result_code, :result_message, :http_status
 
-  def initialize(postcode, use_live_data = false)
-    @postcode       = UKPostcode.new(postcode)
-    @valid          = @postcode.valid?
-    @result_set     = nil
-    config          = YAML.load_file("#{Rails.root}/config/ideal_postcodes.yml")
-    @url            = config['url']
-    @api_key        = config['api_key']
-    @timeout        = config['timeout']
-    @result_code    = nil
-    @result_message = nil
-    @use_live_data  = use_live_data
+  def initialize(postcode, valid_countries, use_live_data = false)
+    @postcode        = UKPostcode.new(postcode)
+    @valid           = @postcode.valid?
+    @result_set      = nil
+    config           = YAML.load_file("#{Rails.root}/config/ideal_postcodes.yml")
+    @url             = config['url']
+    @api_key         = config['api_key']
+    @timeout         = config['timeout']
+    @api_result_set  = nil
+    @use_live_data   = use_live_data
+    @valid_countries = valid_countries
+    @http_status     = nil
   end
 
 
@@ -40,103 +36,133 @@ class PostcodeLookupProxy
     !valid?
   end
 
-  def empty?
-    raise "Call PostcodeProxyLookup#lookup before PostcodeProxyLookup.empty?" if @result_set.nil?
-    @result_set.empty?
-  end
-
-
+ 
   def lookup
-    raise "Invalid Postcode" unless valid?
-    @use_live_data == true ? production_lookup : development_lookup
+    if valid?
+      if @use_live_data
+        @api_result_set = production_lookup
+      else
+        @api_result_set = development_lookup
+      end
+    else
+      @api_result_set = invalid_postcode_response
+    end
+    transform_api_result_set
+    true
   end
 
-  def errors?
-    @result_code != 2000
-  end
   
 
 
   private
 
-  def form_url
-    "#{@url}#{@postcode.outcode}#{@postcode.incode}?api_key=#{@api_key}"
+  # transforms @api_result_set which is returned by the api to @result_set whcih the controller can return
+  #
+  def transform_api_result_set
+    case @api_result_set['code']
+    when 2000
+      transform_successful_result_set
+    else
+      transform_erroneous_result_set
+    end
   end
+ 
+
+  def production_lookup
+    begin
+      Timeout::timeout(@timeout) do
+        @api_response = ActiveSupport::JSON.decode( Excon.get(form_url).body) 
+      end
+    rescue Timeout::Error
+      @api_response = service_unavailable_response
+    end
+  end
+
 
   # returns dummy postcode result based on the first character of the second part of the postcode.
   # if 0 - returns an empty array, indicating no entries of the postcode, otherwise a dummy result set
   # if 9 - returns false to simulate a timeout or other remote service error
+  # otherwise returns a data set as documented at the top of dummy_postcode_results.yml
+  #
   def development_lookup
     case @postcode.incode.first.to_i
     when 0
-      transform_api_response(dummy_postcode_not_found_result_set)
-      return true
+      return no_such_postcode_response
     when 9 
-      @result_set = nil
-      @result_code = 9001
-      @result_message = 'service not available'
-      return false
+      return service_unavailable_response
     else
       index = @postcode.incode.first.to_i % @@dummy_postcode_results.size 
-      transform_api_response(dummy_result_set(index))
-      return true
+      wrap_dummy_result_set( @@dummy_postcode_results[index] )
     end
   end
 
 
-  def dummy_result_set(index)
-    OpenStruct.new(status: 200, body: { 'result' => @@dummy_postcode_results[index], 'code' => '2000', 'message' => 'Success' }.to_json)
-  end
-
-
-  def dummy_postcode_not_found_result_set
-    OpenStruct.new(status: 200, body: { 'code' => '4040', 'message' => 'postcode not found' }.to_json)
-  end
-
-
-  def production_lookup
-    result = true
-    api_response = nil
-    
-    begin
-      Timeout::timeout(@timeout) do
-        api_response = Excon.get(form_url())
-      end
-      
-    rescue Timeout::Error
-      result = false
-      @result_code = 9001
-      @result_message = "Request timed out"
-      @result_set = ""
-    end
-
-    if result == true 
-      if api_response.status == 200 || api_response.status == 404
-        transform_api_response(api_response)
-      else
-        @result_code = "9#{api_response.status}".to_i
-        @result_message = "Error response from remote service"
-        @result_set = ""
-        result = false
-      end
-    end
-    result
-  end
 
 
 
-  def transform_api_response(api_response)
-    response_body = ActiveSupport::JSON.decode(api_response.body)
-    @result_code = response_body['code']
-    @result_message = response_body['message'].to_i
-    if @result_code.to_i == 4040
-      api_results = []
+
+  def transform_successful_result_set
+    if country_valid?
+      addresses = @api_result_set['result'].map { |res| transform_api_address(res) }
+      @result_set = { 'code' => 2000, 'message' => 'Success', 'result' => addresses }
     else
-      api_results = response_body['result']
+      @result_set = { 'code' => 4041, 'message' => api_result_set_country }
     end
-    @result_set = api_results.map { |res| transform_api_address(res) }
+    @http_status = 200
   end
 
+
+  def transform_erroneous_result_set
+    @result_set = @api_result_set
+    @http_status = case @api_result_set['code']
+    when 4040
+      404
+    when 4220
+      422
+    when 5030
+      503
+    else
+      500
+    end
+  end
+
+
+  def country_valid?
+    @valid_countries == ['All'] || @valid_countries.include?(api_result_set_country)
+  end
+
+
+  def api_result_set_country
+    @api_result_set['result'].first['country']
+  end
+
+
+
+  def form_url
+    "#{@url}#{@postcode.outcode}#{@postcode.incode}?api_key=#{@api_key}"
+  end
+
+
+  def wrap_dummy_result_set(result_set)
+    {
+      "result"=> result_set,
+      "code"=>2000,
+      "message"=>"Success"
+    }
+  end
+
+  def service_unavailable_response
+    {"code"=>5030, "message"=>"Service Unavailable"}
+  end
+
+  def invalid_postcode_response
+    {"code"=>4220, "message"=>"Invalid Postcode"}
+  end
+
+
+  def no_such_postcode_response
+    {'code' => 4040, 'message' => 'Postcode Not Found' }
+  end
 
 
   def transform_api_address(res)
@@ -145,7 +171,8 @@ class PostcodeLookupProxy
     address += add_unless_blank(res, 'line_3')
     address += add_unless_blank(res, 'post_town')
     postcode = res['postcode']
-    { 'address' => address, 'postcode' => postcode }
+    country = res['country']
+    { 'address' => address, 'postcode' => postcode, 'country' => country }
   end
 
 
@@ -153,7 +180,5 @@ class PostcodeLookupProxy
     res[key].blank? ? '' : ";;#{res[key]}"
   end
 
-
-  
 
 end

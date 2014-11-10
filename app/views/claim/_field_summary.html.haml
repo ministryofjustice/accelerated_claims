@@ -1,0 +1,7 @@
+- value = summary_value(section, label, value, @claim[section])
+
+- unless value.blank?
+  %p.summary-field
+    %span.summary-label= summary_label(section, label)
+    %span.summary-value{ id: summary_id(section, label) }= value
+

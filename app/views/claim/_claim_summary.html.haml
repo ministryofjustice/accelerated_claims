@@ -1,0 +1,68 @@
+%section.summary
+  = render partial: 'section_summary', locals: { section: 'property' }
+
+  = summary_section_header 'claimant'
+  .moj-panel
+    .row
+      %p
+        %span.summary-label= I18n.t 'claim.claimant_type.label'
+        %span= I18n.t "claim.claimant_type.#{@claim['claimant_type']}"
+    = render partial: 'participant_summary', locals: { type: 'claimant', pattern: /^claimant_\d/ }
+
+    - if contact_details_present?
+      .row.divider
+      .row
+        %h3 Contact details
+      .row
+        - @claim['claimant_contact'].each do |label, value|
+          - if [ :email, :phone, :fax, :dx_number ].include? label.to_sym
+            = render partial: 'field_summary', locals: { section: 'claimant_contact', label: label, value: value }
+
+        - unless @claim['reference_number']['reference_number'].blank?
+          = render partial: 'field_summary', locals: { section: 'reference_number', label: 'reference_number', value: @claim['reference_number']['reference_number'] }
+
+    - if alternate_address_present?
+      .row.divider
+      .row
+        %h3 Alternate address
+      .row
+        - @claim['claimant_contact'].each do |label, value|
+          - if [ :title, :full_name, :company_name, :street, :postcode ].include? label.to_sym
+            = render partial: 'field_summary', locals: { section: 'claimant_contact', label: label, value: value }
+
+  = summary_section_header 'defendant'
+  .moj-panel
+    = render partial: 'participant_summary', locals: { type: 'defendant', pattern: /^defendant_\d/ }
+
+  = render partial: 'section_summary', locals: { section: 'notice' }
+
+  = render partial: 'section_summary', locals: { section: 'tenancy' }
+
+  = render partial: 'section_summary', locals: { section: 'license' }
+
+  = render partial: 'section_summary', locals: { section: 'deposit' }
+
+  = summary_section_header 'fee'
+  .moj-panel
+    .row
+      = render partial: 'field_summary', locals: { section: 'fee',
+          label: 'court_fee', value: '£' + @claim['fee']['court_fee'] }
+
+      - fixed_legal_fee = @claim['legal_cost']['legal_costs']
+
+      = render partial: 'field_summary', locals: { section: 'legal_cost',
+          label: 'legal_costs', value: '£' + (fixed_legal_fee.blank? ? '0' : fixed_legal_fee) }
+
+      = render partial: 'field_summary', locals: { section: 'order',
+          label: 'cost', value: @claim['order']['cost'] }
+
+      = render partial: 'field_summary', locals: { section: 'fee',
+          label: 'account', value: @claim['fee']['account'] }
+
+  = summary_section_header 'court'
+  .moj-panel
+    .row
+      = render partial: 'field_summary',
+          locals: { section: 'possession', label: 'hearing', value: @claim['possession']['hearing'] }
+
+

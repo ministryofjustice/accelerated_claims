@@ -74,6 +74,31 @@ describe 'MojPostcodePicker' do
     end
   end
 
+  describe 'country_name_for_messages' do
+    before(:each) do
+      allow(object).to receive(:postcode).and_return('RG2 7PU')
+      allow(object).to receive(:street).and_return("50 Tregunter Road\r\nLondon")
+      allow(object).to receive(:errors).and_return( {:street => [], :postcode => [] } )
+    end
+    
+    it 'should return England and Wales' do
+      mpp = MojPostcodePicker.new(form, prefix: 'claim_property', address_attr: 'street', vc: 'england+wales')
+      expect(mpp.country_name_for_messages).to eq 'England and Wales'
+    end
+
+    it 'should return UK' do
+      mpp = MojPostcodePicker.new(form, prefix: 'claim_property', address_attr: 'street')
+      expect(mpp.country_name_for_messages).to eq 'UK'
+    end
+
+    it 'should return England, Wales, Northern Ireland and Isle of Man' do
+      mpp = MojPostcodePicker.new(form, prefix: 'claim_property', address_attr: 'street', vc: 'england+wales+northern_ireland+isle_of_man')
+      expect(mpp.country_name_for_messages).to eq 'England, Wales, Northern Ireland and Isle of Man'
+    end
+
+
+  end
+
 end
 
 
@@ -81,7 +106,7 @@ end
 
 def expected_output
   str =<<EOF
-<div class='postcode postcode-picker-container'>
+<div class='postcode postcode-picker-container' data-vc='all'>
   <div class='row postcode-lookup rel js-only'>
     <div class='postcode-display hide' style='margin-bottom: 20px;'>
       Postcode:
@@ -95,7 +120,7 @@ def expected_output
     <div class='postcode-selection-els'>
       <label class='postcode-picker-label' for='claim_property_postcode_edit_field'>Postcode</label>
       <input class='smalltext postcode-picker-edit-field' id='claim_property_postcode_edit_field' maxlength='8' name='[postcode]' size='8' type='text'>
-      <a class='button primary postcode-picker-button' href='#claim_property_postcode_picker'>
+      <a class='button primary postcode-picker-button' data-country='all' href='#claim_property_postcode_picker'>
         Find address
       </a>
     </div>

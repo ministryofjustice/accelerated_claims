@@ -62,3 +62,40 @@ def submit_claim
   end
 end
 
+def write_hash_to_file(filename, object)
+  File.open(filename,'w') do |f|
+    data = JSON.pretty_generate(object)
+    data.gsub!(/"([^"]+)":/, '\1:')
+    data.gsub!('null','nil')
+
+    f.write data
+  end
+end
+
+def summary_data_file data_file
+  "#{data_file.sub(/_(both|js|non-js)/,'').chomp('_data.rb')}_summary_results.rb"
+end
+
+def find_summary_values page, data_file
+  summary_values = {}
+  page.all('.summary-field').map do |p|
+    v= p.find('.summary-value')
+    attribute = v['id'].sub('#','').to_sym
+    summary_values[attribute] = [p.find('.summary-label').text, v.text]
+  end
+
+  if ENV.key?('save_summary_data')
+    file = summary_data_file data_file
+    puts "writing: #{file}"
+    write_hash_to_file file, summary_values
+  end
+
+  summary_values
+end
+
+def load_expected_summary_values data_file
+  file = summary_data_file data_file
+  results = IO.read(file)
+  eval results
+end
+

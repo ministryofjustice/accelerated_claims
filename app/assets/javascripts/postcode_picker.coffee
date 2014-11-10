@@ -9,6 +9,7 @@ class PostcodePicker
     @selectElement = @picker.find('.address-picker-select')
     @button = picker.find('.postcode-picker-button')
     @input = picker.find('.postcode-picker-edit-field')
+    @valid_countries = @normalizeCountry(@picker.data('vc'))
     manualLink = picker.find('.postcode-picker-manual-link')
     selectButton = picker.find('.postcode-picker-cta')
     changePostcodeLink = picker.find('.change-postcode-link')
@@ -56,6 +57,38 @@ class PostcodePicker
       @showPostcodeSearchComponent()
    
 
+  normalizeCountry: (vc) =>
+    if vc == 'all'
+      result = 'UK'
+    else 
+      # all of this crapola because IE 7 and 8 doesn't support the Array.map()  JS method
+      countries = vc.split('+')
+      capitalizedCountries = new Array
+      x = 0
+      loop
+        capitalizedCountries.push(@capitalizeCountry(countries[x]))
+        x = x + 1
+        break if x == countries.length
+
+      @toSentence(capitalizedCountries)
+
+  capitalizeCountry: (vc) =>
+    words = vc.split('_')
+    result = (word.charAt(0).toUpperCase() + word.substr(1).toLowerCase() for word in words)
+    result = result.join(' ')
+    result = result.replace('Of', 'of')
+
+  toSentence: (array) =>
+    if array.length > 1
+      last_item = array.pop()
+      result = array.join(', ')
+      result = result + " and " + last_item
+    else
+      result = array[0]
+      
+    result
+
+
   streetAndPostcodeAlreadyEntered: =>
     @picker.find('input.smalltext.postcode').val() != '' && @picker.find('.street textarea').val() != ''
 
@@ -73,12 +106,12 @@ class PostcodePicker
   showManualLink: =>
     @picker.find('.postcode-picker-manual-link').show()
 
-  lookupPostcode: =>
+  lookupPostcode: (country) =>
     postcode = @input.val()
-    @picker.find('.postcode-display').show()
+    country = @button.data('country')
     @picker.find('.postcode-select-container').hide()
     @showManualLink()
-    window.PostcodeLookup.lookup(postcode, this)
+    window.PostcodeLookup.lookup(postcode, country, this)
 
   selectAddress: =>
     index = parseInt @picker.find('option:selected').val()
@@ -98,10 +131,20 @@ class PostcodePicker
     @picker.find('.change-postcode-link').css('display', 'inline')
     @picker.find('.street textarea').focus()
 
+  handleSuccessfulResponse: (response) ->
+    if response.code == 2000
+      @displayAddresses(response.result)
+    else
+      @displayInvalidCountryMessage(response)
+
+  displayInvalidCountryMessage: (response) ->
+    @picker.find('.postcode-display').hide()
+    @addErrorMessage("Postcode is in #{response.message}. You can only use this service to regain possession of properties in England and Wales.")
+
   displayAddresses: (addresses) ->
+    @addresses = addresses
     @hideAddressFields()
     @hidePostcodeSearchComponent()
-    @addresses = addresses
     @selectElement.empty()
     @picker.find('.postcode-display').removeClass('hide')
     @picker.find('.postcode-display-detail').html(addresses[0].postcode)
@@ -113,7 +156,6 @@ class PostcodePicker
     @picker.find('.postcode-picker-address-list').show()
     @picker.find('.address-picker-select').focus()
     true
-
     
   hidePostcodeSearchComponent: ->
     @picker.find('.postcode-selection-els').hide()
@@ -122,8 +164,6 @@ class PostcodePicker
     @picker.find('.postcode-selection-els').show()
     @input.focus()
     true
-
-
 
   toggleAddressFields: ->
     if @picker.find('.address').is(':visible')
@@ -143,12 +183,12 @@ class PostcodePicker
     @picker.find('.street textarea').focus()
 
   displayInvalidPostcodeMessage: ->
-    @addErrorMessage('Please enter a valid UK postcode')
+    @addErrorMessage("Please enter a valid postcode in " + @valid_countries)
     @picker.find('.postcode-display').hide()
     @hideAddressFields()
 
   displayNoResultsFound: ->
-    @addErrorMessage('No address found. Please enter the address manually')
+    @addErrorMessage("No address found. Please enter the address manually")
     @picker.find('.postcode-display').hide()
     @hideAddressFields()
 

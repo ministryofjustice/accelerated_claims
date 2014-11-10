@@ -1,25 +1,38 @@
-= render partial: 'shared/header_message'
+%header.page-header.group
+  %h1
+    Review the details of your claim
+
+%section.confirmation
+  .row
+    %p
+      %span.strong You have not yet completed your claim.
+      %br
+      Check all the information on this page before clicking ‘Print the form’.
+
+
 = render partial: 'shared/flash'
 
 #activateModalSessionTimer
 
-%section.confirmation
-  .moj-panel
-    .row
-      %p You now need to print the form and send it to court.
+= render partial: 'claim_summary'
 
-    .row.rel
-      = link_to 'Print the form',
-          download_path,
-          class: 'button left large chevron pdf-download',
-          target: '_blank',
-          id: 'download',
-          data: { 'event-label' => 'Print the form',
-          'virtual-pageview' => '/accelerated/pdf-download' }
-      - if session[:test]
-        = link_to 'Submitted data',
-            data_path,
-            id: 'data'
+%section.confirmation
+  .row
+    %p You now need to print the form and send it to court.
+
+%section
+  .action-buttons.cf
+    = link_to 'Print the form',
+        download_path,
+        class: 'button left large chevron pdf-download',
+        target: '_blank',
+        id: 'download',
+        data: { 'event-label' => 'Print the form',
+        'virtual-pageview' => '/accelerated/pdf-download' }
+    - if session[:test]
+      = link_to 'Submitted data',
+          data_path,
+          id: 'data'
 
   %p
     After you’ve submitted your claim, complete our
@@ -32,9 +45,9 @@
         'virtual-pageview' => '/accelerated/satisfaction-survey' }) + '.'
     Your feedback helps us improve the service.
 
-
-
+  %p
+    = link_to 'Terms and conditions and privacy policy', :terms, class: 't-n-c'
 
 / handlebars templates
 
-= render :partial => 'shared/hbtemplates'
+= render partial: 'shared/hbtemplates'

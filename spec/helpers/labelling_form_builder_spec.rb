@@ -49,6 +49,28 @@ describe 'LabellingFormBuilder', :type => :helper  do
     end
   end
 
+  describe '#moj_postcode_picker' do
+    it 'should add default options and call postcode picker' do
+      expected_options = { :prefix => "claim_property", :postcode_attr => :postcode, :address_attr => :street, :name =>  "claim[property]" }
+      picker = double MojPostcodePicker
+      expect(MojPostcodePicker).to receive(:new).with( form, expected_options ).and_return(picker)
+      expect(picker).to receive(:emit)
+      form.moj_postcode_picker('property')
+    end
+
+
+    it 'should substitute options which are supplied' do
+      expected_options = { :prefix => "claim_defendant_1", :postcode_attr => :postcode, :address_attr => :street, :name =>  "claim[defendant_1]", :vc => 'england wales' }
+      picker = double MojPostcodePicker
+      expect(MojPostcodePicker).to receive(:new).with( form, expected_options ).and_return(picker)
+      expect(picker).to receive(:emit)
+      form.moj_postcode_picker('defendant_1', vc: 'england wales')
+    end
+  end
+
+
+
+
   describe '#moj_date_fieldset' do
     let(:date_fieldset) { form.moj_date_fieldset :date_served, 'Date notice served', { class: 'date-picker' }, 9.weeks.ago }
 

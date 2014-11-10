@@ -130,7 +130,7 @@ def claim_post_data
       },
       "fee" =>
       {
-        "court_fee" => "280.00"
+        "court_fee" => "280"
       }
     }
   }
@@ -168,7 +168,7 @@ end
 
 def claim_formatted_data
   {
-    "fee_court_fee" => "280.00",
+    "fee_court_fee" => "280",
     "claimant_1_address" => "Mr John Smith\n2 Brown St\nCwmbran",
     "claimant_1_postcode1" => "SW1W",
     "claimant_1_postcode2" => "0LU",

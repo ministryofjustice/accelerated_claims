@@ -1,4 +1,5 @@
-.postcode.postcode-picker-container{class: @hide ? 'hide' : ''}
+
+.postcode.postcode-picker-container{data: {vc: @valid_countries}, class: @hide ? 'hide' : ''}
   .row.postcode-lookup.rel.js-only
 
     .postcode-display.hide{style: "margin-bottom: 20px;"}
@@ -20,7 +21,7 @@
               :size => "8",
               :type => "text"}
 
-      %a.button.primary.postcode-picker-button{:href => "##{@prefix}_postcode_picker"}
+      %a.button.primary.postcode-picker-button{:href => "##{@prefix}_postcode_picker", data: {country: @valid_countries} }
         Find address
 
     .postcode-picker-hourglass.hide

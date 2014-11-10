@@ -229,7 +229,7 @@ class ClaimForm
     fill_in_text_field(prefix, 'full_name')
 
     if options[:complete_address]
-      click_manual_address_link(prefix) unless options[:claimant_contact]  || options[:js] == false
+      click_manual_address_link(prefix) unless options[:claimant_contact] || !@js_on
       fill_in_text_area(prefix, 'street')
       fill_in_text_field(prefix, 'postcode')
 
@@ -245,7 +245,7 @@ class ClaimForm
 
   def fill_property_details
     prefix = 'property'
-    click_manual_address_link(prefix)
+    click_manual_address_link(prefix) unless !@js_on
     fill_in_text_area(prefix, 'street')
     fill_in_text_field(prefix, 'postcode')
 
