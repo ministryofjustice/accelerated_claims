@@ -49,7 +49,6 @@ def find_it element, id
   @elements[element] ||= page.all(:xpath, "/html/body//#{element}", visible: false).each_with_object({}) {|e, h| h[e['id']] = e if e['id'] }
 
   if @elements[element][id].nil?
-    binding.pry
     puts "#{id} #{element} cannot be found"
   else
     @elements[element][id]
