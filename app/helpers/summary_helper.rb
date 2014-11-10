@@ -60,12 +60,12 @@ module SummaryHelper
 
   def show_participant_address? participant, values
     first_claimant = participant['claimant_1']
-    doesnt_inhabit_property = (values['inhabits_property'] == 'No')
-    not_same_as_first_claimant = (values['address_same_as_first_claimant'] == 'No')
+    doesnt_inhabit_property = (values['inhabits_property'].to_s.downcase == 'no')
+    not_same_as_first_claimant = (values['address_same_as_first_claimant'].to_s.downcase == 'no')
     claimant_street_different = (participant[/claimant_\d+/] &&
         (values['street'] &&
         values['street'] != @claim['claimant_1']['street']) )
-
+    
     if first_claimant ||
         doesnt_inhabit_property ||
         not_same_as_first_claimant ||

@@ -260,7 +260,7 @@ feature 'Filling in claim form' do
       scenario 'defendant 1 address valid', js: true do
         visit '/'
         fill_in 'claim_num_defendants', with: 1
-        choose 'claim_defendant_1_inhabits_property_no'
+        click_link 'defendant_1_resident_details'
         click_link 'claim_defendant_1_postcode_picker_manual_link'
         fill_in 'claim_defendant_1_street', with: valid_address
         expect(page).not_to have_content(address_js_error_message)
@@ -269,7 +269,7 @@ feature 'Filling in claim form' do
       scenario 'defendant 1 address invalid', js: true do
         visit '/'
         fill_in 'claim_num_defendants', with: 1
-        choose 'claim_defendant_1_inhabits_property_no'
+        click_link 'defendant_1_resident_details'
         click_link 'claim_defendant_1_postcode_picker_manual_link'
         fill_in 'claim_defendant_1_street', with: invalid_address
         expect(page).to have_content(address_js_error_message)
@@ -278,7 +278,7 @@ feature 'Filling in claim form' do
       scenario 'defendant 19 address invalid', js: true do
         visit '/'
         fill_in 'claim_num_defendants', with: 20
-        choose 'claim_defendant_19_inhabits_property_no'
+        click_link 'defendant_19_resident_details'
         click_link 'claim_defendant_19_postcode_picker_manual_link'
         fill_in 'claim_defendant_19_street', with: invalid_address
         expect(page).to have_content(address_js_error_message)

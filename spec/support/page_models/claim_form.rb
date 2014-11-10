@@ -97,10 +97,8 @@ class ClaimForm
     defendant = "defendant_#{index}"
     case get_data(defendant, "inhabits_property")
     when 'Yes'
-      choose("claim_defendant_#{index}_inhabits_property_yes")
       address_to_be_completed = false
     else
-      choose("claim_defendant_#{index}_inhabits_property_no")
       address_to_be_completed = true
     end
     address_to_be_completed
@@ -269,8 +267,8 @@ class ClaimForm
     defendant = "defendant_#{defendant_number}"
     fill_in_text_field(defendant, 'title')
     fill_in_text_field(defendant, 'full_name')
-    choose_radio defendant, 'inhabits_property'
     if options[:complete_address] == true
+      click_link("defendant_#{defendant_number}_resident_details")
       click_manual_address_link(defendant)
       fill_in_text_area(defendant, 'street')
       fill_in_text_field(defendant, 'postcode')
