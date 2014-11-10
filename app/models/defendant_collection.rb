@@ -56,7 +56,9 @@ class DefendantCollection < ParticipantCollection
       defendant_params['validate_presence'] = true
     end
     copy_cached_property_address_if_blank(defendant_params)
-    @participants[index] = Defendant.new(defendant_params)
+    @defendant = Defendant.new(defendant_params)
+    @defendant.inhabits_property = 'yes' if @defendant.street == @property_street && @defendant.postcode == @property_postcode
+    @participants[index] = @defendant
   end
 
   def cache_property_address(claim_params)
