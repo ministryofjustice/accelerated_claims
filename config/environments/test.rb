@@ -34,4 +34,6 @@ AcceleratedClaims::Application.configure do
 
   # Logstash
   config.logstasher.enabled = true
+
+  config.relative_url_root = '/accelerated-possession-eviction' if ENV['env'] == 'production'
 end
