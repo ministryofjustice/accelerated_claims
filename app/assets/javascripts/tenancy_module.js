@@ -39,7 +39,7 @@ moj.Modules.tenancyModule = (function() {
   bindEvents = function() {
     $datepickers.each( function() {
       var $this = $( this );
-      $this.find( '[type="text"]' ).on( 'keyup', function() {
+      $this.find( '[type="text"]' ).on( 'blur input', function() {
         changeDate( $this );
       } );
     } );
