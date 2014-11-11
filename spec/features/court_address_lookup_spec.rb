@@ -15,9 +15,11 @@ feature 'Court address lookup' do
       expect(page).to have_css('#court-address', visible: false)
     end
 
-    context 'when JavaScript is not enabled' do
-      scenario 'should have the correct form title', remote: false do
-        expect(page).to have_text original_form_label
+    unless remote_test?
+      context 'when JavaScript is not enabled' do
+        scenario 'should have the correct form title' do
+          expect(page).to have_text original_form_label
+        end
       end
     end
 
