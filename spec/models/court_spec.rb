@@ -2,7 +2,7 @@ RSpec.describe Court, :type => :model do
 
   let(:court) do
     Court.new(court_name: 'Good Court',
-              street: '1 Good Road, Goodtown',
+              street: '1 Good Road,Goodtown',
               postcode: 'GT1 2XX')
   end
 
