@@ -47,7 +47,7 @@ describe PDFDocument do
       let(:json) { claim_formatted_data }
 
       it "should return a file path" do
-        expect(@doc).to receive(:use_strike_through_command)
+        expect(@doc).to receive(:use_strike_through_command) unless ENV['env']
         pdf = @doc.fill
         expect(pdf.path).to match '/tmp/accelerated_claim'
       end
