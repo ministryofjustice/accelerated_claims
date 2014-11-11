@@ -20,6 +20,7 @@ describe ClaimController, :type => :controller do
       get :new
       expect(assigns(:production)).to be true
       expect(assigns(:livepc)).to be true
+      ENV['ENV_NAME'] = nil
     end
 
     it 'should be both production and livepc on production' do
@@ -27,6 +28,7 @@ describe ClaimController, :type => :controller do
       get :new
       expect(assigns(:production)).to be true
       expect(assigns(:livepc)).to be true
+      ENV['ENV_NAME'] = nil
     end
 
   end

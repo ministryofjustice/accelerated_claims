@@ -5,6 +5,24 @@ describe Property, :type => :model do
                  house: "Yes")
   end
 
+
+  describe 'initialization' do
+    it 'should instantiate livepc if in params as true' do
+      property = Property.new(HashWithIndifferentAccess.new(street: 'xxxx', postcode: 'RG2 7PU', house: 'Yes', livepc: true))
+      expect(property.livepc).to be true
+    end
+
+    it 'should instantiate livepc if in params as false' do
+      property = Property.new(HashWithIndifferentAccess.new(street: 'xxxx', postcode: 'RG2 7PU', house: 'Yes', livepc: false))
+      expect(property.livepc).to be false
+    end
+
+    it 'should instantiate livepc if absent from params' do
+      property = Property.new(HashWithIndifferentAccess.new(street: 'xxxx', postcode: 'RG2 7PU', house: 'Yes'))
+      expect(property.livepc).to be false
+    end
+  end
+
   describe "#as_json" do
     let(:json_output) do
       {
@@ -34,6 +52,18 @@ describe Property, :type => :model do
         expect(property).to be_valid
       end
     end
+
+    it 'should accept english postcodes' do
+      expect(property).to be_valid
+    end
+
+    it 'should reject scottish postcodes' do
+      property.postcode = 'AB10 5AB'
+      expect(property).not_to be_valid
+      expect(property.errors['postcode']).to eq [ "Postcode is in Scotland. You can only use this service to regain possession of properties in England and Wales." ]
+    end
+
+    it 'should reject invalid postcodes'
 
     subject { property }
 

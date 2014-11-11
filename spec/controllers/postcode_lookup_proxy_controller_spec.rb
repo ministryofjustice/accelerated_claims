@@ -10,6 +10,8 @@ describe PostcodeLookupProxyController, :type => :controller do
       setenv 'demo'
     end
 
+    after(:all) { resetenv }
+
     before(:example) do
       allow(controller).to receive(:live_postcode_lookup?).and_return(false)
     end
@@ -86,6 +88,7 @@ describe PostcodeLookupProxyController, :type => :controller do
           setenv 'demo'
           expect_postcode_lookup_to_be_called_with(true)
           get :show, format: :json, pc: 'RG2 7PU', vc: 'all'
+          resetenv
         end
 
 
@@ -93,12 +96,14 @@ describe PostcodeLookupProxyController, :type => :controller do
           setenv 'staging'
           expect_postcode_lookup_to_be_called_with(true)
           get :show, format: :json, pc: 'RG2 7PU', vc: 'all'
+          resetenv
         end
 
         it 'should return true for production environments' do
           setenv 'staging'
           expect_postcode_lookup_to_be_called_with(true)
           get :show, format: :json, pc: 'RG2 7PU', vc: 'all'
+          resetenv
         end
       end
     end
@@ -122,6 +127,7 @@ describe PostcodeLookupProxyController, :type => :controller do
         get :show, format: :json, pc: 'RG2 7PU', vc: 'all'
         expect(response.body).to eq 'xxxxx'
         expect(response.status).to eq 200
+        resetenv
       end
 
 
@@ -135,6 +141,7 @@ describe PostcodeLookupProxyController, :type => :controller do
           setenv 'staging'
           expect_postcode_lookup_to_be_called_with(true)
           get :show, format: :json, pc: 'RG2 7PU', vc: 'all'
+          resetenv
         end
 
 
@@ -142,6 +149,7 @@ describe PostcodeLookupProxyController, :type => :controller do
           setenv 'production'
           expect_postcode_lookup_to_be_called_with(true)
           get :show, format: :json, pc: 'RG2 7PU', vc: 'all'
+          resetenv
         end
       end
     end
@@ -152,6 +160,11 @@ end
 
 def setenv(env)
   ENV['ENV_NAME'] = env
+end
+
+
+def resetenv
+  ENV['ENV_NAME'] = nil
 end
 
 def set_referer_url_with_livepc_param

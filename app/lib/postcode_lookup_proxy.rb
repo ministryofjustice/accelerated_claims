@@ -2,7 +2,7 @@ require 'yaml'
 
 # PostcodeLookupProxy API
 
-# pclp = PostcodeLookupProxy.new("AB126FG")
+# pclp = PostcodeLookupProxy.new("AB126FG", ['England', 'Wales'], true)    or  PostcodeLookupProxy.new("AB126FG", [], true)
 # pclp.lookup             # => true if http result was successful, otherwise false
 # pclp.result_set         # => The JSON that is to be returned by the controller
 # pclp.http_status_code   # => the HTTP status code that the controller should return
@@ -14,17 +14,18 @@ class PostcodeLookupProxy
   attr_reader :result_set, :result_code, :result_message, :http_status
 
   def initialize(postcode, valid_countries, use_live_data = false)
-    @postcode        = UKPostcode.new(postcode)
-    @valid           = @postcode.valid?
-    @result_set      = nil
-    config           = YAML.load_file("#{Rails.root}/config/ideal_postcodes.yml")
-    @url             = config['url']
-    @api_key         = config['api_key']
-    @timeout         = config['timeout']
-    @api_result_set  = nil
-    @use_live_data   = use_live_data
-    @valid_countries = valid_countries
-    @http_status     = nil
+    @postcode                 = UKPostcode.new(postcode)
+    @valid                    = @postcode.valid?
+    @result_set               = nil
+    config                    = YAML.load_file("#{Rails.root}/config/ideal_postcodes.yml")
+    @url                      = config['url']
+    @api_key                  = config['api_key']
+    @timeout                  = config['timeout']
+    @api_result_set           = nil
+    @use_live_data            = use_live_data
+    @valid_countries          = valid_countries
+    @http_status              = nil
+    @validation_error_message = nil
   end
 
 
