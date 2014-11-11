@@ -12,7 +12,7 @@ class Court < BaseClass
   def as_json
     {
       'name' => court_name,
-      'address' => "#{street}, #{postcode}"
+      'address' => "#{court_name}\n#{street}\n#{postcode}".sub(', ', "\n")
     }
   end
 end
