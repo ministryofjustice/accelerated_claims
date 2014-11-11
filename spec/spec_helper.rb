@@ -75,6 +75,7 @@ RSpec.configure do |config|
   config.include ShowMeTheCookies, type: :feature
 
   config.infer_spec_type_from_file_location!
+  config.include Rails.application.routes.url_helpers
 end
 
 def diffmerge(actual, expected)

@@ -1,6 +1,6 @@
 describe ClaimController, :type => :controller do
   render_views
-
+  
   describe "#new" do
     it "should render the new claim form" do
       get :new
@@ -73,15 +73,15 @@ describe ClaimController, :type => :controller do
       it 'should contain links to root_url' do
         @controller.session['claim'] = claim_post_data['claim']
         get :confirmation
-        url_root = root_path unless root_path=='/'
-        expect(response.body).to include("<a href='#{url_root}/#property-section'>Change property</a>")
+
+        expect(response.body).to include("<a href='#{File.join(root_path,'#property-section')}'>Change property</a>")
       end
     end
 
     context 'with no claim data' do
       it 'should redirect to the claim form' do
         get :confirmation # no session
-        expect(response).to redirect_to('/')
+        expect(response).to redirect_to(root_path)
       end
     end
 
@@ -91,7 +91,7 @@ describe ClaimController, :type => :controller do
         data['claimant_1'].delete('full_name')
         @controller.session['claim'] = data
         get :confirmation
-        expect(response).to redirect_to('/')
+        expect(response).to redirect_to(root_path)
       end
     end
   end
@@ -99,7 +99,7 @@ describe ClaimController, :type => :controller do
   describe '#submission' do
     it 'should redirect to the confirmation page' do
       post :submission, claim: claim_post_data['claim']
-      expect(response).to redirect_to('/confirmation')
+      expect(response).to redirect_to(File.join(root_path,'/confirmation'))
     end
   end
 
@@ -132,7 +132,7 @@ describe ClaimController, :type => :controller do
         data['claimant_1'].delete('full_name')
         post :submission, claim: data
         get :download
-        expect(response).to redirect_to('/')
+        expect(response).to redirect_to(root_path)
       end
     end
 
@@ -145,7 +145,7 @@ describe ClaimController, :type => :controller do
         allow(env).to receive(:development?).and_return(false)
 
         get :download
-        expect(response).to redirect_to('/expired')
+        expect(response).to redirect_to(File.join(root_path,'expired'))
       end
     end
   end
@@ -177,7 +177,7 @@ describe ClaimController, :type => :controller do
         data['claimant_1'].delete('full_name')
         post :submission, claim: data
         get :data
-        expect(response).to redirect_to('/')
+        expect(response).to redirect_to(root_path)
       end
     end
 
