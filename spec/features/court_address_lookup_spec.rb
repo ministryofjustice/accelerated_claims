@@ -16,7 +16,7 @@ feature 'Court address lookup' do
     end
 
     context 'when JavaScript is not enabled' do
-      scenario 'should have the correct form title' do
+      scenario 'should have the correct form title', remote: false do
         expect(page).to have_text original_form_label
       end
     end
