@@ -52,6 +52,10 @@ class PostcodeLookupProxy
     true
   end
 
+  def norm
+    @postcode.norm
+  end
+
   
 
 

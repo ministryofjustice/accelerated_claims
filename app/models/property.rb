@@ -16,8 +16,6 @@ class Property < BaseClass
 
   def initialize(params)
     @livepc = params['livepc'] || false
-    puts "++++++ DEBUG PORPERTY LIVEPC IS #{@livepc} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    
     super
   end
   
@@ -42,29 +40,21 @@ class Property < BaseClass
   private 
 
   def postcode_is_in_england_or_wales
-    puts "++++++ DEBUG postcode_is_in_england_or_wales ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    
     if postcode.present?
-      puts "++++++ DEBUG present ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-      
       plp = PostcodeLookupProxy.new(postcode, ['England', 'Wales'], @livepc)
       plp.lookup
-
-      puts "++++++ DEBUG plp.result_set #{plp.result_set} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-      
+      @postcode = plp.norm
 
       case plp.result_set['code']
       when 2000
         true
       when 4040
-        errors['postcode'] << "No address found. Please enter the address manually"
-        false
+        true
       when 4041
         errors['postcode'] << "Postcode is in #{plp.result_set['message']}. You can only use this service to regain possession of properties in England and Wales."
         false
       when 4220
-        errors['postcode'] << "Please enter a valid postcode in England and Wales"
-        false
+        true
       when 5030
         true
       else
