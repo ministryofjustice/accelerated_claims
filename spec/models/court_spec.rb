@@ -30,7 +30,7 @@ RSpec.describe Court, :type => :model do
     let(:json) do
       {
         'name' => 'Good Court',
-        'address' => '1 Good Road, Goodtown, GT1 2XX'
+        'address' => "Good Court\n1 Good Road\nGoodtown\nGT1 2XX"
       }
     end
     it 'should return correct JSON' do
