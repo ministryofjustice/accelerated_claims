@@ -1,6 +1,6 @@
 %%%MetaData
 status: Live
-author: Eliot Fineberg <eliot.fineberg@digital.justice.gov.uk>
+author: Adrian Woodcock <adrian.woodcock@digital.justice.gov.uk>
 description: Make a claim to evict your tenants using the accelerated possession procedure if they’re on an assured shorthold tenancy.
 lastUpdated: 3/11/2014
 department: MOJ DS
