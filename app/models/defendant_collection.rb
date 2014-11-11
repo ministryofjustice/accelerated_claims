@@ -47,7 +47,6 @@ class DefendantCollection < ParticipantCollection
     defendant_params = claim_params["defendant_#{index}"]
     defendant_params = ActiveSupport::HashWithIndifferentAccess.new if defendant_params.nil?
     defendant_params['defendant_num'] = index
-    copy_cached_property_address(defendant_params) if defendant_params['inhabits_property'].try(:downcase) == 'yes'
 
     # we need to populate the defendant with the params even if > than number of defendants so that we can re-display that data on the error page
     if index > num_defendants
@@ -56,7 +55,14 @@ class DefendantCollection < ParticipantCollection
     else
       defendant_params['validate_presence'] = true
     end
-    @participants[index] = Defendant.new(defendant_params)
+    copy_cached_property_address_if_blank(defendant_params)
+    @defendant = Defendant.new(defendant_params)
+    if @defendant.validate_presence
+      @defendant.inhabits_property = @defendant.street == @property_street && @defendant.postcode == @property_postcode ? 'yes' : 'no'
+    else
+      @defendant.inhabits_property=nil
+    end
+    @participants[index] = @defendant
   end
 
   def cache_property_address(claim_params)
@@ -66,9 +72,10 @@ class DefendantCollection < ParticipantCollection
     end
   end
 
-  def copy_cached_property_address(params)
-    params['street']   = @property_street
-    params['postcode'] = @property_postcode
+  def copy_cached_property_address_if_blank(params)
+    if params['validate_presence'] && params['street'].blank? && params['postcode'].blank?
+      params['street']   = @property_street
+      params['postcode'] = @property_postcode
+    end
   end
-
 end

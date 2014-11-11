@@ -6,13 +6,10 @@
   = claim_form.fields_for defendant_field, defendant, builder: LabellingFormBuilder do |form|
     = form.text_field_row :title, class: 'title', input_class: 'smalltext'
     = form.text_field_row :full_name, class: 'rel'
-
-    = form.radio_button_fieldset :inhabits_property,
-      'Does the defendant live in the property?',
-      class: 'radio inline js-depend',
-      data: { depend: "inhabitproperty_#{defendant_field}" }
-
-    .sub-panel.extra.address.hide.no{ class: 'js-inhabitproperty_' + defendant_field.to_s }
-      .row.nonjs
-        Defendant’s address if they’re <strong>not</strong> living in the property
-      = form.moj_postcode_picker "defendant_#{defendant_id}"
+    = form.hidden_field :inhabits_property
+    .sub-panel.details{id: "defendant_#{defendant_id}_resident_address"}
+      .row.js-only
+        %a.caption{ id: "defendant_#{defendant_id}_resident_details", class: "js-inhabitproperty show-hide" , href: "#defendant-#{defendant_id}-resident-details", 'aria-expanded' => 'false' }
+          = 'If the defendant is not living in the property, enter the address'
+      .row.hide.nonjs If the defendant is not living in the property, enter the address
+      = form.moj_postcode_picker "defendant_#{defendant_id}", { hide: true}

@@ -19,7 +19,6 @@ feature "submit claim" do
         claim_form.complete_form
       end
       claim_form.submit
-
       expect(page).to have_text('After you’ve submitted your claim, complete our satisfaction survey'), claim_form.validation_error_text
 
       summary_values = find_summary_values page, data_file

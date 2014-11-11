@@ -43,6 +43,9 @@ class ClaimController < ApplicationController
       claim_object = Claim.new(@claim)
 
       if claim_object.valid?
+        (1..claim_object.num_defendants).each do |i|
+          @claim["defendant_#{i}"]['inhabits_property'] = claim_object.defendants[i].inhabits_property
+        end
         @claim['fee']['account'] = claim_object.fee.account # set zero-padded account number
         @page_title = 'Make a claim to evict tenants: accelerated possession'
       else

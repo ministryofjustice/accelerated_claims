@@ -31,10 +31,11 @@ class PostcodePicker
     @button.on 'click', =>
       @lookupPostcode()
 
-    manualLink.on 'click', =>
+    manualLink.on 'click' , =>
       @toggleAddressFields()
       changePostcodeLink.css('display', 'none')
       @picker.find('.address-postcode input').removeAttr('readonly')
+      false
 
     @input.on 'keyup', =>
       @clearPostcodeErrorMessage()

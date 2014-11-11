@@ -4,15 +4,13 @@ describe Defendant, :type => :model do
                   full_name: "John Major",
                   street: "Sesame Street\nLondon",
                   postcode: "SW1X 2PT",
-                  defendant_num: 2,
-                  inhabits_property: 'no')
+                  defendant_num: 2)
   end
 
   let(:property_inhabiting_defendant) do
     Defendant.new(title: "Mr",
                   full_name: "John Major",
-                  defendant_num: 2,
-                  inhabits_property: 'yes')
+                  defendant_num: 2)
   end
 
   describe "when given all valid values" do
@@ -24,17 +22,13 @@ describe Defendant, :type => :model do
   context 'validate inhabits property' do
     let(:invalid_defendant)  { Defendant.new(title: "Mr", full_name: "John Major", street: "Sesame Street\nLondon",  postcode: "SW1X 2PT", defendant_num: 2) }
 
-    it 'should raise error if inhabits property not set' do
-      expect(invalid_defendant).not_to be_valid
-      expect(invalid_defendant.errors[:inhabits_property]).to eq( [ 'Please select whether or not defendant 2 lives in the property' ] )
-    end
-
     it 'should raise error if values are not Yes, no' do
       invalid_defendant.inhabits_property = 'perhaps'
       expect(invalid_defendant).not_to be_valid
       expect(invalid_defendant.errors[:inhabits_property]).to eq( [ 'Please select whether or not defendant 2 lives in the property' ] )
     end
   end
+
 
   context 'validate_presence not set' do
 
@@ -139,6 +133,10 @@ describe Defendant, :type => :model do
         expect(defendant).to_not be_valid
         expect(defendant.errors[:street]).to eq ["Enter defendant 2's full address"]
       end
+
+      it 'should set inhabits_property to no' do
+        expect(defendant.inhabits_property).to eq 'no'
+      end
     end
 
     context 'property_address is yes' do
@@ -162,6 +160,10 @@ describe Defendant, :type => :model do
         property_inhabiting_defendant.title = nil
         expect(property_inhabiting_defendant).to_not be_valid
         expect(property_inhabiting_defendant.errors[:title]).to eq ["Enter defendant 2's title"]
+      end
+
+      it 'should set inhabits_property to yes' do
+        expect(property_inhabiting_defendant.inhabits_property).to eq 'yes'
       end
     end
   end
