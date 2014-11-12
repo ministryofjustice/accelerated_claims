@@ -1,7 +1,6 @@
 describe ClaimController, :type => :controller do
   render_views
 
-
   context 'setting production and livepc' do
     it 'should not be produciton nor livepc in demo with nothing in url' do
       get :new
