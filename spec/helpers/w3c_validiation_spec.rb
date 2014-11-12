@@ -1,12 +1,10 @@
-require 'rspec'
 
-describe 'My behaviour' do
-  if ENV['w3c'] == true
+describe 'Generated views' do
 
-    it 'should do something' do
+  it 'should pass w3c' do
+    if ENV['w3c'] == true
 
       puts 'Running w3c tests'
-
 
       expect(true).to eql(true)
     end
