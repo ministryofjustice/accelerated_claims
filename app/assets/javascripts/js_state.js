@@ -53,6 +53,9 @@ moj.Modules.jsState = (function() {
     // (which is required for checkState to work correctly)
     $( '#ypos' ).trigger( 'change' );
     checkState();
+
+    // finally, make sure the focus is on the error summary if there are any errors.
+    ErrorFocusModule.focusOnErrorSection();
   };
 
   bindEvents = function() {
