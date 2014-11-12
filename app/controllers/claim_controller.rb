@@ -18,6 +18,8 @@ class ClaimController < ApplicationController
 
     
 
+    
+
     @claim = if !@production && params.has_key?(:journey)
       force_reload = params.has_key?(:reload)
 
