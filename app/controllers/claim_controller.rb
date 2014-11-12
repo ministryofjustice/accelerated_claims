@@ -15,9 +15,6 @@ class ClaimController < ApplicationController
       start_year: Date.today.year,
       end_year: Tenancy::APPLICABLE_FROM_DATE.year
     }
-
-    
-
     @claim = if !@production && params.has_key?(:journey)
       force_reload = params.has_key?(:reload)
 
