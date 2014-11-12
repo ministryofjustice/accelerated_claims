@@ -1,7 +1,4 @@
-
 describe PostcodeLookupProxyController, :type => :controller do
-
-
 
   describe "show" do
 
@@ -32,12 +29,11 @@ describe PostcodeLookupProxyController, :type => :controller do
       end
     end
 
-    
     context 'an empty dataset' do
       it "should render 'No matching postcodes'" do
         get :show, format: :json, pc: 'RG2 0PU', vc: 'all'
         expect(response.status).to eq 404
-        expect(response.body).to eq({'code' => 4040, 'message' => 'Postcode Not Found'}.to_json) 
+        expect(response.body).to eq({'code' => 4040, 'message' => 'Postcode Not Found'}.to_json)
       end
     end
 
@@ -48,7 +44,7 @@ describe PostcodeLookupProxyController, :type => :controller do
         expect(Excon).to receive(:get).and_raise(Timeout::Error)
         get :show, format: :json, pc: 'RG2 7PU', vc: 'all'
         expect(response.status).to eq 503
-        expect(response.body).to eq({'code' => 5030, 'message' => 'Service Unavailable'}.to_json) 
+        expect(response.body).to eq({'code' => 5030, 'message' => 'Service Unavailable'}.to_json)
       end
     end
 
@@ -71,11 +67,9 @@ describe PostcodeLookupProxyController, :type => :controller do
     end
   end
 
-
-
   describe 'live_postcode_lookup' do
 
-    # This test queries the live server and so should be used in normal day to day usage, but is 
+    # This test queries the live server and so should be used in normal day to day usage, but is
     # here if there is a question over what the live server actually returns
     #
     if ENV['LIVEPC'] == 'idealpostcodes'
@@ -90,7 +84,6 @@ describe PostcodeLookupProxyController, :type => :controller do
           get :show, format: :json, pc: 'RG2 7PU', vc: 'all'
           resetenv
         end
-
 
         it 'should return true for staging environments' do
           setenv 'staging'
@@ -130,9 +123,7 @@ describe PostcodeLookupProxyController, :type => :controller do
         resetenv
       end
 
-
-
-      # This test queries the live server and so should be used in normal day to day usage, but is 
+      # This test queries the live server and so should be used in normal day to day usage, but is
       # here if there is a question over what the live server actually returns
       #
       if ENV['LIVEPC'] == 'idealpostcodes'
@@ -143,7 +134,6 @@ describe PostcodeLookupProxyController, :type => :controller do
           get :show, format: :json, pc: 'RG2 7PU', vc: 'all'
           resetenv
         end
-
 
         it 'should return true for production environments' do
           setenv 'production'
@@ -156,12 +146,9 @@ describe PostcodeLookupProxyController, :type => :controller do
   end
 end
 
-
-
 def setenv(env)
   ENV['ENV_NAME'] = env
 end
-
 
 def resetenv
   ENV['ENV_NAME'] = nil
@@ -182,18 +169,16 @@ end
 #   allow(pclp).to receive(:http_status).and_return(200)
 # end
 
-
 def scottish_response
   {
     'code'    => 2000,
     'message' => 'Success',
     'result'  => [
-      {'address'=>'134, Corstorphine Road;;EDINBURGH', 'postcode'=>'EH12 6TS', 'country' => 'Scotland'}, 
-      {'address'=>'Royal Zoological Society of Scotland;;134, Corstorphine Road;;EDINBURGH', 'postcode'=>'EH12 6TS', 'country' => 'Scotland'} 
+      {'address'=>'134, Corstorphine Road;;EDINBURGH', 'postcode'=>'EH12 6TS', 'country' => 'Scotland'},
+      {'address'=>'Royal Zoological Society of Scotland;;134, Corstorphine Road;;EDINBURGH', 'postcode'=>'EH12 6TS', 'country' => 'Scotland'}
     ]
   }.to_json
 end
-
 
 def expected_response
   {
