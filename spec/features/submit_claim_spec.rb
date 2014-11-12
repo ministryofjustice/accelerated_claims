@@ -22,7 +22,7 @@ feature "submit claim" do
       expect(page).to have_text('After you’ve submitted your claim, complete our satisfaction survey'), claim_form.validation_error_text
 
       summary_values = find_summary_values page, data_file
-
+      summary_values.delete(:claim_property_livepc)
       expected_summary_values = load_expected_summary_values data_file
 
       expect(summary_values.size).to eq(expected_summary_values.size),
