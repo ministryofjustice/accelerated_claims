@@ -110,9 +110,17 @@ feature 'Court address lookup' do
       end
 
       context 'form toggle link' do
+        let(:postcode) { 'BH22 8HR' }
         scenario 'have a toggle link on load', js: true do
-          text = 'Choose to send this claim to a different court'
-          expect(page.has_content?(text)).not_to be true
+          visit '/'
+          fill_text_field 'claim_property_postcode_edit_field', postcode
+          click_link 'Find address'
+          find('#claim_property_address_select').find(:xpath, 'option[1]').select_option
+          click_link 'Select address'
+
+          expect(page).to have_css('#court-address', visible: false)
+          page.find('#court-details').click
+          expect(page).to have_css('#court-address', visible: true)
         end
 
         scenario 'remove the form toggle link', js: true do

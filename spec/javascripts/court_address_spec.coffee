@@ -28,30 +28,6 @@ describe 'CourtAddressModule', ->
     element.remove()
     element = null
 
-  describe 'enable toggling of court address form', ->
-    link = null
-
-    beforeEach ->
-      link = $('<a id="court-details" class="caption" href="#court-details">Choose to send this claim to a different court</a>')
-      $(document.body).append(link)
-
-    afterEach ->
-      link.remove()
-      link = null
-
-    it 'should toggle the court address form', ->
-      address = $('#court-address')
-      window.CourtAddressModule.enableTogglingOfCourtAddressForm()
-      $('#court-details').trigger 'click'
-      expect(address).not.toBeVisible()
-
-    it 'should add "open" class', ->
-      address = $('#court-details')
-      address.wrap('<div class="row"></div>')
-      window.CourtAddressModule.enableTogglingOfCourtAddressForm()
-      $('#court-details').trigger 'click'
-      expect(address.parent().attr('class')).toMatch('row open')
-
   describe 'changing the postcode of the property value', ->
 
     beforeEach ->
