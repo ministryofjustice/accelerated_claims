@@ -5,6 +5,9 @@ describe 'My behaviour' do
 
     it 'should do something' do
 
+      puts 'Running w3c tests'
+
+
       expect(true).to eql(true)
     end
   end
