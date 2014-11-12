@@ -5,7 +5,6 @@ describe Property, :type => :model do
                  house: "Yes")
   end
 
-
   describe 'initialization' do
     it 'should instantiate livepc if in params as true' do
       property = Property.new(HashWithIndifferentAccess.new(street: 'xxxx', postcode: 'RG2 7PU', house: 'Yes', livepc: true))
