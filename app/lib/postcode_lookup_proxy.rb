@@ -2,31 +2,31 @@ require 'yaml'
 
 # PostcodeLookupProxy API
 
-# pclp = PostcodeLookupProxy.new("AB126FG")
+# pclp = PostcodeLookupProxy.new("AB126FG", ['England', 'Wales'], true)    or  PostcodeLookupProxy.new("AB126FG", [], true)
 # pclp.lookup             # => true if http result was successful, otherwise false
 # pclp.result_set         # => The JSON that is to be returned by the controller
 # pclp.http_status_code   # => the HTTP status code that the controller should return
 #
 class PostcodeLookupProxy
 
-  @@dummy_postcode_results = YAML.load_file("#{Rails.root}/config/dummy_postcode_results.yml") 
+  @@dummy_postcode_results = YAML.load_file("#{Rails.root}/config/dummy_postcode_results.yml")
 
   attr_reader :result_set, :result_code, :result_message, :http_status
 
   def initialize(postcode, valid_countries, use_live_data = false)
-    @postcode        = UKPostcode.new(postcode)
-    @valid           = @postcode.valid?
-    @result_set      = nil
-    config           = YAML.load_file("#{Rails.root}/config/ideal_postcodes.yml")
-    @url             = config['url']
-    @api_key         = config['api_key']
-    @timeout         = config['timeout']
-    @api_result_set  = nil
-    @use_live_data   = use_live_data
-    @valid_countries = valid_countries
-    @http_status     = nil
+    @postcode                 = UKPostcode.new(postcode)
+    @valid                    = @postcode.valid?
+    @result_set               = nil
+    config                    = YAML.load_file("#{Rails.root}/config/ideal_postcodes.yml")
+    @url                      = config['url']
+    @api_key                  = config['api_key']
+    @timeout                  = config['timeout']
+    @api_result_set           = nil
+    @use_live_data            = use_live_data
+    @valid_countries          = valid_countries
+    @http_status              = nil
+    @validation_error_message = nil
   end
-
 
   def valid?
     @valid
@@ -36,7 +36,6 @@ class PostcodeLookupProxy
     !valid?
   end
 
- 
   def lookup
     if valid?
       if @use_live_data
@@ -51,8 +50,9 @@ class PostcodeLookupProxy
     true
   end
 
-  
-
+  def norm
+    @postcode.norm
+  end
 
   private
 
@@ -66,18 +66,16 @@ class PostcodeLookupProxy
       transform_erroneous_result_set
     end
   end
- 
 
   def production_lookup
     begin
       Timeout::timeout(@timeout) do
-        @api_response = ActiveSupport::JSON.decode( Excon.get(form_url).body) 
+        @api_response = ActiveSupport::JSON.decode( Excon.get(form_url).body)
       end
     rescue Timeout::Error
       @api_response = service_unavailable_response
     end
   end
-
 
   # returns dummy postcode result based on the first character of the second part of the postcode.
   # if 0 - returns an empty array, indicating no entries of the postcode, otherwise a dummy result set
@@ -88,18 +86,13 @@ class PostcodeLookupProxy
     case @postcode.incode.first.to_i
     when 0
       return no_such_postcode_response
-    when 9 
+    when 9
       return service_unavailable_response
     else
-      index = @postcode.incode.first.to_i % @@dummy_postcode_results.size 
+      index = @postcode.incode.first.to_i % @@dummy_postcode_results.size
       wrap_dummy_result_set( @@dummy_postcode_results[index] )
     end
   end
-
-
-
-
-
 
   def transform_successful_result_set
     if country_valid?
@@ -110,7 +103,6 @@ class PostcodeLookupProxy
     end
     @http_status = 200
   end
-
 
   def transform_erroneous_result_set
     @result_set = @api_result_set
@@ -126,22 +118,17 @@ class PostcodeLookupProxy
     end
   end
 
-
   def country_valid?
     @valid_countries == ['All'] || @valid_countries.include?(api_result_set_country)
   end
-
 
   def api_result_set_country
     @api_result_set['result'].first['country']
   end
 
-
-
   def form_url
     "#{@url}#{@postcode.outcode}#{@postcode.incode}?api_key=#{@api_key}"
   end
-
 
   def wrap_dummy_result_set(result_set)
     {
@@ -159,11 +146,9 @@ class PostcodeLookupProxy
     {"code"=>4220, "message"=>"Invalid Postcode"}
   end
 
-
   def no_such_postcode_response
     {'code' => 4040, 'message' => 'Postcode Not Found' }
   end
-
 
   def transform_api_address(res)
     address = res['line_1']
@@ -175,10 +160,8 @@ class PostcodeLookupProxy
     { 'address' => address, 'postcode' => postcode, 'country' => country }
   end
 
-
   def add_unless_blank(res, key)
     res[key].blank? ? '' : ";;#{res[key]}"
   end
-
 
 end

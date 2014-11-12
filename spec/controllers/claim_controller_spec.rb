@@ -1,6 +1,37 @@
 describe ClaimController, :type => :controller do
   render_views
-  
+
+  context 'setting production and livepc' do
+    it 'should not be produciton nor livepc in demo with nothing in url' do
+      get :new
+      expect(assigns(:production)).to be false
+      expect(assigns(:livepc)).to be false
+    end
+
+    it 'should not be production but should be livepc if url contains livepc' do
+      get :new, livepc: '1'
+      expect(assigns(:production)).to be false
+      expect(assigns(:livepc)).to be true
+    end
+
+    it 'should be both production and livepc on staging' do
+      ENV['ENV_NAME'] = 'staging'
+      get :new
+      expect(assigns(:production)).to be true
+      expect(assigns(:livepc)).to be true
+      ENV['ENV_NAME'] = nil
+    end
+
+    it 'should be both production and livepc on production' do
+      ENV['ENV_NAME'] = 'production'
+      get :new
+      expect(assigns(:production)).to be true
+      expect(assigns(:livepc)).to be true
+      ENV['ENV_NAME'] = nil
+    end
+
+  end
+
   describe "#new" do
     it "should render the new claim form" do
       get :new
