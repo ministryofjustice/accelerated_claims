@@ -40,14 +40,13 @@ CourtAddressModule =
         CourtAddressModule.flipTextareaToInputField()
         CourtAddressModule.lookUpCourt()
         $('#court-address').hide()
-        $('#court-details').parent().addClass('open')
+        $('#court-details').parent().removeClass('open')
       else
         CourtAddressModule.populateCourtAddressForm('', '', '')
         CourtAddressModule.changeInputFieldToTextarea()
         CourtAddressModule.blankFormFields()
         $('#court-address').show()
-        $('#court-details').parent().removeClass('open')
-
+        $('#court-details').parent().addClass('open')
 
   showCourtAddressForm: ->
     CourtAddressModule.blankFormFields()
