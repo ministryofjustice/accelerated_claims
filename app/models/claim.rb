@@ -96,7 +96,6 @@ class Claim < BaseClass
     validity = false unless num_claimants_valid?
     validity = false unless num_defendants_valid?
 
-
     # attributes_for_submodels returns an array of instance_variables and classes, e.g. [ [property, Property], .... ]
     attributes_for_submodels.each do |instance_var, model|
       result = transfer_errors_from_submodel_to_base(instance_var, model, collection: false)
@@ -208,9 +207,8 @@ class Claim < BaseClass
     end
   end
 
-
   def defendant_for_service hash
-    if @num_defendants > 1      
+    if @num_defendants > 1
       hash.merge!( {'service_address' => ".\n \n \n \n    REFER TO CONTINUATION SHEET", 'service_postcode1' => '', 'service_postcode2' => ''} )
     else
       hash.merge!( {'service_address' => hash['defendant_1_address'], 'service_postcode1' => hash['defendant_1_postcode1'], 'service_postcode2' => hash['defendant_1_postcode2'] })

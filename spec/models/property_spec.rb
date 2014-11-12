@@ -44,8 +44,6 @@ describe Property, :type => :model do
                    house: "Yes")
     end
 
-
-
     describe "when given all valid values" do
       it "should be valid" do
         expect(property).to be_valid
@@ -77,7 +75,6 @@ describe Property, :type => :model do
       end
     end
 
-
     context 'invalid postcode' do
       it 'should generate an error message' do
         property.postcode = 'ABC4545'
@@ -92,7 +89,6 @@ describe Property, :type => :model do
         expect(property.errors[:postcode]).to eq ['Enter the property postcode']
       end
     end
-
 
     context 'invalid address' do
       it 'should generate an error message of the street is missing' do

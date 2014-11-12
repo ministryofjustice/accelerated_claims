@@ -76,7 +76,7 @@ describe 'SummaryHelper', type: :helper  do
   describe 'link_to_edit_section' do
     it 'returns link to section' do
       link = helper.link_to_edit_section 'property'
-      expect(link).to eq "<a href='/#property-section'>Change property</a>\n"
+      expect(link).to eq "<a href='#{File.join(root_path,'#property-section')}'>Change property</a>\n"
     end
   end
 
