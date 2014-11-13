@@ -46,6 +46,11 @@ describe StringNormalizer do
       expect(normalized).to eq expected
     end
 
+    it 'should handle Romanian characters' do
+      @orig  = "ș ț ă Ș Ț Ă"
+      expect(normalized).to eq "s t a S T A"
+    end
+
     it 'should leave non-latin scripts alone' do
       @orig = 'Стивен Ричардс'
       expect(normalized).to eq @orig
@@ -64,7 +69,6 @@ describe StringNormalizer do
       expect(StringNormalizer.hash_to_ascii(original_hash)).to eq expected_hash
     end
   end
-
 
   def original_hash
     {
