@@ -18,6 +18,8 @@ class Defendant < BaseClass
   validate :inhabits_property_is_valid
   validate :validate_defendant_state
 
+
+
   def inhabits_property_is_valid
     if validate_presence?
       unless %w{ yes no }.include?(inhabits_property.try(:downcase))
@@ -42,6 +44,9 @@ class Defendant < BaseClass
 
   def initialize(params = {})
     super
+    pc = UKPostcode.new(params[:postcode])
+    @postcode = pc.norm if pc.valid?
+
     unless params.include?(:validate_presence)
       @validate_presence = true unless params[:validate_absence] == true
     end
@@ -49,6 +54,11 @@ class Defendant < BaseClass
       @inhabits_property = address_blank? ? 'yes' : 'no'
     end
   end
+
+
+
+
+
 
   def validate_presence?
     self.validate_presence == true

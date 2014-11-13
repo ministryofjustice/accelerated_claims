@@ -20,6 +20,9 @@ class Claimant < BaseClass
 
   def initialize(params = {})
     super
+    pc = UKPostcode.new(params[:postcode])
+    @postcode = pc.norm if pc.valid?
+
     unless params.include?(:validate_presence)
       @validate_presence = true unless params[:validate_absence] == true
     end
