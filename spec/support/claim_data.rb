@@ -10,7 +10,7 @@ def claim_post_data
         "title" => "Mr",
         "full_name" => "John Smith",
         "street" => "2 Brown St\nCwmbran",
-        "postcode" => "SW1W 0LU",
+        "postcode" => "sw1w0lu",
         claimant_num: 1
       },
       "claimant_contact" =>
@@ -19,7 +19,7 @@ def claim_post_data
         "full_name" => "Jim Brown",
         "company_name" => "Winning",
         "street" => "3 Smith St\nWinsum",
-        "postcode" => "SW1W 0LU",
+        "postcode" => "sw1w0lu",
         "email" => "jim@example.com",
         "phone" => "020 000 000",
         "fax" => "020 000 000",
@@ -92,7 +92,7 @@ def claim_post_data
         "full_name" => "John Major",
         "inhabits_property" => "No",
         "street" => "Sesame Street\nLondon",
-        "postcode" => "SW1X 2PT"
+        "postcode" => "sw1x2pt"
       },
       "defendant_2"=>
       {
