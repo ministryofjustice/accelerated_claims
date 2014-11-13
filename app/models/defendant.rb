@@ -28,7 +28,6 @@ class Defendant < BaseClass
         errors[:inhabits_property] << "Please select whether or not #{subject_description} lives in the property"
       end
     end
-
   end
 
   # main validation for claimant state
@@ -42,6 +41,11 @@ class Defendant < BaseClass
 
   def initialize(params = {})
     super
+    unless params[:postcode].blank?
+      pc = UKPostcode.new(params[:postcode])
+      @postcode = pc.norm if pc.valid?
+    end
+
     unless params.include?(:validate_presence)
       @validate_presence = true unless params[:validate_absence] == true
     end
