@@ -21,10 +21,11 @@
 
 
 - content_for :content do
-  .phase-banner
-    %p
-      %span This is a new service - #{link_to "your feedback", config_item(:feedback_url)} will help us to improve it.  If you need help with using the online service, we can offer #{link_to 'technical help', technical_help_path}.
-  =yield
+  %main#page-container{ role: "main" }
+    .phase-banner
+      %p
+        %span This is a new service - #{link_to "your feedback", config_item(:feedback_url)} will help us to improve it.  If you need help with using the online service, we can offer #{link_to 'technical help', technical_help_path}.
+    =yield
 
 - content_for :footer_app_links do
   %li
@@ -39,4 +40,4 @@
 
 = render template: "layouts/moj_template"
 
-  
+
