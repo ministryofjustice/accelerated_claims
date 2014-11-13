@@ -2,7 +2,8 @@
 def claim_post_data
   HashWithIndifferentAccess.new(
   { "claim" =>
-    { "num_claimants" => 2,
+    { "livepc" => false,
+      "num_claimants" => 2,
       "claimant_type" => 'individual',
       "claimant_1" =>
       {

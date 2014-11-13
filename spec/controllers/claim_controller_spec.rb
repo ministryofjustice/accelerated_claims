@@ -1,6 +1,37 @@
 describe ClaimController, :type => :controller do
   render_views
 
+  context 'setting production and livepc' do
+    it 'should not be produciton nor livepc in demo with nothing in url' do
+      get :new
+      expect(assigns(:production)).to be false
+      expect(assigns(:livepc)).to be false
+    end
+
+    it 'should not be production but should be livepc if url contains livepc' do
+      get :new, livepc: '1'
+      expect(assigns(:production)).to be false
+      expect(assigns(:livepc)).to be true
+    end
+
+    it 'should be both production and livepc on staging' do
+      ENV['ENV_NAME'] = 'staging'
+      get :new
+      expect(assigns(:production)).to be true
+      expect(assigns(:livepc)).to be true
+      ENV['ENV_NAME'] = nil
+    end
+
+    it 'should be both production and livepc on production' do
+      ENV['ENV_NAME'] = 'production'
+      get :new
+      expect(assigns(:production)).to be true
+      expect(assigns(:livepc)).to be true
+      ENV['ENV_NAME'] = nil
+    end
+
+  end
+
   describe "#new" do
     it "should render the new claim form" do
       get :new
@@ -69,12 +100,19 @@ describe ClaimController, :type => :controller do
         get :confirmation
         expect(response).to render_template("confirmation")
       end
+
+      it 'should contain links to root_url' do
+        @controller.session['claim'] = claim_post_data['claim']
+        get :confirmation
+
+        expect(response.body).to include("<a href='#{File.join(root_path,'#property-section')}'>Change property</a>")
+      end
     end
 
     context 'with no claim data' do
       it 'should redirect to the claim form' do
         get :confirmation # no session
-        expect(response).to redirect_to('/')
+        expect(response).to redirect_to(root_path)
       end
     end
 
@@ -84,7 +122,7 @@ describe ClaimController, :type => :controller do
         data['claimant_1'].delete('full_name')
         @controller.session['claim'] = data
         get :confirmation
-        expect(response).to redirect_to('/')
+        expect(response).to redirect_to(root_path)
       end
     end
   end
@@ -92,7 +130,7 @@ describe ClaimController, :type => :controller do
   describe '#submission' do
     it 'should redirect to the confirmation page' do
       post :submission, claim: claim_post_data['claim']
-      expect(response).to redirect_to('/confirmation')
+      expect(response).to redirect_to(File.join(root_path,'/confirmation'))
     end
   end
 
@@ -125,7 +163,7 @@ describe ClaimController, :type => :controller do
         data['claimant_1'].delete('full_name')
         post :submission, claim: data
         get :download
-        expect(response).to redirect_to('/')
+        expect(response).to redirect_to(root_path)
       end
     end
 
@@ -138,7 +176,7 @@ describe ClaimController, :type => :controller do
         allow(env).to receive(:development?).and_return(false)
 
         get :download
-        expect(response).to redirect_to('/expired')
+        expect(response).to redirect_to(File.join(root_path,'expired'))
       end
     end
   end
@@ -170,7 +208,7 @@ describe ClaimController, :type => :controller do
         data['claimant_1'].delete('full_name')
         post :submission, claim: data
         get :data
-        expect(response).to redirect_to('/')
+        expect(response).to redirect_to(root_path)
       end
     end
 

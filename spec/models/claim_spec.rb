@@ -24,6 +24,37 @@ describe Claim, :type => :model do
         expect(claim).to respond_to attr
       end
     end
+
+    it 'should set livepc to false if false in claim params' do
+      data = claim_post_data['claim']
+      claim = Claim.new(data)
+      expect(claim.livepc).to be false
+    end
+
+    it 'should set livepc to true if true in claim params' do
+      data = claim_post_data['claim'].merge( 'livepc' => true )
+      claim = Claim.new(data)
+      expect(claim.livepc).to be true
+    end
+
+    it 'should set livepc to false if nothing specified in params' do
+      data = claim_post_data['claim']
+      data.delete('livepc')
+      claim = Claim.new(data)
+      expect(claim.livepc).to be false
+    end
+
+    it 'should pass livepc false param to property' do
+      data = claim_post_data['claim']
+      expect(Property).to receive(:new).with({"street"=>"Mucho Gracias Road\nLondon", "postcode"=>"SW1H 9AJ", "house"=>"Yes", "livepc"=>false})
+      claim = Claim.new(data)
+    end
+
+    it 'should pass livepc true param to property' do
+      data = claim_post_data['claim'].merge( 'livepc' => true )
+      expect(Property).to receive(:new).with({"street"=>"Mucho Gracias Road\nLondon", "postcode"=>"SW1H 9AJ", "house"=>"Yes", "livepc"=>true})
+      claim = Claim.new(data)
+    end
   end
 
   context 'method_missing' do

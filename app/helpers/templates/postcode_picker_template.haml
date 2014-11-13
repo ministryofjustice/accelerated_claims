@@ -63,7 +63,8 @@
       %label{:for => "#{@prefix}_#{@postcode_attr}"} 
         Postcode
         - unless @form.object.errors[:postcode].empty?
-          %span.error Enter the postcode
+          - @form.object.errors[:postcode].each do |message|
+            %span.error= message
       %br
       %div{style: "overflow: hidden; width: 100%"}
         %input.smalltext.postcode{:id => "#{@prefix}_#{@postcode_attr}", :maxlength => "8", :name => "#{@name}[#{@postcode_attr}]", value: "#{@postcode_value}", :size => "8", :type => "text", style: 'float: left;  margin-right: 20px;'}

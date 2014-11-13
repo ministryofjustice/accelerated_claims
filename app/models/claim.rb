@@ -11,10 +11,14 @@ class Claim < BaseClass
                 :claimant_type,
                 :num_defendants
 
+  attr_reader   :livepc
+
   @@valid_claimant_types    = %w{ organization individual }
 
   def initialize(claim_params={})
     @javascript_enabled = claim_params.key?('javascript_enabled')
+    @livepc = claim_params['livepc'] || false
+    claim_params['property']['livepc'] = @livepc if claim_params['property']          # propagate the live postcocde lookup flag to the property model
 
     @claimant_type  = claim_params.key?(:claimant_type) ? claim_params[:claimant_type] : nil
     if @claimant_type == 'organization'
@@ -91,7 +95,6 @@ class Claim < BaseClass
     validity = false unless claimant_type_valid?
     validity = false unless num_claimants_valid?
     validity = false unless num_defendants_valid?
-
 
     # attributes_for_submodels returns an array of instance_variables and classes, e.g. [ [property, Property], .... ]
     attributes_for_submodels.each do |instance_var, model|
@@ -204,9 +207,8 @@ class Claim < BaseClass
     end
   end
 
-
   def defendant_for_service hash
-    if @num_defendants > 1      
+    if @num_defendants > 1
       hash.merge!( {'service_address' => ".\n \n \n \n    REFER TO CONTINUATION SHEET", 'service_postcode1' => '', 'service_postcode2' => ''} )
     else
       hash.merge!( {'service_address' => hash['defendant_1_address'], 'service_postcode1' => hash['defendant_1_postcode1'], 'service_postcode2' => hash['defendant_1_postcode2'] })

@@ -1,5 +1,7 @@
 class ClaimController < ApplicationController
 
+  before_filter :set_production_status
+
   def new
     reset_session if referrer_is_landing_page?
     session[:test] = params[:test]
@@ -13,11 +15,7 @@ class ClaimController < ApplicationController
       start_year: Date.today.year,
       end_year: Tenancy::APPLICABLE_FROM_DATE.year
     }
-
-    # use live postcode lookup database if running on productionserver or url param livepc set to 1
-    production = ['staging', 'production'].include?(ENV["ENV_NAME"])
-
-    @claim = if !production && params.has_key?(:journey)
+    @claim = if !@production && params.has_key?(:journey)
       force_reload = params.has_key?(:reload)
 
       require 'fixture_data'
@@ -85,6 +83,7 @@ class ClaimController < ApplicationController
   end
 
   def submission
+    params['claim']['livepc'] = @livepc
     session[:claim] = params['claim']
     move_claimant_address_params_into_the_model
     move_defendant_address_params_into_model
@@ -103,6 +102,13 @@ class ClaimController < ApplicationController
   end
 
   private
+
+  def set_production_status
+    # set production to true if on production or staging - this is used to determine whether or not journey numbers are valid in the url
+    @production = ['staging', 'production'].include?(ENV["ENV_NAME"])
+    request_referrer_query_string = request.referrer ? URI(request.referrer).query : nil
+    @livepc = @production || params[:livepc] == '1' || request_referrer_query_string == 'livepc=1'
+  end
 
   def move_defendant_address_params_into_model
     nums = { '1' => 'one', '2' => 'two' }

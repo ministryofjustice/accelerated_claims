@@ -32,8 +32,6 @@ if ENV['CODECLIMATE_REPO_TOKEN']
   WebMock.disable_net_connect!(:allow => /codeclimate.com/)
 end
 
-
-
 # fix to avoid undefined method `valid_request_keys' for Excon::Utils:Module
 #
 class WebMock::HttpLibAdapters::ExconAdapter
@@ -48,9 +46,6 @@ class WebMock::HttpLibAdapters::ExconAdapter
     hash
   end
 end
-
-
-
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
@@ -75,6 +70,7 @@ RSpec.configure do |config|
   config.include ShowMeTheCookies, type: :feature
 
   config.infer_spec_type_from_file_location!
+  config.include Rails.application.routes.url_helpers
 end
 
 def diffmerge(actual, expected)
