@@ -1,0 +1,58 @@
+// Give elements default CSS by extending from selectors in govuk elements
+@import 'elements-page'
+
+h1
+  @extend .heading-xlarge
+
+  span
+    @extend .heading-secondary
+
+h2
+  @extend .heading-medium
+
+h3
+  @extend .heading-small
+
+fieldset.radio
+  label
+    @extend .block-label
+
+fieldset.inline
+  label
+    clear: none
+    margin-right: $gutter-half
+
+legend
+  @extend .form-label
+
+span.hint
+  @extend .form-hint
+  margin-top: 0px
+
+label[for]
+  @extend .form-label
+
+label + input
+  @extend .form-control
+
+label + textarea
+  @extend .form-control
+
+div.row, fieldset
+  @extend .form-group
+
+.narrow
+  @extend .form-control-1-8
+
+// .moj-panel
+  // @extend .panel-indent
+
+// .divider
+  // width: auto
+  // height: 25px
+  // padding: 0
+  // overflow: hidden
+  // border-bottom: 1px dotted #c2c2c2
+
+.js-only
+  display: none
