@@ -25,9 +25,12 @@ gem 'coffee-rails'
 gem 'unicorn'
 
 # Gov.uk styles
-gem 'govuk_frontend_toolkit', '1.5.0'
+gem 'govuk_frontend_toolkit', '>= 2.0.1'
+gem 'govuk_elements'
+
 # MOJ styles
 gem 'moj_template', '0.16.0'
+
 # required for feedback form
 gem 'zendesk_api'
 gem 'mail'
@@ -81,7 +84,6 @@ end
 
 gem 'pdf-forms', '0.5.5'
 gem 'uk_postcode', '1.0.0'
-
 
 # validate that submitted dates are actually dates
 gem 'validates_timeliness', '~> 3.0'
