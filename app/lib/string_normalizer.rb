@@ -1,7 +1,7 @@
 class StringNormalizer
 
-  @@accented = "ĀāĂăĆćČčĒēĖėĘęĪīĮįŁłŃńŌōŚśŠšȘșȚțŪūŽžŹźŻż"
-  @@normal   = "AaAaCcCcEeEeEeIiIiLlNnOoSsSsSsTtUuZzZzZz"
+  @@accented = "ĀāĂăĄąĆćČčĒēĖėĘęĚěĞğĢģİıĪīĮįĶķŁłĽľĻļŅņŃńŇňŐőŌōŘřŞşŚśŠšȘșŠšȚțŤťŪūŮůŰűÝýŽžŹźŻżŽž"
+  @@normal   = "AaAaAaCcCcEeEeEeEeGgGgIiIiIiKkLlLlLlNnNnNnOoOoRrSSSsSsSsSsTtTtUuUuUuYyZzZzZzZz"
 
   def self.to_ascii(string)
     string.tr(@@accented, @@normal).gsub('Œ', 'OE').gsub('œ', 'oe')

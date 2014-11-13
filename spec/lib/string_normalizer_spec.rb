@@ -51,6 +51,11 @@ describe StringNormalizer do
       expect(normalized).to eq "s t a S T A"
     end
 
+    it 'should handle Czech and Slovak characters' do
+      @orig = "Ľ ľ Š š Č č Ť ť Ž ž Ý ý Ň ň Ě ě Ř ř Ů ů"
+      expect(normalized).to eq "L l S s C c T t Z z Y y N n E e R r U u"
+    end
+
     it 'should leave non-latin scripts alone' do
       @orig = 'Стивен Ричардс'
       expect(normalized).to eq @orig
