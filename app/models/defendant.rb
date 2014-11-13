@@ -18,8 +18,6 @@ class Defendant < BaseClass
   validate :inhabits_property_is_valid
   validate :validate_defendant_state
 
-
-
   def inhabits_property_is_valid
     if validate_presence?
       unless %w{ yes no }.include?(inhabits_property.try(:downcase))
@@ -30,7 +28,6 @@ class Defendant < BaseClass
         errors[:inhabits_property] << "Please select whether or not #{subject_description} lives in the property"
       end
     end
-
   end
 
   # main validation for claimant state
@@ -56,11 +53,6 @@ class Defendant < BaseClass
       @inhabits_property = address_blank? ? 'yes' : 'no'
     end
   end
-
-
-
-
-
 
   def validate_presence?
     self.validate_presence == true
