@@ -86,6 +86,7 @@ class Claim < BaseClass
     add_fee_and_costs json_out
     tenancy_agreement_status json_out
     defendant_for_service json_out
+    json_out = StringNormalizer.hash_to_ascii(json_out)
     json_out
   end
 
