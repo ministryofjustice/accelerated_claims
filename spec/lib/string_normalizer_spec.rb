@@ -52,9 +52,9 @@ describe StringNormalizer do
     end
 
     it 'should handle o-macron' do
-      @orig    = '23 Mōčk Stręęt Ānytœwn Žeńśčina'
-      expected = '23 Mook Stroot Anytoewn Zenscina'
-      expect(normalized).to eq @orig
+      @orig    = '23 Mōčk Stręęt Ānytōœwn Žeńśčina'
+      expected = '23 Mock Street Anytooewn Zenscina'
+      expect(normalized).to eq expected
     end
   end
 
