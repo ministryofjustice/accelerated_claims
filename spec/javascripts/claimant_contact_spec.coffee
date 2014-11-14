@@ -362,6 +362,14 @@ describe 'ClaimantContact', ->
       $('#claim_claimant_type_individual').trigger('click')
       expect(@panel).toBeVisible()
 
+    it 'hides Add reference number link when claimant type individual', ->
+      $('#claim_claimant_type_individual').trigger('click')
+      expect($('#reference-number')).toBeHidden()
+
+    it 'shows Add reference number link when claimant type organization', ->
+      $('#claim_claimant_type_organization').trigger('click')
+      expect($('#reference-number')).toBeVisible()
+
   describe 'entering number of claimants', ->
     it 'shows the claimant-contact panels when number of claimants entered > 0', ->
       $('#claim_num_claimants').val('2')
