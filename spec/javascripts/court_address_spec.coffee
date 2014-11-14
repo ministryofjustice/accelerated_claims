@@ -224,3 +224,36 @@ describe 'CourtAddressModule', ->
       CourtAddressModule.addressReEntry()
       $('.change-postcode-link').trigger 'click'
       expect($('#court-details')).not.toBeVisible()
+
+  describe 'check if court address form is blank', ->
+    element = null
+
+    beforeEach ->
+      element = $( '<div id="court-address-label"/>' +
+          '<div id="court-name"/>' +
+          '<input id="claim_property_postcode" name="claim[property][postcode]" type="text"/>' +
+          '<div style="display: block;" id="court-address">' +
+          '<div class="row"><label for="claim_court_court_name">Name of court</label>' +
+          '<input id="claim_court_court_name" name="claim[court][court_name]" type="hidden"></div>' +
+          '<div class="row"><label for="claim_court_street">Full address</label>' +
+          '<textarea id="claim_court_street" name="claim[court][street]"></textarea></div>' +
+          '<div class="row"><label for="claim_court_postcode">Postcode</label>' +
+          '<input id="claim_court_postcode" name="claim[court][postcode]" type="hidden"></div>' +
+        '</div>')
+      $(document.body).append(element)
+
+    describe 'when there are no values in the form', ->
+      it 'should return true', ->
+        expect(CourtAddressModule.isCourtAddressFormBlank()).toBe(true)
+
+    describe 'when there are values in the form', ->
+      beforeEach ->
+        court_fields = ['#claim_court_court_name',
+                        '#claim_court_street',
+                        '#claim_court_postcode']
+
+        for field in court_fields
+          $(field).val('some value')
+
+      it 'should return false', ->
+        expect(CourtAddressModule.isCourtAddressFormBlank()).toBe(false)

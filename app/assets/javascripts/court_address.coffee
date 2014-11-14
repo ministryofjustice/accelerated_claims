@@ -2,9 +2,20 @@ root = exports ? this
 
 CourtAddressModule =
 
+  isCourtAddressFormBlank: ->
+    court_fields = ['#claim_court_court_name',
+                    '#claim_court_street',
+                    '#claim_court_postcode']
+
+    for field in court_fields
+      return false if $(field).val() != ''
+
+    true
+
   addCourtAddressFormLabel: ->
-    label = "You haven't entered a postcode for the property you want to take back.<br> To see the court you need to send this claim to, <a href=\"#property\">enter the postcode now</a>"
-    $('#court-address-label').html(label)
+    if CourtAddressModule.isCourtAddressFormBlank()
+      label = "You haven't entered a postcode for the property you want to take back.<br> To see the court you need to send this claim to, <a href=\"#property\">enter the postcode now</a>"
+      $('#court-address-label').html(label)
 
   changeElement:(id, tag, new_element) ->
     if $(id).is(tag)
@@ -101,19 +112,13 @@ CourtAddressModule =
       CourtAddressModule.displayNoResultsFound()
 
   getCourtIfPostcodePresent: ->
-    court_fields = ['#claim_court_court_name',
-                    '#claim_court_street',
-                    '#claim_court_postcode']
-    all_blank = true
-
-    for field in court_fields
-      if $(field).val() != ''
-        all_blank = false
-
-    if all_blank
+    if CourtAddressModule.isCourtAddressFormBlank()
       postcode = $('#claim_property_postcode').val()
-      if postcode
-        CourtLookup.lookup(postcode, CourtAddressModule)
+      CourtLookup.lookup(postcode, CourtAddressModule) if postcode
+    else
+      CourtAddressModule.labelForKnownCourt()
+      CourtAddressModule.linkForFormToggling()
+      $('#court-name').html("<b>#{$('#claim_court_court_name').val()}</b>")
 
   showFormWhenErrors: ->
     show = false
