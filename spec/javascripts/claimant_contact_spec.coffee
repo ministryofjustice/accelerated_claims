@@ -194,30 +194,29 @@ describe 'ClaimantContact', ->
           </div>
         </div>
 
-      <div class="row divider"></div>
-      <div class="sub-panel claimant-contact js-claimanttype individual organization">
+      <div class="sub-panel claimant-contact" style="display: block;">
         <div class="sub-panel details">
-          <div class="row js-only">
+          <div class="row js-only contact-details">
             <a aria-expanded="false" class="caption" href="#contact-details" id="contact-details">
               Add phone and email
             </a>
             <span class="hint">(Optional)</span>
           </div>
-          <div class="row rel email"><label for="claim_claimant_contact_email">Email</label>
+          <div class="row rel email contact-details-block" style="display: none;"><label for="claim_claimant_contact_email">Email</label>
           <input id="claim_claimant_contact_email" name="claim[claimant_contact][email]" type="text"></div>
-          <div class="row rel phone"><label for="claim_claimant_contact_phone">Phone</label>
+          <div class="row rel phone contact-details-block" style="display: none;"><label for="claim_claimant_contact_phone">Phone</label>
           <input id="claim_claimant_contact_phone" name="claim[claimant_contact][phone]" type="text"></div>
-          <div class="row rel fax"><label for="claim_claimant_contact_fax">Fax</label>
+          <div class="row rel fax contact-details-block" style="display: none;"><label for="claim_claimant_contact_fax">Fax</label>
           <input id="claim_claimant_contact_fax" maxlength="40" name="claim[claimant_contact][fax]" size="40" type="text"></div>
-          <div class="row rel dx_number"><label for="claim_claimant_contact_dx_number">DX number</label>
+          <div class="row rel dx_number contact-details-block" style="display: none;"><label for="claim_claimant_contact_dx_number">DX number</label>
           <input id="claim_claimant_contact_dx_number" maxlength="40" name="claim[claimant_contact][dx_number]" size="40" type="text"></div>
         </div>
         <div class="row">
           If you want us to send correspondence about the case to a different address, enter it here.
-          <span class="hint block js-claimanttype individual js-only">
+          <span class="hint block js-claimanttype individual js-only" style="display: none;">
             eg a legal representative's address (Optional)
           </span>
-          <span class="hint block js-claimanttype organization">
+          <span class="hint block js-claimanttype organization" style="display: block;">
             eg a legal representative or managing agent's address (Optional)
           </span>
         </div>
@@ -305,7 +304,7 @@ describe 'ClaimantContact', ->
             </div>
           </div>
         </div>
-        <div class="sub-panel details js-claimanttype organization">
+        <div class="sub-panel details js-claimanttype organization" style="display: block;">
           <div class="row js-only">
             <a aria-expanded="false" class="caption" href="#reference-number" id="reference-number">
               Add a reference number
@@ -316,7 +315,6 @@ describe 'ClaimantContact', ->
           <input id="claim_reference_number_reference_number" maxlength="40" name="claim[reference_number][reference_number]" size="40" type="text"></div>
         </div>
       </div>
-    </div>
   </section>
 
 </body>""")
@@ -385,4 +383,36 @@ describe 'ClaimantContact', ->
       $('#claim_num_claimants').val('')
       $('#claim_num_claimants').trigger('keyup')
       expect(@panel).toBeHidden()
+
+  describe 'hiding and showing of contact details block for organizations', ->
+    beforeEach ->
+      $('#claim_claimant_type_organization').trigger('click')
+
+    it 'should be hidden upon initial display', ->
+      expect($('#reference-number')).toBeVisible()
+      expect($('.contact-details-block.email')).toBeHidden()
+      expect($('.contact-details-block.phone')).toBeHidden()
+      expect($('.contact-details-block.fax')).toBeHidden()
+      expect($('.contact-details-block.dx_number')).toBeHidden()
+
+    it 'should be displayed when clicked once', ->
+      $('a.caption#contact-details').trigger('click')
+      expect($('.contact-details-block.email')).toBeVisible()
+      expect($('.contact-details-block.phone')).toBeVisible()
+      expect($('.contact-details-block.fax')).toBeVisible()
+      expect($('.contact-details-block.dx_number')).toBeVisible()
+
+    it 'should be hidden if clicked twice', ->
+      $('a.caption#contact-details').trigger('click')
+      expect($('.contact-details-block.email')).toBeVisible()
+      expect($('.contact-details-block.phone')).toBeVisible()
+      expect($('.contact-details-block.fax')).toBeVisible()
+      expect($('.contact-details-block.dx_number')).toBeVisible()
+      $('a.caption#contact-details').trigger('click')
+      expect($('.contact-details-block.email')).toBeHidden()
+      expect($('.contact-details-block.phone')).toBeHidden()
+      expect($('.contact-details-block.fax')).toBeHidden()
+      expect($('.contact-details-block.dx_number')).toBeHidden()
+
+  describe 'hiding and showing of alternative address block for organizations'
 
