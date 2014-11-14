@@ -1,6 +1,5 @@
 
 .sub-panel.claimant{ id: "claimant_#{claimant_id}_subpanel", 'data-claimant-id'=> claimant_id, class: claimant_id != 1 ? 'same-address' : '' }
-  .row.divider
   .row.hide.js-claimanttype.individual
     = claimant_header claimant_id
 
@@ -23,7 +22,7 @@
               toggle_fieldset: true
 
     .sub-panel.rel.address
-      = form.moj_postcode_picker "claimant_#{claimant_id}", name: "claim[claimant_#{claimant_id}]", address_attr: 'street'    
+      = form.moj_postcode_picker "claimant_#{claimant_id}", name: "claim[claimant_#{claimant_id}]", address_attr: 'street'
 
 
 
