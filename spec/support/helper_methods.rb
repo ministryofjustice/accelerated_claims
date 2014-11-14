@@ -111,8 +111,6 @@ def validate_view(response, options)
   # turn on debugging messages
   @validator.set_debug!(true) if options[:w3c_debug]
 
-  expect(response).to render_template("confirmation")
-
   results = @validator.validate_text(response.body)
 
   if results.errors.length > 0 && options[:w3c_debug]
