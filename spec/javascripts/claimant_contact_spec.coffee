@@ -330,20 +330,51 @@ describe 'ClaimantContact', ->
     element = null
 
   describe 'initial state', ->
-
     it 'hides claimant-contact', ->
-      claimantContact = $('.claimant-contact')
-      console.log("DEBUG   visble" )
-      console.log JSON.stringify(claimantContact.is(':visible'))
-      expect(claimantContact).toBeHidden()
+      expect(@panel).toBeHidden()
 
-    it 'doesnt show the claimant-contact panel when claimant type clicked if nothing in number of claimants', ->
-      claimantContact = $('.claimant-contact')
+  describe 'clicking on claimant type', ->
+    it 'doesnt show the claimant-contact panel when claimant type individual clicked if nothing in number of claimants', ->
       $('#claim_claimant_type_individual').trigger('click')
-      expect(claimantContact).toBeHidden()
+      expect(@panel).toBeHidden()
 
-    it 'doesnt show the claimant-contact panel when claimant type clicked if nothing in number of claimants', ->
-      claimantContact = $('.claimant-contact')
+    it 'shows the claimant-contact panel when claimant type organization clicked', ->
       $('#claim_claimant_type_organization').trigger('click')
-      expect(claimantContact).toBeVisible()
+      expect(@panel).toBeVisible()
+
+    it 'hides the claimant-contact panel when individual is clicked after organization and number of claimants is zero', ->
+      $('#claim_claimant_type_organization').trigger('click')
+      expect(@panel).toBeVisible()
+      $('#claim_num_claimants').val('0')
+      $('#claim_claimant_type_individual').trigger('click')
+      expect(@panel).toBeHidden()
+
+    it 'hides the claimant-contact panel when individual is clicked after organization and number of claimants is blank', ->
+      $('#claim_claimant_type_organization').trigger('click')
+      expect(@panel).toBeVisible()
+      $('#claim_claimant_type_individual').trigger('click')
+      expect(@panel).toBeHidden()
+
+    it 'hides the claimant-contact panel when individual is clicked after organization and number of claimants > 0', ->
+      $('#claim_claimant_type_organization').trigger('click')
+      expect(@panel).toBeVisible()
+      $('#claim_num_claimants').val('1')
+      $('#claim_claimant_type_individual').trigger('click')
+      expect(@panel).toBeVisible()
+
+  describe 'entering number of claimants', ->
+    it 'shows the claimant-contact panels when number of claimants entered > 0', ->
+      $('#claim_num_claimants').val('2')
+      $('#claim_num_claimants').trigger('keyup')
+      expect(@panel).toBeVisible()
+
+    it 'hides the claimant-contact panels when number of claimants entered is zero', ->
+      $('#claim_num_claimants').val('0')
+      $('#claim_num_claimants').trigger('keyup')
+      expect(@panel).toBeHidden()
+
+    it 'hides the claimant-contact panels when number of claimants entered is blank', ->
+      $('#claim_num_claimants').val('')
+      $('#claim_num_claimants').trigger('keyup')
+      expect(@panel).toBeHidden()
 
