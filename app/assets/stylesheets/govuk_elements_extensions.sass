@@ -1,5 +1,14 @@
 // Give elements default CSS by extending from selectors in govuk elements
-@import 'elements-page'
+
+@import 'elements/helpers'
+@import 'elements/reset'
+@import 'elements/elements-typography'
+@import 'elements/layout'
+@import 'elements/forms'
+@import 'elements/lists'
+
+@import 'elements/details'
+@import 'elements/panels'
 
 h1
   @extend .heading-xlarge
@@ -43,6 +52,12 @@ div.row, fieldset
 
 .narrow
   @extend .form-control-1-8
+
+.error-summary
+  @extend .validation-summary
+
+span.error
+  @extend .validation-message
 
 // .moj-panel
   // @extend .panel-indent
