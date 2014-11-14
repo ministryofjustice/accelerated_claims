@@ -37,6 +37,24 @@ feature 'Court address lookup' do
     end
   end
 
+  context 'when the form is populated correctly and submited' do
+    context 'summary page is viewed and the user returns back to the form' do
+      scenario 'should display the court name', js: true do
+        data = load_fixture_data 'spec/fixtures/scenario_01_js_data.rb'
+        AppModel.new(data).exec do
+          visit '/'
+          claim_form.complete_form_with_javascript
+          click_button 'Continue'
+          ensure_present_path '/confirmation'
+          page.evaluate_script('window.history.back()')
+          ensure_present_path '/'
+
+          expect(page).not_to have_text "You haven't entered a postcode for the property you want to take back."
+        end
+      end
+    end
+  end
+
   context 'when property address is populated' do
     let(:postcode) { 'BH22 8HR' }
     let(:json) { CourtfinderController::TEST_RESPONSE_DATA.to_json }

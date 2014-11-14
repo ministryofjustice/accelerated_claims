@@ -98,3 +98,10 @@ def load_expected_summary_values data_file
   eval results
 end
 
+def ensure_present_path path
+  url = page.evaluate_script('document.URL')
+
+  while url !~ /#{path.sub('/', '\/')}$/
+    url = page.evaluate_script('document.URL')
+  end
+end
