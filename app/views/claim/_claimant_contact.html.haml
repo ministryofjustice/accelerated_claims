@@ -1,5 +1,5 @@
 = claim_form.fields_for claimant_field, claimant_contact, builder: LabellingFormBuilder do |form|
-  .sub-panel.claimant-solicitor.js-claimanttype.individual.organization
+  .sub-panel.claimant-contact
     .sub-panel.details
       .row.js-only
         %a.caption#contact-details{ href: '#contact-details', 'aria-expanded' => 'false' }
@@ -28,6 +28,7 @@
       = form.text_area_row  :street, label: add_optional_nonjs('Full address'), class: 'rel street'
       = address_error_message('claimant_contact')
       = form.text_field_row :postcode, label: add_optional_nonjs('Postcode'), class: 'rel postcode', input_class: 'smalltext'
+      = form.moj_postcode_picker "claimant_contact", name: "claim[claimant_contact]", address_attr: 'street', hide: true    
      
     .sub-panel.details.js-claimanttype.organization
       .row.js-only

@@ -13,19 +13,18 @@
 
     .postcode-selection-els
       %label.postcode-picker-label{:for => "#{@prefix}_#{@postcode_attr}_edit_field"} Postcode
-
-
       %input.smalltext.postcode-picker-edit-field{:maxlength => "8",
               :id => "#{@prefix}_#{@postcode_attr}_edit_field",
               :name => "#{@name_prefix}[#{@postcode_attr}]",   
               :size => "8",
               :type => "text"}
-
       %a.button.primary.postcode-picker-button{:href => "##{@prefix}_postcode_picker", data: {country: @valid_countries} }
         Find address
 
+
     .postcode-picker-hourglass.hide
       Finding address....
+
 
     .postcode-select-container.sub-panel.hide{style: "margin-top: 0px;"}
       %fieldset.postcode-picker-address-list
