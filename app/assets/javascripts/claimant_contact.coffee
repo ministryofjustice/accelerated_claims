@@ -37,15 +37,16 @@ class ClaimantContact
     @hideContactDetailBlock()
 
   hideContactDetailBlock: =>
-    $('.contact-details-block').hide()
+    $('.sub-panel.details.contact-details').removeClass('open')
+
+  openContactDetailsBlock: =>
+    $('.sub-panel.details.contact-details').addClass('open')
 
   toggleContactDetails: =>
-    if $('.contact-details-block').is(':visible')
+    if $('.sub-panel.details.contact-details').hasClass('open')
       @hideContactDetailBlock()
-      $('.row.contact-details').removeClass('open')
     else
-      $('.contact-details-block').show()
-      $('.row.contact-details').addClass('open')
+      @openContactDetailsBlock()
 
 root.ClaimantContact = ClaimantContact
 

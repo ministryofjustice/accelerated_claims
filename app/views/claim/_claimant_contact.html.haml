@@ -1,15 +1,14 @@
 = claim_form.fields_for claimant_field, claimant_contact, builder: LabellingFormBuilder do |form|
   .sub-panel.claimant-contact
-    .sub-panel.details
-      .row.js-only.contact-details
+    .sub-panel.details.contact-details
+      .row.js-only
         %a.caption#contact-details{ href: '#contact-details', 'aria-expanded' => 'false' }
           = 'Add phone and email'
         %span.hint (Optional)
-      
-      = form.text_field_row :email, label: add_optional_nonjs('Email'), class: 'rel email contact-details-block'
-      = form.text_field_row :phone, label: add_optional_nonjs('Phone'), class: 'rel phone contact-details-block'
-      = form.text_field_row :fax, label: add_optional_nonjs('Fax'), class: 'rel fax contact-details-block'
-      = form.text_field_row :dx_number, label: add_optional_nonjs('DX number'), class: 'rel dx_number contact-details-block'
+      = form.text_field_row :email, label: add_optional_nonjs('Email'), class: 'rel email '
+      = form.text_field_row :phone, label: add_optional_nonjs('Phone'), class: 'rel phone '
+      = form.text_field_row :fax, label: add_optional_nonjs('Fax'), class: 'rel fax '
+      = form.text_field_row :dx_number, label: add_optional_nonjs('DX number'), class: 'rel dx_number '
     .row
       If you want us to send correspondence about the case to a different address, enter it here.
       %span.hint.block.js-claimanttype.individual.js-only

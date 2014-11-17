@@ -2,6 +2,11 @@
 //= require jquery
 //= require jasmine-jquery
 //= require claimant_contact
+//= require claimant_module
+
+sleep = (ms) ->
+  start = new Date().getTime()
+  continue while new Date().getTime() - start < ms
 
 describe 'ClaimantContact', ->
   element = null
@@ -195,116 +200,118 @@ describe 'ClaimantContact', ->
         </div>
 
       <div class="sub-panel claimant-contact" style="display: block;">
-        <div class="sub-panel details">
-          <div class="row js-only contact-details">
+        <div class="sub-panel details contact-details">
+          <div class="row js-only">
             <a aria-expanded="false" class="caption" href="#contact-details" id="contact-details">
               Add phone and email
             </a>
             <span class="hint">(Optional)</span>
           </div>
-          <div class="row rel email contact-details-block" style="display: none;"><label for="claim_claimant_contact_email">Email</label>
+          <div class="row rel email"><label for="claim_claimant_contact_email">Email</label>
           <input id="claim_claimant_contact_email" name="claim[claimant_contact][email]" type="text"></div>
-          <div class="row rel phone contact-details-block" style="display: none;"><label for="claim_claimant_contact_phone">Phone</label>
+          <div class="row rel phone"><label for="claim_claimant_contact_phone">Phone</label>
           <input id="claim_claimant_contact_phone" name="claim[claimant_contact][phone]" type="text"></div>
-          <div class="row rel fax contact-details-block" style="display: none;"><label for="claim_claimant_contact_fax">Fax</label>
+          <div class="row rel fax"><label for="claim_claimant_contact_fax">Fax</label>
           <input id="claim_claimant_contact_fax" maxlength="40" name="claim[claimant_contact][fax]" size="40" type="text"></div>
-          <div class="row rel dx_number contact-details-block" style="display: none;"><label for="claim_claimant_contact_dx_number">DX number</label>
+          <div class="row rel dx_number"><label for="claim_claimant_contact_dx_number">DX number</label>
           <input id="claim_claimant_contact_dx_number" maxlength="40" name="claim[claimant_contact][dx_number]" size="40" type="text"></div>
         </div>
         <div class="row">
           If you want us to send correspondence about the case to a different address, enter it here.
-          <span class="hint block js-claimanttype individual js-only" style="display: none;">
+          <span class="hint block js-claimanttype individual js-only" style="display: block;">
             eg a legal representative's address (Optional)
           </span>
-          <span class="hint block js-claimanttype organization" style="display: block;">
+          <span class="hint block js-claimanttype organization" style="display: none;">
             eg a legal representative or managing agent's address (Optional)
           </span>
         </div>
         <div class="sub-panel details">
-          <div class="row js-only">
+          <div class="row js-only correspondence-address">
             <a aria-expanded="false" class="caption" href="#correspondence-address" id="correspondence-address">
               Add alternative address
             </a>
             <span class="hint">(Optional)</span>
           </div>
-          <div class="row rel title"><label for="claim_claimant_contact_title">Title</label>
-          <input class="smalltext" id="claim_claimant_contact_title" maxlength="8" name="claim[claimant_contact][title]" size="8" type="text"></div>
-          <div class="row rel"><label for="claim_claimant_contact_full_name">Full name</label>
-          <input id="claim_claimant_contact_full_name" maxlength="40" name="claim[claimant_contact][full_name]" size="40" type="text"></div>
-          <div class="row rel company_name"><label for="claim_claimant_contact_company_name">Company name</label>
-          <input id="claim_claimant_contact_company_name" maxlength="40" name="claim[claimant_contact][company_name]" size="40" type="text"></div>
-          <div class="row rel street"><label for="claim_claimant_contact_street">Full address</label>
-          <textarea id="claim_claimant_contact_street" maxlength="70" name="claim[claimant_contact][street]"></textarea></div>
-          <div class="row js-only"><span class="error hide" id="claim_claimant_contact_street-error-message">
-                The address can’t be longer than 4 lines.
-              </span></div>
-          <div class="row rel postcode"><label for="claim_claimant_contact_postcode">Postcode</label>
-          <input class="smalltext" id="claim_claimant_contact_postcode" maxlength="8" name="claim[claimant_contact][postcode]" size="8" type="text"></div>
-          <div class="hide postcode postcode-picker-container" data-vc="all">
-            <div class="row postcode-lookup rel js-only">
-              <div class="postcode-display hide" style="margin-bottom: 20px;">
-                Postcode:
-                <span class="postcode-display-detail" style="font-weight: bold">
-                  &nbsp;
-                </span>
-                <span>
-                  <a class="change-postcode-link2 js-only" href="#dummy_anchor" id="claim_claimant_contact-manual_change-link-2" style="display: inline; margin-left: 10px;">Change</a>
-                </span>
+          <div class="correspondence-address-block">
+            <div class="row rel title"><label for="claim_claimant_contact_title">Title</label>
+            <input class="smalltext" id="claim_claimant_contact_title" maxlength="8" name="claim[claimant_contact][title]" size="8" type="text"></div>
+            <div class="row rel"><label for="claim_claimant_contact_full_name">Full name</label>
+            <input id="claim_claimant_contact_full_name" maxlength="40" name="claim[claimant_contact][full_name]" size="40" type="text"></div>
+            <div class="row rel company_name"><label for="claim_claimant_contact_company_name">Company name</label>
+            <input id="claim_claimant_contact_company_name" maxlength="40" name="claim[claimant_contact][company_name]" size="40" type="text"></div>
+            <div class="row rel street"><label for="claim_claimant_contact_street">Full address</label>
+            <textarea id="claim_claimant_contact_street" maxlength="70" name="claim[claimant_contact][street]"></textarea></div>
+            <div class="row js-only"><span class="error hide" id="claim_claimant_contact_street-error-message">
+                  The address can’t be longer than 4 lines.
+                </span></div>
+            <div class="row rel postcode"><label for="claim_claimant_contact_postcode">Postcode</label>
+            <input class="smalltext" id="claim_claimant_contact_postcode" maxlength="8" name="claim[claimant_contact][postcode]" size="8" type="text"></div>
+            <div class="hide postcode postcode-picker-container" data-vc="all">
+              <div class="row postcode-lookup rel js-only">
+                <div class="postcode-display hide" style="margin-bottom: 20px;">
+                  Postcode:
+                  <span class="postcode-display-detail" style="font-weight: bold">
+                    &nbsp;
+                  </span>
+                  <span>
+                    <a class="change-postcode-link2 js-only" href="#dummy_anchor" id="claim_claimant_contact-manual_change-link-2" style="display: inline; margin-left: 10px;">Change</a>
+                  </span>
+                </div>
+                <div class="postcode-selection-els">
+                  <label class="postcode-picker-label" for="claim_claimant_contact_postcode_edit_field">Postcode</label>
+                  <input class="smalltext postcode-picker-edit-field" id="claim_claimant_contact_postcode_edit_field" maxlength="8" name="[postcode]" size="8" type="text">
+                  <a class="button primary postcode-picker-button" data-country="all" href="#claim_claimant_contact_postcode_picker">
+                    Find address
+                  </a>
+                </div>
+                <div class="postcode-picker-hourglass hide">
+                  Finding address....
+                </div>
+                <div class="postcode-select-container sub-panel hide" style="margin-top: 0px;">
+                  <fieldset class="postcode-picker-address-list">
+                    <label class="hint" for="claim_claimant_contact_address_select">Please select an address</label>
+                    <select class="address-picker-select" id="claim_claimant_contact_address_select" name="sel-address" role="listbox" size="6">
+                      <option disabled="disabled" id="claim_claimant_contact-listbox" role="option" value="">Please select an address</option>
+                    </select>
+                    <a class="row button primary postcode-picker-cta" href="#claim_claimant_contact_postcode_picker_manual_link" id="claim_claimant_contact_selectaddress" style="margin-bottom: 20px;">
+                      Select address
+                    </a>
+                  </fieldset>
+                </div>
               </div>
-              <div class="postcode-selection-els">
-                <label class="postcode-picker-label" for="claim_claimant_contact_postcode_edit_field">Postcode</label>
-                <input class="smalltext postcode-picker-edit-field" id="claim_claimant_contact_postcode_edit_field" maxlength="8" name="[postcode]" size="8" type="text">
-                <a class="button primary postcode-picker-button" data-country="all" href="#claim_claimant_contact_postcode_picker">
-                  Find address
+              <div class="js-only row">
+                <a class="caption postcode-picker-manual-link" href="#claim_claimant_contact_postcode_picker_manual_link" id="claim_claimant_contact_postcode_picker_manual_link" style="margin-top: 20px;">
+                  Enter address manually
                 </a>
               </div>
-              <div class="postcode-picker-hourglass hide">
-                Finding address....
-              </div>
-              <div class="postcode-select-container sub-panel hide" style="margin-top: 0px;">
-                <fieldset class="postcode-picker-address-list">
-                  <label class="hint" for="claim_claimant_contact_address_select">Please select an address</label>
-                  <select class="address-picker-select" id="claim_claimant_contact_address_select" name="sel-address" role="listbox" size="6">
-                    <option disabled="disabled" id="claim_claimant_contact-listbox" role="option" value="">Please select an address</option>
-                  </select>
-                  <a class="row button primary postcode-picker-cta" href="#claim_claimant_contact_postcode_picker_manual_link" id="claim_claimant_contact_selectaddress" style="margin-bottom: 20px;">
-                    Select address
-                  </a>
-                </fieldset>
-              </div>
-            </div>
-            <div class="js-only row">
-              <a class="caption postcode-picker-manual-link" href="#claim_claimant_contact_postcode_picker_manual_link" id="claim_claimant_contact_postcode_picker_manual_link" style="margin-top: 20px;">
-                Enter address manually
-              </a>
-            </div>
-            <div class="address extra no sub-panel hide" style="margin-top: 10px;">
-              <div class="row street">
-                <label for="claim_claimant_contact_street">
-                  Full address
+              <div class="address extra no sub-panel hide" style="margin-top: 10px;">
+                <div class="row street">
+                  <label for="claim_claimant_contact_street">
+                    Full address
 
-                </label>
-                <textarea class="street" id="claim_claimant_contact_street" maxlength="70" name="claim[claimant_contact][street]"></textarea>
-              </div>
-              <div class="row js-only">
-                <span class="error hide" id="claim_claimant_contact_street-error-message">
-                  The address can’t be longer than 4 lines.
-                </span>
-              </div>
-              <div class="row address-postcode">
-                <label for="claim_claimant_contact_postcode">
-                  Postcode
-                </label>
-                <br>
-                <div style="overflow: hidden; width: 100%">
-                  <input class="smalltext postcode" id="claim_claimant_contact_postcode" maxlength="8" name="claim[claimant_contact][postcode]" size="8" style="float: left;  margin-right: 20px;" type="text" value="">
-                  <a class="change-postcode-link js-only" href="#dummy_anchor" style="float: left;">Change</a>
+                  </label>
+                  <textarea class="street" id="claim_claimant_contact_street" maxlength="70" name="claim[claimant_contact][street]"></textarea>
+                </div>
+                <div class="row js-only">
+                  <span class="error hide" id="claim_claimant_contact_street-error-message">
+                    The address can’t be longer than 4 lines.
+                  </span>
+                </div>
+                <div class="row address-postcode">
+                  <label for="claim_claimant_contact_postcode">
+                    Postcode
+                  </label>
+                  <br>
+                  <div style="overflow: hidden; width: 100%">
+                    <input class="smalltext postcode" id="claim_claimant_contact_postcode" maxlength="8" name="claim[claimant_contact][postcode]" size="8" style="float: left;  margin-right: 20px;" type="text" value="">
+                    <a class="change-postcode-link js-only" href="#dummy_anchor" style="float: left;">Change</a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="sub-panel details js-claimanttype organization" style="display: block;">
+        <div class="sub-panel details js-claimanttype organization" style="display: none;">
           <div class="row js-only">
             <a aria-expanded="false" class="caption" href="#reference-number" id="reference-number">
               Add a reference number
@@ -322,6 +329,8 @@ describe 'ClaimantContact', ->
     $(document.body).append(element)
     @panel = $('.claimant-contact')
     new window.ClaimantContact( @panel )
+    ClaimantModule.setup()
+    console.log "BEFORE EACH ON TEST SUITE"
 
   afterEach ->
     element.remove()
@@ -388,31 +397,23 @@ describe 'ClaimantContact', ->
     beforeEach ->
       $('#claim_claimant_type_organization').trigger('click')
 
-    it 'should be hidden upon initial display', ->
-      expect($('#reference-number')).toBeVisible()
-      expect($('.contact-details-block.email')).toBeHidden()
-      expect($('.contact-details-block.phone')).toBeHidden()
-      expect($('.contact-details-block.fax')).toBeHidden()
-      expect($('.contact-details-block.dx_number')).toBeHidden()
-
     it 'should be displayed when clicked once', ->
       $('a.caption#contact-details').trigger('click')
-      expect($('.contact-details-block.email')).toBeVisible()
-      expect($('.contact-details-block.phone')).toBeVisible()
-      expect($('.contact-details-block.fax')).toBeVisible()
-      expect($('.contact-details-block.dx_number')).toBeVisible()
+      expect($('.sub-panel.details.contact-details').hasClass('open')).toBe(true)
+      expect($('.contact-details>.email')).toBeVisible()
+      expect($('.contact-details>.phone')).toBeVisible()
+      expect($('.contact-details>.fax')).toBeVisible()
+      expect($('.contact-details>.dx_number')).toBeVisible()
 
     it 'should be hidden if clicked twice', ->
       $('a.caption#contact-details').trigger('click')
-      expect($('.contact-details-block.email')).toBeVisible()
-      expect($('.contact-details-block.phone')).toBeVisible()
-      expect($('.contact-details-block.fax')).toBeVisible()
-      expect($('.contact-details-block.dx_number')).toBeVisible()
       $('a.caption#contact-details').trigger('click')
-      expect($('.contact-details-block.email')).toBeHidden()
-      expect($('.contact-details-block.phone')).toBeHidden()
-      expect($('.contact-details-block.fax')).toBeHidden()
-      expect($('.contact-details-block.dx_number')).toBeHidden()
+      expect($('.sub-panel.details.contact-details').hasClass('open')).toBe(false)
+      expect($('.contact-details>.Email').is(':visible')).toBe(false)
+      expect($('.contact-details>.email')).toBeHidden()
+      expect($('.contact-details>.phone')).toBeHidden()
+      expect($('.contact-details>.fax')).toBeHidden()
+      expect($('.contact-details>.dx_number')).toBeHidden()
 
-  describe 'hiding and showing of alternative address block for organizations'
+  # describe 'hiding and showing of alternative address block for organizations'
 
