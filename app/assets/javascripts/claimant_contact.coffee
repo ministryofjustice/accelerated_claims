@@ -6,6 +6,7 @@ class ClaimantContact
     @contactBlock = $('.sub-panel.details.contact-details')
     @addressBlock = $('.sub-panel.details.correspondence-address')
     @referenceBlock = $('.sub-panel.details.reference-number')
+    @pcp = @claimantContactPanel.find('.postcode-picker-container').first()
 
     @claimantContactPanel.hide()
     @hideDetailBlock(@contactBlock)
@@ -27,6 +28,10 @@ class ClaimantContact
 
     $('a#correspondence-address').on 'click', =>
       @toggleDetails(@addressBlock)
+      if @addressBlock.hasClass('open')
+        @pcp.addClass('show').removeClass('hide')
+      else
+        @pcp.addClass('hide').removeClass('show')
       false
 
     $('a#reference-number').on 'click', =>
@@ -50,12 +55,9 @@ class ClaimantContact
     element.addClass('open')
 
   toggleDetails: ( element ) =>
-    console.log('toggle')
     if element.hasClass('open')
-      console.log('--hide')
       @hideDetailBlock(element)
     else
-      console.log('--show')
       @showDetailBlock(element)
 
 root.ClaimantContact = ClaimantContact

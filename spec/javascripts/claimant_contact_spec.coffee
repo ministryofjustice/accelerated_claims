@@ -1,8 +1,6 @@
 //= require moj
 //= require underscore
 //= require jquery
-//= require jasmine-jquery
-//= require claimant_contact
 //= require claimant_module
 //= require show_hide_module
 //= require show_hide
@@ -56,7 +54,6 @@ describe 'ClaimantContact', ->
   beforeEach ->
     element = $("""
 <head>
-
 </head>
 <body class='js-enabled'>
 <section>
@@ -462,9 +459,9 @@ describe 'ClaimantContact', ->
       expect($('.sub-panel.details.correspondence-address')).not.toHaveClass('open')
 
     it 'should show postcode picker when clicked once', ->
-      expect(@pcp).toBeHidden()
+      expect(@pcp).toHaveClass('hide')
       $('a.caption#correspondence-address').trigger('click')
-      expect(@pcp).toBeVisible()
+      expect(@pcp).not.toHaveClass('hide')
 
   describe 'hiding and showing of reference number block for organizations', ->
     beforeEach ->
@@ -480,3 +477,34 @@ describe 'ClaimantContact', ->
 
       $('a.caption#reference-number').trigger('click')
       expect($('.sub-panel.details.reference-number')).not.toHaveClass('open')
+
+#  describe 'hiding and showing of contact details block for individuals', ->
+#    beforeEach ->
+#      $('#claim_claimant_type_indiviudal').trigger('click')
+#      $('#claim_num_claimants').val('1')
+#      $('#claim_num_claimants').trigger('keyup')
+#
+#    it 'should be displayed when clicked once', ->
+#      $('a.caption#contact-details').trigger('click')
+#      expect($('.sub-panel.details.contact-details')).toHaveClass('open')
+#
+#    it 'should be hidden if clicked twice', ->
+#      $('a.caption#contact-details').trigger('click')
+#      expect($('.sub-panel.details.contact-details')).toHaveClass('open')
+#
+#      $('a.caption#contact-details').trigger('click')
+#      expect($('.sub-panel.details.contact-details')).not.toHaveClass('open')
+#
+#    describe 'reference number', ->
+#      it 'should not be shown', ->
+#        expect($('#reference-number')).toBeHidden()
+##        expect($('.sub-panel.details.reference-number')).not.toHaveClass('open')
+
+  describe 'something', ->
+    beforeEach ->
+      $('#claim_claimant_type_individual').trigger('click')
+      $('#claim_num_claimants').val('1')
+      $('#claim_num_claimants').trigger('keyup')
+
+    it 'should...', ->
+      expect($('#reference-number')).toBeHidden()
