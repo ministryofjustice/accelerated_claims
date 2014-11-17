@@ -56,7 +56,7 @@ describe 'ClaimantContact', ->
 <head>
 </head>
 <body class='js-enabled'>
-<section>
+  <section>
     <h2 class="section-header" id="claimant-section">Claimants</h2>
     <div class="moj-panel" data-caption="As the landlord, you're known as the <strong>claimant</strong> in this case." data-multiple="claimant" data-plural="claimants" data-single="claimant" id="claimants">
       <div class="row">
@@ -65,10 +65,10 @@ describe 'ClaimantContact', ->
       <fieldset class="radio js-depend" data-depend="claimanttype"><legend class="visuallyhidden">What kind of claimant are you?</legend><div><span aria-hidden="true">What kind of claimant are you?</span></div><div class="options"><div class="option"><label for="claim_claimant_type_individual"><input data-virtual-pageview="/accelerated/claimants-section" id="claim_claimant_type_individual" name="claim[claimant_type]" type="radio" value="individual">
       A private landlord (individual)</label></div>
 
-      <div class="option"><label for="claim_claimant_type_organization"><input data-virtual-pageview="/accelerated/claimants-section" id="claim_claimant_type_organization" name="claim[claimant_type]" type="radio" value="organization">
+      <div class="option"><label for="claim_claimant_type_organization" class="highlight"><input data-virtual-pageview="/accelerated/claimants-section" id="claim_claimant_type_organization" name="claim[claimant_type]" type="radio" value="organization">
       A private landlord (company), a local authority or a housing association</label></div></div>
       </fieldset>
-      <div class="row hide js-claimanttype individual"><label for="claim_num_claimants">How many claimants are there? <br><span class="hint">All claimants should be named on the tenancy agreement</span></label>
+      <div class="row hide js-claimanttype individual" style="display: none;"><label for="claim_num_claimants">How many claimants are there? <br><span class="hint">All claimants should be named on the tenancy agreement</span></label>
       <input class="narrow" data-depend="num-claimants" id="claim_num_claimants" name="claim[num_claimants]" type="text"></div>
       <div class="row js-only">
         <span class="error hide" id="num-claimants-error-message" style="display: none;">
@@ -77,17 +77,17 @@ describe 'ClaimantContact', ->
         </span>
       </div>
       <div class="claimants">
-        <div class="claimant sub-panel" data-claimant-id="1" id="claimant_1_subpanel" style="display: none;">
+        <div class="claimant sub-panel" data-claimant-id="1" id="claimant_1_subpanel" style="display: block;">
           <div class="row divider"></div>
           <div class="row">
             <h3>Claimant 1</h3>
           </div>
-          <div class="row title hide js-claimanttype individual"><label for="claim_claimant_1_title">Title</label>
+          <div class="row title hide js-claimanttype individual" style="display: none;"><label for="claim_claimant_1_title">Title</label>
           <input class="smalltext" id="claim_claimant_1_title" maxlength="8" name="claim[claimant_1][title]" size="8" type="text"></div>
-          <div class="row rel hide js-claimanttype individual"><label for="claim_claimant_1_full_name">Full name</label>
+          <div class="row rel hide js-claimanttype individual" style="display: none;"><label for="claim_claimant_1_full_name">Full name</label>
           <input id="claim_claimant_1_full_name" maxlength="40" name="claim[claimant_1][full_name]" size="40" type="text"></div>
 
-          <div class="row rel hide js-claimanttype organization"><label for="claim_claimant_1_organization_name">Company name or local authority name</label>
+          <div class="row rel hide js-claimanttype organization" style="display: block;"><label for="claim_claimant_1_organization_name">Company name or local authority name</label>
           <input id="claim_claimant_1_organization_name" name="claim[claimant_1][organization_name]" type="text"></div>
           <div class="sub-panel rel address">
             <div class="postcode postcode-picker-container" data-vc="all">
@@ -158,11 +158,11 @@ describe 'ClaimantContact', ->
         <div class="claimant same-address sub-panel" data-claimant-id="2" id="claimant_2_subpanel" style="display: none;">
           <div class="row divider"></div>
           <div class="row">
-            <h3>Claimant 2 <span class="hint hide js-claimanttype">(optional)</span></h3>
+            <h3>Claimant 2 <span class="hint hide js-claimanttype" style="display: none;">(optional)</span></h3>
           </div>
-          <div class="row title hide js-claimanttype individual"><label for="claim_claimant_2_title">Title</label>
+          <div class="row title hide js-claimanttype individual" style="display: none;"><label for="claim_claimant_2_title">Title</label>
           <input class="smalltext" id="claim_claimant_2_title" maxlength="8" name="claim[claimant_2][title]" size="8" type="text"></div>
-          <div class="row rel hide js-claimanttype individual"><label for="claim_claimant_2_full_name">Full name</label>
+          <div class="row rel hide js-claimanttype individual" style="display: none;"><label for="claim_claimant_2_full_name">Full name</label>
           <input id="claim_claimant_2_full_name" maxlength="40" name="claim[claimant_2][full_name]" size="40" type="text"></div>
           <div class="sub-panel js-only">
             <fieldset class="radio inline"><legend class="visuallyhidden">Is the address the same as the first claimant?</legend><div><span aria-hidden="true">Is the address the same as the first claimant?</span></div><div class="options" data-reverse="true"><div class="option"><label for="claim_claimant_2_address_same_as_first_claimant_yes"><input class="yesno" id="claim_claimant_2_address_same_as_first_claimant_yes" name="claim[claimant_2][address_same_as_first_claimant]" type="radio" value="Yes">
@@ -241,7 +241,7 @@ describe 'ClaimantContact', ->
       </div>
       <div class="row divider"></div>
 
-     <div class="sub-panel claimant-contact" style="display: none;">
+      <div class="sub-panel claimant-contact" style="display: block;">
         <div class="sub-panel details contact-details">
           <div class="row js-only">
             <a aria-expanded="false" class="caption" href="#contact-details" id="contact-details">
@@ -260,10 +260,10 @@ describe 'ClaimantContact', ->
         </div>
         <div class="row">
           If you want us to send correspondence about the case to a different address, enter it here.
-          <span class="hint block js-claimanttype individual js-only">
+          <span class="hint block js-claimanttype individual js-only" style="display: none;">
             eg a legal representative's address (Optional)
           </span>
-          <span class="hint block js-claimanttype organization">
+          <span class="hint block js-claimanttype organization" style="display: block;">
             eg a legal representative or managing agent's address (Optional)
           </span>
         </div>
@@ -344,7 +344,7 @@ describe 'ClaimantContact', ->
             </div>
           </div>
         </div>
-        <div class="sub-panel details js-claimanttype organization reference-number">
+        <div class="sub-panel details js-claimanttype organization reference-number" style="display: block;">
           <div class="row js-only">
             <a aria-expanded="false" class="caption" href="#reference-number" id="reference-number">
               Add a reference number
@@ -362,7 +362,6 @@ describe 'ClaimantContact', ->
     $(document.body).append(element)
     @panel = $('.claimant-contact')
     new window.ClaimantContact()
-#    new window.ClaimantContact( @panel )
     ClaimantModule.setup()
     console.log "BEFORE EACH ON TEST SUITE"
 
@@ -504,7 +503,7 @@ describe 'ClaimantContact', ->
     beforeEach ->
       $('#claim_claimant_type_individual').trigger('click')
       $('#claim_num_claimants').val('1')
-      $('#claim_num_claimants').trigger('keyup')
+      # $('#claim_num_claimants').trigger('keyup')
 
     it 'should...', ->
       expect($('#reference-number')).toBeHidden()

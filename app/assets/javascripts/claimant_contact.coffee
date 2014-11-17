@@ -43,6 +43,7 @@ class ClaimantContact
       @claimantContactPanel.hide()
     else
       @claimantContactPanel.show()
+      @referenceBlock.hide() unless $('#claim_claimant_type_organization').is(':checked')
 
   hideContactPanelIfNumClaimantsBlank: ->
     if (parseInt($('#claim_num_claimants').val()) < 1) || $('#claim_num_claimants').val() == ""
