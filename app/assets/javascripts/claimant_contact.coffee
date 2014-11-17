@@ -1,16 +1,19 @@
-//= require 'claimant_contact'
-
 root = exports ? this
 
 class ClaimantContact
-  constructor: (claimantContactPanel) ->
-    @claimantContactPanel = claimantContactPanel
-    console.log "  DEBUG INITIALISING"
-    claimantContactPanel.hide()
-    @hideDetailBlocks()
+  constructor: () ->
+    @claimantContactPanel = $('.claimant-contact')
+    @contactBlock = $('.sub-panel.details.contact-details')
+    @addressBlock = $('.sub-panel.details.correspondence-address')
+    @referenceBlock = $('.sub-panel.details.reference-number')
+
+    @claimantContactPanel.hide()
+    @hideDetailBlock(@contactBlock)
+    @hideDetailBlock(@addressBlock)
+    @hideDetailBlock(@referenceBlock)
 
     $('#claim_claimant_type_organization').on 'click', =>
-      claimantContactPanel.show()
+      @claimantContactPanel.show()
 
     $('#claim_claimant_type_individual').on 'click', =>
       @hideContactPanelIfNumClaimantsBlank()
@@ -19,8 +22,15 @@ class ClaimantContact
       @showHideContactPanelDependingOnNumClaimants()
 
     $('a#contact-details').on 'click', =>
-      console.log "CLICKED"
-      @toggleContactDetails()
+      @toggleDetails(@contactBlock)
+      false
+
+    $('a#correspondence-address').on 'click', =>
+      @toggleDetails(@addressBlock)
+      false
+
+    $('a#reference-number').on 'click', =>
+      @toggleDetails(@referenceBlock)
       false
 
   showHideContactPanelDependingOnNumClaimants: =>
@@ -33,23 +43,23 @@ class ClaimantContact
     if (parseInt($('#claim_num_claimants').val()) < 1) || $('#claim_num_claimants').val() == ""
       @claimantContactPanel.hide()
 
-  hideDetailBlocks: =>
-    @hideContactDetailBlock()
+  hideDetailBlock: (element) =>
+    element.removeClass('open')
 
-  hideContactDetailBlock: =>
-    $('.sub-panel.details.contact-details').removeClass('open')
+  showDetailBlock: (element) =>
+    element.addClass('open')
 
-  openContactDetailsBlock: =>
-    $('.sub-panel.details.contact-details').addClass('open')
-
-  toggleContactDetails: =>
-    if $('.sub-panel.details.contact-details').hasClass('open')
-      @hideContactDetailBlock()
+  toggleDetails: ( element ) =>
+    console.log('toggle')
+    if element.hasClass('open')
+      console.log('--hide')
+      @hideDetailBlock(element)
     else
-      @openContactDetailsBlock()
+      console.log('--show')
+      @showDetailBlock(element)
 
 root.ClaimantContact = ClaimantContact
 
 jQuery ->
-  new ClaimantContact( $('.claimant-contact') )
+  new ClaimantContact( )
 

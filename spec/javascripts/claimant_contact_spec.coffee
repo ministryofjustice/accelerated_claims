@@ -1,8 +1,11 @@
+//= require moj
 //= require underscore
 //= require jquery
 //= require jasmine-jquery
 //= require claimant_contact
 //= require claimant_module
+//= require show_hide_module
+//= require show_hide
 
 sleep = (ms) ->
   start = new Date().getTime()
@@ -16,7 +19,7 @@ describe 'ClaimantContact', ->
 <head>
 </head>
 <body class='js-enabled'>
-  <section>
+<section>
     <h2 class="section-header" id="claimant-section">Claimants</h2>
     <div class="moj-panel" data-caption="As the landlord, you're known as the <strong>claimant</strong> in this case." data-multiple="claimant" data-plural="claimants" data-single="claimant" id="claimants">
       <div class="row">
@@ -198,8 +201,9 @@ describe 'ClaimantContact', ->
             </div>
           </div>
         </div>
-
-      <div class="sub-panel claimant-contact" style="display: block;">
+      </div>
+      <div class="row divider"></div>
+      <div class="sub-panel claimant-contact" style="display: none;">
         <div class="sub-panel details contact-details">
           <div class="row js-only">
             <a aria-expanded="false" class="caption" href="#contact-details" id="contact-details">
@@ -218,14 +222,14 @@ describe 'ClaimantContact', ->
         </div>
         <div class="row">
           If you want us to send correspondence about the case to a different address, enter it here.
-          <span class="hint block js-claimanttype individual js-only" style="display: block;">
+          <span class="hint block js-claimanttype individual js-only">
             eg a legal representative's address (Optional)
           </span>
-          <span class="hint block js-claimanttype organization" style="display: none;">
+          <span class="hint block js-claimanttype organization">
             eg a legal representative or managing agent's address (Optional)
           </span>
         </div>
-        <div class="sub-panel details">
+        <div class="sub-panel details correspondence-address">
           <div class="row js-only correspondence-address">
             <a aria-expanded="false" class="caption" href="#correspondence-address" id="correspondence-address">
               Add alternative address
@@ -311,7 +315,7 @@ describe 'ClaimantContact', ->
             </div>
           </div>
         </div>
-        <div class="sub-panel details js-claimanttype organization" style="display: none;">
+        <div class="sub-panel details js-claimanttype organization reference-number">
           <div class="row js-only">
             <a aria-expanded="false" class="caption" href="#reference-number" id="reference-number">
               Add a reference number
@@ -322,13 +326,14 @@ describe 'ClaimantContact', ->
           <input id="claim_reference_number_reference_number" maxlength="40" name="claim[reference_number][reference_number]" size="40" type="text"></div>
         </div>
       </div>
+    </div>
   </section>
-
 </body>""")
 
     $(document.body).append(element)
     @panel = $('.claimant-contact')
-    new window.ClaimantContact( @panel )
+    new window.ClaimantContact()
+#    new window.ClaimantContact( @panel )
     ClaimantModule.setup()
     console.log "BEFORE EACH ON TEST SUITE"
 
@@ -399,21 +404,41 @@ describe 'ClaimantContact', ->
 
     it 'should be displayed when clicked once', ->
       $('a.caption#contact-details').trigger('click')
-      expect($('.sub-panel.details.contact-details').hasClass('open')).toBe(true)
-      expect($('.contact-details>.email')).toBeVisible()
-      expect($('.contact-details>.phone')).toBeVisible()
-      expect($('.contact-details>.fax')).toBeVisible()
-      expect($('.contact-details>.dx_number')).toBeVisible()
+      expect($('.sub-panel.details.contact-details')).toHaveClass('open')
 
     it 'should be hidden if clicked twice', ->
       $('a.caption#contact-details').trigger('click')
+      expect($('.sub-panel.details.contact-details')).toHaveClass('open')
+
       $('a.caption#contact-details').trigger('click')
-      expect($('.sub-panel.details.contact-details').hasClass('open')).toBe(false)
-      expect($('.contact-details>.Email').is(':visible')).toBe(false)
-      expect($('.contact-details>.email')).toBeHidden()
-      expect($('.contact-details>.phone')).toBeHidden()
-      expect($('.contact-details>.fax')).toBeHidden()
-      expect($('.contact-details>.dx_number')).toBeHidden()
+      expect($('.sub-panel.details.contact-details')).not.toHaveClass('open')
 
-  # describe 'hiding and showing of alternative address block for organizations'
+  describe 'hiding and showing of alternative address block for organizations', ->
+    beforeEach ->
+      $('#claim_claimant_type_organization').trigger('click')
 
+    it 'should be displayed when clicked once', ->
+      $('a.caption#correspondence-address').trigger('click')
+      expect($('.sub-panel.details.correspondence-address')).toHaveClass('open')
+
+    it 'should be hidden if clicked twice', ->
+      $('a.caption#correspondence-address').trigger('click')
+      expect($('.sub-panel.details.correspondence-address')).toHaveClass('open')
+
+      $('a.caption#correspondence-address').trigger('click')
+      expect($('.sub-panel.details.correspondence-address')).not.toHaveClass('open')
+
+  describe 'hiding and showing of reference number block for organizations', ->
+    beforeEach ->
+      $('#claim_claimant_type_organization').trigger('click')
+
+    it 'should be displayed when clicked once', ->
+      $('a.caption#reference-number').trigger('click')
+      expect($('.sub-panel.details.reference-number')).toHaveClass('open')
+
+    it 'should be hidden if clicked twice', ->
+      $('a.caption#reference-number').trigger('click')
+      expect($('.sub-panel.details.reference-number')).toHaveClass('open')
+
+      $('a.caption#reference-number').trigger('click')
+      expect($('.sub-panel.details.reference-number')).not.toHaveClass('open')
