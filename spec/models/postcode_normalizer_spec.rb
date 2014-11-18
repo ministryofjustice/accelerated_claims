@@ -4,7 +4,7 @@ describe PostcodeNormalizer do
 
     describe '#normalize' do
       it 'should normalize all postcodes in a params hash' do
-        normalizer = PostcodeNormalizer.new(claim_params)
+        normalizer = PostcodeNormalizer.new(raw_claim_params)
         expect(normalizer.normalize).to eq(normalized_params)
       end
     end
@@ -59,7 +59,7 @@ describe PostcodeNormalizer do
   end
 end
 
-def claim_params
+def raw_claim_params
   {
     "property"=>
     {"house"=>"Yes",
