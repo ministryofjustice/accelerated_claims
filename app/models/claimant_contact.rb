@@ -43,9 +43,6 @@ class ClaimantContact < BaseClass
       unless street.present?
         errors.add(:street, 'must be present if name and/or company has been specified')
       end
-      unless postcode.present?
-        errors.add(:postcode, 'must be present if name and/or company has been specified')
-      end
     end
 
     if title.blank? && full_name.blank? && company_name.blank?
