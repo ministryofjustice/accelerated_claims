@@ -32,6 +32,10 @@ class Claim < BaseClass
     @errors = ActiveModel::Errors.new(self)
   end
 
+  def normalize_all_postcodes
+    [ @property ].each { |my_attr| my_attr.normalize_postcode }
+  end
+
   def javascript_enabled?
     @javascript_enabled
   end
