@@ -6,17 +6,20 @@ class ClaimantContact
     @contactBlock = $('.sub-panel.details.contact-details')
     @addressBlock = $('.sub-panel.details.correspondence-address')
     @referenceBlock = $('.sub-panel.details.reference-number')
+    @buttonIndividual = $('#claim_claimant_type_individual')
+    @buttonOrganization = $('#claim_claimant_type_organization')
     @pcp = @claimantContactPanel.find('.postcode-picker-container').first()
 
     @claimantContactPanel.hide()
     @hideDetailBlock(@contactBlock)
     @hideDetailBlock(@addressBlock)
     @hideDetailBlock(@referenceBlock)
+    @displayOnLoad()
 
-    $('#claim_claimant_type_organization').on 'click', =>
+    @buttonOrganization.on 'click', =>
       @claimantContactPanel.show()
 
-    $('#claim_claimant_type_individual').on 'click', =>
+    @buttonIndividual.on 'click', =>
       @hideContactPanelIfNumClaimantsBlank()
 
     $('#claim_num_claimants').on 'keyup', =>
@@ -38,6 +41,18 @@ class ClaimantContact
       @toggleDetails(@referenceBlock)
       false
 
+  displayOnLoad: =>
+    if @buttonOrganization.is(':checked')
+      @claimantContactPanel.show()
+    else if @buttonIndividual.is(':checked')
+      @hideContactPanelIfNumClaimantsBlank()
+    @expandBlockIfPopulated(@addressBlock)
+    @expandBlockIfPopulated(@contactBlock)
+    if @addressBlock.hasClass('open')
+      @pcp.addClass('show').removeClass('hide')
+    else
+      @pcp.addClass('hide').removeClass('show')
+
   showHideContactPanelDependingOnNumClaimants: =>
     if (parseInt($('#claim_num_claimants').val()) < 1) || $('#claim_num_claimants').val() == ""
       @claimantContactPanel.hide()
@@ -48,12 +63,19 @@ class ClaimantContact
   hideContactPanelIfNumClaimantsBlank: ->
     if (parseInt($('#claim_num_claimants').val()) < 1) || $('#claim_num_claimants').val() == ""
       @claimantContactPanel.hide()
+    else
+      @claimantContactPanel.show()
 
   hideDetailBlock: (element) =>
     element.removeClass('open')
 
   showDetailBlock: (element) =>
     element.addClass('open')
+
+  expandBlockIfPopulated: (element) =>
+    if element.is(':visible')
+      if element.find('input').filter( -> this.value != '').length > 0
+        @showDetailBlock(element)
 
   toggleDetails: ( element ) =>
     if element.hasClass('open')
