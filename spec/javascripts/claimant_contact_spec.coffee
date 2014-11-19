@@ -477,33 +477,25 @@ describe 'ClaimantContact', ->
       $('a.caption#reference-number').trigger('click')
       expect($('.sub-panel.details.reference-number')).not.toHaveClass('open')
 
-#  describe 'hiding and showing of contact details block for individuals', ->
-#    beforeEach ->
-#      $('#claim_claimant_type_indiviudal').trigger('click')
-#      $('#claim_num_claimants').val('1')
-#      $('#claim_num_claimants').trigger('keyup')
-#
-#    it 'should be displayed when clicked once', ->
-#      $('a.caption#contact-details').trigger('click')
-#      expect($('.sub-panel.details.contact-details')).toHaveClass('open')
-#
-#    it 'should be hidden if clicked twice', ->
-#      $('a.caption#contact-details').trigger('click')
-#      expect($('.sub-panel.details.contact-details')).toHaveClass('open')
-#
-#      $('a.caption#contact-details').trigger('click')
-#      expect($('.sub-panel.details.contact-details')).not.toHaveClass('open')
-#
-#    describe 'reference number', ->
-#      it 'should not be shown', ->
-#        expect($('#reference-number')).toBeHidden()
-##        expect($('.sub-panel.details.reference-number')).not.toHaveClass('open')
-
-  describe 'something', ->
+  describe 'hiding and showing of contact details block for individuals', ->
     beforeEach ->
-      $('#claim_claimant_type_individual').trigger('click')
+      $('#claim_claimant_type_indiviudal').trigger('click')
       $('#claim_num_claimants').val('1')
-      # $('#claim_num_claimants').trigger('keyup')
+      $('#claim_num_claimants').trigger('keyup')
 
-    it 'should...', ->
-      expect($('#reference-number')).toBeHidden()
+    it 'should be displayed when clicked once', ->
+      $('a.caption#contact-details').trigger('click')
+      expect($('.sub-panel.details.contact-details')).toHaveClass('open')
+
+    it 'should be hidden if clicked twice', ->
+      $('a.caption#contact-details').trigger('click')
+      expect($('.sub-panel.details.contact-details')).toHaveClass('open')
+
+      $('a.caption#contact-details').trigger('click')
+      expect($('.sub-panel.details.contact-details')).not.toHaveClass('open')
+
+    describe 'reference number', ->
+      it 'should not be shown', ->
+        expect($('#reference-number')).toBeHidden()
+        expect($('.sub-panel.details.reference-number')).not.toHaveClass('open')
+
