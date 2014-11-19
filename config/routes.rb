@@ -29,9 +29,10 @@ AcceleratedClaims::Application.routes.draw do
     post '/expire_session', controller: :application, action: :expire_session
     post '/invalid_access_token', controller: :application, action: :invalid_access_token, as: :invalid_access_token
 
-
     # postcode lookup proxy
     get '/postcode',        controller: :postcode_lookup_proxy, action: :show
+
+    get '/court-address/:postcode',   controller: :courtfinder, action: :address, as: :court_address
 
     # zendesk
     resource :feedback,     only: [:new, :create], controller: 'feedback'

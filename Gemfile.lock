@@ -65,6 +65,10 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-screenshot (1.0.3)
+      capybara (>= 1.0, < 3)
+      colored
+      launchy
     celluloid (0.15.2)
       timers (~> 1.1.0)
     childprocess (0.5.3)
@@ -82,7 +86,9 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.0)
+    colored (1.2)
     columnize (0.8.9)
+    courtfinder-client (0.0.5)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     curb (0.8.5)
@@ -347,9 +353,11 @@ DEPENDENCIES
   brakeman
   byebug
   capybara
+  capybara-screenshot
   ci_reporter
   codeclimate-test-reporter
   coffee-rails
+  courtfinder-client (= 0.0.5)
   curb
   dotenv-rails
   excon

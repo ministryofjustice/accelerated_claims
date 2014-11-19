@@ -23,6 +23,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara/rails'
 require 'capybara/rspec'
+require 'capybara-screenshot/rspec'
 require 'webmock/rspec'
 
 if ENV['CODECLIMATE_REPO_TOKEN']
