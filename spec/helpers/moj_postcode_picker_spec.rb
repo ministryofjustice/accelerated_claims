@@ -66,7 +66,7 @@ describe 'MojPostcodePicker' do
 
   end
 
-  describe "emit" do
+  describe 'emit' do
     it 'substitutes its own variables' do
       allow(object).to receive(:postcode).and_return('RG2 7PU')
       allow(object).to receive(:street).and_return("50 Tregunter Road\r\nLondon")

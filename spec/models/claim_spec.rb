@@ -359,7 +359,6 @@ describe Claim, :type => :model do
         expect(claim).to_not be_valid
         expect(claim.claimant_1.errors.messages[:full_name]).to eq ["Enter claimant 1's full name"]
         expect(claim.claimant_1.errors.messages[:street]).to eq ["Enter claimant 1's full address"]
-        # expect(claim.claimant_1.errors.messages[:postcode]).to eq ["Enter claimant 1's postcode"]
       end
 
       it 'should be valid if there is claimant 1 data and no claimant 2 data' do
@@ -423,7 +422,6 @@ describe Claim, :type => :model do
                 ["claim_claimant_2_title_error", "Enter claimant 2's title"],
                 ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"],
                 ["claim_claimant_2_street_error", "Enter claimant 2's full address"]
-                # ["claim_claimant_2_postcode_error", "Enter claimant 2's postcode"]
               ]
           end
         end
