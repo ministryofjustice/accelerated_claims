@@ -1,3 +1,4 @@
+# coding: utf-8
 describe 'MojPostcodePicker' do
 
 
@@ -8,7 +9,7 @@ describe 'MojPostcodePicker' do
   before(:each) do
     allow(form).to receive(:object).and_return( object )
   end
-  
+
   describe 'new' do
     it 'calls load_haml just once the first time the class is instantiated' do
       # given an instantiated class of MojPostcodePicker with @@haml populated
@@ -80,7 +81,7 @@ describe 'MojPostcodePicker' do
       allow(object).to receive(:street).and_return("50 Tregunter Road\r\nLondon")
       allow(object).to receive(:errors).and_return( {:street => [], :postcode => [] } )
     end
-    
+
     it 'should return England and Wales' do
       mpp = MojPostcodePicker.new(form, prefix: 'claim_property', address_attr: 'street', vc: 'england+wales')
       expect(mpp.country_name_for_messages).to eq 'England and Wales'
@@ -114,7 +115,7 @@ def expected_output
         &nbsp;
       </span>
       <span>
-        <a class='change-postcode-link2 js-only' href='#dummy_anchor' id='claim_property-manual_change-link-2' style='display: inline; margin-left: 10px;'>Change</a>
+        <a class='change-postcode-link2 js-only' href='#change_postcode' id='claim_property-manual_change-link-2' style='display: inline; margin-left: 10px;'>Change</a>
       </span>
     </div>
     <div class='postcode-selection-els'>
@@ -148,7 +149,7 @@ def expected_output
     <div class='row street'>
       <label for='claim_property_street'>
         Full address
-        
+
       </label>
       <textarea class='street' id='claim_property_street' maxlength='70' name='claim[property][street]'>50 Tregunter Road&#x000A;London</textarea>
     </div>
@@ -164,7 +165,7 @@ def expected_output
       <br>
       <div style='overflow: hidden; width: 100%'>
         <input class='smalltext postcode' id='claim_property_postcode' maxlength='8' name='claim[property][postcode]' size='8' style='float: left;  margin-right: 20px;' type='text' value='RG2 7PU'>
-        <a class='change-postcode-link js-only' href='#dummy_anchor' style='float: left;'>Change</a>
+        <a class='change-postcode-link js-only' href='#change_postcode' style='float: left;'>Change</a>
       </div>
     </div>
   </div>
@@ -172,5 +173,3 @@ def expected_output
 EOF
   str
 end
-
-
