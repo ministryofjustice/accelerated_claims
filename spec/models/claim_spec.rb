@@ -359,7 +359,7 @@ describe Claim, :type => :model do
         expect(claim).to_not be_valid
         expect(claim.claimant_1.errors.messages[:full_name]).to eq ["Enter claimant 1's full name"]
         expect(claim.claimant_1.errors.messages[:street]).to eq ["Enter claimant 1's full address"]
-        expect(claim.claimant_1.errors.messages[:postcode]).to eq ["Enter claimant 1's postcode"]
+        # expect(claim.claimant_1.errors.messages[:postcode]).to eq ["Enter claimant 1's postcode"]
       end
 
       it 'should be valid if there is claimant 1 data and no claimant 2 data' do
@@ -394,8 +394,7 @@ describe Claim, :type => :model do
             expect(claim.errors.full_messages).to eq [
               ["claim_claimant_2_title_error", "Enter claimant 2's title"],
               ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"],
-              ["claim_claimant_2_street_error", "Enter claimant 2's full address"],
-              ["claim_claimant_2_postcode_error", "Enter claimant 2's postcode"]
+              ["claim_claimant_2_street_error", "Enter claimant 2's full address"]
             ]
           end
         end
@@ -423,8 +422,8 @@ describe Claim, :type => :model do
             expect(claim.errors.full_messages).to eq [
                 ["claim_claimant_2_title_error", "Enter claimant 2's title"],
                 ["claim_claimant_2_full_name_error", "Enter claimant 2's full name"],
-                ["claim_claimant_2_street_error", "Enter claimant 2's full address"],
-                ["claim_claimant_2_postcode_error", "Enter claimant 2's postcode"]
+                ["claim_claimant_2_street_error", "Enter claimant 2's full address"]
+                # ["claim_claimant_2_postcode_error", "Enter claimant 2's postcode"]
               ]
           end
         end
@@ -568,13 +567,10 @@ describe Claim, :type => :model do
         expect(claim.defendants).to_not be_valid
         expect(claim.defendants.errors['defendant_1_title']).to eq [ "Enter defendant 1's title",  ]
         expect(claim.defendants.errors['defendant_1_full_name']).to eq [ "Enter defendant 1's full name" ]
-        expect(claim.defendants.errors['defendant_2_postcode']).to eq [ "Enter defendant 2's postcode" ]
 
         # and the messages should be transferred to claim.errors[:base]
         expect(claim.errors[:base]).to include(["claim_defendant_1_title_error", "Enter defendant 1's title"])
         expect(claim.errors[:base]).to include(["claim_defendant_1_full_name_error", "Enter defendant 1's full name"])
-        expect(claim.errors[:base]).to include(["claim_defendant_2_postcode_error", "Enter defendant 2's postcode"])
-
       end
     end
 

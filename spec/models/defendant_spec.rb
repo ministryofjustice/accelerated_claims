@@ -29,7 +29,6 @@ describe Defendant, :type => :model do
     end
   end
 
-
   context 'validate_presence not set' do
 
     context 'property_address is no' do
@@ -46,12 +45,6 @@ describe Defendant, :type => :model do
         defendant.full_name = nil
         expect(defendant).to_not be_valid
         expect(defendant.errors[:full_name]).to eq ["Enter defendant 2's full name"]
-      end
-
-      it 'should not be valid if postcode is missing' do
-        defendant.postcode = nil
-        expect(defendant).to_not be_valid
-        expect(defendant.errors[:postcode]).to eq ["Enter defendant 2's postcode"]
       end
 
       it 'should not be valid if street is missing' do
@@ -120,12 +113,6 @@ describe Defendant, :type => :model do
         defendant.full_name = nil
         expect(defendant).to_not be_valid
         expect(defendant.errors[:full_name]).to eq ["Enter defendant 2's full name"]
-      end
-
-      it 'should not be valid if postcode is missing' do
-        defendant.postcode = nil
-        expect(defendant).to_not be_valid
-        expect(defendant.errors[:postcode]).to eq ["Enter defendant 2's postcode"]
       end
 
       it 'should not be valid if street is missing' do
@@ -201,18 +188,6 @@ describe Defendant, :type => :model do
   end
 
   context 'address validation' do
-
-    it 'should not validate if postcode is incomplete' do
-      defendant.postcode = 'SW10'
-      expect(defendant).not_to be_valid
-      expect(defendant.errors[:postcode]).to eq ["Defendant 2's postcode is not a full postcode"]
-    end
-
-    it 'should not validate if postcode is invalid' do
-      defendant.postcode = 'SW10XX 5FF'
-      expect(defendant).not_to be_valid
-      expect(defendant.errors[:postcode]).to eq ["is too long (maximum is 8 characters)", "Enter a valid postcode for defendant 2"]
-    end
 
     it 'should not validate if street is too long' do
       defendant.street = "x" * 72
