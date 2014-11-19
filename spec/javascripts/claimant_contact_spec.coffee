@@ -241,7 +241,8 @@ describe 'ClaimantContact', ->
       </div>
       <div class="row divider"></div>
 
-      <div class="sub-panel claimant-contact" style="display: block;">
+<div class="sub-panel claimant-contact" style="display: none;">
+        <div class="row divider"></div>
         <div class="sub-panel details contact-details">
           <div class="row js-only">
             <a aria-expanded="false" class="caption" href="#contact-details" id="contact-details">
@@ -260,10 +261,10 @@ describe 'ClaimantContact', ->
         </div>
         <div class="row">
           If you want us to send correspondence about the case to a different address, enter it here.
-          <span class="hint block js-claimanttype individual js-only" style="display: none;">
+          <span class="hint block js-claimanttype individual js-only">
             eg a legal representative's address (Optional)
           </span>
-          <span class="hint block js-claimanttype organization" style="display: block;">
+          <span class="hint block js-claimanttype organization">
             eg a legal representative or managing agent's address (Optional)
           </span>
         </div>
@@ -344,7 +345,7 @@ describe 'ClaimantContact', ->
             </div>
           </div>
         </div>
-        <div class="sub-panel details js-claimanttype organization reference-number" style="display: block;">
+        <div class="sub-panel details js-claimanttype organization reference-number">
           <div class="row js-only">
             <a aria-expanded="false" class="caption" href="#reference-number" id="reference-number">
               Add a reference number
@@ -355,6 +356,7 @@ describe 'ClaimantContact', ->
           <input id="claim_reference_number_reference_number" maxlength="40" name="claim[reference_number][reference_number]" size="40" type="text"></div>
         </div>
       </div>
+
     </div>
   </section>
 </body>""")

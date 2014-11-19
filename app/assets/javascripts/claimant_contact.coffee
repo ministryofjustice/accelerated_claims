@@ -48,6 +48,7 @@ class ClaimantContact
       @hideContactPanelIfNumClaimantsBlank()
     @expandBlockIfPopulated(@addressBlock)
     @expandBlockIfPopulated(@contactBlock)
+    @expandBlockIfPopulated(@referenceBlock)
     if @addressBlock.hasClass('open')
       @pcp.addClass('show').removeClass('hide')
     else
