@@ -52,6 +52,26 @@ feature 'Court address lookup' do
           expect(page).not_to have_text "You haven't entered a postcode for the property you want to take back."
         end
       end
+
+      scenario 'should allow resubmission with a changed property address', js: true do
+        data = load_fixture_data 'spec/fixtures/scenario_01_js_data.rb'
+        AppModel.new(data).exec do
+          visit '/'
+          claim_form.complete_form_with_javascript
+          click_button 'Continue'
+          ensure_present_path '/confirmation'
+          page.evaluate_script('window.history.back()')
+          ensure_present_path '/'
+
+          # click 'Change' to change the postcode for the property
+          page.find(:xpath, '//*[@id="property"]/div/div[3]/div[3]/div/a').click
+
+          fill_text_field 'claim_property_postcode_edit_field', 'W93XX'
+          click_link 'Find address'
+          click_button 'Continue'
+          expect(page).not_to have_text 'Review the details of your claim'
+        end
+      end
     end
   end
 

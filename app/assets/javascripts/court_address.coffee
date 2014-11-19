@@ -2,14 +2,14 @@ root = exports ? this
 
 CourtAddressModule =
 
+  courtFields: ->
+    ['#claim_court_court_name',
+     '#claim_court_street',
+     '#claim_court_postcode']
+
   isCourtAddressFormBlank: ->
-    court_fields = ['#claim_court_court_name',
-                    '#claim_court_street',
-                    '#claim_court_postcode']
-
-    for field in court_fields
+    for field in CourtAddressModule.courtFields()
       return false if $(field).val() != ''
-
     true
 
   addCourtAddressFormLabel: ->
@@ -34,16 +34,16 @@ CourtAddressModule =
   changeInputFieldToTextarea: ->
     CourtAddressModule.changeElement('#claim_court_street', 'input', '<textarea></textarea>')
 
-  hideCourtAddress: ->
-    $('#claim_court_court_name').attr({ 'type': 'hidden' })
-    $('#claim_court_postcode').attr({ 'type': 'hidden' })
+  hideCourtAddressInputFields: ->
+    for field in CourtAddressModule.courtFields()
+      $(field).attr({ 'type': 'hidden' })
+
     $("#court-address").hide()
 
   blankFormFields: ->
-    for attr_name in ['court_name', 'street', 'postcode']
-      form_field = "#claim_court_#{attr_name}"
-      $(form_field).val('') if $(form_field).not(':visible')
-      $(form_field).attr({ 'type': 'text' })
+    for field in CourtAddressModule.courtFields()
+      $(field).val('') if $(field).not(':visible')
+      $(field).attr({ 'type': 'text' })
 
   enableTogglingOfCourtAddressForm: ->
     $("#court-details").click ->
@@ -51,6 +51,7 @@ CourtAddressModule =
         CourtAddressModule.flipTextareaToInputField()
         CourtAddressModule.lookUpCourt()
         $('#court-address').hide()
+        CourtAddressModule.hideCourtAddressInputFields()
         $('#court-details').parent().removeClass('open')
       else
         CourtAddressModule.populateCourtAddressForm('', '', '')
@@ -73,6 +74,7 @@ CourtAddressModule =
     court_name_element = $('#court-name')[0]
     court_name_element.innerHTML = "<b>#{court_name}</b>"
     CourtAddressModule.populateCourtAddressForm(court_name, court_street, court_postcode)
+    CourtAddressModule.hideCourtAddressInputFields()
     CourtAddressModule.linkForFormToggling()
     CourtAddressModule.labelForKnownCourt()
 
@@ -145,7 +147,7 @@ CourtAddressModule =
   setup: ->
     CourtAddressModule.getCourtIfPostcodePresent()
     CourtAddressModule.addCourtAddressFormLabel()
-    CourtAddressModule.hideCourtAddress()
+    CourtAddressModule.hideCourtAddressInputFields()
     CourtAddressModule.sendPostcodeForLookup()
     CourtAddressModule.flipTextareaToInputField()
     CourtAddressModule.showFormWhenErrors()
