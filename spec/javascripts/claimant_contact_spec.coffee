@@ -363,7 +363,6 @@ describe 'ClaimantContact', ->
     @panel = $('.claimant-contact')
     new window.ClaimantContact()
     ClaimantModule.setup()
-    console.log "BEFORE EACH ON TEST SUITE"
 
   afterEach ->
     element.remove()
