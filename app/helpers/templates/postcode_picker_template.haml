@@ -3,11 +3,11 @@
   .row.postcode-lookup.rel.js-only
 
     .postcode-display.hide{style: "margin-bottom: 20px;"}
-      Postcode: 
+      Postcode:
       %span.postcode-display-detail{style: "font-weight: bold"}
         &nbsp;
       %span
-        %a.change-postcode-link2.js-only{id: "#{@prefix}-manual_change-link-2", href: "#dummy_anchor", style: "display: inline; margin-left: 10px;"} Change                       
+        %a.change-postcode-link2.js-only{id: "#{@prefix}-manual_change-link-2", href: "#change_postcode", style: "display: inline; margin-left: 10px;"} Change
 
 
 
@@ -15,7 +15,7 @@
       %label.postcode-picker-label{:for => "#{@prefix}_#{@postcode_attr}_edit_field"} Postcode
       %input.smalltext.postcode-picker-edit-field{:maxlength => "8",
               :id => "#{@prefix}_#{@postcode_attr}_edit_field",
-              :name => "#{@name_prefix}[#{@postcode_attr}]",   
+              :name => "#{@name_prefix}[#{@postcode_attr}]",
               :size => "8",
               :type => "text"}
       %a.button.primary.postcode-picker-button{:href => "##{@prefix}_postcode_picker", data: {country: @valid_countries} }
@@ -33,7 +33,7 @@
           %option{id:"#{@prefix}-listbox", role: "option", disabled: "disabled", :value => ""} Please select an address
         %a.row.button.primary.postcode-picker-cta{id: "#{@prefix}_selectaddress", href: "##{@prefix}_postcode_picker_manual_link", style: "margin-bottom: 20px;"}
           Select address
-    
+
   .js-only.row
     %a.caption.postcode-picker-manual-link{ href: "##{@prefix}_postcode_picker_manual_link", id: "#{@prefix}_postcode_picker_manual_link", style: "margin-top: 20px;"}
       Enter address manually
@@ -43,7 +43,7 @@
 
     - options = @form.object.errors[:street].any? ? {id: "#{@prefix}_#{@address_attr}_error", class: 'error'} : {}
     .row.street{options}
-      %label{:for => "#{@prefix}_#{@address_attr}"} 
+      %label{:for => "#{@prefix}_#{@address_attr}"}
         Full address
         = @street_hint
         - unless @form.object.errors[:street].empty?
@@ -59,7 +59,7 @@
     - options = @form.object.errors[:postcode].any? ? {id: "#{@prefix}_#{@postcode_attr}_error", class: 'error'} : {}
 
     .row.address-postcode{options}
-      %label{:for => "#{@prefix}_#{@postcode_attr}"} 
+      %label{:for => "#{@prefix}_#{@postcode_attr}"}
         Postcode
         - unless @form.object.errors[:postcode].empty?
           - @form.object.errors[:postcode].each do |message|
@@ -67,4 +67,4 @@
       %br
       %div{style: "overflow: hidden; width: 100%"}
         %input.smalltext.postcode{:id => "#{@prefix}_#{@postcode_attr}", :maxlength => "8", :name => "#{@name}[#{@postcode_attr}]", value: "#{@postcode_value}", :size => "8", :type => "text", style: 'float: left;  margin-right: 20px;'}
-        %a.change-postcode-link.js-only{href: "#dummy_anchor", style: 'float: left;'} Change 
+        %a.change-postcode-link.js-only{href: "#change_postcode", style: 'float: left;'} Change

@@ -144,7 +144,7 @@ describe 'CourtAddressModule', ->
       expect(label).toMatch(html)
 
     it 'should hide the court address form', ->
-      window.CourtAddressModule.hideCourtAddress()
+      window.CourtAddressModule.hideCourtAddressInputFields()
       address = $('#court-address')
       expect(address).not.toBeVisible()
 
@@ -196,7 +196,7 @@ describe 'CourtAddressModule', ->
   describe 'when the address re-entry is attempted', ->
     beforeEach ->
       elements = $(
-        "<a class='change-postcode-link' href='#dummy_anchor'>Change</a>" +
+        "<a class='change-postcode-link' href='#change_postcode'>Change</a>" +
         '<div id="court-name"><b>Cambridge County Court and Family Court</b></div>' +
         '<a id="court-details" class="caption">Choose to send this claim to a different court</a>'
       )

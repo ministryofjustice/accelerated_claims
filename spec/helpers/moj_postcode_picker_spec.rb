@@ -1,3 +1,4 @@
+# coding: utf-8
 describe 'MojPostcodePicker' do
 
   let(:form)      { double LabellingFormBuilder }
@@ -113,7 +114,7 @@ def expected_output
         &nbsp;
       </span>
       <span>
-        <a class='change-postcode-link2 js-only' href='#dummy_anchor' id='claim_property-manual_change-link-2' style='display: inline; margin-left: 10px;'>Change</a>
+        <a class='change-postcode-link2 js-only' href='#change_postcode' id='claim_property-manual_change-link-2' style='display: inline; margin-left: 10px;'>Change</a>
       </span>
     </div>
     <div class='postcode-selection-els'>
@@ -163,7 +164,7 @@ def expected_output
       <br>
       <div style='overflow: hidden; width: 100%'>
         <input class='smalltext postcode' id='claim_property_postcode' maxlength='8' name='claim[property][postcode]' size='8' style='float: left;  margin-right: 20px;' type='text' value='RG2 7PU'>
-        <a class='change-postcode-link js-only' href='#dummy_anchor' style='float: left;'>Change</a>
+        <a class='change-postcode-link js-only' href='#change_postcode' style='float: left;'>Change</a>
       </div>
     </div>
   </div>
@@ -171,8 +172,6 @@ def expected_output
 EOF
   squeeze(str)
 end
-
-
 
 def squeeze(str)
   str.gsub(/\n\s+/, '').gsub(/\n+/, "\n")
