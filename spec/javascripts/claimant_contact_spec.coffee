@@ -409,7 +409,7 @@ describe 'ClaimantContact', ->
 
     it 'shows Add reference number link when claimant type organization', ->
       $('#claim_claimant_type_organization').trigger('click')
-      expect($('#reference-number')).toBeVisible()
+      expect($('#reference-number').css('display')).toEqual('inline')
 
   describe 'entering number of claimants', ->
     it 'shows the claimant-contact panels when number of claimants entered > 0', ->
