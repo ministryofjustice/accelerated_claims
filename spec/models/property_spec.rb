@@ -63,7 +63,7 @@ describe Property, :type => :model do
     it 'should reject invalid postcodes' do
       property.postcode = 'ABC105AB'
       expect(property).not_to be_valid
-      expect(property.errors['postcode']).to eq [ "Enter a valid postcode for property" ]
+      expect(property.errors['postcode']).to eq [ "Please enter a valid postcode for a property in England and Wales" ]
     end
 
     subject { property }
@@ -86,7 +86,7 @@ describe Property, :type => :model do
       it 'should generate an error message' do
         property.postcode = nil
         expect(property.valid?).not_to be true
-        expect(property.errors[:postcode]).to eq ['Enter the property postcode']
+        expect(property.errors[:postcode]).to eq ['Please enter a valid postcode for a property in England and Wales']
       end
     end
 

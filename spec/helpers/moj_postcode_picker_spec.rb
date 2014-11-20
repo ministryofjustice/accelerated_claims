@@ -1,14 +1,12 @@
 describe 'MojPostcodePicker' do
 
-
-
   let(:form)      { double LabellingFormBuilder }
   let(:object)    { double Object }
 
   before(:each) do
     allow(form).to receive(:object).and_return( object )
   end
-  
+
   describe 'new' do
     it 'calls load_haml just once the first time the class is instantiated' do
       # given an instantiated class of MojPostcodePicker with @@haml populated
@@ -25,7 +23,6 @@ describe 'MojPostcodePicker' do
       expect(mpp2.haml).to eq expected_haml
     end
 
-
     it 'generates default prefixes and attribute names if no options specified' do
       allow(object).to receive(:postcode).and_return('RG2 7PU')
       allow(object).to receive(:address_lines).and_return("50 Tregunter Road\r\nLondon")
@@ -36,7 +33,6 @@ describe 'MojPostcodePicker' do
       expect(mpp.instance_variable_get(:@postcode_attr)).to eq 'postcode'
       expect(mpp.instance_variable_get(:@address_attr)).to eq 'address_lines'
     end
-
 
     it 'generates non-default prefixes and attribute names if options are specified' do
       allow(object).to receive(:pc).and_return('RG2 7PU')
@@ -60,8 +56,15 @@ describe 'MojPostcodePicker' do
       expect(mpp.instance_variable_get(:@address_attr)).to eq 'street'
     end
 
-  end
+    it 'generates non-default button label' do
+      allow(object).to receive(:postcode).and_return('RG2 7PU')
+      allow(object).to receive(:street).and_return("50 Tregunter Road\r\nLondon")
+      mpp = MojPostcodePicker.new(form, prefix: "claim_claimant_1", name: "claim[claimant_1]", address_attr: 'street', button_label: "Chercher l'adresse")
 
+      expect(mpp.instance_variable_get(:@button_label)).to eq "Chercher l'adresse"
+    end
+
+  end
 
   describe 'emit' do
     it 'substitutes its own variables' do
@@ -80,7 +83,7 @@ describe 'MojPostcodePicker' do
       allow(object).to receive(:street).and_return("50 Tregunter Road\r\nLondon")
       allow(object).to receive(:errors).and_return( {:street => [], :postcode => [] } )
     end
-    
+
     it 'should return England and Wales' do
       mpp = MojPostcodePicker.new(form, prefix: 'claim_property', address_attr: 'street', vc: 'england+wales')
       expect(mpp.country_name_for_messages).to eq 'England and Wales'
@@ -96,13 +99,9 @@ describe 'MojPostcodePicker' do
       expect(mpp.country_name_for_messages).to eq 'England, Wales, Northern Ireland and Isle of Man'
     end
 
-
   end
 
 end
-
-
-
 
 def expected_output
   str =<<EOF
@@ -121,7 +120,7 @@ def expected_output
       <label class='postcode-picker-label' for='claim_property_postcode_edit_field'>Postcode</label>
       <input class='smalltext postcode-picker-edit-field' id='claim_property_postcode_edit_field' maxlength='8' name='[postcode]' size='8' type='text'>
       <a class='button primary postcode-picker-button' data-country='all' href='#claim_property_postcode_picker'>
-        Find address
+        Find UK address
       </a>
     </div>
     <div class='postcode-picker-hourglass hide'>
@@ -148,7 +147,7 @@ def expected_output
     <div class='row street'>
       <label for='claim_property_street'>
         Full address
-        
+
       </label>
       <textarea class='street' id='claim_property_street' maxlength='70' name='claim[property][street]'>50 Tregunter Road&#x000A;London</textarea>
     </div>
@@ -172,5 +171,4 @@ def expected_output
 EOF
   str
 end
-
 

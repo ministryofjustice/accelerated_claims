@@ -137,7 +137,6 @@ class Claimant < BaseClass
     validate_address_same_as_first_claimant
     if check_address_fields?
       errors[:street] << "Enter #{possessive_subject_description} full address" if street.blank?
-      errors[:postcode] << "Enter #{possessive_subject_description} postcode" if postcode.blank?
     end
   end
 
