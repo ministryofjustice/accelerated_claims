@@ -73,7 +73,7 @@ describe 'MojPostcodePicker' do
       allow(object).to receive(:errors).and_return( {:street => [], :postcode => [] } )
 
       mpp = MojPostcodePicker.new(form, prefix: 'claim_property', address_attr: 'street')
-      expect(mpp.emit).to eq expected_output
+      expect(squeeze(mpp.emit)).to eq expected_output
     end
   end
 
@@ -147,7 +147,7 @@ def expected_output
     <div class='row street'>
       <label for='claim_property_street'>
         Full address
-        
+
       </label>
       <textarea class='street' id='claim_property_street' maxlength='70' name='claim[property][street]'>50 Tregunter Road&#x000A;London</textarea>
     </div>
@@ -169,6 +169,11 @@ def expected_output
   </div>
 </div>
 EOF
-  str
+  squeeze(str)
 end
 
+
+
+def squeeze(str)
+  str.gsub(/\n\s+/, '').gsub(/\n+/, "\n")
+end
