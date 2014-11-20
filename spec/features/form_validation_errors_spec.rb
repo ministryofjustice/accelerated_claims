@@ -54,6 +54,16 @@ feature 'Filling in claim form' do
       click_button 'Continue'
     end
 
+    scenario 'submitting form with contact-details email supplied', js: true do
+      visit '/'
+      choose('claim_claimant_type_individual')
+      find('#contact-details').click
+      find_it('input', 'claim_claimant_contact_email').set 'x@example.com'
+      click_button 'Continue'
+
+      expect(page).to have_content 'x@example.com'
+    end
+
     scenario 'clicking on the error message takes you to section', js: true do
       visit '/'
       choose('claim_claimant_type_individual')
@@ -241,7 +251,7 @@ feature 'Filling in claim form' do
         visit '/'
         choose('claim_claimant_type_individual')
         fill_in 'claim_num_claimants', with: 1
-        click_link 'Add alternative address'
+        find('#correspondence-address').click
         click_link 'claim_claimant_contact_postcode_picker_manual_link'
         fill_in('claim_claimant_contact_street', with: valid_address)
         expect(page).not_to have_content(address_js_error_message)
@@ -251,7 +261,7 @@ feature 'Filling in claim form' do
         visit '/'
         choose('claim_claimant_type_individual')
         fill_in 'claim_num_claimants', with: 1
-        click_link 'Add alternative address'
+        find('#correspondence-address').click
         click_link 'claim_claimant_contact_postcode_picker_manual_link'
         fill_in('claim_claimant_contact_street', with: invalid_address)
         expect(page).to have_content(address_js_error_message)
