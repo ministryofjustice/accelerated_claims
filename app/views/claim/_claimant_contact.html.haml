@@ -1,15 +1,26 @@
 = claim_form.fields_for claimant_field, claimant_contact, builder: LabellingFormBuilder do |form|
-  .sub-panel.claimant-contact
-    .row.divider
-    .sub-panel.details.contact-details
-      .row.js-only
-        %a.caption#contact-details{ href: '#contact-details', 'aria-expanded' => 'false' }
-          = 'Add phone and email'
-        %span.hint (Optional)
-      = form.text_field_row :email, label: add_optional_nonjs('Email'), class: 'rel email'
-      = form.text_field_row :phone, label: add_optional_nonjs('Phone'), class: 'rel phone'
-      = form.text_field_row :fax, label: add_optional_nonjs('Fax'), class: 'rel fax'
-      = form.text_field_row :dx_number, label: add_optional_nonjs('DX number'), class: 'rel dx_number'
+  .sub-panel.claimant-solicitor.js-claimanttype.individual.organization
+    %details
+      %summary
+        %span.summary#contact-details Add phone and email (Optional)
+      .panel-indent
+        = form.text_field_row :email, label: add_optional_nonjs('Email'), class: 'rel email'
+        = form.text_field_row :phone, label: add_optional_nonjs('Phone'), class: 'rel phone'
+        = form.text_field_row :fax, label: add_optional_nonjs('Fax'), class: 'rel fax'
+        = form.text_field_row :dx_number, label: add_optional_nonjs('DX number'), class: 'rel dx_number'
+
+    - if false
+      .sub-panel.claimant-contact
+        .row.divider
+        .sub-panel.details.contact-details
+          .row.js-only
+            %a.caption#contact-details{ href: '#contact-details', 'aria-expanded' => 'false' }
+              = 'Add phone and email'
+            %span.hint (Optional)
+          = form.text_field_row :email, label: add_optional_nonjs('Email'), class: 'rel email'
+          = form.text_field_row :phone, label: add_optional_nonjs('Phone'), class: 'rel phone'
+          = form.text_field_row :fax, label: add_optional_nonjs('Fax'), class: 'rel fax'
+          = form.text_field_row :dx_number, label: add_optional_nonjs('DX number'), class: 'rel dx_number'
     .row
       If you want us to send correspondence about the case to a different address, enter it here.
       %span.hint.block.js-claimanttype.individual.js-only
@@ -17,15 +28,27 @@
       %span.hint.block.js-claimanttype.organization
         eg a legal representative or managing agent's address (Optional)
 
-    .sub-panel.details.correspondence-address
-      .row.js-only.correspondence-address
-        %a.caption#correspondence-address{ href: '#correspondence-address', 'aria-expanded' => 'false' }
-          = 'Add alternative address'.html_safe
-        %span.hint (Optional)
-      = form.text_field_row :title, label: add_optional_nonjs('Title'),    class: 'rel title', input_class: 'smalltext'
-      = form.text_field_row :full_name, label: add_optional_nonjs('Full name'), class: 'rel '
-      = form.text_field_row :company_name, label: add_optional_nonjs('Company name'),  class: 'rel company_name'
-      = form.moj_postcode_picker "claimant_contact", name: "claim[claimant_contact]", address_attr: 'street', hide: true
+    %details
+      %summary
+        %span.summary#correspondence-address Add alternative address (Optional)
+      .panel-indent
+        = form.text_field_row :title, label: add_optional_nonjs('Title'),    class: 'rel title', input_class: 'smalltext'
+        = form.text_field_row :full_name, label: add_optional_nonjs('Full name'), class: 'rel '
+        = form.text_field_row :company_name, label: add_optional_nonjs('Company name'),  class: 'rel company_name'
+        = form.text_area_row  :street, label: add_optional_nonjs('Full address'), class: 'rel street'
+        = address_error_message('claimant_contact')
+        = form.text_field_row :postcode, label: add_optional_nonjs('Postcode'), class: 'rel postcode', input_class: 'smalltext'
+
+    - if false
+      .sub-panel.details.correspondence-address
+        .row.js-only.correspondence-address
+          %a.caption#correspondence-address{ href: '#correspondence-address', 'aria-expanded' => 'false' }
+            = 'Add alternative address'.html_safe
+          %span.hint (Optional)
+        = form.text_field_row :title, label: add_optional_nonjs('Title'),    class: 'rel title', input_class: 'smalltext'
+        = form.text_field_row :full_name, label: add_optional_nonjs('Full name'), class: 'rel '
+        = form.text_field_row :company_name, label: add_optional_nonjs('Company name'),  class: 'rel company_name'
+        = form.moj_postcode_picker "claimant_contact", name: "claim[claimant_contact]", address_attr: 'street', hide: true
 
     .sub-panel.details.js-claimanttype.organization.reference-number
       .row.js-only
