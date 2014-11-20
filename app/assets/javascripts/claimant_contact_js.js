@@ -26,6 +26,7 @@ moj.Modules.claimantContact = (function() {
 
     hidePanel();
     checkPanel();
+    updateClaimantSolicitorVisibility();
   };
 
   cacheEls = function() {
@@ -92,8 +93,7 @@ moj.Modules.claimantContact = (function() {
   // public
 
   return {
-    init: init,
-    updateClaimantSolicitorVisibility: updateClaimantSolicitorVisibility
+    init: init
   };
 
 }());

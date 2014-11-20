@@ -122,7 +122,7 @@ describe 'PostcodePicker', ->
       expect( options.eq(0).text() ).toEqual 'Flat 1, 1 Melbury Close, FERNDOWN'
       expect( options.eq(1).text() ).toEqual '3 Melbury Close, FERNDOWN'
 
-      expect(@picker.find('.postcode-select-container')).toBeVisible()
+      expect(@picker.find('.postcode-select-container').css('display')).toEqual('block')
 
     it 'clears the existing contents of the select box before adding in new ones', ->
       @view.handleSuccessfulResponse(@results)
@@ -133,7 +133,7 @@ describe 'PostcodePicker', ->
       expect( options.eq(0).text() ).toEqual 'Flat 1, 1 Melbury Close, FERNDOWN'
       expect( options.eq(1).text() ).toEqual '3 Melbury Close, FERNDOWN'
 
-      expect(@picker.find('.postcode-select-container')).toBeVisible()
+      expect(@picker.find('.postcode-select-container').css('display')).toEqual('block')
 
     it 'hides the postcode entry box', ->
       @view.handleSuccessfulResponse(@results)
@@ -142,7 +142,7 @@ describe 'PostcodePicker', ->
     it 'displays the selected postcode as fixed text', ->
       @view.handleSuccessfulResponse(@results)
       pcd = @picker.find('.postcode-display')
-      expect(pcd).toBeVisible()
+      expect(pcd.css('display')).toEqual('block')
       expect(@picker.find('.postcode-display-detail').html()).toEqual 'BH22 8HR'
 
     it 'displays not England and Wales message if code = 4041', ->
@@ -228,7 +228,7 @@ describe 'PostcodePicker', ->
       @view.displayServiceUnavailable()
 
     it 'should hide postcode fixed text', ->
-      expect(@picker.find('.postcode-display')).toBeVisible()
+      expect(@picker.find('.postcode-display').css('display')).toEqual('block')
       @picker.find('.change-postcode-link2').trigger('click')
       expect(@picker.find('.postcode-display').hasClass('hide')).toBe true
 
@@ -241,7 +241,7 @@ describe 'PostcodePicker', ->
       @view.handleSuccessfulResponse(@results)
 
     it 'shows address list', ->
-      expect(@picker.find('.postcode-select-container')).toBeVisible()
+      expect(@picker.find('.postcode-select-container').css('display')).toEqual('block')
 
 
   describe 'toSentence', ->
