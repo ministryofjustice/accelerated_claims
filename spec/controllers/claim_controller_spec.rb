@@ -36,10 +36,6 @@ describe ClaimController, :type => :controller do
     it "should render the new claim form" do
       get :new
       expect(response).to render_template("new")
-      if ENV['w3c_validate']
-        validation = validate_view(response, { w3c_debug: ENV['w3c_debug'] || false })
-        expect(validation.errors.length).to eql(0)
-      end
     end
 
     describe 'HTTP response headers' do
