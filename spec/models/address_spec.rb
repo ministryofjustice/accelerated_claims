@@ -153,6 +153,20 @@ describe 'Address', :type => :model do
     end
   end
 
+  describe '#==' do
+    it 'should be equal if the street and postcode are the same' do
+      a1 = Address.new(Property.new(street: 'my street', postcode: 'sw109lb', house: 'Yes'))
+      a2 = Address.new(Property.new(street: 'my street', postcode: 'sw109lb', house: 'No'))
+      expect(a1 == a2).to be true
+    end
+
+    it 'should not be equal if the attrs are diffferent' do
+      a1 = Address.new(Property.new(street: 'my streetxx', postcode: 'sw109lb', house: 'Yes'))
+      a2 = Address.new(Property.new(street: 'my street', postcode: 'sw109lb', house: 'No'))
+      expect(a1 == a2).to be false
+    end
+  end
+
 end
 
 

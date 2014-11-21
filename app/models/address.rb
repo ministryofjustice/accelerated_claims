@@ -38,6 +38,8 @@ class Address < BaseClass
   end
 
   def valid?
+    puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
     results = []
     results << validate_postcode if @england_and_wales_only == true
     results << validate_presence if @must_be_blank == false
@@ -49,9 +51,16 @@ class Address < BaseClass
     result
   end
 
+  def ==(other)
+    other.street == @street && other.postcode == @postcode
+  end
 
   def validate_maximum_street_length
-    return false if !@street.nil? && @street.length > 70
+    puts "++++++ DEBUG max street length #{@street.length} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    puts @street
+    puts @street.length
+    if !@street.nil? && @street.length > 70
+      errors[:street] << "Property address is too long (maximum 70 characters)"
     return true
   end
 

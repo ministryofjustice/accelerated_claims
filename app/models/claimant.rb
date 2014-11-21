@@ -1,16 +1,19 @@
 class Claimant < BaseClass
 
-  include AddressModule
   include ActiveModel::Validations
   include Comparable
 
-  attr_accessor :validate_presence, :validate_absence
+  attr_accessor :validate_presence, :validate_absence, :address
   attr_accessor :claimant_num
   attr_accessor :title
   attr_accessor :full_name
   attr_accessor :organization_name
   attr_accessor :claimant_type
   attr_accessor :address_same_as_first_claimant
+  attr_reader   :params
+
+  delegate :street, :street=, :postcode, :postcode=, to: :address
+
 
   validate :validate_claimant_state
 
@@ -19,12 +22,17 @@ class Claimant < BaseClass
   validates :full_name, length: { maximum: 40 }
 
   def initialize(params = {})
-    super
+    @params = params
+    @address = Address.new(self)
     unless params.include?(:validate_presence)
       @validate_presence = true unless params[:validate_absence] == true
     end
+    
+    @address.must_be_blank! if @validate_absence == true
+
     @check_address_same_as_first_claimant = params['validate_address_same_as_first_claimant']
     @claimant_type = params['claimant_type']
+    super
   end
 
   def ==(other)
@@ -36,6 +44,10 @@ class Claimant < BaseClass
 
   def empty?
     title.blank? && full_name.blank? && organization_name.blank? && street.blank? && postcode.blank?
+  end
+
+  def valid?
+    @address.valid?
   end
 
   # main validation for claimant state
