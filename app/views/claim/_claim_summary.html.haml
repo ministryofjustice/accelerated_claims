@@ -4,9 +4,9 @@
   = summary_section_header 'claimant'
   .moj-panel
     .row
-      %p
+      %p.summary-field
         %span.summary-label= I18n.t 'claim.claimant_type.label'
-        %span= I18n.t "claim.claimant_type.#{@claim['claimant_type']}"
+        %span.summary-value{ id: summary_id('claimant', 'type') }= I18n.t "claim.claimant_type.#{@claim['claimant_type']}"
     = render partial: 'participant_summary', locals: { type: 'claimant', pattern: /^claimant_\d/ }
 
     - if contact_details_present?
