@@ -1,7 +1,7 @@
 .row
-  %p
+  %p.summary-field
     %span.summary-label= I18n.t "claim.num_#{type}s.label"
-    %span= @claim["num_#{type}s"]
+    %span.summary-value{ id: summary_id(type, "num_#{type}s") }= @claim["num_#{type}s"]
 - @claim.keys.select{|x| x[pattern]}.each do |participant|
   - blank_participant = @claim[participant]['validate_absence']
   - unless blank_participant
