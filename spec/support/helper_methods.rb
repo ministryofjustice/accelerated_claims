@@ -97,4 +97,3 @@ def load_expected_summary_values data_file
   results = IO.read(file)
   eval results
 end
-

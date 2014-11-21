@@ -77,6 +77,7 @@ group :test do
   gem 'show_me_the_cookies'
   gem 'codeclimate-test-reporter', require: nil
   gem 'ruby-prof'
+  gem 'w3c_validators'
 end
 
 gem 'pdf-forms', '0.5.5'
