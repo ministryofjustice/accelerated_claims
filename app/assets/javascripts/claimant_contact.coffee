@@ -42,12 +42,12 @@ class ClaimantContact
 
   expandBlockIfPopulated: (details) =>
     if details.is(':visible')
-      if details.find( '[type="text"], textarea' ).filter( -> $(this).val() != '').length > 0
+      userEnteredData = details.find( '[type="text"], textarea' ).filter( -> $(this).val() != '').length > 0
+      if userEnteredData
         # use setTimeout() as details.polyfill.js may not be loaded yet
         setTimeout( (-> details.find('summary').trigger('click') ), 0)
 
 root.ClaimantContact = ClaimantContact
 
-jQuery ->
-  new ClaimantContact( )
+root.expandBlockIfPopulated = root.ClaimantContact.prototype.expandBlockIfPopulated
 
