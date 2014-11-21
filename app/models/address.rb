@@ -1,8 +1,9 @@
 class Address < BaseClass
 
- validates :street, presence: { message: 'Enter the property address' }
+ 
 
- attr_reader :street, :postcode, :england_and_wales_only, :must_be_blank
+ attr_reader    :england_and_wales_only, :must_be_blank
+ attr_accessor  :postcode, :street
 
 
   # instantiate a new address from the given params using the options
@@ -31,21 +32,50 @@ class Address < BaseClass
   def subject_description
     @parent.respond_to?(:subject_description) ? @parent.subject_description : @parent.class.to_s
   end
-      
 
   def possessive_subject_description
     @parent.respond_to?(:possessive_subject_description) ? @parent.possessive_subject_description : "#{@parent.class.to_s}'s"
   end
-
 
   def valid?
     results = []
     results << validate_postcode if @england_and_wales_only == true
     results << validate_presence if @must_be_blank == false
     results << validate_absence if @must_be_blank == true
-    results.include?(false) ? false : true
+    results << validate_maximum_street_length
+    results << validate_maximum_number_of_newlines
+    result = results.include?(false) ? false : true
+    transfer_error_messages_to_parent if result == false
+    result
   end
 
+
+  def validate_maximum_street_length
+    return false if !@street.nil? && @street.length > 70
+    return true
+  end
+
+
+  def validate_maximum_number_of_newlines
+    result = true
+    unless street.nil?
+      if @street.strip.count("\n") > 3
+        errors.add(:street, "#{possessive_subject_description.capitalize} address can’t be longer than 4 lines.")
+        result = false
+      end
+    end
+    result
+  end
+
+  def indented_details(spaces_to_indent)
+    postcode1, postcode2 = split_postcode
+    indentation = ' ' * spaces_to_indent
+    str  = "#{indentation}#{title} #{full_name}\n"
+    address_lines = street.split("\n")
+    address_lines.each { |al| str += "#{indentation}#{al}\n" }
+    str += "#{indentation}#{postcode1} #{postcode2}\n"
+    str
+  end
 
   def validate_presence
     if @street.blank?
@@ -64,7 +94,6 @@ class Address < BaseClass
     end
     return errors.empty?
   end
-
 
   def validate_postcode
     if postcode.blank? || UKPostcode.new(postcode).valid? == false
@@ -91,6 +120,16 @@ class Address < BaseClass
         return true
       else
         raise "Unexpected return from postcode lookup: #{plp.result_set.inspect}"
+      end
+    end
+  end
+
+  private 
+
+  def transfer_error_messages_to_parent
+    [:street, :postcode].each do |field|
+      errors[field].each do |msg|
+        @parent.errors[field] = msg
       end
     end
   end

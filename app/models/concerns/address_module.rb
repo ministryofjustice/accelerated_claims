@@ -1,6 +1,6 @@
 require 'uk_postcode'
 
-module Address
+module AddressModule
 
   extend ActiveSupport::Concern
 

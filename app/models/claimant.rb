@@ -1,6 +1,6 @@
 class Claimant < BaseClass
 
-  include Address
+  include AddressModule
   include ActiveModel::Validations
   include Comparable
 

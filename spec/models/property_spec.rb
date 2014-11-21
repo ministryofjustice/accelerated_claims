@@ -55,15 +55,13 @@ describe Property, :type => :model do
     end
 
     it 'should reject scottish postcodes' do
-      property = Property.new(street: "1 Aha Street\nLondon",
-                   postcode: "SW1H 9AJ",
-                   house: "Yes")
+      property = Property.new(street: "1 Aha Street\nLondon", postcode: "SW1H 5AJ", house: "Yes")
       expect(property).not_to be_valid
       expect(property.errors['postcode']).to eq [ "Postcode is in Scotland. You can only use this service to regain possession of properties in England and Wales." ]
     end
 
     it 'should reject invalid postcodes' do
-      property.postcode = 'ABC105AB'
+      property = Property.new(street: "1 Aha Street\nLondon", postcode: "ABC105AB", house: "Yes")
       expect(property).not_to be_valid
       expect(property.errors['postcode']).to eq [ "Please enter a valid postcode for a property in England and Wales" ]
     end
@@ -77,13 +75,7 @@ describe Property, :type => :model do
       end
     end
 
-    context 'invalid postcode' do
-      it 'should generate an error message' do
-        property.postcode = 'ABC4545'
-        expect(property).not_to be_valid
-      end
-    end
-
+    
     context 'missing postcode' do
       it 'should generate an error message' do
         property.postcode = nil

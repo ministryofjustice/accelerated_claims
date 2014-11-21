@@ -141,6 +141,18 @@ describe 'Address', :type => :model do
     end
   end
 
+  describe '#transfer_error_messages_to_parent' do
+    it 'should transfer errors from address object to parent object' do
+      address.errors[:street] << "Street error 1"
+      address.errors[:street] << "Street error 2"
+      address.errors[:postcode] << "postcode error"
+      address.send(:transfer_error_messages_to_parent)
+      parent_errors = address.instance_variable_get(:@parent).errors
+      expect(parent_errors[:street]).to eq ["Street error 1", "Street error 2"]
+      expect(parent_errors[:postcode]).to eq ["postcode error"]
+    end
+  end
+
 end
 
 

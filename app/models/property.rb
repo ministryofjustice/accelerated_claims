@@ -1,17 +1,13 @@
 require 'uk_postcode'
 
 class Property < BaseClass
-  # include Address
 
   attr_accessor   :house, :address
   attr_reader     :livepc, :params
 
-  delegate :street, :postcode, to: :address
+  delegate :street, :street=, :postcode, :postcode=, to: :address
 
   validates :house, presence: { message: 'Please select what kind of property it is' }, inclusion: { in: ['Yes', 'No'] }
-  # validates :street, presence: { message: 'Enter the property address' }
-  # validate  :postcode_is_in_england_or_wales
-
   validate :address_validation
 
 
@@ -24,10 +20,7 @@ class Property < BaseClass
   end
 
   def address_validation
-    unless @address.valid?
-      errors[:street] = @address.errors[:street]
-      errors[:postcode] = @address.errors[:postcode]
-    end
+    @address.valid?               # This takes care of transferring error messages from Address object to Property object
   end
 
 
@@ -51,32 +44,32 @@ class Property < BaseClass
 
   private
 
-  def postcode_is_in_england_or_wales
-    if postcode.blank? || UKPostcode.new(postcode).valid? == false
-      errors['postcode'] << "Please enter a valid postcode for a property in England and Wales"
-      return false
-    end
+  # def postcode_is_in_england_or_wales
+  #   if postcode.blank? || UKPostcode.new(postcode).valid? == false
+  #     errors['postcode'] << "Please enter a valid postcode for a property in England and Wales"
+  #     return false
+  #   end
 
-    if postcode.present?
-      plp = PostcodeLookupProxy.new(postcode, ['England', 'Wales'], @livepc)
-      plp.lookup
-      @postcode = plp.norm
+  #   if postcode.present?
+  #     plp = PostcodeLookupProxy.new(postcode, ['England', 'Wales'], @livepc)
+  #     plp.lookup
+  #     @postcode = plp.norm
 
-      case plp.result_set['code']
-      when 2000
-        true
-      when 4040
-        true
-      when 4041
-        errors['postcode'] << "Postcode is in #{plp.result_set['message']}. You can only use this service to regain possession of properties in England and Wales."
-        false
-      when 4220
-        true
-      when 5030
-        true
-      else
-        raise "Unexpected return from postcode lookup: #{plp.result_set.inspect}"
-      end
-    end
-  end
+  #     case plp.result_set['code']
+  #     when 2000
+  #       true
+  #     when 4040
+  #       true
+  #     when 4041
+  #       errors['postcode'] << "Postcode is in #{plp.result_set['message']}. You can only use this service to regain possession of properties in England and Wales."
+  #       false
+  #     when 4220
+  #       true
+  #     when 5030
+  #       true
+  #     else
+  #       raise "Unexpected return from postcode lookup: #{plp.result_set.inspect}"
+  #     end
+  #   end
+  # end
 end

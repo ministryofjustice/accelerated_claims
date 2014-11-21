@@ -5,7 +5,7 @@ require 'uk_postcode'
 class ClaimantContact < BaseClass
 
   @do_partial_address_completion_validation = true
-  include Address
+  include AddressModule
 
   attr_accessor :title
   attr_accessor :full_name

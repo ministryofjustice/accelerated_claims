@@ -1,6 +1,6 @@
 class Defendant < BaseClass
 
-  include Address
+  include AddressModule
 
   attr_accessor :validate_presence, :validate_absence
 
