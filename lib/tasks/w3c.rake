@@ -5,7 +5,7 @@ namespace :w3c do
     task :validate_task => []
     Rake::Task[:validate_task].clear
     RSpec::Core::RakeTask.new(:validate_task) do |t|
-      t.pattern = 'spec/helpers/w3c_validation_spec.rb'
+      t.pattern = 'spec/features/w3c_validation_spec.rb'
     end
     Rake::Task[:validate_task].invoke
   end

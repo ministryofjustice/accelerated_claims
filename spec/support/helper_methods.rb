@@ -1,7 +1,3 @@
-require 'w3c_validators'
-
-include W3CValidators
-
 def remote_test?
   ENV['env'].present?
 end
@@ -100,27 +96,4 @@ def load_expected_summary_values data_file
   file = summary_data_file data_file
   results = IO.read(file)
   eval results
-end
-
-# options[:w3c_debug] = turn on debug output
-def validate_view(response, options)
-  WebMock.disable_net_connect!(:allow => [ /validator.w3.org/ ])
-  @validator = MarkupValidator.new
-
-  # turn on debugging messages
-  @validator.set_debug!(true) if options[:w3c_debug]
-
-  results = @validator.validate_text(response.body)
-
-  if results.errors.length > 0 && options[:w3c_debug]
-    results.errors.each do |err|
-      puts err.to_s
-    end
-    puts 'Debugging messages'
-
-    results.debug_messages.each do |key, value|
-      puts "  #{key}: #{value}"
-    end
-  end
-  results
 end
