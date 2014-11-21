@@ -24,7 +24,10 @@ class ClaimController < ApplicationController
       Claim.new(HashWithIndifferentAccess.new(claim_data))
     elsif (data = session[:claim])
       Claim.new(data).tap { |claim|
-        @errors = claim.errors unless claim.valid?
+        unless claim.valid?
+          @errors = claim.errors
+          @error_messages = claim.error_messages
+        end
       }
     else
       Claim.new

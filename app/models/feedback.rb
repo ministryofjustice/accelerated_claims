@@ -52,4 +52,13 @@ class Feedback
       "#{field}: #{send(field)}"
     end.join("\n\n")
   end
+
+  def error_messages
+    errors.messages.each_with_object({}) do |parts, hash|
+      field = parts.first
+      message = parts.last
+      hash["feedback_#{field}_error"] = message
+    end
+  end
+
 end
