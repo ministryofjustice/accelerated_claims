@@ -57,11 +57,13 @@ feature 'Filling in claim form' do
     scenario 'submitting form with contact-details email supplied', js: true do
       visit '/'
       choose('claim_claimant_type_individual')
-      find('#contact-details').click
+      fill_in 'claim_num_claimants', with: 1
+
+      find_it('span', 'contact-details').click
       find_it('input', 'claim_claimant_contact_email').set 'x@example.com'
       click_button 'Continue'
 
-      expect(page).to have_content 'x@example.com'
+      expect( find('#claim_claimant_contact_email').value ).to eq('x@example.com')
     end
 
     scenario 'clicking on the error message takes you to section', js: true do

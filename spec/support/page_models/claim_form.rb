@@ -123,12 +123,12 @@ class ClaimForm
 
   def fill_claimant_contact_with_js
     if get_data('javascript','separate_correspondence_address') == 'Yes'
-      find('#correspondence-address').click
+      find_it('span', 'correspondence-address').click
       complete_details_of_person('claimant_contact')
       fill_in_text_field('claimant_contact', 'company_name')
     end
     if get_data('javascript','other_contact_details') == 'Yes'
-      find('#contact-details').click
+      find_it('span', 'contact-details').click
       fill_claimant_contact_details
     end
   end
@@ -157,7 +157,7 @@ class ClaimForm
 
   def fill_reference_number_with_js
     unless get_data('reference_number', 'reference_number').blank?
-      find('#reference-number').click
+      find_it('span', 'reference-number').click
       fill_reference_number
     end
   end
@@ -246,7 +246,7 @@ class ClaimForm
     fill_in_text_field(prefix, 'full_name')
 
     if options[:complete_address]
-      click_manual_address_link(prefix) unless !@js_on
+      click_manual_address_link(prefix) if @js_on
       fill_in_text_area(prefix, 'street')
       fill_in_text_field(prefix, 'postcode')
 
