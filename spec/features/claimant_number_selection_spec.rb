@@ -22,7 +22,7 @@ feature 'Claimant number selection' do
         visit '/'
         choose 'A private landlord (individual)'
         fill_in "How many claimants are there?", with: '1'
-        expect(page).to have_css('.claimant-contact')
+        expect(page).to have_css('#contact-details')
       end
     end
   end
@@ -31,7 +31,7 @@ feature 'Claimant number selection' do
     scenario 'additional contact info', js: true do
       visit '/'
       choose 'A private landlord (company), a local authority or a housing association'
-      expect(page).to have_css('.claimant-contact')
+      expect(page).to have_css('#contact-details')
     end
 
     scenario 'claimant type change', js: true do
