@@ -165,7 +165,6 @@ describe DefendantCollection do
       dc.valid?
       expect(dc.errors[:defendant_1_title]).to eq ["Enter defendant 1's title"]
       expect(dc.errors[:defendant_2_full_name]).to eq ["Enter defendant 2's full name"]
-      expect(dc.errors[:defendant_3_postcode]).to eq ["Enter defendant 3's postcode"]
     end
   end
 end

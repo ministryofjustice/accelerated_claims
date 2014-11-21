@@ -32,6 +32,10 @@ class Claim < BaseClass
     @errors = ActiveModel::Errors.new(self)
   end
 
+  def normalize_all_postcodes
+    [ @property ].each { |my_attr| my_attr.normalize_postcode }
+  end
+
   def javascript_enabled?
     @javascript_enabled
   end
@@ -86,6 +90,7 @@ class Claim < BaseClass
     add_fee_and_costs json_out
     tenancy_agreement_status json_out
     defendant_for_service json_out
+    json_out = StringNormalizer.hash_to_ascii(json_out)
     json_out
   end
 

@@ -9,11 +9,9 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     row_input attribute, :text_field, options
   end
 
-
   def text_area_row(attribute, options={})
     row_input attribute, :text_area, options
   end
-
 
   def moj_date_fieldset attribute, legend, options = {}, example_date = Date.today, explanatory_text = nil
     df = MojDateFieldset.new(self, attribute, legend, options, example_date, explanatory_text)
@@ -28,17 +26,22 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   #  :address_attr - the name of the address attribute if not 'street'
   #  :name - the prefix of the name given to the street and postcode attributes if not 'claim['xxxx'] where xxxx is the attribute
   #  :street_hint -  and html which is to be inserted as a hint above the street textarea
-  #  :vc - list of valid countries: postcodes that return a country not in the supplied list will be marked as invalid.  
-  #        If not supplied or blank, all countries are valid.  Countries should be joined by '+' and spaces in country names should be replaced 
+  #  :vc - list of valid countries: postcodes that return a country not in the supplied list will be marked as invalid.
+  #        If not supplied or blank, all countries are valid.  Countries should be joined by '+' and spaces in country names should be replaced
   #        by underscores, e.g "england+wales+channel_islands+isle_of_man"
+  #  :button_label - the text to use on the Find UK Address button if not 'Find Uk Address'
   #
-  def moj_postcode_picker attribute, options = {}  
-    default_options = { :prefix => "claim_#{attribute}", :postcode_attr => :postcode, :address_attr => :street, :name =>  "claim[#{attribute}]" }
+  def moj_postcode_picker attribute, options = {}
+    default_options = {
+      :prefix        => "claim_#{attribute}",
+      :postcode_attr => :postcode,
+      :address_attr  => :street,
+      :name          => "claim[#{attribute}]"
+    }
     options = default_options.merge(options)
     mpp = MojPostcodePicker.new(self, options)
     mpp.emit
   end
-
 
   # Defaults to "Yes" "No" labels on radio inputs
   def radio_button_fieldset attribute, legend, options={}
@@ -63,13 +66,11 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 
-  
   def row attribute, options={}
     @template.haml_tag haml_tag_text('div option', attribute, options) do
       yield
     end
   end
-
 
   def error_for? attribute
     if @object.is_a?(Claim)
@@ -110,7 +111,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     @object_name.to_s.tr('[]','_').squeeze('_')
   end
 
-
   def labelled_check_box attribute, label, yes='Yes', no='No', options={}
     set_class_and_id attribute, options
     hidden_input = check_box_input_hidden attribute, options, yes, no
@@ -133,12 +133,10 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     list.join("\n").html_safe
   end
 
-
   def set_class_and_id attribute, options
     options[:class] = css_for(attribute, options)
     options[:id] = id_for(attribute) unless id_for(attribute).blank?
   end
-
 
   def fieldset_tag(attribute, legend_text, options = {}, &block)
     fieldset = tag(:fieldset, options_for_fieldset(options), true)
@@ -154,8 +152,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     fieldset.safe_concat("</fieldset>")
   end
 
-  
-
   private
 
   def fieldset attribute, options={}
@@ -165,11 +161,9 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 
-
   def id_for attribute, default=nil
     error_for?(attribute) ? error_id_for(attribute) : (default || '')
   end
-
 
   def label_content_for attribute, label, options={}
     label ||= attribute.to_s.humanize
@@ -191,7 +185,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   def ends_with_punctuation? span
     span[/\?<\/span/] || span[/\.<\/span>/] || span[/\.|\?$/]
   end
-
 
   def legend_for attribute, legend_text, options
     label = label_content_for(attribute, legend_text, hint: options[:hint])

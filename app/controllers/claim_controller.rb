@@ -32,8 +32,8 @@ class ClaimController < ApplicationController
   end
 
   def confirmation
-    @claim = session[:claim]
 
+    @claim = session[:claim]
     if @claim.nil?
       redirect_to_with_protocol(:new)
     else
@@ -48,7 +48,10 @@ class ClaimController < ApplicationController
       else
         redirect_to_with_protocol(:new)
       end
+      @claim = PostcodeNormalizer.new(@claim).normalize
+
     end
+
   end
 
   def download

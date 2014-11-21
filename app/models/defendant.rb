@@ -28,7 +28,6 @@ class Defendant < BaseClass
         errors[:inhabits_property] << "Please select whether or not #{subject_description} lives in the property"
       end
     end
-
   end
 
   # main validation for claimant state
@@ -126,7 +125,7 @@ class Defendant < BaseClass
     if self.inhabits_property == 'yes' || self.inhabits_property.blank?
       validate_are_present(:title, :full_name)
     else
-      validate_are_present(:title, :full_name, :street, :postcode)
+      validate_are_present(:title, :full_name, :street)
     end
   end
 
