@@ -1,6 +1,7 @@
 = claim_form.fields_for fee_account, builder: LabellingFormBuilder do |form|
-  .sub-panel.details#fee-account-panel
-    .row.js-only
-      %a.caption#fee-account{ href: '#fee-account', 'aria-expanded' => 'false', class: 'show-hide-panel' }
-        = I18n.t 'claim.fee.account.prompt'.html_safe
-    = form.text_field_row :account, label: "<span class='visuallyhidden'>#{I18n.t 'claim.fee.account.guidance'}</span> <span aria-hidden='true'>#{I18n.t 'claim.fee.account.description'}</span>".html_safe, maxlength: 10
+  %details
+    %summary
+      %span.summary#fee-account= I18n.t 'claim.fee.account.prompt'.html_safe
+    .row
+      = form.text_field_row :account, label: "<span class='visuallyhidden'>#{I18n.t 'claim.fee.account.guidance'}</span> <span aria-hidden='true'>#{I18n.t 'claim.fee.account.description'}</span>".html_safe, maxlength: 10
+
