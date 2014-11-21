@@ -102,8 +102,7 @@ def load_expected_summary_values data_file
   eval results
 end
 
-# options[:debug] = turn on debug output
-
+# options[:w3c_debug] = turn on debug output
 def validate_view(response, options)
   WebMock.disable_net_connect!(:allow => [ /validator.w3.org/ ])
   @validator = MarkupValidator.new
@@ -114,10 +113,6 @@ def validate_view(response, options)
   results = @validator.validate_text(response.body)
 
   if results.errors.length > 0 && options[:w3c_debug]
-    puts '*****************'
-    puts response.body
-    puts '*****************'
-
     results.errors.each do |err|
       puts err.to_s
     end
