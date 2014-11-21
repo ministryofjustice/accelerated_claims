@@ -13,11 +13,13 @@ def validate_view(response, options)
   results = @validator.validate_text(response.body)
 
   if results.errors.length > 0 && options[:w3c_debug]
+    puts 'Errors'
+    puts '------------------'
     results.errors.each do |err|
       puts err.to_s
     end
     puts 'Debugging messages'
-
+    puts '------------------'
     results.debug_messages.each do |key, value|
       puts "  #{key}: #{value}"
     end
