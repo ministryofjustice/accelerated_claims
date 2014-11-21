@@ -55,7 +55,9 @@ describe Property, :type => :model do
     end
 
     it 'should reject scottish postcodes' do
-      property.postcode = 'AB10 5AB'
+      property = Property.new(street: "1 Aha Street\nLondon",
+                   postcode: "SW1H 9AJ",
+                   house: "Yes")
       expect(property).not_to be_valid
       expect(property.errors['postcode']).to eq [ "Postcode is in Scotland. You can only use this service to regain possession of properties in England and Wales." ]
     end

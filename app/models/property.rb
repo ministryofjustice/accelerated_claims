@@ -1,19 +1,35 @@
 require 'uk_postcode'
 
 class Property < BaseClass
-  include Address
+  # include Address
 
-  attr_accessor :house
-  attr_reader   :livepc
+  attr_accessor   :house, :address
+  attr_reader     :livepc, :params
+
+  delegate :street, :postcode, to: :address
 
   validates :house, presence: { message: 'Please select what kind of property it is' }, inclusion: { in: ['Yes', 'No'] }
-  validates :street, presence: { message: 'Enter the property address' }
-  validate  :postcode_is_in_england_or_wales
+  # validates :street, presence: { message: 'Enter the property address' }
+  # validate  :postcode_is_in_england_or_wales
+
+  validate :address_validation
+
 
   def initialize(params)
+    @params = params
     @livepc = params['livepc'] || false
+    @address = Address.new(self)
+    @address.england_and_wales_only!
     super
   end
+
+  def address_validation
+    unless @address.valid?
+      errors[:street] = @address.errors[:street]
+      errors[:postcode] = @address.errors[:postcode]
+    end
+  end
+
 
   def as_json
     postcode1, postcode2 = split_postcode
