@@ -36,14 +36,14 @@ CourtAddressModule =
 
   hideCourtAddressInputFields: ->
     for field in CourtAddressModule.courtFields()
-      $(field).attr({ 'type': 'hidden' })
-
+      CourtAddressModule.changeElement('#' + $(field).attr('id'), 'input', "<input type='hidden'></input>")
+      
     $("#court-address").hide()
 
   blankFormFields: ->
     for field in CourtAddressModule.courtFields()
       $(field).val('') if $(field).not(':visible')
-      $(field).attr({ 'type': 'text' })
+      CourtAddressModule.changeElement('#' + $(field).attr('id'), 'input', "<input type='text'></input>")
 
   enableTogglingOfCourtAddressForm: ->
     $("#court-details").click ->
@@ -131,8 +131,8 @@ CourtAddressModule =
       unless show
         id = "\##{prefix}_#{val}_error"
         if $('#form_errors').find("[data-id='#{id}']").length > 0
-          $('#claim_court_court_name').attr({ 'type': 'text' })
-          $('#claim_court_postcode').attr({ 'type': 'text' })
+          CourtAddressModule.changeElement('#claim_court_court_name', 'input', "<input type='text'></input>")
+          CourtAddressModule.changeElement('#claim_court_postcode', 'input', "<input type='text'></input>")
           CourtAddressModule.changeInputFieldToTextarea()
           $('#court-address').show()
           show = true
