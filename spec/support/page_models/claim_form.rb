@@ -49,8 +49,8 @@ class ClaimForm
       page.all(street).first.set('court_street')
     end
 
-    fill_text_field("#{prefix}court_name", 'court_name')
-    fill_text_field("#{prefix}postcode", 'postcode')
+    find("##{prefix}court_name").set 'court_name'
+    find("##{prefix}postcode").set 'postcode'
   end
 
   def complete_form_with_javascript
