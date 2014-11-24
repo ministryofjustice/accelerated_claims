@@ -6,7 +6,11 @@ describe ClaimController, :type => :controller do
         get :new
         expect(response.body).to include('Make a claim to evict tenants')
         page_valid = validate_view(response,{w3c_debug: ENV['w3c_debug'] || false})
+        expect(page_valid.result).not_to eql('fail')
         expect(page_valid.errors.length).to eql(0)
+        if page_valid.result=='error'
+          expect(page_valid.message).not_to eql(nil)
+        end
       end
       it 'when submitted with invalid claim data should re-render new and be valid' do
         data = claim_post_data['claim']
@@ -18,7 +22,11 @@ describe ClaimController, :type => :controller do
         expect(response.body).to include('Make a claim to evict tenants')
         expect(response.body).to include('See highlighted errors below')
         page_valid = validate_view(response,{w3c_debug: ENV['w3c_debug'] || false})
+        expect(page_valid.result).not_to eql('fail')
         expect(page_valid.errors.length).to eql(0)
+        if page_valid.result=='error'
+          expect(page_valid.message).not_to eql(nil)
+        end
       end
     end
     describe '#confirmation' do
@@ -28,7 +36,11 @@ describe ClaimController, :type => :controller do
         get :confirmation
         expect(response.body).to include('Check all the information on this page before clicking ‘Print the form’.')
         page_valid = validate_view(response,{w3c_debug: ENV['w3c_debug'] || false})
+        expect(page_valid.result).not_to eql('fail')
         expect(page_valid.errors.length).to eql(0)
+        if page_valid.result=='error'
+          expect(page_valid.message).not_to eql(nil)
+        end
       end
     end
   end
@@ -41,7 +53,11 @@ describe FeedbackController, :type => :controller do
         get :new
         expect(response.body).to include('Did you have any difficulty with this service?')
         page_valid = validate_view(response,{w3c_debug: ENV['w3c_debug'] || false})
+        expect(page_valid.result).not_to eql('fail')
         expect(page_valid.errors.length).to eql(0)
+        if page_valid.result=='error'
+          expect(page_valid.message).not_to eql(nil)
+        end
       end
     end
   end
@@ -54,7 +70,11 @@ describe UserCallbackController, :type => :controller do
         get :new
         expect(response.body).to include('Please note: we cannot offer legal advice.')
         page_valid = validate_view(response,{w3c_debug: ENV['w3c_debug'] || false})
+        expect(page_valid.result).not_to eql('fail')
         expect(page_valid.errors.length).to eql(0)
+        if page_valid.result=='error'
+          expect(page_valid.message).not_to eql(nil)
+        end
       end
       it 'should render a valid page after invalid data is submitted' do
         @params = {
@@ -66,7 +86,11 @@ describe UserCallbackController, :type => :controller do
         expect(response.body).to include('Please note: we cannot offer legal advice.')
         expect(response.body).to include('See highlighted errors below')
         page_valid = validate_view(response,{w3c_debug: ENV['w3c_debug'] || false})
+        expect(page_valid.result).not_to eql('fail')
         expect(page_valid.errors.length).to eql(0)
+        if page_valid.result=='error'
+          expect(page_valid.message).not_to eql(nil)
+        end
       end
     end
   end
