@@ -15,6 +15,7 @@ class Address < BaseClass
     @postcode               = @parent.params[:postcode]
     @england_and_wales_only = false
     @must_be_blank          = determine_blankness
+    @suppress_validation    = false
   end
 
   # forces validation of postcode to England and Wales only
@@ -35,7 +36,13 @@ class Address < BaseClass
     @parent.respond_to?(:possessive_subject_description) ? @parent.possessive_subject_description : "#{@parent.class.to_s}'s"
   end
 
+  def suppress_validation!
+    errors.clear
+    @suppress_validation = true
+  end
+
   def valid?
+    return true if @suppress_validation
     results = []
     results << validate_postcode if @england_and_wales_only == true
     results << validate_presence if @must_be_blank == false
@@ -131,7 +138,7 @@ class Address < BaseClass
   private 
 
   def determine_blankness
-    if @parent.params['validate_absence'] == true || @parent.params['address_same_as_first_claimant'] == 'Yes' || @parent.params['validate_address_same_as_first_claimant'] == true
+    if @parent.params['validate_absence'] == true || @parent.params['address_same_as_first_claimant'] == 'Yes'
       true
     else
       false

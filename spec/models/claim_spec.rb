@@ -599,13 +599,6 @@ describe Claim, :type => :model do
           javascript_enabled_params['num_defendants'] = 1
           javascript_enabled_params.delete('defendant_2')
           claim = Claim.new(javascript_enabled_params)
-
-          puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-          
-          claim.valid?
-          puts claim.errors.full_messages
-          expect(false).to be true
-
           expect(claim).to be_valid
           expect(claim.errors[:base]).to be_empty
         end

@@ -19,12 +19,9 @@ class Claimant < BaseClass
   validates :title, length: { maximum: 8 }
   validates :full_name, length: { maximum: 40 }
   validate  :address_validation
-  validate :validate_address_same_as_first_claimant
+  # validate :validate_address_same_as_first_claimant
 
   def initialize(params = {})
-    puts "++++++ DEBUG CLAIMANT INITIALIZATION ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    pp params
-    
     @params = HashWithIndifferentAccess.new(params)
     @address = Address.new(self)
     unless params.include?(:validate_presence)
@@ -135,21 +132,14 @@ class Claimant < BaseClass
 
   def validate_address_same_as_first_claimant
     if !first_claimant?
-      puts "++++++ DEBUG claimant #{@claimant_num}++++++ #{__FILE__}::#{__LINE__} ++++\n"
-      
-
-
-
-
-    # if @check_address_same_as_first_claimant && address_same_as_first_claimant.blank? && !first_claimant? && @params[:validate_absence] != true
-    #   puts "++++++ DEBUG validate_address_same_as_first_claimant ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    #   puts @check_address_same_as_first_claimant.inspect
-    #   puts address_same_as_first_claimant.blank?
-    #   puts !first_claimant?
-    #   puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    #   pp @params
-      
-    #   errors.add(:address_same_as_first_claimant, "You must specify whether #{subject_description}'s address is the same as the first claimant")
+      if @check_address_same_as_first_claimant 
+        if !@validate_absence || @validate_presence
+          if @params[:address_same_as_first_claimant].blank?
+            errors.add(:address_same_as_first_claimant, "You must specify whether #{subject_description}'s address is the same as the first claimant")
+            @address.suppress_validation!
+          end
+        end
+      end
     end
   end
 

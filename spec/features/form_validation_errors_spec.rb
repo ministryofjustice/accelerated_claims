@@ -17,7 +17,7 @@ feature 'Filling in claim form' do
     scenario "submitting incomplete form", js: false do
       visit '/'
       click_button 'Continue'
-      expect(page).to have_content("Enter the property address")
+      expect(page).to have_content("Enter property full address")
       expect(page).to have_content("Enter the name of the person who gave the notice")
 
       expect(page).to have_content("You must say how the notice was given")
@@ -64,7 +64,7 @@ feature 'Filling in claim form' do
       check_focus_after_click 'Please say how many claimants there are', 'claim_num_claimants'
       check_focus_after_click 'Please enter a valid number of defendants between 1 and 20', 'claim_num_defendants'
       check_focus_after_click 'Please select what kind of property it is', 'claim_property_house_yes'
-      check_focus_after_click 'Enter the property address', 'claim_property_street'
+      check_focus_after_click 'Enter property full address', 'claim_property_street'
       check_focus_after_click 'You must say whether or not you gave notice to the defendant', 'claim_notice_notice_served_yes'
       check_focus_after_click 'You must say whether or not you have an HMO licence', 'claim_license_multiple_occupation_yes'
       check_focus_after_click 'You must say whether the defendant paid a deposit', 'claim_deposit_received_yes'

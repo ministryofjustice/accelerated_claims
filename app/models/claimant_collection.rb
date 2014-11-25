@@ -3,9 +3,8 @@ class ClaimantCollection < ParticipantCollection
 
   MAX_CLAIMANTS = 4
 
+
   def initialize(claim_params)
-    puts "++++++ DEBUG initialize claimant collection ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    
     @num_participants = claim_params['num_claimants'].to_i || 0
     @claimant_type = claim_params['claimant_type']
     super
@@ -30,8 +29,6 @@ class ClaimantCollection < ParticipantCollection
   private
 
   def populate_claimants(claim_params, validate_address_same_as_first_claimant)
-    puts "++++++ DEBUG populate claimants validate_address_same_as_first_claimant: #{validate_address_same_as_first_claimant.inspect} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    
     ( 1 .. ClaimantCollection.max_claimants ).each do |index|
       if claim_params.nil? || claim_params.empty?
         @participants[index] = Claimant.new( 'claimant_num' => index,
@@ -44,11 +41,11 @@ class ClaimantCollection < ParticipantCollection
   end
 
   def populate_same_addresses
-    @participants.select { |i, c| c.address_same_as_first_claimant == 'Yes'}.each do |i, c|
-      if first_claimant = @participants[1]
-        c.street = first_claimant.street
-        c.postcode = first_claimant.postcode
-      end
+    first_claimant = @participants[1]
+    @participants.select { |claimant_num, claimant| claimant.address_same_as_first_claimant == 'Yes'}.each do |claimant_num, claimant|
+      claimant.street = first_claimant.street
+      claimant.postcode = first_claimant.postcode
+      claimant.address.suppress_validation!
     end
   end
 

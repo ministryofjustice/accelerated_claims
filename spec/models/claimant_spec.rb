@@ -167,19 +167,6 @@ describe Claimant, :type => :model do
         expect(claimant.errors[:street]).to eq ["Enter claimant 2's full address"]
       end
 
-
-      # it 'should validate presence of title' do
-      #   params = individual_params.merge(claimant_num: 2, address_same_as_first_claimant: 'No') 
-      #   params.delete(:title)
-      #   c  = Claimant.new params
-      #   x = c.valid?
-      #   puts "++++++ DEBUG notice #{c.title.inspect} #{x.inspect}++++++ #{__FILE__}::#{__LINE__} ++++\n"
-        
-      #   puts c.errors.full_messages
-      # end
-
-
-
       it 'should not be valid if any of the attributes are blank' do
         claimant.title = nil
         claimant.full_name = ''

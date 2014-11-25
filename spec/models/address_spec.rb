@@ -100,19 +100,19 @@ describe 'Address', :type => :model do
         it 'should reject missing street' do
           address = Address.new(Property.new(postcode: '90100'))
           expect(address).not_to be_valid
-          expect(address.errors[:street]).to eq ["Enter the property address"]
+          expect(address.errors[:street]).to eq ["Enter property full address"]
         end
 
         it 'should reject blank street' do
           address = Address.new(Property.new(street: '', postcode: '90100'))
           expect(address).not_to be_valid
-          expect(address.errors[:street]).to eq ["Enter the property address"]
+          expect(address.errors[:street]).to eq ["Enter property full address"]
         end
         
         it 'should reject nil street' do
           address = Address.new(Property.new(street: nil, postcode: '90100'))
           expect(address).not_to be_valid
-          expect(address.errors[:street]).to eq ["Enter the property address"]
+          expect(address.errors[:street]).to eq ["Enter property full address"]
         end
       end
     end
@@ -165,6 +165,20 @@ describe 'Address', :type => :model do
       a2 = Address.new(Property.new(street: 'my street', postcode: 'sw109lb', house: 'No'))
       expect(a1 == a2).to be false
     end
+  end
+
+  describe 'suppress_validation' do
+    it 'should clear all errrors and return true to valid' do
+      address = Address.new(Property.new( {house: 'Yes', postcode: 'RG2XXX7PU'} ))
+      expect(address).to_not be_valid
+      expect(address.errors[:street]).to eq ['Enter property full address']
+      
+      address.suppress_validation!
+      expect(address).to be_valid
+      expect(address.errors).to be_empty
+    end
+
+
   end
 
 end
