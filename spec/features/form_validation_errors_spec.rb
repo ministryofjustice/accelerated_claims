@@ -18,14 +18,13 @@ feature 'Filling in claim form' do
       visit '/'
       click_button 'Continue'
       expect(page).to have_content("Enter the property address")
-      expect(page).to have_content("Enter the property postcode")
       expect(page).to have_content("Enter the name of the person who gave the notice")
 
       expect(page).to have_content("You must say how the notice was given")
 
       expect(page).to have_content("Please select what kind of property it is")
     end
-  
+
     scenario "submitting an incomplete deposit information given date", js: true do
       visit '/'
       choose('claim_deposit_received_yes')
@@ -45,7 +44,7 @@ feature 'Filling in claim form' do
     scenario "submitting incomplete form", js: true do
       visit '/'
       click_button 'Continue'
-      
+
       expect(page).to have_content('Please select what kind of claimant you are')
 
       check_focus_after_click 'You must say whether the defendant paid a deposit', 'claim_deposit_received_yes'
@@ -55,11 +54,11 @@ feature 'Filling in claim form' do
       click_button 'Continue'
     end
 
-    scenario "submitting form with only claimant type selected", js: true do
+
+    scenario 'clicking on the error message takes you to section', js: true do
       visit '/'
       choose('claim_claimant_type_individual')
       click_button 'Continue'
-
       expect(page).to have_content('Please say how many claimants there are')
 
       check_focus_after_click 'Please say how many claimants there are', 'claim_num_claimants'
@@ -67,8 +66,6 @@ feature 'Filling in claim form' do
 
       check_focus_after_click 'Please select what kind of property it is', 'claim_property_house_yes'
       check_focus_after_click 'Enter the property address', 'claim_property_street'
-      check_focus_after_click 'Enter the property postcode', 'claim_property_postcode'
-
       check_focus_after_click 'You must say whether or not you gave notice to the defendant', 'claim_notice_notice_served_yes'
 
       check_focus_after_click 'You must say whether or not you have an HMO licence', 'claim_license_multiple_occupation_yes'
@@ -84,7 +81,6 @@ feature 'Filling in claim form' do
       check_focus_after_click 'You must have given 2 months notice to make an accelerated possession claim', 'claim_notice_notice_served_yes'
     end
   end
-
 
   scenario "submitting form without notice checked, the hidden errors should not be shown", js: true do
     visit '/'
@@ -244,7 +240,9 @@ feature 'Filling in claim form' do
       scenario 'claimant_contact_address valid', js: true do
         visit '/'
         choose('claim_claimant_type_individual')
-        click_link 'correspondence-address'
+        fill_in 'claim_num_claimants', with: 1
+        click_link 'Add alternative address'
+        click_link 'claim_claimant_contact_postcode_picker_manual_link'
         fill_in('claim_claimant_contact_street', with: valid_address)
         expect(page).not_to have_content(address_js_error_message)
       end
@@ -252,7 +250,9 @@ feature 'Filling in claim form' do
       scenario 'claimant_contact_address invalid', js: true do
         visit '/'
         choose('claim_claimant_type_individual')
+        fill_in 'claim_num_claimants', with: 1
         click_link 'Add alternative address'
+        click_link 'claim_claimant_contact_postcode_picker_manual_link'
         fill_in('claim_claimant_contact_street', with: invalid_address)
         expect(page).to have_content(address_js_error_message)
       end
@@ -346,4 +346,3 @@ end
 def non_js_address_error_message(attribute)
   "#{attribute} address can’t be longer than 4 lines."
 end
-

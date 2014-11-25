@@ -41,11 +41,6 @@ class Defendant < BaseClass
 
   def initialize(params = {})
     super
-    unless params[:postcode].blank?
-      pc = UKPostcode.new(params[:postcode])
-      @postcode = pc.norm if pc.valid?
-    end
-
     unless params.include?(:validate_presence)
       @validate_presence = true unless params[:validate_absence] == true
     end
@@ -130,7 +125,7 @@ class Defendant < BaseClass
     if self.inhabits_property == 'yes' || self.inhabits_property.blank?
       validate_are_present(:title, :full_name)
     else
-      validate_are_present(:title, :full_name, :street, :postcode)
+      validate_are_present(:title, :full_name, :street)
     end
   end
 

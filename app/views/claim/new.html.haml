@@ -43,7 +43,6 @@
         = render partial: 'claimant', object: @claim.claimant_2, locals: { claimant_id: 2, claim_form: claim_form, claimant_field: :claimant_2}
         = render partial: 'claimant', object: @claim.claimant_3, locals: { claimant_id: 3, claim_form: claim_form, claimant_field: :claimant_3}
         = render partial: 'claimant', object: @claim.claimant_4, locals: { claimant_id: 4, claim_form: claim_form, claimant_field: :claimant_4}
-      .row.divider
       = render partial: 'claimant_contact', object: @claim.claimant_contact, locals: { claim_form: claim_form, claimant_field: :claimant_contact}
 
 
@@ -102,6 +101,7 @@
   %section
     = section_header 'court'
     .moj-panel
+      = render partial: 'court',      object: @claim.court,      locals: { claim_form: claim_form }
       = render partial: 'possession', object: @claim.possession, locals: { claim_form: claim_form }
 
     .action-buttons.cf

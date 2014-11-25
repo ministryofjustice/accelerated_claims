@@ -5,36 +5,37 @@ root = exports ? this
 class PostcodePicker
 
   constructor: (picker) ->
-    @picker = picker
-    @selectElement = @picker.find('.address-picker-select')
-    @button = picker.find('.postcode-picker-button')
-    @input = picker.find('.postcode-picker-edit-field')
-    @valid_countries = @normalizeCountry(@picker.data('vc'))
-    manualLink = picker.find('.postcode-picker-manual-link')
-    selectButton = picker.find('.postcode-picker-cta')
-    changePostcodeLink = picker.find('.change-postcode-link')
-    changePostcodeLink2 = picker.find('.change-postcode-link2')
+    @picker             = picker                                                # The postcode picker container
+    @selectElement      = picker.find('.address-picker-select')                 # The drop down box that will be populated with addresses
+    @button             = picker.find('.postcode-picker-button')                # The find address button
+    @input              = picker.find('.postcode-picker-edit-field')            # The edit box where the postcode is entered
+    @valid_countries    = @normalizeCountry(@picker.data('vc'))                 # The list of valid countries for this picker
+    manualLink          = picker.find('.postcode-picker-manual-link')           # The link to enter an address manually
+    selectButton        = picker.find('.postcode-picker-cta')                   # The select address button
+    changePostcodeLink  = picker.find('.change-postcode-link')                  # The Change link displayed after the address has been selected
+    changePostcodeLink2 = picker.find('.change-postcode-link2')                 # The Change link displayed where the entered postcode is redisplayed above the drop down box
 
     # if the postcode is populated, then it means that the address was correctly selected earlier
     # and we want to display it.
     if @addressSuccessfullySelectedOnPreviousPage() || @errorsExistForStreetOrPostcode()
-      @picker.find('.address.extra' ).show()
-      @picker.find('.postcode-selection-els').hide()
-      @picker.find('.postcode-display').hide()
-      @hideManualLink()
+      @picker.find('.address.extra' ).show()                                    # Show the address block as if it were manually entered
+      @picker.find('.postcode-selection-els').hide()                            # Hide the postocode entry edit field and Find Address button
+      @picker.find('.postcode-display').hide()                                  # Hide the redisplay of the entered postcode
+      @hideManualLink()                                                         # Hide the Enter Postcode Manually link
 
     if @streetAndPostcodeAlreadyEntered()
-      @picker.find('.address-postcode input').attr('readonly', '1')
+      @picker.find('.address-postcode input').attr('readonly', '1')             # Make the postcode box of the displayed address uneditable
 
-
-
+    # Lookup postcode when Find Address button clicked
+    #
     @button.on 'click', =>
       @lookupPostcode()
 
+    # Display address entry fields when manual link is clicked
     manualLink.on 'click' , =>
-      @toggleAddressFields()
-      changePostcodeLink.css('display', 'none')
-      @picker.find('.address-postcode input').removeAttr('readonly')
+      @toggleAddressFields()                                                    # Toggle visibility of address fields, blank out any values that they may contains
+      changePostcodeLink.css('display', 'none')                                 # Hide the change postcode link
+      @picker.find('.address-postcode input').removeAttr('readonly')            # Make Postcode edit field editable
       false
 
     @input.on 'keyup', =>
@@ -49,18 +50,16 @@ class PostcodePicker
       @picker.find('.postcode-selection-els').show()
       @input.val('')
       @input.focus()
-      
 
     changePostcodeLink2.on 'click', =>
       @picker.find('.postcode-display').hide()
       @picker.find('.postcode-select-container').hide()
       @showPostcodeSearchComponent()
-   
 
   normalizeCountry: (vc) =>
     if vc == 'all'
       result = 'UK'
-    else 
+    else
       # all of this crapola because IE 7 and 8 doesn't support the Array.map()  JS method
       countries = vc.split('+')
       capitalizedCountries = new Array
@@ -85,17 +84,14 @@ class PostcodePicker
       result = result + " and " + last_item
     else
       result = array[0]
-      
-    result
 
+    result
 
   streetAndPostcodeAlreadyEntered: =>
     @picker.find('input.smalltext.postcode').val() != '' && @picker.find('.street textarea').val() != ''
 
-
   addressSuccessfullySelectedOnPreviousPage: =>
     @picker.find('input.smalltext.postcode').val() != ''
-
 
   errorsExistForStreetOrPostcode: =>
     @picker.find('.street.error').size() != 0 || @picker.find('.address-postcode.error').size() != 0
@@ -120,10 +116,9 @@ class PostcodePicker
     postcode = selectedAddress.postcode
     @picker.find('.street textarea').val(street)
     @picker.find('.address-postcode input').val(postcode)
+    @picker.find('.address-postcode input').trigger('change')
     @picker.find('.address-postcode input').attr('readonly', '1')
-
     @picker.find('.postcode-picker-address-list').hide()
-    
     @picker.find('.address.extra' ).show()
     @picker.find('.postcode-selection-els').hide()
     @picker.find('.postcode-display').hide()
@@ -156,7 +151,7 @@ class PostcodePicker
     @picker.find('.postcode-picker-address-list').show()
     @picker.find('.address-picker-select').focus()
     true
-    
+
   hidePostcodeSearchComponent: ->
     @picker.find('.postcode-selection-els').hide()
 
@@ -208,4 +203,3 @@ root.PostcodePicker = PostcodePicker
 jQuery ->
    _.each $('.postcode-picker-container'), (picker) ->
      new PostcodePicker( $(picker) )
-

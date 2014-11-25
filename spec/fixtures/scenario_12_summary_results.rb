@@ -1,3 +1,4 @@
+# coding: utf-8
 {
   claim_property_house: [
     "Type of property",
@@ -94,5 +95,17 @@
   claim_possession_hearing: [
     "Claimant to be at court if there's a hearing",
     "No"
+  ],
+  claim_court_name: [
+    "Name",
+    "court_name"
+  ],
+  claim_court_address: [
+    "Address",
+    "court_street"
+  ],
+  claim_court_postcode: [
+    "Postcode",
+    "postcode"
   ]
 }

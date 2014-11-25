@@ -9,7 +9,8 @@ class ErrorMessageSequencer
     'claim_deposit',
     'claim_license',
     'claim_order',
-    'claim_possession'
+    'claim_possession',
+    'claim_court'
   ]
 
   FIELD_ORDER = {
@@ -84,6 +85,12 @@ class ErrorMessageSequencer
 
     'claim_possession' => [
       'claim_possession_hearing_error',
+    ],
+
+    'claim_court' => [
+      'claim_court_court_name',
+      'claim_court_street_error',
+      'claim_court_postcode_error'
     ]
   }
 

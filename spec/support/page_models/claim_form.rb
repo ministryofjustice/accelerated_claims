@@ -35,6 +35,22 @@ class ClaimForm
     fill_fee_account
     fill_legal_costs
     fill_reference_number
+    fill_court_details
+  end
+
+  def fill_court_details
+    prefix = 'claim_court_'
+    street = "\##{prefix}street"
+
+    if @js_on == true
+      find('#court-details').click
+      page.all(street, visible: false).first.set('court_street')
+    else
+      page.all(street).first.set('court_street')
+    end
+
+    find("##{prefix}court_name").set 'court_name'
+    find("##{prefix}postcode").set 'postcode'
   end
 
   def complete_form_with_javascript
@@ -69,6 +85,7 @@ class ClaimForm
     fill_legal_costs
     fill_reference_number_with_js unless claimant_type == 'individual'
     fill_fee_account_with_js
+    fill_court_details
   end
 
   def select_number_of_claimants
@@ -107,7 +124,7 @@ class ClaimForm
   def fill_claimant_contact_with_js
     if get_data('javascript','separate_correspondence_address') == 'Yes'
       find('#correspondence-address').click
-      complete_details_of_person('claimant_contact', claimant_contact: true)
+      complete_details_of_person('claimant_contact')
       fill_in_text_field('claimant_contact', 'company_name')
     end
     if get_data('javascript','other_contact_details') == 'Yes'
@@ -160,11 +177,11 @@ class ClaimForm
   end
 
   def fill_in_text_field(prefix, key)
-    fill_in_value 'input', "claim_#{prefix}_#{key}", get_data(prefix, key)
+    fill_text_field "claim_#{prefix}_#{key}", get_data(prefix, key)
   end
 
   def fill_in_text_area(prefix, key)
-    fill_in_value 'textarea', "claim_#{prefix}_#{key}", get_data(prefix, key)
+    fill_text_area "claim_#{prefix}_#{key}", get_data(prefix, key)
   end
 
   def fill_in_text_field_if_present(prefix, key)
@@ -229,7 +246,7 @@ class ClaimForm
     fill_in_text_field(prefix, 'full_name')
 
     if options[:complete_address]
-      click_manual_address_link(prefix) unless options[:claimant_contact] || !@js_on
+      click_manual_address_link(prefix) unless !@js_on
       fill_in_text_area(prefix, 'street')
       fill_in_text_field(prefix, 'postcode')
 

@@ -76,20 +76,12 @@ describe Claimant, :type => :model do
         claimant.postcode = nil
         expect(claimant).not_to be_valid
         expect(claimant.errors[:street]).to eq ["Enter claimant 1's full address"]
-        expect(claimant.errors[:postcode]).to eq ["Enter claimant 1's postcode"]
       end
 
       it 'should not be valid if street is missing' do
         claimant.street = nil
         expect(claimant).not_to be_valid
         expect(claimant.errors[:street]).to eq ["Enter claimant 1's full address"]
-        expect(claimant.errors[:postcode_picker]).to be_empty
-      end
-
-      it 'should not be valid if the postcocde is missing' do
-        claimant.postcode = nil
-        expect(claimant).not_to be_valid
-        expect(claimant.errors[:postcode]).to eq ["Enter claimant 1's postcode"]
         expect(claimant.errors[:postcode_picker]).to be_empty
       end
     end
@@ -173,22 +165,9 @@ describe Claimant, :type => :model do
         expect(claimant.errors[:title]).to eq ["Enter claimant 2's title"]
         expect(claimant.errors[:full_name]).to eq ["Enter claimant 2's full name"]
         expect(claimant.errors[:street]).to eq ["Enter claimant 2's full address"]
-        expect(claimant.errors[:postcode]).to eq ["Enter claimant 2's postcode"]
       end
 
       describe 'address validation' do
-        it 'should not validate when postcode is incomplete' do
-          claimant.postcode = 'SW10'
-          expect(claimant).not_to be_valid
-          expect(claimant.errors[:postcode]).to eq ["Claimant 2's postcode is not a full postcode"]
-        end
-
-        it 'should not validate when postcode is invalid' do
-          claimant.postcode = 'SW10XX 5FF'
-          expect(claimant).not_to be_valid
-          expect(claimant.errors[:postcode]).to eq ["is too long (maximum is 8 characters)", "Enter a valid postcode for claimant 2"]
-        end
-
         it 'should not validate when street is too long' do
           claimant.street = "x" * 72
           expect(claimant).not_to be_valid

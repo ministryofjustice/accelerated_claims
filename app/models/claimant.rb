@@ -20,11 +20,6 @@ class Claimant < BaseClass
 
   def initialize(params = {})
     super
-    unless params[:postcode].blank?
-      pc = UKPostcode.new(params[:postcode])
-      @postcode = pc.norm if pc.valid?
-    end
-
     unless params.include?(:validate_presence)
       @validate_presence = true unless params[:validate_absence] == true
     end
@@ -142,7 +137,6 @@ class Claimant < BaseClass
     validate_address_same_as_first_claimant
     if check_address_fields?
       errors[:street] << "Enter #{possessive_subject_description} full address" if street.blank?
-      errors[:postcode] << "Enter #{possessive_subject_description} postcode" if postcode.blank?
     end
   end
 

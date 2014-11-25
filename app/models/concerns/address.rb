@@ -9,18 +9,11 @@ module Address
     attr_accessor :postcode
 
     validates :street,   length: { maximum: 70 }
-    validates :postcode, length: { maximum: 8 }
-
-    validate :full_postcode
     validate :maximum_number_of_newlines
 
     if @do_partial_address_completion_validation
       with_options if: -> address { address.postcode.present? } do |a|
         a.validates :street, presence: { message: 'Enter the full address' }
-      end
-
-      with_options if: -> address { address.street.present? } do |a|
-        a.validates :postcode, presence: { message: 'Enter the postcode' }
       end
     end
 
@@ -30,16 +23,6 @@ module Address
     unless street.nil?
       if street.strip.count("\n") > 3
         errors.add(:street, "#{possessive_subject_description.capitalize} address can’t be longer than 4 lines.")
-      end
-    end
-  end
-
-  def full_postcode
-    if postcode.present?
-      if !UKPostcode.new(postcode).valid?
-        errors.add(:postcode, "Enter a valid postcode for #{subject_description}")
-      elsif !UKPostcode.new(postcode).full?
-        errors.add(:postcode, "#{possessive_subject_description.capitalize} postcode is not a full postcode")
       end
     end
   end

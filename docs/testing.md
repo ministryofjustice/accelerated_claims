@@ -84,3 +84,19 @@ Load testing is done through the tsung-wrapper repo.
 
 Tsung cannot cope with sending back Rails CSRF authenticity tokens, so the server has to be run without CSRF protection for loadtesting.  This is
 achieved by setting an environment variable CC_NO_CSRF to any value.
+
+## W3C validation tests
+
+These are configured to run each night by Jenkins.
+
+To run them locally on your machine:
+
+```
+rake w3c:validate
+```
+
+or, to include outputs of the errors:
+
+```
+w3c_debug=true rake w3c:validate
+```

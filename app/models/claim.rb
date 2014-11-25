@@ -32,6 +32,10 @@ class Claim < BaseClass
     @errors = ActiveModel::Errors.new(self)
   end
 
+  def normalize_all_postcodes
+    [ @property ].each { |my_attr| my_attr.normalize_postcode }
+  end
+
   def javascript_enabled?
     @javascript_enabled
   end
@@ -233,7 +237,7 @@ class Claim < BaseClass
   end
 
   def singular_submodels
-    %w(Fee Property Notice License Deposit Possession Order Tenancy ClaimantContact LegalCost ReferenceNumber)
+    %w(Fee Property Notice License Deposit Possession Order Tenancy ClaimantContact LegalCost ReferenceNumber Court)
   end
 
   def attributes_for_submodel_collections
@@ -302,4 +306,3 @@ class Claim < BaseClass
   end
 
 end
-

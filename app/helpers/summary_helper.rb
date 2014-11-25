@@ -66,7 +66,7 @@ module SummaryHelper
     claimant_street_different = (participant[/claimant_\d+/] &&
         (values['street'] &&
         values['street'] != @claim['claimant_1']['street']) )
-    
+
     if first_claimant ||
         doesnt_inhabit_property ||
         not_same_as_first_claimant ||

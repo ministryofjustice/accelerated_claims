@@ -85,22 +85,6 @@ describe ClaimantContact, :type => :model do
 
   end
 
-  context 'validate postcode' do
-    it 'should be invalid if postcode is too short' do
-      params = claim_post_data['claim']['claimant_contact'].merge(:postcode => 'sw10')
-      cc = ClaimantContact.new(params)
-      expect(cc).not_to be_valid
-      expect(cc.errors.full_messages).to eq( [ "Postcode Claimant contact's postcode is not a full postcode" ] )
-    end
-
-    it 'should invalid if postcode not valid postcode' do
-      params = claim_post_data['claim']['claimant_contact'].merge(:postcode => 'sw109733')
-      cc = ClaimantContact.new(params)
-      expect(cc).not_to be_valid
-      expect(cc.errors.full_messages).to eq( [ "Postcode Enter a valid postcode for claimant contact" ] )
-    end
-  end
-
   context 'incomplete alternative address' do
     it 'should be valid if no fields are present' do
       cc = ClaimantContact.new
@@ -154,10 +138,7 @@ describe ClaimantContact, :type => :model do
         params = claim_post_data['claim']['claimant_contact'].merge(:street => '', :postcode => '')
         cc = ClaimantContact.new(params)
         expect(cc).not_to be_valid
-        expect(cc.errors.full_messages).to eq( [
-                  "Street must be present if name and/or company has been specified",
-                  "Postcode must be present if name and/or company has been specified"
-           ] )
+        expect(cc.errors.full_messages).to eq( [ "Street must be present if name and/or company has been specified" ] )
       end
 
       it 'should not be valid if street is missing' do
@@ -166,15 +147,7 @@ describe ClaimantContact, :type => :model do
         expect(cc).not_to be_valid
         expect(cc.errors.full_messages).to eq( ["Street Enter the full address", "Street must be present if name and/or company has been specified"] )
       end
-
-      it 'should not be valid if postcode is missing' do
-        params = claim_post_data['claim']['claimant_contact'].merge(:postcode => '')
-        cc = ClaimantContact.new(params)
-        expect(cc).not_to be_valid
-        expect(cc.errors.full_messages).to eq( ["Postcode Enter the postcode", "Postcode must be present if name and/or company has been specified"] )
-      end
     end
-
   end
 
   subject { claimant_contact }
