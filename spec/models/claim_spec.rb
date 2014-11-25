@@ -349,8 +349,8 @@ describe Claim, :type => :model do
         claim = Claim.new(data)
         expect(claim).to_not be_valid
         expect(claim.claimant_2.errors.messages[:full_name]).to eq ['must not be entered if number of claimants is 1']
-        expect(claim.claimant_2.errors.messages[:street]).to eq ['must not be entered if number of claimants is 1']
-        expect(claim.claimant_2.errors.messages[:postcode]).to eq ['must not be entered if number of claimants is 1']
+        expect(claim.claimant_2.errors.messages[:street]).to eq ['Address for claimant 2 must be blank']
+        expect(claim.claimant_2.errors.messages[:postcode]).to eq ['Postcode for claimant 2 must be blank']
       end
 
       it 'should be invalid when there is no claimant 1 data' do
@@ -599,6 +599,13 @@ describe Claim, :type => :model do
           javascript_enabled_params['num_defendants'] = 1
           javascript_enabled_params.delete('defendant_2')
           claim = Claim.new(javascript_enabled_params)
+
+          puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+          
+          claim.valid?
+          puts claim.errors.full_messages
+          expect(false).to be true
+
           expect(claim).to be_valid
           expect(claim.errors[:base]).to be_empty
         end

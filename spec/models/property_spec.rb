@@ -88,7 +88,7 @@ describe Property, :type => :model do
       it 'should generate an error message of the street is missing' do
         property.street = nil
         expect(property.valid?).not_to be true
-        expect(property.errors[:street]).to eq ['Enter the property address']
+        expect(property.errors[:street]).to eq ['Enter property full address']
       end
     end
   end

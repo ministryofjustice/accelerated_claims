@@ -1,7 +1,5 @@
 class Address < BaseClass
 
- 
-
  attr_reader    :england_and_wales_only, :must_be_blank
  attr_accessor  :postcode, :street
 
@@ -16,9 +14,9 @@ class Address < BaseClass
     @street                 = @parent.params[:street]
     @postcode               = @parent.params[:postcode]
     @england_and_wales_only = false
-    @must_be_blank          = false
+    @must_be_blank          = determine_blankness
   end
-  
+
   # forces validation of postcode to England and Wales only
   def england_and_wales_only!
     @england_and_wales_only = true
@@ -38,8 +36,6 @@ class Address < BaseClass
   end
 
   def valid?
-    puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    
     results = []
     results << validate_postcode if @england_and_wales_only == true
     results << validate_presence if @must_be_blank == false
@@ -56,11 +52,10 @@ class Address < BaseClass
   end
 
   def validate_maximum_street_length
-    puts "++++++ DEBUG max street length #{@street.length} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    puts @street
-    puts @street.length
     if !@street.nil? && @street.length > 70
       errors[:street] << "Property address is too long (maximum 70 characters)"
+      return false
+    end
     return true
   end
 
@@ -79,7 +74,7 @@ class Address < BaseClass
   def indented_details(spaces_to_indent)
     postcode1, postcode2 = split_postcode
     indentation = ' ' * spaces_to_indent
-    str  = "#{indentation}#{title} #{full_name}\n"
+    str  = "#{indentation}#{@parent.title} #{@parent.full_name}\n"
     address_lines = street.split("\n")
     address_lines.each { |al| str += "#{indentation}#{al}\n" }
     str += "#{indentation}#{postcode1} #{postcode2}\n"
@@ -88,7 +83,7 @@ class Address < BaseClass
 
   def validate_presence
     if @street.blank?
-      errors['street'] << "Enter the #{subject_description} address"
+      errors['street'] << "Enter #{possessive_subject_description} full address"
       return false
     end
     return true
@@ -134,6 +129,15 @@ class Address < BaseClass
   end
 
   private 
+
+  def determine_blankness
+    if @parent.params['validate_absence'] == true || @parent.params['address_same_as_first_claimant'] == 'Yes' || @parent.params['validate_address_same_as_first_claimant'] == true
+      true
+    else
+      false
+    end
+  end
+  
 
   def transfer_error_messages_to_parent
     [:street, :postcode].each do |field|

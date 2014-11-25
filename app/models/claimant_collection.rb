@@ -4,6 +4,8 @@ class ClaimantCollection < ParticipantCollection
   MAX_CLAIMANTS = 4
 
   def initialize(claim_params)
+    puts "++++++ DEBUG initialize claimant collection ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
     @num_participants = claim_params['num_claimants'].to_i || 0
     @claimant_type = claim_params['claimant_type']
     super
@@ -28,6 +30,8 @@ class ClaimantCollection < ParticipantCollection
   private
 
   def populate_claimants(claim_params, validate_address_same_as_first_claimant)
+    puts "++++++ DEBUG populate claimants validate_address_same_as_first_claimant: #{validate_address_same_as_first_claimant.inspect} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
     ( 1 .. ClaimantCollection.max_claimants ).each do |index|
       if claim_params.nil? || claim_params.empty?
         @participants[index] = Claimant.new( 'claimant_num' => index,
