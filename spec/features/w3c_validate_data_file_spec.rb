@@ -1,27 +1,36 @@
-  def run_context (test_data)
+  def run_test (test_data)
     if ENV['w3c_validate']
       test = eval(test_data).to_h
-      describe "#{test[:controller].camelize}Controller".constantize , :type => :controller do
+      describe "#{test[:controller].camelize}Controller".safe_constantize , :type => :controller do
         render_views
         describe "##{test[:action]}" do
-          it 'should render valid html' do
-
+          it "should #{test[:test_name]}" do
             action = "#{test[:action]}".to_sym
             action_redir =  "#{test[:action_redir]}".to_sym
-
+            action_redir_err =  "#{test[:action_redir_err]}".to_sym
             path_redir = test[:redirect_path]
             redirect_path = Rails.application.routes.recognize_path(path_redir, :method => :get) if !path_redir.nil?
 
-            if !test[:action_redir].blank? && 'GET'.match(test[:method])
+            if 'POST'.match(test[:method])
+              post action, { test[:param_name] => test[:params]}
+              if response.code!=200
+                if test[:redirect_path].nil? && !test[:action_redir_err].nil?
+                  get action_redir_err
+                elsif !test[:redirect_path].nil? && !test[:action_redir].nil?
+                  expect(response).to redirect_to(redirect_path)
+                  get action_redir
+                end
+              end
+            elsif !test[:action_redir].blank? && 'GET'.match(test[:method])
               get action
               expect(response).to redirect_to(redirect_path)
               get action_redir
             elsif 'GET'.match(test[:method])
               get action
             end
-            page_valid = validate_view(response,{w3c_debug: test[:w3c_debug] || false})
+            page_valid = validate_view(response)
+            puts page_valid.message if ENV['w3c_debug'] && !page_valid.message.nil?
             if page_valid.result=='error'
-              # @validation_results.increment_errors
               expect(page_valid.message).not_to eql(nil)
               raise page_valid.message
             elsif page_valid.result=='fail'
@@ -29,7 +38,6 @@
               raise page_valid.message
             else
               expect(page_valid.errors.length).to eql(0)
-              # @validation_results.increment_passes
             end
           end
         end
@@ -39,6 +47,6 @@
 
   eval(IO.read('spec/fixtures/w3c_data.rb')).each do |test|
     eval(%Q|
-          run_context '#{test}'
+          run_test '#{test}'
       |)
   end
