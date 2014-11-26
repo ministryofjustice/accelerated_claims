@@ -1,6 +1,6 @@
 
 .postcode.postcode-picker-container{data: {vc: @valid_countries}, class: @hide ? 'hide' : ''}
-  .row.postcode-lookup.rel.js-only
+  .postcode-lookup.rel.js-only
 
     .postcode-display.hide{style: "margin-bottom: 20px;"}
       Postcode:
@@ -9,28 +9,24 @@
       %span
         %a.change-postcode-link2.js-only{id: "#{@prefix}-manual_change-link-2", href: "#change_postcode", style: "display: inline; margin-left: 10px;"} Change
 
-
-
     .postcode-selection-els
-      %label.postcode-picker-label{:for => "#{@prefix}_#{@postcode_attr}_edit_field"} Postcode
-      %input.smalltext.postcode-picker-edit-field{:maxlength => "8",
-              :id => "#{@prefix}_#{@postcode_attr}_edit_field",
-              :name => "#{@name_prefix}[#{@postcode_attr}]",
-              :size => "8",
-              :type => "text"}
-      %a.button.primary.postcode-picker-button{:href => "##{@prefix}_postcode_picker", data: {country: @valid_countries} }
+      %label.postcode-picker-label{for: "#{@prefix}_#{@postcode_attr}_edit_field"} Postcode
+      %input.narrow.postcode-picker-edit-field{maxlength: "8",
+              id: "#{@prefix}_#{@postcode_attr}_edit_field",
+              name: "#{@name_prefix}[#{@postcode_attr}]",
+              size: "8",
+              type: "text"}
+      %a.button.primary.postcode-picker-button{href: "##{@prefix}_postcode_picker", data: {country: @valid_countries} }
         = @button_label
-
 
     .postcode-picker-hourglass.hide
       Finding address....
-
 
     .postcode-select-container.sub-panel.hide{style: "margin-top: 0px;"}
       %fieldset.postcode-picker-address-list
         %label.hint{ for: "#{@prefix}_address_select"} Please select an address
         %select.address-picker-select{id: "#{@prefix}_address_select", name: "sel-address", size: "6", role:'listbox'}
-          %option{id:"#{@prefix}-listbox", role: "option", disabled: "disabled", :value => ""} Please select an address
+          %option{id:"#{@prefix}-listbox", role: "option", disabled: "disabled", value: ""} Please select an address
         %a.row.button.primary.postcode-picker-cta{id: "#{@prefix}_selectaddress", href: "##{@prefix}_postcode_picker_manual_link", style: "margin-bottom: 20px;"}
           Select address
 
@@ -43,13 +39,13 @@
 
     - options = @form.object.errors[:street].any? ? {id: "#{@prefix}_#{@address_attr}_error", class: 'error'} : {}
     .row.street{options}
-      %label{:for => "#{@prefix}_#{@address_attr}"}
+      %label{for: "#{@prefix}_#{@address_attr}"}
         Full address
         = @street_hint
         - unless @form.object.errors[:street].empty?
           %span.error Enter the full address
 
-      %textarea.street{id: "#{@prefix}_#{@address_attr}", :maxlength => "70", :name => "#{@name}[street]"}
+      %textarea.street{id: "#{@prefix}_#{@address_attr}", maxlength: "70", name: "#{@name}[street]"}
         = "#{@address_value}"
 
     .row.js-only
@@ -59,12 +55,12 @@
     - options = @form.object.errors[:postcode].any? ? {id: "#{@prefix}_#{@postcode_attr}_error", class: 'error'} : {}
 
     .row.address-postcode{options}
-      %label{:for => "#{@prefix}_#{@postcode_attr}"}
+      %label{for: "#{@prefix}_#{@postcode_attr}"}
         Postcode
         - unless @form.object.errors[:postcode].empty?
           - @form.object.errors[:postcode].each do |message|
             %span.error= message
       %br
       %div{style: "overflow: hidden; width: 100%"}
-        %input.smalltext.postcode{:id => "#{@prefix}_#{@postcode_attr}", :maxlength => "8", :name => "#{@name}[#{@postcode_attr}]", value: "#{@postcode_value}", :size => "8", :type => "text", style: 'float: left;  margin-right: 20px;'}
+        %input.smalltext.postcode{id: "#{@prefix}_#{@postcode_attr}", maxlength: "8", name: "#{@name}[#{@postcode_attr}]", value: "#{@postcode_value}", size: "8", type: "text", style: 'float: left;  margin-right: 20px;'}
         %a.change-postcode-link.js-only{href: "#change_postcode", style: 'float: left;'} Change
