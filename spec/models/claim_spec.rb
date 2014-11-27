@@ -25,34 +25,34 @@ describe Claim, :type => :model do
       end
     end
 
-    it 'should set livepc to false if false in claim params' do
+    it 'should set use_live_postcode_lookup to false if false in claim params' do
       data = claim_post_data['claim']
       claim = Claim.new(data)
-      expect(claim.livepc).to be false
+      expect(claim.use_live_postcode_lookup).to be false
     end
 
-    it 'should set livepc to true if true in claim params' do
-      data = claim_post_data['claim'].merge( 'livepc' => true )
+    it 'should set use_live_postcode_lookup to true if true in claim params' do
+      data = claim_post_data['claim'].merge( 'use_live_postcode_lookup' => true )
       claim = Claim.new(data)
-      expect(claim.livepc).to be true
+      expect(claim.use_live_postcode_lookup).to be true
     end
 
-    it 'should set livepc to false if nothing specified in params' do
+    it 'should set use_live_postcode_lookup to false if nothing specified in params' do
       data = claim_post_data['claim']
-      data.delete('livepc')
+      data.delete('use_live_postcode_lookup')
       claim = Claim.new(data)
-      expect(claim.livepc).to be false
+      expect(claim.use_live_postcode_lookup).to be false
     end
 
-    it 'should pass livepc false param to property' do
+    it 'should pass use_live_postcode_lookup false param to property' do
       data = claim_post_data['claim']
-      expect(Property).to receive(:new).with({"street"=>"Mucho Gracias Road\nLondon", "postcode"=>"SW1H 9AJ", "house"=>"Yes", "livepc"=>false})
+      expect(Property).to receive(:new).with({"street"=>"Mucho Gracias Road\nLondon", "postcode"=>"SW1H 9AJ", "house"=>"Yes", "use_live_postcode_lookup"=>false})
       claim = Claim.new(data)
     end
 
-    it 'should pass livepc true param to property' do
-      data = claim_post_data['claim'].merge( 'livepc' => true )
-      expect(Property).to receive(:new).with({"street"=>"Mucho Gracias Road\nLondon", "postcode"=>"SW1H 9AJ", "house"=>"Yes", "livepc"=>true})
+    it 'should pass use_live_postcode_lookup true param to property' do
+      data = claim_post_data['claim'].merge( 'use_live_postcode_lookup' => true )
+      expect(Property).to receive(:new).with({"street"=>"Mucho Gracias Road\nLondon", "postcode"=>"SW1H 9AJ", "house"=>"Yes", "use_live_postcode_lookup"=>true})
       claim = Claim.new(data)
     end
   end

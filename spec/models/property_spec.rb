@@ -6,19 +6,19 @@ describe Property, :type => :model do
   end
 
   describe 'initialization' do
-    it 'should instantiate livepc if in params as true' do
-      property = Property.new(HashWithIndifferentAccess.new(street: 'xxxx', postcode: 'RG2 7PU', house: 'Yes', livepc: true))
-      expect(property.livepc).to be true
+    it 'should instantiate use_live_postcode_lookup if in params as true' do
+      property = Property.new(use_live_postcode_lookup: true)
+      expect(property.address.use_live_postcode_lookup).to be true
     end
 
-    it 'should instantiate livepc if in params as false' do
-      property = Property.new(HashWithIndifferentAccess.new(street: 'xxxx', postcode: 'RG2 7PU', house: 'Yes', livepc: false))
-      expect(property.livepc).to be false
+    it 'should instantiate use_live_postcode_lookup if in params as false' do
+      property = Property.new(use_live_postcode_lookup: false)
+      expect(property.address.use_live_postcode_lookup).to be false
     end
 
-    it 'should instantiate livepc if absent from params' do
-      property = Property.new(HashWithIndifferentAccess.new(street: 'xxxx', postcode: 'RG2 7PU', house: 'Yes'))
-      expect(property.livepc).to be false
+    it 'should instantiate use_live_postcode_lookup if absent from params' do
+      property = Property.new()
+      expect(property.address.use_live_postcode_lookup).to be false
     end
   end
 
@@ -75,7 +75,6 @@ describe Property, :type => :model do
       end
     end
 
-    
     context 'missing postcode' do
       it 'should generate an error message' do
         property.postcode = nil

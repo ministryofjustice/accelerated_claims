@@ -3,7 +3,6 @@ class ClaimantCollection < ParticipantCollection
 
   MAX_CLAIMANTS = 4
 
-
   def initialize(claim_params)
     @num_participants = claim_params['num_claimants'].to_i || 0
     @claimant_type = claim_params['claimant_type']

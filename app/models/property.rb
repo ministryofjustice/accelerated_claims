@@ -1,21 +1,18 @@
-require 'uk_postcode'
-
 class Property < BaseClass
 
   attr_accessor   :house, :address
-  attr_reader     :livepc, :params
 
   delegate :street, :street=, :postcode, :postcode=, to: :address
 
   validates :house, presence: { message: 'Please select what kind of property it is' }, inclusion: { in: ['Yes', 'No'] }
   validate :address_validation
 
-  def initialize(params)
-    @params = params
-    @livepc = params['livepc'] || false
+  def initialize(params = {})
     @address = Address.new(self)
-    @address.england_and_wales_only!
     super
+
+    @address.use_live_postcode_lookup = params[:use_live_postcode_lookup] || false
+    @address.england_and_wales_only!
   end
 
   def address_validation

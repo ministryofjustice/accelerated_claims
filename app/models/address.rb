@@ -1,19 +1,15 @@
 class Address < BaseClass
 
   attr_reader    :england_and_wales_only, :must_be_blank
-  attr_accessor  :postcode, :street
+  attr_accessor  :postcode, :street, :absence_validation_message
+  attr_accessor  :use_live_postcode_lookup
 
   # Instantiate and Address object
-  # options:
-  #    :absence_validation_message - a non-standard message to display if validate absence fails
   #
-  def initialize(parent, options = {})
+  def initialize(parent)
     @parent                 = parent
-    @options                = options
-    @street                 = @parent.params[:street]
-    @postcode               = @parent.params[:postcode]
     @england_and_wales_only = false
-    @must_be_blank          = determine_blankness
+    @must_be_blank          = false
     @suppress_validation    = false
   end
 
@@ -25,6 +21,10 @@ class Address < BaseClass
   # forces validation of address to be blank
   def must_be_blank!
     @must_be_blank = true
+  end
+
+  def blank?
+    @street.blank? && @postcode.blank?
   end
 
   def subject_description
@@ -43,14 +43,14 @@ class Address < BaseClass
   def valid?
     return true if @suppress_validation
     results = []
-    results << validate_postcode if @england_and_wales_only == true
-    results << validate_presence if @must_be_blank == false
-    results << validate_absence if @must_be_blank == true
+    results << validate_postcode_in_england_or_wales if @england_and_wales_only
+    results << validate_presence unless @must_be_blank
+    results << validate_absence if @must_be_blank
     results << validate_maximum_street_length
     results << validate_maximum_number_of_newlines
-    result = results.include?(false) ? false : true
-    transfer_error_messages_to_parent if result == false
-    result
+    valid = results.include?(false) ? false : true
+    transfer_error_messages_to_parent unless valid
+    valid
   end
 
   def ==(other)
@@ -105,21 +105,21 @@ class Address < BaseClass
   end
 
   def validate_absence_error_message(attribute)
-    if @options.key?(:absence_validation_message)
-      @options[:absence_validation_message].sub('%%attribute%%', attribute).capitalize
+    if absence_validation_message
+      absence_validation_message.sub('%%attribute%%', attribute).capitalize
     else
       "#{attribute} for #{subject_description} must be blank".capitalize
     end
   end
 
-  def validate_postcode
+  def validate_postcode_in_england_or_wales
     if postcode.blank? || UKPostcode.new(postcode).valid? == false
       errors['postcode'] << "Please enter a valid postcode for a property in England and Wales"
       return false
     end
 
     if postcode.present?
-      plp = PostcodeLookupProxy.new(postcode, ['England', 'Wales'], @livepc)
+      plp = PostcodeLookupProxy.new(postcode, ['England', 'Wales'], @use_live_postcode_lookup)
       plp.lookup
       @postcode = plp.norm
 
@@ -142,14 +142,6 @@ class Address < BaseClass
   end
 
   private
-
-  def determine_blankness
-    if @parent.params['validate_absence'] == true || @parent.params['address_same_as_first_claimant'] == 'Yes'
-      true
-    else
-      false
-    end
-  end
 
   def transfer_error_messages_to_parent
     [:street, :postcode].each do |field|

@@ -1,7 +1,5 @@
 class Defendant < BaseClass
 
-  # include AddressModule
-
   attr_accessor :validate_presence, :validate_absence
 
   attr_accessor :title
@@ -20,23 +18,23 @@ class Defendant < BaseClass
   validate :validate_defendant_state
   validate :address_validation
 
-
   def initialize(params = {})
-    @params = params
-    unless params.include?(:validate_presence)
-      @validate_presence = true unless params[:validate_absence] == true
-    end
-    @validate_absence = @params[:validate_absence] == true ? true : false
-    if @validate_presence
-      @inhabits_property = address_params_blank? ? 'yes' : 'no'
-    end
-    
     @address = Address.new(self)
-    if @validate_absence == true 
-      @address.must_be_blank! 
-    end
-    @address.suppress_validation! if @inhabits_property == 'yes' 
     super
+
+    unless params.include?(:validate_presence)
+      @validate_presence = true unless validate_absence?
+    end
+
+    if validate_absence?
+      @address.must_be_blank!
+    end
+
+    if validate_presence?
+      @inhabits_property = @address.blank? ? 'yes' : 'no'
+    end
+
+    @address.suppress_validation! if @inhabits_property != 'no'
   end
 
   def inhabits_property_is_valid
@@ -64,13 +62,12 @@ class Defendant < BaseClass
     @address.valid?
   end
 
-
   def validate_presence?
-    self.validate_presence == true
+    @validate_presence == true
   end
 
   def validate_absence?
-    self.validate_absence == true
+    @validate_absence == true
   end
 
   def empty?
@@ -100,11 +97,6 @@ class Defendant < BaseClass
 
   def address_blank?
     (street.blank? && postcode.blank?)
-  end
-
-
-  def address_params_blank?
-    (@params[:street].blank? && @params[:postcode].blank?)
   end
 
   def subject_description

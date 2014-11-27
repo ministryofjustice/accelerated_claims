@@ -10,7 +10,6 @@ class Claimant < BaseClass
   attr_accessor :organization_name
   attr_accessor :claimant_type
   attr_accessor :address_same_as_first_claimant
-  attr_reader   :params
 
   delegate :street, :street=, :postcode, :postcode=, :indented_details, to: :address
 
@@ -22,17 +21,19 @@ class Claimant < BaseClass
   # validate :validate_address_same_as_first_claimant
 
   def initialize(params = {})
-    @params = HashWithIndifferentAccess.new(params)
     @address = Address.new(self)
+    super
+
     unless params.include?(:validate_presence)
-      @validate_presence = true unless params[:validate_absence] == true
+      @validate_presence = true unless @validate_absence
     end
 
-    @address.must_be_blank! if @validate_absence == true
+    if @validate_absence || @address_same_as_first_claimant == 'Yes'
+      @address.must_be_blank!
+    end
 
     @check_address_same_as_first_claimant = params['validate_address_same_as_first_claimant']
     @claimant_type = params['claimant_type']
-    super
   end
 
   def ==(other)
@@ -134,7 +135,7 @@ class Claimant < BaseClass
     if !first_claimant?
       if @check_address_same_as_first_claimant
         if !@validate_absence || @validate_presence
-          if @params[:address_same_as_first_claimant].blank?
+          if address_same_as_first_claimant.blank?
             errors.add(:address_same_as_first_claimant, "You must specify whether #{subject_description}'s address is the same as the first claimant")
             @address.suppress_validation!
           end

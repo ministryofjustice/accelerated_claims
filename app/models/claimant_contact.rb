@@ -1,4 +1,3 @@
-
 require 'email_validator'
 
 class ClaimantContact < BaseClass
@@ -7,7 +6,6 @@ class ClaimantContact < BaseClass
   attr_accessor :full_name
   attr_accessor :company_name
   attr_accessor :address
-  attr_accessor :params
 
   attr_accessor :email
   attr_accessor :phone
@@ -27,9 +25,10 @@ class ClaimantContact < BaseClass
   validate  :name_and_address_consistency
 
   def initialize(params = {})
-    @params = params
-    @address = Address.new(self, absence_validation_message: 'Claimant contact %%attribute%% must be blank if no full name or company name is specified')
+    @address = Address.new(self)
     super
+
+    @address.absence_validation_message= 'Claimant contact %%attribute%% must be blank if no full name or company name is specified'
   end
 
   def name_and_address_consistency

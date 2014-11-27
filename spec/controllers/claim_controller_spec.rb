@@ -1,32 +1,32 @@
 describe ClaimController, :type => :controller do
   render_views
 
-  context 'setting production and livepc' do
-    it 'should not be produciton nor livepc in demo with nothing in url' do
+  context 'setting production and use_live_postcode_lookup' do
+    it 'should not be produciton nor use_live_postcode_lookup in demo with nothing in url' do
       get :new
       expect(assigns(:production)).to be false
-      expect(assigns(:livepc)).to be false
+      expect(assigns(:use_live_postcode_lookup)).to be false
     end
 
-    it 'should not be production but should be livepc if url contains livepc' do
+    it 'should not be production but should be use_live_postcode_lookup if url contains use_live_postcode_lookup' do
       get :new, livepc: '1'
       expect(assigns(:production)).to be false
-      expect(assigns(:livepc)).to be true
+      expect(assigns(:use_live_postcode_lookup)).to be true
     end
 
-    it 'should be both production and livepc on staging' do
+    it 'should be both production and use_live_postcode_lookup on staging' do
       ENV['ENV_NAME'] = 'staging'
       get :new
       expect(assigns(:production)).to be true
-      expect(assigns(:livepc)).to be true
+      expect(assigns(:use_live_postcode_lookup)).to be true
       ENV['ENV_NAME'] = nil
     end
 
-    it 'should be both production and livepc on production' do
+    it 'should be both production and use_live_postcode_lookup on production' do
       ENV['ENV_NAME'] = 'production'
       get :new
       expect(assigns(:production)).to be true
-      expect(assigns(:livepc)).to be true
+      expect(assigns(:use_live_postcode_lookup)).to be true
       ENV['ENV_NAME'] = nil
     end
 

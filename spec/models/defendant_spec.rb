@@ -1,4 +1,5 @@
 describe Defendant, :type => :model do
+
   let(:defendant) do
     Defendant.new(title: "Mr",
                   full_name: "John Major",
@@ -84,8 +85,9 @@ describe Defendant, :type => :model do
       end
 
       it 'should not generate error messages for full name and postcode' do
-        defendant = Defendant.new( {:title=>"Mr", :full_name=>"John Major", street: '', postcode: '', defendant_num: 2, inhabits_property: ''} )
-        expect(defendant).not_to be_valid
+        defendant = Defendant.new( title: "Mr", full_name: "John Major",
+            street: '', postcode: '', defendant_num: 2, inhabits_property: '' )
+        expect(defendant).to be_valid
         expect(defendant.errors[:street]).to eq []
         expect(defendant.errors[:postcode]).to eq []
       end

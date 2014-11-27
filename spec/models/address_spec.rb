@@ -2,9 +2,9 @@
 describe 'Address', :type => :model do
 
   let(:address)  do
-      property = Property.new(street: 'my street', age: 20, house: 'yes', postcode: 'sw109lb')
-      address = Address.new(property)
-    end
+    claimant = Claimant.new(street: 'my street', age: 20, house: 'yes', postcode: 'sw109lb')
+    address = claimant.address
+  end
 
   describe '.new' do
 
@@ -31,7 +31,7 @@ describe 'Address', :type => :model do
 
     it 'should pick up the class name if the parent object does not repond to subject description' do
       allow(address.instance_variable_get(:@parent)).to receive(:respond_to?).and_return(false)
-      expect(address.subject_description).to eq 'Property'
+      expect(address.subject_description).to eq 'Claimant'
     end
   end
 
@@ -43,7 +43,7 @@ describe 'Address', :type => :model do
 
     it 'should pick up the class name if the parent object does not repond to subject description' do
       allow(address.instance_variable_get(:@parent)).to receive(:respond_to?).and_return(false)
-      expect(address.possessive_subject_description).to eq "Property's"
+      expect(address.possessive_subject_description).to eq "Claimant's"
     end
   end
 
@@ -61,14 +61,14 @@ describe 'Address', :type => :model do
           end
 
           it 'should reject scottish postcodes if england and wales only set' do
-            address = Address.new(Property.new(street: 'my scottish street', postcode: 'ab255xh'))
+            address = Property.new(street: 'my scottish street', postcode: 'ab255xh').address
             address.england_and_wales_only!
             expect(address).not_to be_valid
             expect(address.errors[:postcode]).to eq ["Postcode is in Scotland. You can only use this service to regain possession of properties in England and Wales."]
           end
 
           it 'should reject missing postcodes' do
-            address = Address.new(Property.new(street: 'my scottish street'))
+            address = Property.new(street: 'my scottish street').address
             address.england_and_wales_only!
             expect(address).not_to be_valid
             expect(address.errors[:postcode]).to eq ["Please enter a valid postcode for a property in England and Wales"]
@@ -76,18 +76,18 @@ describe 'Address', :type => :model do
         end
 
         context 'england and wales only not set' do
-          it 'should not reject scottish postcodes if england and wales only set' do
-            address = Address.new(Property.new(street: 'my scottish street', postcode: 'ab255xh'))
+          it 'should not reject scottish postcodes if england and wales only not set' do
+            address = Claimant.new(street: 'my scottish street', postcode: 'ab255xh').address
             expect(address).to be_valid
           end
 
           it 'should accept missing postcodes if england and wales only not set' do
-            address = Address.new(Property.new(street: 'my scottish street'))
+            address = Claimant.new(street: 'my scottish street').address
             expect(address).to be_valid
           end
 
           it 'should accept foreign postcodes if england and wales only not set' do
-            address = Address.new(Property.new(street: 'my scottish street', postcode: '90100'))
+            address = Claimant.new(street: 'my scottish street', postcode: '90100').address
             expect(address).to be_valid
           end
         end
@@ -95,25 +95,25 @@ describe 'Address', :type => :model do
 
       context 'street validation' do
         it 'should reject missing street' do
-          address = Address.new(Property.new(postcode: '90100'))
+          address = Property.new(postcode: '90100').address
           expect(address).not_to be_valid
           expect(address.errors[:street]).to eq ["Enter property full address"]
         end
 
         it 'should reject blank street' do
-          address = Address.new(Property.new(street: '', postcode: '90100'))
+          address = Property.new(street: '', postcode: '90100').address
           expect(address).not_to be_valid
           expect(address.errors[:street]).to eq ["Enter property full address"]
         end
 
         it 'should reject nil street' do
-          address = Address.new(Property.new(street: nil, postcode: '90100'))
+          address = Property.new(street: nil, postcode: '90100').address
           expect(address).not_to be_valid
           expect(address.errors[:street]).to eq ["Enter property full address"]
         end
 
         it 'should reject streets with more than 4 lines' do
-          address = Address.new(Property.new(street: "line 1\nline 2\nline 3\nline 4\nline 5", postcode: '90100'))
+          address = Property.new(street: "line 1\nline 2\nline 3\nline 4\nline 5", postcode: '90100').address
           expect(address).not_to be_valid
           expect(address.errors[:street]).to eq ["Property address can’t be longer than 4 lines"]
         end
@@ -122,37 +122,37 @@ describe 'Address', :type => :model do
 
     context 'with must_be_blank true' do
       it 'should accept blank street and postcode' do
-        address = Address.new(Property.new( {house: 'Yes'} ))
+        address = Claimant.new( {house: 'Yes'} ).address
         address.must_be_blank!
         expect(address).to be_valid
       end
 
       it 'should reject street present' do
-        address = Address.new(Property.new( {house: 'Yes', street: 'my street'} ))
+        address = Property.new( {house: 'Yes', street: 'my street'} ).address
         address.must_be_blank!
         expect(address).not_to be_valid
         expect(address.errors[:street]).to eq ["Full address for property must be blank"]
       end
 
       it 'should reject postcode present' do
-        address = Address.new(Property.new( {house: 'Yes', postcode: 'RG2 7PU'} ))
+        address = Property.new( {house: 'Yes', postcode: 'RG2 7PU'} ).address
         address.must_be_blank!
         expect(address).not_to be_valid
         expect(address.errors[:postcode]).to eq ["Postcode for property must be blank"]
       end
 
       it 'should reject street present with non standard message' do
-        address = Address.new(Property.new( {house: 'Yes', street: 'my street'} ), absence_validation_message: "%%attribute%% for property must be blank if xxxxx")
+        address = ClaimantContact.new( {house: 'Yes', street: 'my street'} ).address
         address.must_be_blank!
         expect(address).not_to be_valid
-        expect(address.errors[:street]).to eq ["Full address for property must be blank if xxxxx"]
+        expect(address.errors[:street]).to eq ["Claimant contact full address must be blank if no full name or company name is specified"]
       end
 
       it 'should reject postcode present with non standard message' do
-        address = Address.new(Property.new( {house: 'Yes', postcode: 'RG2 7PU'} ), absence_validation_message: "%%attribute%% for property must be blank if xxxxx")
+        address = ClaimantContact.new( {house: 'Yes', postcode: 'RG2 7PU'} ).address
         address.must_be_blank!
         expect(address).not_to be_valid
-        expect(address.errors[:postcode]).to eq ["Postcode for property must be blank if xxxxx"]
+        expect(address.errors[:postcode]).to eq ["Claimant contact postcode must be blank if no full name or company name is specified"]
       end
 
     end
@@ -172,21 +172,21 @@ describe 'Address', :type => :model do
 
   describe '#==' do
     it 'should be equal if the street and postcode are the same' do
-      a1 = Address.new(Property.new(street: 'my street', postcode: 'sw109lb', house: 'Yes'))
-      a2 = Address.new(Property.new(street: 'my street', postcode: 'sw109lb', house: 'No'))
+      a1 = Property.new(street: 'my street', postcode: 'sw109lb', house: 'Yes').address
+      a2 = Property.new(street: 'my street', postcode: 'sw109lb', house: 'No').address
       expect(a1 == a2).to be true
     end
 
     it 'should not be equal if the attrs are diffferent' do
-      a1 = Address.new(Property.new(street: 'my streetxx', postcode: 'sw109lb', house: 'Yes'))
-      a2 = Address.new(Property.new(street: 'my street', postcode: 'sw109lb', house: 'No'))
+      a1 = Property.new(street: 'my streetxx', postcode: 'sw109lb', house: 'Yes').address
+      a2 = Property.new(street: 'my street', postcode: 'sw109lb', house: 'No').address
       expect(a1 == a2).to be false
     end
   end
 
   describe 'suppress_validation' do
     it 'should clear all errrors and return true to valid' do
-      address = Address.new(Property.new( {house: 'Yes', postcode: 'RG2XXX7PU'} ))
+      address = Property.new( {house: 'Yes', postcode: 'RG2XXX7PU'} ).address
       expect(address).to_not be_valid
       expect(address.errors[:street]).to eq ['Enter property full address']
 

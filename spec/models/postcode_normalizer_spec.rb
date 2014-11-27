@@ -65,7 +65,7 @@ def raw_claim_params
     {"house"=>"Yes",
      "street"=>"kjk ;sldjfl;sdkjf; s",
      "postcode"=>"sw56ll",
-     "livepc"=>false},
+     "use_live_postcode_lookup"=>false},
    "claimant_type"=>"individual",
    "num_claimants"=>"2",
    "claimant_1"=>
@@ -349,7 +349,7 @@ def raw_claim_params
    "order"=>{"cost"=>"No"},
    "possession"=>{"hearing"=>"No"},
    "javascript_enabled"=>"Yes",
-   "livepc"=>false
+   "use_live_postcode_lookup"=>false
   }
 end
 
@@ -359,7 +359,7 @@ def normalized_params
     {"house"=>"Yes",
      "street"=>"kjk ;sldjfl;sdkjf; s",
      "postcode"=>"SW5 6LL",
-     "livepc"=>false},
+     "use_live_postcode_lookup"=>false},
    "claimant_type"=>"individual",
    "num_claimants"=>"2",
    "claimant_1"=>
@@ -643,6 +643,6 @@ def normalized_params
    "order"=>{"cost"=>"No"},
    "possession"=>{"hearing"=>"No"},
    "javascript_enabled"=>"Yes",
-   "livepc"=>false
+   "use_live_postcode_lookup"=>false
   }
 end
