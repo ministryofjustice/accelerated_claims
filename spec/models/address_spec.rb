@@ -114,6 +114,12 @@ describe 'Address', :type => :model do
           expect(address).not_to be_valid
           expect(address.errors[:street]).to eq ["Enter property full address"]
         end
+
+        it 'should reject streets with more than 4 lines' do
+          address = Address.new(Property.new(street: "line 1\nline 2\nline 3\nline 4\nline 5", postcode: '90100'))
+          expect(address).not_to be_valid
+          expect(address.errors[:street]).to eq ["Property address can’t be longer than 4 lines"]
+        end
       end
     end
 

@@ -13,7 +13,7 @@ module AddressModule
 
     if @do_partial_address_completion_validation
       with_options if: -> address { address.postcode.present? } do |a|
-        a.validates :street, presence: { message: 'Enter the full address' }
+        a.validates :street, presence: { message: 'Enter the full address    ######' }
       end
     end
 

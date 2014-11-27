@@ -183,7 +183,7 @@ describe Claimant, :type => :model do
         it 'should not validate when street is too long' do
           claimant.street = "x" * 72
           expect(claimant).not_to be_valid
-          expect(claimant.errors[:street]).to eq ["Property address is too long (maximum 70 characters)"]
+          expect(claimant.errors[:street]).to eq ["Claimant 2's address is too long (maximum 70 characters)"]
         end
       end
     end

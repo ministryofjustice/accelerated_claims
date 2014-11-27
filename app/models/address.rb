@@ -60,7 +60,7 @@ class Address < BaseClass
 
   def validate_maximum_street_length
     if !@street.nil? && @street.length > 70
-      errors[:street] << "Property address is too long (maximum 70 characters)"
+      errors[:street] << "#{possessive_subject_description.capitalize} address is too long (maximum 70 characters)"
       return false
     end
     return true
@@ -71,7 +71,7 @@ class Address < BaseClass
     result = true
     unless street.nil?
       if @street.strip.count("\n") > 3
-        errors.add(:street, "#{possessive_subject_description.capitalize} address can’t be longer than 4 lines.")
+        errors.add(:street, "#{possessive_subject_description.capitalize} address can’t be longer than 4 lines")
         result = false
       end
     end

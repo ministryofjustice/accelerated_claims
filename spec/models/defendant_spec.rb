@@ -84,9 +84,7 @@ describe Defendant, :type => :model do
       end
 
       it 'should not generate error messages for full name and postcode' do
-        defendant.inhabits_property = nil
-        defendant.street = nil
-        defendant.postcode = nil
+        defendant = Defendant.new( {:title=>"Mr", :full_name=>"John Major", street: '', postcode: '', defendant_num: 2, inhabits_property: ''} )
         expect(defendant).not_to be_valid
         expect(defendant.errors[:street]).to eq []
         expect(defendant.errors[:postcode]).to eq []
@@ -155,6 +153,14 @@ describe Defendant, :type => :model do
     end
   end
 
+  context 'validate address' do
+    it 'should reject addresses longer than 4 lines' do
+      defendant = Defendant.new( {:title=>"Mr", :full_name=>"John Major", street: "line 1\nline 2\nline 3\nline 4\nline 5", postcode: 'rg27pu', defendant_num: 2, inhabits_property: ''} )
+      expect(defendant).not_to be_valid
+      expect(defendant.errors[:street]).to eq ["Defendant 2's address can’t be longer than 4 lines"]
+    end
+  end
+
   context 'validate_abscence set to true' do
     let(:nil_defendant)  { Defendant.new(:validate_presence => false, :validate_absence => true) }
 
@@ -192,7 +198,7 @@ describe Defendant, :type => :model do
     it 'should not validate if street is too long' do
       defendant.street = "x" * 72
       expect(defendant).not_to be_valid
-      expect(defendant.errors[:street]).to eq ["is too long (maximum is 70 characters)"]
+      expect(defendant.errors[:street]).to eq ["Defendant 2's address is too long (maximum 70 characters)"]
     end
 
   end

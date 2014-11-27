@@ -314,7 +314,7 @@ feature 'Filling in claim form' do
           visit '/'
           fill_in('claim_claimant_contact_street', with: invalid_address)
           click_button 'Continue'
-          expect(page).to have_content( non_js_address_error_message("Claimant contact's") )
+          expect(page).to have_content( non_js_address_error_message("claimant contact's") )
         end
 
         scenario 'defendant_1 address is invalid' do
@@ -342,6 +342,6 @@ def address_js_error_message
 end
 
 def non_js_address_error_message(attribute)
-  "#{attribute} address can’t be longer than 4 lines."
+  "#{attribute} address can’t be longer than 4 lines"
 end
 
