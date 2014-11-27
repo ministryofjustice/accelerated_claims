@@ -20,7 +20,7 @@ describe 'PostcodePicker', ->
         &nbsp;
       </span>
       <span>
-        <a class="change-postcode-link2 js-only" href="#dummy_anchor" id="claim_property-manual_change-link-2" style="display: inline; margin-left: 10px;">Change</a>
+        <a class="change-postcode-link2 js-only" href="#change_postcode" id="claim_property-manual_change-link-2" style="display: inline; margin-left: 10px;">Change</a>
       </span>
     </div>
     <div class="postcode-selection-els">
@@ -69,7 +69,7 @@ describe 'PostcodePicker', ->
       <br>
       <div style="overflow: hidden; width: 100%">
         <input class="smalltext postcode" id="claim_property_postcode" maxlength="8" name="claim[property][postcode]" size="8" style="float: left;  margin-right: 20px;" type="text" value="">
-        <a class="change-postcode-link js-only" href="#dummy_anchor" style="float: left;">Change</a>
+        <a class="change-postcode-link js-only" href="#change_postcode" style="float: left;">Change</a>
       </div>
     </div>
   </div>
@@ -81,13 +81,13 @@ describe 'PostcodePicker', ->
       'message':  'Success',
       'result':  [
         {
-          "address":"Flat 1;;1 Melbury Close;;FERNDOWN", 
-          "postcode":"BH22 8HR", 
+          "address":"Flat 1;;1 Melbury Close;;FERNDOWN",
+          "postcode":"BH22 8HR",
           "country": "England"
         },
         {
-          "address":"3 Melbury Close;;FERNDOWN", 
-          "postcode":"BH22 8HR", 
+          "address":"3 Melbury Close;;FERNDOWN",
+          "postcode":"BH22 8HR",
           "country": "England"
         }
       ]
@@ -249,10 +249,10 @@ describe 'PostcodePicker', ->
       expect(@view.toSentence(['England'])).toEqual 'England'
 
     it 'should separate a two element array by and', ->
-      expect(@view.toSentence(['England', 'Wales'])).toEqual 'England and Wales'      
+      expect(@view.toSentence(['England', 'Wales'])).toEqual 'England and Wales'
 
     it 'should separate a list by commas and the last by and', ->
-      expect(@view.toSentence(['England', 'Wales', 'Northern Ireland'])).toEqual 'England, Wales and Northern Ireland'            
+      expect(@view.toSentence(['England', 'Wales', 'Northern Ireland'])).toEqual 'England, Wales and Northern Ireland'
 
 
   describe 'capitalizeCountry', ->
@@ -276,7 +276,3 @@ describe 'PostcodePicker', ->
 
     it 'should return England, Wales, Channel Islands, Northern Ireland and Isle of Man', ->
       expect(@view.normalizeCountry('england+wales+channel_islands+northern_ireland+isle_of_man')).toEqual 'England, Wales, Channel Islands, Northern Ireland and Isle of Man'
-
-
-
-

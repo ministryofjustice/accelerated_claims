@@ -77,6 +77,8 @@ group :test do
   gem 'show_me_the_cookies'
   gem 'codeclimate-test-reporter', require: nil
   gem 'ruby-prof'
+  gem 'w3c_validators'
+  gem 'capybara-screenshot'
 end
 
 gem 'pdf-forms', '0.5.5'
@@ -91,3 +93,5 @@ gem 'logstasher'
 
 # statsd client
 gem 'statsd-ruby'
+
+gem 'courtfinder-client', '0.0.5'

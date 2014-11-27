@@ -23,6 +23,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara/rails'
 require 'capybara/rspec'
+require 'capybara-screenshot/rspec'
 require 'webmock/rspec'
 
 if ENV['CODECLIMATE_REPO_TOKEN']
@@ -31,8 +32,6 @@ if ENV['CODECLIMATE_REPO_TOKEN']
   # allow Code Climate Test coverage reports to be sent
   WebMock.disable_net_connect!(:allow => /codeclimate.com/)
 end
-
-
 
 # fix to avoid undefined method `valid_request_keys' for Excon::Utils:Module
 #
@@ -48,9 +47,6 @@ class WebMock::HttpLibAdapters::ExconAdapter
     hash
   end
 end
-
-
-
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 

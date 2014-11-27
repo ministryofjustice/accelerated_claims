@@ -131,7 +131,13 @@ def claim_post_data
       },
       "fee" =>
       {
-        "court_fee" => "280"
+        "court_fee" => "280.00"
+      },
+      'court' => {
+        'court_name' => 'Good Court',
+        'street' => '1 Good Road',
+        'town' => 'Goodtown',
+        'postcode' => 'GT1 2XX'
       }
     }
   }
