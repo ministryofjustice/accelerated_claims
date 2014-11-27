@@ -27,8 +27,8 @@
               get action
             end
 
-            page_valid = validate_view(response)
-            
+            page_valid = validate_view(response, {test_name: test[:test_name]})
+
             puts page_valid.message if ENV['w3c_debug'] && !page_valid.message.nil?
             if page_valid.result=='error'
               expect(page_valid.message).not_to eql(nil)

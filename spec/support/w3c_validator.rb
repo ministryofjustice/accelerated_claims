@@ -21,7 +21,7 @@ def validate_view(response, options={})
       if results.errors.length > 0
         outcome.result='fail'
         outcome.errors = results.errors
-        outcome.message = "\nValidation failed"
+        outcome.message = "\nValidation failed for #{options[:test_name] if options[:test_name].present?}"
         outcome.message += "\nErrors"
         outcome.message += "\n------------------"
         results.errors.each do |err|
@@ -32,9 +32,12 @@ def validate_view(response, options={})
       end
     rescue => e
       outcome.result='error'
-      outcome.message =  "\nError while validating"
+      outcome.message =  "\nValidation error while processing"
+      outcome.message += "\n#{options[:test_name]}" if options[:test_name].present?
       outcome.message += "\n----------------------"
       outcome.message += "\n#{e.message}"
+      outcome.message += "\non #{attempt.ordinalize} pass"
+      outcome.message += "\n----------------------"
     end
   end while outcome.result == 'error' &&  attempt < tries
   if attempt==tries
