@@ -107,7 +107,7 @@ end
 def expected_output
   str =<<EOF
 <div class='postcode postcode-picker-container' data-vc='all'>
-  <div class='row postcode-lookup rel js-only'>
+  <div class='postcode-lookup rel js-only'>
     <div class='postcode-display hide' style='margin-bottom: 20px;'>
       Postcode:
       <span class='postcode-display-detail' style='font-weight: bold'>
@@ -119,8 +119,8 @@ def expected_output
     </div>
     <div class='postcode-selection-els'>
       <label class='postcode-picker-label' for='claim_property_postcode_edit_field'>Postcode</label>
-      <input class='smalltext postcode-picker-edit-field' id='claim_property_postcode_edit_field' maxlength='8' name='[postcode]' size='8' type='text'>
-      <a class='button primary postcode-picker-button' data-country='all' href='#claim_property_postcode_picker'>
+      <input class='narrow postcode-picker-edit-field' id='claim_property_postcode_edit_field' maxlength='8' name='[postcode]' size='8' type='text'>
+      <a class='button postcode-picker-button' data-country='all' href='#claim_property_postcode_picker'>
         Find UK address
       </a>
     </div>
@@ -133,7 +133,7 @@ def expected_output
         <select class='address-picker-select' id='claim_property_address_select' name='sel-address' role='listbox' size='6'>
           <option disabled='disabled' id='claim_property-listbox' role='option' value=''>Please select an address</option>
         </select>
-        <a class='row button primary postcode-picker-cta' href='#claim_property_postcode_picker_manual_link' id='claim_property_selectaddress' style='margin-bottom: 20px;'>
+        <a class='row button postcode-picker-cta' href='#claim_property_postcode_picker_manual_link' id='claim_property_selectaddress' style='margin-bottom: 20px;'>
           Select address
         </a>
       </fieldset>
@@ -152,18 +152,19 @@ def expected_output
       </label>
       <textarea class='street' id='claim_property_street' maxlength='70' name='claim[property][street]'>50 Tregunter Road&#x000A;London</textarea>
     </div>
-    <div class='row js-only'>
-      <span class='error hide' id='claim_property_street-error-message'>
-        The address can’t be longer than 4 lines.
-      </span>
+    <div class='js-only'>
+      <div class='row hide' id='claim_property_street-error-message'>
+        <span class='error'>
+          The address can’t be longer than 4 lines.
+        </span>
+      </div>
     </div>
     <div class='row address-postcode'>
       <label for='claim_property_postcode'>
         Postcode
       </label>
-      <br>
       <div style='overflow: hidden; width: 100%'>
-        <input class='smalltext postcode' id='claim_property_postcode' maxlength='8' name='claim[property][postcode]' size='8' style='float: left;  margin-right: 20px;' type='text' value='RG2 7PU'>
+        <input class='narrow postcode' id='claim_property_postcode' maxlength='8' name='claim[property][postcode]' size='8' style='float: left;  margin-right: 20px;' type='text' value='RG2 7PU'>
         <a class='change-postcode-link js-only' href='#change_postcode' style='float: left;'>Change</a>
       </div>
     </div>
@@ -174,5 +175,5 @@ EOF
 end
 
 def squeeze(str)
-  str.gsub(/\n\s+/, '').gsub(/\n+/, "\n")
+  str.gsub(/\n\s+/, '').gsub(/\n+/, "\n").gsub('><',">\n<")
 end

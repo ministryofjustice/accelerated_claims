@@ -4,7 +4,7 @@
     = claimant_header claimant_id
 
   = claim_form.fields_for claimant_field, claimant, builder: LabellingFormBuilder do |form|
-    = form.text_field_row :title,    class: 'title hide js-claimanttype individual', input_class: 'smalltext'
+    = form.text_field_row :title,    class: 'title hide js-claimanttype individual', input_class: 'narrow'
     = form.text_field_row :full_name, class: 'rel hide js-claimanttype individual'
 
     -# we want to execute the following bit of code if non-javascript (:claimant_1) or with javascript ("claimant_{{id}}")
