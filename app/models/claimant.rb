@@ -18,7 +18,6 @@ class Claimant < BaseClass
   validates :title, length: { maximum: 8 }
   validates :full_name, length: { maximum: 40 }
   validate  :address_validation
-  # validate :validate_address_same_as_first_claimant
 
   def initialize(params = {})
     @address = Address.new(self)
