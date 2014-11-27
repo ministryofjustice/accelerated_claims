@@ -16,7 +16,7 @@
               name: "#{@name_prefix}[#{@postcode_attr}]",
               size: "8",
               type: "text"}
-      %a.button.primary.postcode-picker-button{href: "##{@prefix}_postcode_picker", data: {country: @valid_countries} }
+      %a.button.postcode-picker-button{href: "##{@prefix}_postcode_picker", data: {country: @valid_countries} }
         = @button_label
 
     .postcode-picker-hourglass.hide
@@ -27,7 +27,7 @@
         %label.hint{ for: "#{@prefix}_address_select"} Please select an address
         %select.address-picker-select{id: "#{@prefix}_address_select", name: "sel-address", size: "6", role:'listbox'}
           %option{id:"#{@prefix}-listbox", role: "option", disabled: "disabled", value: ""} Please select an address
-        %a.row.button.primary.postcode-picker-cta{id: "#{@prefix}_selectaddress", href: "##{@prefix}_postcode_picker_manual_link", style: "margin-bottom: 20px;"}
+        %a.row.button.postcode-picker-cta{id: "#{@prefix}_selectaddress", href: "##{@prefix}_postcode_picker_manual_link", style: "margin-bottom: 20px;"}
           Select address
 
   .js-only.row
@@ -48,9 +48,10 @@
       %textarea.street{id: "#{@prefix}_#{@address_attr}", maxlength: "70", name: "#{@name}[street]"}
         = "#{@address_value}"
 
-    .row.js-only
-      %span.error.hide{id: "#{@prefix}_#{@address_attr}-error-message"}
-        The address can’t be longer than 4 lines.
+    .js-only
+      .row.hide{id: "#{@prefix}_#{@address_attr}-error-message"}
+        %span.error
+          The address can’t be longer than 4 lines.
 
     - options = @form.object.errors[:postcode].any? ? {id: "#{@prefix}_#{@postcode_attr}_error", class: 'error'} : {}
 
@@ -60,7 +61,6 @@
         - unless @form.object.errors[:postcode].empty?
           - @form.object.errors[:postcode].each do |message|
             %span.error= message
-      %br
       %div{style: "overflow: hidden; width: 100%"}
-        %input.smalltext.postcode{id: "#{@prefix}_#{@postcode_attr}", maxlength: "8", name: "#{@name}[#{@postcode_attr}]", value: "#{@postcode_value}", size: "8", type: "text", style: 'float: left;  margin-right: 20px;'}
+        %input.narrow.postcode{id: "#{@prefix}_#{@postcode_attr}", maxlength: "8", name: "#{@name}[#{@postcode_attr}]", value: "#{@postcode_value}", size: "8", type: "text", style: 'float: left;  margin-right: 20px;'}
         %a.change-postcode-link.js-only{href: "#change_postcode", style: 'float: left;'} Change
