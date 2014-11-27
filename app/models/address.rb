@@ -1,14 +1,8 @@
 class Address < BaseClass
 
- attr_reader    :england_and_wales_only, :must_be_blank
- attr_accessor  :postcode, :street
+  attr_reader    :england_and_wales_only, :must_be_blank
+  attr_accessor  :postcode, :street
 
-
-  # instantiate a new address from the given params using the options
-  # valid options are:
-  #  - england_wales: true if address is to be limited to England and Wales.  Default is false
-  #  - subject: the name of the subject to be included in 
-  #
   def initialize(parent)
     @parent                 = parent
     @street                 = @parent.params[:street]
@@ -65,7 +59,6 @@ class Address < BaseClass
     end
     return true
   end
-
 
   def validate_maximum_number_of_newlines
     result = true
@@ -135,7 +128,7 @@ class Address < BaseClass
     end
   end
 
-  private 
+  private
 
   def determine_blankness
     if @parent.params['validate_absence'] == true || @parent.params['address_same_as_first_claimant'] == 'Yes'
@@ -144,7 +137,6 @@ class Address < BaseClass
       false
     end
   end
-  
 
   def transfer_error_messages_to_parent
     [:street, :postcode].each do |field|
@@ -153,6 +145,5 @@ class Address < BaseClass
       end
     end
   end
-
 
 end

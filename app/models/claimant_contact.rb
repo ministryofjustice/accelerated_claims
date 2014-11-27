@@ -30,13 +30,11 @@ class ClaimantContact < BaseClass
 
   validate  :name_and_address_consistency
 
-  def initialize(params)
+  def initialize(params = {})
     @params = params
     @address = Address.new(self)
     super
   end
-  
-
 
   def name_and_address_consistency
     # if either title and name or company or both is present, then address must be present
