@@ -127,7 +127,7 @@ describe Claimant, :type => :model do
       it 'should reject if address fields are supplied' do
         claimant = Claimant.new claimant_params
         expect(claimant).not_to be_valid
-        expect(claimant.errors[:street]).to eq ["Address for claimant 2 must be blank"]
+        expect(claimant.errors[:street]).to eq ["Full address for claimant 2 must be blank"]
         expect(claimant.errors[:postcode]).to eq ["Postcode for claimant 2 must be blank"]
       end
 

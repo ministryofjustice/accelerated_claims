@@ -349,7 +349,7 @@ describe Claim, :type => :model do
         claim = Claim.new(data)
         expect(claim).to_not be_valid
         expect(claim.claimant_2.errors.messages[:full_name]).to eq ['must not be entered if number of claimants is 1']
-        expect(claim.claimant_2.errors.messages[:street]).to eq ['Address for claimant 2 must be blank']
+        expect(claim.claimant_2.errors.messages[:street]).to eq ['Full address for claimant 2 must be blank']
         expect(claim.claimant_2.errors.messages[:postcode]).to eq ['Postcode for claimant 2 must be blank']
       end
 

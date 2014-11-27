@@ -3,8 +3,13 @@ class Address < BaseClass
   attr_reader    :england_and_wales_only, :must_be_blank
   attr_accessor  :postcode, :street
 
-  def initialize(parent)
+  # Instantiate and Address object
+  # options:
+  #    :absence_validation_message - a non-standard message to display if validate absence fails
+  #
+  def initialize(parent, options = {})
     @parent                 = parent
+    @options                = options
     @street                 = @parent.params[:street]
     @postcode               = @parent.params[:postcode]
     @england_and_wales_only = false
@@ -91,12 +96,20 @@ class Address < BaseClass
 
   def validate_absence
     if @street.present?
-      errors[:street] << "Address for #{subject_description} must be blank"
+      errors[:street] << validate_absence_error_message('full address')
     end
     if @postcode.present?
-      errors[:postcode] << "Postcode for #{subject_description} must be blank"
+      errors[:postcode] << validate_absence_error_message('postcode')
     end
     return errors.empty?
+  end
+
+  def validate_absence_error_message(attribute)
+    if @options.key?(:absence_validation_message)
+      @options[:absence_validation_message].sub('%%attribute%%', attribute).capitalize
+    else
+      "#{attribute} for #{subject_description} must be blank".capitalize
+    end
   end
 
   def validate_postcode

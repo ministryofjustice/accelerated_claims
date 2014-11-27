@@ -1,11 +1,7 @@
 
 require 'email_validator'
-require 'uk_postcode'
 
 class ClaimantContact < BaseClass
-
-  @do_partial_address_completion_validation = true
-  # include AddressModule
 
   attr_accessor :title
   attr_accessor :full_name
@@ -32,7 +28,7 @@ class ClaimantContact < BaseClass
 
   def initialize(params = {})
     @params = params
-    @address = Address.new(self)
+    @address = Address.new(self, absence_validation_message: 'Claimant contact %%attribute%% must be blank if no full name or company name is specified')
     super
   end
 

@@ -35,13 +35,11 @@ describe 'Address', :type => :model do
     end
   end
 
-
   describe '#possessive_subject_description' do
     it 'should take the subject description from the parent objects class' do
       allow(address.instance_variable_get(:@parent)).to receive(:possessive_subject_description).and_return("The Property's")
       expect(address.possessive_subject_description).to eq "The Property's"
     end
-
 
     it 'should pick up the class name if the parent object does not repond to subject description' do
       allow(address.instance_variable_get(:@parent)).to receive(:respond_to?).and_return(false)
@@ -49,13 +47,12 @@ describe 'Address', :type => :model do
     end
   end
 
-
   context 'validation' do
-    
+
     context 'with must be blank false' do
-      
+
       context 'postcode validation' do
-        
+
         context 'with engand_and_wales only set to true' do
 
           it 'should pass validation on an valid uk postcode' do
@@ -108,7 +105,7 @@ describe 'Address', :type => :model do
           expect(address).not_to be_valid
           expect(address.errors[:street]).to eq ["Enter property full address"]
         end
-        
+
         it 'should reject nil street' do
           address = Address.new(Property.new(street: nil, postcode: '90100'))
           expect(address).not_to be_valid
@@ -129,19 +126,33 @@ describe 'Address', :type => :model do
         address.must_be_blank!
         expect(address).to be_valid
       end
-      
+
       it 'should reject street present' do
         address = Address.new(Property.new( {house: 'Yes', street: 'my street'} ))
         address.must_be_blank!
         expect(address).not_to be_valid
-        expect(address.errors[:street]).to eq ["Address for property must be blank"]
+        expect(address.errors[:street]).to eq ["Full address for property must be blank"]
       end
 
-      it 'should reject postcoce present' do
+      it 'should reject postcode present' do
         address = Address.new(Property.new( {house: 'Yes', postcode: 'RG2 7PU'} ))
         address.must_be_blank!
         expect(address).not_to be_valid
         expect(address.errors[:postcode]).to eq ["Postcode for property must be blank"]
+      end
+
+      it 'should reject street present with non standard message' do
+        address = Address.new(Property.new( {house: 'Yes', street: 'my street'} ), absence_validation_message: "%%attribute%% for property must be blank if xxxxx")
+        address.must_be_blank!
+        expect(address).not_to be_valid
+        expect(address.errors[:street]).to eq ["Full address for property must be blank if xxxxx"]
+      end
+
+      it 'should reject postcode present with non standard message' do
+        address = Address.new(Property.new( {house: 'Yes', postcode: 'RG2 7PU'} ), absence_validation_message: "%%attribute%% for property must be blank if xxxxx")
+        address.must_be_blank!
+        expect(address).not_to be_valid
+        expect(address.errors[:postcode]).to eq ["Postcode for property must be blank if xxxxx"]
       end
 
     end
@@ -178,18 +189,15 @@ describe 'Address', :type => :model do
       address = Address.new(Property.new( {house: 'Yes', postcode: 'RG2XXX7PU'} ))
       expect(address).to_not be_valid
       expect(address.errors[:street]).to eq ['Enter property full address']
-      
+
       address.suppress_validation!
       expect(address).to be_valid
       expect(address.errors).to be_empty
     end
 
-
   end
 
 end
-
-
 
 def hwi(hash)
   HashWithIndifferentAccess.new(hash)

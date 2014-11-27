@@ -128,8 +128,8 @@ describe ClaimantContact, :type => :model do
         expect(cc).not_to be_valid
         expect(cc.errors.full_messages).to eq(
           [
-            "Street Address for the claimant contact must be blank",
-            "Postcode Postcode for the claimant contact must be blank"
+            "Street Claimant contact full address must be blank if no full name or company name is specified",
+            "Postcode Claimant contact postcode must be blank if no full name or company name is specified"
           ] )
       end
     end
