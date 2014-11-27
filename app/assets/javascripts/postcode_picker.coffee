@@ -116,10 +116,9 @@ class PostcodePicker
     postcode = selectedAddress.postcode
     @picker.find('.street textarea').val(street)
     @picker.find('.address-postcode input').val(postcode)
+    @picker.find('.address-postcode input').trigger('change')
     @picker.find('.address-postcode input').attr('readonly', '1')
-
     @picker.find('.postcode-picker-address-list').hide()
-
     @picker.find('.address.extra' ).show()
     @picker.find('.postcode-selection-els').hide()
     @picker.find('.postcode-display').hide()
@@ -204,4 +203,3 @@ root.PostcodePicker = PostcodePicker
 jQuery ->
    _.each $('.postcode-picker-container'), (picker) ->
      new PostcodePicker( $(picker) )
-

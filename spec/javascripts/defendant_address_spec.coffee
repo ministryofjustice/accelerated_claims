@@ -3,7 +3,6 @@
 //= require jasmine-jquery
 //= require defendant_module
 
-
 describe "DefendantModule", ->
   element=null
   beforeEach ->
@@ -35,7 +34,7 @@ describe "DefendantModule", ->
                     &nbsp;
                   </span>
                   <span>
-                    <a class='change-postcode-link2 js-only' href='#dummy_anchor' id='claim_defendant_1-manual_change-link-2' style='display: inline; margin-left: 10px;'>Change</a>
+                    <a class='change-postcode-link2 js-only' href='#change_postcode' id='claim_defendant_1-manual_change-link-2' style='display: inline; margin-left: 10px;'>Change</a>
                   </span>
                 </div>
                 <div class='postcode-selection-els'>
@@ -85,7 +84,7 @@ describe "DefendantModule", ->
                   <br>
                   <div style='overflow: hidden; width: 100%'>
                     <input class='smalltext postcode' id='claim_defendant_1_postcode' maxlength='8' name='claim[defendant_1][postcode]' size='8' style='float: left;  margin-right: 20px;' type='text' value=''>
-                    <a class='change-postcode-link js-only' href='#dummy_anchor' style='float: left;'>Change</a>
+                    <a class='change-postcode-link js-only' href='#change_postcode' style='float: left;'>Change</a>
                   </div>
                 </div>
               </div>
@@ -117,7 +116,7 @@ describe "DefendantModule", ->
                     &nbsp;
                   </span>
                   <span>
-                    <a class='change-postcode-link2 js-only' href='#dummy_anchor' id='claim_defendant_2-manual_change-link-2' style='display: inline; margin-left: 10px;'>Change</a>
+                    <a class='change-postcode-link2 js-only' href='#change_postcode' id='claim_defendant_2-manual_change-link-2' style='display: inline; margin-left: 10px;'>Change</a>
                   </span>
                 </div>
                 <div class='postcode-selection-els'>
@@ -167,7 +166,7 @@ describe "DefendantModule", ->
                   <br>
                   <div style='overflow: hidden; width: 100%'>
                     <input class='smalltext postcode' id='claim_defendant_2_postcode' maxlength='8' name='claim[defendant_2][postcode]' size='8' style='float: left;  margin-right: 20px;' type='text' value='BH22 8HR'>
-                    <a class='change-postcode-link js-only' href='#dummy_anchor' style='float: left;'>Change</a>
+                    <a class='change-postcode-link js-only' href='#change_postcode' style='float: left;'>Change</a>
                   </div>
                 </div>
               </div>
