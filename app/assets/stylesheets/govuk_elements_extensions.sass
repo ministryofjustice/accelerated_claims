@@ -40,6 +40,9 @@ fieldset.inline
 legend
   @extend .form-label
 
+select
+  @extend .form-label
+
 span.hint
   @extend .form-hint
   margin-top: 0px
@@ -101,4 +104,30 @@ span.error
 
 .summary-value
   @extend .column-three-quarters
+
+.postcode-picker-edit-field
+  margin-right: 10px
+
+textarea
+  height: 110px
+
+// --
+// Only required for postcode picker manual entry caption
+a.caption
+  padding-left: 20px
+  background: image-url('summary-arrow-sprite.gif') 0 5px no-repeat
+  color: $link-colour
+  cursor: pointer
+  &:hover
+    text-decoration: underline
+  &:focus
+    background: rgb(254, 188, 64) image-url('summary-arrow-sprite.gif') 0 5px no-repeat
+.open
+  a.caption
+    background-position: -1000px 5px
+    color: $link-active-colour
+    &:focus
+      background: rgb(254, 188, 64) image-url('summary-arrow-sprite.gif') 0 5px no-repeat
+
+// --
 
