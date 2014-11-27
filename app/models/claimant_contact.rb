@@ -47,24 +47,9 @@ class ClaimantContact < BaseClass
       errors.add(:title, 'must be present if full_name has been entered')
     end
 
-    # if (title.present?  && full_name.present?) || company_name.present?
-
-    #   unless street.present?
-    #     errors.add(:street, 'must be present if name and/or company has been specified')
-    #   end
-    # end
-
     if title.blank? && full_name.blank? && company_name.blank?
       @address.must_be_blank!
     end
-    #   if street.present?
-    #     errors.add(:street, 'cannot be entered if no company or title and full name have been entered')
-    #   end
-
-    #   if postcode.present?
-    #     errors.add(:postcode, 'cannot be entered if no company or title and full name have been entered')
-    #   end
-    # end
     @address.valid?
   end
 
