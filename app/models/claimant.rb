@@ -1,10 +1,9 @@
 class Claimant < BaseClass
 
-  include Address
   include ActiveModel::Validations
   include Comparable
 
-  attr_accessor :validate_presence, :validate_absence
+  attr_accessor :validate_presence, :validate_absence, :address
   attr_accessor :claimant_num
   attr_accessor :title
   attr_accessor :full_name
@@ -12,17 +11,26 @@ class Claimant < BaseClass
   attr_accessor :claimant_type
   attr_accessor :address_same_as_first_claimant
 
-  validate :validate_claimant_state
+  delegate :street, :street=, :postcode, :postcode=, :indented_details, to: :address
 
+  validate :validate_claimant_state
   validates :claimant_num, presence: { message: 'Claimant number not specified' }, allow_nil: false
   validates :title, length: { maximum: 8 }
   validates :full_name, length: { maximum: 40 }
+  validate  :address_validation
 
   def initialize(params = {})
+    @address = Address.new(self)
     super
+
     unless params.include?(:validate_presence)
-      @validate_presence = true unless params[:validate_absence] == true
+      @validate_presence = true unless @validate_absence
     end
+
+    if @validate_absence || @address_same_as_first_claimant == 'Yes'
+      @address.must_be_blank!
+    end
+
     @check_address_same_as_first_claimant = params['validate_address_same_as_first_claimant']
     @claimant_type = params['claimant_type']
   end
@@ -38,10 +46,15 @@ class Claimant < BaseClass
     title.blank? && full_name.blank? && organization_name.blank? && street.blank? && postcode.blank?
   end
 
+  def address_validation
+    validate_address_same_as_first_claimant
+    @address.valid?
+  end
+
   # main validation for claimant state
   def validate_claimant_state
     if validate_absence?
-      validate_are_blank(:title, :full_name, :organization_name, :street, :postcode)
+      validate_are_blank(:title, :full_name, :organization_name)
     else
       validate_fields_are_present
     end
@@ -118,26 +131,24 @@ class Claimant < BaseClass
   end
 
   def validate_address_same_as_first_claimant
-    if @check_address_same_as_first_claimant && address_same_as_first_claimant.blank? && !first_claimant?
-      errors.add(:address_same_as_first_claimant, "You must specify whether #{subject_description}'s address is the same as the first claimant")
+    if !first_claimant?
+      if @check_address_same_as_first_claimant
+        if !@validate_absence || @validate_presence
+          if address_same_as_first_claimant.blank?
+            errors.add(:address_same_as_first_claimant, "You must specify whether #{subject_description}'s address is the same as the first claimant")
+            @address.suppress_validation!
+          end
+        end
+      end
     end
   end
 
   def validate_organisation_fields_are_present
     validate_are_present(:organization_name)
-    validate_address
   end
 
   def validate_individual_fields_are_present
     validate_are_present(:title, :full_name)
-    validate_address
-  end
-
-  def validate_address
-    validate_address_same_as_first_claimant
-    if check_address_fields?
-      errors[:street] << "Enter #{possessive_subject_description} full address" if street.blank?
-    end
   end
 
   def validate_are_present(*fields)

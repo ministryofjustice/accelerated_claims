@@ -126,9 +126,10 @@ describe ClaimantContact, :type => :model do
         params = claim_post_data['claim']['claimant_contact'].merge(:title => '', :full_name => '', :company_name => '')
         cc = ClaimantContact.new(params)
         expect(cc).not_to be_valid
-        expect(cc.errors.full_messages).to eq( [
-                "Street cannot be entered if no company or title and full name have been entered",
-                 "Postcode cannot be entered if no company or title and full name have been entered"
+        expect(cc.errors.full_messages).to eq(
+          [
+            "Street Claimant contact full address must be blank if no full name or company name is specified",
+            "Postcode Claimant contact postcode must be blank if no full name or company name is specified"
           ] )
       end
     end
@@ -138,14 +139,14 @@ describe ClaimantContact, :type => :model do
         params = claim_post_data['claim']['claimant_contact'].merge(:street => '', :postcode => '')
         cc = ClaimantContact.new(params)
         expect(cc).not_to be_valid
-        expect(cc.errors.full_messages).to eq( [ "Street must be present if name and/or company has been specified" ] )
+        expect(cc.errors.full_messages).to eq( [ "Street Enter the claimant contact's full address" ] )
       end
 
       it 'should not be valid if street is missing' do
         params = claim_post_data['claim']['claimant_contact'].merge(:street => '')
         cc = ClaimantContact.new(params)
         expect(cc).not_to be_valid
-        expect(cc.errors.full_messages).to eq( ["Street Enter the full address", "Street must be present if name and/or company has been specified"] )
+        expect(cc.errors.full_messages).to eq( ["Street Enter the claimant contact's full address"] )
       end
     end
   end

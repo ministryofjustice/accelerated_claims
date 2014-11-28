@@ -109,23 +109,34 @@ describe Claimant, :type => :model do
 
     context 'address_same_as_first_claimant nil' do
       let(:claimant_params) { individual_params.merge(claimant_num: 2, address_same_as_first_claimant: nil) }
-
-      subject { claimant }
-      it { is_expected.to_not be_valid }
+      it 'should fail if address same as first claimant not supplied' do
+        claimant = Claimant.new claimant_params
+        expect(claimant).not_to be_valid
+        expect(claimant.errors[:address_same_as_first_claimant]).to eq ["You must specify whether claimant 2's address is the same as the first claimant"]
+      end
     end
 
     context 'address_same_as_first_claimant nil and validate_address_same_as_first_claimant is false' do
       let(:claimant_params) { individual_params.merge(claimant_num: 2, address_same_as_first_claimant: nil, validate_address_same_as_first_claimant: false) }
-
       subject { claimant }
       it { is_expected.to be_valid }
     end
 
     context 'address_same_as_first_claimant true' do
       let(:claimant_params) { individual_params.merge(claimant_num: 2, address_same_as_first_claimant: 'Yes') }
+      it 'should reject if address fields are supplied' do
+        claimant = Claimant.new claimant_params
+        expect(claimant).not_to be_valid
+        expect(claimant.errors[:street]).to eq ["Full address for claimant 2 must be blank"]
+        expect(claimant.errors[:postcode]).to eq ["Postcode for claimant 2 must be blank"]
+      end
 
-      subject { claimant }
-      it { is_expected.to be_valid }
+      it 'should pass validation if street and postcode are blank' do
+        claimant_params.delete(:street)
+        claimant_params.delete(:postcode)
+        claimant = Claimant.new claimant_params
+        expect(claimant).to be_valid
+      end
 
       context 'address fields blank' do
         it 'should be valid' do
@@ -157,10 +168,11 @@ describe Claimant, :type => :model do
       end
 
       it 'should not be valid if any of the attributes are blank' do
-        claimant.title = ''
+        claimant.title = nil
         claimant.full_name = ''
         claimant.street = ''
         claimant.postcode = ''
+
         expect(claimant).to_not be_valid
         expect(claimant.errors[:title]).to eq ["Enter claimant 2's title"]
         expect(claimant.errors[:full_name]).to eq ["Enter claimant 2's full name"]
@@ -171,7 +183,7 @@ describe Claimant, :type => :model do
         it 'should not validate when street is too long' do
           claimant.street = "x" * 72
           expect(claimant).not_to be_valid
-          expect(claimant.errors[:street]).to eq ["is too long (maximum is 70 characters)"]
+          expect(claimant.errors[:street]).to eq ["Claimant 2's address is too long (maximum 70 characters)"]
         end
       end
     end

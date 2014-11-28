@@ -30,7 +30,7 @@ feature "submit claim" do
       end
 
       summary_values = find_summary_values page, data_file
-      summary_values.delete(:claim_property_livepc)
+      summary_values.delete(:claim_property_use_live_postcode_lookup)
       expected_summary_values = load_expected_summary_values data_file
 
       expect(summary_values.size).to eq(expected_summary_values.size),

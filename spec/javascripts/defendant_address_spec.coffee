@@ -3,7 +3,6 @@
 //= require jasmine-jquery
 //= require defendant_module
 
-
 describe "DefendantModule", ->
   element=null
   beforeEach ->

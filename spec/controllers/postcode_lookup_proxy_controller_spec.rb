@@ -154,11 +154,11 @@ def resetenv
   ENV['ENV_NAME'] = nil
 end
 
-def set_referer_url_with_livepc_param
+def set_referer_url_with_use_live_postcode_lookup_param
   allow(request).to receive(:referer).and_return('https://civilclaims.service.gov.uk/accelerated-possession-eviction?journey=4&livepc=1')
 end
 
-def set_referer_url_without_livepc_param
+def set_referer_url_without_use_live_postcode_lookup_param
   allow(request).to receive(:referer).and_return('https://civilclaims.service.gov.uk/accelerated-possession-eviction?journey=4')
 end
 

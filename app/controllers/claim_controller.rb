@@ -86,7 +86,7 @@ class ClaimController < ApplicationController
   end
 
   def submission
-    params['claim']['livepc'] = @livepc
+    params['claim']['use_live_postcode_lookup'] = @use_live_postcode_lookup
     session[:claim] = params['claim']
     move_claimant_address_params_into_the_model
     move_defendant_address_params_into_model
@@ -110,7 +110,7 @@ class ClaimController < ApplicationController
     # set production to true if on production or staging - this is used to determine whether or not journey numbers are valid in the url
     @production = ['staging', 'production'].include?(ENV["ENV_NAME"])
     request_referrer_query_string = request.referrer ? URI(request.referrer).query : nil
-    @livepc = @production || params[:livepc] == '1' || request_referrer_query_string == 'livepc=1'
+    @use_live_postcode_lookup = @production || params[:livepc] == '1' || request_referrer_query_string == 'livepc=1'
   end
 
   def move_defendant_address_params_into_model

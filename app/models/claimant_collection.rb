@@ -40,11 +40,11 @@ class ClaimantCollection < ParticipantCollection
   end
 
   def populate_same_addresses
-    @participants.select { |i, c| c.address_same_as_first_claimant == 'Yes'}.each do |i, c|
-      if first_claimant = @participants[1]
-        c.street = first_claimant.street
-        c.postcode = first_claimant.postcode
-      end
+    first_claimant = @participants[1]
+    @participants.select { |claimant_num, claimant| claimant.address_same_as_first_claimant == 'Yes'}.each do |claimant_num, claimant|
+      claimant.street = first_claimant.street
+      claimant.postcode = first_claimant.postcode
+      claimant.address.suppress_validation!
     end
   end
 

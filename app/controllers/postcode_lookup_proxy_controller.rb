@@ -9,9 +9,7 @@ class PostcodeLookupProxyController < ApplicationController
     end
   end
 
-
   private
-
 
   def country_params
     if params[:vc].present?
@@ -21,11 +19,10 @@ class PostcodeLookupProxyController < ApplicationController
     end
   end
 
- 
   def live_postcode_lookup?
     production = ['staging', 'production'].include?( ENV['ENV_NAME'] )
-    livepc = (URI(request.referer).query =~ /livepc=1/).nil? ? false : true
-    livepc || production
+    use_live_postcode_lookup = (URI(request.referer).query =~ /livepc=1/).nil? ? false : true
+    use_live_postcode_lookup || production
   end
 
 end

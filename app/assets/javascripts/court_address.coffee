@@ -37,7 +37,7 @@ CourtAddressModule =
   hideCourtAddressInputFields: ->
     for field in CourtAddressModule.courtFields()
       CourtAddressModule.changeElement('#' + $(field).attr('id'), 'input', "<input type='hidden'></input>")
-      
+
     $("#court-address").hide()
 
   blankFormFields: ->

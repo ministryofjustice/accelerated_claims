@@ -17,7 +17,6 @@ describe PostcodeLookupProxy do
     end
   end
 
-
   context '#lookup using dummy data' do
     it 'should return 422 if postcode invalid' do
       pclp = PostcodeLookupProxy.new('WCX1B5HA', ['All'])
@@ -48,7 +47,6 @@ describe PostcodeLookupProxy do
     end
   end
 
-
   context 'country limited to England and Wales' do
     it 'should return success for English Postcode' do
       pclp = PostcodeLookupProxy.new('BH22 7HR', ['England', 'Wales'])
@@ -65,8 +63,6 @@ describe PostcodeLookupProxy do
     end
 
   end
-
-
 
   describe 'private method production_lookup' do
 
@@ -118,7 +114,6 @@ describe PostcodeLookupProxy do
     end
   end
 
-
   context 'calls either development or production lookup' do
     it 'should call development lookup if not production' do
       pc = PostcodeLookupProxy.new('WC1B5HA', [])
@@ -158,66 +153,64 @@ end
 
 def expected_result_set
   [
-      {'address'=>'1 Melbury Close;;FERNDOWN',   'postcode'=>'BH22 8HR', 'country' => 'England' }, 
-      {'address'=>'3 Melbury Close;;FERNDOWN',   'postcode'=>'BH22 8HR', 'country' => 'England' }, 
-      {'address'=>'5 Melbury Close;;FERNDOWN',   'postcode'=>'BH22 8HR', 'country' => 'England' }, 
-      {'address'=>'7 Melbury Close;;FERNDOWN',   'postcode'=>'BH22 8HR', 'country' => 'England' }, 
-      {'address'=>'9 Melbury Close;;FERNDOWN',   'postcode'=>'BH22 8HR', 'country' => 'England' }, 
-      {'address'=>'11 Melbury Close;;FERNDOWN',  'postcode'=>'BH22 8HR', 'country' => 'England' }, 
-      {'address'=>'13 Melbury Close;;FERNDOWN',  'postcode'=>'BH22 8HR', 'country' => 'England' }, 
-      {'address'=>'15 Melbury Close;;FERNDOWN',  'postcode'=>'BH22 8HR', 'country' => 'England' }, 
-      {'address'=>'17 Melbury Close;;FERNDOWN',  'postcode'=>'BH22 8HR', 'country' => 'England' }, 
-      {'address'=>'19 Melbury Close;;FERNDOWN',  'postcode'=>'BH22 8HR', 'country' => 'England' }, 
-      {'address'=>'121 Melbury Close;;FERNDOWN', 'postcode'=>'BH22 8HR', 'country' => 'England' }, 
-      {'address'=>'22 Melbury Close;;FERNDOWN',  'postcode'=>'BH22 8H', 'country' => 'England' },  
+      {'address'=>'1 Melbury Close;;FERNDOWN',   'postcode'=>'BH22 8HR', 'country' => 'England' },
+      {'address'=>'3 Melbury Close;;FERNDOWN',   'postcode'=>'BH22 8HR', 'country' => 'England' },
+      {'address'=>'5 Melbury Close;;FERNDOWN',   'postcode'=>'BH22 8HR', 'country' => 'England' },
+      {'address'=>'7 Melbury Close;;FERNDOWN',   'postcode'=>'BH22 8HR', 'country' => 'England' },
+      {'address'=>'9 Melbury Close;;FERNDOWN',   'postcode'=>'BH22 8HR', 'country' => 'England' },
+      {'address'=>'11 Melbury Close;;FERNDOWN',  'postcode'=>'BH22 8HR', 'country' => 'England' },
+      {'address'=>'13 Melbury Close;;FERNDOWN',  'postcode'=>'BH22 8HR', 'country' => 'England' },
+      {'address'=>'15 Melbury Close;;FERNDOWN',  'postcode'=>'BH22 8HR', 'country' => 'England' },
+      {'address'=>'17 Melbury Close;;FERNDOWN',  'postcode'=>'BH22 8HR', 'country' => 'England' },
+      {'address'=>'19 Melbury Close;;FERNDOWN',  'postcode'=>'BH22 8HR', 'country' => 'England' },
+      {'address'=>'121 Melbury Close;;FERNDOWN', 'postcode'=>'BH22 8HR', 'country' => 'England' },
+      {'address'=>'22 Melbury Close;;FERNDOWN',  'postcode'=>'BH22 8H', 'country' => 'England' },
       {'address'=>'23 Melbury Close;;FERNDOWN',  'postcode'=>'BH22 8HR', 'country' => 'England' }
   ]
 end
 
-
 def dummy_ideal_postcodes_result
   {
-    "code" => 2000, 
-    "message" => "Success", 
-    "result" => 
+    "code" => 2000,
+    "message" => "Success",
+    "result" =>
     [
-      { "address" => "2 Barons Court Road;;LONDON", 
-        "postcode" => "ID1 1QD", 
-        "country" => "England"
-      }, 
-      { "address" => "Basement Flat;;2 Barons Court Road;;LONDON", 
-        "postcode" => "ID1 1QD", 
-        "country" => "England"
-      }, 
-      { "address" => "4 Barons Court Road;;LONDON", 
-        "postcode" => "ID1 1QD", 
-        "country" => "England"
-      }, 
-      { "address" => "Basement;;4 Barons Court Road;;LONDON", 
-        "postcode" => "ID1 1QD", 
-        "country" => "England"
-      }, 
-      {"address" => "6 Barons Court Road;;LONDON", 
+      { "address" => "2 Barons Court Road;;LONDON",
         "postcode" => "ID1 1QD",
         "country" => "England"
-      }, 
-      { "address" => "8 Barons Court Road;;LONDON", 
-        "postcode" => "ID1 1QD", 
+      },
+      { "address" => "Basement Flat;;2 Barons Court Road;;LONDON",
+        "postcode" => "ID1 1QD",
         "country" => "England"
-      }, 
-      { "address" => "ID Consulting Limited;;59 Barons Court Road;;LONDON", 
-        "postcode" => "ID1 1QD", 
+      },
+      { "address" => "4 Barons Court Road;;LONDON",
+        "postcode" => "ID1 1QD",
+        "country" => "England"
+      },
+      { "address" => "Basement;;4 Barons Court Road;;LONDON",
+        "postcode" => "ID1 1QD",
+        "country" => "England"
+      },
+      {"address" => "6 Barons Court Road;;LONDON",
+        "postcode" => "ID1 1QD",
+        "country" => "England"
+      },
+      { "address" => "8 Barons Court Road;;LONDON",
+        "postcode" => "ID1 1QD",
+        "country" => "England"
+      },
+      { "address" => "ID Consulting Limited;;59 Barons Court Road;;LONDON",
+        "postcode" => "ID1 1QD",
         "country" => "England"
       }
     ]
   }
 end
 
-
 def scottish_result_set
   [
-      {'address'=>'134, Corstorphine Road;;EDINBURGH', 'postcode'=>'EH12 6TS', 'country' => 'Scotland'}, 
-      {'address'=>'Royal Zoological Society of Scotland;;134, Corstorphine Road;;EDINBURGH', 'postcode'=>'EH12 6TS', 'country' => 'Scotland'} 
+      {'address'=>'134, Corstorphine Road;;EDINBURGH', 'postcode'=>'EH12 6TS', 'country' => 'Scotland'},
+      {'address'=>'Royal Zoological Society of Scotland;;134, Corstorphine Road;;EDINBURGH', 'postcode'=>'EH12 6TS', 'country' => 'Scotland'}
   ]
 end
 

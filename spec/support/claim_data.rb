@@ -2,7 +2,7 @@
 def claim_post_data
   HashWithIndifferentAccess.new(
   { "claim" =>
-    { "livepc" => false,
+    { "use_live_postcode_lookup" => false,
       "num_claimants" => 2,
       "claimant_type" => 'individual',
       "claimant_1" =>

@@ -166,6 +166,14 @@ describe DefendantCollection do
       expect(dc.errors[:defendant_1_title]).to eq ["Enter defendant 1's title"]
       expect(dc.errors[:defendant_2_full_name]).to eq ["Enter defendant 2's full name"]
     end
+
+    it 'should reject addresses with too many lines for defendant 1' do
+      params = claim_params
+      params['defendant_1']['street'] = "line 1\nline 2\nline 3\nline 4\nline 5"
+      dc = DefendantCollection.new(params)
+      expect(dc).not_to be_valid
+      expect(dc.errors[:defendant_1_street]).to eq(["Defendant 1's address can’t be longer than 4 lines"])
+    end
   end
 end
 

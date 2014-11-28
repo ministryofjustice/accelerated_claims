@@ -145,7 +145,10 @@ describe ClaimantCollection do
 
   describe '#[]=' do
 
-    let(:claimant)   { Claimant.new( { "title" => "Mrs", "full_name" => "Maggie Thatcher", "street" => "10 Downing Street St\nLondon", "postcode" => "SW1W 0LU"} ) }
+    let(:claimant) {
+      Claimant.new( title: "Mrs", full_name: "Maggie Thatcher",
+          street: "10 Downing Street St\nLondon", postcode: "SW1W 0LU" )
+    }
     it 'should raise error if index is zero' do
       expect {
         claimants[0] = claimant

@@ -6,19 +6,19 @@ describe Property, :type => :model do
   end
 
   describe 'initialization' do
-    it 'should instantiate livepc if in params as true' do
-      property = Property.new(HashWithIndifferentAccess.new(street: 'xxxx', postcode: 'RG2 7PU', house: 'Yes', livepc: true))
-      expect(property.livepc).to be true
+    it 'should instantiate use_live_postcode_lookup if in params as true' do
+      property = Property.new(use_live_postcode_lookup: true)
+      expect(property.address.use_live_postcode_lookup).to be true
     end
 
-    it 'should instantiate livepc if in params as false' do
-      property = Property.new(HashWithIndifferentAccess.new(street: 'xxxx', postcode: 'RG2 7PU', house: 'Yes', livepc: false))
-      expect(property.livepc).to be false
+    it 'should instantiate use_live_postcode_lookup if in params as false' do
+      property = Property.new(use_live_postcode_lookup: false)
+      expect(property.address.use_live_postcode_lookup).to be false
     end
 
-    it 'should instantiate livepc if absent from params' do
-      property = Property.new(HashWithIndifferentAccess.new(street: 'xxxx', postcode: 'RG2 7PU', house: 'Yes'))
-      expect(property.livepc).to be false
+    it 'should instantiate use_live_postcode_lookup if absent from params' do
+      property = Property.new()
+      expect(property.address.use_live_postcode_lookup).to be false
     end
   end
 
@@ -55,13 +55,13 @@ describe Property, :type => :model do
     end
 
     it 'should reject scottish postcodes' do
-      property.postcode = 'AB10 5AB'
+      property = Property.new(street: "1 Aha Street\nLondon", postcode: "SW1H 5AJ", house: "Yes")
       expect(property).not_to be_valid
       expect(property.errors['postcode']).to eq [ "Postcode is in Scotland. You can only use this service to regain possession of properties in England and Wales." ]
     end
 
     it 'should reject invalid postcodes' do
-      property.postcode = 'ABC105AB'
+      property = Property.new(street: "1 Aha Street\nLondon", postcode: "ABC105AB", house: "Yes")
       expect(property).not_to be_valid
       expect(property.errors['postcode']).to eq [ "Please enter a valid postcode for a property in England and Wales" ]
     end
@@ -71,13 +71,6 @@ describe Property, :type => :model do
     describe "house" do
       it "when blank" do
         property.house = ""
-        expect(property).not_to be_valid
-      end
-    end
-
-    context 'invalid postcode' do
-      it 'should generate an error message' do
-        property.postcode = 'ABC4545'
         expect(property).not_to be_valid
       end
     end
@@ -94,7 +87,7 @@ describe Property, :type => :model do
       it 'should generate an error message of the street is missing' do
         property.street = nil
         expect(property.valid?).not_to be true
-        expect(property.errors[:street]).to eq ['Enter the property address']
+        expect(property.errors[:street]).to eq ['Enter property full address']
       end
     end
   end

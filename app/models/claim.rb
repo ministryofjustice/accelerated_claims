@@ -11,14 +11,14 @@ class Claim < BaseClass
                 :claimant_type,
                 :num_defendants
 
-  attr_reader   :livepc
+  attr_reader   :use_live_postcode_lookup
 
   @@valid_claimant_types    = %w{ organization individual }
 
   def initialize(claim_params={})
     @javascript_enabled = claim_params.key?('javascript_enabled')
-    @livepc = claim_params['livepc'] || false
-    claim_params['property']['livepc'] = @livepc if claim_params['property']          # propagate the live postcocde lookup flag to the property model
+    @use_live_postcode_lookup = claim_params['use_live_postcode_lookup'] || false
+    claim_params['property']['use_live_postcode_lookup'] = @use_live_postcode_lookup if claim_params['property']          # propagate the live postcocde lookup flag to the property model
 
     @claimant_type  = claim_params.key?(:claimant_type) ? claim_params[:claimant_type] : nil
     if @claimant_type == 'organization'

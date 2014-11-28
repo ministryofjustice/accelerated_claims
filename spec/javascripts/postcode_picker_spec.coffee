@@ -112,7 +112,6 @@ describe 'PostcodePicker', ->
 
       expect(window.PostcodeLookup.lookup).toHaveBeenCalledWith('SW106AJ', 'all', @view)
 
-
   describe 'handleSuccessfulResponse called with array of addresses', ->
     it 'renders list of addresses in select box', ->
       @view.handleSuccessfulResponse(@results)
@@ -150,7 +149,6 @@ describe 'PostcodePicker', ->
       @view.handleSuccessfulResponse(response)
       expect( @picker.find('span.error.postcode').text() ).toEqual 'Postcode is in Northern Ireland. You can only use this service to regain possession of properties in England and Wales.'
 
-
   describe 'invalid postcode', ->
     it 'should display an error message', ->
       @view.displayInvalidPostcodeMessage()
@@ -165,7 +163,6 @@ describe 'PostcodePicker', ->
       @view.displayInvalidPostcodeMessage()
       @postcodeEditField.trigger('keyup')
       expect( @picker.find('span.error.postcode').size() ).toEqual 0
-
 
   describe 'displayNoResultsFound', ->
     it 'should display an error message if no result found', ->
@@ -186,7 +183,6 @@ describe 'PostcodePicker', ->
       @postcodeEditField.trigger('keyup')
       expect( @picker.find('span.error.postcode').size() ).toEqual 0
 
-
   describe 'service not available', ->
     beforeEach ->
       @view.displayServiceUnavailable()
@@ -196,7 +192,6 @@ describe 'PostcodePicker', ->
       expect( @picker.find('span.error.postcode').text() ).toEqual(
         'Postcode lookup service not available. Please enter the address manually.'
       )
-
 
   describe 'selecting address from select box', ->
     beforeEach ->
@@ -222,7 +217,6 @@ describe 'PostcodePicker', ->
     it 'should mark the postcode field as readonly', ->
       expect( @picker.find('#claim_property_postcode')).toHaveAttr('readonly', 'readonly')
 
-
   describe 'clicking on change-postcode-link2', ->
     beforeEach ->
       @view.displayServiceUnavailable()
@@ -231,7 +225,6 @@ describe 'PostcodePicker', ->
       expect(@picker.find('.postcode-display').css('display')).toEqual('block')
       @picker.find('.change-postcode-link2').trigger('click')
       expect(@picker.find('.postcode-display').hasClass('hide')).toBe true
-
 
   describe 'displaying results after selection', ->
     beforeEach ->
@@ -243,7 +236,6 @@ describe 'PostcodePicker', ->
     it 'shows address list', ->
       expect(@picker.find('.postcode-select-container').css('display')).toEqual('block')
 
-
   describe 'toSentence', ->
     it 'should return just the name of a country if only one in the array', ->
       expect(@view.toSentence(['England'])).toEqual 'England'
@@ -254,7 +246,6 @@ describe 'PostcodePicker', ->
     it 'should separate a list by commas and the last by and', ->
       expect(@view.toSentence(['England', 'Wales', 'Northern Ireland'])).toEqual 'England, Wales and Northern Ireland'
 
-
   describe 'capitalizeCountry', ->
     it 'should capitalize single work country names', ->
       expect(@view.capitalizeCountry('england')).toEqual 'England'
@@ -264,7 +255,6 @@ describe 'PostcodePicker', ->
 
     it 'should lowercase of in country names', ->
       expect(@view.capitalizeCountry('isle_of_man')).toEqual 'Isle of Man'
-
 
   describe 'normalizeCountry', ->
     it 'should return uk for all', ->

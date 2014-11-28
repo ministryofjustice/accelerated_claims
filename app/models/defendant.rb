@@ -1,22 +1,41 @@
 class Defendant < BaseClass
 
-  include Address
-
   attr_accessor :validate_presence, :validate_absence
 
   attr_accessor :title
   attr_accessor :full_name
-  attr_accessor :street
-  attr_accessor :postcode
-  attr_accessor :property_address
+  attr_accessor :address
   attr_accessor :inhabits_property
   attr_accessor :defendant_num
+  attr_reader   :params
+
+  delegate :street, :street=, :postcode, :postcode=, :indented_details, to: :address
 
   validates :title, length: { maximum: 8 }
   validates :full_name, length: { maximum: 40 }
 
   validate :inhabits_property_is_valid
   validate :validate_defendant_state
+  validate :address_validation
+
+  def initialize(params = {})
+    @address = Address.new(self)
+    super
+
+    unless params.include?(:validate_presence)
+      @validate_presence = true unless validate_absence?
+    end
+
+    if validate_absence?
+      @address.must_be_blank!
+    end
+
+    if validate_presence?
+      @inhabits_property = @address.blank? ? 'yes' : 'no'
+    end
+
+    @address.suppress_validation! if @inhabits_property != 'no'
+  end
 
   def inhabits_property_is_valid
     if validate_presence?
@@ -39,22 +58,16 @@ class Defendant < BaseClass
     end
   end
 
-  def initialize(params = {})
-    super
-    unless params.include?(:validate_presence)
-      @validate_presence = true unless params[:validate_absence] == true
-    end
-    if @validate_presence
-      @inhabits_property = address_blank? ? 'yes' : 'no'
-    end
+  def address_validation
+    @address.valid?
   end
 
   def validate_presence?
-    self.validate_presence == true
+    @validate_presence == true
   end
 
   def validate_absence?
-    self.validate_absence == true
+    @validate_absence == true
   end
 
   def empty?
@@ -122,11 +135,7 @@ class Defendant < BaseClass
   end
 
   def validate_fields_are_present
-    if self.inhabits_property == 'yes' || self.inhabits_property.blank?
-      validate_are_present(:title, :full_name)
-    else
-      validate_are_present(:title, :full_name, :street)
-    end
+    validate_are_present(:title, :full_name)
   end
 
   def validate_are_present(*fields)
