@@ -3,6 +3,7 @@
   Button94: nil,
   NameOfCourt: nil,
   ClaimNumber: nil,
+  court_name: "court_name",
   claimant_1_address: "Mr Joe Peters\n553 Olympic Road\nMidtown",
   claimant_1_postcode1: "AA11",
   claimant_1_postcode2: "4LP",
