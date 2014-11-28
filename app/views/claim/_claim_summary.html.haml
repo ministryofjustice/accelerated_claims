@@ -2,18 +2,17 @@
   = render partial: 'section_summary', locals: { section: 'property' }
 
   = summary_section_header 'claimant'
-  .moj-panel
-    .row
-      %p.summary-field
-        %span.summary-label= I18n.t 'claim.claimant_type.label'
-        %span.summary-value{ id: summary_id('claimant', 'type') }= I18n.t "claim.claimant_type.#{@claim['claimant_type']}"
-    = render partial: 'participant_summary', locals: { type: 'claimant', pattern: /^claimant_\d/ }
+  %table
+    %tbody
+      %tr.summary-field
+        %td.summary-label= I18n.t 'claim.claimant_type.label'
+        %td.summary-value{ id: summary_id('claimant', 'type') }= I18n.t "claim.claimant_type.#{@claim['claimant_type']}"
+  = render partial: 'participant_summary', locals: { type: 'claimant', pattern: /^claimant_\d/ }
 
-    - if contact_details_present?
-      .row.divider
-      .row
-        %h3 Contact details
-      .row
+  - if contact_details_present?
+    %h3 Contact details
+    %table
+      %tbody
         - @claim['claimant_contact'].each do |label, value|
           - if [ :email, :phone, :fax, :dx_number ].include? label.to_sym
             = render partial: 'field_summary', locals: { section: 'claimant_contact', label: label, value: value }
@@ -21,18 +20,16 @@
         - unless @claim['reference_number']['reference_number'].blank?
           = render partial: 'field_summary', locals: { section: 'reference_number', label: 'reference_number', value: @claim['reference_number']['reference_number'] }
 
-    - if alternate_address_present?
-      .row.divider
-      .row
-        %h3 Alternate address
-      .row
+  - if alternate_address_present?
+    %h3 Alternate address
+    %table
+      %tbody
         - @claim['claimant_contact'].each do |label, value|
           - if [ :title, :full_name, :company_name, :street, :postcode ].include? label.to_sym
             = render partial: 'field_summary', locals: { section: 'claimant_contact', label: label, value: value }
 
   = summary_section_header 'defendant'
-  .moj-panel
-    = render partial: 'participant_summary', locals: { type: 'defendant', pattern: /^defendant_\d/ }
+  = render partial: 'participant_summary', locals: { type: 'defendant', pattern: /^defendant_\d/ }
 
   = render partial: 'section_summary', locals: { section: 'notice' }
 
@@ -43,8 +40,8 @@
   = render partial: 'section_summary', locals: { section: 'deposit' }
 
   = summary_section_header 'fee'
-  .moj-panel
-    .row
+  %table
+    %tbody
       = render partial: 'field_summary', locals: { section: 'fee',
           label: 'court_fee', value: '£' + @claim['fee']['court_fee'] }
 
@@ -60,8 +57,8 @@
           label: 'account', value: @claim['fee']['account'] }
 
   = summary_section_header 'court'
-  .moj-panel
-    .row
+  %table
+    %tbody
       = render partial: 'field_summary',
       locals: { section: 'possession', label: 'hearing', value: @claim['possession']['hearing'] }
       = render partial: 'field_summary',
