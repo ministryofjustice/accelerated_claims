@@ -7,7 +7,7 @@ $path: ''
 @import 'elements/elements-typography'
 @import 'elements/layout'
 @import 'elements/forms'
-// @import "elements/tables"
+@import "elements/tables"
 @import 'elements/buttons'
 @import 'elements/details'
 @import 'elements/lists'
@@ -100,18 +100,34 @@ span.error
 .right
   float: right
 
-.summary-header .section-header
-  margin-top: 0px
+.summary-header
+  margin-top: 100px
+  .section-header
+    margin-top: 0px
+    border: none
+    @include media(mobile)
+      margin-bottom: 10px
 
-.summary-field
-  @extend .grid-row
-  margin-bottom: 0.5em
+  .edit-link
+    float: right
+    margin-right: 15px
 
+    @include media(mobile)
+      float: left
+      margin-left: 15px
+      margin-bottom: 15px
+
+
+//.summary-field
+//  @extend .grid-row
+//  margin-bottom: 0.5em
+//
 .summary-label
-  @extend .column-quarter
-
-.summary-value
-  @extend .column-three-quarters
+  color: $secondary-text-colour
+  width: 30%
+//
+//.summary-value
+//  @extend .column-three-quarters
 
 .postcode-picker-edit-field
   margin-right: 10px
@@ -144,3 +160,11 @@ section
 
 .form-group
   float: none
+
+table
+  tbody
+    border-top: 1px solid $border-colour
+  th, td
+    @include core-19
+
+
