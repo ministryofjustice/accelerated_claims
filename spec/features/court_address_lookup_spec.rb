@@ -45,9 +45,10 @@ feature 'Court address lookup' do
           visit '/'
           claim_form.complete_form_with_javascript
           click_button 'Continue'
-          ensure_present_path '/confirmation'
-          page.evaluate_script('window.history.back()')
-          ensure_present_path '/'
+          find('section.summary') # ensure confirmation page loaded
+
+          visit '/'
+          find('form#claimForm') # ensure form page loaded
 
           expect(page).not_to have_text "You haven't entered a postcode for the property you want to take back."
         end
@@ -59,9 +60,9 @@ feature 'Court address lookup' do
           visit '/'
           claim_form.complete_form_with_javascript
           click_button 'Continue'
-          ensure_present_path '/confirmation'
-          page.evaluate_script('window.history.back()')
-          ensure_present_path '/'
+          find('section.summary') # ensure confirmation page loaded
+          visit '/'
+          find('form#claimForm') # ensure form page loaded
 
           # click 'Change' to change the postcode for the property
           page.find(:xpath, '//*[@id="property"]/div/div[3]/div[3]/div/a').click
