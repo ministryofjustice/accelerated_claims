@@ -71,9 +71,10 @@ feature 'Filling in claim form' do
       check_focus_after_click 'You must say whether the defendant paid a deposit', 'claim_deposit_received_yes'
       check_focus_after_click 'You must choose whether you wish to attend the possible court hearing', 'claim_possession_hearing_no'
       check_focus_after_click 'You must say what kind of tenancy agreement you have', 'claim_tenancy_tenancy_type_assured'
+    end
 
-      click_button 'Continue'
-
+    scenario 'choosing no notice served shows appropriate errors', js: true do
+      visit '/'
       choose('claim_notice_notice_served_no')
       expect(page).to have_content('You cannot continue with this claim')
       click_button 'Continue'
