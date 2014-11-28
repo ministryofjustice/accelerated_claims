@@ -27,23 +27,24 @@
         choice: [ 'individual', 'organization' ],
         data: { depend: 'claimanttype', 'virtual-pageview' => '/accelerated/claimants-section' }
 
-      = claim_form.text_field_row :num_claimants,
-        class: 'hide js-claimanttype individual',
-        input_class: 'narrow',
-        data: { depend: 'num-claimants' },
-        label: 'How many claimants are there? <br/><span class="hint">All claimants should be named on the tenancy agreement</span>'
+      .panel-indent
+        = claim_form.text_field_row :num_claimants,
+          class: 'hide js-claimanttype individual',
+          input_class: 'narrow',
+          data: { depend: 'num-claimants' },
+          label: 'How many claimants are there? <br/><span class="hint">All claimants should be named on the tenancy agreement</span>'
 
-      .row.js-only
-        %span.error.hide#num-claimants-error-message
-          The number of claimants must be between 1 and 4. If you have more than 4 claimants, you’ll need to complete your
-          accelerated possession claim on the <a href="http://hmctsformfinder.justice.gov.uk/HMCTS/GetForm.do?court_forms_id=618">N5b form</a>
+        .row.js-only
+          %span.error.hide#num-claimants-error-message
+            The number of claimants must be between 1 and 4. If you have more than 4 claimants, you’ll need to complete your
+            accelerated possession claim on the <a href="http://hmctsformfinder.justice.gov.uk/HMCTS/GetForm.do?court_forms_id=618">N5b form</a>
 
-      .claimants
-        = render partial: 'claimant', object: @claim.claimant_1, locals: { claimant_id: 1, claim_form: claim_form, claimant_field: :claimant_1}
-        = render partial: 'claimant', object: @claim.claimant_2, locals: { claimant_id: 2, claim_form: claim_form, claimant_field: :claimant_2}
-        = render partial: 'claimant', object: @claim.claimant_3, locals: { claimant_id: 3, claim_form: claim_form, claimant_field: :claimant_3}
-        = render partial: 'claimant', object: @claim.claimant_4, locals: { claimant_id: 4, claim_form: claim_form, claimant_field: :claimant_4}
-      = render partial: 'claimant_contact', object: @claim.claimant_contact, locals: { claim_form: claim_form, claimant_field: :claimant_contact}
+        .claimants
+          = render partial: 'claimant', object: @claim.claimant_1, locals: { claimant_id: 1, claim_form: claim_form, claimant_field: :claimant_1}
+          = render partial: 'claimant', object: @claim.claimant_2, locals: { claimant_id: 2, claim_form: claim_form, claimant_field: :claimant_2}
+          = render partial: 'claimant', object: @claim.claimant_3, locals: { claimant_id: 3, claim_form: claim_form, claimant_field: :claimant_3}
+          = render partial: 'claimant', object: @claim.claimant_4, locals: { claimant_id: 4, claim_form: claim_form, claimant_field: :claimant_4}
+        = render partial: 'claimant_contact', object: @claim.claimant_contact, locals: { claim_form: claim_form, claimant_field: :claimant_contact}
 
 
   %section
@@ -65,7 +66,7 @@
           The number of defendants must be between 1 and 20. If you have more than 20 defendants, you’ll need to complete your
           accelerated possession claim on the <a href="http://hmctsformfinder.justice.gov.uk/HMCTS/GetForm.do?court_forms_id=618">N5b form</a>
 
-      .defendants
+      .panel-indent.defendants
         - (1 .. DefendantCollection::max_defendants(js_enabled: true)).each do |i|
           = render partial: 'defendant', object: @claim.send("defendant_#{i}".to_sym), locals: { defendant_id: i, claim_form: claim_form, defendant_field: "defendant_#{i}".to_sym }
 

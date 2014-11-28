@@ -21,7 +21,7 @@
       - form.row :as_property do
         = form.labelled_check_box :as_property, 'A deposit in the form of a valuable item <span class="hint block">For example jewellery</span>'.html_safe, 'Yes', 'No', data: { depend: 'depositTypeProperty'}
 
-  .row.money-deposit-type.hide.js-depositTypeMoney.yes
+  .panel-indent.row.money-deposit-type.hide.js-depositTypeMoney.yes
     %h4.strong
       %span.nonjs(data-jsalt='You') If you took a money deposit you
       need to be sure that:
@@ -35,7 +35,7 @@
         = 'you gave the defendant all the information about the deposit scheme that landlords must provide'.html_safe
     = form.moj_date_fieldset :information_given_date, 'Enter the date this information was given', class: 'row rel hide js-depositTypeMoney yes'
 
-  .row.property-deposit-type.hide.js-depositTypeProperty.yes
+  .panel-indent.row.property-deposit-type.hide.js-depositTypeProperty.yes
     %h4.strong
       %span.nonjs(data-jsalt='You') If you took a valuable item as a deposit you
       need to be sure that:
