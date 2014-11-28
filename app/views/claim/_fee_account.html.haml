@@ -2,6 +2,6 @@
   %details
     %summary
       %span.summary#fee-account= I18n.t 'claim.fee.account.prompt'.html_safe
-    .row
+    .panel-indent
       = form.text_field_row :account, label: "<span class='visuallyhidden'>#{I18n.t 'claim.fee.account.guidance'}</span> <span aria-hidden='true'>#{I18n.t 'claim.fee.account.description'}</span>".html_safe, maxlength: 10
 

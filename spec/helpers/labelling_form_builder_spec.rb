@@ -58,7 +58,6 @@ describe 'LabellingFormBuilder', :type => :helper  do
       form.moj_postcode_picker('property')
     end
 
-
     it 'should substitute options which are supplied' do
       expected_options = { :prefix => "claim_defendant_1", :postcode_attr => :postcode, :address_attr => :street, :name =>  "claim[defendant_1]", :vc => 'england wales' }
       picker = double MojPostcodePicker
@@ -67,9 +66,6 @@ describe 'LabellingFormBuilder', :type => :helper  do
       form.moj_postcode_picker('defendant_1', vc: 'england wales')
     end
   end
-
-
-
 
   describe '#moj_date_fieldset' do
     let(:date_fieldset) { form.moj_date_fieldset :date_served, 'Date notice served', { class: 'date-picker' }, 9.weeks.ago }
@@ -98,7 +94,7 @@ describe 'LabellingFormBuilder', :type => :helper  do
     let(:row) { form.text_field_row(:expiry_date) }
 
     it 'outputs the correct form element' do
-      expect(row).to contain_css_selectors(['.row input[type=text]', '.row label'])
+      expect(row).to contain_css_selectors(['.form-group input[type=text]', '.form-group label'])
     end
 
     it 'shows errors inside the label' do
@@ -142,7 +138,7 @@ describe 'LabellingFormBuilder', :type => :helper  do
 
     it 'outputs regular text_area_row' do
       expect(subject).to contain_css_selectors([
-        '.row textarea#claim_notice_full_address', '.row label'
+        '.form-group textarea#claim_notice_full_address', '.form-group label'
       ])
     end
 

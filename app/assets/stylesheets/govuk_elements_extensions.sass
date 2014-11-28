@@ -16,15 +16,18 @@ $path: ''
 
 h1
   @extend .heading-xlarge
-
   span
     @extend .heading-secondary
 
 h2
-  @extend .heading-medium
+  @extend .heading-large
+  margin-top: 100px
+  padding-bottom: 0.2em
+  border-bottom: 1px solid $border-colour
+  margin-bottom: 40px
 
 h3
-  @extend .heading-small
+  @extend .heading-medium
 
 ul
   @extend .list-bullet
@@ -33,10 +36,12 @@ fieldset.radio
   label
     @extend .block-label
 
-fieldset.inline
-  label
-    clear: none
-    margin-right: $gutter-half
+.options
+  @extend .grid-row
+  .option
+    @extend .column-two-thirds
+    label
+      float: none
 
 legend
   @extend .form-label
@@ -57,20 +62,22 @@ label + input
 label + textarea
   @extend .form-control
 
-div.row, fieldset
+fieldset, .sub-panel
   @extend .form-group
+
+.rel
+  margin-bottom: 15px
 
 .narrow
   @extend .form-control-1-8
 
 .error-summary
   @extend .validation-summary
+  h3
+    margin-top: 20px
 
 span.error
   @extend .validation-message
-
-// .moj-panel
-  // @extend .panel-indent
 
 // .divider
   // width: auto
@@ -132,3 +139,8 @@ a.caption
 
 // --
 
+section
+  clear: left
+
+.form-group
+  float: none

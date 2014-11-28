@@ -38,7 +38,7 @@
   .address.extra.no.sub-panel.hide{style: "margin-top: 10px;"}
 
     - options = @form.object.errors[:street].any? ? {id: "#{@prefix}_#{@address_attr}_error", class: 'error'} : {}
-    .row.street{options}
+    .form-group.street{options}
       %label{for: "#{@prefix}_#{@address_attr}"}
         Full address
         = @street_hint
@@ -55,7 +55,7 @@
 
     - options = @form.object.errors[:postcode].any? ? {id: "#{@prefix}_#{@postcode_attr}_error", class: 'error'} : {}
 
-    .row.address-postcode{options}
+    .form-group.address-postcode{options}
       %label{for: "#{@prefix}_#{@postcode_attr}"}
         Postcode
         - unless @form.object.errors[:postcode].empty?

@@ -55,10 +55,16 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
     options[:choice] ||= [ 'Yes', 'No' ]
 
+    options_class = if options[:class][/inline/]
+      'inline'
+    else
+      'options'
+    end
+
     data_reverse = options.delete(:toggle_fieldset) ? ' data-reverse="true"' : ''
 
     fieldset_tag attribute, legend, options do
-      @template.surround("<div class='options'#{data_reverse}>".html_safe, "</div>".html_safe) do
+      @template.surround("<div class='#{options_class}'#{data_reverse}>".html_safe, "</div>".html_safe) do
         options[:choice].map do |choice|
           radio_button_row(attribute, choice, virtual_pageview, input_class)
         end.join("\n")
@@ -285,7 +291,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
   def row_input attribute, input, options
     virtual_pageview = options[:data] ? options[:data].delete('virtual-pageview') : nil
-    css = "row #{css_for(attribute, options)}".strip
+    css = "form-group #{css_for(attribute, options)}".strip
     id = id_for(attribute).blank? ? '' : "id='#{id_for(attribute)}' "
 
     @template.surround("<div #{id}class='#{css}'>".html_safe, "</div>".html_safe) do
