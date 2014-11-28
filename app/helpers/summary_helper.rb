@@ -104,6 +104,7 @@ module SummaryHelper
     'confirmed_first_rules_period_applicable_statements',
     'as_property',
     'address_same_as_first_claimant',
+    'use_live_postcode_lookup',
     'inhabits_property'].include?(label)
   end
 
