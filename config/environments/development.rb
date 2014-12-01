@@ -30,7 +30,7 @@ AcceleratedClaims::Application.configure do
   #
   # config.cache_store = :redis_store, ('redis://localhost:6379/1')
 
-  jsonlogger = LogStuff.new_logger("#{Rails.root}/log/output.json", Logger::INFO)
+  jsonlogger = LogStuff.new_logger("#{Rails.root}/log/logstash_development.log", Logger::INFO)
 
   config.log_level = :info
   config.logstasher.enabled = true

@@ -50,8 +50,16 @@ AcceleratedClaims::Application.configure do
   # Use a different logger for distributed setups.
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
+  jsonlogger = LogStuff.new_logger("#{Rails.root}/log/logstash_development.log", Logger::INFO)
   config.logstasher.enabled = true
   config.logstasher.suppress_app_log = true
+  config.logstasher.logger = jsonlogger
+
+  # Need to specifically set the logstasher loglevel since it will overwrite the one set earlier
+  config.logstasher.log_level = Logger::INFO
+  config.logstasher.source = "accelerated_claims.production.#{ENV['USER']}"
+  # Reuse logstasher logger with logstuff
+  LogStuff.setup(:logger => jsonlogger)
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
