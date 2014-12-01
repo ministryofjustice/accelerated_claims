@@ -78,23 +78,50 @@ feature 'Court address lookup' do
 
   context 'when property address is populated' do
     let(:postcode) { 'BH22 8HR' }
-    let(:json) { CourtfinderController::TEST_RESPONSE_DATA.to_json }
+    let(:production_json) do
+      [{
+         'name' => 'Bournemouth and Poole County Court and Family Court',
+         'address' => {
+           'town' => 'Bournemouth',
+           'address_lines' => ['Courts of Justice',
+                               'Deansleigh Road'],
+           'type' => 'Visiting',
+           'postcode' => 'BH7 7DS',
+           'county' => 'Dorset'
+         }
+       }].to_json
+    end
+
+    let(:json) {
+      ENV['env'] == 'production' ? production_json : \
+        CourtfinderController::TEST_RESPONSE_DATA.to_json
+    }
+
+    let(:court_name) do
+      bournemouth = 'Bournemouth Crown Court'
+      cambridge = 'Cambridge County Court and Family Court'
+      ENV['env'] == 'production' ?  bournemouth : cambridge
+    end
 
     before { court_finder_stub(postcode, body: json) }
 
     scenario 'find and populate court name, address, show manual edit link', js: true do
+      puts "court_name: #{court_name}"
       visit '/'
       fill_text_field 'claim_property_postcode_edit_field', postcode
       click_link 'Find address'
       find('#claim_property_address_select').find(:xpath, 'option[1]').select_option
       click_link 'Select address'
 
-      expect(page).to have_text 'Cambridge County Court and Family Court'
+      # expect(page).to have_text 'Cambridge County Court and Family Court'
+      expect(page).to have_text court_name
 
       address = JSON.parse(json)[0]['address']['address_lines'].join(',')
       expect( page.find("#claim_court_street", visible: false).value ).to eq(address)
+      # expect( page.find("#claim_court_street", visible: false).value ).to eq 'Courts of Justice,Deansleigh Road'
 
       expect(page).to have_xpath('//*[@id="court-details"]')
+      # puts "-------> #{ENV['env']}"
     end
 
     context 'court address form visibility' do
