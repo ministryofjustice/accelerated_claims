@@ -169,6 +169,9 @@ GEM
     logstasher (0.5.3)
       logstash-event (~> 1.1.0)
       request_store
+    logstuff (0.0.2)
+      logstash-event (~> 1.1.0)
+      request_store
     lumberjack (1.0.7)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
@@ -379,6 +382,7 @@ DEPENDENCIES
   jquery-rails
   launchy
   logstasher
+  logstuff
   mail
   moj_template (= 0.16.0)
   parallel

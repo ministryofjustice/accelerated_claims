@@ -60,7 +60,9 @@ class ClaimController < ApplicationController
       redirect_to expired_path
     else
       @claim = Claim.new(session[:claim])
+
       if @claim.valid?
+        LogStuff.info(:fee_account_num, present: @claim.fee.account.present?.to_s) { "Fee Account Number Usage" }
         flatten = Rails.env.test? || params[:flatten] == 'false' ? false : true
         pdf = PDFDocument.new(@claim.as_json, flatten).fill
 
