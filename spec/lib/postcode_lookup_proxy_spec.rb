@@ -64,56 +64,6 @@ describe PostcodeLookupProxy do
 
   end
 
-  describe 'private method production_lookup' do
-
-    # This test queries the live server and so should be used in normal day to day usage, but is
-    # here if there is a question over what the live server actually returns
-    #
-    if ENV['LIVEPC'] == 'idealpostcodes'
-      context 'timely lookup' do
-        it 'should call ideal-postcodes and return true, transforming the api into @result_set' do
-          pclp = PostcodeLookupProxy.new('SW10 9LN')
-
-          response = double('Http Repsonse')
-          expect(Excon).to receive(:get).and_return(response)
-          expect(response).to receive(:status).and_return(200).at_least(1)
-          expect(response).to receive(:body).and_return(api_response)
-
-          expect(pclp.send(:production_lookup)).to be true
-          expect(pclp.result_set).to eq [
-            {"address"=>"2 Barons Court Road;;LONDON", "postcode"=>"ID1 1QD"},
-            {"address"=>"Basement Flat;;2 Barons Court Road;;LONDON", "postcode"=>"ID1 1QD"}
-          ]
-        end
-      end
-
-      it 'should return 404 if postcode not found' do
-        WebMock.disable_net_connect!(:allow => [/api.ideal-postcodes.co.uk/, /codeclimate.com/] )
-        pclp = PostcodeLookupProxy.new('RG2 0PU', [], true)
-        pclp.lookup
-        expect(pclp.result_set).to eq ( {"code"=>4040, "message"=>"Postcode Not Found"} )
-        expect(pclp.http_status).to eq 404
-      end
-
-      it 'should return 503 if timeout' do
-        WebMock.disable_net_connect!(:allow => [/api.ideal-postcodes.co.uk/, /codeclimate.com/] )
-        pclp = PostcodeLookupProxy.new('RG2 9PU', [], true)
-        expct(Excon).to receive(:get).and_raise_error(Timeout::Error)
-        pclp.lookup
-        expect(pclp.result_set).to eq ( {"code"=>5030, "message"=>"Service Unavailable"} )
-        expect(pclp.http_status).to eq 503
-      end
-
-      it 'should return valid data set if valid' do
-        WebMock.disable_net_connect!(:allow => [/api.ideal-postcodes.co.uk/, /codeclimate.com/] )
-        pclp = PostcodeLookupProxy.new('ID1 1QD', [], true)
-        pclp.lookup
-        expect(pclp.result_set).to eq ( dummy_ideal_postcodes_result )
-        expect(pclp.http_status).to eq 200
-      end
-    end
-  end
-
   context 'calls either development or production lookup' do
     it 'should call development lookup if not production' do
       pc = PostcodeLookupProxy.new('WC1B5HA', [])
