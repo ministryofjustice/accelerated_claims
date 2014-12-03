@@ -264,7 +264,12 @@ class ClaimForm
     prefix = 'property'
     click_manual_address_link(prefix) unless !@js_on
     fill_in_text_area(prefix, 'street')
-    fill_in_text_field(prefix, 'postcode')
+
+    if ENV["env"] == 'production'
+      fill_text_field 'claim_property_postcode', 'SW1H9AJ'
+    else
+      fill_in_text_field(prefix, 'postcode')
+    end
 
     choose_radio(prefix, 'house')
   end
