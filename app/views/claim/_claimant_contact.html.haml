@@ -1,6 +1,6 @@
 = claim_form.fields_for claimant_field, claimant_contact, builder: LabellingFormBuilder do |form|
-  #claimant-contact.sub-panel.claimant-solicitor
-    .row
+  #claimant-contact
+    .sub-panel
       %details
         %summary
           %span.summary#contact-details Add phone and email (Optional)
@@ -10,7 +10,7 @@
           = form.text_field_row :fax, label: add_optional_nonjs('Fax'), class: 'rel fax'
           = form.text_field_row :dx_number, label: add_optional_nonjs('DX number'), class: 'rel dx_number'
 
-    .row
+    .sub-panel
       %p
         If you want us to send correspondence about the case to a different address, enter it here.
         %span.hint.block.js-claimanttype.individual.js-only
@@ -26,7 +26,7 @@
           = form.text_field_row :company_name, label: add_optional_nonjs('Company name'),  class: 'rel company_name'
           = form.moj_postcode_picker "claimant_contact", name: "claim[claimant_contact]", address_attr: 'street', hide: false
 
-    .row#reference-block
+    .sub-panel#reference-block
       %details
         %summary
           %span.summary#reference-number Add a reference number (Optional)
