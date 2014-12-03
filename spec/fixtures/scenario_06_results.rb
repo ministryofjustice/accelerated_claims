@@ -1,6 +1,8 @@
 {
   Button94: nil,
   Button95: nil,
+  court_name: "court_name",
+  fee_account: nil,
   claimant_1_address: "Infinity Southwich\nRedleaf House, 157-159 Masonic Hall\nSouthwich",
   claimant_1_postcode1: "SH2",
   claimant_1_postcode2: "9HY",

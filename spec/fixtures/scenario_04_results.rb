@@ -1,6 +1,7 @@
 {
   Button94: nil,
   Button95: nil,
+  court_name: "court_name",
   claimant_1_address: "Miss Teri Dactyl\n7 Bysea Rd\nBlacktown",
   claimant_1_postcode1: "YY21",
   claimant_1_postcode2: "1JH",
