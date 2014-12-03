@@ -179,6 +179,26 @@ describe ClaimController, :type => :controller do
         expect(response).to redirect_to(File.join(root_path,'expired'))
       end
     end
+
+    context 'logging fee_account_num' do
+      it 'should log fee account num logstash record if first time for this session' do
+        expect(LogStuff).to receive(:info).with(:fee_account_num, { present: 'false', ip: instance_of(String) } )
+        expect(session[:fee_account_num_logged]).to be_nil
+
+        data = claim_post_data['claim']
+        post :submission, claim: data
+        get :download
+        expect(session[:fee_account_num_logged]).to be true
+      end
+
+      it 'should not log a fee accunt num if already done once for this session' do
+        expect(LogStuff).not_to receive(:info).with(:fee_account_num, { present: 'false', ip: instance_of(String) } )
+        session[:fee_account_num_logged] = true
+        data = claim_post_data['claim']
+        post :submission, claim: data
+        get :download
+      end
+    end
   end
 
   describe 'GET data' do
