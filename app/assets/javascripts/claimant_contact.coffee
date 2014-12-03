@@ -10,11 +10,11 @@ class ClaimantContact
     @buttonOrganization = $('#claim_claimant_type_organization')
     @numberOfClaimants = $('#claim_num_claimants')
 
-    @claimantContactPanel.hide()
+    @hideContactPanel()
     @displayOnLoad()
 
     @buttonOrganization.on 'click', =>
-      @claimantContactPanel.show()
+      @showContactPanel()
       @referenceBlock.show()
 
     @buttonIndividual.on 'click', =>
@@ -23,10 +23,22 @@ class ClaimantContact
     $('#claim_num_claimants').on 'keyup', =>
       @showHideContactPanelDependingOnNumClaimants()
 
+  showContactPanel: =>
+    @claimantContactPanel.show()
+
+  hideContactPanel: =>
+    @claimantContactPanel.hide()
+
+  organization: =>
+    @buttonOrganization.is(':checked')
+
+  individual: =>
+    @buttonIndividual.is(':checked')
+
   displayOnLoad: =>
-    if @buttonOrganization.is(':checked')
-      @claimantContactPanel.show()
-    else if @buttonIndividual.is(':checked')
+    if @organization()
+      @showContactPanel()
+    else if @individual()
       @showHideContactPanelDependingOnNumClaimants()
 
     detailsElements = $('details', $('#claimant-contact'))
@@ -35,10 +47,10 @@ class ClaimantContact
 
   showHideContactPanelDependingOnNumClaimants: =>
     if parseInt(@numberOfClaimants.val()) < 1 || @numberOfClaimants.val() == ""
-      @claimantContactPanel.hide()
+      @hideContactPanel()
     else
-      @claimantContactPanel.show()
-      @referenceBlock.hide() unless @buttonOrganization.is(':checked')
+      @showContactPanel()
+      @referenceBlock.hide() unless @organization()
 
   expandBlockIfPopulated: (details) =>
     if details.is(':visible')
