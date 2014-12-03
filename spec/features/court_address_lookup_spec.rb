@@ -39,38 +39,40 @@ feature 'Court address lookup' do
 
   context 'when the form is populated correctly and submited' do
     context 'summary page is viewed and the user returns back to the form' do
-      scenario 'should display the court name', js: true do
-        data = load_fixture_data 'spec/fixtures/scenario_01_js_data.rb'
-        AppModel.new(data).exec do
-          visit '/'
-          claim_form.complete_form_with_javascript
-          click_button 'Continue'
-          find('section.summary') # ensure confirmation page loaded
+      unless ENV["env"] == 'production'
+        scenario 'should display the court name', js: true do
+          data = load_fixture_data 'spec/fixtures/scenario_01_js_data.rb'
+          AppModel.new(data).exec do
+            visit '/'
+            claim_form.complete_form_with_javascript
+            click_button 'Continue'
+            find('section.summary') # ensure confirmation page loaded
 
-          visit '/'
-          find('form#claimForm') # ensure form page loaded
+            visit '/'
+            find('form#claimForm') # ensure form page loaded
 
-          expect(page).not_to have_text "You haven't entered a postcode for the property you want to take back."
+            expect(page).not_to have_text "You haven't entered a postcode for the property you want to take back."
+          end
         end
-      end
 
-      scenario 'should allow resubmission with a changed property address', js: true do
-        data = load_fixture_data 'spec/fixtures/scenario_01_js_data.rb'
-        AppModel.new(data).exec do
-          visit '/'
-          claim_form.complete_form_with_javascript
-          click_button 'Continue'
-          find('section.summary') # ensure confirmation page loaded
-          visit '/'
-          find('form#claimForm') # ensure form page loaded
+        scenario 'should allow resubmission with a changed property address', js: true do
+          data = load_fixture_data 'spec/fixtures/scenario_01_js_data.rb'
+          AppModel.new(data).exec do
+            visit '/'
+            claim_form.complete_form_with_javascript
+            click_button 'Continue'
+            find('section.summary') # ensure confirmation page loaded
+            visit '/'
+            find('form#claimForm') # ensure form page loaded
 
-          # click 'Change' to change the postcode for the property
-          page.find(:xpath, '//*[@id="property"]/div/div[3]/div[3]/div/a').click
+            # click 'Change' to change the postcode for the property
+            page.find(:xpath, '//*[@id="property"]/div/div[3]/div[3]/div/a').click
 
-          fill_text_field 'claim_property_postcode_edit_field', 'W93XX'
-          click_link 'Find address'
-          click_button 'Continue'
-          expect(page).not_to have_text 'Review the details of your claim'
+            fill_text_field 'claim_property_postcode_edit_field', 'W93XX'
+            click_link 'Find address'
+            click_button 'Continue'
+            expect(page).not_to have_text 'Review the details of your claim'
+          end
         end
       end
     end
@@ -78,7 +80,30 @@ feature 'Court address lookup' do
 
   context 'when property address is populated' do
     let(:postcode) { 'BH22 8HR' }
-    let(:json) { CourtfinderController::TEST_RESPONSE_DATA.to_json }
+    let(:production_json) do
+      [{
+         'name' => 'Bournemouth and Poole County Court and Family Court',
+         'address' => {
+           'town' => 'Bournemouth',
+           'address_lines' => ['Courts of Justice',
+                               'Deansleigh Road'],
+           'type' => 'Visiting',
+           'postcode' => 'BH7 7DS',
+           'county' => 'Dorset'
+         }
+       }].to_json
+    end
+
+    let(:json) {
+      ENV['env'] == 'production' ? production_json : \
+        CourtfinderController::TEST_RESPONSE_DATA.to_json
+    }
+
+    let(:court_name) do
+      bournemouth = 'Bournemouth Crown Court'
+      cambridge = 'Cambridge County Court and Family Court'
+      ENV['env'] == 'production' ?  bournemouth : cambridge
+    end
 
     before { court_finder_stub(postcode, body: json) }
 
@@ -89,7 +114,7 @@ feature 'Court address lookup' do
       find('#claim_property_address_select').find(:xpath, 'option[1]').select_option
       click_link 'Select address'
 
-      expect(page).to have_text 'Cambridge County Court and Family Court'
+      expect(page).to have_text court_name
 
       address = JSON.parse(json)[0]['address']['address_lines'].join(',')
       expect( page.find("#claim_court_street", visible: false).value ).to eq(address)
