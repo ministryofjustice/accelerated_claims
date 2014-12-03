@@ -109,7 +109,7 @@ class ClaimController < ApplicationController
 
   def log_fee_account_num_usage
     if session[:fee_account_num_logged].nil?
-      LogStuff.info(:fee_account_num, present: @claim.fee.account.present?.to_s, ip: request.env['REMOTE_ADDR']) { "Fee Account Number Usage" }
+      LogStuff.info(:fee_account_num, present: @claim.fee.account.present?.to_s, ip: request.remote_ip) { "Fee Account Number Usage" }
       session[:fee_account_num_logged] = true
     end
   end
