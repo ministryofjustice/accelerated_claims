@@ -202,7 +202,7 @@ describe 'ClaimantContact', ->
           </div>
         </div>
       </div>
-      <div class='sub-panel claimant-solicitor js-claimanttype individual organization' id='claimant-contact'>
+      <div class='sub-panel js-claimanttype individual organization' id='claimant-contact'>
         <div class='row'>
           <details>
             <summary>
