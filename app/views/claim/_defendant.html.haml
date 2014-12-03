@@ -8,8 +8,10 @@
     = form.text_field_row :full_name, class: 'rel'
     = form.hidden_field :inhabits_property
     .sub-panel.details{id: "defendant_#{defendant_id}_resident_address"}
-      .row.js-only
-        %a.caption{ id: "defendant_#{defendant_id}_resident_details", class: "js-inhabitproperty show-hide" , href: "#defendant-#{defendant_id}-resident-details", 'aria-expanded' => 'false' }
-          = 'If the defendant is not living in the property, enter the address'
-      .row.hide.nonjs If the defendant is not living in the property, enter the address
-      = form.moj_postcode_picker "defendant_#{defendant_id}", { hide: true}
+      %details
+        %summary.js-only
+          %span.summary{ id: "defendant_#{defendant_id}_resident_details" } If the defendant is not living in the property, enter the address
+        .panel-indent
+          .row.hide.nonjs If the defendant is not living in the property, enter the address
+          = form.moj_postcode_picker "defendant_#{defendant_id}"
+
