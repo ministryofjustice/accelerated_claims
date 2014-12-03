@@ -290,7 +290,7 @@ class ClaimForm
     fill_in_text_field(defendant, 'title')
     fill_in_text_field(defendant, 'full_name')
     if options[:complete_address] == true
-      click_link("defendant_#{defendant_number}_resident_details")
+      find("#defendant_#{defendant_number}_resident_details").click
       click_manual_address_link(defendant)
       fill_in_text_area(defendant, 'street')
       fill_in_text_field(defendant, 'postcode')
