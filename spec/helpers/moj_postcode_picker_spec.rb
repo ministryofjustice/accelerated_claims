@@ -145,7 +145,7 @@ def expected_output
     </a>
   </div>
   <div class='address extra no sub-panel hide' style='margin-top: 10px;'>
-    <div class='row street'>
+    <div class='form-group street'>
       <label for='claim_property_street'>
         Full address
 
@@ -159,7 +159,7 @@ def expected_output
         </span>
       </div>
     </div>
-    <div class='row address-postcode'>
+    <div class='form-group address-postcode'>
       <label for='claim_property_postcode'>
         Postcode
       </label>
