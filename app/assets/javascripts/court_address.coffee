@@ -143,37 +143,29 @@ CourtAddressModule =
       $('#court-address').show()
 
   showCourtFormIfNonstandardCourt: ->
-
     postcode = $('#claim_property_postcode').val()
-
     if postcode != ''
-
       separator = "/"
       if window.location.pathname.match(/\/$/)
         separator = ""
-
       myUrl =  window.location.pathname + separator + "court-address/#{postcode}"
       jQuery.ajax( myUrl,
         success: (data) ->
-
           submitted_court_name = $('#claim_court_court_name').val()
           submitted_court_street = $('#claim_court_street').val()
           submitted_court_postcode = $('#claim_court_postcode').val()
-
           default_court_name = data[0].name
           default_court_street = data[0].address.address_lines.toString()
           default_court_postcode = data[0].address.postcode
-
           if default_court_name != submitted_court_name || default_court_street != submitted_court_street || default_court_postcode != submitted_court_postcode
             CourtAddressModule.changeElement('#claim_court_court_name', 'input', "<input type='text'></input>")
             CourtAddressModule.changeElement('#claim_court_postcode', 'input', "<input type='text'></input>")
             CourtAddressModule.changeInputFieldToTextarea()
             $('#court-details').parent().addClass('open')
             $('#court-address').show()
-      error: (jqXHR, textStatus, errorThrown) ->
-        CourtAddressModule.displayNoResultsFound()
+        error: (jqXHR, textStatus, errorThrown) ->
+          CourtAddressModule.displayNoResultsFound()
       )
-
 
   addressReEntry: ->
     $('.change-postcode-link').click ->
