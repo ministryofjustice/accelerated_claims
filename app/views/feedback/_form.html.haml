@@ -6,11 +6,9 @@
     = f.text_area_row :difficulty_feedback, label: 'Did you have any difficulty with this service?'
 
     = f.text_area_row :improvement_feedback, label: 'Do you have any ideas for how it could be improved?'
-    .row
-      %p
-        Please don't include any personal or financial details
-        %br
-        %span.hint For example, your National Insurance or credit card numbers.
+    %p
+      Please don't include any personal or financial details
+      %span.hint For example, your National Insurance or credit card numbers.
 
     = f.radio_button_fieldset :satisfaction_feedback,
       'Overall, how did you feel about the service you received today?',
@@ -30,12 +28,13 @@
          'other_help' ]
     = f.text_field :other_help
 
-    .row
-      %h2 Tell us what you think of new designs
-      Please enter your email address if you're interested in taking part in our user testing and giving feedback on some new designs. We won't use your email address for anything else.
+    %h3 Tell us what you think of new designs
+    %p
+      Please enter your email address if you're interested in taking part in our
+      user testing and giving feedback on some new designs.
+      We won't use your email address for anything else.
 
-    .row
+    .sub-panel
       = f.text_field_row :email, label: 'Your email address', class: 'rel'
 
-    .row
-      = f.submit 'Send feedback', class: 'button button-get-started', id: 'send-feedback'
+    = f.submit 'Send feedback', class: 'button button-get-started', id: 'send-feedback'

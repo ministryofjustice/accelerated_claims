@@ -1,7 +1,7 @@
 %header
   %h1
     Ask for technical help
-  %h2
+  %h3
     Please note: we cannot offer legal advice.
 
 = render partial: 'shared/flash'
@@ -12,13 +12,9 @@
 
   %p We’ll only use your details to call you back. Don’t include any personal information, for example address or date of birth.
 
-
   = form_for @user_callback, url: user_callback_request_path, html: { novalidate: 'novalidate' }, builder: LabellingFormBuilder do |f|
-    .moj-panel
-      = f.text_field_row :name, label: 'Name'
-      .row
-      = f.text_field_row :phone, label: 'Telephone number', class: 'rel'
-      = f.text_area_row :description, label: "Describe what you'd like to talk about"
+    = f.text_field_row :name, label: 'Name'
+    = f.text_field_row :phone, label: 'Telephone number', class: 'rel'
+    = f.text_area_row :description, label: "Describe what you'd like to talk about"
 
-    .action-buttons.cf
-      = f.submit 'Send', :class => 'button button-primary large chevron left', :id => 'submit-button'
+    = f.submit 'Send', class: 'button button-get-started', id: 'submit-button'
