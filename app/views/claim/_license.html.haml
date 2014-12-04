@@ -9,7 +9,7 @@
       choice: [ 'Yes', 'Applied', 'No' ],
       data: { depend: 'hmo', 'virtual-pageview' => '/accelerated/licenses-section' }
 
-  .panel-indent.sub-panel.hide.js-hmo.yes
+  .panel-indent.hide.js-hmo.yes
     = form.radio_button_fieldset :issued_under_act_part_yes,
         '<span class="nonjs" data-jsalt="Which"><strong class="bold-small">If yes</strong>, which</span> licence do you have?'.html_safe,
         class: 'radio',
@@ -17,7 +17,7 @@
     = form.text_field_row  :issued_by, label: 'Which local authority issued the licence?'
     = form.moj_date_fieldset :issued_date, 'When was it issued?', class: 'date-picker'
 
-  .panel-indent.sub-panel.hide.js-hmo.applied
+  .panel-indent.hide.js-hmo.applied
     = form.radio_button_fieldset :issued_under_act_part_applied,
         '<span class="nonjs" data-jsalt="Which"><strong class="bold-small">If you\'ve applied for one</strong>, which</span> licence have you applied for?'.html_safe,
         class: 'radio',
