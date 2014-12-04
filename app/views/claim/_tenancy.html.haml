@@ -8,7 +8,7 @@
 
   .row.divider.hide.js-tenancyType.assured
 
-  .panel-indent.sub-panel.rel.hide.js-tenancyType.assured
+  .sub-panel.rel.hide.js-tenancyType.assured
     %h3.section-header.hide Assured shorthold tenancies
 
     = form.radio_button_fieldset :assured_shorthold_tenancy_type,
@@ -19,13 +19,13 @@
 
 
     .sub-panel.assuredTenancyOptions.hide.js-tenancyNumber.one.multiple
-      .sub-panel.hide.inset.js-tenancyNumber.one
+      .panel-indent.sub-panel.hide.inset.js-tenancyNumber.one
         .row.remove
           %p= "If you’ve had <strong>1</strong> tenancy agreement, enter the details".html_safe
 
         = form.moj_date_fieldset :start_date, 'Start date of the tenancy agreement', class: 'date-picker rel conditional original'
 
-      .sub-panel.hide.inset.js-tenancyNumber.multiple
+      .panel-indent.sub-panel.hide.inset.js-tenancyNumber.multiple
         .row.remove
           = 'If you’ve had <strong>more than 1</strong> tenancy agreement, enter the details'.html_safe
 
@@ -76,7 +76,7 @@
 
   .row.divider.hide.js-tenancyType.demoted
 
-  .panel-indent.sub-panel.rel.hide.js-tenancyType.demoted
+  .sub-panel.rel.hide.js-tenancyType.demoted
     %h3.section-header.hide Demoted assured shorthold tenancies
 
     .sub-panel.inset
