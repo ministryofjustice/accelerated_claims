@@ -1,6 +1,8 @@
 = claim_form.fields_for license, builder: LabellingFormBuilder do |form|
-  .row
-    ='If 3 or more unrelated tenants live in your property, or the bathroom or kitchen are shared, it may be classed as a <a href="https://www.gov.uk/private-renting/houses-in-multiple-occupation" class="external" rel="external" target="_blank">House in Multiple Occupation (HMO)</a>.'.html_safe
+  %p
+    If 3 or more unrelated tenants live in your property, or the bathroom or
+    kitchen are shared, it may be classed as a
+    = '<a href="https://www.gov.uk/private-renting/houses-in-multiple-occupation" class="external" rel="external" target="_blank">House in Multiple Occupation (HMO)</a>.'.html_safe
   = form.radio_button_fieldset :multiple_occupation,
       'Do you have a HMO licence?',
       class: 'radio inline js-depend',
@@ -20,5 +22,4 @@
         '<span class="nonjs" data-jsalt="Which"><strong>If you\'ve applied for one</strong>, which</span> licence have you applied for?'.html_safe,
         class: 'radio',
         choice: [ 'Part2', 'Part3', '' ]
-    .row
-      %p You'll need to provide evidence of your licence application.
+    %p You'll need to provide evidence of your licence application.
