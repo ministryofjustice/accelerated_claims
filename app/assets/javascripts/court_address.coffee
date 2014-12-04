@@ -72,7 +72,7 @@ CourtAddressModule =
     court_street = data[0].address.address_lines
     court_postcode = data[0].address.postcode
     court_name_element = $('#court-name')[0]
-    court_name_element.innerHTML = "<b>#{court_name}</b>"
+    court_name_element.innerHTML = "<b class='bold-small'>#{court_name}</b>"
     if CourtAddressModule.courtFormHasErrors()==false || $('#court-address').is(':hidden')
       CourtAddressModule.populateCourtAddressForm(court_name, court_street, court_postcode)
       CourtAddressModule.hideCourtAddressInputFields()
@@ -120,7 +120,7 @@ CourtAddressModule =
     else
       CourtAddressModule.labelForKnownCourt()
       CourtAddressModule.linkForFormToggling()
-      $('#court-name').html("<b>#{$('#claim_court_court_name').val()}</b>")
+      $('#court-name').html("<b class='bold-small'>#{$('#claim_court_court_name').val()}</b>")
 
   courtFormHasErrors: ->
     result = false
