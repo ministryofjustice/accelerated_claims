@@ -70,6 +70,9 @@ fieldset, .sub-panel
 
 .narrow
   @extend .form-control-1-8
+  @include media(mobile)
+    width: 50%
+
 
 .error-summary
   @extend .validation-summary
