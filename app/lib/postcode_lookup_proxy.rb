@@ -72,10 +72,11 @@ class PostcodeLookupProxy
       Timeout::timeout(@timeout) do
         @api_response = ActiveSupport::JSON.decode( Excon.get(form_url).body)
         record_log_with_timeout(false)
+        @api_response
       end
     rescue Timeout::Error
-      @api_response = service_unavailable_response
       record_log_with_timeout(true)
+      @api_response = service_unavailable_response
     end
   end
 
