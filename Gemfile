@@ -36,6 +36,7 @@ gem 'faraday'
 gem 'redis-rails'
 
 gem 'excon'
+gem 'logstuff'
 
 group :production, :development do
 #  gem 'newrelic_rpm'
@@ -94,4 +95,4 @@ gem 'logstasher'
 # statsd client
 gem 'statsd-ruby'
 
-gem 'courtfinder-client', '0.0.5'
+gem 'courtfinder-client', '0.0.6'

@@ -32,8 +32,20 @@ AcceleratedClaims::Application.configure do
   # in memory cache store
   config.cache_store = :memory_store
 
-  # Logstash
-  config.logstasher.enabled = true
-
   config.relative_url_root = '/accelerated-possession-eviction' if ENV['env'] == 'production'
+
+  # Logstash
+  jsonlogger = LogStuff.new_logger("#{Rails.root}/log/logstash_test.log", Logger::INFO)
+
+  config.log_level = :debug
+  config.logstasher.enabled = true
+  config.logstasher.suppress_app_log = false
+  config.logstasher.logger = jsonlogger
+
+  # Need to specifically set the logstasher loglevel since it will overwrite the one set earlier
+  config.logstasher.log_level = Logger::INFO
+  config.logstasher.source = "accelerated_claims.test.#{ENV['USER']}"
+  # Reuse logstasher logger with logstuff
+  LogStuff.setup(:logger => jsonlogger)
+
 end

@@ -88,7 +88,7 @@ GEM
     coffee-script-source (1.7.0)
     colored (1.2)
     columnize (0.8.9)
-    courtfinder-client (0.0.5)
+    courtfinder-client (0.0.6)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     curb (0.8.5)
@@ -167,6 +167,9 @@ GEM
       rb-inotify (>= 0.9)
     logstash-event (1.1.5)
     logstasher (0.5.3)
+      logstash-event (~> 1.1.0)
+      request_store
+    logstuff (0.0.2)
       logstash-event (~> 1.1.0)
       request_store
     lumberjack (1.0.7)
@@ -360,7 +363,7 @@ DEPENDENCIES
   ci_reporter
   codeclimate-test-reporter
   coffee-rails
-  courtfinder-client (= 0.0.5)
+  courtfinder-client (= 0.0.6)
   curb
   dotenv-rails
   excon
@@ -379,6 +382,7 @@ DEPENDENCIES
   jquery-rails
   launchy
   logstasher
+  logstuff
   mail
   moj_template (= 0.16.0)
   parallel
