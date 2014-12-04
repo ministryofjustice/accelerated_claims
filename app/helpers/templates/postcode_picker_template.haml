@@ -27,10 +27,10 @@
         %label.hint{ for: "#{@prefix}_address_select"} Please select an address
         %select.address-picker-select{id: "#{@prefix}_address_select", name: "sel-address", size: "6", role:'listbox'}
           %option{id:"#{@prefix}-listbox", role: "option", disabled: "disabled", value: ""} Please select an address
-        %a.row.button.postcode-picker-cta{id: "#{@prefix}_selectaddress", href: "##{@prefix}_postcode_picker_manual_link", style: "margin-bottom: 20px;"}
+        %a.button.postcode-picker-cta{id: "#{@prefix}_selectaddress", href: "##{@prefix}_postcode_picker_manual_link", style: "margin-bottom: 20px;"}
           Select address
 
-  .js-only.row
+  .js-only
     %a.caption.postcode-picker-manual-link{ href: "##{@prefix}_postcode_picker_manual_link", id: "#{@prefix}_postcode_picker_manual_link", style: "margin-top: 20px;"}
       Enter address manually
 
@@ -49,7 +49,7 @@
         = "#{@address_value}"
 
     .js-only
-      .row.hide{id: "#{@prefix}_#{@address_attr}-error-message"}
+      .hide{id: "#{@prefix}_#{@address_attr}-error-message"}
         %span.error
           The address can’t be longer than 4 lines.
 

@@ -6,8 +6,6 @@
         choice: [ 'assured', 'demoted' ],
         data: { depend: 'tenancyType', 'virtual-pageview' => '/accelerated/tenancy-section' }
 
-  .row.divider.hide.js-tenancyType.assured
-
   .sub-panel.rel.hide.js-tenancyType.assured
     %h3.section-header.hide Assured shorthold tenancies
 
@@ -20,14 +18,14 @@
 
     .sub-panel.assuredTenancyOptions.hide.js-tenancyNumber.one.multiple
       .panel-indent.sub-panel.hide.inset.js-tenancyNumber.one
-        .row.remove
-          %p= "If you’ve had <strong class='bold-small'>1</strong> tenancy agreement, enter the details".html_safe
+        %p.remove
+          If you’ve had <strong class='bold-small'>1</strong> tenancy agreement, enter the details
 
         = form.moj_date_fieldset :start_date, 'Start date of the tenancy agreement', class: 'date-picker rel conditional original'
 
       .panel-indent.sub-panel.hide.inset.js-tenancyNumber.multiple
-        .row.remove
-          = 'If you’ve had <strong class="bold-small">more than 1</strong> tenancy agreement, enter the details'.html_safe
+        %p.remove
+          If you’ve had <strong class="bold-small">more than 1</strong> tenancy agreement, enter the details
 
         = form.moj_date_fieldset :original_assured_shorthold_tenancy_agreement_date, 'Date of the original tenancy agreement', class: 'date-picker conditional original'
 
@@ -44,23 +42,27 @@
             choice: [ 'Yes', 'No', '' ]
 
       .sub-panel.inset.hide.js-conditionals
-
-        .row.statements.hide.current
+        .statements.hide.current
           -# following paragraph replaced and moved when JS turned on - see tenancy_module.js
-          %p#read-statements= "If your original tenancy agreement (and any additional agreements) were made <strong class='bold-small'>on or after #{(Tenancy::RULES_CHANGE_DATE).to_s(:printed)}</strong>, read the statements below and select all that apply:".html_safe
+          %p#read-statements
+            If your original tenancy agreement (and any additional agreements)
+            were made <strong class='bold-small'>on or after #{(Tenancy::RULES_CHANGE_DATE).to_s(:printed)}</strong>,
+            read the statements below and select all that apply:
 
           %ul
             %li You didn’t tell the defendant that the agreement was likely to change
             %li You have an assured shorthold tenancy agreement (with no exceptions)
             %li The defendant is not living in the property as an agricultural worker in connection with their work (so Schedule 3, Housing Act 1988 does not apply)
 
-
         %fieldset.statements.hide.current.radio{ id: (form.error_for?(:confirmed_second_rules_period_applicable_statements) ? form.error_id_for(:confirmed_second_rules_period_applicable_statements) : 'second_rule_placeholder') }
           - form.row :confirmed_second_rules_period_applicable_statements do
             = form.labelled_check_box :confirmed_second_rules_period_applicable_statements, '<strong class="bold-small">Yes</strong>, all these statements apply'.html_safe
 
-        .row.statements.hide.older
-          %p.hide= "If your original tenancy agreement (and any additional agreements) were made between <strong>#{Tenancy::APPLICABLE_FROM_DATE.to_s(:printed)} and #{(Tenancy::RULES_CHANGE_DATE - 1).to_s(:printed)}</strong>, read the statements below and select all that apply:".html_safe
+        .statements.hide.older
+          %p.hide
+            If your original tenancy agreement (and any additional agreements)
+            were made between <strong class='bold-small'>#{Tenancy::APPLICABLE_FROM_DATE.to_s(:printed)} and #{(Tenancy::RULES_CHANGE_DATE - 1).to_s(:printed)}</strong>,
+            read the statements below and select all that apply:
 
           %ul
             %li The tenancy agreement was for 6 months (or more)
@@ -73,8 +75,6 @@
         %fieldset.statements.hide.older.radio{ id: (form.error_for?(:confirmed_first_rules_period_applicable_statements) ? form.error_id_for(:confirmed_first_rules_period_applicable_statements) : 'first_rule_placeholder') }
           - form.row :confirmed_first_rules_period_applicable_statements do
             = form.labelled_check_box :confirmed_first_rules_period_applicable_statements, '<strong class="bold-small">Yes</strong>, all these statements apply'.html_safe
-
-  .row.divider.hide.js-tenancyType.demoted
 
   .sub-panel.rel.hide.js-tenancyType.demoted
     %h3.section-header.hide Demoted assured shorthold tenancies
