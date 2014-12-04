@@ -133,13 +133,13 @@ def expected_output
         <select class='address-picker-select' id='claim_property_address_select' name='sel-address' role='listbox' size='6'>
           <option disabled='disabled' id='claim_property-listbox' role='option' value=''>Please select an address</option>
         </select>
-        <a class='row button postcode-picker-cta' href='#claim_property_postcode_picker_manual_link' id='claim_property_selectaddress' style='margin-bottom: 20px;'>
+        <a class='button postcode-picker-cta' href='#claim_property_postcode_picker_manual_link' id='claim_property_selectaddress' style='margin-bottom: 20px;'>
           Select address
         </a>
       </fieldset>
     </div>
   </div>
-  <div class='js-only row'>
+  <div class='js-only'>
     <a class='caption postcode-picker-manual-link' href='#claim_property_postcode_picker_manual_link' id='claim_property_postcode_picker_manual_link' style='margin-top: 20px;'>
       Enter address manually
     </a>
@@ -153,7 +153,7 @@ def expected_output
       <textarea class='street' id='claim_property_street' maxlength='70' name='claim[property][street]'>50 Tregunter Road&#x000A;London</textarea>
     </div>
     <div class='js-only'>
-      <div class='row hide' id='claim_property_street-error-message'>
+      <div class='hide' id='claim_property_street-error-message'>
         <span class='error'>
           The address can’t be longer than 4 lines.
         </span>
