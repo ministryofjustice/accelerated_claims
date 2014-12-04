@@ -68,8 +68,6 @@ CourtAddressModule =
     CourtLookup.lookup(postcode, CourtAddressModule)
 
   populateCourtDetails: (data) ->
-    console.log('populateCourtDetails')
-    console.log('data=' + data[0].name.toString())
     court_name = data[0].name
     court_street = data[0].address.address_lines
     court_postcode = data[0].address.postcode
@@ -146,28 +144,31 @@ CourtAddressModule =
       $('#court-address').show()
 
   showCourtFormIfNonstandardCourt: ->
-    submitted_court_name = $('#claim_court_court_name').val()
-    submitted_court_street = $('#claim_court_street').val()
-    submitted_court_postcode = $('#claim_court_postcode').val()
-    console.log(' -- submitted_court_name=' + submitted_court_name)
-    console.log(' -- submitted_court_street=' + submitted_court_street)
-    console.log(' -- submitted_court_postcode=' + submitted_court_postcode)
-    console.log('looking up court from postcode')
+    separator = "/"
+    if window.location.pathname.match(/\/$/)
+      separator = ""
 
+    myUrl =  window.location.pathname + separator + "court-address/#{$('#claim_property_postcode').val()}"
+    jQuery.ajax( myUrl,
+      success: (data) ->
 
-    default_court_name = $('#claim_court_court_name').val()
-    default_court_street = $('#claim_court_street').val()
-    default_court_postcode = $('#claim_court_postcode').val()
+        submitted_court_name = $('#claim_court_court_name').val()
+        submitted_court_street = $('#claim_court_street').val()
+        submitted_court_postcode = $('#claim_court_postcode').val()
 
+        default_court_name = data[0].name
+        default_court_street = data[0].address.address_lines.toString()
+        default_court_postcode = data[0].address.postcode
 
-    console.log(' -- default_court_name=' + default_court_name)
-    console.log(' -- default_court_street=' + default_court_street)
-    console.log(' -- default_court_postcode=' + default_court_postcode)
-
-    $('#claim_court_court_name').val(submitted_court_name)
-    $('#claim_court_street').val(submitted_court_street)
-    $('#claim_court_postcode').val(submitted_court_postcode)
-    return 'done'
+        if default_court_name != submitted_court_name || default_court_street != submitted_court_street || default_court_postcode != submitted_court_postcode
+          CourtAddressModule.changeElement('#claim_court_court_name', 'input', "<input type='text'></input>")
+          CourtAddressModule.changeElement('#claim_court_postcode', 'input', "<input type='text'></input>")
+          CourtAddressModule.changeInputFieldToTextarea()
+          $('#court-details').parent().addClass('open')
+          $('#court-address').show()
+    error: (jqXHR, textStatus, errorThrown) ->
+      CourtAddressModule.displayNoResultsFound()
+    )
 
 
   addressReEntry: ->
@@ -184,6 +185,7 @@ CourtAddressModule =
     CourtAddressModule.sendPostcodeForLookup()
     CourtAddressModule.flipTextareaToInputField()
     CourtAddressModule.showFormWhenErrors()
+    CourtAddressModule.showCourtFormIfNonstandardCourt()
     CourtAddressModule.addressReEntry()
 
 root.CourtAddressModule = CourtAddressModule
