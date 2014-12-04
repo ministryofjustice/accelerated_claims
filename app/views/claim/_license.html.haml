@@ -11,7 +11,7 @@
 
   .panel-indent.sub-panel.hide.js-hmo.yes
     = form.radio_button_fieldset :issued_under_act_part_yes,
-        '<span class="nonjs" data-jsalt="Which"><strong>If yes</strong>, which</span> licence do you have?'.html_safe,
+        '<span class="nonjs" data-jsalt="Which"><strong class="bold-small">If yes</strong>, which</span> licence do you have?'.html_safe,
         class: 'radio',
         choice: [ 'Part2', 'Part3', '' ]
     = form.text_field_row  :issued_by, label: 'Which local authority issued the licence?'
@@ -19,7 +19,7 @@
 
   .panel-indent.sub-panel.hide.js-hmo.applied
     = form.radio_button_fieldset :issued_under_act_part_applied,
-        '<span class="nonjs" data-jsalt="Which"><strong>If you\'ve applied for one</strong>, which</span> licence have you applied for?'.html_safe,
+        '<span class="nonjs" data-jsalt="Which"><strong class="bold-small">If you\'ve applied for one</strong>, which</span> licence have you applied for?'.html_safe,
         class: 'radio',
         choice: [ 'Part2', 'Part3', '' ]
     %p You'll need to provide evidence of your licence application.

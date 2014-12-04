@@ -21,13 +21,13 @@
     .sub-panel.assuredTenancyOptions.hide.js-tenancyNumber.one.multiple
       .panel-indent.sub-panel.hide.inset.js-tenancyNumber.one
         .row.remove
-          %p= "If you’ve had <strong>1</strong> tenancy agreement, enter the details".html_safe
+          %p= "If you’ve had <strong class='bold-small'>1</strong> tenancy agreement, enter the details".html_safe
 
         = form.moj_date_fieldset :start_date, 'Start date of the tenancy agreement', class: 'date-picker rel conditional original'
 
       .panel-indent.sub-panel.hide.inset.js-tenancyNumber.multiple
         .row.remove
-          = 'If you’ve had <strong>more than 1</strong> tenancy agreement, enter the details'.html_safe
+          = 'If you’ve had <strong class="bold-small">more than 1</strong> tenancy agreement, enter the details'.html_safe
 
         = form.moj_date_fieldset :original_assured_shorthold_tenancy_agreement_date, 'Date of the original tenancy agreement', class: 'date-picker conditional original'
 
@@ -47,7 +47,7 @@
 
         .row.statements.hide.current
           -# following paragraph replaced and moved when JS turned on - see tenancy_module.js
-          %p#read-statements= "If your original tenancy agreement (and any additional agreements) were made <strong>on or after #{(Tenancy::RULES_CHANGE_DATE).to_s(:printed)}</strong>, read the statements below and select all that apply:".html_safe
+          %p#read-statements= "If your original tenancy agreement (and any additional agreements) were made <strong class='bold-small'>on or after #{(Tenancy::RULES_CHANGE_DATE).to_s(:printed)}</strong>, read the statements below and select all that apply:".html_safe
 
           %ul
             %li You didn’t tell the defendant that the agreement was likely to change
@@ -57,7 +57,7 @@
 
         %fieldset.statements.hide.current.radio{ id: (form.error_for?(:confirmed_second_rules_period_applicable_statements) ? form.error_id_for(:confirmed_second_rules_period_applicable_statements) : 'second_rule_placeholder') }
           - form.row :confirmed_second_rules_period_applicable_statements do
-            = form.labelled_check_box :confirmed_second_rules_period_applicable_statements, '<strong>Yes</strong>, all these statements apply'.html_safe
+            = form.labelled_check_box :confirmed_second_rules_period_applicable_statements, '<strong class="bold-small">Yes</strong>, all these statements apply'.html_safe
 
         .row.statements.hide.older
           %p.hide= "If your original tenancy agreement (and any additional agreements) were made between <strong>#{Tenancy::APPLICABLE_FROM_DATE.to_s(:printed)} and #{(Tenancy::RULES_CHANGE_DATE - 1).to_s(:printed)}</strong>, read the statements below and select all that apply:".html_safe
@@ -72,7 +72,7 @@
 
         %fieldset.statements.hide.older.radio{ id: (form.error_for?(:confirmed_first_rules_period_applicable_statements) ? form.error_id_for(:confirmed_first_rules_period_applicable_statements) : 'first_rule_placeholder') }
           - form.row :confirmed_first_rules_period_applicable_statements do
-            = form.labelled_check_box :confirmed_first_rules_period_applicable_statements, '<strong>Yes</strong>, all these statements apply'.html_safe
+            = form.labelled_check_box :confirmed_first_rules_period_applicable_statements, '<strong class="bold-small">Yes</strong>, all these statements apply'.html_safe
 
   .row.divider.hide.js-tenancyType.demoted
 
