@@ -60,9 +60,8 @@ class ClaimController < ApplicationController
       redirect_to expired_path
     else
       @claim = Claim.new(session[:claim])
-
       if @claim.valid?
-        LogStuff.info(:fee_account_num, present: @claim.fee.account.present?.to_s) { "Fee Account Number Usage" }
+        log_fee_account_num_usage
         flatten = Rails.env.test? || params[:flatten] == 'false' ? false : true
         pdf = PDFDocument.new(@claim.as_json, flatten).fill
 
@@ -107,6 +106,13 @@ class ClaimController < ApplicationController
   end
 
   private
+
+  def log_fee_account_num_usage
+    if session[:fee_account_num_logged].nil?
+      LogStuff.info(:fee_account_num, present: @claim.fee.account.present?.to_s, ip: request.remote_ip) { "Fee Account Number Usage" }
+      session[:fee_account_num_logged] = true
+    end
+  end
 
   def set_production_status
     # set production to true if on production or staging - this is used to determine whether or not journey numbers are valid in the url

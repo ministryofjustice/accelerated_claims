@@ -79,6 +79,30 @@ describe PostcodeLookupProxy do
 
   end
 
+  context 'logging' do
+    it 'should call Logstuff with timeout false if no error' do
+      dummy_response = double "Dummy Ideal Postcodes response"
+      allow(dummy_response).to receive(:body).and_return(ActiveSupport::JSON.encode("body"))
+
+      expect(Excon).to receive(:get).and_return(dummy_response)
+      expect(LogStuff).to receive(:info).with(:fee_account_num, {timeout: false, endpoint: 'https://api.ideal-postcodes.co.uk/v1/postcodes/' } )
+
+      pc = PostcodeLookupProxy.new('WC1B5HA', [], true)
+      pc.send(:production_lookup)
+    end
+
+    it 'should call LogStuff with timeout true if there is a timeout' do
+      # dummy_response = double "Dummy Ideal Postcodes response"
+      # allow(dummy_response).to receive(:body).and_return(ActiveSupport::JSON.encode("body"))
+
+      expect(Excon).to receive(:get).and_raise(Timeout::Error)
+      expect(LogStuff).to receive(:info).with(:fee_account_num, {timeout: true, endpoint: 'https://api.ideal-postcodes.co.uk/v1/postcodes/' } )
+
+      pc = PostcodeLookupProxy.new('WC1B5HA', [], true)
+      pc.send(:production_lookup)
+    end
+  end
+
   ##### - A test to check that we can connect to the real remote service - don't use in day-to-day testing
 
   # describe 'a real lookup to the api' do

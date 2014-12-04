@@ -71,10 +71,16 @@ class PostcodeLookupProxy
     begin
       Timeout::timeout(@timeout) do
         @api_response = ActiveSupport::JSON.decode( Excon.get(form_url).body)
+        record_log_with_timeout(false)
       end
     rescue Timeout::Error
       @api_response = service_unavailable_response
+      record_log_with_timeout(true)
     end
+  end
+
+  def record_log_with_timeout(timeout)
+    LogStuff.info(:fee_account_num, timeout: timeout, endpoint: @url) { "Postcode Lookup" }
   end
 
   # returns dummy postcode result based on the first character of the second part of the postcode.
