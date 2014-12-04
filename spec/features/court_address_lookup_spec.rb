@@ -85,7 +85,8 @@ feature 'Court address lookup' do
          'name' => 'Bournemouth and Poole County Court and Family Court',
          'address' => {
            'town' => 'Bournemouth',
-           'address_lines' => ['Courts of Justice',
+           'address_lines' => ['Bournemouth and Poole County Court and Family Court hearing centre',
+                               'Courts of Justice',
                                'Deansleigh Road'],
            'type' => 'Visiting',
            'postcode' => 'BH7 7DS',
@@ -100,7 +101,7 @@ feature 'Court address lookup' do
     }
 
     let(:court_name) do
-      bournemouth = 'Bournemouth Crown Court'
+      bournemouth = 'Bournemouth and Poole County Court and Family Court'
       cambridge = 'Cambridge County Court and Family Court'
       ENV['env'] == 'production' ?  bournemouth : cambridge
     end
@@ -112,12 +113,14 @@ feature 'Court address lookup' do
       fill_text_field 'claim_property_postcode_edit_field', postcode
       click_link 'Find address'
       find('#claim_property_address_select').find(:xpath, 'option[1]').select_option
-      click_link 'Select address'
+      click_on 'Select address'
 
-      expect(page).to have_text court_name
+      court_name_on_page = find(:xpath, '//*[@id="court-name"]/b').text
+      expect(court_name_on_page).to have_text court_name
 
       address = JSON.parse(json)[0]['address']['address_lines'].join(',')
-      expect( page.find("#claim_court_street", visible: false).value ).to eq(address)
+      court_address_on_page = find("#claim_court_street", visible: false).value
+      expect(court_address_on_page).to eq(address)
 
       expect(page).to have_xpath('//*[@id="court-details"]')
     end
