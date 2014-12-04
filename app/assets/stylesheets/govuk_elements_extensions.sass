@@ -170,3 +170,21 @@ table
 .panel-indent.no-padding
   padding-top: 0px
   padding-bottom: 0px
+
+[type="text"], [type="password"], textarea
+  padding: 5px 4px 2px
+  border: 1px solid $grey-2
+
+[type="text"].pound
+  background-image: image-url('poundbg.png')
+  background-position: left center
+  background-repeat: no-repeat
+  padding-left: 40px
+
+input[disabled="disabled"], input[readonly="readonly"]
+  opacity: 1
+  background-color: $grey-4
+  color: $grey-1
+  &:focus
+    outline: none
+
