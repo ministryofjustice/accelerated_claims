@@ -81,7 +81,7 @@ class PostcodeLookupProxy
   end
 
   def record_log_with_timeout(timeout)
-    LogStuff.info(:fee_account_num, timeout: timeout, endpoint: @url) { "Postcode Lookup" }
+    LogStuff.info(:postcode_lookup, timeout: timeout, endpoint: @url) { "Postcode Lookup" }
   end
 
   # returns dummy postcode result based on the first character of the second part of the postcode.
