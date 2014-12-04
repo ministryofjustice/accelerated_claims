@@ -104,10 +104,10 @@
     = render partial: 'court',      object: @claim.court,      locals: { claim_form: claim_form }
     = render partial: 'possession', object: @claim.possession, locals: { claim_form: claim_form }
 
-    %input.button.button-get-started#submit{name: 'Continue', value: 'Continue', type: 'submit'}
+    %input.button.primary#submit{name: 'Continue', value: 'Continue', type: 'submit'}
 
-    %p
-      = link_to 'Terms and conditions and privacy policy', :terms, class: 'font-xsmall'
+    %p.font-xsmall
+      = link_to 'Terms and conditions and privacy policy', :terms, rel: 'external', class: 'external', target: '_blank'
 
 / handlebars templates
 

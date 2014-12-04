@@ -15,24 +15,22 @@
 
 = render partial: 'claim_summary'
 
-%section.confirmation
+.sub-panel
   %p You now need to print the form and send it to court.
 
-%section
-  .action-buttons.cf
-    = link_to 'Print the form',
-        download_path,
-        class: 'button left large chevron pdf-download',
-        target: '_blank',
-        id: 'download',
-        data: { 'event-label' => 'Print the form',
-        'virtual-pageview' => '/accelerated/pdf-download' }
-    - if session[:test]
-      = link_to 'Submitted data',
-          data_path,
-          id: 'data'
+  = link_to 'Print the form',
+      download_path,
+      class: 'button primary',
+      target: '_blank',
+      id: 'download',
+      data: { 'event-label' => 'Print the form',
+      'virtual-pageview' => '/accelerated/pdf-download' }
+  - if session[:test]
+    = link_to 'Submitted data',
+        data_path,
+        id: 'data'
 
-  %p
+  %p.font-xsmall
     After you’ve submitted your claim, complete our
     = link_to('satisfaction survey',
         'https://www.gov.uk/done/accelerated-possession-eviction',
@@ -43,8 +41,8 @@
         'virtual-pageview' => '/accelerated/satisfaction-survey' }) + '.'
     Your feedback helps us improve the service.
 
-  %p
-    = link_to 'Terms and conditions and privacy policy', :terms, class: 'font-xsmall'
+  %p.font-xsmall
+    = link_to 'Terms and conditions and privacy policy', :terms, rel: 'external', class: 'external', target: '_blank'
 
 / handlebars templates
 
