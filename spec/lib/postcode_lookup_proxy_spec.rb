@@ -85,7 +85,7 @@ describe PostcodeLookupProxy do
       allow(dummy_response).to receive(:body).and_return(ActiveSupport::JSON.encode("body"))
 
       expect(Excon).to receive(:get).and_return(dummy_response)
-      expect(LogStuff).to receive(:info).with(:fee_account_num, {timeout: false, endpoint: 'https://api.ideal-postcodes.co.uk/v1/postcodes/' } )
+      expect(LogStuff).to receive(:info).with(:postcode_lookup, {timeout: false, endpoint: 'https://api.ideal-postcodes.co.uk/v1/postcodes/' } )
 
       pc = PostcodeLookupProxy.new('WC1B5HA', [], true)
       pc.send(:production_lookup)
@@ -96,7 +96,7 @@ describe PostcodeLookupProxy do
       # allow(dummy_response).to receive(:body).and_return(ActiveSupport::JSON.encode("body"))
 
       expect(Excon).to receive(:get).and_raise(Timeout::Error)
-      expect(LogStuff).to receive(:info).with(:fee_account_num, {timeout: true, endpoint: 'https://api.ideal-postcodes.co.uk/v1/postcodes/' } )
+      expect(LogStuff).to receive(:info).with(:postcode_lookup, {timeout: true, endpoint: 'https://api.ideal-postcodes.co.uk/v1/postcodes/' } )
 
       pc = PostcodeLookupProxy.new('WC1B5HA', [], true)
       pc.send(:production_lookup)
