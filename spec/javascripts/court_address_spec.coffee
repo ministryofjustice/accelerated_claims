@@ -97,8 +97,7 @@ describe 'CourtAddressModule', ->
 
       describe 'form label', ->
         it 'should change the label text', ->
-          text = "You need to post this claim to the court nearest \
-          the property you're taking back:"
+          text = "You need to post this claim to the court nearest the property you're taking back:"
           window.CourtAddressModule.labelForKnownCourt()
           label = $('#court-address-label').html()
           expect(label).toMatch(text)
