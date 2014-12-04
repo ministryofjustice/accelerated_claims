@@ -88,7 +88,7 @@ class ErrorMessageSequencer
     ],
 
     'claim_court' => [
-      'claim_court_court_name',
+      'claim_court_court_name_error',
       'claim_court_street_error',
       'claim_court_postcode_error'
     ]
