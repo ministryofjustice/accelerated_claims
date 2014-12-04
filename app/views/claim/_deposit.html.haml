@@ -11,20 +11,24 @@
 
   %fieldset.hide.js-deposit.yes.radio.js-depend{ class: fieldset_class, id: fieldset_id }
     %legend
-      %span.nonjs(data-jsalt='What') If <strong>yes</strong>, what
-      kind of deposit?
+      %span.nonjs(data-jsalt='What')
+        If <strong class="bold-small">yes</strong>, what kind of deposit?
       - if deposit_type_error
         %span.error You must say what kind of deposit the defendant paid
     .options
       - form.row :as_money do
-        = form.labelled_check_box :as_money, 'A money deposit <span class="hint block">For example cash or cheque</span>'.html_safe, 'Yes', 'No', data: {depend: 'depositTypeMoney'}
+        = form.labelled_check_box :as_money,
+          'A money deposit <span class="hint block">For example cash or cheque</span>'.html_safe,
+          'Yes', 'No', data: {depend: 'depositTypeMoney'}
       - form.row :as_property do
-        = form.labelled_check_box :as_property, 'A deposit in the form of a valuable item <span class="hint block">For example jewellery</span>'.html_safe, 'Yes', 'No', data: { depend: 'depositTypeProperty'}
+        = form.labelled_check_box :as_property,
+          'A deposit in the form of a valuable item <span class="hint block">For example jewellery</span>'.html_safe,
+          'Yes', 'No', data: { depend: 'depositTypeProperty'}
 
   .panel-indent.row.money-deposit-type.hide.js-depositTypeMoney.yes
-    %h4.strong
-      %span.nonjs(data-jsalt='You') If you took a money deposit you
-      need to be sure that:
+    %p.bold-small
+      %span.nonjs(data-jsalt='You')
+        If you took a money deposit you need to be sure that:
     %ul
       %li
         = 'you kept the deposit in a government-backed deposit protection scheme and met the scheme’s requirements'.html_safe
@@ -36,8 +40,8 @@
     = form.moj_date_fieldset :information_given_date, 'Enter the date this information was given', class: 'row rel hide js-depositTypeMoney yes'
 
   .panel-indent.row.property-deposit-type.hide.js-depositTypeProperty.yes
-    %h4.strong
-      %span.nonjs(data-jsalt='You') If you took a valuable item as a deposit you
-      need to be sure that:
+    %p.bold-small
+      %span.nonjs(data-jsalt='You')
+        If you took a valuable item as a deposit you need to be sure that:
     %ul
       %li= 'it had been returned at the time notice was given.'.html_safe
