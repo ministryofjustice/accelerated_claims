@@ -283,6 +283,19 @@ feature 'Filling in claim form' do
         fill_in 'claim_defendant_19_street', with: invalid_address
         expect(page).to have_content(address_js_error_message)
       end
+
+      context 'postcode picker' do
+        scenario 'form submitted with empty property address should show address and postcode picker', js: true do
+          visit '/'
+          expect(page).to have_css('input#claim_property_postcode_edit_field')
+          expect(page).not_to have_css('div#property > div > div.open')
+          click_button 'Continue'
+          expect(page).to have_css('div#property > div > div.open')
+          expect(page).to have_css('input#claim_property_postcode_edit_field')
+          expect(page).to have_css('textarea#claim_property_street')
+          expect(page).to have_css('div#claim_property_street_error > label > span.error')
+        end
+      end
     end
 
     context 'javascript disabled' do
