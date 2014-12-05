@@ -168,15 +168,18 @@ class PostcodePicker
     if @picker.find('.address').is(':visible')
       @hideAddressFields()
     else
-      @displayAddressFields()
+      @clearAndDisplayAddressFields()
 
   hideAddressFields: ->
     @picker.find('.address').hide()
     @picker.find('.postcode-picker-manual-link').parent().removeClass('open')
 
-  displayAddressFields: ->
+  clearAndDisplayAddressFields: ->
     @picker.find('.street').val('')
     @picker.find('.postcode').val('')
+    @displayAddressFields()
+
+  displayAddressFields:->
     @picker.find('.address').show()
     @picker.find('.postcode-picker-manual-link').parent().addClass('open')
     @picker.find('.street textarea').focus()
@@ -192,7 +195,7 @@ class PostcodePicker
     @hideAddressFields()
 
   displayServiceUnavailable: ->
-    @displayAddressFields()
+    @clearAndDisplayAddressFields()
     @addErrorMessage('Postcode lookup service not available. Please enter the address manually.')
 
   clearPostcodeErrorMessage: ->
