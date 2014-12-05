@@ -34,12 +34,12 @@
     %ul
       %li
         = 'you kept the deposit in a government-backed deposit protection scheme and met the scheme’s requirements'.html_safe
-    = form.text_field_row  :ref_number, label: 'Enter the tenancy deposit scheme reference number', class: 'rel hide js-depositTypeMoney yes'
+    = form.text_field_row  :ref_number, label: 'Enter the tenancy deposit scheme reference number', class: 'hide js-depositTypeMoney yes'
 
     %ul
       %li
         = 'you gave the defendant all the information about the deposit scheme that landlords must provide'.html_safe
-    = form.moj_date_fieldset :information_given_date, 'Enter the date this information was given', class: 'row rel hide js-depositTypeMoney yes'
+    = form.moj_date_fieldset :information_given_date, 'Enter the date this information was given', class: 'row hide js-depositTypeMoney yes'
 
   .panel-indent.property-deposit-type.hide.js-depositTypeProperty.yes
     %p.bold-small
