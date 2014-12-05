@@ -25,6 +25,7 @@ class PostcodePicker
 
     if @errorsExistForStreetOrPostcode()
       @displayAddressFields()
+      changePostcodeLink.hide()
 
     if @streetAndPostcodeAlreadyEntered()
       @picker.find('.address-postcode input').attr('readonly', '1')             # Make the postcode box of the displayed address uneditable
