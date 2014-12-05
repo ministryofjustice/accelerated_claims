@@ -179,7 +179,7 @@ class PostcodePicker
     @picker.find('.postcode').val('')
     @displayAddressFields()
 
-  displayAddressFields:->
+  displayAddressFields: ->
     @picker.find('.address').show()
     @picker.find('.postcode-picker-manual-link').parent().addClass('open')
     @picker.find('.street textarea').focus()
