@@ -284,8 +284,8 @@ feature 'Filling in claim form' do
         expect(page).to have_content(address_js_error_message)
       end
 
-      context 'postcode picker' do
-        scenario 'form submitted with empty property address should show address and postcode picker', js: true do
+      context 'postcode picker with incomplete address' do
+        scenario 'should show address and postcode picker when form submitted', js: true do
           visit '/'
           expect(page).to have_css('input#claim_property_postcode_edit_field')
           expect(page).not_to have_css('div#property > div > div.open')
