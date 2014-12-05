@@ -29,7 +29,7 @@ gem 'govuk_frontend_toolkit', '>= 2.0.1'
 gem 'govuk_elements_rails', '>= 0.1.1'
 
 # MOJ styles
-gem 'moj_template', '0.16.0'
+gem 'moj_template'
 
 # required for feedback form
 gem 'zendesk_api'
