@@ -6,9 +6,9 @@
           %span.summary#contact-details Add phone and email (Optional)
         .panel-indent
           .sub-panel.hide.nonjs Add phone and email (Optional)
-          = form.text_field_row :email, label: add_optional_nonjs('Email'), class: 'rel email'
-          = form.text_field_row :phone, label: add_optional_nonjs('Phone'), class: 'rel phone'
-          = form.text_field_row :fax, label: add_optional_nonjs('Fax'), class: 'rel fax'
+          = form.text_field_row :email, label: add_optional_nonjs('Email'), class: 'email'
+          = form.text_field_row :phone, label: add_optional_nonjs('Phone'), class: 'phone'
+          = form.text_field_row :fax, label: add_optional_nonjs('Fax'), class: 'fax'
           = form.text_field_row :dx_number, label: add_optional_nonjs('DX number'), class: 'rel dx_number'
 
     .sub-panel
@@ -23,9 +23,9 @@
           %span.summary#correspondence-address Add alternative address (Optional)
         .panel-indent
           .sub-panel.hide.nonjs Add alternative address (Optional)
-          = form.text_field_row :title, label: add_optional_nonjs('Title'),    class: 'rel title', input_class: 'narrow'
-          = form.text_field_row :full_name, label: add_optional_nonjs('Full name'), class: 'rel '
-          = form.text_field_row :company_name, label: add_optional_nonjs('Company name'),  class: 'rel company_name'
+          = form.text_field_row :title, label: add_optional_nonjs('Title'),    class: 'title', input_class: 'narrow'
+          = form.text_field_row :full_name, label: add_optional_nonjs('Full name')
+          = form.text_field_row :company_name, label: add_optional_nonjs('Company name'),  class: 'company_name'
           = form.moj_postcode_picker "claimant_contact", name: "claim[claimant_contact]", address_attr: 'street', hide: false
 
     .sub-panel#reference-block

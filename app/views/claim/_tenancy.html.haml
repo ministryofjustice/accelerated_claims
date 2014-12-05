@@ -6,7 +6,7 @@
         choice: [ 'assured', 'demoted' ],
         data: { depend: 'tenancyType', 'virtual-pageview' => '/accelerated/tenancy-section' }
 
-  .sub-panel.rel.hide.js-tenancyType.assured
+  .sub-panel.hide.js-tenancyType.assured
     %h3.section-header.hide Assured shorthold tenancies
 
     = form.radio_button_fieldset :assured_shorthold_tenancy_type,
@@ -21,7 +21,7 @@
         %p.remove
           If you’ve had <strong class='bold-small'>1</strong> tenancy agreement, enter the details
 
-        = form.moj_date_fieldset :start_date, 'Start date of the tenancy agreement', class: 'date-picker rel conditional original'
+        = form.moj_date_fieldset :start_date, 'Start date of the tenancy agreement', class: 'date-picker conditional original'
 
       .panel-indent.hide.inset.js-tenancyNumber.multiple
         %p.remove
@@ -29,7 +29,7 @@
 
         = form.moj_date_fieldset :original_assured_shorthold_tenancy_agreement_date, 'Date of the original tenancy agreement', class: 'date-picker conditional original'
 
-        = form.moj_date_fieldset :latest_agreement_date, 'Date of the most recent tenancy agreement', class: 'date-picker rel conditional latest'
+        = form.moj_date_fieldset :latest_agreement_date, 'Date of the most recent tenancy agreement', class: 'date-picker conditional latest'
 
         = form.radio_button_fieldset :agreement_reissued_for_same_property,
             'Is the tenancy agreement for the same property?',
@@ -38,7 +38,7 @@
 
         = form.radio_button_fieldset :agreement_reissued_for_same_landlord_and_tenant,
             'Is the tenancy agreement between the same landlord and tenant?',
-            class: 'radio inline rel',
+            class: 'radio inline',
             choice: [ 'Yes', 'No', '' ]
 
       .sub-panel.inset.hide.js-conditionals
@@ -68,15 +68,15 @@
             %li The tenancy agreement was for 6 months (or more)
             %li.noticeStatement
               You told the defendant (in writing) that they’d have an assured shorthold tenancy before they moved in
-              = form.text_field_row :assured_shorthold_tenancy_notice_served_by, label: 'Who told the defendant?', class: 'rel'
-              = form.moj_date_fieldset :assured_shorthold_tenancy_notice_served_date, 'When?', class: 'date-picker rel'
+              = form.text_field_row :assured_shorthold_tenancy_notice_served_by, label: 'Who told the defendant?'
+              = form.moj_date_fieldset :assured_shorthold_tenancy_notice_served_date, 'When?', class: 'date-picker'
             %li You couldn’t have ended the tenancy agreement in the first 6 months
 
         %fieldset.statements.hide.older.radio{ id: (form.error_for?(:confirmed_first_rules_period_applicable_statements) ? form.error_id_for(:confirmed_first_rules_period_applicable_statements) : 'first_rule_placeholder') }
           - form.row :confirmed_first_rules_period_applicable_statements do
             = form.labelled_check_box :confirmed_first_rules_period_applicable_statements, '<strong class="bold-small">Yes</strong>, all these statements apply'.html_safe
 
-  .sub-panel.rel.hide.js-tenancyType.demoted
+  .sub-panel.hide.js-tenancyType.demoted
     %h3.section-header.hide Demoted assured shorthold tenancies
 
     .sub-panel.inset

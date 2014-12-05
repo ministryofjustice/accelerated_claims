@@ -3,7 +3,7 @@
 
   = claim_form.fields_for defendant_field, defendant, builder: LabellingFormBuilder do |form|
     = form.text_field_row :title, class: 'title', input_class: 'narrow'
-    = form.text_field_row :full_name, class: 'rel'
+    = form.text_field_row :full_name
     = form.hidden_field :inhabits_property
     .sub-panel.details{id: "defendant_#{defendant_id}_resident_address"}
       %details
