@@ -71,7 +71,7 @@ feature 'Court address lookup' do
               visit '/'
               claim_form.complete_form_with_javascript
               click_button 'Continue'
-              find('section.summary') # ensure confirmation page loaded
+              find('div.summary') # ensure confirmation page loaded
 
               visit '/'
               find('form#claimForm') # ensure form page loaded
@@ -86,7 +86,7 @@ feature 'Court address lookup' do
               visit '/'
               claim_form.complete_form_with_javascript
               click_button 'Continue'
-              find('section.summary') # ensure confirmation page loaded
+              find('div.summary') # ensure confirmation page loaded
               visit '/'
               find('form#claimForm') # ensure form page loaded
 
