@@ -284,16 +284,23 @@ feature 'Filling in claim form' do
         expect(page).to have_content(address_js_error_message)
       end
 
-      context 'postcode picker with incomplete address' do
-        scenario 'should show address and postcode picker when form submitted', js: true do
+      context 'postcode picker widget' do
+        scenario 'should only show postcode picker' do
           visit '/'
           expect(page).to have_css('input#claim_property_postcode_edit_field')
           expect(page).not_to have_css('div#property > div > div.open')
-          click_button 'Continue'
-          expect(page).to have_css('div#property > div > div.open')
-          expect(page).to have_css('input#claim_property_postcode_edit_field')
-          expect(page).to have_css('textarea#claim_property_street')
-          expect(page).to have_css('div#claim_property_street_error > label > span.error')
+        end
+        context 'with incomplete address data' do
+          scenario 'should show address too', js: true do
+            visit '/'
+            click_button 'Continue'
+            expect(page).to have_css('input#claim_property_postcode_edit_field')
+            expect(page).to have_css('div#property > div > div.open')
+            expect(page).to have_css('textarea#claim_property_street')
+            expect(page).to have_css('input#claim_property_postcode')
+            expect(page).to have_css('div#claim_property_street_error > label > span.error')
+            expect(page).to have_css('div#claim_property_postcode_error > label > span.error')
+          end
         end
       end
     end
