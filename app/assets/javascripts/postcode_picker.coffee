@@ -25,7 +25,9 @@ class PostcodePicker
 
     if @errorsExistForStreetOrPostcode()
       @displayAddressFields()
-      changePostcodeLink.hide()
+      manualLink.show()                                                         # Show the manual link
+      @picker.find('.postcode-selection-els').show()                            # Show the postocode entry edit field and Find Address button
+      changePostcodeLink.hide()                                                 # Hide the chnage link next to the manual postcode
 
     if @streetAndPostcodeAlreadyEntered()
       @picker.find('.address-postcode input').attr('readonly', '1')             # Make the postcode box of the displayed address uneditable
