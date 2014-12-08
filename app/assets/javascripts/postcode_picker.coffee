@@ -17,11 +17,17 @@ class PostcodePicker
 
     # if the postcode is populated, then it means that the address was correctly selected earlier
     # and we want to display it.
-    if @addressSuccessfullySelectedOnPreviousPage() || @errorsExistForStreetOrPostcode()
+    if @addressSuccessfullySelectedOnPreviousPage()
       @picker.find('.address.extra' ).show()                                    # Show the address block as if it were manually entered
       @picker.find('.postcode-selection-els').hide()                            # Hide the postocode entry edit field and Find Address button
       @picker.find('.postcode-display').hide()                                  # Hide the redisplay of the entered postcode
       @hideManualLink()                                                         # Hide the Enter Postcode Manually link
+
+    if @errorsExistForStreetOrPostcode()
+      @displayAddressFields()
+      manualLink.show()
+      @picker.find('.postcode-selection-els').show()
+      changePostcodeLink.hide()
 
     if @streetAndPostcodeAlreadyEntered()
       @picker.find('.address-postcode input').attr('readonly', '1')             # Make the postcode box of the displayed address uneditable
@@ -164,15 +170,18 @@ class PostcodePicker
     if @picker.find('.address').is(':visible')
       @hideAddressFields()
     else
-      @displayAddressFields()
+      @clearAndDisplayAddressFields()
 
   hideAddressFields: ->
     @picker.find('.address').hide()
     @picker.find('.postcode-picker-manual-link').parent().removeClass('open')
 
-  displayAddressFields: ->
+  clearAndDisplayAddressFields: ->
     @picker.find('.street').val('')
     @picker.find('.postcode').val('')
+    @displayAddressFields()
+
+  displayAddressFields: ->
     @picker.find('.address').show()
     @picker.find('.postcode-picker-manual-link').parent().addClass('open')
     @picker.find('.street textarea').focus()
@@ -188,7 +197,7 @@ class PostcodePicker
     @hideAddressFields()
 
   displayServiceUnavailable: ->
-    @displayAddressFields()
+    @clearAndDisplayAddressFields()
     @addErrorMessage('Postcode lookup service not available. Please enter the address manually.')
 
   clearPostcodeErrorMessage: ->
