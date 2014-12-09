@@ -1,13 +1,13 @@
 class Court < BaseClass
 
   attr_accessor :court_name
-  validates :court_name, presence: { message: 'You must provide court name' }
+  validates :court_name, presence: { message: 'You must enter the court’s name' }
 
   attr_accessor :street
-  validates :street, presence: { message: 'You must provide court address' }
+  validates :street, presence: { message: 'You must enter the court’s address' }
 
   attr_accessor :postcode
-  validates :postcode, presence: { message: 'You must provide the postcode for the court' }
+  validates :postcode, presence: { message: 'You must enter the court’s postcode' }
 
   def as_json
     {
