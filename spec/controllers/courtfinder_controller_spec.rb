@@ -46,7 +46,8 @@ describe CourtfinderController, type: :controller do
       after { ENV.delete('ENV_NAME') }
 
       def custom_stub(body)
-        url = "https://courttribunalfinder.service.gov.uk/search/results.json?aol=Housing%20possession&postcode=#{postcode}"
+        url = "https://courttribunalfinder.service.gov.uk/search/results.json\
+              ?aol=Housing%20possession&postcode=#{postcode}".sub(' ', '')
         stub_request(:get, url).to_return(status: 400, body: body, headers: {})
       end
 
