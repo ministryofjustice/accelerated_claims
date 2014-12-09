@@ -1,2 +1,11 @@
 AllCops:
+  Exclude:
+    - Gemfile
+    - Rakefile
+
+AllCops:
   RunRailsCops: true
+
+StringLiterals:
+  Enabled: true
+  EnforcedStyle: single_quotes
