@@ -38,11 +38,12 @@ class PostcodeLookupProxy
 
   def lookup
     if valid?
-      if @use_live_data
-        @api_result_set = production_lookup
-      else
-        @api_result_set = development_lookup
-      end
+      # if @use_live_data
+      #   @api_result_set = production_lookup
+      # else
+      #   @api_result_set = development_lookup
+      # end
+      @api_result_set = production_lookup                       # always use production lookup for this branch only
     else
       @api_result_set = invalid_postcode_response
     end
@@ -74,6 +75,10 @@ class PostcodeLookupProxy
         record_log_with_timeout(false)
         @api_response
       end
+
+      # force timeout error for this branch only
+      raise Timeout::Error
+
     rescue Timeout::Error
       record_log_with_timeout(true)
       @api_response = service_unavailable_response
