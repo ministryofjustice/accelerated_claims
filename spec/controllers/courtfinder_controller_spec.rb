@@ -34,12 +34,12 @@ describe CourtfinderController, type: :controller do
     end
 
     context 'when error is returned' do
-      let(:postcode) { "foo bar" }
+      let(:postcode) { 'foo bar' }
       let(:json_error) { '{ "error": "Timeout" }' }
 
       before do
-        ENV["ENV_NAME"] = "production"
-        WebMock.disable_net_connect!(allow: ["127.0.0.1", /codeclimate.com/])
+        ENV['ENV_NAME'] = 'production'
+        WebMock.disable_net_connect!(allow: ['127.0.0.1', /codeclimate.com/])
         instance_double('Courtfinder::Client::HousingPossession', get: postcode)
       end
 
