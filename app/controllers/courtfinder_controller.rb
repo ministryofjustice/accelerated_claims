@@ -18,7 +18,7 @@ class CourtfinderController < ApplicationController
     postcode = params['postcode']
 
     result = if ENV["ENV_NAME"] == "production"
-               Courtfinder::Client::HousingPossession.new.get(params['postcode'])
+               court_finder_lookup(postcode)
              else
                postcode == 'fake' ? [] : TEST_RESPONSE_DATA
              end
@@ -29,5 +29,16 @@ class CourtfinderController < ApplicationController
     else
       render json: result
     end
+  end
+
+  private
+
+  def court_finder_lookup(postcode)
+    output = Courtfinder::Client::HousingPossession.new.get(postcode)
+    if output.key? :error
+      LogStuff.error(:court_finder) { output[:error] }
+      output = []
+    end
+    output
   end
 end
