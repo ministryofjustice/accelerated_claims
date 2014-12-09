@@ -39,14 +39,15 @@ describe CourtfinderController, type: :controller do
 
       before do
         ENV['ENV_NAME'] = 'production'
-        WebMock.disable_net_connect!(allow: ["127.0.0.1", /codeclimate.com/])
+        WebMock.disable_net_connect!(allow: ['127.0.0.1', /codeclimate.com/])
         instance_double('Courtfinder::Client::HousingPossession', get: postcode)
       end
 
       after { ENV.delete('ENV_NAME') }
 
       def custom_stub(body)
-        url = "https://courttribunalfinder.service.gov.uk/search/results.json?aol=Housing%20possession&postcode=#{postcode}"
+        url = "https://courttribunalfinder.service.gov.uk/search/results.json\
+              ?aol=Housing%20possession&postcode=#{postcode}".sub(' ', '')
         stub_request(:get, url).to_return(status: 400, body: body, headers: {})
       end
 
