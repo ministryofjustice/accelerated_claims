@@ -84,13 +84,10 @@ feature "moj date fieldset" do
 
   str = <<-EOHTML
 <fieldset#{fieldset_class}#{fieldset_id}>
-  <legend class="visuallyhidden">
+  <legend>
     Date Notice Served
     <span class='hint block'>For example,&nbsp;&nbsp;#{date_example}</span>
   </legend>
-  <div>
-    <span aria-hidden='true'>Date Notice Served</span> <span class='hint block' aria-hidden='true'>For example,&nbsp;&nbsp;#{date_example}</span>
-  </div>
   <div class="form-date">
     <div class="form-group form-group-day">
       <label for="claim_notice_date_served_3i">Day</label>
