@@ -17,13 +17,13 @@
 
 
     .sub-panel.assuredTenancyOptions.hide.js-tenancyNumber.one.multiple
-      .panel-indent.hide.inset.js-tenancyNumber.one
+      .panel-indent.hide.js-tenancyNumber.one
         %p.remove
           If you’ve had <strong class='bold-small'>1</strong> tenancy agreement, enter the details
 
         = form.moj_date_fieldset :start_date, 'Start date of the tenancy agreement', class: 'date-picker conditional original'
 
-      .panel-indent.hide.inset.js-tenancyNumber.multiple
+      .panel-indent.hide.js-tenancyNumber.multiple
         %p.remove
           If you’ve had <strong class="bold-small">more than 1</strong> tenancy agreement, enter the details
 
@@ -41,7 +41,7 @@
             class: 'radio inline',
             choice: [ 'Yes', 'No', '' ]
 
-      .sub-panel.inset.hide.js-conditionals
+      .sub-panel.panel-indent.hide.js-conditionals
         .statements.hide.current
           -# following paragraph replaced and moved when JS turned on - see tenancy_module.js
           %p#read-statements
@@ -79,7 +79,7 @@
   .sub-panel.hide.js-tenancyType.demoted
     %h3.section-header.hide Demoted assured shorthold tenancies
 
-    .sub-panel.inset
+    .sub-panel.panel-indent
       = form.moj_date_fieldset  :demotion_order_date, 'Date of demotion order', class: 'date-picker'
       = form.text_field_row :demotion_order_court, label: 'Court where demotion order was made'
       = form.radio_button_fieldset :previous_tenancy_type,
