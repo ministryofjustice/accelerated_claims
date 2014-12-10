@@ -42,7 +42,7 @@ class CourtfinderController < ApplicationController
         court = []
       end
     rescue NoMethodError
-       court = []
+      court = []
     end
     court
   end
