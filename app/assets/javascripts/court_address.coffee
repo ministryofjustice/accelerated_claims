@@ -14,7 +14,7 @@ CourtAddressModule =
 
   addCourtAddressFormLabel: ->
     if CourtAddressModule.isCourtAddressFormBlank()
-      label = "You haven't entered a postcode for the property you want to take back.<br> To see the court you need to send this claim to, <a href=\"#property\">enter the postcode now</a>"
+      label = "You haven't entered a postcode for the property you want to take back. To see the court you need to send this claim to, <a href=\"#property\">enter the postcode now</a>."
       $('#court-address-label').html(label)
 
   changeElement:(id, tag, new_element) ->
