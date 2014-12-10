@@ -20,7 +20,8 @@
     = form.moj_date_fieldset :expiry_date, 'Date notice ended', { class: 'date-picker' }, 1.week.ago
 
 .sub-panel.js-only.grid-row
-  %section.column-two-thirds.hide.js-notice.no.flash.error-summary
-    %h3 You cannot continue with this claim
-    %p= notice_caution
+  .column-two-thirds
+    .hide.js-notice.no.flash.error-summary
+      %h3 You cannot continue with this claim
+      %p= notice_caution
 
