@@ -28,7 +28,7 @@ moj.Modules.tenancyModule = (function() {
     cacheEls();
     bindEvents();
 
-    $( '#read-statements' ).text( 'Carefully read the statements below:' ).addClass( 'strong' ).prependTo( $( '.js-conditionals' ) ).wrap( '<div class="row"></div>' );
+    $( '#read-statements' ).text( 'Carefully read the statements below:' ).addClass( 'bold-small' ).prependTo( $( '.js-conditionals' ) ).wrap( '<div class="row"></div>' );
   };
 
   cacheEls = function() {
