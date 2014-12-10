@@ -188,13 +188,21 @@ describe ClaimController, :type => :controller do
         data = claim_post_data['claim']
         post :submission, claim: data
         get :download
-        expect(session[:fee_account_num_logged]).to be true
+        expect(session[:fee_account_num_logged]).to eq data['property']['postcode']
       end
 
-      it 'should not log a fee accunt num if already done once for this session' do
+      it 'should not log a fee account num if already done this session for the same postcode' do
         expect(LogStuff).not_to receive(:info).with(:fee_account_num, { present: 'false', ip: instance_of(String) } )
-        session[:fee_account_num_logged] = true
         data = claim_post_data['claim']
+        session[:fee_account_num_logged] = data['property']['postcode']
+        post :submission, claim: data
+        get :download
+      end
+
+      it 'should log a fee account num if already done this session for a different postcode' do
+        expect(LogStuff).to receive(:info).with(:fee_account_num, { present: 'false', ip: instance_of(String) } )
+        data = claim_post_data['claim']
+        session[:fee_account_num_logged] = data['property']['postcode'].tr('0123456789', '9876543210')  # ensure this postcode different from last
         post :submission, claim: data
         get :download
       end

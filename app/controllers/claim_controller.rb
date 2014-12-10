@@ -107,10 +107,11 @@ class ClaimController < ApplicationController
 
   private
 
+  # only record a fee_account_num event if the property postcode is NOT the same as the previous download in this session
   def log_fee_account_num_usage
-    if session[:fee_account_num_logged].nil?
+    if session[:fee_account_num_logged].nil?  || (session[:fee_account_num_logged] != session[:claim][:property][:postcode])
       LogStuff.info(:fee_account_num, present: @claim.fee.account.present?.to_s, ip: request.remote_ip) { "Fee Account Number Usage" }
-      session[:fee_account_num_logged] = true
+      session[:fee_account_num_logged] = session[:claim][:property][:postcode]
     end
   end
 
