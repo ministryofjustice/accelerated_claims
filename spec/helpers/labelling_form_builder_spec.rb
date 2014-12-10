@@ -82,11 +82,9 @@ describe 'LabellingFormBuilder', :type => :helper  do
       messages = double('error_messages', messages: { date_served: ['date cannot be blank'] })
       expect(notice).to receive(:errors).at_least(:once).and_return(messages)
 
-      expect(date_fieldset).to include("<span class='error' aria-hidden='true'>date cannot be blank</span>")
       expect(date_fieldset).to include("<span class='error'>date cannot be blank</span>")
 
       expect(date_fieldset).to only_show_errors_inside(:legend, error_css: "legend span.error")
-      expect(date_fieldset).to only_show_errors_inside(:div, error_css: "div span.error")
     end
   end
 
@@ -128,9 +126,6 @@ describe 'LabellingFormBuilder', :type => :helper  do
       expect(fieldset).to only_show_errors_inside(:legend, error_css: 'legend span.error')
     end
 
-    it 'shows errors inside div' do
-      expect(fieldset).to only_show_errors_inside(:div, error_css: 'div span.error')
-    end
   end
 
   describe '#text_area_row' do
