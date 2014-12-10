@@ -17,7 +17,7 @@ class CourtfinderController < ApplicationController
   def address
     postcode = params['postcode']
 
-    court = if ENV["ENV_NAME"] == "production"
+    court = if ENV['ENV_NAME'] == 'production'
                court_finder_lookup(postcode)
              else
                postcode == 'fake' ? [] : TEST_RESPONSE_DATA
