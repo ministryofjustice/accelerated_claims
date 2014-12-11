@@ -117,7 +117,7 @@ def expected_output
         <a class='change-postcode-link2 js-only' href='#change_postcode' id='claim_property-manual_change-link-2' style='display: inline; margin-left: 10px;'>Change</a>
       </span>
     </div>
-    <div class='postcode-selection-els'>
+    <div class='postcode-selection-els' id='claim_property_postcode_selection_els'>
       <label class='postcode-picker-label' for='claim_property_postcode_edit_field'>Postcode</label>
       <input class='smalltext postcode-picker-edit-field' id='claim_property_postcode_edit_field' maxlength='8' name='[postcode]' size='8' type='text'>
       <a class='button primary postcode-picker-button' data-country='all' href='#claim_property_postcode_picker'>
@@ -144,7 +144,7 @@ def expected_output
       Enter address manually
     </a>
   </div>
-  <div class='address extra no sub-panel hide' style='margin-top: 10px;'>
+  <div class='address extra no sub-panel hide' id='claim_property_address_extra' style='margin-top: 10px;'>
     <div class='row street'>
       <label for='claim_property_street'>
         Full address

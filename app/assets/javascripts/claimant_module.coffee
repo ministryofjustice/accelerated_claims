@@ -43,6 +43,15 @@ ClaimantModule =
         address = $( this ).find( '.sub-panel.address' )
         address.hide()
 
+  bindNoCheckboxToShowAddress: ->
+    $( '.same-address' ).each ->
+      block = $( this )
+      block.find('input[value="No"]').on 'change', ->
+        if $(this).is( ':checked' )
+          address_block_id = $(this).attr('id').replace('_address_same_as_first_claimant_no', '_postcode_selection_els')
+          address_block = $("##{address_block_id}")
+          address_block.show()
+
   setup: ->
     ClaimantModule.hideClaimantSections()
     ClaimantModule.bindToNumberClaimantsInput()
@@ -50,6 +59,7 @@ ClaimantModule =
     ClaimantModule.bindIndividualLandlordSelectToShowClaimants()
     ClaimantModule.showClaimants($('#claim_num_claimants').val())
     ClaimantModule.hideAddresses()
+    ClaimantModule.bindNoCheckboxToShowAddress()
 
 root.ClaimantModule = ClaimantModule
 
