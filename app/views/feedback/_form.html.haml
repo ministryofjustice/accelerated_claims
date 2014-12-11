@@ -26,7 +26,8 @@
          'filled_in_for_me',
          'used_accessibility_tool',
          'other_help' ]
-    = f.text_field :other_help
+    - if false # todo: hide this input unless 'other_help' choose
+      = f.text_field :other_help
 
     %h3 Tell us what you think of new designs
     %p
