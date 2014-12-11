@@ -1,9 +1,10 @@
 = claim_form.fields_for possession, builder: LabellingFormBuilder do |form|
-  %p
-    If leaving the property in 14 days will cause the defendant extreme hardship, they can ask for extra time (up to 42 days). This may result in a court hearing.
+  .sub-panel
+    %p
+      If leaving the property in 14 days will cause the defendant extreme hardship, they can ask for extra time (up to 42 days). This may result in a court hearing.
 
-  = form.radio_button_fieldset :hearing,
-      'Do you want to be at court if there is a hearing?',
-      class: 'radio inline',
-      choice: [ 'No', 'Yes' ],
-      data: { 'virtual-pageview' => '/accelerated/court-section' }
+    = form.radio_button_fieldset :hearing,
+        'Do you want to be at court if there is a hearing?',
+        class: 'radio inline',
+        choice: [ 'No', 'Yes' ],
+        data: { 'virtual-pageview' => '/accelerated/court-section' }
