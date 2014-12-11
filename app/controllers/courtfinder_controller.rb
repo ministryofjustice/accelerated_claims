@@ -17,28 +17,33 @@ class CourtfinderController < ApplicationController
   def address
     postcode = params['postcode']
 
-    result = if ENV["ENV_NAME"] == "production"
+    court = if ENV['ENV_NAME'] == 'production'
                court_finder_lookup(postcode)
              else
                postcode == 'fake' ? [] : TEST_RESPONSE_DATA
              end
 
-    if result.empty?
+    if court.empty?
       message = "No court found for #{postcode} postcode"
       render json: message, status: :not_found
     else
-      render json: result
+      render json: court
     end
   end
 
   private
 
   def court_finder_lookup(postcode)
-    output = Courtfinder::Client::HousingPossession.new.get(postcode)
-    if output.key? :error
-      LogStuff.error(:court_finder) { output[:error] }
-      output = []
+    court = Courtfinder::Client::HousingPossession.new.get(postcode)
+
+    begin
+      if court.key? :error
+        LogStuff.error(:court_finder) { court[:error] }
+        court = []
+      end
+    rescue NoMethodError
+      court = []
     end
-    output
+    court
   end
 end
