@@ -77,7 +77,7 @@ fieldset, .sub-panel
 .narrow
   width: 22%
   @include media(mobile)
-    width: 50%
+    width: 40%
 
 .error-summary
   @extend .validation-summary
@@ -140,6 +140,9 @@ span.error
 .postcode-picker-edit-field
   margin-right: 10px
 
+.postcode-selection-els
+  margin-bottom: 15px
+
 textarea
   height: 110px
 
@@ -200,6 +203,9 @@ input[disabled="disabled"], input[readonly="readonly"]
   margin-top: 30px
   margin-bottom: 50px
 
+.button.postcode-picker-button
+  display: inline
+
 @import "claims-modal"
 
 .previous_tenancy_type
@@ -211,3 +217,9 @@ label[for="claim_fee_account"]
 
 a[rel="external"]:after
   background-position: right -1%
+
+#claimant_1_subpanel
+  .panel-indent
+    border-left: none
+    margin: 0px
+    padding: 0px
