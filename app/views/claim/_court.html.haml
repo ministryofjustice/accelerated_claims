@@ -1,13 +1,13 @@
 = claim_form.fields_for court, builder: LabellingFormBuilder do |form|
-  %p#court-address-label
-    Enter the name and address of the court you want to send this claim to.
+  .sub-panel
+    %p#court-address-label
+      Enter the name and address of the court you want to send this claim to.
 
-  #court-name
+    #court-name
 
-  #court-address
+    #court-address.panel-indent
 
-    = form.text_field_row :court_name, label: 'Name of court'
-    = form.text_area_row  :street, label: 'Full address'
-    = form.text_field_row :postcode, label: 'Postcode'
+      = form.text_field_row :court_name, label: 'Name of court'
+      = form.text_area_row  :street, label: 'Full address'
+      = form.text_field_row :postcode, label: 'Postcode'
 
-  .divider
