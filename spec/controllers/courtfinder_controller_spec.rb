@@ -2,7 +2,7 @@ describe CourtfinderController, type: :controller do
   describe '#address' do
     context 'when a valid postcode is given' do
       let(:postcode) { 'SG8 0LT' }
-      let(:json) { CourtfinderController::TEST_RESPONSE_DATA.to_json }
+      let(:json) { court_address.to_json }
 
       before { court_finder_stub(postcode, body: json) }
 
@@ -38,29 +38,18 @@ describe CourtfinderController, type: :controller do
       let(:json_error) { '{ "error": "Timeout" }' }
 
       before do
-        ENV['ENV_NAME'] = 'production'
-        WebMock.disable_net_connect!(allow: ['127.0.0.1', /codeclimate.com/])
-        instance_double('Courtfinder::Client::HousingPossession', get: postcode)
-      end
-
-      after { ENV.delete('ENV_NAME') }
-
-      def custom_stub(body)
-        url = "https://courttribunalfinder.service.gov.uk/search/results.json\
-              ?aol=Housing%20possession&postcode=#{postcode}".sub(' ', '')
-        stub_request(:get, url).to_return(status: 400, body: body, headers: {})
+        allow_any_instance_of(Courtfinder::Client::HousingPossession).to \
+          receive(:get).and_return(json_error)
       end
 
       it 'should log the error' do
-        custom_stub(json_error)
         expect(LogStuff).to receive(:error)
         get :address, postcode: postcode
       end
 
       it 'should return expected result' do
-        custom_stub(json_error)
         get :address, postcode: postcode
-        expect(response.body).to eq "No court found for #{postcode} postcode"
+        expect(response.body).to eq '[]'
       end
     end
   end
