@@ -4,6 +4,8 @@ feature 'Postcode address lookup' do
 
   before do
     WebMock.disable_net_connect!(:allow => ["127.0.0.1", /codeclimate.com/])
+    allow_any_instance_of(Courtfinder::Client::HousingPossession).to \
+      receive(:get).and_return(court_address.to_json)
   end
 
   def click_find_address
