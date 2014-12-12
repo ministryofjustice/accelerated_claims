@@ -14,7 +14,6 @@ describe DefendantCollection do
         dc2 = DefendantCollection.new(params)
         expect(dc2).not_to be_valid
         expected_errors = [
-              "Defendant 4 title Enter defendant 4's title",
               "Defendant 4 full name Enter defendant 4's full name"
             ]
         expect(dc2.errors.full_messages).to eq expected_errors
@@ -163,7 +162,6 @@ describe DefendantCollection do
     it 'should have error messages for the missing fields' do
       dc = DefendantCollection.new(invalid_params)
       dc.valid?
-      expect(dc.errors[:defendant_1_title]).to eq ["Enter defendant 1's title"]
       expect(dc.errors[:defendant_2_full_name]).to eq ["Enter defendant 2's full name"]
     end
 
