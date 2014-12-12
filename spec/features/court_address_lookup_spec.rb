@@ -45,7 +45,9 @@ feature 'Court address lookup' do
              'name' => 'Bournemouth and Poole County Court and Family Court',
              'address' => {
                'town' => 'Bournemouth',
-               'address_lines' => ['Bournemouth and Poole County Court and Family Court hearing centre',
+               'address_lines' => ['Bournemouth and Poole County Court
+                                    and Family Court hearing
+                                    centre'.sub('  ', ''),
                                    'Courts of Justice',
                                    'Deansleigh Road'],
                'type' => 'Visiting',
