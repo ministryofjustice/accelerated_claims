@@ -121,10 +121,10 @@ feature 'Court address lookup' do
       'Bournemouth and Poole County Court and Family Court'
     end
 
-    before {
+    before do
       allow_any_instance_of(Courtfinder::Client::HousingPossession).to \
         receive(:get).and_return(court_data)
-    }
+    end
 
     scenario 'find and populate court name, address, show manual edit link', js: true do
       visit '/'
