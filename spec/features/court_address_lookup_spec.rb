@@ -40,7 +40,7 @@ feature 'Court address lookup' do
   context 'when the form is populated correctly and submited' do
     context 'summary page is viewed and the user returns back to the form' do
       unless ENV["env"] == 'production'
-        let(:json) do
+        let(:court_data) do
           [{
              'name' => 'Bournemouth and Poole County Court and Family Court',
              'address' => {
@@ -52,12 +52,12 @@ feature 'Court address lookup' do
                'postcode' => 'BH7 7DS',
                'county' => 'Dorset'
              }
-           }].to_json
+           }]
         end
 
         before {
           allow_any_instance_of(Courtfinder::Client::HousingPossession).to \
-            receive(:get).and_return(json)
+            receive(:get).and_return(court_data)
         }
 
         scenario 'should display the court name', js: true do
@@ -100,7 +100,7 @@ feature 'Court address lookup' do
 
   context 'when property address is populated' do
     let(:postcode) { 'BH22 8HR' }
-    let(:json) do
+    let(:court_data) do
       [{
          'name' => 'Bournemouth and Poole County Court and Family Court',
          'address' => {
@@ -112,7 +112,7 @@ feature 'Court address lookup' do
            'postcode' => 'BH7 7DS',
            'county' => 'Dorset'
          }
-       }].to_json
+       }]
     end
 
     let(:court_name) do
@@ -121,7 +121,7 @@ feature 'Court address lookup' do
 
     before {
       allow_any_instance_of(Courtfinder::Client::HousingPossession).to \
-        receive(:get).and_return(json)
+        receive(:get).and_return(court_data)
     }
 
     scenario 'find and populate court name, address, show manual edit link', js: true do
@@ -134,7 +134,7 @@ feature 'Court address lookup' do
       court_name_on_page = find(:xpath, '//*[@id="court-name"]/b').text
       expect(court_name_on_page).to have_text court_name
 
-      address = JSON.parse(json)[0]['address']['address_lines'].join(',')
+      address = court_data[0]['address']['address_lines'].join(',')
       court_address_on_page = find("#claim_court_street", visible: false).value
       expect(court_address_on_page).to eq(address)
 
