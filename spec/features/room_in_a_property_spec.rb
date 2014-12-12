@@ -1,12 +1,10 @@
-# -*- coding: utf-8 -*-
 feature 'Filling in property section' do
 
   before do
     WebMock.disable_net_connect!(:allow => ["127.0.0.1", /codeclimate.com/])
+    allow_any_instance_of(Courtfinder::Client::HousingPossession).to \
+      receive(:get).and_return(court_address)
   end
-
-  
-  
 
   unless remote_test?
     scenario "see room number hint", js: false do
@@ -15,7 +13,7 @@ feature 'Filling in property section' do
     end
 
     scenario "selecting room in a property, then selecting self-contained house", js: true do
-      
+
       visit '/'
       wait_for_ajax
       expect(page).to have_css('div#javascript_done')

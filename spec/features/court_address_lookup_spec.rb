@@ -40,6 +40,28 @@ feature 'Court address lookup' do
   context 'when the form is populated correctly and submited' do
     context 'summary page is viewed and the user returns back to the form' do
       unless ENV["env"] == 'production'
+        let(:court_data) do
+          [{
+              'name' => 'Bournemouth and Poole County Court and Family Court',
+              'address' => {
+                'town' => 'Bournemouth',
+                'address_lines' => ['Bournemouth and Poole County Court
+                                    and Family Court hearing
+                                    centre'.sub('  ', ''),
+                                    'Courts of Justice',
+                                    'Deansleigh Road'],
+                'type' => 'Visiting',
+                'postcode' => 'BH7 7DS',
+                'county' => 'Dorset'
+              }
+           }]
+        end
+
+        before {
+          allow_any_instance_of(Courtfinder::Client::HousingPossession).to \
+            receive(:get).and_return(court_data)
+        }
+
         scenario 'should display the court name', js: true do
           data = load_fixture_data 'spec/fixtures/scenario_01_js_data.rb'
           AppModel.new(data).exec do
@@ -80,33 +102,30 @@ feature 'Court address lookup' do
 
   context 'when property address is populated' do
     let(:postcode) { 'BH22 8HR' }
-    let(:production_json) do
+    let(:court_data) do
       [{
          'name' => 'Bournemouth and Poole County Court and Family Court',
          'address' => {
            'town' => 'Bournemouth',
-           'address_lines' => ['Bournemouth and Poole County Court and Family Court hearing centre',
+           'address_lines' => ['Bournemouth and Poole County Court and
+                                Family Court hearing centre'.sub('  ', ''),
                                'Courts of Justice',
                                'Deansleigh Road'],
            'type' => 'Visiting',
            'postcode' => 'BH7 7DS',
            'county' => 'Dorset'
          }
-       }].to_json
+      }]
     end
-
-    let(:json) {
-      ENV['env'] == 'production' ? production_json : \
-        CourtfinderController::TEST_RESPONSE_DATA.to_json
-    }
 
     let(:court_name) do
-      bournemouth = 'Bournemouth and Poole County Court and Family Court'
-      cambridge = 'Cambridge County Court and Family Court'
-      ENV['env'] == 'production' ?  bournemouth : cambridge
+      'Bournemouth and Poole County Court and Family Court'
     end
 
-    before { court_finder_stub(postcode, body: json) }
+    before do
+      allow_any_instance_of(Courtfinder::Client::HousingPossession).to \
+        receive(:get).and_return(court_data)
+    end
 
     scenario 'find and populate court name, address, show manual edit link', js: true do
       visit '/'
@@ -118,7 +137,7 @@ feature 'Court address lookup' do
       court_name_on_page = find(:xpath, '//*[@id="court-name"]/b').text
       expect(court_name_on_page).to have_text court_name
 
-      address = JSON.parse(json)[0]['address']['address_lines'].join(',')
+      address = court_data[0]['address']['address_lines'].join(',')
       court_address_on_page = find("#claim_court_street", visible: false).value
       expect(court_address_on_page).to eq(address)
 
