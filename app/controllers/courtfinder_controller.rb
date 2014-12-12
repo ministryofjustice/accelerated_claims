@@ -16,7 +16,7 @@ class CourtfinderController < ApplicationController
 
   private
 
-  def process_court_data court
+  def process_court_data(court)
     unless court.instance_of? Array
       if court.key? 'error'
         LogStuff.error(:court_finder) { court['error'] }
