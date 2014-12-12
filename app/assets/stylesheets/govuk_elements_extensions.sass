@@ -206,7 +206,26 @@ input[disabled="disabled"], input[readonly="readonly"]
 .button.postcode-picker-button
   display: inline
 
-@import "claims-modal"
+#session-modal
+  width: 530px
+  h2
+    background-color: #df3034
+    background-image: image-url('icon-important.png')
+    background-position: 15px center
+    background-repeat: no-repeat
+    color: $white
+    font-size: 19px
+    font-weight: bold
+    line-height: 60px
+    padding-left: 60px
+
+  p
+    margin: 15px
+    font-size: 19px
+
+  a:focus
+    background-color: transparent
+    border: 3px solid $yellow
 
 .previous_tenancy_type
   .inline
@@ -223,3 +242,4 @@ a[rel="external"]:after
     border-left: none
     margin: 0px
     padding: 0px
+
