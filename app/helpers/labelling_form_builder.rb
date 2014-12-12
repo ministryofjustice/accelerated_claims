@@ -55,10 +55,12 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
     options[:choice] ||= [ 'Yes', 'No' ]
 
+    options_class = options[:class][/inline/] ? 'inline' : 'options'
+
     data_reverse = options.delete(:toggle_fieldset) ? ' data-reverse="true"' : ''
 
     fieldset_tag attribute, legend, options do
-      @template.surround("<div class='options'#{data_reverse}>".html_safe, "</div>".html_safe) do
+      @template.surround("<div class='#{options_class}'#{data_reverse}>".html_safe, "</div>".html_safe) do
         options[:choice].map do |choice|
           radio_button_row(attribute, choice, virtual_pageview, input_class)
         end.join("\n")
@@ -141,12 +143,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   def fieldset_tag(attribute, legend_text, options = {}, &block)
     fieldset = tag(:fieldset, options_for_fieldset(options), true)
 
-    # use visually hidden legend text for screen reader accessibility
     fieldset.safe_concat legend_for(attribute, legend_text, options) unless legend_text.blank?
-
-    # hide repeated legend text from screen readers using aria-hidden='true'
-    label = label_content_for(attribute, "<span aria-hidden='true'>#{legend_text}</span>".html_safe, hint: options[:hint], aria_hidden: true)
-    fieldset.safe_concat content_tag(:div, label) unless label.blank?
 
     fieldset.concat(capture(&block)) if block_given?
     fieldset.safe_concat("</fieldset>")
@@ -179,7 +176,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def hint_span options
-    options[:hint] ? "<span class='hint block'#{aria_hidden(options)}>#{options[:hint]}</span>".html_safe : nil
+    options[:hint] ? "<span class='hint block'>#{options[:hint]}</span>".html_safe : nil
   end
 
   def ends_with_punctuation? span
@@ -188,11 +185,11 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
   def legend_for attribute, legend_text, options
     label = label_content_for(attribute, legend_text, hint: options[:hint])
-    content_tag(:legend, label, class: 'visuallyhidden')
+    content_tag(:legend, label)
   end
 
   def hidden_fullstop options
-    options[:aria_hidden] ? '' : '<span class="visuallyhidden">.</span>'.html_safe
+    '<span class="visuallyhidden">.</span>'.html_safe
   end
 
   def error_span_message attribute
@@ -204,7 +201,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def error_span_open_tag options
-    " <span class='error#{error_classes(options)}'#{error_span_id(options)}#{aria_hidden(options)}>".html_safe
+    " <span class='error#{error_classes(options)}'#{error_span_id(options)}>".html_safe
   end
 
   def error_span_id options
@@ -213,10 +210,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
   def error_classes options
     ' visuallyhidden' if options[:hidden]
-  end
-
-  def aria_hidden options
-    " aria-hidden='true'" if options[:aria_hidden]
   end
 
   def options_for_fieldset options
@@ -285,7 +278,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
   def row_input attribute, input, options
     virtual_pageview = options[:data] ? options[:data].delete('virtual-pageview') : nil
-    css = "row #{css_for(attribute, options)}".strip
+    css = "form-group #{css_for(attribute, options)}".strip
     id = id_for(attribute).blank? ? '' : "id='#{id_for(attribute)}' "
 
     @template.surround("<div #{id}class='#{css}'>".html_safe, "</div>".html_safe) do

@@ -3,12 +3,14 @@ module SummaryHelper
 
   def summary_section_header section
     capture_haml do
-      haml_tag 'div.summary-header' do
-        haml_tag 'div.left', :< do
-          section_header section
-        end
-        haml_tag 'div.right', :< do
-          link_to_edit_section section
+      haml_tag 'div.grid-row' do
+        haml_tag 'div.summary-header' do
+          haml_tag 'div.column-two-thirds', :< do
+            section_header section
+          end
+          haml_tag 'div.edit-link.column-one-third', :< do
+            link_to_edit_section section
+          end
         end
       end
     end

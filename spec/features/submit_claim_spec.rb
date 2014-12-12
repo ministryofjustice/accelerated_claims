@@ -25,7 +25,7 @@ feature "submit claim" do
 
       begin
         # raises exception if confirmation page not returned
-        page.find(:xpath, '//*[@id="content"]/section[1]')
+        page.find(:xpath, '//div[@class="sub-panel summary"]')
       rescue => err
         puts "ERROR: #{err.message} class: #{err.class}"
         fail validation_error_text(page)

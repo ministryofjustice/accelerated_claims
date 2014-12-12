@@ -1,36 +1,20 @@
-%header.page-header.group
+%header
   %h1
     Ask for technical help
+  %h3
+    Please note: we cannot offer legal advice.
 
-%header.content-header
-  %section
-    %h2.section-header Please note: we cannot offer legal advice.
+= render partial: 'shared/flash'
+= render partial: 'shared/error_messages'
 
-    = render partial: 'shared/flash'
+%section
+  %p Enter your name, telephone number and a brief description of what you need help with. We'll get back to you during the next working day between 9am and 5pm.
 
-    - unless @user_callback.errors.messages.blank?
-      %section.flash.error-summary{tabindex: "-1"}
-        %h2#error-heading You need to fix the errors on this page before continuing.
-
-        %p See highlighted errors below.
-
-        %ul
-          - @user_callback.errors.messages.each do |field, message|
-            %li
-              = link_to "#{message.first}", "#user_callback_#{field}_error", class: 'error-link', data: { id: "##{field}" }
-
-
-    %p Enter your name, telephone number and a brief description of what you need help with. We'll get back to you during the next working day between 9am and 5pm.
-
-    %p We’ll only use your details to call you back. Don’t include any personal information, for example address or date of birth.
-
+  %p We’ll only use your details to call you back. Don’t include any personal information, for example address or date of birth.
 
   = form_for @user_callback, url: user_callback_request_path, html: { novalidate: 'novalidate' }, builder: LabellingFormBuilder do |f|
-    .moj-panel
-      = f.text_field_row :name, label: 'Name'
-      .row
-      = f.text_field_row :phone, label: 'Telephone number', class: 'rel'
-      = f.text_area_row :description, label: "Describe what you'd like to talk about"
+    = f.text_field_row :name, label: 'Name'
+    = f.text_field_row :phone, label: 'Telephone number'
+    = f.text_area_row :description, label: "Describe what you'd like to talk about"
 
-    .action-buttons.cf
-      = f.submit 'Send', :class => 'button button-primary large chevron left', :id => 'submit-button'
+    = f.submit 'Send', class: 'button primary', id: 'submit-button'

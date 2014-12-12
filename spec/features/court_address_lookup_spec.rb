@@ -30,7 +30,7 @@ feature 'Court address lookup' do
       end
 
       scenario 'should have the link back to property section', js: true do
-        form_title = 'You haven\'t entered a postcode for the property you want to take back.<br> To see the court you need to send this claim to, <a href="#property">enter the postcode now</a>'
+        form_title = 'You haven\'t entered a postcode for the property you want to take back. To see the court you need to send this claim to, <a href="#property">enter the postcode now</a>.'
         element = page.evaluate_script("$('#court-address-label').html()")
         expect(element).to eq form_title
       end
@@ -68,7 +68,7 @@ feature 'Court address lookup' do
             visit '/'
             claim_form.complete_form_with_javascript
             click_button 'Continue'
-            find('section.summary') # ensure confirmation page loaded
+            find('div.summary') # ensure confirmation page loaded
 
             visit '/'
             find('form#claimForm') # ensure form page loaded
@@ -83,7 +83,7 @@ feature 'Court address lookup' do
             visit '/'
             claim_form.complete_form_with_javascript
             click_button 'Continue'
-            find('section.summary') # ensure confirmation page loaded
+            find('div.summary') # ensure confirmation page loaded
             visit '/'
             find('form#claimForm') # ensure form page loaded
 
@@ -183,7 +183,7 @@ feature 'Court address lookup' do
         no_postcode_label = <<-END.gsub(/(^\s+\||\n)/, '')
           |You haven't entered a postcode for the property
           | you want to take back. To see the court you need
-          | to send this claim to, enter the postcode now
+          | to send this claim to, enter the postcode now.
         END
 
         label = find('#court-address-label').text

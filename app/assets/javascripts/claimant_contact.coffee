@@ -2,90 +2,64 @@ root = exports ? this
 
 class ClaimantContact
   constructor: () ->
-    @claimantContactPanel = $('.claimant-contact')
-    @contactBlock = $('.sub-panel.details.contact-details')
-    @addressBlock = $('.sub-panel.details.correspondence-address')
-    @referenceBlock = $('.sub-panel.details.reference-number')
+    @claimantContactPanel = $('#claimant-contact')
+
+    @referenceBlock = $('#reference-block')
+
     @buttonIndividual = $('#claim_claimant_type_individual')
     @buttonOrganization = $('#claim_claimant_type_organization')
-    @pcp = @claimantContactPanel.find('.postcode-picker-container').first()
+    @numberOfClaimants = $('#claim_num_claimants')
 
-    @claimantContactPanel.hide()
-    @hideDetailBlock(@contactBlock)
-    @hideDetailBlock(@addressBlock)
-    @hideDetailBlock(@referenceBlock)
+    @hideContactPanel()
     @displayOnLoad()
 
     @buttonOrganization.on 'click', =>
-      @claimantContactPanel.show()
+      @showContactPanel()
+      @referenceBlock.show()
 
     @buttonIndividual.on 'click', =>
-      @hideContactPanelIfNumClaimantsBlank()
+      @showHideContactPanelDependingOnNumClaimants()
 
     $('#claim_num_claimants').on 'keyup', =>
       @showHideContactPanelDependingOnNumClaimants()
 
-    $('a#contact-details').on 'click', =>
-      @toggleDetails(@contactBlock)
-      false
+  showContactPanel: =>
+    @claimantContactPanel.show()
 
-    $('a#correspondence-address').on 'click', =>
-      @toggleDetails(@addressBlock)
-      if @addressBlock.hasClass('open')
-        @pcp.addClass('show').removeClass('hide')
-      else
-        @pcp.addClass('hide').removeClass('show')
-      false
+  hideContactPanel: =>
+    @claimantContactPanel.hide()
 
-    $('a#reference-number').on 'click', =>
-      @toggleDetails(@referenceBlock)
-      false
+  organization: =>
+    @buttonOrganization.is(':checked')
+
+  individual: =>
+    @buttonIndividual.is(':checked')
 
   displayOnLoad: =>
-    if @buttonOrganization.is(':checked')
-      @claimantContactPanel.show()
-    else if @buttonIndividual.is(':checked')
-      @hideContactPanelIfNumClaimantsBlank()
-    @expandBlockIfPopulated(@addressBlock)
-    @expandBlockIfPopulated(@contactBlock)
-    @expandBlockIfPopulated(@referenceBlock)
-    if @addressBlock.hasClass('open')
-      @pcp.addClass('show').removeClass('hide')
-    else
-      @pcp.addClass('hide').removeClass('show')
+    if @organization()
+      @showContactPanel()
+    else if @individual()
+      @showHideContactPanelDependingOnNumClaimants()
+
+    detailsElements = $('details', $('#claimant-contact'))
+    detailsElements.each (index) =>
+      @expandBlockIfPopulated( detailsElements.eq(index) )
 
   showHideContactPanelDependingOnNumClaimants: =>
-    if (parseInt($('#claim_num_claimants').val()) < 1) || $('#claim_num_claimants').val() == ""
-      @claimantContactPanel.hide()
+    if parseInt(@numberOfClaimants.val()) < 1 || @numberOfClaimants.val() == ""
+      @hideContactPanel()
     else
-      @claimantContactPanel.show()
-      @referenceBlock.hide() unless $('#claim_claimant_type_organization').is(':checked')
+      @showContactPanel()
+      @referenceBlock.hide() unless @organization()
 
-  hideContactPanelIfNumClaimantsBlank: ->
-    if (parseInt($('#claim_num_claimants').val()) < 1) || $('#claim_num_claimants').val() == ""
-      @claimantContactPanel.hide()
-    else
-      @claimantContactPanel.show()
-
-  hideDetailBlock: (element) =>
-    element.removeClass('open')
-
-  showDetailBlock: (element) =>
-    element.addClass('open')
-
-  expandBlockIfPopulated: (element) =>
-    if element.is(':visible')
-      if element.find('input').filter( -> this.value != '').length > 0
-        @showDetailBlock(element)
-
-  toggleDetails: ( element ) =>
-    if element.hasClass('open')
-      @hideDetailBlock(element)
-    else
-      @showDetailBlock(element)
+  expandBlockIfPopulated: (details) =>
+    if details.is(':visible')
+      userEnteredData = details.find( '[type="text"], textarea' ).filter( -> $(this).val() != '').length > 0
+      if userEnteredData
+        # use setTimeout() as details.polyfill.js may not be loaded yet
+        setTimeout( (-> details.find('summary').trigger('click') ), 0)
 
 root.ClaimantContact = ClaimantContact
 
-jQuery ->
-  new ClaimantContact( )
+root.expandBlockIfPopulated = root.ClaimantContact.prototype.expandBlockIfPopulated
 
