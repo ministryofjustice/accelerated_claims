@@ -3,6 +3,8 @@ feature "submit claim" do
   before do
     stub_request(:post, "http://localhost:4000/").to_return(:status => 200, :body => "", :headers => {})
     WebMock.disable_net_connect!(:allow => ["127.0.0.1", /codeclimate.com/])
+    allow_any_instance_of(Courtfinder::Client::HousingPossession).to \
+      receive(:get).and_return(court_address.to_json)
   end
 
   def run_scenario data_file, options={}
