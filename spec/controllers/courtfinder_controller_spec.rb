@@ -41,7 +41,7 @@ describe CourtfinderController, type: :controller do
 
     context 'when error is returned' do
       let(:postcode) { 'foo bar' }
-      let(:json_error) { {"error" => "Timeout"} }
+      let(:json_error) { { "error" => "Timeout" } }
 
       before do
         allow_any_instance_of(Courtfinder::Client::HousingPossession).to \
