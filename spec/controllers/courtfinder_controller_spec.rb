@@ -4,7 +4,10 @@ describe CourtfinderController, type: :controller do
       let(:postcode) { 'SG8 0LT' }
       let(:json) { court_address.to_json }
 
-      before { court_finder_stub(postcode, body: json) }
+      before do
+        allow_any_instance_of(Courtfinder::Client::HousingPossession).to \
+          receive(:get).and_return(json)
+      end
 
       it 'should return the correct response code' do
         get :address, postcode: postcode
@@ -20,7 +23,10 @@ describe CourtfinderController, type: :controller do
     context 'when a invalid postcode is given' do
       let(:postcode) { 'fake' }
 
-      before { court_finder_stub(postcode, body: '', code: 404) }
+      before do
+        allow_any_instance_of(Courtfinder::Client::HousingPossession).to \
+          receive(:get).and_return('')
+      end
 
       it 'should return error status code' do
         get :address, postcode: postcode

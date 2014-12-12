@@ -17,9 +17,13 @@ class CourtfinderController < ApplicationController
   private
 
   def process_court_data court
-    if (court.class != Array) && (JSON.parse(court).key? 'error')
-      LogStuff.error(:court_finder) { court['error'] }
-      court = []
+    json = JSON.parse court
+
+    unless json.class == Array
+      if json.key? 'error'
+        LogStuff.error(:court_finder) { court['error'] }
+        court = []
+      end
     end
     court
   end
