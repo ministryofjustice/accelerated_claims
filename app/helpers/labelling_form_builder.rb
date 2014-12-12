@@ -55,11 +55,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
     options[:choice] ||= [ 'Yes', 'No' ]
 
-    options_class = if options[:class][/inline/]
-      'inline'
-    else
-      'options'
-    end
+    options_class = options[:class][/inline/] ? 'inline' : 'options'
 
     data_reverse = options.delete(:toggle_fieldset) ? ' data-reverse="true"' : ''
 
