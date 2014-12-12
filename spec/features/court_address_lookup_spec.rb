@@ -115,7 +115,7 @@ feature 'Court address lookup' do
            'postcode' => 'BH7 7DS',
            'county' => 'Dorset'
          }
-       }]
+      }]
     end
 
     let(:court_name) do
