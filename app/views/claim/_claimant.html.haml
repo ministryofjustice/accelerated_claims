@@ -1,7 +1,7 @@
 
 .sub-panel.claimant{ id: "claimant_#{claimant_id}_subpanel", 'data-claimant-id'=> claimant_id, class: claimant_id != 1 ? 'same-address' : '' }
   .row.divider
-  .row
+  .row.hide.js-claimanttype.individual
     = claimant_header claimant_id
 
   = claim_form.fields_for claimant_field, claimant, builder: LabellingFormBuilder do |form|
