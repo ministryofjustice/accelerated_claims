@@ -69,11 +69,6 @@ describe Defendant, :type => :model do
         expect(property_inhabiting_defendant.errors[:full_name]).to eq ["Enter defendant 2's full name"]
       end
 
-      it 'should be invalid if title is missing' do
-        property_inhabiting_defendant.title = nil
-        expect(property_inhabiting_defendant).to_not be_valid
-        expect(property_inhabiting_defendant.errors[:title]).to eq ["Enter defendant 2's title"]
-      end
     end
 
     context 'inhabit property_not_set' do
@@ -141,12 +136,6 @@ describe Defendant, :type => :model do
         property_inhabiting_defendant.full_name = nil
         expect(property_inhabiting_defendant).to_not be_valid
         expect(property_inhabiting_defendant.errors[:full_name]).to eq ["Enter defendant 2's full name"]
-      end
-
-      it 'should be invalid if title is missing' do
-        property_inhabiting_defendant.title = nil
-        expect(property_inhabiting_defendant).to_not be_valid
-        expect(property_inhabiting_defendant.errors[:title]).to eq ["Enter defendant 2's title"]
       end
 
       it 'should set inhabits_property to yes' do

@@ -168,13 +168,11 @@ describe Claimant, :type => :model do
       end
 
       it 'should not be valid if any of the attributes are blank' do
-        claimant.title = nil
         claimant.full_name = ''
         claimant.street = ''
         claimant.postcode = ''
 
         expect(claimant).to_not be_valid
-        expect(claimant.errors[:title]).to eq ["Enter claimant 2's title"]
         expect(claimant.errors[:full_name]).to eq ["Enter claimant 2's full name"]
         expect(claimant.errors[:street]).to eq ["Enter claimant 2's full address"]
       end

@@ -97,22 +97,6 @@ describe ClaimantContact, :type => :model do
       expect(cc).to be_valid
     end
 
-    context 'partial title and full name' do
-      it 'should not be valid if name is specified without title' do
-        params = claim_post_data['claim']['claimant_contact'].merge(:title => '')
-        cc = ClaimantContact.new(params)
-        expect(cc).not_to be_valid
-        expect(cc.errors.full_messages).to eq( [ "Title must be present if full_name has been entered" ] )
-      end
-
-      it 'should not be valid if title is specified without full name' do
-        params = claim_post_data['claim']['claimant_contact'].merge(:full_name => '')
-        cc = ClaimantContact.new(params)
-        expect(cc).not_to be_valid
-        expect(cc.errors.full_messages).to eq( [ "Full name must be present if title has been entered" ] )
-      end
-    end
-
     context 'company specified' do
       it 'should be valid without title and full name' do
         params = claim_post_data['claim']['claimant_contact'].merge(:title => '', :full_name => '')

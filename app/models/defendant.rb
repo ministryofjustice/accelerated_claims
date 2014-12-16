@@ -135,7 +135,7 @@ class Defendant < BaseClass
   end
 
   def validate_fields_are_present
-    validate_are_present(:title, :full_name)
+    validate_are_present(:full_name)
   end
 
   def validate_are_present(*fields)

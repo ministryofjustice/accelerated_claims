@@ -34,13 +34,6 @@ class ClaimantContact < BaseClass
   def name_and_address_consistency
     # if either title and name or company or both is present, then address must be present
     # if address present, then either title and name or company or both must be present
-    if title.present? && full_name.blank?
-      errors.add(:full_name, 'must be present if title has been entered')
-    end
-
-    if full_name.present? && title.blank?
-      errors.add(:title, 'must be present if full_name has been entered')
-    end
 
     if title.blank? && full_name.blank? && company_name.blank?
       @address.must_be_blank!
