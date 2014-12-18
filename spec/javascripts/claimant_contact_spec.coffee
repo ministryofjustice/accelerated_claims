@@ -44,7 +44,7 @@ describe 'ClaimantContact', ->
       <div class='claimants'>
         <div class='claimant sub-panel' data-claimant-id='1' id='claimant_1_subpanel'>
           <div class='row'>
-            <h3>Claimant 1</h3>
+            <h3 class='js-claimanttype individual'>Claimant 1</h3>
           </div>
           <div class='row title hide js-claimanttype individual'><label for="claim_claimant_1_title">Title</label>
           <input class="smalltext" id="claim_claimant_1_title" maxlength="8" name="claim[claimant_1][title]" size="8" type="text" /></div>

@@ -3,7 +3,7 @@ describe 'ClaimantHelper', :type => :helper  do
   describe 'claimant_header' do
     context 'claimant_id 1' do
       it 'does not display optional' do
-        expect(helper.claimant_header 1).to eq "<h3>Claimant 1</h3>"
+        expect(helper.claimant_header 1).to eq "<h3 class='js-claimanttype individual'>Claimant 1</h3>"
       end
     end
 
