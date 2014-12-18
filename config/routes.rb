@@ -20,6 +20,7 @@ AcceleratedClaims::Application.routes.draw do
     get  '/raise_exception',controller: :claim, action: :raise_exception
 
     get  '/help',           controller: :static, action: :help, as: :help
+    get  '/maintenance',    controller: :static, action: :maintenance, as: :maintenance
     get  '/cookies',        controller: :static, action: :cookies, as: :cookies
     get  '/accessibility',  controller: :static, action: :accessibility, as: :accessibility
     get  '/terms',          controller: :static, action: :terms, as: :terms
