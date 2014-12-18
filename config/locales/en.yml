@@ -156,7 +156,7 @@ en:
   confirmation:
     heading: Review the details of your claim
     incomplete: You have not yet completed your claim.
-    check: Check all the information on this page before clicking ‘Print the form’.
+    check: Check all the information on this page before clicking ‘Continue’.
     continue_prompt: You now need to save the form and print it. You must then send it to court.
     continue: Continue
     pre_satisfaction: After you’ve submitted your claim, complete our

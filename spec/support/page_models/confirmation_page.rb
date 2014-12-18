@@ -30,7 +30,7 @@ class ConfirmationPage
 private
 
   def capybara_download_pdf
-    click_link 'Print the form'
+    click_link 'Continue'
     assert_pdf_content_type(page.response_headers)
 
     write_pdf_to_tempfile page.body

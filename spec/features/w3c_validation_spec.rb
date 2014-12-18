@@ -26,7 +26,7 @@ describe ClaimController, :type => :controller do
         data = claim_post_data['claim']
         @controller.session['claim'] = data
         get :confirmation
-        expect(response.body).to include('Check all the information on this page before clicking ‘Print the form’.')
+        expect(response.body).to include('Check all the information on this page before clicking ‘Continue’.')
         page_valid = validate_view(response,{w3c_debug: ENV['w3c_debug'] || false})
         expect(page_valid.errors.length).to eql(0)
       end
