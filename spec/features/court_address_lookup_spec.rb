@@ -33,7 +33,7 @@ feature 'Court address lookup' do
         end
 
         scenario 'should have the link back to property section', js: true do
-          form_title = 'You haven\'t entered a postcode for the property you want to take back. To see the court you need to send this claim to, <a href="#property">enter the postcode now</a>'
+          form_title = 'You haven\'t entered a postcode for the property you want to take back. To see the court you need to send this claim to, <a href="#property">enter the postcode now</a>.'
           element = page.evaluate_script("$('#court-address-label').html()")
           expect(element).to eq form_title
         end
