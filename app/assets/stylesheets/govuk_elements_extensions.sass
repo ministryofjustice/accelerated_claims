@@ -241,23 +241,22 @@ a[rel="external"]:after
     margin: 0px
     padding: 0px
 
+.button.postcode-picker-button
+  display: inline
+
 .address-picker-select
   @extend .column-two-thirds
   display: block
   float: none
-  margin-bottom: 20px
   @include media(mobile)
     width: 100%
 
 .postcode-picker-cta
   margin-top: 10px
 
-.button.postcode-picker-button
-  display: inline
-  margin-top: 50px
-  margin-bottom: 10px
-
-.form .button
-  @include media(mobile)
-    display: inline
+.form
+  .postcode-picker-address-list
+    .button
+      @include media(mobile)
+        width: 40%
 
