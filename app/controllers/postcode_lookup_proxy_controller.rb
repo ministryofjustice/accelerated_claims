@@ -20,7 +20,7 @@ class PostcodeLookupProxyController < ApplicationController
   end
 
   def live_postcode_lookup?
-    production = ['staging', 'production'].include?( ENV['ENV_NAME'] )
+    production = ['demo1', 'staging', 'production'].include?( ENV['ENV_NAME'] )
     use_live_postcode_lookup = (URI(request.referer).query =~ /livepc=1/).nil? ? false : true
     use_live_postcode_lookup || production
   end
