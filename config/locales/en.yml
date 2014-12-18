@@ -153,6 +153,16 @@ en:
         label: Fixed legal fees
     court:
       label: Court
+  confirmation:
+    heading: Review the details of your claim
+    incomplete: You have not yet completed your claim.
+    check: Check all the information on this page before clicking ‘Print the form’.
+    continue_prompt: You now need to save the form and print it. You must then send it to court.
+    continue: Continue
+    pre_satisfaction: After you’ve submitted your claim, complete our
+    satisfaction: satisfaction survey
+    feedback: Your feedback helps us improve the service.
+    t_and_c: Terms and conditions and privacy policy
   feedback:
     satisfaction_feedback:
       very_satisfied: 'Very satisfied'
