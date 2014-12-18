@@ -38,11 +38,12 @@ class PostcodeLookupProxy
 
   def lookup
     if valid?
-      if @use_live_data
-        @api_result_set = production_lookup
-      else
-        @api_result_set = development_lookup
-      end
+      # if @use_live_data ||
+      #   @api_result_set = production_lookup
+      # else
+      #   @api_result_set = development_lookup
+      # end
+      @api_result_set = production_lookup
     else
       @api_result_set = invalid_postcode_response
     end
@@ -69,6 +70,7 @@ class PostcodeLookupProxy
 
   def production_lookup
     begin
+      raise Timeout::Error if @postcode.incode.first.to_i == 9
       Timeout::timeout(@timeout) do
         @api_response = ActiveSupport::JSON.decode( Excon.get(form_url).body)
         record_log_with_timeout(false)
