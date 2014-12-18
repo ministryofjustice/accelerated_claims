@@ -12,6 +12,14 @@
     "Postcode",
     "SH1 3HP"
   ],
+  claim_claimant_type: [
+    "Type of claimant",
+    "A private landlord (company), a local authority or a housing association"
+  ],
+  claim_claimant_num_claimants: [
+    "Number of claimants",
+    "1"
+  ],
   claim_claimant_1_organization_name: [
     "Organization name",
     "Infinity Southwich"
@@ -35,6 +43,10 @@
   claim_reference_number_reference_number: [
     "Reference number",
     "T003900DF07"
+  ],
+  claim_defendant_num_defendants: [
+    "Number of defendants",
+    "1"
   ],
   claim_defendant_1_title: [
     "Title",

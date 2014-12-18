@@ -12,6 +12,14 @@
     "Postcode",
     "WL0 6SG"
   ],
+  claim_claimant_type: [
+    "Type of claimant",
+    "A private landlord (individual)"
+  ],
+  claim_claimant_num_claimants: [
+    "Number of claimants",
+    "1"
+  ],
   claim_claimant_1_title: [
     "Title",
     "Mr"
@@ -31,6 +39,10 @@
   claim_claimant_contact_email: [
     "Email",
     "jim@example.com"
+  ],
+  claim_defendant_num_defendants: [
+    "Number of defendants",
+    "1"
   ],
   claim_defendant_1_title: [
     "Title",

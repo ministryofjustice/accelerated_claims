@@ -1,14 +1,12 @@
-%header.page-header.group
+%header
   %h1
     =I18n.t('confirmation.heading')
 
 %section.confirmation
-  .row
-    %p
-      %span.strong= I18n.t('confirmation.incomplete')
-      %br
-      =I18n.t('confirmation.check')
-
+  %p
+    %span.bold-medium= I18n.t('confirmation.incomplete')
+  %p
+    =I18n.t('confirmation.check')
 
 = render partial: 'shared/flash'
 
@@ -16,25 +14,22 @@
 
 = render partial: 'claim_summary'
 
-%section.confirmation
-  .row
-    %p= I18n.t('confirmation.continue_prompt')
+.sub-panel
+  %p= I18n.t('confirmation.continue_prompt')
 
-%section
-  .action-buttons.cf
-    = link_to I18n.t('confirmation.continue'),
-        download_path,
-        class: 'button left large chevron pdf-download',
-        target: '_blank',
-        id: 'download',
-        data: { 'event-label' => I18n.t('confirmation.continue'),
-        'virtual-pageview' => '/accelerated/pdf-download' }
-    - if session[:test]
-      = link_to 'Submitted data',
-          data_path,
-          id: 'data'
+  = link_to I18n.t('confirmation.continue'),
+      download_path,
+      class: 'button primary',
+      target: '_blank',
+      id: 'download',
+      data: { 'event-label' => I18n.t('confirmation.continue'),
+      'virtual-pageview' => '/accelerated/pdf-download' }
+  - if session[:test]
+    = link_to 'Submitted data',
+        data_path,
+        id: 'data'
 
-  %p
+  %p.font-xsmall
     =I18n.t('confirmation.pre_satisfaction')
     = link_to(I18n.t('confirmation.satisfaction'),
         'https://www.gov.uk/done/accelerated-possession-eviction',
@@ -45,7 +40,7 @@
         'virtual-pageview' => '/accelerated/satisfaction-survey' }) + '.'
     =I18n.t('confirmation.feedback')
 
-  %p
+  %p.font-xsmall
     = link_to I18n.t('confirmation.t_and_c'), :terms, class: 't-n-c'
 
 / handlebars templates

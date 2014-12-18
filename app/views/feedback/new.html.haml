@@ -1,7 +1,8 @@
-%header.page-header.group
+%header
   %h1
     Your feedback
 
 = render partial: 'shared/flash'
+= render partial: 'shared/error_messages'
 
 = render "feedback/form"

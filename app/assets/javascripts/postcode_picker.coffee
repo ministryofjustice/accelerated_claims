@@ -94,10 +94,10 @@ class PostcodePicker
     result
 
   streetAndPostcodeAlreadyEntered: =>
-    @picker.find('input.smalltext.postcode').val() != '' && @picker.find('.street textarea').val() != ''
+    @picker.find('input.postcode').val() != '' && @picker.find('.street textarea').val() != ''
 
   addressSuccessfullySelectedOnPreviousPage: =>
-    @picker.find('input.smalltext.postcode').val() != ''
+    @picker.find('input.postcode').val() != ''
 
   errorsExistForStreetOrPostcode: =>
     @picker.find('.street.error').size() != 0 || @picker.find('.address-postcode.error').size() != 0

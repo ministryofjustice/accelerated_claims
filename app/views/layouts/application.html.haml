@@ -2,15 +2,13 @@
   = "#{@page_title} - #{Rails.configuration.app_title}"
 
 - content_for :stylesheets do
-  = stylesheet_link_tag "application", media: "all"
-  :erb
-    <!--[if IE 6]> <%= stylesheet_link_tag "ie6", media: "all" %> <![endif]-->
-    <!--[if IE 7]> <%= stylesheet_link_tag "ie7", media: "all" %> <![endif]-->
-    <!--[if IE 8]> <%= stylesheet_link_tag "ie8", media: "all" %> <![endif]-->
+  = raw stylesheet_link_tag("application", media: "all")
+  = raw %Q|    <!--[if IE 6]> #{stylesheet_link_tag "govuk_elements_extensions_ie6", media: "all"} <![endif]-->|
+  = raw %Q|    <!--[if IE 7]> #{stylesheet_link_tag "govuk_elements_extensions_ie7", media: "all"} <![endif]-->|
+  = raw %Q|    <!--[if IE 8]> #{stylesheet_link_tag "govuk_elements_extensions_ie8", media: "all"} <![endif]-->|
 
 - content_for :javascripts do
-  :erb
-    <!--[if gte IE 7]><!--> <%= javascript_include_tag "application" %> <!--<![endif]-->
+  = raw %Q|    <!--[if gte IE 7]><!--> #{javascript_include_tag "application"} <!--<![endif]-->|
 
 - content_for :head do
   = csrf_meta_tag
@@ -18,13 +16,14 @@
 
 - content_for :cookie_message, ""
 
+- content_for :js_gt_ie, '6'
 
-
-- content_for :content do
-  .phase-banner
-    %p
-      %span This is a new service - #{link_to "your feedback", config_item(:feedback_url)} will help us to improve it.  If you need help with using the online service, we can offer #{link_to 'technical help', technical_help_path}.
-  =yield
+- content_for :content_override do
+  %main#page-container{ role: "main" }
+    .phase-banner
+      %p
+        %span This is a new service - #{link_to "your feedback", config_item(:feedback_url)} will help us to improve it.  If you need help with using the online service, we can offer #{link_to 'technical help', technical_help_path}.
+    =yield
 
 - content_for :footer_app_links do
   %li
@@ -36,7 +35,5 @@
   - content_for :body_end do
     %script{type: 'text/javascript', charset: 'utf-8', src: 'https://cdn3.userzoom.com/uz.js?cuid=13AFA5DAF5D9E311BEDA0022196C4538'}
 
-
 = render template: "layouts/moj_template"
 
-  

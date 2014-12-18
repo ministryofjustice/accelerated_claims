@@ -84,42 +84,41 @@ feature "moj date fieldset" do
 
   str = <<-EOHTML
 <fieldset#{fieldset_class}#{fieldset_id}>
-  <legend class="visuallyhidden">
+  <legend>
     Date Notice Served
     <span class='hint block'>For example,&nbsp;&nbsp;#{date_example}</span>
   </legend>
-  <div>
-    <span aria-hidden='true'>Date Notice Served</span> <span class='hint block' aria-hidden='true'>For example,&nbsp;&nbsp;#{date_example}</span>
-  </div>
-  <div class="moj-date-day-div">
-    <label for="claim_notice_date_served_3i">Day</label>
-    <input  class="#{input_class_prefix}-day#{input_class}"
-            id="claim_notice_date_served_3i"
-            maxlength="2"
-            name="claim[notice][date_served(3i)]"
+  <div class="form-date">
+    <div class="form-group form-group-day">
+      <label for="claim_notice_date_served_3i">Day</label>
+      <input  class="#{input_class_prefix}-day#{input_class}"
+              id="claim_notice_date_served_3i"
+              maxlength="2"
+              name="claim[notice][date_served(3i)]"
+              #{input_options}
+              size="2"
+              type="text" />
+    </div>
+    <div class="form-group form-group-month">
+      <label for="claim_notice_date_served_2i">Month</label>
+      <input  class="#{input_class_prefix}-month#{input_class}"
+              id="claim_notice_date_served_2i"
+              maxlength="9"
+              name="claim[notice][date_served(2i)]"
+              #{input_options}
+              size="9"
+              type="text" />
+    </div>
+    <div class="form-group form-group-year">
+      <label for="claim_notice_date_served_1i">Year</label>
+      <input  class="#{input_class_prefix}-year#{input_class}"
+            id="claim_notice_date_served_1i"
+            maxlength="4"
+            name="claim[notice][date_served(1i)]"
             #{input_options}
-            size="2"
+            size="4"
             type="text" />
-  </div>
-  <div class="moj-date-month-div">
-    <label for="claim_notice_date_served_2i">Month</label>
-    <input  class="#{input_class_prefix}-month#{input_class}"
-            id="claim_notice_date_served_2i"
-            maxlength="9"
-            name="claim[notice][date_served(2i)]"
-            #{input_options}
-            size="9"
-            type="text" />
-  </div>
-  <div class="moj-date-year-div">
-    <label for="claim_notice_date_served_1i">Year</label>
-    <input  class="#{input_class_prefix}-year#{input_class}"
-          id="claim_notice_date_served_1i"
-          maxlength="4"
-          name="claim[notice][date_served(1i)]"
-          #{input_options}
-          size="4"
-          type="text" />
+    </div>
   </div>
 </fieldset>
 EOHTML

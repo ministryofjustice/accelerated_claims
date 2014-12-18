@@ -25,9 +25,12 @@ gem 'coffee-rails'
 gem 'unicorn'
 
 # Gov.uk styles
-gem 'govuk_frontend_toolkit', '1.5.0'
+gem 'govuk_frontend_toolkit', '>= 2.0.1'
+gem 'govuk_elements_rails', '>= 0.1.1'
+
 # MOJ styles
-gem 'moj_template', '0.16.0'
+gem 'moj_template'
+
 # required for feedback form
 gem 'zendesk_api'
 gem 'mail'
@@ -48,7 +51,7 @@ group :development, :test do
   gem 'rspec-legacy_formatters'
   gem 'jasmine-core', '~> 2.0.0'
   gem 'jasmine', '~> 2.0.2'
-  gem 'jasmine-rails', '~> 0.9.1'
+  gem 'jasmine-rails', '~> 0.10.0'
   gem 'jasmine-jquery-rails', '~> 2.0.2'
   gem 'guard-jasmine', git: 'https://github.com/guard/guard-jasmine', branch: 'jasmine-2'
   gem 'quiet_assets'
@@ -84,7 +87,6 @@ end
 
 gem 'pdf-forms', '0.5.5'
 gem 'uk_postcode', '1.0.0'
-
 
 # validate that submitted dates are actually dates
 gem 'validates_timeliness', '~> 3.0'
