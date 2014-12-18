@@ -38,7 +38,6 @@ class ApplicationController < ActionController::Base
 
   protected
 
-
   def referrer_is_feedback_form?
     request.referrer.to_s[/#{feedback_path}|#{technical_help_path}/]
   end
@@ -53,6 +52,8 @@ class ApplicationController < ActionController::Base
         render :new
       end
     else
+      @errors = item.errors
+      @error_messages = item.error_messages
       render :new
     end
   end

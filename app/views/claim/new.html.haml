@@ -4,22 +4,21 @@
 
 #activateModalSessionTimer
 
-= form_for @claim, url: submission_path, :html => { :method => :post, :id => 'claimForm' }, builder: LabellingFormBuilder do |claim_form|
+= form_for @claim, url: submission_path, :html => { method: :post, id: 'claimForm', class: 'form' }, builder: LabellingFormBuilder do |claim_form|
 
   = claim_form.hidden_field(:form_state, id: 'js-state')
 
   %section
     = section_header 'property'
-    .moj-panel
-      = render partial: 'property', object: @claim.property, locals: { claim_form: claim_form }
+    = render partial: 'property', object: @claim.property, locals: { claim_form: claim_form }
 
   %section
     = section_header 'claimant'
-
-    .moj-panel#claimants(data-multiple="claimant" data-single="claimant" data-plural="claimants" data-caption="As the landlord, you're known as the <strong>claimant</strong> in this case.")
-
-      .row
-        As the landlord, you’re known as the <b>claimant</b> in this case.
+    #claimants
+      %p
+        As the landlord, you’re known as the
+        %span.bold-small claimant
+        in this case.
 
       = claim_form.radio_button_fieldset :claimant_type,
         'What kind of claimant are you?'.html_safe,
@@ -27,32 +26,37 @@
         choice: [ 'individual', 'organization' ],
         data: { depend: 'claimanttype', 'virtual-pageview' => '/accelerated/claimants-section' }
 
-      = claim_form.text_field_row :num_claimants,
-        class: 'hide js-claimanttype individual',
-        input_class: 'narrow',
-        data: { depend: 'num-claimants' },
-        label: 'How many claimants are there? <br/><span class="hint">All claimants should be named on the tenancy agreement</span>'
-
-      .row.js-only
-        %span.error.hide#num-claimants-error-message
-          The number of claimants must be between 1 and 4. If you have more than 4 claimants, you’ll need to complete your
-          accelerated possession claim on the <a href="http://hmctsformfinder.justice.gov.uk/HMCTS/GetForm.do?court_forms_id=618">N5b form</a>
-
       .claimants
-        = render partial: 'claimant', object: @claim.claimant_1, locals: { claimant_id: 1, claim_form: claim_form, claimant_field: :claimant_1}
-        = render partial: 'claimant', object: @claim.claimant_2, locals: { claimant_id: 2, claim_form: claim_form, claimant_field: :claimant_2}
-        = render partial: 'claimant', object: @claim.claimant_3, locals: { claimant_id: 3, claim_form: claim_form, claimant_field: :claimant_3}
-        = render partial: 'claimant', object: @claim.claimant_4, locals: { claimant_id: 4, claim_form: claim_form, claimant_field: :claimant_4}
-      = render partial: 'claimant_contact', object: @claim.claimant_contact, locals: { claim_form: claim_form, claimant_field: :claimant_contact}
+        = claim_form.text_field_row :num_claimants,
+          class: 'hide js-claimanttype individual',
+          input_class: 'narrow',
+          data: { depend: 'num-claimants' },
+          label: 'How many claimants are there? <br/><span class="hint">All claimants should be named on the tenancy agreement</span>'
+
+        %p.js-only.grid-row
+          %span.error.column-two-thirds.hide#num-claimants-error-message
+            The number of claimants must be between 1 and 4.
+            If you have more than 4 claimants, you’ll need to complete your
+            accelerated possession claim on the
+            <a href="http://hmctsformfinder.justice.gov.uk/HMCTS/GetForm.do?court_forms_id=618">N5b form</a>
+
+        .sub-panel.claimants
+          = render partial: 'claimant', object: @claim.claimant_1, locals: { claimant_id: 1, claim_form: claim_form, claimant_field: :claimant_1}
+          = render partial: 'claimant', object: @claim.claimant_2, locals: { claimant_id: 2, claim_form: claim_form, claimant_field: :claimant_2}
+          = render partial: 'claimant', object: @claim.claimant_3, locals: { claimant_id: 3, claim_form: claim_form, claimant_field: :claimant_3}
+          = render partial: 'claimant', object: @claim.claimant_4, locals: { claimant_id: 4, claim_form: claim_form, claimant_field: :claimant_4}
+        = render partial: 'claimant_contact', object: @claim.claimant_contact, locals: { claim_form: claim_form, claimant_field: :claimant_contact}
 
 
   %section
     = section_header 'defendant'
-    .moj-panel.has-multiple#defendants(data-multiple="defendant" data-single="defendant" data-plural="defendants" data-caption="Your tenants are known as <strong>defendants</strong> in this case.")
+    .has-multiple#defendants
 
-      .row
-        Your tenants are known as <b>defendants</b> in this case.
-        %p.nonjs If there are more than 4 defendants in this case, then you will need to change your browser settings to ‘enable javascript’.
+      %p
+        Your tenants are known as
+        %span.bold-small defendants
+        in this case.
+      %p.nonjs If there are more than 4 defendants in this case, then you will need to change your browser settings to ‘enable javascript’.
 
 
       = claim_form.text_field_row :num_defendants,
@@ -60,8 +64,8 @@
           data: { 'virtual-pageview' => '/accelerated/defendants-section' },
           label: 'How many defendants are there? <span class="hint block">All defendants should be named on the tenancy agreement.</span>'
 
-      .row.js-only
-        %span.error.hide#num-defendants-error-message
+      %p.js-only.grid-row
+        %span.error.column-two-thirds.hide#num-defendants-error-message
           The number of defendants must be between 1 and 20. If you have more than 20 defendants, you’ll need to complete your
           accelerated possession claim on the <a href="http://hmctsformfinder.justice.gov.uk/HMCTS/GetForm.do?court_forms_id=618">N5b form</a>
 
@@ -73,42 +77,37 @@
 
   %section
     = section_header 'notice'
-    .moj-panel#notice-module
+    #notice-module
       = render partial: 'notice', object: @claim.notice, locals: { claim_form: claim_form }
 
   %section
     = section_header 'tenancy'
-    .moj-panel
-      = render partial: 'tenancy', object: @claim.tenancy, locals: { claim_form: claim_form }
+    = render partial: 'tenancy', object: @claim.tenancy, locals: { claim_form: claim_form }
 
   %section
     = section_header 'license'
-    .moj-panel
-      = render partial: 'license', object: @claim.license, locals: { claim_form: claim_form }
+    = render partial: 'license', object: @claim.license, locals: { claim_form: claim_form }
 
   %section
     = section_header 'deposit'
-    .moj-panel#deposit-module
+    #deposit-module
       = render partial: 'deposit', object: @claim.deposit, locals: { claim_form: claim_form }
 
   %section
     = section_header 'fee'
-    .moj-panel
-      = render partial: 'fee',        object: @claim.fee,        locals: { claim_form: claim_form }
-      = render partial: 'legal_cost', object: @claim.legal_cost, locals: { claim_form: claim_form }
-      = render partial: 'order',      object: @claim.order,      locals: { claim_form: claim_form }
-      = render partial: 'fee_account',object: @claim.fee,        locals: { claim_form: claim_form }
+    = render partial: 'fee',        object: @claim.fee,        locals: { claim_form: claim_form }
+    = render partial: 'legal_cost', object: @claim.legal_cost, locals: { claim_form: claim_form }
+    = render partial: 'order',      object: @claim.order,      locals: { claim_form: claim_form }
+    = render partial: 'fee_account',object: @claim.fee,        locals: { claim_form: claim_form }
   %section
     = section_header 'court'
-    .moj-panel
-      = render partial: 'court',      object: @claim.court,      locals: { claim_form: claim_form }
-      = render partial: 'possession', object: @claim.possession, locals: { claim_form: claim_form }
+    = render partial: 'court',      object: @claim.court,      locals: { claim_form: claim_form }
+    = render partial: 'possession', object: @claim.possession, locals: { claim_form: claim_form }
 
-    .action-buttons.cf
-      %input.button.primary.large.chevron.left#submit{name: 'Continue', value: 'Continue', type: 'submit'}
+    %input.button.primary#submit{name: 'Continue', value: 'Continue', type: 'submit'}
 
-    %p
-      = link_to 'Terms and conditions and privacy policy', :terms, class: 't-n-c'
+    %p.font-xsmall
+      = link_to 'Terms and conditions and privacy policy', :terms, rel: 'external', class: 'external', target: '_blank'
 
 / handlebars templates
 

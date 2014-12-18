@@ -12,17 +12,13 @@ feature 'Claimant number selection' do
   context 'when individual landlord' do
 
     describe 'when number of claimants' do
-      scenario 'are not selected', js: true do
-        visit '/'
-        choose 'A private landlord (individual)'
-        expect(page).not_to have_css('#claim_claimant_1_street')
-      end
-
       scenario 'are selected', js: true do
         visit '/'
         choose 'A private landlord (individual)'
+        expect(page).not_to have_css('#claim_claimant_1_street')
+
         fill_in "How many claimants are there?", with: '1'
-        expect(page).to have_css('.claimant-contact')
+        expect(page).to have_css('#contact-details')
       end
     end
   end
@@ -31,12 +27,8 @@ feature 'Claimant number selection' do
     scenario 'additional contact info', js: true do
       visit '/'
       choose 'A private landlord (company), a local authority or a housing association'
-      expect(page).to have_css('.claimant-contact')
-    end
+      expect(page).to have_css('#contact-details')
 
-    scenario 'claimant type change', js: true do
-      visit '/'
-      choose 'A private landlord (company), a local authority or a housing association'
       choose 'A private landlord (individual)'
       expect(page).not_to have_css('#claim_claimant_1_street')
     end

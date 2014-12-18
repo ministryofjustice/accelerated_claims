@@ -1,11 +1,12 @@
 - if @errors
   %section#form_errors.flash.error-summary{tabindex: "-1"}
-    %h2#page-error-heading You need to fix the errors on this page before continuing.
+    %h3#page-error-heading You need to fix the errors on this page before continuing.
 
     %p See highlighted errors below.
 
     %ul
-      - @claim.error_messages.each do |field, message|
+      - @error_messages.each do |field, message|
         %li
           - link = link_reference_for_error(field)
+          - message = message.is_a?(Array) ? message.first : message
           = link_to message, "##{link}", class: 'error-link', data: { id: "##{field}" }

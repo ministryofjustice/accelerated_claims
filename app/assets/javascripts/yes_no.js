@@ -58,6 +58,9 @@ moj.Modules.yesNo = (function() {
 
   yesnoClick = function( $el ) {
     var reverse = $el.closest( '.options' ).data( 'reverse' );
+    if(typeof reverse === 'undefined') {
+      reverse = $el.closest( '.inline' ).data( 'reverse' );
+    }
     var nextDiv = $el.closest( 'fieldset' ).next();
     nextDiv = nextDiv[0] ? nextDiv : $el.closest( 'fieldset' ).parent().next();
 

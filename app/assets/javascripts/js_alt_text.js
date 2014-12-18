@@ -6,25 +6,12 @@
 moj.Modules.jsAlt = (function() {
   "use strict";
 
-  var //functions
-      init,
-      cacheEls,
-      replaceText,
-
-      //elements
-      $jsAlts
-      ;
+  var init, replaceText;
 
   init = function() {
-    cacheEls();
-
-    $jsAlts.each( function() {
+    $( '.nonjs' ).each( function() {
       replaceText( $( this ) );
     } );
-  };
-
-  cacheEls = function() {
-    $jsAlts = $( '.nonjs' );
   };
 
   replaceText = function( $el ) {
@@ -34,8 +21,6 @@ moj.Modules.jsAlt = (function() {
       $el.remove();
     }
   };
-
-  // public
 
   return {
     init: init

@@ -1,8 +1,8 @@
 - flash.each do |name, message|
   - unless name == 'error'
     %section.flash.success
-      %h2= message
+      %h3= message
 - if flash[:error]
   %section.flash.error-summary
-    %h2= flash[:error]
+    %h3= flash[:error]
 
