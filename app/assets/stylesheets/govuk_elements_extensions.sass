@@ -204,9 +204,6 @@ input[disabled="disabled"], input[readonly="readonly"]
   margin-top: 30px
   margin-bottom: 50px
 
-.button.postcode-picker-button
-  display: inline
-
 #session-modal
   width: 530px
   h2
@@ -243,4 +240,23 @@ a[rel="external"]:after
     border-left: none
     margin: 0px
     padding: 0px
+
+.button.postcode-picker-button
+  display: inline
+
+.address-picker-select
+  @extend .column-two-thirds
+  display: block
+  float: none
+  @include media(mobile)
+    width: 100%
+
+.postcode-picker-cta
+  margin-top: 10px
+
+.form
+  .postcode-picker-address-list
+    .button
+      @include media(mobile)
+        width: 40%
 
