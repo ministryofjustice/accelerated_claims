@@ -12,6 +12,14 @@
     "Postcode",
     "EY1H 9AJ"
   ],
+  claim_claimant_type: [
+    "Type of claimant",
+    "A private landlord (individual)"
+  ],
+  claim_claimant_num_claimants: [
+    "Number of claimants",
+    "2"
+  ],
   claim_claimant_1_title: [
     "Title",
     "Mr"
@@ -75,6 +83,10 @@
   claim_claimant_contact_postcode: [
     "Postcode",
     "FX1W 0LU"
+  ],
+  claim_defendant_num_defendants: [
+    "Number of defendants",
+    "1"
   ],
   claim_defendant_1_title: [
     "Title",

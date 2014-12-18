@@ -1,7 +1,7 @@
 = summary_section_header section
 
-.moj-panel{ id: "##{section}", style: "clear: both;"}
-  .row
+%table{ id: section, style: "clear: both;"}
+  %tbody
     - values = @claim[section]
     - if values.is_a?(Hash)
       - values.each do |label, value|

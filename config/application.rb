@@ -64,9 +64,9 @@ module AcceleratedClaims
     # Enable the asset pipeline
     config.assets.enabled = true
     config.assets.precompile += %w(
-      ie6.css
-      ie7.css
-      ie8.css
+      govuk_elements_extensions_ie6.css
+      govuk_elements_extensions_ie7.css
+      govuk_elements_extensions_ie8.css
     )
 
   end

@@ -20,6 +20,14 @@ class UserCallback
      description == DESCRIPTION) ? true : false
   end
 
+  def error_messages
+    errors.messages.each_with_object({}) do |parts, hash|
+      field = parts.first
+      message = parts.last
+      hash["user_callback_#{field}_error"] = message
+    end
+  end
+
   private
 
   def phone_number_format

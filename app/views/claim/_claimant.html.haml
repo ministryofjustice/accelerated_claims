@@ -1,17 +1,15 @@
 
 .sub-panel.claimant{ id: "claimant_#{claimant_id}_subpanel", 'data-claimant-id'=> claimant_id, class: claimant_id != 1 ? 'same-address' : '' }
-  .row.divider
-  .row.hide.js-claimanttype.individual
-    = claimant_header claimant_id
+  = claimant_header claimant_id
 
   = claim_form.fields_for claimant_field, claimant, builder: LabellingFormBuilder do |form|
-    = form.text_field_row :title,    class: 'title hide js-claimanttype individual', input_class: 'smalltext'
-    = form.text_field_row :full_name, class: 'rel hide js-claimanttype individual'
+    = form.text_field_row :title,    class: 'title hide js-claimanttype individual', input_class: 'narrow'
+    = form.text_field_row :full_name, class: 'hide js-claimanttype individual'
 
     -# we want to execute the following bit of code if non-javascript (:claimant_1) or with javascript ("claimant_{{id}}")
     - if claimant_field == :claimant_1 || claimant_field == 'claimant_{{id}}'
       - if claimant_field == :claimant_1
-        .row.hide.nonjs.js-claimanttype.individual OR
+        %p.bold-small.hide.nonjs.js-claimanttype.individual OR
       = form.text_field_row :organization_name, label: 'Company name or local authority name', class: 'rel hide js-claimanttype organization'
 
     - unless claimant_field == :claimant_1
@@ -22,8 +20,8 @@
               input_class: 'yesno',
               toggle_fieldset: true
 
-    .sub-panel.rel.address
-      = form.moj_postcode_picker "claimant_#{claimant_id}", name: "claim[claimant_#{claimant_id}]", address_attr: 'street'    
+    .sub-panel.address.panel-indent
+      = form.moj_postcode_picker "claimant_#{claimant_id}", name: "claim[claimant_#{claimant_id}]", address_attr: 'street'
 
 
 

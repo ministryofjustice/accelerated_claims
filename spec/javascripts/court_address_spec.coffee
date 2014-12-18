@@ -138,8 +138,8 @@ describe 'CourtAddressModule', ->
     it 'should add court address form label', ->
       window.CourtAddressModule.addCourtAddressFormLabel()
       label = $('#court-address-label').html()
-      html = "You haven't entered a postcode for the property you want to take back.<br> \
-        To see the court you need to send this claim to, <a href=\"#property\">enter the postcode now</a>"
+      html = "You haven't entered a postcode for the property you want to take back. \
+        To see the court you need to send this claim to, <a href=\"#property\">enter the postcode now</a>."
       expect(label).toMatch(html)
 
     it 'should hide the court address form', ->

@@ -1,15 +1,14 @@
 # Class to generate html for moj_date_fieldset method in LabellingFormBuilder.
 
-
 class MojDateFieldset
 
   @@hint      = "For example,&nbsp;&nbsp;"
   @@date_mask = '%d&nbsp;&nbsp;%m&nbsp;&nbsp;%Y'
 
   @@div_classes = {
-    :day            => 'moj-date-day-div',
-    :long_monthname => 'moj-date-month-div',
-    :year           => 'moj-date-year-div'
+    :day            => 'form-group form-group-day',
+    :long_monthname => 'form-group form-group-month',
+    :year           => 'form-group form-group-year'
   }
 
   @@div_labels = {
@@ -17,7 +16,6 @@ class MojDateFieldset
     :long_monthname => 'Month',
     :year           => 'Year'
   }
-
 
   # @param [LabellingFormBuilder] form : the form builder
   # @param [Symbol] attribute: the name of the attribute to be updated (usually a Date class)
@@ -40,8 +38,6 @@ class MojDateFieldset
     @passed_in_year_options  = nil
     extract_sub_options
   end
-
-
 
   def emit
     @form.set_class_and_id @attribute, @options
@@ -70,16 +66,17 @@ class MojDateFieldset
                                 class: 'moj-date-year'
                               }
 
-        html  = div_and_label_for(date_form, :day, default_day_options.merge(@passed_in_day_options)) +
-                div_and_label_for(date_form, :long_monthname, default_month_options.merge(@passed_in_month_options)) +
-                div_and_label_for(date_form, :year, default_year_options.merge(@passed_in_year_options))
+        html = '<div class="form-date">' +
+               div_and_label_for(date_form, :day, default_day_options.merge(@passed_in_day_options)) +
+               div_and_label_for(date_form, :long_monthname, default_month_options.merge(@passed_in_month_options)) +
+               div_and_label_for(date_form, :year, default_year_options.merge(@passed_in_year_options)) +
+               '</div>'
         html.html_safe
       end
     end
   end
 
   private
-
 
   def div_and_label_for(form, attribute, options)
     html = %Q[
@@ -104,7 +101,6 @@ class MojDateFieldset
     @passed_in_month_options = @options.delete('_month') || {}
     @passed_in_year_options  = @options.delete('_year') || {}
   end
-
 
   # takes a hash of html options and merges in any css classes that are provided as strings
   def merge_css_class(css_class, options)

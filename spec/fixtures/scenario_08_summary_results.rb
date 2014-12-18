@@ -12,6 +12,14 @@
     "Postcode",
     "GO5 4BB"
   ],
+  claim_claimant_type: [
+    "Type of claimant",
+    "A private landlord (individual)"
+  ],
+  claim_claimant_num_claimants: [
+    "Number of claimants",
+    "1"
+  ],
   claim_claimant_1_title: [
     "Title",
     "Mrs"
@@ -55,6 +63,10 @@
   claim_claimant_contact_postcode: [
     "Postcode",
     "GO1 6AP"
+  ],
+  claim_defendant_num_defendants: [
+    "Number of defendants",
+    "2"
   ],
   claim_defendant_1_title: [
     "Title",

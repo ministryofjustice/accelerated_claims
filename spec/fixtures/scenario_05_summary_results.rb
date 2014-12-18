@@ -12,6 +12,14 @@
     "Postcode",
     "AV3 0BJ"
   ],
+  claim_claimant_type: [
+    "Type of claimant",
+    "A private landlord (company), a local authority or a housing association"
+  ],
+  claim_claimant_num_claimants: [
+    "Number of claimants",
+    "1"
+  ],
   claim_claimant_1_organization_name: [
     "Organization name",
     "Yammerton City Council"
@@ -43,6 +51,10 @@
   claim_claimant_contact_postcode: [
     "Postcode",
     "AV1 3AG"
+  ],
+  claim_defendant_num_defendants: [
+    "Number of defendants",
+    "1"
   ],
   claim_defendant_1_title: [
     "Title",

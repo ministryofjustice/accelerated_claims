@@ -20,7 +20,7 @@ class PageviewTracker
     @bind external_links, 'click', @onClick
     @bindDynamicallyCreatedElements()
 
-  construct_xx_link: ->
+  unique_link_id: ->
     @xx_link_counter++
     "xx-link-" + @xx_link_counter
 
@@ -40,7 +40,7 @@ class PageviewTracker
     _.each elements, (element) =>
 
       if !element.id
-        $(element).attr('id', @construct_xx_link())
+        $(element).attr('id', @unique_link_id())
       selector = '#' + element.id
       $(document).on event, selector, handler
 

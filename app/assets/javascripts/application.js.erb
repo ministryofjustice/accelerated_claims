@@ -18,6 +18,11 @@
 //= require tools
 //= require animate
 
+// from govuk_elements gem
+//= require details.polyfill
+//= require bind
+//= require selection-buttons
+
 //= require address_module
 //= require postcode_picker
 
@@ -75,3 +80,16 @@ $.fn.scrollStopped = function(callback) {
 
 $('body').append("<div id='javascript_done'></div>");
 $('form#claimForm').append('<input type="hidden" id="javascript-enabled" name="claim[javascript_enabled]" value="Yes">');
+
+var $blockLabels = $("input[type='radio'], input[type='checkbox']");
+
+GOVUK.selectionButtons($blockLabels);
+
+jQuery(function() {
+  return new ClaimantContact();
+});
+
+jQuery(function() {
+  return FeeAccountModule.initialDisplay();
+});
+
