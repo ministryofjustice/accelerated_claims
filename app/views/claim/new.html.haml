@@ -7,7 +7,7 @@
 = form_for @claim, url: submission_path, :html => { method: :post, id: 'claimForm', class: 'form' }, builder: LabellingFormBuilder do |claim_form|
 
   = claim_form.hidden_field(:form_state, id: 'js-state')
-
+  
   %section
     = section_header 'property'
     = render partial: 'property', object: @claim.property, locals: { claim_form: claim_form }
