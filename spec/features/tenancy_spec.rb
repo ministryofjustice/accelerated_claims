@@ -8,22 +8,37 @@ feature 'Tenancy' do
     choose('claim_notice_notice_served_yes')
   end
 
-  scenario 'Start date of tenancy should be 01/01/this year', js: true do
+  scenario 'start date should be 01/01/this year', js: true do
     expected_date = Date.new(Date.today.year - 1, 3, 1).strftime('%d %m %Y')
     choose('claim_tenancy_tenancy_type_assured')
     choose('claim_tenancy_assured_shorthold_tenancy_type_one')
     test_displayed_value('Start date of the tenancy agreement', expected_date)
   end
 
-  scenario 'Date notice served should be 01/01/this year', js: true do
+  scenario 'notice served date should be 01/01/this year', js: true do
     expected_date = Date.new(Date.today.year, 1, 1).strftime('%d %m %Y')
     test_displayed_value('Date notice served', expected_date)
   end
 
-  scenario 'Date notice ended should be 01/03/this year', js: true do
+  scenario 'notice ended date should be 01/03/this year', js: true do
     expected_date = Date.new(Date.today.year, 3, 1).strftime('%d %m %Y')
     test_displayed_value('Date notice ended', expected_date)
   end
+
+  scenario 'date original tenancy agreement should be 01/03/Year-2 ', js: true do
+    choose('claim_tenancy_tenancy_type_assured')
+    choose('claim_tenancy_assured_shorthold_tenancy_type_multiple')
+    expected_date = Date.new(Date.today.year - 2, 3, 1).strftime('%d %m %Y')
+    test_displayed_value('Date of the original tenancy agreement', expected_date)
+  end
+
+  scenario 'start date should be 01/01/this year', js: true do
+    expected_date = Date.new(Date.today.year - 1, 3, 1).strftime('%d %m %Y')
+    choose('claim_tenancy_tenancy_type_assured')
+    choose('claim_tenancy_assured_shorthold_tenancy_type_multiple')
+    test_displayed_value('Date of the most recent tenancy agreement', expected_date)
+  end
+
 
   def test_displayed_value(text, value)
     xpath_src =  "//fieldset[contains(./legend/text(), '#{text}')]//span"

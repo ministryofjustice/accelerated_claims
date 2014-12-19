@@ -21,15 +21,15 @@
         %p.remove
           If you’ve had <strong class='bold-small'>1</strong> tenancy agreement, enter the details
 
-        = form.moj_date_fieldset :start_date, 'Start date of the tenancy agreement', { class: 'date-picker conditional original'}, Date.new(Date.today.year-1, 3, 1)
+        = form.moj_date_fieldset :start_date, 'Start date of the tenancy agreement', { class: 'date-picker conditional original'}, Date.new(Date.today.year - 1, 3, 1)
 
       .panel-indent.hide.js-tenancyNumber.multiple
         %p.remove
           If you’ve had <strong class="bold-small">more than 1</strong> tenancy agreement, enter the details
 
-        = form.moj_date_fieldset :original_assured_shorthold_tenancy_agreement_date, 'Date of the original tenancy agreement', class: 'date-picker conditional original'
+        = form.moj_date_fieldset :original_assured_shorthold_tenancy_agreement_date, 'Date of the original tenancy agreement', { class: 'date-picker conditional original' }, Date.new(Date.today.year - 2, 3, 1)
 
-        = form.moj_date_fieldset :latest_agreement_date, 'Date of the most recent tenancy agreement', class: 'date-picker conditional latest'
+        = form.moj_date_fieldset :latest_agreement_date, 'Date of the most recent tenancy agreement', { class: 'date-picker conditional latest' },  Date.new(Date.today.year - 1, 3, 1)
 
         = form.radio_button_fieldset :agreement_reissued_for_same_property,
             'Is the tenancy agreement for the same property?',
