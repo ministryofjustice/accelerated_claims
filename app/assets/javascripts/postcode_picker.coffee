@@ -36,9 +36,7 @@ class PostcodePicker
       @lookupPostcode()
 
     @input.keypress (e) =>
-      code = if e.keyCode then e.keyCode else e.which
-      enterKeyCode = 13
-      if code == enterKeyCode
+      if @enterPressed(e)
         e.preventDefault()
         @lookupPostcode()
 
@@ -55,6 +53,11 @@ class PostcodePicker
     selectButton.on 'click', =>
       @selectAddress()
 
+    @selectElement.keypress (e) =>
+      if @enterPressed(e)
+        e.preventDefault()
+        @selectAddress()
+
     changePostcodeLink.on 'click', =>
       @hideAddressFields()
       @showManualLink()
@@ -66,6 +69,11 @@ class PostcodePicker
       @picker.find('.postcode-display').hide()
       @picker.find('.postcode-select-container').hide()
       @showPostcodeSearchComponent()
+
+  enterPressed: (e) ->
+    code = if e.keyCode then e.keyCode else e.which
+    enterKeyCode = 13
+    code == enterKeyCode
 
   normalizeCountry: (vc) =>
     if vc == 'all'
