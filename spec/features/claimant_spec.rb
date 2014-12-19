@@ -18,4 +18,10 @@ feature 'Claimant' do
     switch_between_landlord_types
     display_claimant_details_form_fields
   end
+
+  scenario 'choosing company hides claimant 1 label', js: true do
+    visit '/'
+    choose 'A private landlord (company), a local authority or a housing association'
+    expect(page).not_to have_css('#claim_claimant_1_title')
+  end
 end
