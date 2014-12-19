@@ -98,12 +98,13 @@ describe 'PostcodePicker', ->
     @postcodeEditField = @picker.find('.postcode-picker-edit-field')
     @postcodeSearchComponent = @picker.find('.postcode-selection-els')
     @view = new window.PostcodePicker( @picker )
+    @enterKeyCode = 13
 
   afterEach ->
     element.remove()
     element = null
 
-  describe 'enter postcode and find postcode button clicked', ->
+  describe 'enter postcode and find address button clicked', ->
     it 'looks up postcode', ->
       spyOn window.PostcodeLookup, 'lookup'
 
@@ -111,6 +112,28 @@ describe 'PostcodePicker', ->
       @picker.find('.postcode-picker-button').click()
 
       expect(window.PostcodeLookup.lookup).toHaveBeenCalledWith('SW106AJ', 'all', @view)
+
+  describe 'enter postcode and enter pressed (e.which = 13)', ->
+    it 'looks up postcode', ->
+      spyOn window.PostcodeLookup, 'lookup'
+      @postcodeEditField.val('SW106AJ')
+      enterPress = jQuery.Event('keypress')
+      enterPress.which = @enterKeyCode
+
+      @postcodeEditField.trigger(enterPress)
+      lookup = window.PostcodeLookup.lookup
+      expect(lookup).toHaveBeenCalledWith('SW106AJ', 'all', @view)
+
+  describe 'enter postcode and enter pressed (e.keyCode = 13)', ->
+    it 'looks up postcode', ->
+      spyOn window.PostcodeLookup, 'lookup'
+      @postcodeEditField.val('SW106AJ')
+      enterPress = jQuery.Event('keypress')
+      enterPress.keyCode = @enterKeyCode
+
+      @postcodeEditField.trigger(enterPress)
+      lookup = window.PostcodeLookup.lookup
+      expect(lookup).toHaveBeenCalledWith('SW106AJ', 'all', @view)
 
   describe 'handleSuccessfulResponse called with array of addresses', ->
     it 'renders list of addresses in select box', ->
@@ -193,7 +216,7 @@ describe 'PostcodePicker', ->
         'Postcode lookup service not available. Please enter the address manually.'
       )
 
-  describe 'selecting address from select box', ->
+  describe 'clicking select address button', ->
     beforeEach ->
       @view.handleSuccessfulResponse(@results)
       @picker.find('option').eq(0).attr('selected', 'selected')
@@ -216,6 +239,30 @@ describe 'PostcodePicker', ->
 
     it 'should mark the postcode field as readonly', ->
       expect( @picker.find('#claim_property_postcode')).toHaveAttr('readonly', 'readonly')
+
+  describe 'pressing enter (which 13) in select address list', ->
+    it 'calls selectAddress()', ->
+      @view.handleSuccessfulResponse(@results)
+      selectElement = @picker.find('.address-picker-select')
+      enterPress = jQuery.Event('keypress')
+      enterPress.which = @enterKeyCode
+      spyOn @view, 'selectAddress'
+
+      @picker.find('option').eq(0).attr('selected', 'selected')
+      selectElement.trigger(enterPress)
+      expect(@view.selectAddress).toHaveBeenCalled()
+
+  describe 'pressing enter (keyCode 13) in select address list', ->
+    it 'calls selectAddress()', ->
+      @view.handleSuccessfulResponse(@results)
+      selectElement = @picker.find('.address-picker-select')
+      enterPress = jQuery.Event('keypress')
+      enterPress.keyCode = @enterKeyCode
+      spyOn @view, 'selectAddress'
+
+      @picker.find('option').eq(0).attr('selected', 'selected')
+      selectElement.trigger(enterPress)
+      expect(@view.selectAddress).toHaveBeenCalled()
 
   describe 'clicking on change-postcode-link2', ->
     beforeEach ->

@@ -1,13 +1,12 @@
 %header
   %h1
-    Review the details of your claim
+    =I18n.t('confirmation.heading')
 
 %section.confirmation
   %p
-    %span.bold-medium You have not yet completed your claim.
+    %span.bold-medium= I18n.t('confirmation.incomplete')
   %p
-    Check all the information on this page before clicking ‘Print the form’.
-
+    =I18n.t('confirmation.check')
 
 = render partial: 'shared/flash'
 
@@ -16,14 +15,14 @@
 = render partial: 'claim_summary'
 
 .sub-panel
-  %p You now need to print the form and send it to court.
+  %p= I18n.t('confirmation.continue_prompt')
 
-  = link_to 'Print the form',
+  = link_to I18n.t('confirmation.continue'),
       download_path,
       class: 'button primary',
       target: '_blank',
       id: 'download',
-      data: { 'event-label' => 'Print the form',
+      data: { 'event-label' => I18n.t('confirmation.continue'),
       'virtual-pageview' => '/accelerated/pdf-download' }
   - if session[:test]
     = link_to 'Submitted data',
@@ -31,18 +30,18 @@
         id: 'data'
 
   %p.font-xsmall
-    After you’ve submitted your claim, complete our
-    = link_to('satisfaction survey',
+    =I18n.t('confirmation.pre_satisfaction')
+    = link_to(I18n.t('confirmation.satisfaction'),
         'https://www.gov.uk/done/accelerated-possession-eviction',
         id: 'done',
         class: 'external',
         rel: 'external',
         data: { 'event-label' => 'View GDS done page',
         'virtual-pageview' => '/accelerated/satisfaction-survey' }) + '.'
-    Your feedback helps us improve the service.
+    =I18n.t('confirmation.feedback')
 
   %p.font-xsmall
-    = link_to 'Terms and conditions and privacy policy', :terms, rel: 'external', class: 'external', target: '_blank'
+    = link_to I18n.t('confirmation.t_and_c'), :terms, rel: 'external', class: 'external', target: '_blank'
 
 / handlebars templates
 
