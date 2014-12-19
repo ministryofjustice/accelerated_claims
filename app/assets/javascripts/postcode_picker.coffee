@@ -32,10 +32,13 @@ class PostcodePicker
     if @streetAndPostcodeAlreadyEntered()
       @picker.find('.address-postcode input').attr('readonly', '1')             # Make the postcode box of the displayed address uneditable
 
-    # Lookup postcode when Find Address button clicked
-    #
     @button.on 'click', =>
       @lookupPostcode()
+
+    @input.keypress (e) =>
+      if @enterPressed(e)
+        e.preventDefault()
+        @lookupPostcode()
 
     # Display address entry fields when manual link is clicked
     manualLink.on 'click' , =>
@@ -50,6 +53,11 @@ class PostcodePicker
     selectButton.on 'click', =>
       @selectAddress()
 
+    @selectElement.keypress (e) =>
+      if @enterPressed(e)
+        e.preventDefault()
+        @selectAddress()
+
     changePostcodeLink.on 'click', =>
       @hideAddressFields()
       @showManualLink()
@@ -61,6 +69,11 @@ class PostcodePicker
       @picker.find('.postcode-display').hide()
       @picker.find('.postcode-select-container').hide()
       @showPostcodeSearchComponent()
+
+  enterPressed: (e) ->
+    code = if e.keyCode then e.keyCode else e.which
+    enterKeyCode = 13
+    code == enterKeyCode
 
   normalizeCountry: (vc) =>
     if vc == 'all'
