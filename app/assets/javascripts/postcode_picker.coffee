@@ -32,10 +32,15 @@ class PostcodePicker
     if @streetAndPostcodeAlreadyEntered()
       @picker.find('.address-postcode input').attr('readonly', '1')             # Make the postcode box of the displayed address uneditable
 
-    # Lookup postcode when Find Address button clicked
-    #
     @button.on 'click', =>
       @lookupPostcode()
+
+    @input.keypress (e) =>
+      code = if e.keyCode then e.keyCode else e.which
+      enterKeyCode = 13
+      if code == enterKeyCode
+        e.preventDefault()
+        @lookupPostcode()
 
     # Display address entry fields when manual link is clicked
     manualLink.on 'click' , =>
