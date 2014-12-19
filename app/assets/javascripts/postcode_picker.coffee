@@ -50,7 +50,8 @@ class PostcodePicker
     @input.on 'keyup', =>
       @clearPostcodeErrorMessage()
 
-    selectButton.on 'click', =>
+    selectButton.click (e) =>
+      e.preventDefault()
       @selectAddress()
 
     @selectElement.keypress (e) =>
@@ -130,20 +131,21 @@ class PostcodePicker
 
   selectAddress: =>
     index = parseInt @picker.find('option:selected').val()
-    selectedAddress = @addresses[index]
-    street = selectedAddress.address.replace(/;;/g, "\n")
-    postcode = selectedAddress.postcode
-    @picker.find('.street textarea').val(street)
-    @picker.find('.address-postcode input').val(postcode)
-    @picker.find('.address-postcode input').trigger('change')
-    @picker.find('.address-postcode input').attr('readonly', '1')
-    @picker.find('.postcode-picker-address-list').hide()
-    @picker.find('.address.extra' ).show()
-    @picker.find('.postcode-selection-els').hide()
-    @picker.find('.postcode-display').hide()
-    @hideManualLink()
-    @picker.find('.change-postcode-link').css('display', 'inline')
-    @picker.find('.street textarea').focus()
+    if index?
+      selectedAddress = @addresses[index]
+      street = selectedAddress.address.replace(/;;/g, "\n")
+      postcode = selectedAddress.postcode
+      @picker.find('.street textarea').val(street)
+      @picker.find('.address-postcode input').val(postcode)
+      @picker.find('.address-postcode input').trigger('change')
+      @picker.find('.address-postcode input').attr('readonly', '1')
+      @picker.find('.postcode-picker-address-list').hide()
+      @picker.find('.address.extra' ).show()
+      @picker.find('.postcode-selection-els').hide()
+      @picker.find('.postcode-display').hide()
+      @hideManualLink()
+      @picker.find('.change-postcode-link').css('display', 'inline')
+      @picker.find('.street textarea').focus()
 
   handleSuccessfulResponse: (response) ->
     if response.code == 2000
