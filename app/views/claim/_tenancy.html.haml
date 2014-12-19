@@ -21,7 +21,7 @@
         %p.remove
           If you’ve had <strong class='bold-small'>1</strong> tenancy agreement, enter the details
 
-        = form.moj_date_fieldset :start_date, 'Start date of the tenancy agreement', class: 'date-picker conditional original'
+        = form.moj_date_fieldset :start_date, 'Start date of the tenancy agreement', { class: 'date-picker conditional original'}, Date.new(Date.today.year-1, 3, 1)
 
       .panel-indent.hide.js-tenancyNumber.multiple
         %p.remove
