@@ -117,19 +117,23 @@ describe 'PostcodePicker', ->
     it 'looks up postcode', ->
       spyOn window.PostcodeLookup, 'lookup'
       @postcodeEditField.val('SW106AJ')
-      enterPress = jQuery.Event("keypress")
+      enterPress = jQuery.Event('keypress')
       enterPress.which = @enterKeyCode
+
       @postcodeEditField.trigger(enterPress)
-      expect(window.PostcodeLookup.lookup).toHaveBeenCalledWith('SW106AJ', 'all', @view)
+      lookup = window.PostcodeLookup.lookup
+      expect(lookup).toHaveBeenCalledWith('SW106AJ', 'all', @view)
 
   describe 'enter postcode and enter pressed (e.keyCode = 13)', ->
     it 'looks up postcode', ->
       spyOn window.PostcodeLookup, 'lookup'
       @postcodeEditField.val('SW106AJ')
-      enterPress = jQuery.Event("keypress")
+      enterPress = jQuery.Event('keypress')
       enterPress.keyCode = @enterKeyCode
+
       @postcodeEditField.trigger(enterPress)
-      expect(window.PostcodeLookup.lookup).toHaveBeenCalledWith('SW106AJ', 'all', @view)
+      lookup = window.PostcodeLookup.lookup
+      expect(lookup).toHaveBeenCalledWith('SW106AJ', 'all', @view)
 
   describe 'handleSuccessfulResponse called with array of addresses', ->
     it 'renders list of addresses in select box', ->
@@ -240,7 +244,7 @@ describe 'PostcodePicker', ->
     it 'calls selectAddress()', ->
       @view.handleSuccessfulResponse(@results)
       selectElement = @picker.find('.address-picker-select')
-      enterPress = jQuery.Event("keypress")
+      enterPress = jQuery.Event('keypress')
       enterPress.which = @enterKeyCode
       spyOn @view, 'selectAddress'
 
@@ -252,7 +256,7 @@ describe 'PostcodePicker', ->
     it 'calls selectAddress()', ->
       @view.handleSuccessfulResponse(@results)
       selectElement = @picker.find('.address-picker-select')
-      enterPress = jQuery.Event("keypress")
+      enterPress = jQuery.Event('keypress')
       enterPress.keyCode = @enterKeyCode
       spyOn @view, 'selectAddress'
 
