@@ -1,7 +1,16 @@
+def build_path(path_redir)
+  Rails.application.routes.recognize_path(path_redir, method: :get)
+end
+
+def post_debug?(page_valid)
+  ENV['w3c_debug'] && !page_valid.message.nil?
+end
+
 def run_test (test_data)
   if ENV['w3c_validate']
     test = eval(test_data).to_h
-    describe "#{test[:controller].camelize}Controller".safe_constantize , :type => :controller do
+    description = "#{test[:controller].camelize}Controller"
+    describe description.safe_constantize, type: :controller do
       render_views
       describe "##{test[:action]}" do
         it "should #{test[:test_name]}" do
@@ -10,7 +19,7 @@ def run_test (test_data)
           action_redir =  "#{test[:action_redir]}".to_sym
           action_redir_err =  "#{test[:action_redir_err]}".to_sym
           path_redir = test[:redirect_path]
-          redirect_path = Rails.application.routes.recognize_path(path_redir, :method => :get) if path_redir.present?
+          redirect_path = build_path(path_redir) if path_redir.present?
 
           if 'POST'.match(test[:method])
             post action, { test[:param_name] => test[:params]}
@@ -29,7 +38,7 @@ def run_test (test_data)
 
           page_valid = validate_view(response, {test_name: test[:test_name]})
 
-          puts page_valid.message if ENV['w3c_debug'] && !page_valid.message.nil?
+          puts page_valid.message if post_debug?(page_valid)
           if page_valid.result=='error'
             expect(page_valid.message).not_to eql(nil)
             raise page_valid.message

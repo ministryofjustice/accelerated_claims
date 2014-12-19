@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
 def invalid_claim_post_data
   data = claim_post_data['claim']
   data['claimant_1'].delete('full_name')

@@ -4,5 +4,4 @@ class W3cValidationResult
   attr_accessor :result
   attr_accessor :errors
   attr_accessor :message
-
 end
