@@ -453,7 +453,7 @@ a:focus {
   height: 17px;
   overflow: hidden;
   text-indent: -999em;
-  background: url(../images/open-government-licence.png) 0 0 no-repeat;
+  background: url(/images/open-government-licence.png) 0 0 no-repeat;
 }
 #footer .footer-meta .footer-meta-inner .open-government-licence p {
   font-family: "nta", Arial, sans-serif;
@@ -509,7 +509,7 @@ a:focus {
 #footer .footer-meta .copyright a {
   display: block;
   padding: 115px 0 0 0;
-  background: transparent url(../images/govuk-crest.png) no-repeat 100% 0;
+  background: transparent url(/images/govuk-crest.png) no-repeat 100% 0;
   text-align: right;
   text-decoration: none;
 }
