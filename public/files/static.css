@@ -331,6 +331,10 @@ a:focus {
 #global-header .header-proposition #proposition-links li a:hover {
   text-decoration: underline;
 }
+#global-header-bar .header-bar {
+  height: 10px;
+  background-color: #005ea5;
+}
 #footer {
   background-color: #dee0e2;
   border-top: 1px solid #a1acb2;
@@ -429,7 +433,7 @@ a:focus {
     padding-left: 0;
   }
 }
-#footer .footer-meta .footer-meta-inner .open-government-licence h2 {
+#footer .footer-meta .footer-meta-inner .open-government-licence .logo {
   position: absolute;
   left: 0;
   top: 0;
@@ -437,19 +441,19 @@ a:focus {
   height: 100%;
 }
 @media (max-width: 640px) {
-  #footer .footer-meta .footer-meta-inner .open-government-licence h2 {
+  #footer .footer-meta .footer-meta-inner .open-government-licence .logo {
     position: static;
     width: auto;
     margin-bottom: 1em;
   }
 }
-#footer .footer-meta .footer-meta-inner .open-government-licence h2 a {
+#footer .footer-meta .footer-meta-inner .open-government-licence .logo a {
   display: block;
   width: 41px;
   height: 17px;
   overflow: hidden;
   text-indent: -999em;
-  background: url(../files/open-government-licence.png) 0 0 no-repeat;
+  background: url(../images/open-government-licence.png) 0 0 no-repeat;
 }
 #footer .footer-meta .footer-meta-inner .open-government-licence p {
   font-family: "nta", Arial, sans-serif;
@@ -505,7 +509,7 @@ a:focus {
 #footer .footer-meta .copyright a {
   display: block;
   padding: 115px 0 0 0;
-  background: transparent url(../files/govuk-crest.png) no-repeat 100% 0;
+  background: transparent url(../images/govuk-crest.png) no-repeat 100% 0;
   text-align: right;
   text-decoration: none;
 }
@@ -657,11 +661,8 @@ h2 {
 #wrapper {
   background-color: white;
   padding: 0 0 60px 0;
-  border-bottom: 10px solid #0b0c0c;
 }
-body.beta #wrapper {
-  border-color: #f47738;
-}
+
 @media (min-width: 769px) {
   #global-header .header-proposition {
     padding-top: 8px;
@@ -703,6 +704,15 @@ body.beta #global-header .header-proposition .proposition-phase {
   position: relative;
   top: -3px;
 }
+@media (min-width: 641px) {
+  #page-container {
+    margin: 0 30px;
+  }
+}
+#page-container {
+  max-width: 960px;
+  margin: 0 auto;
+}
 #footer h2 {
   font-family: "nta", Arial, sans-serif;
   font-size: 24px;
@@ -716,6 +726,24 @@ body.beta #global-header .header-proposition .proposition-phase {
     font-size: 20px;
     line-height: 1.2;
   }
+}
+.phase-banner {
+  padding: 10px 0 8px 0;
+  border-bottom: 1px solid #bfc1c3;
+}
+@media (min-width: 641px) {
+  .phase-banner {
+    padding-bottom: 10px;
+  }
+}
+.phase-banner p {
+  margin: 0;
+  color: black;
+  font-family: "nta", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: 400;
+  text-transform: none;
 }
 @-ms-viewport {
   width: device-width;
