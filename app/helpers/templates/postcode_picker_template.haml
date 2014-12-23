@@ -41,6 +41,8 @@
     .form-group.street{options}
       %label{for: "#{@prefix}_#{@address_attr}"}
         Full address
+        - if @nonjs_optional
+          %span.nonjs.hint (optional)
         = @street_hint
         - unless @form.object.errors[:street].empty?
           %span.error Enter the full address
@@ -58,6 +60,8 @@
     .form-group.address-postcode{options}
       %label{for: "#{@prefix}_#{@postcode_attr}"}
         Postcode
+        - if @nonjs_optional
+          %span.nonjs.hint (optional)
         - unless @form.object.errors[:postcode].empty?
           - @form.object.errors[:postcode].each do |message|
             %span.error= message

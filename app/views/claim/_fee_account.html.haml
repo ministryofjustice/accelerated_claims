@@ -1,5 +1,5 @@
 = claim_form.fields_for fee_account, builder: LabellingFormBuilder do |form|
-  %details
+  %details{ open: true }
     %summary.js-only
       %span.summary#fee-account= I18n.t 'claim.fee.account.prompt'
     .panel-indent

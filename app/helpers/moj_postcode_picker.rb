@@ -38,6 +38,7 @@ class MojPostcodePicker
     @address_value   = form.object.send(@address_attr.to_sym)
     @address_value.gsub!("\r\n", "&#x000A;") unless @address_value.nil?
     @hide            = options[:hide] || false
+    @nonjs_optional  = options[:nonjs_optional] || false
   end
 
   def haml
