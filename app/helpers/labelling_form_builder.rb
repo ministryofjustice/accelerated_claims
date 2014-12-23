@@ -281,18 +281,24 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     css = "form-group #{css_for(attribute, options)}".strip
     id = id_for(attribute).blank? ? '' : "id='#{id_for(attribute)}' "
 
+    screenreader = options[:include_object_for_sr].blank? ? '' : "<span class='visuallyhidden'>#{ options[:include_object_for_sr] }</span> "
+
     @template.surround("<div #{id}class='#{css}'>".html_safe, "</div>".html_safe) do
       input_options = options.merge(class: options[:input_class])
       input_options.merge!(data: {'virtual_pageview' => virtual_pageview}) if virtual_pageview
       input_options.delete(:label)
       input_options.delete(:input_class)
+      input_options.delete(:include_object_for_sr)
 
-      labelled_input attribute, input, input_options, options[:label]
+      labelled_input attribute, input, input_options, options[:label], screenreader
     end
   end
 
-  def labelled_input attribute, input, input_options, label=nil
-    label = label(attribute, label_content_for(attribute, label))
+  def labelled_input attribute, input, input_options, label=nil, screenreader=nil
+
+    txt = "#{screenreader}#{label_content_for(attribute, label)}".html_safe
+
+    label = label(attribute, txt )
 
     if max_length = max_length(attribute)
       input_options.merge!(maxlength: max_length)
