@@ -21,7 +21,7 @@
           eg a legal representative or managing agent's address if housing association
       %details{ open: true }
         %summary.js-only
-          %span.summary#correspondence-address Add alternative address (Optional)
+          %span.summary#correspondence-address Add alternative address (optional)
         .panel-indent
           = form.text_field_row :title, label: add_optional_nonjs('Title'), class: 'title', input_class: 'narrow'
           = form.text_field_row :full_name, label: add_optional_nonjs('Full name')
@@ -31,6 +31,6 @@
     .sub-panel#reference-block
       %details{ open: true }
         %summary.js-only
-          %span.summary#reference-number Add a reference number (Optional)
+          %span.summary#reference-number Add a reference number (optional)
         .panel-indent
           = render partial: 'reference_number', object: @claim.reference_number, locals: { claim_form: claim_form }
