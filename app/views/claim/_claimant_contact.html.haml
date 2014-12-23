@@ -26,7 +26,7 @@
           = form.text_field_row :title, label: add_optional_nonjs('Title'), class: 'title', input_class: 'narrow'
           = form.text_field_row :full_name, label: add_optional_nonjs('Full name')
           = form.text_field_row :company_name, label: add_optional_nonjs('Company name'), class: 'company_name'
-          = form.moj_postcode_picker "claimant_contact", name: "claim[claimant_contact]", address_attr: 'street', hide: false
+          = form.moj_postcode_picker "claimant_contact", name: "claim[claimant_contact]", address_attr: 'street', hide: false, nonjs_optional: true
 
     .sub-panel#reference-block
       %details{ open: true }
