@@ -1,38 +1,36 @@
 = claim_form.fields_for claimant_field, claimant_contact, builder: LabellingFormBuilder do |form|
   #claimant-contact
     .sub-panel
-      %details
+      %span.visuallyhidden Add phone and email. This is optional.
+      %details{ open: true }
         %summary.js-only
-          %span.summary#contact-details Add phone and email (Optional)
+          %span.summary#contact-details Add phone and email (optional)
         .panel-indent
-          .sub-panel.hide.nonjs Add phone and email (Optional)
           = form.text_field_row :email, label: add_optional_nonjs('Email'), class: 'email'
           = form.text_field_row :phone, label: add_optional_nonjs('Phone'), class: 'phone'
           = form.text_field_row :fax, label: add_optional_nonjs('Fax'), class: 'fax'
           = form.text_field_row :dx_number, label: add_optional_nonjs('DX number'), class: 'rel dx_number'
 
     .sub-panel
+      %span.visuallyhidden Add an alternative address. This is optional.
       %p
         If you want us to send correspondence about the case to a different address, enter it here.
         %span.hint.block.js-claimanttype.individual.js-only
-          eg a legal representative's address (Optional)
+          eg a legal representative's address if private landlord
         %span.hint.block.js-claimanttype.organization
-          eg a legal representative or managing agent's address (Optional)
-      %details
+          eg a legal representative or managing agent's address if housing association
+      %details{ open: true }
         %summary.js-only
           %span.summary#correspondence-address Add alternative address (Optional)
         .panel-indent
-          .sub-panel.hide.nonjs Add alternative address (Optional)
-          = form.text_field_row :title, label: add_optional_nonjs('Title'),    class: 'title', input_class: 'narrow'
+          = form.text_field_row :title, label: add_optional_nonjs('Title'), class: 'title', input_class: 'narrow'
           = form.text_field_row :full_name, label: add_optional_nonjs('Full name')
-          = form.text_field_row :company_name, label: add_optional_nonjs('Company name'),  class: 'company_name'
+          = form.text_field_row :company_name, label: add_optional_nonjs('Company name'), class: 'company_name'
           = form.moj_postcode_picker "claimant_contact", name: "claim[claimant_contact]", address_attr: 'street', hide: false
 
     .sub-panel#reference-block
-      %details
+      %details{ open: true }
         %summary.js-only
           %span.summary#reference-number Add a reference number (Optional)
         .panel-indent
-          .sub-panel.hide.nonjs Add a reference number (Optional)
           = render partial: 'reference_number', object: @claim.reference_number, locals: { claim_form: claim_form }
-
