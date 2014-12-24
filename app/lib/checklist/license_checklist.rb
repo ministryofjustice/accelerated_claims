@@ -11,8 +11,8 @@ class LicenseChecklist
   private
 
   def add_license_text
-    add_note(part2_text) if applied_for_test?('license_multiple_occupation', 'license_part2')
-    add_note(part3_text) if applied_for_test?('license_part3', 'license_part3')
+    add_note(part2_text) if applied_for_test?('multiple_occupation', '2')
+    add_note(part3_text) if applied_for_test?('part3', '3')
   end
 
   def add_note text
@@ -27,11 +27,11 @@ class LicenseChecklist
     "- evidence of your HMO licence application - marked 'E'\n\n"
   end
 
-  def applied_for_test?(first_part, part_prefix)
-    @json[first_part] == 'Yes' &&
-        @json["#{part_prefix}_authority"].blank? &&
-        @json["#{part_prefix}_day"].blank? &&
-        @json["#{part_prefix}_month"].blank? &&
-        @json["#{part_prefix}_year"].blank?
+  def applied_for_test?(first_part, prefix_number)
+    @json["license_#{first_part}"] == 'Yes' &&
+        @json["license_part#{prefix_number}_authority"].blank? &&
+        @json["license_part#{prefix_number}_day"].blank? &&
+        @json["license_part#{prefix_number}_month"].blank? &&
+        @json["license_part#{prefix_number}_year"].blank?
   end
 end
