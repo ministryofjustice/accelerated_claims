@@ -97,30 +97,30 @@ class PDFDocument
   end
 
   def self.build_lines_hash(x0, x1, y)
-    {x0: x0, x1: x1, y: y}
+    { x0: x0, x1: x1, y: y }
   end
 
   FIRST_3A_LINES = [
-    build_lines_hash(42, 515, 327+57),
-    build_lines_hash(42, 120, 315+56)
+    build_lines_hash(42, 515, 327 + 57),
+    build_lines_hash(42, 120, 315 + 56)
   ]
   FIRST_3B_LINES = [
-    build_lines_hash(42, 505, 299+57)
+    build_lines_hash(42, 505, 299 + 57)
   ]
   FIRST_3C_LINES = [
-    build_lines_hash(42, 515, 282+57),
-    build_lines_hash(42, 100, 270+55)
+    build_lines_hash(42, 515, 282 + 57),
+    build_lines_hash(42, 100, 270 + 55)
   ]
   SECOND_3A_LINES = [
-    build_lines_hash(42, 420, 215+52)
+    build_lines_hash(42, 420, 215 + 52)
   ]
   SECOND_3B_LINES = [
-    build_lines_hash(42, 465, 198+51)
+    build_lines_hash(42, 465, 198 + 51)
   ]
   SECOND_3C_3D_LINES = [
-    build_lines_hash(42, 505, 180+49),
-    build_lines_hash(42, 470, 160+50),
-    build_lines_hash(42, 475, 123+48)
+    build_lines_hash(42, 505, 180 + 49),
+    build_lines_hash(42, 470, 160 + 50),
+    build_lines_hash(42, 475, 123 + 48)
   ]
 
   def strike_out_paths index
@@ -167,7 +167,7 @@ class PDFDocument
   end
 
   def build_hash_for_list(x, y, x1)
-    {page: 3, x: x, y: y, x1: x1, y1: 0, thickness: 1}
+    { page: 3, x: x, y: y, x1: x1, y1: 0, thickness: 1 }
   end
 
   def strike_out_applicable_statements result_pdf

@@ -113,24 +113,24 @@ class ErrorMessageSequencer
 
   def update_pair(start)
     case start
-      when 'claim_num_claimants_error'
-        result = 'claim_claimant_number_of_claimants_error'
-      when 'claim_num_defendants_error'
-        result= 'claim_defendant_number_of_defendants_error'
-      else
-        result = start
+    when 'claim_num_claimants_error'
+      result = 'claim_claimant_number_of_claimants_error'
+    when 'claim_num_defendants_error'
+      result = 'claim_defendant_number_of_defendants_error'
+    else
+      result = start
     end
     result
   end
 
   def reset_pair(start)
     case start
-      when 'claim_claimant_number_of_claimants_error'
-        result = 'claim_num_claimants_error'
-      when 'claim_defendant_number_of_defendants_error'
-        result= 'claim_num_defendants_error'
-      else
-        result = start
+    when 'claim_claimant_number_of_claimants_error'
+      result = 'claim_num_claimants_error'
+    when 'claim_defendant_number_of_defendants_error'
+      result = 'claim_num_defendants_error'
+    else
+      result = start
     end
     result
   end
