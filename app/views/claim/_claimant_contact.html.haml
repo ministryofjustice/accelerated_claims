@@ -5,6 +5,7 @@
       %details{ open: true }
         %summary.js-only
           %span.summary#contact-details Add phone and email (optional)
+        %p.hide.nonjs Add additional contact details, eg phone and email
         .panel-indent
           = form.text_field_row :email, label: add_optional_nonjs('Email'), class: 'email'
           = form.text_field_row :phone, label: add_optional_nonjs('Phone'), class: 'phone'
@@ -32,5 +33,6 @@
       %details{ open: true }
         %summary.js-only
           %span.summary#reference-number Add a reference number (optional)
+        %p.hide.nonjs Add a reference number
         .panel-indent
           = render partial: 'reference_number', object: @claim.reference_number, locals: { claim_form: claim_form }
