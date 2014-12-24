@@ -30,8 +30,8 @@ class LicenseChecklist
   def applied_for_test?(first_part, part_prefix)
     @json[first_part] == 'Yes' &&
         @json["#{part_prefix}_authority"].blank? &&
-        @json['license_part3_day'].blank? &&
-        @json['license_part3_month'].blank? &&
-        @json['license_part3_year'].blank?
+        @json["#{part_prefix}_day"].blank? &&
+        @json["#{part_prefix}_month"].blank? &&
+        @json["#{part_prefix}_year"].blank?
   end
 end
