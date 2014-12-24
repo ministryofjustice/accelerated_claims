@@ -11,8 +11,7 @@ class LicenseChecklist
   private
 
   def add_license_text
-    add_note(part2_text) if applied_for_test?('license_multiple_occupation',
-                                              'license_part2')
+    add_note(part2_text) if applied_for_test?('license_multiple_occupation', 'license_part2')
     add_note(part3_text) if applied_for_test?('license_part3', 'license_part3')
   end
 
