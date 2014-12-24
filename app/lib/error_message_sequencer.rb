@@ -100,11 +100,11 @@ class ErrorMessageSequencer
   def sequence(errors)
     errors = errors[:base]
     errors.each do |pair|
-      update_pair(pair)
+      pair[0] = update_pair(pair[0])
     end
     sorted = errors.sort { |a, b| comparison_number(a[0], b[0]) }
     sorted.each do |pair|
-      reset_pair(pair)
+      pair[0] = reset_pair(pair[0])
     end
     sorted
   end
