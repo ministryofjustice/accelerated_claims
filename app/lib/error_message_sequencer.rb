@@ -100,18 +100,40 @@ class ErrorMessageSequencer
   def sequence(errors)
     errors = errors[:base]
     errors.each do |pair|
-      pair[0] = 'claim_claimant_number_of_claimants_error'  if pair[0] =='claim_num_claimants_error'
-      pair[0] = 'claim_defendant_number_of_defendants_error' if pair[0] =='claim_num_defendants_error'
+      pair[0] = update_pair(pair[0])
     end
     sorted = errors.sort { |a, b| comparison_number(a[0], b[0]) }
     sorted.each do |pair|
-      pair[0] = 'claim_num_claimants_error'  if pair[0] =='claim_claimant_number_of_claimants_error'
-      pair[0] = 'claim_num_defendants_error' if pair[0] =='claim_defendant_number_of_defendants_error'
+      pair[0] = reset_pair(pair[0])
     end
     sorted
   end
 
   private
+
+  def update_pair(start)
+    case start
+    when 'claim_num_claimants_error'
+      result = 'claim_claimant_number_of_claimants_error'
+    when 'claim_num_defendants_error'
+      result = 'claim_defendant_number_of_defendants_error'
+    else
+      result = start
+    end
+    result
+  end
+
+  def reset_pair(start)
+    case start
+    when 'claim_claimant_number_of_claimants_error'
+      result = 'claim_num_claimants_error'
+    when 'claim_defendant_number_of_defendants_error'
+      result = 'claim_num_defendants_error'
+    else
+      result = start
+    end
+    result
+  end
 
   # e.g. returns 'claim_defendant' if given 'claim_defendant_1_title_error'
   def section_prefix error
