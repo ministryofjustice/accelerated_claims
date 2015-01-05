@@ -2,6 +2,7 @@ class Claimant < BaseClass
 
   include ActiveModel::Validations
   include Comparable
+  include SharedPartyMethods
 
   attr_accessor :validate_presence, :validate_absence, :address
   attr_accessor :claimant_num
@@ -149,12 +150,6 @@ class Claimant < BaseClass
 
   def validate_individual_fields_are_present
     validate_are_present(:full_name)
-  end
-
-  def validate_are_present(*fields)
-    fields.each do |field|
-      errors.add(field, "Enter #{subject_description}'s #{display_name(field)}") if self.send(field).blank?
-    end
   end
 
   def check_address_fields?
