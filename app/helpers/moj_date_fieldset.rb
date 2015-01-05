@@ -49,16 +49,16 @@ class MojDateFieldset
 
       @form.fields_for(@attribute, date) do |date_form|
         obj_name = @form.object.class.to_s.underscore
-        
+
         default_day_options = build_options(2, obj_name, @attribute, '3i', 'day')
         default_month_options = build_options(9, obj_name, @attribute, '2i', 'month')
         default_year_options = build_options(4, obj_name, @attribute, '1i', 'year')
 
-        html = '<div class="form-date">' +
-               div_and_label_for(date_form, :day, default_day_options.merge(@passed_in_day_options)) +
-               div_and_label_for(date_form, :long_monthname, default_month_options.merge(@passed_in_month_options)) +
-               div_and_label_for(date_form, :year, default_year_options.merge(@passed_in_year_options)) +
-               '</div>'
+        html = "<div class='form-date'>
+                #{div_and_label_for(date_form, :day, default_day_options.merge(@passed_in_day_options))}
+                #{div_and_label_for(date_form, :long_monthname, default_month_options.merge(@passed_in_month_options))}
+                #{div_and_label_for(date_form, :year, default_year_options.merge(@passed_in_year_options))}
+                </div>"
         html.html_safe
       end
     end
