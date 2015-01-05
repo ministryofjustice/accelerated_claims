@@ -2,6 +2,9 @@ root = exports ? this
 
 CourtAddressModule =
 
+  courtData: ->
+    ''
+
   courtFields: ->
     ['#claim_court_court_name',
      '#claim_court_street',
@@ -49,7 +52,7 @@ CourtAddressModule =
     $("#court-details").click ->
       if $('#claim_court_street').is(':visible')
         CourtAddressModule.flipTextareaToInputField()
-        # CourtAddressModule.lookUpCourt()
+        CourtAddressModule.populateCourtDetails()
         $('#court-address').hide()
         CourtAddressModule.hideCourtAddressInputFields()
         $('#court-details').parent().removeClass('open')
@@ -67,16 +70,10 @@ CourtAddressModule =
   findCourtName: (postcode) ->
     CourtLookup.lookup(postcode, CourtAddressModule)
 
-  # populateCourtDetails: (data) ->
   populateCourtDetails: ->
-    console.log "calling populateCourtDetails!"
-    court = new CourtDetails
-    # court_name = data[0].name
-    court_name = court.details[0].name
-    # court_street = data[0].address.address_lines
-    court_street = court.details[0].address.address_lines
-    # court_postcode = data[0].address.postcode
-    court_postcode = court.details[0].address.postcode
+    court_name = CourtAddressModule.courtData[0].name
+    court_street = CourtAddressModule.courtData[0].address.address_lines
+    court_postcode = CourtAddressModule.courtData[0].address.postcode
     court_name_element = $('#court-name')[0]
     court_name_element.innerHTML = "<b class='bold-small'>#{court_name}</b>"
     if CourtAddressModule.courtFormHasErrors()==false || $('#court-address').is(':hidden')
@@ -120,14 +117,10 @@ CourtAddressModule =
       CourtAddressModule.displayNoResultsFound()
 
   getCourtIfPostcodePresent: ->
-    console.log 'called getCourtIfPostcodePresent!'
     if CourtAddressModule.isCourtAddressFormBlank()
-      console.log 'called CourtAddressModule.isCourtAddressFormBlank()'
       postcode = $('#claim_property_postcode').val()
       CourtLookup.lookup(postcode, CourtAddressModule) if postcode
-      # CourtAddressModule.populateCourtDetails()
     else
-      console.log 'called isCourtAddressFormBlank where the form isn\'t blank'
       CourtAddressModule.labelForKnownCourt()
       CourtAddressModule.linkForFormToggling()
       $('#court-name').html("<b class='bold-small'>#{$('#claim_court_court_name').val()}</b>")
@@ -167,6 +160,7 @@ CourtAddressModule =
           default_court_name = data[0].name
           default_court_street = data[0].address.address_lines.toString()
           default_court_postcode = data[0].address.postcode
+          CourtAddressModule.courtData = data
           if default_court_name != submitted_court_name || default_court_street != submitted_court_street || default_court_postcode != submitted_court_postcode
             CourtAddressModule.changeElement('#claim_court_court_name', 'input', "<input type='text'></input>")
             CourtAddressModule.changeElement('#claim_court_postcode', 'input', "<input type='text'></input>")
