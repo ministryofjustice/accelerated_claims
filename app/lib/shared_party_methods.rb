@@ -1,7 +1,8 @@
 module SharedPartyMethods
   def validate_are_present(*fields)
     fields.each do |field|
-      errors.add(field, "Enter #{subject_description}'s #{display_name(field)}") if self.send(field).blank?
+      error_message = "Enter #{subject_description}'s #{display_name(field)}"
+      errors.add(field, error_message) if send(field).blank?
     end
   end
 end

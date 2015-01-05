@@ -12,7 +12,8 @@ class DocumentCount
     @json
   end
 
-private
+  private
+
   def increment_counter(counter, collection)
     controller = "#{collection.camelize}Collection".safe_constantize
     ( 1 .. controller.send("max_#{collection}s") ).each { |i| counter += 1 if @json["#{collection}_#{i}_address"].present? }

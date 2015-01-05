@@ -50,11 +50,11 @@ class MojDateFieldset
       @form.fields_for(@attribute, date) do |date_form|
         obj_name = @form.object.class.to_s.underscore
 
-        default_day_options = build_options(2, obj_name, @attribute, '3i', 'day')
-        default_month_options = build_options(9, obj_name, @attribute, '2i', 'month')
-        default_year_options = build_options(4, obj_name, @attribute, '1i', 'year')
+        default_day_options = options(2, obj_name, @attribute, '3i', 'day')
+        default_month_options = options(9, obj_name, @attribute, '2i', 'month')
+        default_year_options = options(4, obj_name, @attribute, '1i', 'year')
 
-        html = %Q[
+        html = %[
           <div class="form-date">
             #{div_and_label_for(date_form, :day, default_day_options.merge(@passed_in_day_options))}
             #{div_and_label_for(date_form, :long_monthname, default_month_options.merge(@passed_in_month_options))}
@@ -68,7 +68,7 @@ class MojDateFieldset
 
   private
 
-  def build_options(maxlength, obj_name, attribute, extender, moj_date_class_name)
+  def options(maxlength, obj_name, attribute, extender, moj_date_class_name)
     { maxlength: maxlength,
       id: "claim_#{obj_name}_#{attribute}_#{extender}",
       name: "claim[#{obj_name}][#{attribute}(#{extender})]",
