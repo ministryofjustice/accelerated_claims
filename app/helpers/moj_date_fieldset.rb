@@ -48,35 +48,33 @@ class MojDateFieldset
       date = @form.object.send(@attribute)
 
       @form.fields_for(@attribute, date) do |date_form|
-        obj_name   = @form.object.class.to_s.underscore
+        obj_name = @form.object.class.to_s.underscore
 
-        default_day_options = { maxlength: 2,
-                                id: "claim_#{obj_name}_#{@attribute}_3i",
-                                name: "claim[#{obj_name}][#{@attribute}(3i)]",
-                                class: 'moj-date-day'
-                              }
-        default_month_options = { maxlength: 9,
-                                id: "claim_#{obj_name}_#{@attribute}_2i",
-                                name: "claim[#{obj_name}][#{@attribute}(2i)]",
-                                class: 'moj-date-month'
-                              }
-        default_year_options = { maxlength: 4,
-                                id: "claim_#{obj_name}_#{@attribute}_1i",
-                                name: "claim[#{obj_name}][#{@attribute}(1i)]",
-                                class: 'moj-date-year'
-                              }
+        default_day_options = options(2, obj_name, @attribute, '3i', 'day')
+        default_month_options = options(9, obj_name, @attribute, '2i', 'month')
+        default_year_options = options(4, obj_name, @attribute, '1i', 'year')
 
-        html = '<div class="form-date">' +
-               div_and_label_for(date_form, :day, default_day_options.merge(@passed_in_day_options)) +
-               div_and_label_for(date_form, :long_monthname, default_month_options.merge(@passed_in_month_options)) +
-               div_and_label_for(date_form, :year, default_year_options.merge(@passed_in_year_options)) +
-               '</div>'
-        html.html_safe
+        html = %[
+          <div class="form-date">
+            #{div_and_label_for(date_form, :day, default_day_options.merge(@passed_in_day_options))}
+            #{div_and_label_for(date_form, :long_monthname, default_month_options.merge(@passed_in_month_options))}
+            #{div_and_label_for(date_form, :year, default_year_options.merge(@passed_in_year_options))}
+          </div>
+          ]
+        squash(html).html_safe
       end
     end
   end
 
   private
+
+  def options(maxlength, obj_name, attribute, extender, moj_date_class_name)
+    { maxlength: maxlength,
+      id: "claim_#{obj_name}_#{attribute}_#{extender}",
+      name: "claim[#{obj_name}][#{attribute}(#{extender})]",
+      class: "moj-date-#{moj_date_class_name}"
+    }
+  end
 
   def div_and_label_for(form, attribute, options)
     html = %Q[

@@ -6,9 +6,19 @@ class DocumentCount
 
   def add
     counter = 1
-    ( 1 .. DefendantCollection.max_defendants ).each { |i| counter += 1 if @json["defendant_#{i}_address"].present? }
-    ( 1 .. ClaimantCollection.max_claimants ).each { |i|  counter += 1 if @json["claimant_#{i}_address"].present? }
+    counter = increment_counter(counter, 'defendant')
+    counter = increment_counter(counter, 'claimant')
     @json['copy_number'] = (counter)
     @json
+  end
+
+  private
+
+  def increment_counter(counter, collection)
+    controller = "#{collection.camelize}Collection".safe_constantize
+    (1..controller.send("max_#{collection}s")).each do |i|
+      counter += 1 if @json["#{collection}_#{i}_address"].present?
+    end
+    counter
   end
 end
