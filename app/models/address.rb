@@ -46,7 +46,6 @@ class Address < BaseClass
     results << validate_postcode_in_england_or_wales if @england_and_wales_only
     results << validate_presence unless @must_be_blank
     results << validate_absence if @must_be_blank
-    results << validate_maximum_street_length
     results << validate_maximum_number_of_newlines
     valid = results.include?(false) ? false : true
     transfer_error_messages_to_parent unless valid
@@ -55,14 +54,6 @@ class Address < BaseClass
 
   def ==(other)
     other.street == @street && other.postcode == @postcode
-  end
-
-  def validate_maximum_street_length
-    if !@street.nil? && @street.length > 70
-      errors[:street] << "#{possessive_subject_description.capitalize} address is too long (maximum 70 characters)"
-      return false
-    end
-    return true
   end
 
   def validate_maximum_number_of_newlines

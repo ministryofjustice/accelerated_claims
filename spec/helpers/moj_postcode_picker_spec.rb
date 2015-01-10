@@ -150,7 +150,7 @@ def expected_output
         Full address
 
       </label>
-      <textarea class='street' id='claim_property_street' maxlength='70' name='claim[property][street]'>50 Tregunter Road&#x000A;London</textarea>
+      <textarea class='street' id='claim_property_street' maxlength='140' name='claim[property][street]'>50 Tregunter Road&#x000A;London</textarea>
     </div>
     <div class='js-only'>
       <div class='hide' id='claim_property_street-error-message'>

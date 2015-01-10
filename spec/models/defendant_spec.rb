@@ -184,16 +184,6 @@ describe Defendant, :type => :model do
 
   end
 
-  context 'address validation' do
-
-    it 'should not validate if street is too long' do
-      defendant.street = "x" * 72
-      expect(defendant).not_to be_valid
-      expect(defendant.errors[:street]).to eq ["Defendant 2's address is too long (maximum 70 characters)"]
-    end
-
-  end
-
   describe "#as_json" do
     context "when the model is not blank" do
       let(:desired_format) do
