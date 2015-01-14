@@ -79,7 +79,7 @@ class Claim < BaseClass
       end
     end
 
-    add_externals(json_out)
+    add_external json_out
 
     json_out = StringNormalizer.hash_to_ascii(json_out)
     json_out
