@@ -116,7 +116,7 @@ moj.Modules.tenancyModule = (function() {
       $( obj + ', .js-conditionals' ).show();
     } else {
       $( obj ).hide().find( ':checked' ).attr( 'checked', false );
-    };
+    }
   };
 
   hideConditionals = function() {
