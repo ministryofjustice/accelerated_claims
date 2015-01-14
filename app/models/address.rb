@@ -59,7 +59,7 @@ class Address < BaseClass
 
   def validate_maximum_street_length
     if !@street.nil? && @street.length > 70
-      errors[:street] << "#{possessive_subject_description.capitalize} address is too long (maximum 70 characters)"
+      add_to_errors 'street', "#{possessive_subject_description.capitalize} address is too long (maximum 70 characters)"
       return false
     end
     return true
@@ -69,7 +69,7 @@ class Address < BaseClass
     result = true
     unless street.nil?
       if @street.strip.count("\n") > 3
-        errors.add(:street, "#{possessive_subject_description.capitalize} address can’t be longer than 4 lines")
+        add_to_errors 'street', "#{possessive_subject_description.capitalize} address can’t be longer than 4 lines"
         result = false
       end
     end
@@ -88,7 +88,7 @@ class Address < BaseClass
 
   def validate_presence
     if @street.blank?
-      errors['street'] << "Enter #{possessive_subject_description} full address"
+      add_to_errors 'street', "Enter #{possessive_subject_description} full address"
       return false
     end
     return true
@@ -96,10 +96,10 @@ class Address < BaseClass
 
   def validate_absence
     if @street.present?
-      errors[:street] << validate_absence_error_message('full address')
+      add_to_errors 'street', validate_absence_error_message('full address')
     end
     if @postcode.present?
-      errors[:postcode] << validate_absence_error_message('postcode')
+      add_to_errors 'postcode', validate_absence_error_message('postcode')
     end
     return errors.empty?
   end
@@ -113,8 +113,8 @@ class Address < BaseClass
   end
 
   def validate_postcode_in_england_or_wales
-    if postcode.blank? || UKPostcode.new(postcode).valid? == false
-      errors['postcode'] << "Please enter a valid postcode for a property in England and Wales"
+    if postcode_blank_or_invalid?
+      add_to_errors 'postcode', "Please enter a valid postcode for a property in England and Wales"
       return false
     end
 
@@ -124,17 +124,11 @@ class Address < BaseClass
       @postcode = plp.norm
 
       case plp.result_set['code']
-      when 2000
-        return true
-      when 4040
+      when 2000, 4040, 4220, 5030
         return true
       when 4041
-        errors['postcode'] << "Postcode is in #{plp.result_set['message']}. You can only use this service to regain possession of properties in England and Wales."
+        add_to_errors 'postcode', "Postcode is in #{plp.result_set['message']}. You can only use this service to regain possession of properties in England and Wales."
         return false
-      when 4220
-        return true
-      when 5030
-        return true
       else
         raise "Unexpected return from postcode lookup: #{plp.result_set.inspect}"
       end
@@ -142,6 +136,14 @@ class Address < BaseClass
   end
 
   private
+
+  def add_to_errors(as, message)
+    errors[as] << message
+  end
+
+  def postcode_blank_or_invalid?
+    postcode.blank? || UKPostcode.new(postcode).valid? == false
+  end
 
   def transfer_error_messages_to_parent
     [:street, :postcode].each do |field|
