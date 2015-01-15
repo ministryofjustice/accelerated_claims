@@ -11,15 +11,9 @@ class ClaimController < ApplicationController
     @date_select_options = get_date_select_options
 
     @claim = if has_journey
-      force_reload = params.has_key?(:reload)
-      get_claim_for_journey(force_reload)
-    elsif (data = session[:claim])
-      Claim.new(data).tap { |claim|
-        unless claim.valid?
-          @errors = claim.errors
-          @error_messages = claim.error_messages
-        end
-      }
+      get_claim_for_journey
+    elsif session[:claim]
+      get_claim_from_session
     else
       Claim.new
     end
@@ -58,7 +52,7 @@ class ClaimController < ApplicationController
     pdf = PDFDocument.new(@claim.as_json, flatten).fill
 
     ActiveSupport::Notifications.instrument('send_file') do
-      send_file(pdf.path, filename: "accelerated-claim.pdf", disposition: "inline", type: "application/pdf")
+      send_file(pdf.path, filename: 'accelerated-claim.pdf', disposition:'inline', type: 'application/pdf')
     end
 
   end
@@ -96,11 +90,21 @@ class ClaimController < ApplicationController
 
   private
 
-  def get_claim_for_journey(force_reload)
+  def get_claim_for_journey
+    force_reload = params.has_key?(:reload)
     require 'fixture_data'
     journey_id = params[:journey].to_i
     claim_data = FixtureData.data(force_reload).params_data_for(journey_id)
     Claim.new(HashWithIndifferentAccess.new(claim_data))
+  end
+
+  def get_claim_from_session
+    Claim.new(session[:claim]).tap { |claim|
+      unless claim.valid?
+        @errors = claim.errors
+        @error_messages = claim.error_messages
+      end
+    }
   end
 
   def get_date_select_options
