@@ -9,13 +9,10 @@ class ClaimController < ApplicationController
     @page_title = 'Make a claim to evict tenants: accelerated possession'
 
     @date_select_options = get_date_select_options
-    @claim = if production_or_journey
-      force_reload = params.has_key?(:reload)
 
-      require 'fixture_data'
-      journey_id = params[:journey].to_i
-      claim_data = FixtureData.data(force_reload).params_data_for(journey_id)
-      Claim.new(HashWithIndifferentAccess.new(claim_data))
+    @claim = if has_journey
+      force_reload = params.has_key?(:reload)
+      get_claim_for_journey(force_reload)
     elsif (data = session[:claim])
       Claim.new(data).tap { |claim|
         unless claim.valid?
@@ -101,6 +98,13 @@ class ClaimController < ApplicationController
 
   private
 
+  def get_claim_for_journey(force_reload)
+    require 'fixture_data'
+    journey_id = params[:journey].to_i
+    claim_data = FixtureData.data(force_reload).params_data_for(journey_id)
+    Claim.new(HashWithIndifferentAccess.new(claim_data))
+  end
+
   def get_date_select_options
     {
         order: [:day, :month, :year],
@@ -111,7 +115,7 @@ class ClaimController < ApplicationController
     }
   end
 
-  def production_or_journey
+  def has_journey
     !@production && params.has_key?(:journey)
   end
 
