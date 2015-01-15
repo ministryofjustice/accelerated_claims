@@ -97,12 +97,12 @@ class ClaimController < ApplicationController
   end
 
   def get_claim_from_session
-    Claim.new(session[:claim]).tap { |claim|
+    Claim.new(session[:claim]).tap do |claim|
       unless claim.valid?
         @errors = claim.errors
         @error_messages = claim.error_messages
       end
-    }
+    end
   end
 
   def get_claim_from_params
