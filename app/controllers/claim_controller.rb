@@ -171,10 +171,14 @@ class ClaimController < ApplicationController
       claim_key = "claimant_#{i}"
       key = "claimant#{i}address"
       if key_present_and_yes(key)
-        params['claim'][claim_key]['street'] = params['claim']['claimant_1']['street']
-        params['claim'][claim_key]['postcode'] = params['claim']['claimant_1']['postcode']
+        update_claimant_address(claim_key)
       end
     end
+  end
+
+  def update_claimant_address(claim_key)
+    params['claim'][claim_key]['street'] = params['claim']['claimant_1']['street']
+    params['claim'][claim_key]['postcode'] = params['claim']['claimant_1']['postcode']
   end
 
   def key_present_and_yes(key)
