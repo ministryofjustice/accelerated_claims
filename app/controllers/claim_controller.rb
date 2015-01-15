@@ -27,9 +27,7 @@ class ClaimController < ApplicationController
     claim_object = Claim.new(@claim)
 
     if claim_object.valid?
-      (1..claim_object.num_defendants).each do |i|
-        @claim["defendant_#{i}"]['inhabits_property'] = claim_object.defendants[i].inhabits_property
-      end
+      update_defendant_inhabits(claim_object)
       @claim['fee']['account'] = claim_object.fee.account # set zero-padded account number
       @page_title = 'Make a claim to evict tenants: accelerated possession'
     else
@@ -51,9 +49,7 @@ class ClaimController < ApplicationController
     flatten = in_test_or_flatten
     pdf = PDFDocument.new(@claim.as_json, flatten).fill
 
-    ActiveSupport::Notifications.instrument('send_file') do
-      send_file(pdf.path, filename: 'accelerated-claim.pdf', disposition:'inline', type: 'application/pdf')
-    end
+    send_pdf(pdf)
 
   end
 
@@ -179,12 +175,28 @@ class ClaimController < ApplicationController
   end
 
   def update_claimant_address(claim_key)
-    params['claim'][claim_key]['street'] = params['claim']['claimant_1']['street']
-    params['claim'][claim_key]['postcode'] = params['claim']['claimant_1']['postcode']
+    update_address_param claim_key, 'street'
+    update_address_param claim_key, 'postcode'
+  end
+
+  def update_address_param(claim_key, key)
+    params['claim'][claim_key][key] = params['claim']['claimant_1'][key]
+  end
+
+  def update_defendant_inhabits(claim_object)
+    (1..claim_object.num_defendants).each do |i|
+      @claim["defendant_#{i}"]['inhabits_property'] = claim_object.defendants[i].inhabits_property
+    end
   end
 
   def key_present_and_yes(key)
     params.key?(key) && params[key] == 'yes'
+  end
+
+  def send_pdf(pdf)
+    ActiveSupport::Notifications.instrument('send_file') do
+      send_file(pdf.path, filename: 'accelerated-claim.pdf', disposition: 'inline', type: 'application/pdf')
+    end
   end
 
   def delete_all_pdfs
