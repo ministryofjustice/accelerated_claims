@@ -10,13 +10,14 @@ class ClaimController < ApplicationController
 
     @date_select_options = get_date_select_options
 
-    @claim = if has_journey
-      get_claim_for_journey
-    elsif session[:claim]
-      get_claim_from_session
-    else
-      Claim.new
-    end
+    @claim =
+        if has_journey
+          get_claim_for_journey
+        elsif session[:claim]
+          get_claim_from_session
+        else
+          Claim.new
+        end
   end
 
   def confirmation
@@ -68,7 +69,7 @@ class ClaimController < ApplicationController
   def submission
     params['claim']['use_live_postcode_lookup'] = @use_live_postcode_lookup
     session[:claim] = params['claim']
-    
+
     move_claimant_address_params_into_model
     move_defendant_address_params_into_model
 
@@ -113,7 +114,7 @@ class ClaimController < ApplicationController
     {
       order: [:day, :month, :year],
       with_css_classes: true,
-      prompt: {day: 'Day', month: 'Month', year: 'Year'},
+      prompt: { day: 'Day', month: 'Month', year: 'Year' },
       start_year: Date.today.year,
       end_year: Tenancy::APPLICABLE_FROM_DATE.year
     }
