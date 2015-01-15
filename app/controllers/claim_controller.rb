@@ -8,13 +8,7 @@ class ClaimController < ApplicationController
 
     @page_title = 'Make a claim to evict tenants: accelerated possession'
 
-    @date_select_options = {
-      order: [:day, :month, :year],
-      with_css_classes: true,
-      prompt: { day: 'Day', month: 'Month', year: 'Year' },
-      start_year: Date.today.year,
-      end_year: Tenancy::APPLICABLE_FROM_DATE.year
-    }
+    @date_select_options = get_date_select_options
     @claim = if !@production && params.has_key?(:journey)
       force_reload = params.has_key?(:reload)
 
@@ -59,13 +53,12 @@ class ClaimController < ApplicationController
 
   def download
     if session[:claim].nil?
-      msg = "User attempted to download PDF from an expired session - redirected to #{expired_path}"
       redirect_to expired_path
     else
       @claim = Claim.new(session[:claim])
       if @claim.valid?
         log_fee_account_num_usage
-        flatten = Rails.env.test? || params[:flatten] == 'false' ? false : true
+        flatten = in_test_or_flatten
         pdf = PDFDocument.new(@claim.as_json, flatten).fill
 
         ActiveSupport::Notifications.instrument('send_file') do
@@ -110,12 +103,33 @@ class ClaimController < ApplicationController
 
   private
 
+  def get_date_select_options
+    {
+        order: [:day, :month, :year],
+        with_css_classes: true,
+        prompt: {day: 'Day', month: 'Month', year: 'Year'},
+        start_year: Date.today.year,
+        end_year: Tenancy::APPLICABLE_FROM_DATE.year
+    }
+  end
+
+
+  def in_test_or_flatten
+    Rails.env.test? || params[:flatten] == 'false' ? false : true
+  end
+
   # only record a fee_account_num event if the property postcode is NOT the same as the previous download in this session
   def log_fee_account_num_usage
-    if session[:fee_account_num_logged].nil?  || (session[:fee_account_num_logged] != session[:claim][:property][:postcode])
-      LogStuff.info(:fee_account_num, present: @claim.fee.account.present?.to_s, ip: request.remote_ip) { "Fee Account Number Usage" }
+    if check_for_session_fee_account
+      LogStuff.info(:fee_account_num,
+                    present: @claim.fee.account.present?.to_s,
+                    ip: request.remote_ip) { 'Fee Account Number Usage' }
       session[:fee_account_num_logged] = session[:claim][:property][:postcode]
     end
+  end
+
+  def check_for_session_fee_account
+    session[:fee_account_num_logged].nil? || ((session[:fee_account_num_logged] != session[:claim][:property][:postcode]))
   end
 
   def set_production_status
@@ -137,12 +151,17 @@ class ClaimController < ApplicationController
 
   def move_claimant_address_params_into_the_model
     (2 .. ClaimantCollection.max_claimants).each do |i|
+      claim_key = "claimant_#{i}"
       key = "claimant#{i}address"
-      if params.key?(key) && params[key] == "yes"
-        params['claim']["claimant_#{i}"]['street'] = params['claim']['claimant_1']['street']
-        params['claim']["claimant_#{i}"]['postcode'] = params['claim']['claimant_1']['postcode']
+      if key_present_and_yes(key)
+        params['claim'][claim_key]['street'] = params['claim']['claimant_1']['street']
+        params['claim'][claim_key]['postcode'] = params['claim']['claimant_1']['postcode']
       end
     end
+  end
+
+  def key_present_and_yes(key)
+    params.key?(key) && params[key] == 'yes'
   end
 
   def delete_all_pdfs
