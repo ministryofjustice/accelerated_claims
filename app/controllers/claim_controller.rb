@@ -38,7 +38,6 @@ class ClaimController < ApplicationController
   end
 
   def download
-
     return redirect_to expired_path if session[:claim].nil?
 
     @claim = Claim.new(session[:claim])
@@ -105,16 +104,18 @@ class ClaimController < ApplicationController
       end
     }
   end
+
   def get_claim_from_params
     Claim.new(params['claim'])
   end
+
   def get_date_select_options
     {
-        order: [:day, :month, :year],
-        with_css_classes: true,
-        prompt: {day: 'Day', month: 'Month', year: 'Year'},
-        start_year: Date.today.year,
-        end_year: Tenancy::APPLICABLE_FROM_DATE.year
+      order: [:day, :month, :year],
+      with_css_classes: true,
+      prompt: {day: 'Day', month: 'Month', year: 'Year'},
+      start_year: Date.today.year,
+      end_year: Tenancy::APPLICABLE_FROM_DATE.year
     }
   end
 
