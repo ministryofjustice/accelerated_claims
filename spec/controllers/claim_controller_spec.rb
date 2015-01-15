@@ -182,6 +182,7 @@ describe ClaimController, :type => :controller do
 
     context 'logging fee_account_num' do
       it 'should log fee account num logstash record if first time for this session' do
+        expect(LogStuff).to receive(:info).with(:strike_through, :debug)
         expect(LogStuff).to receive(:info).with(:fee_account_num, { present: 'false', ip: instance_of(String) } )
         expect(session[:fee_account_num_logged]).to be_nil
 
@@ -200,6 +201,7 @@ describe ClaimController, :type => :controller do
       end
 
       it 'should log a fee account num if already done this session for a different postcode' do
+        expect(LogStuff).to receive(:info).with(:strike_through, :debug)
         expect(LogStuff).to receive(:info).with(:fee_account_num, { present: 'false', ip: instance_of(String) } )
         data = claim_post_data['claim']
         session[:fee_account_num_logged] = data['property']['postcode'].tr('0123456789', '9876543210')  # ensure this postcode different from last
