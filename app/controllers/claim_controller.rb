@@ -51,7 +51,6 @@ class ClaimController < ApplicationController
     pdf = PDFDocument.new(@claim.as_json, flatten).fill
 
     send_pdf(pdf)
-
   end
 
   # Returns JSON formatted data which is passed for PDF generation.
