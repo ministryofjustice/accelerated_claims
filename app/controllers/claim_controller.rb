@@ -46,22 +46,21 @@ class ClaimController < ApplicationController
   end
 
   def download
-    if session[:claim].nil?
-      redirect_to expired_path
-    else
-      @claim = Claim.new(session[:claim])
-      if @claim.valid?
-        log_fee_account_num_usage
-        flatten = in_test_or_flatten
-        pdf = PDFDocument.new(@claim.as_json, flatten).fill
 
-        ActiveSupport::Notifications.instrument('send_file') do
-          send_file(pdf.path, filename: "accelerated-claim.pdf", disposition: "inline", type: "application/pdf")
-        end
-      else
-        redirect_to_with_protocol :new
-      end
+    return redirect_to expired_path if session[:claim].nil?
+
+    @claim = Claim.new(session[:claim])
+
+    return redirect_to_with_protocol :new if !@claim.valid?
+
+    log_fee_account_num_usage
+    flatten = in_test_or_flatten
+    pdf = PDFDocument.new(@claim.as_json, flatten).fill
+
+    ActiveSupport::Notifications.instrument('send_file') do
+      send_file(pdf.path, filename: "accelerated-claim.pdf", disposition: "inline", type: "application/pdf")
     end
+
   end
 
   # Returns JSON formatted data which is passed for PDF generation.
