@@ -46,6 +46,7 @@ class ClaimController < ApplicationController
     return redirect_to_with_protocol :new if !@claim.valid?
 
     log_fee_account_num_usage
+
     flatten = in_test_or_flatten
     pdf = PDFDocument.new(@claim.as_json, flatten).fill
 
@@ -68,9 +69,11 @@ class ClaimController < ApplicationController
   def submission
     params['claim']['use_live_postcode_lookup'] = @use_live_postcode_lookup
     session[:claim] = params['claim']
-    move_claimant_address_params_into_the_model
+    
+    move_claimant_address_params_into_model
     move_defendant_address_params_into_model
-    @claim = Claim.new(params['claim'])
+
+    @claim = get_claim_from_params
 
     if @claim.valid?
       redirect_to_with_protocol :confirmation
@@ -102,7 +105,9 @@ class ClaimController < ApplicationController
       end
     }
   end
-
+  def get_claim_from_params
+    Claim.new(params['claim'])
+  end
   def get_date_select_options
     {
         order: [:day, :month, :year],
@@ -127,8 +132,12 @@ class ClaimController < ApplicationController
       LogStuff.info(:fee_account_num,
                     present: @claim.fee.account.present?.to_s,
                     ip: request.remote_ip) { 'Fee Account Number Usage' }
-      session[:fee_account_num_logged] = session[:claim][:property][:postcode]
+      set_postcode_from_session
     end
+  end
+
+  def set_postcode_from_session
+    session[:fee_account_num_logged] = session[:claim][:property][:postcode]
   end
 
   def check_for_session_fee_account
@@ -164,7 +173,7 @@ class ClaimController < ApplicationController
     end
   end
 
-  def move_claimant_address_params_into_the_model
+  def move_claimant_address_params_into_model
     (2 .. ClaimantCollection.max_claimants).each do |i|
       claim_key = "claimant_#{i}"
       key = "claimant#{i}address"
