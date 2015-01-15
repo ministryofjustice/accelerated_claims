@@ -129,7 +129,11 @@ class ClaimController < ApplicationController
   end
 
   def check_for_session_fee_account
-    session[:fee_account_num_logged].nil? || ((session[:fee_account_num_logged] != session[:claim][:property][:postcode]))
+    session[:fee_account_num_logged].nil? || session_fa_equals_postcode
+  end
+
+  def session_fa_equals_postcode
+    (session[:fee_account_num_logged] != session[:claim][:property][:postcode])
   end
 
   def set_production_status
