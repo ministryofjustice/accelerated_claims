@@ -9,7 +9,7 @@ class ClaimController < ApplicationController
     @page_title = 'Make a claim to evict tenants: accelerated possession'
 
     @date_select_options = get_date_select_options
-    @claim = if !@production && params.has_key?(:journey)
+    @claim = if production_or_journey
       force_reload = params.has_key?(:reload)
 
       require 'fixture_data'
@@ -46,9 +46,7 @@ class ClaimController < ApplicationController
         redirect_to_with_protocol(:new)
       end
       @claim = PostcodeNormalizer.new(@claim).normalize
-
     end
-
   end
 
   def download
@@ -113,6 +111,9 @@ class ClaimController < ApplicationController
     }
   end
 
+  def production_or_journey
+    !@production && params.has_key?(:journey)
+  end
 
   def in_test_or_flatten
     Rails.env.test? || params[:flatten] == 'false' ? false : true
@@ -138,9 +139,17 @@ class ClaimController < ApplicationController
 
   def set_production_status
     # set production to true if on production or staging - this is used to determine whether or not journey numbers are valid in the url
-    @production = ['staging', 'production'].include?(ENV["ENV_NAME"])
-    request_referrer_query_string = request.referrer ? URI(request.referrer).query : nil
-    @use_live_postcode_lookup = @production || params[:livepc] == '1' || request_referrer_query_string == 'livepc=1'
+    @production = ['staging', 'production'].include?(ENV['ENV_NAME'])
+    request_referrer_query_string = get_request_referrer
+    @use_live_postcode_lookup = use_live_pc(request_referrer_query_string)
+  end
+
+  def use_live_pc(request)
+    @production || params[:livepc] == '1' || request == 'livepc=1'
+  end
+
+  def get_request_referrer
+    request.referrer ? URI(request.referrer).query : nil
   end
 
   def move_defendant_address_params_into_model
