@@ -1,7 +1,7 @@
 {
   Button94: nil,
   Button95: nil,
-  court_name: "court_name",
+  court_name: "Bournemouth and Poole County Court and Family Court",
   fee_account: nil,
   claimant_1_address: "Infinity Southwich\nRedleaf House, 157-159 Masonic Hall\nSouthwich",
   claimant_1_postcode1: "SH2",

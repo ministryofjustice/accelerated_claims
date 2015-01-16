@@ -42,15 +42,18 @@ class ClaimForm
     prefix = 'claim_court_'
     street = "\##{prefix}street"
 
-    if @js_on == true
-      find('#court-details').click
-      page.all(street, visible: false).first.set('court_street')
-    else
-      page.all(street).first.set('court_street')
-    end
+    court_data = {
+      'name'     => 'Bournemouth and Poole County Court and Family Court',
+      'street'   => "Bournemouth and Poole County Court and Family Court hearing centre\nCourts of Justice\nDeansleigh Road\nBOURNEMOUTH",
+      'postcode' => 'BH7 7DS',
+      'county'   => 'Dorset'
+      }
 
-    find("##{prefix}court_name").set 'court_name'
-    find("##{prefix}postcode").set 'postcode'
+    find('#court-details').click if @js_on == true
+    find(street).set court_data['street']
+
+    find("##{prefix}court_name").set court_data['name']
+    find("##{prefix}postcode").set court_data['postcode']
   end
 
   def complete_form_with_javascript
@@ -262,7 +265,7 @@ class ClaimForm
 
   def fill_property_details
     prefix = 'property'
-    click_manual_address_link(prefix) unless !@js_on
+    click_manual_address_link(prefix)
     fill_in_text_area(prefix, 'street')
 
     if ENV["env"] == 'production'

@@ -1,7 +1,7 @@
 {
   Button94: nil,
   Button95: nil,
-  court_name: "court_name",
+  court_name: "Bournemouth and Poole County Court and Family Court",
   claimant_1_address: "Mr Willie Cox\n104 Babbage Rd\nLondonville",
   claimant_1_postcode1: "SB24",
   claimant_1_postcode2: "9HE",

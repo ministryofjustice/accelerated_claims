@@ -3,7 +3,7 @@
   Button94: nil,
   NameOfCourt: nil,
   ClaimNumber: nil,
-  court_name: "court_name",
+  court_name: "Bournemouth and Poole County Court and Family Court",
   claimant_1_address: "Mr Francis Coker\n13 Princess Square\nMilton",
   claimant_1_postcode1: "RT12",
   claimant_1_postcode2: "1LS",
