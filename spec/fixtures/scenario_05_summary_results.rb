@@ -74,11 +74,11 @@
   ],
   claim_notice_date_served: [
     "Date notice served",
-    "13 01 2014"
+    "13 January 2014"
   ],
   claim_notice_expiry_date: [
     "Date notice ended",
-    "13 03 2014"
+    "13 March 2014"
   ],
   claim_tenancy_tenancy_type: [
     "Type of tenancy agreement",
@@ -86,7 +86,7 @@
   ],
   claim_tenancy_demotion_order_date: [
     "Demotion order date",
-    "20 04 2013"
+    "20 April 2013"
   ],
   claim_tenancy_demotion_order_court: [
     "Demotion order court",
@@ -114,7 +114,7 @@
   ],
   claim_deposit_information_given_date: [
     "Date defendant was informed",
-    "20 04 2013"
+    "20 April 2013"
   ],
   claim_fee_court_fee: [
     "Court fee",

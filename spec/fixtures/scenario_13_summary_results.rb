@@ -70,11 +70,11 @@
   ],
   claim_notice_date_served: [
     "Date notice served",
-    "08 09 2013"
+    "08 September 2013"
   ],
   claim_notice_expiry_date: [
     "Date notice ended",
-    "08 11 2013"
+    "08 November 2013"
   ],
   claim_tenancy_tenancy_type: [
     "Type of tenancy agreement",
@@ -86,7 +86,7 @@
   ],
   claim_tenancy_start_date: [
     "Start date of the tenancy agreement",
-    "20 12 2010"
+    "20 December 2010"
   ],
   claim_license_multiple_occupation: [
     "HMO licence held",
@@ -110,7 +110,7 @@
   ],
   claim_deposit_information_given_date: [
     "Date defendant was informed",
-    "20 12 2010"
+    "20 December 2010"
   ],
   claim_fee_court_fee: [
     "Court fee",

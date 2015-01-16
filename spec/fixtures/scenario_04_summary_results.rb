@@ -66,11 +66,11 @@
   ],
   claim_notice_date_served: [
     "Date notice served",
-    "13 12 2013"
+    "13 December 2013"
   ],
   claim_notice_expiry_date: [
     "Date notice ended",
-    "13 02 2014"
+    "13 February 2014"
   ],
   claim_tenancy_tenancy_type: [
     "Type of tenancy agreement",
@@ -82,11 +82,11 @@
   ],
   claim_tenancy_original_assured_shorthold_tenancy_agreement_date: [
     "Original assured shorthold tenancy agreement date",
-    "12 03 2004"
+    "12 March 2004"
   ],
   claim_tenancy_latest_agreement_date: [
     "Latest agreement date",
-    "14 06 2012"
+    "14 June 2012"
   ],
   claim_tenancy_agreement_reissued_for_same_property: [
     "Agreement reissued for same property",
@@ -114,7 +114,7 @@
   ],
   claim_deposit_information_given_date: [
     "Date defendant was informed",
-    "12 03 2004"
+    "12 March 2004"
   ],
   claim_fee_court_fee: [
     "Court fee",

@@ -86,11 +86,11 @@
   ],
   claim_notice_date_served: [
     "Date notice served",
-    "04 01 2014"
+    "04 January 2014"
   ],
   claim_notice_expiry_date: [
     "Date notice ended",
-    "04 03 2014"
+    "04 March 2014"
   ],
   claim_tenancy_tenancy_type: [
     "Type of tenancy agreement",
@@ -102,7 +102,7 @@
   ],
   claim_tenancy_start_date: [
     "Start date of the tenancy agreement",
-    "27 02 1997"
+    "27 February 1997"
   ],
   claim_tenancy_assured_shorthold_tenancy_notice_served_by: [
     "Assured shorthold tenancy notice served by",
@@ -110,7 +110,7 @@
   ],
   claim_tenancy_assured_shorthold_tenancy_notice_served_date: [
     "Assured shorthold tenancy notice served date",
-    "24 05 2010"
+    "24 May 2010"
   ],
   claim_license_multiple_occupation: [
     "HMO licence held",
@@ -126,7 +126,7 @@
   ],
   claim_license_issued_date: [
     "Issued date",
-    "15 06 2010"
+    "15 June 2010"
   ],
   claim_deposit_received: [
     "Deposit paid",
@@ -142,7 +142,7 @@
   ],
   claim_deposit_information_given_date: [
     "Date defendant was informed",
-    "27 02 1997"
+    "27 February 1997"
   ],
   claim_fee_court_fee: [
     "Court fee",
