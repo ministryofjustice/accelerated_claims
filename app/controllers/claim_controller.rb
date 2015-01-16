@@ -35,26 +35,21 @@ class ClaimController < ApplicationController
   end
 
   def confirmation
-
     @claim = session[:claim]
-    if @claim.nil?
-      redirect_to_with_protocol(:new)
+
+    return redirect_to_with_protocol(:new) if @claim.nil?
+
+    claim_object = Claim.new(@claim)
+
+    if claim_object.valid?
+      update_defendant_inhabits(claim_object)
+      @claim['fee']['account'] = claim_object.fee.account # set zero-padded account number
+      @page_title = 'Make a claim to evict tenants: accelerated possession'
     else
-      claim_object = Claim.new(@claim)
-
-      if claim_object.valid?
-        (1..claim_object.num_defendants).each do |i|
-          @claim["defendant_#{i}"]['inhabits_property'] = claim_object.defendants[i].inhabits_property
-        end
-        @claim['fee']['account'] = claim_object.fee.account # set zero-padded account number
-        @page_title = 'Make a claim to evict tenants: accelerated possession'
-      else
-        redirect_to_with_protocol(:new)
-      end
-      @claim = PostcodeNormalizer.new(@claim).normalize
-
+      redirect_to_with_protocol(:new)
     end
 
+    @claim = PostcodeNormalizer.new(@claim).normalize
   end
 
   def download
@@ -109,7 +104,11 @@ class ClaimController < ApplicationController
   end
 
   private
-
+  def update_defendant_inhabits(claim_object)
+    (1..claim_object.num_defendants).each do |i|
+      @claim["defendant_#{i}"]['inhabits_property'] = claim_object.defendants[i].inhabits_property
+    end
+  end
   # only record a fee_account_num event if the property postcode is NOT the same as the previous download in this session
   def log_fee_account_num_usage
     if session[:fee_account_num_logged].nil?  || (session[:fee_account_num_logged] != session[:claim][:property][:postcode])
