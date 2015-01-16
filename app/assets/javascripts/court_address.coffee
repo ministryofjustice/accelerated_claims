@@ -41,6 +41,7 @@ CourtAddressModule =
     $("#court-address").hide()
 
   blankFormFields: ->
+    $('#claim_court_default').val('false')
     for field in CourtAddressModule.courtFields()
       $(field).val('') if $(field).not(':visible')
       CourtAddressModule.changeElement('#' + $(field).attr('id'), 'input', "<input type='text'></input>")
@@ -52,6 +53,7 @@ CourtAddressModule =
         CourtAddressModule.lookUpCourt()
         $('#court-address').hide()
         CourtAddressModule.hideCourtAddressInputFields()
+        $('#claim_court_default').val('true')
         $('#court-details').parent().removeClass('open')
       else
         CourtAddressModule.populateCourtAddressForm('', '', '')
@@ -76,6 +78,7 @@ CourtAddressModule =
     if CourtAddressModule.courtFormHasErrors()==false || $('#court-address').is(':hidden')
       CourtAddressModule.populateCourtAddressForm(court_name, court_street, court_postcode)
       CourtAddressModule.hideCourtAddressInputFields()
+      $('#claim_court_default').val('true')
     CourtAddressModule.linkForFormToggling()
     CourtAddressModule.labelForKnownCourt()
 
