@@ -12,7 +12,7 @@ class ClaimantContact < BaseClass
   attr_accessor :fax
   attr_accessor :dx_number
 
-  delegate :street, :street=, :postcode, :postcode=, :indented_details, to: :address
+  delegate :street, :street=, :postcode, :postcode=, :indented_details, :manually_entered_address, :manually_entered_address=, to: :address
 
   validates :title, length: { maximum: 8 }
   validates :company_name, length: { maximum: 40 }
