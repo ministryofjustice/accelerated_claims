@@ -83,6 +83,6 @@
       = form.moj_date_fieldset  :demotion_order_date, 'Date of demotion order', class: 'date-picker'
       = form.text_field_row :demotion_order_court, label: 'Court where demotion order was made'
       = form.radio_button_fieldset :previous_tenancy_type,
-          'What kind of <a href="https://www.gov.uk/private-renting-tenancy-agreements/tenancy-types" class="external" rel="external" target="_blank">tenancy agreement</a> did the defendant have before it was demoted?',
+          "What kind of #{external_link('https://www.gov.uk/private-renting-tenancy-agreements/tenancy-types', 'tenancy agreement')} did the defendant have before it was demoted?",
           class: 'radio inline previous_tenancy_type',
           choice: [ Tenancy::ASSURED, Tenancy::SECURE, '' ]
