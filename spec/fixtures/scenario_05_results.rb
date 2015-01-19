@@ -1,7 +1,7 @@
 {
   Button94: nil,
   Button95: nil,
-  court_name: "court_name",
+  court_name: "Bournemouth and Poole County Court and Family Court",
   claimant_1_address: "Yammerton City Council\nCivic Centre, St. Peter's Square\nYammerton",
   claimant_1_postcode1: "AV1",
   claimant_1_postcode2: "1SH",

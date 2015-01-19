@@ -3,7 +3,7 @@
   Button94: nil,
   NameOfCourt: nil,
   ClaimNumber: nil,
-  court_name: "court_name",
+  court_name: "Bournemouth and Poole County Court and Family Court",
   claimant_1_address: "Mr  Joe Blow\n9 Made-up Lane\nAnytown",
   claimant_1_postcode1: "EY88",
   claimant_1_postcode2: "1ZZ",

@@ -1,8 +1,8 @@
 class Address < BaseClass
 
   attr_reader    :england_and_wales_only, :must_be_blank
-  attr_accessor  :postcode, :street, :absence_validation_message
-  attr_accessor  :use_live_postcode_lookup
+  attr_writer    :postcode
+  attr_accessor  :street, :absence_validation_message, :use_live_postcode_lookup
 
   # Instantiate and Address object
   #
@@ -11,6 +11,16 @@ class Address < BaseClass
     @england_and_wales_only = false
     @must_be_blank          = false
     @suppress_validation    = false
+  end
+
+  def postcode
+    if @postcode.present?
+      pc = UKPostcode.new(@postcode)
+      if pc.valid?
+        return pc.norm
+      end
+    end
+    @postcode
   end
 
   # forces validation of postcode to England and Wales only
@@ -46,7 +56,6 @@ class Address < BaseClass
     results << validate_postcode_in_england_or_wales if @england_and_wales_only
     results << validate_presence unless @must_be_blank
     results << validate_absence if @must_be_blank
-    results << validate_maximum_street_length
     results << validate_maximum_number_of_newlines
     valid = results.include?(false) ? false : true
     transfer_error_messages_to_parent unless valid
@@ -54,15 +63,7 @@ class Address < BaseClass
   end
 
   def ==(other)
-    other.street == @street && other.postcode == @postcode
-  end
-
-  def validate_maximum_street_length
-    if !@street.nil? && @street.length > 70
-      errors[:street] << "#{possessive_subject_description.capitalize} address is too long (maximum 70 characters)"
-      return false
-    end
-    return true
+    other.street == @street && other.postcode == postcode
   end
 
   def validate_maximum_number_of_newlines
