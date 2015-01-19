@@ -1,13 +1,21 @@
 class Court < BaseClass
 
-  attr_accessor :court_name
+  attr_accessor :court_name, :address
+
+  validate  :address_validation
   validates :court_name, presence: { message: 'You must enter the court’s name' }
 
-  attr_accessor :street
-  validates :street, presence: { message: 'You must enter the court’s address' }
+  delegate :street, :street=, :postcode, :postcode=, to: :address
 
-  attr_accessor :postcode
-  validates :postcode, presence: { message: 'You must enter the court’s postcode' }
+  def initialize(params = {})
+    @address = Address.new(self)
+    @address.england_and_wales_only!
+    super
+  end
+
+  def address_validation
+    @address.valid?
+  end
 
   attr_accessor :default
 

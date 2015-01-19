@@ -45,7 +45,6 @@ CourtAddressModule =
     $("#court-address").hide()
 
   blankFormFields: ->
-    $('#claim_court_default').val('false')
     for field in CourtAddressModule.courtFields()
       $(field).val('') if $(field).not(':visible')
       CourtAddressModule.changeElement('#' + $(field).attr('id'), 'input', "<input type='text'></input>")
@@ -57,7 +56,6 @@ CourtAddressModule =
         CourtAddressModule.populateCourtDetails()
         $('#court-address').hide()
         CourtAddressModule.hideCourtAddressInputFields()
-        $('#claim_court_default').val('true')
         $('#court-details').parent().removeClass('open')
       else
         CourtAddressModule.populateCourtAddressForm('', '', '')
@@ -82,7 +80,6 @@ CourtAddressModule =
     if CourtAddressModule.courtFormHasErrors()==false || $('#court-address').is(':hidden')
       CourtAddressModule.populateCourtAddressForm(court_name, court_street, court_postcode)
       CourtAddressModule.hideCourtAddressInputFields()
-      $('#claim_court_default').val('true')
     CourtAddressModule.linkForFormToggling()
     CourtAddressModule.labelForKnownCourt()
 
@@ -161,17 +158,29 @@ CourtAddressModule =
           submitted_court_name = $('#claim_court_court_name').val()
           submitted_court_street = $('#claim_court_street').val()
           submitted_court_postcode = $('#claim_court_postcode').val()
+<<<<<<< HEAD
           if data[0] != undefined
             default_court_name = data[0].name
             default_court_street = data[0].address.address_lines.toString()
             default_court_postcode = data[0].address.postcode
-            CourtAddressModule.courtData = data
             if default_court_name != submitted_court_name || default_court_street != submitted_court_street || default_court_postcode != submitted_court_postcode
               CourtAddressModule.changeElement('#claim_court_court_name', 'input', "<input type='text'></input>")
               CourtAddressModule.changeElement('#claim_court_postcode', 'input', "<input type='text'></input>")
               CourtAddressModule.changeInputFieldToTextarea()
               $('#court-details').parent().addClass('open')
               $('#court-address').show()
+=======
+          default_court_name = data[0].name
+          default_court_street = data[0].address.address_lines.toString()
+          default_court_postcode = data[0].address.postcode
+          CourtAddressModule.courtData = data
+          if default_court_name != submitted_court_name || default_court_street != submitted_court_street || default_court_postcode != submitted_court_postcode
+            CourtAddressModule.changeElement('#claim_court_court_name', 'input', "<input type='text'></input>")
+            CourtAddressModule.changeElement('#claim_court_postcode', 'input', "<input type='text'></input>")
+            CourtAddressModule.changeInputFieldToTextarea()
+            $('#court-details').parent().addClass('open')
+            $('#court-address').show()
+>>>>>>> master
         error: (jqXHR, textStatus, errorThrown) ->
           CourtAddressModule.displayNoResultsFound()
       )

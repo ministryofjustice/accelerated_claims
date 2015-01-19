@@ -130,14 +130,14 @@
   ],
   claim_court_name: [
     "Name",
-    "court_name"
+    "Bournemouth and Poole County Court and Family Court"
   ],
   claim_court_address: [
     "Address",
-    "court_street"
+    "Bournemouth and Poole County Court and Family Court hearing centre Courts of Justice Deansleigh Road BOURNEMOUTH"
   ],
   claim_court_postcode: [
     "Postcode",
-    "postcode"
+    "BH7 7DS"
   ]
 }

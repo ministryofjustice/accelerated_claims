@@ -10,7 +10,7 @@ describe 'Address', :type => :model do
 
     it 'should extract street and postcode params from a bigger set of params' do
       expect(address.street).to eq 'my street'
-      expect(address.postcode).to eq 'sw109lb'
+      expect(address.postcode).to eq 'SW10 9LB'
     end
 
     it 'should set must be blank to false by default' do
