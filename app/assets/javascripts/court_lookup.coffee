@@ -10,10 +10,10 @@ CourtLookup =
     myUrl =  window.location.pathname + separator + "court-address/#{postcode}"
     jQuery.ajax( myUrl,
       success: (data) ->
-        view.populateCourtDetails(data)
+        view.courtData = data
+        view.populateCourtDetails()
       error: (jqXHR, textStatus, errorThrown) ->
         view.displayNoResultsFound()
     )
 
 root.CourtLookup = CourtLookup
-
