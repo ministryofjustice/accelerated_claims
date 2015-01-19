@@ -1,8 +1,8 @@
 class Address < BaseClass
 
-  attr_reader    :england_and_wales_only
-  attr_accessor  :postcode, :street, :absence_validation_message, :must_be_blank, :manually_entered_address
-  attr_accessor  :use_live_postcode_lookup
+  attr_reader    :england_and_wales_only, :must_be_blank
+  attr_writer    :postcode
+  attr_accessor  :street, :absence_validation_message, :use_live_postcode_lookup, :manually_entered_address
 
   # Instantiate an Address object
   #
@@ -11,6 +11,16 @@ class Address < BaseClass
     @england_and_wales_only = false
     @must_be_blank          = false
     @suppress_validation    = false
+  end
+
+  def postcode
+    if @postcode.present?
+      pc = UKPostcode.new(@postcode)
+      if pc.valid?
+        return pc.norm
+      end
+    end
+    @postcode
   end
 
   # forces validation of postcode to England and Wales only
@@ -54,7 +64,7 @@ class Address < BaseClass
   end
 
   def ==(other)
-    other.street == @street && other.postcode == @postcode
+    other.street == @street && other.postcode == postcode
   end
 
   def validate_street_length

@@ -1,7 +1,7 @@
 {
   Button94: nil,
   Button95: nil,
-  court_name: "court_name",
+  court_name: "Bournemouth and Poole County Court and Family Court",
   claimant_1_address: "Mr Mark Ateer\n26 Heath St\nAnytown",
   claimant_1_postcode1: "FX9",
   claimant_1_postcode2: "1XX",
