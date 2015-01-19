@@ -344,6 +344,10 @@ def raw_claim_params
      "information_given_date(3i)"=>"1",
      "information_given_date(2i)"=>"January",
      "information_given_date(1i)"=>"2002"},
+   "court" =>
+    {"court_name"=>"Good Court",
+     "street"=>"1 Good Road, Goodtown",
+     "postcode"=>"GT1 2XX"},
    "fee"=>{"court_fee"=>"280", "account"=>"0000001234"},
    "legal_cost"=>{"legal_costs"=>""},
    "order"=>{"cost"=>"No"},
@@ -638,6 +642,10 @@ def normalized_params
      "information_given_date(3i)"=>"1",
      "information_given_date(2i)"=>"January",
      "information_given_date(1i)"=>"2002"},
+ "court" =>
+    {"court_name"=>"Good Court",
+     "street"=>"1 Good Road, Goodtown",
+     "postcode"=>"GT1 2XX"},
    "fee"=>{"court_fee"=>"280", "account"=>"0000001234"},
    "legal_cost"=>{"legal_costs"=>""},
    "order"=>{"cost"=>"No"},
