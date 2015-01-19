@@ -3,7 +3,7 @@
     %h3#page-error-heading You need to fix the errors on this page before continuing.
 
     %p See highlighted errors below.
-
+    %span.visuallyhidden Errors are listed as links below, click to select the field that needs correcting.
     %ul
       - @error_messages.each do |field, message|
         %li
