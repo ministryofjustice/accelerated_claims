@@ -11,7 +11,7 @@ describe 'CourtLookup', ->
 
       view = jasmine.createSpyObj('view', ['populateCourtDetails'])
       CourtLookup.lookup 'SW16AJ', view
-      expect(view.populateCourtDetails).toHaveBeenCalledWith('dummy')
+      expect(view.populateCourtDetails).toHaveBeenCalledWith()
 
   describe 'lookup fails', ->
     it 'should call displayNoResultsFound on view', ->
