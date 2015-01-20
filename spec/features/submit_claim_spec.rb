@@ -35,7 +35,7 @@ feature "submit claim" do
 
         summary_values = find_summary_values page, data_file
         summary_values.delete(:claim_property_use_live_postcode_lookup)
-        summary_values.delete_if{ |key, value| key.to_s =~ /_manually_entered_address$/ }
+        summary_values.delete_if{ |key, _| key.to_s =~ /_manually_entered_address$/ }
         expected_summary_values = load_expected_summary_values data_file
 
         expect(summary_values.size).to eq(expected_summary_values.size),

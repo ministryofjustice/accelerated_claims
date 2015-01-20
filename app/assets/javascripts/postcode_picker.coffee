@@ -121,7 +121,7 @@ class PostcodePicker
     result
 
   streetAndPostcodeAlreadyEntered: =>
-    @picker.find('input.postcode').val() != '' && @picker.find('.street textarea').val() != ''
+    @picker.find('input.postcode').val() != '' && @addressBox.val() != ''
 
   addressSuccessfullySelectedOnPreviousPage: =>
     @picker.find('input.postcode').val() != ''
@@ -148,7 +148,7 @@ class PostcodePicker
       selectedAddress = @addresses[index]
       street = selectedAddress.address.replace(/;;/g, "\n")
       postcode = selectedAddress.postcode
-      @picker.find('.street textarea').val(street)
+      @addressBox.val(street)
       @picker.find('.address-postcode input').val(postcode)
       @picker.find('.address-postcode input').trigger('change')
       @picker.find('.address-postcode input').attr('readonly', '1')
@@ -158,7 +158,7 @@ class PostcodePicker
       @picker.find('.postcode-display').hide()
       @hideManualLink()
       @picker.find('.change-postcode-link').css('display', 'inline')
-      @picker.find('.street textarea').focus()
+      @addressBox.focus()
 
   handleSuccessfulResponse: (response) ->
     if response.code == 2000
@@ -212,7 +212,7 @@ class PostcodePicker
   displayAddressFields: ->
     @picker.find('.address').show()
     @picker.find('.postcode-picker-manual-link').parent().addClass('open')
-    @picker.find('.street textarea').focus()
+    @addressBox.focus()
 
   displayInvalidPostcodeMessage: ->
     @addErrorMessage("Please enter a valid postcode in " + @valid_countries)
