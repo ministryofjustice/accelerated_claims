@@ -10,6 +10,7 @@ class PostcodePicker
     @button             = picker.find('.postcode-picker-button')                # The find address button
     @input              = picker.find('.postcode-picker-edit-field')            # The edit box where the postcode is entered
     @valid_countries    = @normalizeCountry(@picker.data('vc'))                 # The list of valid countries for this picker
+    @addressBox         = picker.find('.street textarea')
     manualLink          = picker.find('.postcode-picker-manual-link')           # The link to enter an address manually
     selectButton        = picker.find('.postcode-picker-cta')                   # The select address button
     changePostcodeLink  = picker.find('.change-postcode-link')                  # The Change link displayed after the address has been selected
@@ -31,6 +32,9 @@ class PostcodePicker
 
     if @streetAndPostcodeAlreadyEntered()
       @picker.find('.address-postcode input').attr('readonly', '1')             # Make the postcode box of the displayed address uneditable
+
+    @addressBox.on 'keypress', =>
+      @setManualEntryFlag()
 
     @button.on 'click', =>
       @lookupPostcode()
