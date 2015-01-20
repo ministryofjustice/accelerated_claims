@@ -50,6 +50,7 @@ describe 'PostcodePicker', ->
       Enter address manually
     </a>
   </div>
+  <input class='manual_entry_flag' id='claim_property_manual_entry' name='claim[property][manual_entry]' type='hidden' value='1'>
   <div class="address extra no sub-panel hide" style="margin-top: 10px;">
     <div class="row street">
       <label for="claim_property_street">
@@ -240,6 +241,9 @@ describe 'PostcodePicker', ->
     it 'should mark the postcode field as readonly', ->
       expect( @picker.find('#claim_property_postcode')).toHaveAttr('readonly', 'readonly')
 
+    it 'calls unsetManualEntryFlag', ->
+      expect( @picker.find('.manual_entry_flag').val()).toEqual '0'
+
   describe 'pressing enter (which 13) in select address list', ->
     it 'calls selectAddress()', ->
       @view.handleSuccessfulResponse(@results)
@@ -272,6 +276,15 @@ describe 'PostcodePicker', ->
       expect(@picker.find('.postcode-display').css('display')).toEqual('block')
       @picker.find('.change-postcode-link2').trigger('click')
       expect(@picker.find('.postcode-display').hasClass('hide')).toBe true
+
+    it 'should set manual_entry_flag to 1', ->
+      @picker.find('.change-postcode-link2').trigger('click')
+      expect(@picker.find('.manual_entry_flag').val()).toEqual('1')
+
+  describe 'clicking on change_postcode_link', ->
+    it 'should set the manual entry flag to 1', ->
+      @picker.find('.change-postcode-link').trigger('click')
+      expect(@picker.find('.manual_entry_flag').val()).toEqual('1')
 
   describe 'displaying results after selection', ->
     beforeEach ->
@@ -313,3 +326,13 @@ describe 'PostcodePicker', ->
 
     it 'should return England, Wales, Channel Islands, Northern Ireland and Isle of Man', ->
       expect(@view.normalizeCountry('england+wales+channel_islands+northern_ireland+isle_of_man')).toEqual 'England, Wales, Channel Islands, Northern Ireland and Isle of Man'
+
+  describe 'setManualEntryFlag', ->
+    it 'should set the manual entry flag', ->
+      @view.setManualEntryFlag()
+      expect(@picker.find('.manual_entry_flag').val()).toEqual '1'
+
+  describe 'unsetManualEntryFlag', ->
+    it 'should unset the manual entry flag', ->
+      @view.unsetManualEntryFlag()
+      expect(@picker.find('.manual_entry_flag').val()).toEqual '0'

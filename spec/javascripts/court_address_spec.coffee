@@ -2,6 +2,7 @@
 //= require jquery
 //= require jasmine-jquery
 //= require court_address
+//= require court_lookup
 
 enterPostcode = (postcode) ->
   postcode_field = $('#claim_property_postcode')
@@ -76,7 +77,6 @@ describe 'CourtAddressModule', ->
           window.CourtAddressModule.enableTogglingOfCourtAddressForm()
 
         it 'should be a textarea', ->
-          $('#court-details').trigger 'click'
           street_field = $('#claim_court_street').prop('tagName').toLowerCase()
           expect(street_field).toEqual('textarea')
 
@@ -113,9 +113,9 @@ describe 'CourtAddressModule', ->
         expect(street_field).toEqual('input')
 
       it 'should try to re-populate the court address', ->
-        spyOn(window.CourtAddressModule, 'lookUpCourt')
+        spyOn(window.CourtAddressModule, 'populateCourtDetails')
         $('#court-details').trigger 'click'
-        expect(window.CourtAddressModule.lookUpCourt).toHaveBeenCalled()
+        expect(window.CourtAddressModule.populateCourtDetails).toHaveBeenCalled()
 
     describe 'with no postcode provided', ->
       it 'should not do Court address lookup', ->

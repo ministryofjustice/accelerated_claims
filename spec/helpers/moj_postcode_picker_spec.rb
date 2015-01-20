@@ -72,6 +72,7 @@ describe 'MojPostcodePicker' do
       allow(object).to receive(:postcode).and_return('RG2 7PU')
       allow(object).to receive(:street).and_return("50 Tregunter Road\r\nLondon")
       allow(object).to receive(:errors).and_return( {:street => [], :postcode => [] } )
+      allow(form).to receive(:hidden_field).and_return(hidden_field_tag_html)
 
       mpp = MojPostcodePicker.new(form, prefix: 'claim_property', address_attr: 'street')
       expect(squeeze(mpp.emit)).to eq expected_output
@@ -102,6 +103,10 @@ describe 'MojPostcodePicker' do
 
   end
 
+end
+
+def hidden_field_tag_html
+  %q/<input class="manual_entry_flag" id="claim_property_manually_entered_address" name="claim[property][manually_entered_address]" type="hidden" value="1">/
 end
 
 def expected_output
@@ -144,13 +149,14 @@ def expected_output
       Enter address manually
     </a>
   </div>
+  <input class="manual_entry_flag" id="claim_property_manually_entered_address" name="claim[property][manually_entered_address]" type="hidden" value="1">
   <div class='address extra no sub-panel hide' style='margin-top: 10px;'>
     <div class='form-group street'>
       <label for='claim_property_street'>
         Full address
 
       </label>
-      <textarea class='street' id='claim_property_street' maxlength='70' name='claim[property][street]'>50 Tregunter Road&#x000A;London</textarea>
+      <textarea class='street' id='claim_property_street' maxlength='140' name='claim[property][street]'>50 Tregunter Road&#x000A;London</textarea>
     </div>
     <div class='js-only'>
       <div class='hide' id='claim_property_street-error-message'>

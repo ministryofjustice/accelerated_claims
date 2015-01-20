@@ -61,8 +61,7 @@ feature 'Court address lookup' do
           end
 
           before {
-            allow_any_instance_of(Courtfinder::Client::HousingPossession).to \
-              receive(:get).and_return(court_data)
+            expect_any_instance_of(Courtfinder::Client::HousingPossession).to receive(:get).and_return(court_data)
           }
 
           scenario 'should display the court name', js: true do
@@ -91,8 +90,7 @@ feature 'Court address lookup' do
               find('form#claimForm') # ensure form page loaded
 
               # click 'Change' to change the postcode for the property
-              page.find(:xpath, '//*[@id="property"]/div/div[3]/div[3]/div/a').click
-
+              page.find('#property a.change-postcode-link').click
               fill_text_field 'claim_property_postcode_edit_field', 'W93XX'
               click_link 'Find address'
               click_button 'Continue'

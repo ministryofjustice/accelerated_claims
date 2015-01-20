@@ -3,7 +3,7 @@
   Button94: nil,
   NameOfCourt: nil,
   ClaimNumber: nil,
-  court_name: "court_name",
+  court_name: "Bournemouth and Poole County Court and Family Court",
   claimant_1_address: "Mrs Shirley Williams\n38 Llanwrchgog St\nCaedffyn",
   claimant_1_postcode1: "GO31",
   claimant_1_postcode2: "1RJ",

@@ -236,6 +236,18 @@
     post_town: LONDON
     postcode: WC1B 5HA
     country: England
+  - line_1: The Sanctuary Registered Charity
+    line_2: St. Vincents Community Centre
+    line_3: Talma Road
+    post_town: LONDON
+    postcode: SW2 1AS
+    country: England
+  - line_1: The Unlimited Society of World War I and World War II Veterans
+    line_2: St. Vincent of Santa Maria di Santiago di Compostela Community Centre
+    line_3: 198 Northumberland Avenue
+    post_town: LONDON
+    postcode: SW2 1AS
+    country: England
 -
   - line_1: "134, Corstorphine Road"
     post_town: "EDINBURGH"
