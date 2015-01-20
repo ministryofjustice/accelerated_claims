@@ -87,6 +87,11 @@ class ClaimController < ApplicationController
   end
 
   private
+  def update_defendant_inhabits(claim_object)
+    (1..claim_object.num_defendants).each do |i|
+      @claim["defendant_#{i}"]['inhabits_property'] = claim_object.defendants[i].inhabits_property
+    end
+  end
 
   def get_claim_for_journey
     force_reload = params.has_key?(:reload)

@@ -63,7 +63,8 @@
       locals: { section: 'possession', label: 'hearing', value: @claim['possession']['hearing'] }
       = render partial: 'field_summary',
       locals: { section: 'court', label: 'name', value: @claim['court']['court_name'] }
-      = render partial: 'field_summary',
-      locals: { section: 'court', label: 'address', value: @claim['court']['street'] }
-      = render partial: 'field_summary',
-      locals: { section: 'court', label: 'postcode', value: @claim['court']['postcode'] }
+      - if @claim['court']['default']!='true'
+        = render partial: 'field_summary',
+        locals: { section: 'court', label: 'address', value: @claim['court']['street'] }
+        = render partial: 'field_summary',
+        locals: { section: 'court', label: 'postcode', value: @claim['court']['postcode'] }

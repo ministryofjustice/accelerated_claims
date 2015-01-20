@@ -147,6 +147,6 @@ module SummaryHelper
   end
 
   def date_value label, values
-    [values["#{label}(3i)"], values["#{label}(2i)"], values["#{label}(1i)"] ].join(' ')
+    [values["#{label}(3i)"], Date::MONTHNAMES[values["#{label}(2i)"].to_i], values["#{label}(1i)"]].join(' ')
   end
 end

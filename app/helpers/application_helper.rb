@@ -29,6 +29,10 @@ module ApplicationHelper
     end
   end
 
+  def external_link(url, text)
+    %[<a href='#{url}' class='external' rel='external' target='_blank' alt='External link, opens in new window'>#{text}</a>].html_safe
+  end
+
   def add_optional text
     %[#{text}<span class="hint"> (optional)</span>].html_safe
   end

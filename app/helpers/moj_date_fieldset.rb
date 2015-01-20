@@ -8,12 +8,14 @@ class MojDateFieldset
   @@div_classes = {
     :day            => 'form-group form-group-day',
     :long_monthname => 'form-group form-group-month',
+    :month          => 'form-group form-group-month',
     :year           => 'form-group form-group-year'
   }
 
   @@div_labels = {
     :day            => 'Day',
     :long_monthname => 'Month',
+    :month          => 'Month',
     :year           => 'Year'
   }
 
@@ -57,7 +59,7 @@ class MojDateFieldset
         html = %[
           <div class="form-date">
             #{div_and_label_for(date_form, :day, default_day_options.merge(@passed_in_day_options))}
-            #{div_and_label_for(date_form, :long_monthname, default_month_options.merge(@passed_in_month_options))}
+            #{div_and_label_for(date_form, :month, default_month_options.merge(@passed_in_month_options))}
             #{div_and_label_for(date_form, :year, default_year_options.merge(@passed_in_year_options))}
           </div>
           ]

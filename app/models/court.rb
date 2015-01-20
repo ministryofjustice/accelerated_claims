@@ -17,6 +17,8 @@ class Court < BaseClass
     @address.valid?
   end
 
+  attr_accessor :default
+
   def as_json
     {
       'name' => court_name,

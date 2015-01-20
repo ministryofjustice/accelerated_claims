@@ -94,11 +94,11 @@
   ],
   claim_notice_date_served: [
     "Date notice served",
-    "13 12 2013"
+    "13 December 2013"
   ],
   claim_notice_expiry_date: [
     "Date notice ended",
-    "13 02 2014"
+    "13 February 2014"
   ],
   claim_tenancy_tenancy_type: [
     "Type of tenancy agreement",
@@ -110,7 +110,7 @@
   ],
   claim_tenancy_start_date: [
     "Start date of the tenancy agreement",
-    "08 04 1999"
+    "08 April 1999"
   ],
   claim_license_multiple_occupation: [
     "HMO licence held",
