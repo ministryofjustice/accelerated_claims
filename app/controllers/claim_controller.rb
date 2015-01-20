@@ -8,73 +8,49 @@ class ClaimController < ApplicationController
 
     @page_title = 'Make a claim to evict tenants: accelerated possession'
 
-    @date_select_options = {
-      order: [:day, :month, :year],
-      with_css_classes: true,
-      prompt: { day: 'Day', month: 'Month', year: 'Year' },
-      start_year: Date.today.year,
-      end_year: Tenancy::APPLICABLE_FROM_DATE.year
-    }
-    @claim = if !@production && params.has_key?(:journey)
-      force_reload = params.has_key?(:reload)
+    @date_select_options = get_date_select_options
 
-      require 'fixture_data'
-      journey_id = params[:journey].to_i
-      claim_data = FixtureData.data(force_reload).params_data_for(journey_id)
-      Claim.new(HashWithIndifferentAccess.new(claim_data))
-    elsif (data = session[:claim])
-      Claim.new(data).tap { |claim|
-        unless claim.valid?
-          @errors = claim.errors
-          @error_messages = claim.error_messages
+    @claim =
+        if has_journey
+          get_claim_for_journey
+        elsif session[:claim]
+          get_claim_from_session
+        else
+          Claim.new
         end
-      }
-    else
-      Claim.new
-    end
   end
 
   def confirmation
-
     @claim = session[:claim]
-    if @claim.nil?
-      redirect_to_with_protocol(:new)
+
+    return redirect_to_with_protocol(:new) if @claim.nil?
+
+    claim_object = Claim.new(@claim)
+
+    if claim_object.valid?
+      update_defendant_inhabits(claim_object)
+      @claim['fee']['account'] = claim_object.fee.account # set zero-padded account number
+      @page_title = 'Make a claim to evict tenants: accelerated possession'
     else
-      claim_object = Claim.new(@claim)
-
-      if claim_object.valid?
-        (1..claim_object.num_defendants).each do |i|
-          @claim["defendant_#{i}"]['inhabits_property'] = claim_object.defendants[i].inhabits_property
-        end
-        @claim['fee']['account'] = claim_object.fee.account # set zero-padded account number
-        @page_title = 'Make a claim to evict tenants: accelerated possession'
-      else
-        redirect_to_with_protocol(:new)
-      end
-      @claim = PostcodeNormalizer.new(@claim).normalize
-
+      redirect_to_with_protocol(:new)
     end
 
+    @claim = PostcodeNormalizer.new(@claim).normalize
   end
 
   def download
-    if session[:claim].nil?
-      msg = "User attempted to download PDF from an expired session - redirected to #{expired_path}"
-      redirect_to expired_path
-    else
-      @claim = Claim.new(session[:claim])
-      if @claim.valid?
-        log_fee_account_num_usage
-        flatten = Rails.env.test? || params[:flatten] == 'false' ? false : true
-        pdf = PDFDocument.new(@claim.as_json, flatten).fill
+    return redirect_to expired_path if session[:claim].nil?
 
-        ActiveSupport::Notifications.instrument('send_file') do
-          send_file(pdf.path, filename: "accelerated-claim.pdf", disposition: "inline", type: "application/pdf")
-        end
-      else
-        redirect_to_with_protocol :new
-      end
-    end
+    @claim = Claim.new(session[:claim])
+
+    return redirect_to_with_protocol :new if !@claim.valid?
+
+    log_fee_account_num_usage
+
+    flatten = in_test_or_flatten
+    pdf = PDFDocument.new(@claim.as_json, flatten).fill
+
+    send_pdf(pdf)
   end
 
   # Returns JSON formatted data which is passed for PDF generation.
@@ -92,9 +68,11 @@ class ClaimController < ApplicationController
   def submission
     params['claim']['use_live_postcode_lookup'] = @use_live_postcode_lookup
     session[:claim] = params['claim']
-    move_claimant_address_params_into_the_model
+
+    move_claimant_address_params_into_model
     move_defendant_address_params_into_model
-    @claim = Claim.new(params['claim'])
+
+    @claim = get_claim_from_params
 
     if @claim.valid?
       redirect_to_with_protocol :confirmation
@@ -110,19 +88,80 @@ class ClaimController < ApplicationController
 
   private
 
+  def get_claim_for_journey
+    force_reload = params.has_key?(:reload)
+    require 'fixture_data'
+    journey_id = params[:journey].to_i
+    claim_data = FixtureData.data(force_reload).params_data_for(journey_id)
+    Claim.new(HashWithIndifferentAccess.new(claim_data))
+  end
+
+  def get_claim_from_session
+    Claim.new(session[:claim]).tap do |claim|
+      unless claim.valid?
+        @errors = claim.errors
+        @error_messages = claim.error_messages
+      end
+    end
+  end
+
+  def get_claim_from_params
+    Claim.new(params['claim'])
+  end
+
+  def get_date_select_options
+    {
+      order: [:day, :month, :year],
+      with_css_classes: true,
+      prompt: { day: 'Day', month: 'Month', year: 'Year' },
+      start_year: Date.today.year,
+      end_year: Tenancy::APPLICABLE_FROM_DATE.year
+    }
+  end
+
+  def has_journey
+    !@production && params.has_key?(:journey)
+  end
+
+  def in_test_or_flatten
+    Rails.env.test? || params[:flatten] == 'false' ? false : true
+  end
+
   # only record a fee_account_num event if the property postcode is NOT the same as the previous download in this session
   def log_fee_account_num_usage
-    if session[:fee_account_num_logged].nil?  || (session[:fee_account_num_logged] != session[:claim][:property][:postcode])
-      LogStuff.info(:fee_account_num, present: @claim.fee.account.present?.to_s, ip: request.remote_ip) { "Fee Account Number Usage" }
-      session[:fee_account_num_logged] = session[:claim][:property][:postcode]
+    if check_for_session_fee_account
+      LogStuff.info(:fee_account_num,
+                    present: @claim.fee.account.present?.to_s,
+                    ip: request.remote_ip) { 'Fee Account Number Usage' }
+      set_postcode_from_session
     end
+  end
+
+  def set_postcode_from_session
+    session[:fee_account_num_logged] = session[:claim][:property][:postcode]
+  end
+
+  def check_for_session_fee_account
+    session[:fee_account_num_logged].nil? || session_fa_equals_postcode
+  end
+
+  def session_fa_equals_postcode
+    (session[:fee_account_num_logged] != session[:claim][:property][:postcode])
   end
 
   def set_production_status
     # set production to true if on production or staging - this is used to determine whether or not journey numbers are valid in the url
-    @production = ['staging', 'production'].include?(ENV["ENV_NAME"])
-    request_referrer_query_string = request.referrer ? URI(request.referrer).query : nil
-    @use_live_postcode_lookup = @production || params[:livepc] == '1' || request_referrer_query_string == 'livepc=1'
+    @production = ['staging', 'production'].include?(ENV['ENV_NAME'])
+    request_referrer_query_string = get_request_referrer
+    @use_live_postcode_lookup = use_live_pc(request_referrer_query_string)
+  end
+
+  def use_live_pc(request)
+    @production || params[:livepc] == '1' || request == 'livepc=1'
+  end
+
+  def get_request_referrer
+    request.referrer ? URI(request.referrer).query : nil
   end
 
   def move_defendant_address_params_into_model
@@ -135,13 +174,38 @@ class ClaimController < ApplicationController
     end
   end
 
-  def move_claimant_address_params_into_the_model
+  def move_claimant_address_params_into_model
     (2 .. ClaimantCollection.max_claimants).each do |i|
+      claim_key = "claimant_#{i}"
       key = "claimant#{i}address"
-      if params.key?(key) && params[key] == "yes"
-        params['claim']["claimant_#{i}"]['street'] = params['claim']['claimant_1']['street']
-        params['claim']["claimant_#{i}"]['postcode'] = params['claim']['claimant_1']['postcode']
+      if key_present_and_yes(key)
+        update_claimant_address(claim_key)
       end
+    end
+  end
+
+  def update_claimant_address(claim_key)
+    update_address_param claim_key, 'street'
+    update_address_param claim_key, 'postcode'
+  end
+
+  def update_address_param(claim_key, key)
+    params['claim'][claim_key][key] = params['claim']['claimant_1'][key]
+  end
+
+  def update_defendant_inhabits(claim_object)
+    (1..claim_object.num_defendants).each do |i|
+      @claim["defendant_#{i}"]['inhabits_property'] = claim_object.defendants[i].inhabits_property
+    end
+  end
+
+  def key_present_and_yes(key)
+    params.key?(key) && params[key] == 'yes'
+  end
+
+  def send_pdf(pdf)
+    ActiveSupport::Notifications.instrument('send_file') do
+      send_file(pdf.path, filename: 'accelerated-claim.pdf', disposition: 'inline', type: 'application/pdf')
     end
   end
 

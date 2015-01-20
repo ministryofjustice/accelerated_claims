@@ -160,12 +160,15 @@ class Tenancy < BaseClass
   end
 
   def only_start_date_present?
-    start_date.present? && \
-    (latest_agreement_date.blank? &&
-     agreement_reissued_for_same_property.blank? &&
-     agreement_reissued_for_same_landlord_and_tenant.blank? &&
-     assured_shorthold_tenancy_notice_served_by.blank? &&
-     assured_shorthold_tenancy_notice_served_date.blank?)
+    start_date.present? && all_blank?
+  end
+
+  def all_blank?
+    latest_agreement_date.blank? &&
+    agreement_reissued_for_same_property.blank? &&
+    agreement_reissued_for_same_landlord_and_tenant.blank? &&
+    assured_shorthold_tenancy_notice_served_by.blank? &&
+    assured_shorthold_tenancy_notice_served_date.blank?
   end
 
   def demoted_tenancy?
@@ -186,29 +189,34 @@ class Tenancy < BaseClass
 
   def as_json
     date = original_assured_shorthold_tenancy_agreement_date.present? ? original_assured_shorthold_tenancy_agreement_date : start_date
-    hash = {
-      "start_date_day" => day(date),
-      "start_date_month" => month(date),
-      "start_date_year" => year(date),
-      "demoted_tenancy" => format_tenancy_type,
-      "agreement_reissued_for_same_landlord_and_tenant" => agreement_reissued_for_same_landlord_and_tenant,
-      "agreement_reissued_for_same_property" => agreement_reissued_for_same_property,
-      "assured_shorthold_tenancy_notice_served_by" => assured_shorthold_tenancy_notice_served_by,
-      "latest_agreement_date_day" => day(latest_agreement_date),
-      "latest_agreement_date_month" => month(latest_agreement_date),
-      "latest_agreement_date_year" => year(latest_agreement_date),
-      'demotion_order_court' => short_court_name,
-      'previous_tenancy_type' => previous_tenancy_type,
-      'assured_shorthold_tenancy_type' => assured_shorthold_tenancy_type
-    }
+    hash = build_hash(date)
     hash.merge!(applicable_statements)
     split_date(:demotion_order_date, hash)
     split_date(:assured_shorthold_tenancy_notice_served_date, hash)
     split_date(:original_assured_shorthold_tenancy_agreement_date, hash)
+    split_date(:latest_agreement_date, hash)
+    # "latest_agreement_date_day" => day(latest_agreement_date),
+    #     "latest_agreement_date_month" => month(latest_agreement_date),
+    #     "latest_agreement_date_year" => year(latest_agreement_date),
     hash
   end
 
   private
+
+  def build_hash(date)
+    {
+        "start_date_day" => day(date),
+        "start_date_month" => month(date),
+        "start_date_year" => year(date),
+        "demoted_tenancy" => format_tenancy_type,
+        "agreement_reissued_for_same_landlord_and_tenant" => agreement_reissued_for_same_landlord_and_tenant,
+        "agreement_reissued_for_same_property" => agreement_reissued_for_same_property,
+        "assured_shorthold_tenancy_notice_served_by" => assured_shorthold_tenancy_notice_served_by,
+        'demotion_order_court' => short_court_name,
+        'previous_tenancy_type' => previous_tenancy_type,
+        'assured_shorthold_tenancy_type' => assured_shorthold_tenancy_type
+    }
+  end
 
   def applicable_statements
     {
@@ -246,18 +254,22 @@ class Tenancy < BaseClass
 
     if in_both_rules_periods?
       if confirmed_first_rules_period_applicable_statements == 'No'
-        errors.add(:confirmed_first_rules_period_applicable_statements, message)
+        add_error(:confirmed_first_rules_period_applicable_statements, message)
       end
       if confirmed_second_rules_period_applicable_statements == 'No'
-        errors.add(:confirmed_second_rules_period_applicable_statements, message)
+        add_error(:confirmed_second_rules_period_applicable_statements, message)
       end
     elsif applicable_statements_not_confirmed?
       if in_first_rules_period?
-        errors.add(:confirmed_first_rules_period_applicable_statements, message)
+        add_error(:confirmed_first_rules_period_applicable_statements, message)
       elsif in_second_rules_period?
-        errors.add(:confirmed_second_rules_period_applicable_statements, message)
+        add_error(:confirmed_second_rules_period_applicable_statements, message)
       end
     end
+  end
+
+  def add_error(object ,message)
+    errors.add(object, message)
   end
 
   def applicable_statements_not_confirmed?

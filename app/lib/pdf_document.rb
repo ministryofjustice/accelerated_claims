@@ -142,15 +142,21 @@ class PDFDocument
 
   def add_applicable_statement_strike_outs list
     1.upto(6) do |index|
-      if @json["tenancy_applicable_statements_#{index}"][/No/]
+      if statement_applicable(index)
         strike_out_paths(index).each do |line|
-          x = line[:x0]
-          y = line[:y]
-          x1 = line[:x1]
-          list << { page: 3, x: x, y: y, x1: x1, y1: 0, thickness: 1 }
+          list << { page: 3,
+                    x: line[:x0],
+                    y: line[:y],
+                    x1: line[:x1],
+                    y1: 0,
+                    thickness: 1 }
         end
       end
     end
+  end
+
+  def statement_applicable(index)
+    @json["tenancy_applicable_statements_#{index}"][/No/]
   end
 
   def add_previous_tenancy_type_strike_out list
@@ -184,7 +190,7 @@ class PDFDocument
     begin
       call_strike_through_service list, result_pdf, output_pdf
     rescue Faraday::ConnectionFailed, Errno::EPIPE, Exception => e
-      Rails.logger.warn "e: #{e.class}: #{e.to_s}:\n  #{e.backtrace[0..3].join("\n  ")}"
+      LogStuff.warn(:strike_through_error) { "e: #{e.class}: #{e.to_s}:\n  #{e.backtrace[0..3].join("\n  ")}" }
       use_strike_through_command list, result_pdf, output_pdf, 'error_add_strikes_commandline.pdf'
     end
 
@@ -192,10 +198,13 @@ class PDFDocument
       use_strike_through_command list, result_pdf, output_pdf, 'missing_file_add_strikes_commandline.pdf'
     end
 
-    if !Rails.env.test? || ENV['browser']
-      FileUtils.mv output_pdf.path, result_pdf.path
-    end
-    Rails.logger.debug "result_pdf: #{result_pdf.path} size: #{File.size?(result_pdf.path)}"
+    FileUtils.mv output_pdf.path, result_pdf.path if non_test_or_browser?
+
+    LogStuff.info(:strike_through, :debug) { "result_pdf: #{result_pdf.path} size: #{File.size?(result_pdf.path)}" }
+  end
+
+  def non_test_or_browser?
+    !Rails.env.test? || ENV['browser']
   end
 
   def call_strike_through_service list, result_pdf, output_pdf
@@ -217,7 +226,7 @@ class PDFDocument
   end
 
   def call_strike_through_command list, result_pdf, output_pdf
-    if !Rails.env.test? || ENV['browser']
+    if non_test_or_browser?
       strikes = nil
       ActiveSupport::Notifications.instrument('store_strikes.pdf') do
         strikes = Tempfile.new('strikes.json', '/tmp/')

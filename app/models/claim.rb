@@ -66,30 +66,21 @@ class Claim < BaseClass
 
     cs = ContinuationSheet.new(claimants.further_participants, defendants.further_participants)
     cs.generate
-    unless cs.empty?
-      json_in.merge!( cs.as_json )
-    end
+
+    json_in.merge!( cs.as_json ) unless cs.empty?
 
     json_out = {}
     json_in.each do |attribute, submodel_data|
       submodel_data.each do |key, value|
-        value = case value
-                when TrueClass
-                  'Yes'
-                when FalseClass
-                  'No'
-                else
-                  value
-                end
+        value = get_value(value)
         attribute = 'claimant_contact' if attribute[/reference_number|legal_cost/]
 
         json_out["#{attribute}_#{key}"] = value
       end
     end
 
-    add_fee_and_costs json_out
-    tenancy_agreement_status json_out
-    defendant_for_service json_out
+    add_external json_out
+
     json_out = StringNormalizer.hash_to_ascii(json_out)
     json_out
   end
@@ -117,26 +108,49 @@ class Claim < BaseClass
 
   private
 
+  def get_value(value)
+    case value
+      when TrueClass
+        'Yes'
+      when FalseClass
+        'No'
+      else
+        value
+    end
+  end
+
   # if the perform validation fails - then we need to return false tos that the errors get transfereed
 
   def transfer_errors_from_submodel_to_base(instance_var, model, options)
     unless send(instance_var).valid?
-      if options[:collection] == false || perform_collection_validation_for?(instance_var)
+      if error_collection(instance_var, options)
         errors = send(instance_var).errors
-          errors.each_with_index do |error, index|
-            attribute = error.first
-            if options[:collection] == false
-              key = "claim_#{instance_var}_#{attribute}_error"
-            else
-              key = "claim_#{attribute}_error"
-            end
-          @errors[:base] << [ key, error.last ]
+        errors.each_with_index do |error, index|
+          attribute = error.first
+          key = get_key(attribute, instance_var, options)
+          add_to_base_error key, error.last
         end
         result = false
       end
     end
 
     result
+  end
+
+  def add_to_base_error(key, value)
+    @errors[:base] << [key, value]
+  end
+
+  def get_key(attribute, instance_var, options)
+    if options[:collection] == false
+      "claim_#{instance_var}_#{attribute}_error"
+    else
+      "claim_#{attribute}_error"
+    end
+  end
+
+  def error_collection(instance_var, options)
+    options[:collection] == false || perform_collection_validation_for?(instance_var)
   end
 
   # Calls the method defined for this instance_var to determine whether the claim object is in a state where it is worth
@@ -150,11 +164,11 @@ class Claim < BaseClass
     if @claimant_type_valid_result.nil?
       @claimant_type_valid_result = true
       if @claimant_type.nil?
-        @errors[:base] << ['claim_claimant_type_error', 'Please select what kind of claimant you are']
+        add_to_base_error 'claim_claimant_type_error', 'Please select what kind of claimant you are'
         @claimant_type_valid_result = false
       else
         unless @@valid_claimant_types.include?(@claimant_type)
-          @errors[:base] << ['claim_claimant_type_error', 'You must specify a valid kind of claimant']
+          add_to_base_error 'claim_claimant_type_error', 'You must specify a valid kind of claimant'
           @claimant_type_valid_result = false
         end
       end
@@ -168,10 +182,10 @@ class Claim < BaseClass
       if @claimant_type.present?
         @num_claimants_valid_result = true
         if @num_claimants.nil? || @num_claimants == 0
-          @errors[:base] << ['claim_claimant_number_of_claimants_error', 'Please say how many claimants there are']
+          add_to_base_error 'claim_claimant_number_of_claimants_error', 'Please say how many claimants there are'
           @num_claimants_valid_result = false
         elsif @num_claimants > ClaimantCollection.max_claimants
-          @errors[:base] << ['claim_claimant_number_of_claimants_error', 'If there are more than 4 claimants in this case, you’ll need to complete your accelerated possession claim on the N5b form']
+          add_to_base_error 'claim_claimant_number_of_claimants_error', 'If there are more than 4 claimants in this case, you’ll need to complete your accelerated possession claim on the N5b form'
           @num_claimants_valid_result = false
         end
       end
@@ -183,16 +197,22 @@ class Claim < BaseClass
     if @num_defendants_valid_result.nil?
       max_num_defendants = DefendantCollection.max_defendants(js_enabled: @javascript_enabled)
       if @num_defendants.blank?
-        @errors[:base] << ['claim_defendant_number_of_defendants_error', 'Please say how many defendants there are']
+        add_to_base_error 'claim_defendant_number_of_defendants_error', 'Please say how many defendants there are'
         @num_defendants_valid_result = false
       elsif @num_defendants < 1 || @num_defendants > max_num_defendants
-        @errors[:base] << ['claim_defendant_number_of_defendants_error', "Please enter a valid number of defendants between 1 and #{max_num_defendants}"]
+        add_to_base_error 'claim_defendant_number_of_defendants_error', "Please enter a valid number of defendants between 1 and #{max_num_defendants}"
         @num_defendants_valid_result = false
       else
         @num_defendants_valid_result = true
       end
     end
     @num_defendants_valid_result
+  end
+
+  def add_external json_out
+    add_fee_and_costs json_out
+    tenancy_agreement_status json_out
+    defendant_for_service json_out
   end
 
   def add_fee_and_costs hash
