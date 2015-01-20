@@ -11,6 +11,7 @@ moj.Modules.tenancyModule = (function() {
       changeDate,
       checkDates,
       hideConditionals,
+      testStatements,
       resetHidden,
 
       //elements
@@ -102,20 +103,19 @@ moj.Modules.tenancyModule = (function() {
       }
     }
 
-    if( showOlder ) {
-      $( '.statements.older, .js-conditionals' ).show();
-    } else {
-      $( '.statements.older' ).hide().find( ':checked' ).attr( 'checked', false );
-    }
-
-    if( showCurrent ) {
-      $( '.statements.current, .js-conditionals' ).show();
-    } else {
-      $( '.statements.current' ).hide().find( ':checked' ).attr( 'checked', false );
-    }
+    testStatements(showOlder, '.statements.older');
+    testStatements(showCurrent, '.statements.current');
 
     if( !showOlder && !showCurrent ) {
       $( '.js-conditionals' ).hide();
+    }
+  };
+
+  testStatements = function(test, obj) {
+    if ( test ) {
+      $( obj + ', .js-conditionals' ).show();
+    } else {
+      $( obj ).hide().find( ':checked' ).attr( 'checked', false );
     }
   };
 

@@ -48,16 +48,15 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     translation_key = translation_key(attribute)
     raise "TBD: #{translation_key} #{options[:choice]}" if options[:choice].is_a?(Hash)
 
-    virtual_pageview = options[:data] ? options[:data].delete('virtual-pageview') : nil
+    virtual_pageview = get_virtual_pageview(options)
     input_class = options.delete(:input_class)
 
     set_class_and_id attribute, options
 
     options[:choice] ||= [ 'Yes', 'No' ]
 
-    options_class = options[:class][/inline/] ? 'inline' : 'options'
-
-    data_reverse = options.delete(:toggle_fieldset) ? ' data-reverse="true"' : ''
+    options_class = get_class(options)
+    data_reverse = get_data_reverse(options)
 
     fieldset_tag attribute, legend, options do
       @template.surround("<div class='#{options_class}'#{data_reverse}>".html_safe, "</div>".html_safe) do
@@ -150,6 +149,14 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   private
+
+  def get_data_reverse(options)
+    options.delete(:toggle_fieldset) ? ' data-reverse="true"' : ''
+  end
+
+  def get_class(options)
+    options[:class][/inline/] ? 'inline' : 'options'
+  end
 
   def fieldset attribute, options={}
     options.delete(:id) unless options[:id].present?
@@ -254,9 +261,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
     @template.surround("<div class='option'>".html_safe, "</div>".html_safe) do
       @template.surround("<label for='#{id}'>".html_safe, "</label>".html_safe) do
-        # errors = error_span(attribute, {hidden: true}) if error_for?(attribute)
         [
-          # errors,
           input,
           label
         ].compact.join("\n")
@@ -277,7 +282,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def row_input attribute, input, options
-    virtual_pageview = options[:data] ? options[:data].delete('virtual-pageview') : nil
+    virtual_pageview = get_virtual_pageview(options)
     css = "form-group #{css_for(attribute, options)}".strip
     id = id_for(attribute).blank? ? '' : "id='#{id_for(attribute)}' "
 
@@ -289,6 +294,10 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
       labelled_input attribute, input, input_options, options[:label]
     end
+  end
+
+  def get_virtual_pageview(options)
+    options[:data] ? options[:data].delete('virtual-pageview') : nil
   end
 
   def labelled_input attribute, input, input_options, label=nil
