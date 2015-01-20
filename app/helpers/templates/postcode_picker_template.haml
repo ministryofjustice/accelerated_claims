@@ -47,8 +47,9 @@
           %span.nonjs.hint (optional)
         = @street_hint
         - unless @form.object.errors[:street].empty?
-          %span.error Enter the full address
-
+          - @form.object.errors[:street].each do |error_message|
+            %span.error= error_message
+          
       %textarea.street{id: "#{@prefix}_#{@address_attr}", maxlength: "140", name: "#{@name}[street]"}
         = "#{@address_value}"
 
