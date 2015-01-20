@@ -12,7 +12,7 @@ class Claimant < BaseClass
   attr_accessor :claimant_type
   attr_accessor :address_same_as_first_claimant
 
-  delegate :street, :street=, :postcode, :postcode=, :indented_details, to: :address
+  delegate :street, :street=, :postcode, :postcode=, :indented_details, :manually_entered_address, :manually_entered_address=, to: :address
 
   validate :validate_claimant_state
   validates :claimant_num, presence: { message: 'Claimant number not specified' }, allow_nil: false

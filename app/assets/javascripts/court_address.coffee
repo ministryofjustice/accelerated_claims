@@ -36,7 +36,7 @@ CourtAddressModule =
 
   changeInputFieldToTextarea: ->
     CourtAddressModule.changeElement('#claim_court_street', 'input', '<textarea></textarea>')
-    $('#claim_court_street').attr('maxlength', 200)
+    $('#claim_court_street').attr('maxlength', 140)
 
   hideCourtAddressInputFields: ->
     for field in CourtAddressModule.courtFields()

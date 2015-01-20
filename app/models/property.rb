@@ -2,7 +2,7 @@ class Property < BaseClass
 
   attr_accessor   :house, :address
 
-  delegate :street, :street=, :postcode, :postcode=, to: :address
+  delegate :street, :street=, :postcode, :postcode=, :manually_entered_address, :manually_entered_address=, to: :address
 
   validates :house, presence: { message: 'Please select what kind of property it is' }, inclusion: { in: ['Yes', 'No'] }
   validate :address_validation

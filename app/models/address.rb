@@ -2,9 +2,9 @@ class Address < BaseClass
 
   attr_reader    :england_and_wales_only, :must_be_blank
   attr_writer    :postcode
-  attr_accessor  :street, :absence_validation_message, :use_live_postcode_lookup
+  attr_accessor  :street, :absence_validation_message, :use_live_postcode_lookup, :manually_entered_address
 
-  # Instantiate and Address object
+  # Instantiate an Address object
   #
   def initialize(parent)
     @parent                 = parent
@@ -57,6 +57,7 @@ class Address < BaseClass
     results << validate_presence unless @must_be_blank
     results << validate_absence if @must_be_blank
     results << validate_maximum_number_of_newlines
+    results << validate_street_length
     valid = results.include?(false) ? false : true
     transfer_error_messages_to_parent unless valid
     valid
@@ -64,6 +65,14 @@ class Address < BaseClass
 
   def ==(other)
     other.street == @street && other.postcode == postcode
+  end
+
+  def validate_street_length
+    if manually_entered_address == "1" && street.length > 140
+      errors.add(:street, "#{possessive_subject_description.capitalize} address can’t be longer than 140 characters")
+      return false
+    end
+    true
   end
 
   def validate_maximum_number_of_newlines

@@ -34,7 +34,9 @@
     %a.caption.postcode-picker-manual-link{ href: "##{@prefix}_postcode_picker_manual_link", id: "#{@prefix}_postcode_picker_manual_link", style: "margin-top: 20px;"}
       Enter address manually
 
-
+  
+  = @form.hidden_field :manually_entered_address, class: "manual_entry_flag", name: "#{@name}[manually_entered_address]" 
+  
   .address.extra.no.sub-panel.hide{style: "margin-top: 10px;"}
 
     - options = @form.object.errors[:street].any? ? {id: "#{@prefix}_#{@address_attr}_error", class: 'error'} : {}

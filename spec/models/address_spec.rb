@@ -2,7 +2,7 @@
 describe 'Address', :type => :model do
 
   let(:address)  do
-    claimant = Claimant.new(street: 'my street', age: 20, house: 'yes', postcode: 'sw109lb')
+    claimant = Claimant.new(street: 'my street', age: 20, house: 'yes', postcode: 'sw109lb', manually_entered_address: '1')
     address = claimant.address
   end
 
@@ -44,6 +44,32 @@ describe 'Address', :type => :model do
     it 'should pick up the class name if the parent object does not repond to subject description' do
       allow(address.instance_variable_get(:@parent)).to receive(:respond_to?).and_return(false)
       expect(address.possessive_subject_description).to eq "Claimant's"
+    end
+  end
+
+  describe 'length_validation' do
+    let(:long_street)   { "X" * 141 }
+    let(:short_street)  { "Z" * 140 }
+
+    context 'manually_entered_address' do
+
+      it 'should allow addresses shorter than 140 characters' do
+        claimant = Claimant.new(street: short_street, house: 'yes', postcode: 'sw109lb', manually_entered_address: '1')
+        expect(claimant.address.valid?).to be true
+      end
+
+      it 'should not allow addresses longer than 140 characters' do
+        claimant = Claimant.new(street: long_street, house: 'yes', postcode: 'sw109lb', manually_entered_address: '1')
+        expect(claimant.address.valid?).to be false
+        expect(claimant.address.errors.full_messages).to eq ["Street Claimant 's address can’t be longer than 140 characters"]
+      end
+    end
+
+    context 'postode-picker entered address' do
+      it 'should allow addresses of any length' do
+        claimant = Claimant.new(street: long_street, house: 'yes', postcode: 'sw109lb', manually_entered_address: '0')
+        expect(claimant.address.valid?).to be true
+      end
     end
   end
 

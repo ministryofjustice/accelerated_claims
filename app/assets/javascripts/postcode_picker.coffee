@@ -51,6 +51,7 @@ class PostcodePicker
       @clearPostcodeErrorMessage()
 
     selectButton.click (e) =>
+      @unsetManualEntryFlag()
       e.preventDefault()
       @selectAddress()
 
@@ -60,6 +61,7 @@ class PostcodePicker
         @selectAddress()
 
     changePostcodeLink.on 'click', =>
+      @setManualEntryFlag()
       @hideAddressFields()
       @showManualLink()
       @picker.find('.postcode-selection-els').show()
@@ -67,9 +69,16 @@ class PostcodePicker
       @input.focus()
 
     changePostcodeLink2.on 'click', =>
+      @setManualEntryFlag()
       @picker.find('.postcode-display').hide()
       @picker.find('.postcode-select-container').hide()
       @showPostcodeSearchComponent()
+
+  setManualEntryFlag: =>
+    @picker.find('.manual_entry_flag').val('1')
+
+  unsetManualEntryFlag: =>
+    @picker.find('.manual_entry_flag').val('0')
 
   enterPressed: (e) ->
     code = if e.keyCode then e.keyCode else e.which
