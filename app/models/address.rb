@@ -69,7 +69,7 @@ class Address < BaseClass
 
   def validate_street_length
     if manually_entered_address == "1" && street.length > 140
-      add_to_errors 'street', "#{possessive_subject_description.capitalize} address is too long (maximum 70 characters)"
+      add_to_errors 'street', "#{possessive_subject_description.capitalize} address can’t be longer than 140 characters"
       return false
     end
     true
