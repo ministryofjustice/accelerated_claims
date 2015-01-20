@@ -11,7 +11,7 @@ class Defendant < BaseClass
   attr_accessor :defendant_num
   attr_reader   :params
 
-  delegate :street, :street=, :postcode, :postcode=, :indented_details, to: :address
+  delegate :street, :street=, :postcode, :postcode=, :indented_details, :manually_entered_address, :manually_entered_address=, to: :address
 
   validates :title, length: { maximum: 8 }
   validates :full_name, length: { maximum: 40 }

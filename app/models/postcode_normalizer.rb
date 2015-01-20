@@ -4,7 +4,7 @@ class PostcodeNormalizer
 
   def initialize(claim_params)
     @claim_params      = claim_params
-    @submodel_names    = %w{ property defendant_collection claimant_collection claimant_contact }
+    @submodel_names    = %w{ property defendant_collection claimant_collection claimant_contact court }
 
   end
 
