@@ -15,7 +15,7 @@ describe 'ApplicationHelper', type: :helper  do
   describe 'external_link' do
     it 'should have set alt text' do
       link = helper.external_link 'http://www.text.com', 'test'
-      expect(link).to eq("<a href='http://www.text.com' class='external' rel='external' target='_blank' alt='External link, opens in new window'>test</a>")
+      expect(link).to eq("<a href='http://www.text.com' class='external' rel='external' target='_blank' title='External link, opens in new window'>test</a>")
     end
   end
 end
