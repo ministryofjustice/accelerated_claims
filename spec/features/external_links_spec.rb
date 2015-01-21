@@ -5,7 +5,7 @@ feature 'External links' do
   scenario 'anchor tags with target _blank should have alt text', js: true do
     visit '/'
     page.all(:xpath, "//a[@target = '_blank']").each do |link|
-      expect(link[:alt]).to eq('External link, opens in new window')
+      expect(link[:title]).to eq('External link, opens in new window')
     end
   end
 end
