@@ -30,7 +30,7 @@ module ApplicationHelper
   end
 
   def external_link(url, text)
-    %[<a href='#{url}' class='external' rel='external' target='_blank' alt='External link, opens in new window'>#{text}</a>].html_safe
+    %[<a href='#{url}' class='external' rel='external' target='_blank' title='External link, opens in new window'>#{text}</a>].html_safe
   end
 
   def add_optional text
