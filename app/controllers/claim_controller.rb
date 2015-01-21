@@ -30,6 +30,7 @@ class ClaimController < ApplicationController
     if claim_object.valid?
       update_defendant_inhabits(claim_object)
       @claim['fee']['account'] = claim_object.fee.account # set zero-padded account number
+      @claim = SummaryHashCleaner.new(@claim).clean
       @page_title = 'Make a claim to evict tenants: accelerated possession'
     else
       redirect_to_with_protocol(:new)
