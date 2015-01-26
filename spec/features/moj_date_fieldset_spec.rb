@@ -91,33 +91,33 @@ feature "moj date fieldset" do
   <div class="form-date">
     <div class="form-group form-group-day">
       <label for="claim_notice_date_served_3i">Day</label>
-      <input  class="#{input_class_prefix}-day#{input_class}"
+      <input  maxlength="2"
               id="claim_notice_date_served_3i"
-              maxlength="2"
               name="claim[notice][date_served(3i)]"
+              class="#{input_class_prefix}-day#{input_class}"
               #{input_options}
               size="2"
               type="text" />
     </div>
     <div class="form-group form-group-month">
       <label for="claim_notice_date_served_2i">Month</label>
-      <input  class="#{input_class_prefix}-month#{input_class}"
+      <input  maxlength="9"
               id="claim_notice_date_served_2i"
-              maxlength="9"
               name="claim[notice][date_served(2i)]"
+              class="#{input_class_prefix}-month#{input_class}"
               #{input_options}
               size="9"
               type="text" />
     </div>
     <div class="form-group form-group-year">
       <label for="claim_notice_date_served_1i">Year</label>
-      <input  class="#{input_class_prefix}-year#{input_class}"
-            id="claim_notice_date_served_1i"
-            maxlength="4"
-            name="claim[notice][date_served(1i)]"
-            #{input_options}
-            size="4"
-            type="text" />
+      <input maxlength="4"
+             id="claim_notice_date_served_1i"
+             name="claim[notice][date_served(1i)]"
+             class="#{input_class_prefix}-year#{input_class}"
+             #{input_options}
+             size="4"
+             type="text" />
     </div>
   </div>
 </fieldset>
