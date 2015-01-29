@@ -133,8 +133,7 @@ class DownloadScenarioData
 
   # TODO replace this temprorary URl with real one once testing done
   def self.get_download_url
-    # key = "0Arsa0arziNdndHlwM2xJMVl5Z3pDdFVOYnVsRmZST1E"
-    # "https://docs.google.com/spreadsheet/pub?key=#{key}&single=true&gid=0&output=csv"
-    "https://docs.google.com/a/digital.justice.gov.uk/spreadsheet/ccc?key=0Arsa0arziNdndHlwM2xJMVl5Z3pDdFVOYnVsRmZST1E&usp=sharing&output=csv"
+    key = "0Arsa0arziNdndHlwM2xJMVl5Z3pDdFVOYnVsRmZST1E"
+    "https://docs.google.com/spreadsheet/pub?key=#{key}&single=true&gid=0&output=csv"
   end
 end
