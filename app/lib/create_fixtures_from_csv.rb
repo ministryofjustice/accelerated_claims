@@ -93,7 +93,6 @@ class DataScenarioGenerator
     valid_rows
   end
 
-
   def countScenarios
     r = @rows[0] 
     col = @column_containing_first_journey 
@@ -111,14 +110,19 @@ class DownloadScenarioData
     url = get_download_url
     puts "Downloading: #{url}"
 
-    response = Excon.get(url, {
-      headers: {
-        "Accept" => "text/csv"
-      },
-      expects: [200],
-    })
-
-    write_csv_to_tempfile response.body
+    begin
+      response = Excon.get(url, {
+        headers: {
+          "Accept" => "text/csv"
+        },
+        expects: [200],
+      })
+      write_csv_to_tempfile response.body
+    rescue
+      puts 'Error downloading spreadsheet, loading local copy'
+      file_path = Rails.root.join('lib', 'assets', 'source_data.csv')
+      file_path
+    end
   end
 
   def self.write_csv_to_tempfile(csv_data)
