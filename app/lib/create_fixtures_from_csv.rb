@@ -93,7 +93,6 @@ class DataScenarioGenerator
     valid_rows
   end
 
-
   def countScenarios
     r = @rows[0] 
     col = @column_containing_first_journey 
@@ -111,14 +110,19 @@ class DownloadScenarioData
     url = get_download_url
     puts "Downloading: #{url}"
 
-    response = Excon.get(url, {
-      headers: {
-        "Accept" => "text/csv"
-      },
-      expects: [200],
-    })
-
-    write_csv_to_tempfile response.body
+    begin
+      response = Excon.get(url, {
+        headers: {
+          "Accept" => "text/csv"
+        },
+        expects: [200],
+      })
+      write_csv_to_tempfile response.body
+    rescue
+      puts 'Error downloading spreadsheet, loading local copy'
+      file_path = Rails.root.join('lib', 'assets', 'source_data.csv')
+      file_path
+    end
   end
 
   def self.write_csv_to_tempfile(csv_data)
@@ -129,7 +133,8 @@ class DownloadScenarioData
 
   # TODO replace this temprorary URl with real one once testing done
   def self.get_download_url
-    key = "0Arsa0arziNdndHlwM2xJMVl5Z3pDdFVOYnVsRmZST1E"
-    "https://docs.google.com/spreadsheet/pub?key=#{key}&single=true&gid=0&output=csv"
+    # key = "0Arsa0arziNdndHlwM2xJMVl5Z3pDdFVOYnVsRmZST1E"
+    # "https://docs.google.com/spreadsheet/pub?key=#{key}&single=true&gid=0&output=csv"
+    "https://docs.google.com/a/digital.justice.gov.uk/spreadsheet/ccc?key=0Arsa0arziNdndHlwM2xJMVl5Z3pDdFVOYnVsRmZST1E&usp=sharing&output=csv"
   end
 end
