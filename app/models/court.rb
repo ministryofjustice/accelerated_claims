@@ -9,7 +9,6 @@ class Court < BaseClass
 
   def initialize(params = {})
     @address = Address.new(self)
-    @address.england_and_wales_only!
     super
   end
 
