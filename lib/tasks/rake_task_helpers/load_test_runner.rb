@@ -46,9 +46,9 @@ class LoadTestRunner
 
   def create_xml_file
     create_empty_tmp_dirs
-    command = "ruby #{@tsung_wrapper_dir}/lib/wrap.rb -xe #{@env} -p cc -l #{@load_profile} all_scenarios > #{@xml_dir}/#{@xml_file_name}.xml"
-    puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    puts command
+    command = "ruby #{@tsung_wrapper_dir}/lib/wrap.rb -xe #{@env} -p cc -l #{@load_profile} all_scenarios > #{@xml_dir}/#{@xml_file_name}"
+    puts "Writing xml file to #{@xml_dir}/#{@xml_file_name}"
+    system command
   end
 
   def run_tsung
