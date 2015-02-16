@@ -2,7 +2,6 @@ require_relative '../spec_helper'
 require_relative '../../app/lib/error_message_sequencer'
 
 describe ErrorMessageSequencer do
-
   let(:claim_claimant_number_of_claimants_error)                                  { ['claim_claimant_number_of_claimants_error',      'msg']}
   let(:claim_property_street_error)                                               { ['claim_property_street_error',                   'msg']}
   let(:claim_property_postcode_error)                                             { ['claim_property_postcode_error',                 'msg']}
@@ -37,7 +36,6 @@ describe ErrorMessageSequencer do
   let(:claim_defendant_number_of_defendants_error)                                { ['claim_defendant_number_of_defendants_error',    'msg']}
   let(:claim_new_error)                                                           { ['claim_new_error',                               'msg']}
   let(:claim_property_new_error)                                                  { ['claim_property_new_error',                      'msg']}
-
 
   let(:base_errors) do
     [

@@ -196,6 +196,8 @@ GEM
     minitest (5.5.1)
     moj_template (0.23.0)
       rails (>= 3.1)
+    morph (0.3.7)
+      activesupport (>= 2.0.2)
     multi_json (1.10.1)
     multipart-post (2.0.0)
     nokogiri (1.6.3.1)
@@ -406,6 +408,7 @@ DEPENDENCIES
   logstuff
   mail
   moj_template
+  morph
   parallel
   pdf-forms (= 0.5.5)
   poltergeist

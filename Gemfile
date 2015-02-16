@@ -40,6 +40,7 @@ gem 'redis-rails'
 
 gem 'excon'
 gem 'logstuff'
+gem 'morph'
 
 group :production, :development do
 #  gem 'newrelic_rpm'

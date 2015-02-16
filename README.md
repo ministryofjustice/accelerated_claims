@@ -38,3 +38,16 @@ Please remember to set the environment **SECRET_KEY_BASE** variable.
 
 
 
+## Load Testing (Under construction)
+
+Load testing is performed by:
+
+    rake load_test:run
+
+### Tsung_wrapper
+
+The tsung_wrapper project must be checked out of git and installed on the same machine that is running the load test.
+The scenarios to run are defined in the tsung_wrapper project, in the ```config/<project_name>``` directory.
+
+
+

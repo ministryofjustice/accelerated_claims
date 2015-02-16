@@ -1,0 +1,69 @@
+# config file for load_test rake task
+#
+# edit this file to determine what scenarios in the tsung_wrapper project are to be executed for every rake task
+# then run rake load:generate_tasks to generate the rake tasks.
+
+# defines the directory relative to Rails.root where the tsung_wrapper project is installed
+tsung_wrapper: '../tsung_wrapper'
+
+# project: this defines in what directory in the tsung-wrapper project the definition files for the load testing scenarios are to be found
+project: cc
+
+# this section describes the scenario to run to provide response_time figures
+response:
+
+  # scenario: this defines which scenario file to run (defined in tsung-wrapper/config/<project>/scenarios)
+  scenario: all_scenarios
+
+  # environment: this defines the environment to run against (defined in tsung-wrapper/config/<project>/environemnts)
+  environment: staging
+
+  # load_profile: this defines the load profile to use (defined in tsung-wrapper/config/<project>/load_profiles))
+  load_profile: 12_user_60_secs
+
+
+# This section describes the load tests to run to test the point at which it breaks
+breakpoint:
+  # scenario: this defines which scenario file to run (defined in tsung-wrapper/config/<project>/scenarios)
+  scenario: all_scenarios
+
+  # environment: this defines the environment to run against (defined in tsung-wrapper/config/<project>/environemnts)
+  environment: staging
+
+  # load_profile: this defines the load profile to use (defined in tsung-wrapper/config/<project>/load_profiles))
+  load_profile: phased
+
+  # max acceptable response time in milliseconds
+  max_response_time: 10_000
+
+
+  # Produces hash like this:
+  #
+  # {
+  #   'min_response_time' => 16.879,                      
+  #   'average_before_error' => 25342,
+  #   'max_response_time' => {
+  #     'threshold' => 10,
+  #     'exceeded' => 'yes',
+  #     'first_response_time_exceeded' => {
+  #       'elapsed_since_start' => 220,
+  #       'num_simultaneous_requests' => 26,
+  #       'request_arrivals_per_second' => 2.6
+  #       'average_response_time' => 1032,
+  #       'max_response_time' => 101070
+  #     }
+  #     'average_respose_time_exceeded' => {
+  #       'elapsed_since_start' => 330,
+  #       'num_simultaneous_requests' => 33,
+  #       'request_arrivals_per_second' => 3.3
+  #       'average_response_time' => 11917,
+  #       'max_response_time' => 16620
+  #     }
+  #   }
+  #   'first_error' => {
+  #     'occurred' => 'yes'
+  #     'elapsed_since_start' => 410,
+  #     'num_simultaneous_requests' => 39,
+  #     'request_arrivals_per_second' => 3.9
+  #     }
+  #   }
