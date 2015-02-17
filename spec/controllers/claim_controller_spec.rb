@@ -226,6 +226,9 @@ describe ClaimController, :type => :controller do
 
         claim_formatted_data.each do |field, value|
           value = "" if value.nil?
+          if field == 'possession_hearing'
+            value = value == 'Yes' ? 'No' : 'Yes'
+          end
           value = nil if field[/tenancy_previous_tenancy_type/]
           expect(json).to include( field => value )
         end

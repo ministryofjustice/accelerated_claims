@@ -6,6 +6,7 @@ class PDFDocument
     @json = json
     @flatten = flatten
     remove_backslash_r!
+    reverse_possession_hearing!
     add_document_count
     add_checklist
   end
@@ -47,6 +48,10 @@ class PDFDocument
 
   def add_document_count
     DocumentCount.new(@json).add
+  end
+
+  def reverse_possession_hearing!
+    @json['possession_hearing'] = @json['possession_hearing'] == 'Yes' ? 'No' : 'Yes'
   end
 
   def remove_backslash_r!

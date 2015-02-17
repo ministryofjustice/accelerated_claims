@@ -59,7 +59,7 @@
   deposit_received: "No",
   deposit_received_cert: nil,
   deposit_as_property: "No",
-  possession_hearing: "No",
+  possession_hearing: "Yes",
   order_possession: "Yes",
   ClaimantSignatureDateDay: nil,
   ClaimantSignatureDateMonth: nil,
