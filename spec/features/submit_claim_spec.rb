@@ -101,12 +101,12 @@ feature "submit claim" do
       end
     end
 
-    # unless data['javascript'] == 'NON-JS'
-    #   eval(%Q|
-    #     scenario "#{title} with JS: #{description.first} (#{description.last})", js: true do
-    #       run_scenario '#{data_file}', js: true
-    #     end
-    #   |)
-    # end
+    unless data['javascript'] == 'NON-JS'
+      eval(%Q|
+        scenario "#{title} with JS: #{description.first} (#{description.last})", js: true do
+          run_scenario '#{data_file}', js: true
+        end
+      |)
+    end
   end
 end
