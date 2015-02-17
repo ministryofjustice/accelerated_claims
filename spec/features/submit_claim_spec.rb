@@ -80,7 +80,8 @@ feature "submit claim" do
 
   JOURNEY = ENV['JOURNEY'] || ''
 
-  Dir.glob("spec/fixtures/scenario_#{JOURNEY}*_data.rb") do |data_file|
+  # Dir.glob("spec/fixtures/scenario_#{JOURNEY}*_data.rb") do |data_file|
+  Dir.glob("spec/fixtures/scenario_01*_data.rb") do |data_file|
     data = load_fixture_data(data_file)
     title = data['title']
     description = data['description']
@@ -101,12 +102,12 @@ feature "submit claim" do
       end
     end
 
-    unless data['javascript'] == 'NON-JS'
-      eval(%Q|
-        scenario "#{title} with JS: #{description.first} (#{description.last})", js: true do
-          run_scenario '#{data_file}', js: true
-        end
-      |)
-    end
+    # unless data['javascript'] == 'NON-JS'
+    #   eval(%Q|
+    #     scenario "#{title} with JS: #{description.first} (#{description.last})", js: true do
+    #       run_scenario '#{data_file}', js: true
+    #     end
+    #   |)
+    # end
   end
 end

@@ -69,7 +69,7 @@
   deposit_information_given_date_month: "09",
   deposit_information_given_date_year: "2012",
   deposit_as_property: "No",
-  possession_hearing: "Yes",
+  possession_hearing: "No",
   order_possession: "Yes",
   ClaimantSignatureDateDay: nil,
   ClaimantSignatureDateMonth: nil,
