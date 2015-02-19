@@ -67,7 +67,6 @@ class ClaimController < ApplicationController
   end
 
   def submission
-    puts ">>>>>>>>>>>>>> claims_controller # submission <<<<<<<<<<<<<<<<<<"
     params['claim']['use_live_postcode_lookup'] = @use_live_postcode_lookup
     session[:claim] = params['claim']
 
