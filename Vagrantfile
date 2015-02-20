@@ -1,61 +1,55 @@
-# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+DOCKER_IMAGE_TAG='accelerated-claims'
+DOCKER_PORT=2378
+UNICORN_PORT=3002
 VAGRANTFILE_API_VERSION = "2"
 
+DOCKER_ENABLED_BOX="puppetlabs/ubuntu-14.04-64-nocm"
+
+$docker_setup=<<CONF
+cat > /etc/default/docker << 'EOF'
+DOCKER_OPTS="-H 0.0.0.0:#{DOCKER_PORT} -H unix:///var/run/docker.sock"
+EOF
+service docker restart
+CONF
+
+unless Vagrant.has_plugin?("vagrant-cachier")
+  puts "WARNING: vagrant-cachier plugin is not installed! It really speeds this up..."
+  puts "         Install using 'vagrant plugin install vagrant-cachier'"
+end
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  bootstrap_vendor_formulas = <<-SCRIPT
-    cd ../civil-claims-deploy;
-    fab vendor_formulas
-  SCRIPT
-  system bootstrap_vendor_formulas
+  config.vm.box = DOCKER_ENABLED_BOX
+  config.vm.hostname = "#{DOCKER_IMAGE_TAG}-dockerhost"
+  config.vm.network "forwarded_port", guest: DOCKER_PORT, host: DOCKER_PORT
+  config.vm.network "forwarded_port", guest: UNICORN_PORT, host: UNICORN_PORT
 
+  # Set up SSH agent forwarding.
+  config.ssh.forward_agent = true
 
-  config.vm.box = "base"
-  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+  config.vm.provision "docker"
+  config.vm.provision "shell", inline: $docker_setup
 
-  # you'll be wanting to add civilclaims.local to /etc/hosts
-  config.vm.network :private_network, ip: "192.168.33.10"
-
-  config.vm.provider "virtualbox" do |vb|
-    vb.customize ["modifyvm", :id, "--memory", "1024"]
+  # build image and start the application
+  #  rails 4.2.0 need explicit binding to 0.0.0.0 now
+  #  use /tmp/server.pid so that we don't prevent future runs from firing up.
+  config.vm.provision "docker" do |d|
+    d.build_image "/vagrant", args: "-t #{DOCKER_IMAGE_TAG}"
+    d.run "#{DOCKER_IMAGE_TAG}",
+      image: "#{DOCKER_IMAGE_TAG}",
+      args: "-v /vagrant:/usr/src/app -p #{UNICORN_PORT}:3000",
+      cmd: "bundle exec rails server -P /tmp/server.pid --binding=0.0.0.0"
   end
-
-  # https://www.vagrantup.com/blog/feature-preview-vagrant-1-5-rsync.html
-  config.vm.synced_folder ".", "/srv/accelerated_claims/accelerated_claims", type: "rsync", rsync__exclude: ['vendor/bundler','run_ac_front.sh']
-
-  # mount salt required folders
-  config.vm.synced_folder "../civil-claims-deploy/providers", "/srv/providers/"
-  config.vm.synced_folder "../civil-claims-deploy/salt", "/srv/salt/"
-  config.vm.synced_folder "../civil-claims-deploy/vendor/_root", "/srv/salt-formulas", type: "rsync", rsync__args: ["--verbose", "--archive", "--delete", "-z", "-L"]
-  config.vm.synced_folder "../civilclaims-pillars", "/srv/pillar/"
-
-
-  config.vm.provision :salt do |salt|
-
-    minion_config_dir   = '../civil-claims-deploy/salt/minions/vagrant/templates/'
-    salt.minion_config  = minion_config_dir + "minion"
-    salt.minion_key     = minion_config_dir + 'key'
-    salt.minion_pub     = minion_config_dir + 'key.pub'
-
-
-    salt.install_master = false
-    salt.seed_master = {vagrant: salt.minion_pub}
-
-    # Pass extra flags to bootstrap script
-    salt.bootstrap_options = "-D"
-
-    salt.verbose = true
-    salt.install_type = 'git'
-    salt.install_args = 'v2014.1.4'
-
-  end
-
-  script = <<-SCRIPT
-    mkdir -p /etc/salt
-    cp /srv/salt/minions/vagrant/templates/minion /etc/salt/minion
-    service salt-minion restart
-    sleep 5 # This might not be needed, but why rush these things?
-    salt-call state.highstate --local --retcode-passthrough pillar="{htaccess_users: ~}"
-  SCRIPT
-  config.vm.provision :shell, inline: script, keep_color: false
+  # print out help
+  config.vm.provision "shell", inline: <<-EOF
+    echo "#---------------------------------------"
+    echo "# Application should be available at:"
+    echo "#  http://localhost:#{UNICORN_PORT}"
+    echo "#---------------------------------------"
+    echo "# To use docker locally, set:"
+    echo "export DOCKER_HOST=tcp://localhost:#{DOCKER_PORT}"
+  EOF
 
 end
