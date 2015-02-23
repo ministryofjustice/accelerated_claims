@@ -8,7 +8,7 @@ namespace :spec do
 
 	desc 'run feature tests' 
 	task :features do
-		system 'rspec spec/features'
+		system 'env=docker rspec spec/features'
 	end
 	
 end
