@@ -1,5 +1,5 @@
 def remote_test?
-  ENV['env'].present?
+  ENV['env'].present?  && ENV['env'] != 'docker'
 end
 
 def form_date field, date
