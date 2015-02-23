@@ -65,8 +65,13 @@ Unit, lib, routing and controller specs can, and should, be run inside the conta
 	docker exec -i -t <container_id> bash    # get an interactive shell inside the docker container
 	rake spec:docker                         # run all the tests in ```spec/lib spec/models spec/routing spec/controllers```
 
-Feature tests should be run on localhost (the docker container doesn't have phantomjs installed, so the feature tests can't be run from there).
+Feature tests should be run on localhost against the instance running in the container by specifying ```docker``` as the remote environment.  This can also be done using the ```spec:features``` rake task.
 
+	env=docker rspec spec/features
+
+or
+	rake spec:features
+	
 
 ### Dependencies
 * Virtual Box  - install from https://www.virtualbox.org/wiki/Downloads

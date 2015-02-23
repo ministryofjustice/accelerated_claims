@@ -1,11 +1,12 @@
 def remote_hosts
   {
-    'dev' => 'civilclaims.local',
-    'demo'  => 'civilclaims.dsd.io',
-    'demo1' => 'civilclaims.demo1.civilclaims.dsd.io',
-    'demo2' => 'civilclaims.demo2.civilclaims.dsd.io',
-    'staging' => 'civil:mojcivil@civilclaimsstaging.dsd.io',
-    'production' => 'civilclaims.service.gov.uk'
+    'dev' => 'https://civilclaims.local/accelerated-possession-eviction',
+    'demo'  => 'https://civilclaims.dsd.io/accelerated-possession-eviction',
+    'demo1' => 'https://civilclaims.demo1.civilclaims.dsd.io/accelerated-possession-eviction',
+    'demo2' => 'https://civilclaims.demo2.civilclaims.dsd.io/accelerated-possession-eviction',
+    'staging' => 'https://civil:mojcivil@civilclaimsstaging.dsd.io/accelerated-possession-eviction',
+    'production' => 'https://civilclaims.service.gov.uk/accelerated-possession-eviction',
+    'docker' => 'http://localhost:3002'
   }
 end
 
@@ -18,7 +19,8 @@ def remote_host
 end
 
 Capybara.run_server = false
-Capybara.app_host = "https://#{remote_host}/accelerated-possession-eviction"
+Capybara.app_host = remote_host
+
 puts "Running tests remotely against " + Capybara.app_host
 Capybara.default_driver = Capybara.javascript_driver
 WebMock.disable! if defined? WebMock
