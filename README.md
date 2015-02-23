@@ -56,14 +56,14 @@ The app runs on port 3000 inside the container, which is exposed to the outside 
 
 
 
-### running tests on the app running in the container
+### Running tests on the app running in the container
 
 Unit, lib, routing and controller specs can, and should, be run inside the container.  There is a rake task ```spec:docker``` set up to do this:
 
 	vagrant ssh 			                 # ssh into the virtual machine
 	docker ps 				                 # get the container id of the docker container running in the virtual machine
 	docker exec -i -t <container_id> bash    # get an interactive shell inside the docker container
-	rake spec:docker n                       # run all the tests in ```spec/lib spec/models spec/routing spec/controllers```
+	rake spec:docker                         # run all the tests in ```spec/lib spec/models spec/routing spec/controllers```
 
 Feature tests should be run on localhost (the docker container doesn't have phantomjs installed, so the feature tests can't be run from there).
 
