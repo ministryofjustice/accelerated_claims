@@ -38,3 +38,40 @@ Please remember to set the environment **SECRET_KEY_BASE** variable.
 
 
 
+# Dockerisation
+
+## Introduction
+
+Stephen Richards and Mike Pountney are working on dockerizing this app in order to provide a standardised environment for development, deployment and production running.
+
+## Development environment
+
+The development environment uses Virtual Box and Vagrant to create a linux vm in which to run the docker container.  The Vagrantfile and Dockerfile in this project contain all the instructions necessary to provision the vm, create and run the docker container, and run the app inside the container.
+
+### Setting up the VM and docker container
+
+	vagrant up
+
+The app runs on port 3000 inside the container, which is exposed to the outside world as port 3002 on localhost, therefore to see your app running, navigate to http://localhost:3002
+
+
+
+### running tests on the app running in the container
+
+Unit, lib, routing and controller specs can, and should, be run inside the container.  There is a rake task ```spec:docker``` set up to do this:
+
+	vagrant ssh 			                 # ssh into the virtual machine
+	docker ps 				                 # get the container id of the docker container running in the virtual machine
+	docker exec -i -t <container_id> bash    # get an interactive shell inside the docker container
+	rake spec:docker n                       # run all the tests in ```spec/lib spec/models spec/routing spec/controllers```
+
+Feature tests should be run on localhost (the docker container doesn't have phantomjs installed, so the feature tests can't be run from there).
+
+
+### Dependencies
+* Virtual Box  - install from https://www.virtualbox.org/wiki/Downloads
+* Vagrant - install from http://www.vagrantup.com/downloads.html
+
+
+
+
