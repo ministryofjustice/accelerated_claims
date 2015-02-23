@@ -3,6 +3,7 @@ FROM ministryofjustice/ruby:2.1.5-webapp-onbuild
 # runit needs inittab
 RUN touch /etc/inittab
 
+RUN apt-get update
 RUN apt-get install -y pdftk
 
 # runit setup for the application
