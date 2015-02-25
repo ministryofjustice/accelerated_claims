@@ -39,8 +39,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     d.build_image "/vagrant", args: "-t #{DOCKER_IMAGE_TAG}"
     d.run "#{DOCKER_IMAGE_TAG}",
       image: "#{DOCKER_IMAGE_TAG}",
-      args: "-v /vagrant:/usr/src/app -p #{UNICORN_PORT}:3000",
-      cmd: "bundle exec rails server -P /tmp/server.pid --binding=0.0.0.0"
+      args: "-v /vagrant:/usr/src/app -p #{UNICORN_PORT}:3000"
   end
   # print out help
   config.vm.provision "shell", inline: <<-EOF
