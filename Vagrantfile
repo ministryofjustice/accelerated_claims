@@ -13,6 +13,10 @@ cat > /etc/default/docker << 'EOF'
 DOCKER_OPTS="-H 0.0.0.0:#{DOCKER_PORT} -H unix:///var/run/docker.sock"
 EOF
 service docker restart
+sleep 5
+(docker stop accelerated-claims ) >/dev/null 2>&1
+(docker rm accelerated-claims || exit 0) >/dev/null 2>&1
+(docker rmi -f accelerated-claims || exit 0) >/dev/null 2>&1
 CONF
 
 unless Vagrant.has_plugin?("vagrant-cachier")
