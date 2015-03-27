@@ -1,6 +1,6 @@
 url: https://api.ideal-postcodes.co.uk/v1/postcodes/
 api_key: ak_i09ecaamj9h7zaGvj3Vu1pjpzgdvE
-timeout: 1.5
+timeout: 3.0
 
 
 # response codes
