@@ -13,6 +13,10 @@ cat > /etc/default/docker << 'EOF'
 DOCKER_OPTS="-H 0.0.0.0:#{DOCKER_PORT} -H unix:///var/run/docker.sock"
 EOF
 service docker restart
+sleep 5
+docker stop accelerated-claims >/dev/null 2>&1 || true
+docker rm accelerated-claims >/dev/null 2>&1 || true
+docker rmi -f accelerated-claims >/dev/null 2>&1 || true
 CONF
 
 unless Vagrant.has_plugin?("vagrant-cachier")
@@ -39,8 +43,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     d.build_image "/vagrant", args: "-t #{DOCKER_IMAGE_TAG}"
     d.run "#{DOCKER_IMAGE_TAG}",
       image: "#{DOCKER_IMAGE_TAG}",
-      args: "-v /vagrant:/usr/src/app -p #{UNICORN_PORT}:3000",
-      cmd: "bundle exec rails server -P /tmp/server.pid --binding=0.0.0.0"
+      args: "-v /vagrant:/usr/src/app -p #{UNICORN_PORT}:3000"
   end
   # print out help
   config.vm.provision "shell", inline: <<-EOF
