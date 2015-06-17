@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.0'
+gem 'rails', '4.2.2'
 
 # Enable HAML (required for MOJ toolkit)
 gem 'haml-rails'
@@ -17,7 +17,7 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'therubyracer', platforms: :ruby
 
 # Use jquery + underscore as the JavaScript library
-gem 'jquery-rails'
+gem 'jquery-rails', '3.1.3'
 gem 'underscore-rails'
 gem 'coffee-rails'
 

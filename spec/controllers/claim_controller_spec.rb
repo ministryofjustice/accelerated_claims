@@ -38,19 +38,6 @@ describe ClaimController, :type => :controller do
       expect(response).to render_template("new")
     end
 
-    describe 'HTTP response headers' do
-      subject { response }
-
-      it 'set to blank (we set values in nginx conf)' do
-        expect(response['X-Frame-Options']).to eq ''
-        expect(response['X-Content-Type-Options']).to eq ''
-        expect(response['X-XSS-Protection']).to eq ''
-        expect(response['Pragma']).to eq ''
-        expect(response['Cache-Control']).to eq ''
-        expect(response['Expires']).to eq ''
-      end
-    end
-
     shared_examples 'session mantained' do
       it 'should not clear session' do
         expect(controller).not_to receive(:reset_session)
