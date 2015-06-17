@@ -17,7 +17,7 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'therubyracer', platforms: :ruby
 
 # Use jquery + underscore as the JavaScript library
-gem 'jquery-rails'
+gem 'jquery-rails', '3.1.3'
 gem 'underscore-rails'
 gem 'coffee-rails'
 
