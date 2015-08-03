@@ -8,7 +8,7 @@
   claim: {
     property: {
       street: "Mucho Gracias Road\nLondon",
-      postcode: "EY1H 9AJ",
+      postcode: "EY1H 4AJ",
       house: "Yes"
     },
     claim: {
@@ -21,7 +21,7 @@
       organization_name: nil,
       full_name: "John Smith",
       street: "2 Brown St\nBwlchllydd",
-      postcode: "FX1W 0LU"
+      postcode: "FX1W 7LU"
     },
     claimant_2: {
       title: nil,

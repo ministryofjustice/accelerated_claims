@@ -8,7 +8,7 @@
   claim: {
     property: {
       street: "Mucho Gracias Road\nLondon",
-      postcode: "EY1H 9AJ",
+      postcode: "EY1H 4AJ",
       house: "Yes"
     },
     claim: {
@@ -21,7 +21,7 @@
       organization_name: nil,
       full_name: "John Smith",
       street: "2 Brown St\nBwlchllydd",
-      postcode: "FX1W 0LU"
+      postcode: "FX1W 7LU"
     },
     claimant_2: {
       title: "Ms",
@@ -29,7 +29,7 @@
       full_name: "Jane Smith",
       address_same_as_first_claimant: "No",
       street: "7 Main Street\nAlfreton",
-      postcode: "FX1W 0LU"
+      postcode: "FX1W 7LU"
     },
     claimant_3: {
       title: nil,
@@ -61,7 +61,7 @@
       full_name: "Jim Brown",
       company_name: nil,
       street: "3 Smith Street\nBwlchllydd",
-      postcode: "FX1W 0LU",
+      postcode: "FX1W 7LU",
       email: "jim@example.com",
       phone: "020 000 000",
       fax: "020 000 000",

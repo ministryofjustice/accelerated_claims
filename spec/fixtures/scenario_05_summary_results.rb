@@ -10,7 +10,7 @@
   ],
   claim_property_postcode: [
     "Postcode",
-    "AV3 0BJ"
+    "AV3 2BJ"
   ],
   claim_claimant_type: [
     "Type of claimant",

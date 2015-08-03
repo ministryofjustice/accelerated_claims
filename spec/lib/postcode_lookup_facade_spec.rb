@@ -1,18 +1,18 @@
-describe PostcodeLookupProxy, skip: true do
+describe PostcodeLookupFacade do
 
   describe '.new' do
     context 'a valid postcode' do
       it 'should return be valid' do
-        pclp = PostcodeLookupProxy.new('WC1B5HA', ['England', 'Wales'],  false)
-        result = pclp.lookup
+        pclp = PostcodeLookupFacade.new(['England', 'Wales'],  false)
+        result = pclp.lookup 'WC1B5HA'
         expect(result).to be_valid
       end
     end
 
     context 'invalid postcode' do
       it 'should not be valid' do
-        pclp = PostcodeLookupProxy.new('WCX1B5HA', ['England', 'Wales'])
-        result = pclp.lookup
+        pclp = PostcodeLookupFacade.new(['England', 'Wales'])
+        result = pclp.lookup 'WCX1BGHA'
         expect(result).not_to be_valid
         expect(result).to be_invalid
       end
@@ -21,63 +21,57 @@ describe PostcodeLookupProxy, skip: true do
 
   context '#lookup using dummy data' do
     it 'should return 422 if postcode invalid' do
-      pclp = PostcodeLookupProxy.new('WCX1B5HA', ['All'])
-      result = pclp.lookup
+      pclp = PostcodeLookupFacade.new(['All'])
+      pclp.lookup 'WCX1BFHA'
         
-      expect(pclp.result_set).to eq ( {"code"=>4220, "message"=>"Invalid Postcode"} )
-      expect(pclp.http_status).to eq 422
+      expect(pclp.status).to eq ( [{:message=>"Invalid Postcode", :code=>4220}, 422])
     end
 
     it 'should return 404 if postcode not found' do
-      pclp = PostcodeLookupProxy.new('RG2 0PU', ['All'])
-      pclp.lookup
-      expect(pclp.result_set).to eq ( {"code"=>4040, "message"=>"Postcode Not Found"} )
-      expect(pclp.http_status).to eq 404
+      pclp = PostcodeLookupFacade.new(['All'])
+      pclp.lookup 'RG2 0PU'
+      expect(pclp.status).to eq ( [{:message=>"Postcode Not Found", :code=>4040}, 404])
     end
 
     it 'should return 503 if timeout' do
-      pclp = PostcodeLookupProxy.new('RG2 9PU', ['All'])
-      pclp.lookup
-      expect(pclp.result_set).to eq ( {"code"=>5030, "message"=>"Service Unavailable"} )
-      expect(pclp.http_status).to eq 503
+      pclp = PostcodeLookupFacade.new(['All'])
+      pclp.lookup 'RG2 9PU'
+      expect(pclp.status).to eq ( [{:message=>"Service Unavailable", :code=>5030}, 503])
     end
 
     it 'should return valid data set if valid' do
-      pclp = PostcodeLookupProxy.new('BH22 7HR', ['All'])
-      pclp.lookup
-      expect(pclp.result_set).to eq ( {"code"=>2000, "message"=>"Success", 'result' => expected_result_set } )
-      expect(pclp.http_status).to eq 200
+      pclp = PostcodeLookupFacade.new(['All'])
+      pclp.lookup 'BH22 7HR'
+      expect(pclp.status).to eq ( [{:message=>"Success", :code=>2000, :result=>expected_status }, 200])
     end
   end
 
   context 'country limited to England and Wales' do
     it 'should return success for English Postcode' do
-      pclp = PostcodeLookupProxy.new('BH22 7HR', ['England', 'Wales'])
-      pclp.lookup
-      expect(pclp.result_set).to eq ( {"code"=>2000, "message"=>"Success", 'result' => expected_result_set } )
-      expect(pclp.http_status).to eq 200
+      pclp = PostcodeLookupFacade.new(['England', 'Wales'])
+      pclp.lookup 'BH22 7HR'
+      expect(pclp.status).to eq ( [{:message=>"Success", :code=>2000, :result=>expected_status}, 200])
     end
 
     it 'should return 200/4041 for Scottish Address' do
-      pclp = PostcodeLookupProxy.new('EH1 5HR', ['England', 'Wales'])
-      pclp.lookup
-      expect(pclp.result_set).to eq ( {"code"=>4041, "message"=>"Scotland"} )
-      expect(pclp.http_status).to eq 200
+      pclp = PostcodeLookupFacade.new(['England', 'Wales'])
+      pclp.lookup 'EH1 5HR'
+      expect(pclp.status).to eq ( [{:message=>"Scotland", :code=>4041 }, 200])
     end
 
   end
 
   context 'calls either development or live_lookup' do
-    it 'should call development lookup if not production' do
-      pc = PostcodeLookupProxy.new('WC1B5HA', [])
-      expect(pc).to receive(:dummy_lookup).and_call_original
-      pc.lookup
+    it 'should call lookup_postcode on a DummyPostcodeLookupClient if not production' do
+      pc = PostcodeLookupFacade.new([])
+      expect_any_instance_of(DummyPostcodeLookupClient).to receive(:lookup_postcode).and_call_original
+      pc.lookup 'WC1B5HA'
     end
 
-    it 'should call live_lookup if use_live_data true' do
-      pc = PostcodeLookupProxy.new('WC1B5HA', [], true)
-      expect(pc).to receive(:live_lookup).and_return(api_response)
-      pc.lookup
+    it 'should call lookup_postcode on a PostcodeInfo::Client if use_live_data true' do
+      pc = PostcodeLookupFacade.new([], true)
+      expect_any_instance_of(PostcodeInfo::Client).to receive(:lookup_postcode).and_return(api_response)
+      pc.lookup 'WC1B5HA'
     end
 
   end
@@ -87,19 +81,19 @@ describe PostcodeLookupProxy, skip: true do
       dummy_response = double "Dummy Ideal Postcodes response"
       allow(dummy_response).to receive(:body).and_return(ActiveSupport::JSON.encode("body"))
 
-      expect(Excon).to receive(:get).and_return(dummy_response)
-      expect(LogStuff).to receive(:info).with(:postcode_lookup, {timeout: false, endpoint: 'https://api.ideal-postcodes.co.uk/v1/postcodes/' } )
+      expect_any_instance_of(PostcodeInfo::Client).to receive(:lookup_postcode).and_return(dummy_response)
+      expect(LogStuff).to receive(:info).with(:postcode_lookup, {timeout: false, endpoint: 'https://postcodeinfo.service.justice.gov.uk/' } )
 
-      pc = PostcodeLookupProxy.new('WC1B5HA', [], true)
-      pc.send(:live_lookup)
+      pc = PostcodeLookupFacade.new([], true)
+      pc.send(:lookup, 'WC1B5HA')
     end
 
     it 'should call LogStuff with timeout true if there is a timeout' do
-      expect(Excon).to receive(:get).and_raise(Timeout::Error)
-      expect(LogStuff).to receive(:info).with(:postcode_lookup, {timeout: true, endpoint: 'https://api.ideal-postcodes.co.uk/v1/postcodes/' } )
+      expect_any_instance_of(PostcodeInfo::Client).to receive(:lookup_postcode).and_raise(Timeout::Error)
+      expect(LogStuff).to receive(:info).with(:postcode_lookup, {timeout: true, endpoint: 'https://postcodeinfo.service.justice.gov.uk/' } )
 
-      pc = PostcodeLookupProxy.new('WC1B5HA', [], true)
-      pc.send(:live_lookup)
+      pc = PostcodeLookupFacade.new([], true)
+      pc.send(:lookup, 'WC1B5HA')
     end
   end
 
@@ -108,7 +102,7 @@ describe PostcodeLookupProxy, skip: true do
   # describe 'a real lookup to the api' do
   #   it 'should return a result or timeout' do
   #     WebMock.disable_net_connect!(:allow => [/api.ideal-postcodes.co.uk/, /codeclimate.com/] )
-  #     pclp = PostcodeLookupProxy.new('SW109LB', true)
+  #     pclp = PostcodeLookupFacade.new('SW109LB', true)
   #     expect(pclp).to be_valid
   #     result = pclp.lookup
   #     if result == true
@@ -125,7 +119,7 @@ def api_response
   %Q/{"result":[{"postcode":"ID1 1QD","postcode_inward":"1QD","postcode_outward":"ID1","post_town":"LONDON","dependant_locality":"","double_dependant_locality":"","thoroughfare":"Barons Court Road","dependant_thoroughfare":"","building_number":"2","building_name":"","sub_building_name":"","po_box":"","department_name":"","organisation_name":"","udprn":25962203,"postcode_type":"S","su_organisation_indicator":"","delivery_point_suffix":"1G","line_1":"2 Barons Court Road","line_2":"","line_3":"","premise":"2","country":"England","county":"","district":"Hammersmith and Fulham","ward":"North End","longitude":-0.208644362766368,"latitude":51.4899488390558,"eastings":524466,"northings":178299},{"postcode":"ID1 1QD","postcode_inward":"1QD","postcode_outward":"ID1","post_town":"LONDON","dependant_locality":"","double_dependant_locality":"","thoroughfare":"Barons Court Road","dependant_thoroughfare":"","building_number":"2","building_name":"Basement Flat","sub_building_name":"","po_box":"","department_name":"","organisation_name":"","udprn":52618355,"postcode_type":"S","su_organisation_indicator":"","delivery_point_suffix":"3A","line_1":"Basement Flat","line_2":"2 Barons Court Road","line_3":"","premise":"Basement Flat, 2","country":"England","county":"","district":"Hammersmith and Fulham","ward":"North End","longitude":-0.208644362766368,"latitude":51.4899488390558,"eastings":524466,"northings":178299}],"code":2000,"message":"Success"}/
 end
 
-def expected_result_set
+def expected_status
   [
       {'address'=>'1 Melbury Close;;FERNDOWN',   'postcode'=>'BH22 8HR', 'country' => 'England' },
       {'address'=>'3 Melbury Close;;FERNDOWN',   'postcode'=>'BH22 8HR', 'country' => 'England' },
@@ -181,7 +175,7 @@ def dummy_ideal_postcodes_result
   }
 end
 
-def scottish_result_set
+def scottish_status
   [
       {'address'=>'134, Corstorphine Road;;EDINBURGH', 'postcode'=>'EH12 6TS', 'country' => 'Scotland'},
       {'address'=>'Royal Zoological Society of Scotland;;134, Corstorphine Road;;EDINBURGH', 'postcode'=>'EH12 6TS', 'country' => 'Scotland'}

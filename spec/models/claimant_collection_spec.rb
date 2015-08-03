@@ -10,14 +10,14 @@ describe ClaimantCollection do
           "title" => "Mr",
           "full_name" => "John Smith 1st",
           "street" => "2 Brown St\nCwmbran",
-          "postcode" => "SW1W 0LU"
+          "postcode" => "SW1W 7LU"
         },
         "claimant_2" =>
         {
           "title" => "Mr",
           "full_name" => "John Smith 2nd",
           "street" => "2 Brown St\nCwmbran",
-          "postcode" => "SW1W 0LU",
+          "postcode" => "SW1W 7LU",
           "address_same_as_first_claimant" => 'No'
         },
         "claimant_3" =>
@@ -25,7 +25,7 @@ describe ClaimantCollection do
           "title" => "Mr",
           "full_name" => "John Smith 3rd",
           "street" => "2 Brown St\nCwmbran",
-          "postcode" => "SW1W 0LU",
+          "postcode" => "SW1W 7LU",
           "address_same_as_first_claimant" => 'No'
         }
       }
@@ -146,7 +146,7 @@ describe ClaimantCollection do
 
     let(:claimant) {
       Claimant.new( title: "Mrs", full_name: "Maggie Thatcher",
-          street: "10 Downing Street St\nLondon", postcode: "SW1W 0LU" )
+          street: "10 Downing Street St\nLondon", postcode: "SW1W 7LU" )
     }
     it 'should raise error if index is zero' do
       expect {

@@ -1,9 +1,13 @@
 class CountryNameNormalizer
 
   def initialize(params)
-    @country_params = params[:vc].gsub('+', ' ') if params.key?(:vc)
+    @country_params = sanitize(params[:vc]) if params.key?(:vc)
   end
   
+  def sanitize(param)
+    countries_allowed = param.is_a?(Array) ? param.join(' ') : param
+    countries_allowed.gsub('+', ' ')
+  end
 
   def normalize
     countries = @country_params.nil? ? [] : @country_params.split(' ')

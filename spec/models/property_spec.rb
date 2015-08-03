@@ -40,7 +40,7 @@ describe Property, :type => :model do
   describe "validations" do
     let(:property) do
       Property.new(street: "1 Aha Street\nLondon",
-                   postcode: "SW1H 9AJ",
+                   postcode: "SW1H 3AJ",
                    house: "Yes")
     end
 
