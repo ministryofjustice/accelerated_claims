@@ -8,7 +8,7 @@
   claim: {
     property: {
       street: "94 East St\nAnyville",
-      postcode: "FX1X 9ZZ",
+      postcode: "FX1X 4ZZ",
       house: "No"
     },
     claim: {

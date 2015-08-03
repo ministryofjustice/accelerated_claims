@@ -24,8 +24,8 @@ describe PostcodeLookupProxyController, :type => :controller do
     context 'an invalid postcode' do
       it "should render 'invalid postcode'" do
         get :show, format: :json, pc: 'Sw10XX6ete', vc: 'all'
-        expect(response.status).to eq 404
-        expect(JSON.parse(response.body)).to eq({'code' => 4040, 'message' => 'Postcode Not Found'})
+        expect(response.status).to eq 422
+        expect(JSON.parse(response.body)).to eq({'code' => 4220, 'message' => 'Invalid Postcode'})
       end
     end
 
@@ -105,7 +105,6 @@ describe PostcodeLookupProxyController, :type => :controller do
 
       let(:postcode)        { 'RG2 7PU' }
       let(:all_countries)   { ['All'] }
-      let(:pclp)            { double PostcodeLookupProxy }
 
       before(:each) do
         allow(request).to receive(:referer).and_return('https://civilclaims.service.gov.uk/accelerated-possession-eviction?journey=4')

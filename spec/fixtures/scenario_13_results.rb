@@ -4,7 +4,7 @@
   court_name: "Bournemouth and Poole County Court and Family Court",
   claimant_1_address: "Mr John Smith\n2 Brown St\nBwlchllydd",
   claimant_1_postcode1: "FX1W",
-  claimant_1_postcode2: "0LU",
+  claimant_1_postcode2: "7LU",
   claimant_2_address: nil,
   claimant_2_postcode1: nil,
   claimant_2_postcode2: nil,

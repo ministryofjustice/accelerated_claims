@@ -34,7 +34,7 @@
   ],
   claim_claimant_1_postcode: [
     "Postcode",
-    "FX1W 0LU"
+    "FX1W 7LU"
   ],
   claim_claimant_contact_email: [
     "Email",

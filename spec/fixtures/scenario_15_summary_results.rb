@@ -34,7 +34,7 @@
   ],
   claim_claimant_1_postcode: [
     "Postcode",
-    "FX1W 0LU"
+    "FX1W 7LU"
   ],
   claim_claimant_2_title: [
     "Title",
@@ -50,7 +50,7 @@
   ],
   claim_claimant_2_postcode: [
     "Postcode",
-    "FX1W 0LU"
+    "FX1W 7LU"
   ],
   claim_claimant_3_title: [
     "Title",
@@ -90,7 +90,7 @@
   ],
   claim_claimant_contact_postcode: [
     "Postcode",
-    "FX1W 0LU"
+    "FX1W 7LU"
   ],
   claim_defendant_num_defendants: [
     "Number of defendants",

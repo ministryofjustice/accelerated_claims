@@ -8,7 +8,7 @@
   claim: {
     property: {
       street: "94 East St\nAnyville",
-      postcode: "FX1X 9ZZ",
+      postcode: "FX1X 4ZZ",
       house: "No"
     },
     claim: {
@@ -75,7 +75,7 @@
       full_name: "Chris P. Bacon",
       inhabits_property: "Yes",
       street: "94 East St\nAnyville",
-      postcode: "FX1X 9ZZ"
+      postcode: "FX1X 4ZZ"
     },
     defendant_2: {
       title: nil,

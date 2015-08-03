@@ -10,7 +10,7 @@
   ],
   claim_property_postcode: [
     "Postcode",
-    "EY1H 9AJ"
+    "EY1H 4AJ"
   ],
   claim_claimant_type: [
     "Type of claimant",
@@ -34,7 +34,7 @@
   ],
   claim_claimant_1_postcode: [
     "Postcode",
-    "FX1W 0LU"
+    "FX1W 7LU"
   ],
   claim_claimant_2_title: [
     "Title",
@@ -50,7 +50,7 @@
   ],
   claim_claimant_2_postcode: [
     "Postcode",
-    "FX1W 0LU"
+    "FX1W 7LU"
   ],
   claim_claimant_contact_email: [
     "Email",
@@ -82,7 +82,7 @@
   ],
   claim_claimant_contact_postcode: [
     "Postcode",
-    "FX1W 0LU"
+    "FX1W 7LU"
   ],
   claim_defendant_num_defendants: [
     "Number of defendants",

@@ -10,7 +10,7 @@
   ],
   claim_property_postcode: [
     "Postcode",
-    "AA10 0XA"
+    "AA10 6XA"
   ],
   claim_claimant_type: [
     "Type of claimant",

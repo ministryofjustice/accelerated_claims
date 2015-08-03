@@ -1,5 +1,5 @@
 class DummyPostcodeLookupClient
-  attr_accessor :dummy_postcodes, :response_body
+  attr_accessor :dummy_postcodes, :status
 
   def initialize
     self.dummy_postcodes = load_dummy_postcodes
@@ -12,18 +12,22 @@ class DummyPostcodeLookupClient
   private
 
     def dummy_lookup(postcode)
-      key_digit = postcode.gsub(' ', '')[-3].to_i
+      key_digit = postcode.gsub(' ', '')[-3]
       case key_digit
-      when 0
-        {'status' => 404, 'message' => 'No matching postcodes', 'result' => []}
-        MockPostcode.new([], nil, true)
-      when 9
-        self.result_set = {'status' => 503, 'message' => 'Service Unavailable'}
-        MockPostcode.new([], nil, false)
+      when '0'
+        self.status = [{:message => 'Postcode Not Found', :code => 4040}, 404]
+        MockPostcode.new(postcode, [], nil, false)
+      when '9'
+        self.status = [{:message => 'Service Unavailable', :code => 5030}, 503]
+        MockPostcode.new(postcode, [], nil, false)
+      when /[a-z]/i
+        self.status = [{:message => 'Invalid Postcode', :code => 4220}, 422]
+        MockPostcode.new(postcode, [], nil, false)
       else
-        addresses = self.dummy_postcodes[key_digit % 6]
+        addresses = self.dummy_postcodes[key_digit.to_i % 6]
         country = addresses[0]['country']
-        MockPostcode.new(addresses, country, true)
+        pc = MockPostcode.new(postcode, addresses, country, true)
+        #self.status = [{message: 'Success', code: 2000, result: pc.addresses}, 200]
       end
     end
 
@@ -37,12 +41,13 @@ end
 
 
 class MockPostcode
-  attr_accessor :addresses, :country, :valid
+  attr_accessor :addresses, :country, :valid, :postcode
 
-  def initialize(addresses, country, valid)
+  def initialize(postcode, addresses, country, valid)
     self.addresses = addresses.map{ |addr| self.class.format_dummy_address(addr) }
     self.country = {'name' => country}
     self.valid = valid
+    self.postcode = postcode
   end
 
   def self.format_dummy_address(addr)
@@ -55,5 +60,9 @@ class MockPostcode
 
   def valid?
     self.valid
+  end
+
+  def invalid?
+    !valid?
   end
 end

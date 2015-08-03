@@ -6,7 +6,7 @@ Claimant 3:
     Mrs Jane Smith
     2 Brown St
     Bwlchllydd
-    FX1W 0LU
+    FX1W 7LU
 
 Additional Defendants
 =====================
@@ -30,10 +30,10 @@ end
   court_name: "Bournemouth and Poole County Court and Family Court",
   claimant_1_address: "Mr John Smith\n2 Brown St\nBwlchllydd",
   claimant_1_postcode1: "FX1W",
-  claimant_1_postcode2: "0LU",
+  claimant_1_postcode2: "7LU",
   claimant_2_address: "Ms Diedre Smith\n7 Main Street\nAlfreton",
   claimant_2_postcode1: "FX1W",
-  claimant_2_postcode2: "0LU",
+  claimant_2_postcode2: "7LU",
   left_panel0: left_panel0,
   defendant_2_address: "Mr John Dorey\n23 Mock St\nAnytown",
   defendant_2_postcode1: "EY99",
@@ -95,7 +95,7 @@ end
   ClaimantSigneePositionAtSolicitorFirm: nil,
   claimant_contact_address: "Mr Jim Brown\n3 Smith Street\nBwlchllydd",
   claimant_contact_postcode1: "FX1W",
-  claimant_contact_postcode2: "0LU",
+  claimant_contact_postcode2: "7LU",
   claimant_contact_reference_number: nil,
   claimant_contact_fax: "020 000 000",
   claimant_contact_dx_number: "DX 123",
