@@ -88,6 +88,8 @@ end
 gem 'pdf-forms', '0.5.5'
 gem 'uk_postcode'
 
+gem 'postcodeinfo-client-ruby', '>= 0.2.0'
+
 # validate that submitted dates are actually dates
 gem 'validates_timeliness', '~> 3.0'
 

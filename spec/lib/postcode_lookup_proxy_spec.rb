@@ -4,15 +4,17 @@ describe PostcodeLookupProxy do
     context 'a valid postcode' do
       it 'should return be valid' do
         pclp = PostcodeLookupProxy.new('WC1B5HA', ['England', 'Wales'],  false)
-        expect(pclp).to be_valid
+        result = pclp.lookup
+        expect(result).to be_valid
       end
     end
 
     context 'invalid postcode' do
       it 'should not be valid' do
-        pc = PostcodeLookupProxy.new('WCX1B5HA', ['England', 'Wales'])
-        expect(pc).not_to be_valid
-        expect(pc).to be_invalid
+        pclp = PostcodeLookupProxy.new('WCX1B5HA', ['England', 'Wales'])
+        result = pclp.lookup
+        expect(result).not_to be_valid
+        expect(result).to be_invalid
       end
     end
   end
@@ -20,7 +22,8 @@ describe PostcodeLookupProxy do
   context '#lookup using dummy data' do
     it 'should return 422 if postcode invalid' do
       pclp = PostcodeLookupProxy.new('WCX1B5HA', ['All'])
-      pclp.lookup
+      result = pclp.lookup
+        
       expect(pclp.result_set).to eq ( {"code"=>4220, "message"=>"Invalid Postcode"} )
       expect(pclp.http_status).to eq 422
     end
@@ -64,16 +67,16 @@ describe PostcodeLookupProxy do
 
   end
 
-  context 'calls either development or production lookup' do
+  context 'calls either development or live_lookup' do
     it 'should call development lookup if not production' do
       pc = PostcodeLookupProxy.new('WC1B5HA', [])
-      expect(pc).to receive(:development_lookup).and_call_original
+      expect(pc).to receive(:dummy_lookup).and_call_original
       pc.lookup
     end
 
-    it 'should call production lookup if use_live_data true' do
+    it 'should call live_lookup if use_live_data true' do
       pc = PostcodeLookupProxy.new('WC1B5HA', [], true)
-      expect(pc).to receive(:production_lookup).and_return(api_response)
+      expect(pc).to receive(:live_lookup).and_return(api_response)
       pc.lookup
     end
 
@@ -88,7 +91,7 @@ describe PostcodeLookupProxy do
       expect(LogStuff).to receive(:info).with(:postcode_lookup, {timeout: false, endpoint: 'https://api.ideal-postcodes.co.uk/v1/postcodes/' } )
 
       pc = PostcodeLookupProxy.new('WC1B5HA', [], true)
-      pc.send(:production_lookup)
+      pc.send(:live_lookup)
     end
 
     it 'should call LogStuff with timeout true if there is a timeout' do
@@ -96,7 +99,7 @@ describe PostcodeLookupProxy do
       expect(LogStuff).to receive(:info).with(:postcode_lookup, {timeout: true, endpoint: 'https://api.ideal-postcodes.co.uk/v1/postcodes/' } )
 
       pc = PostcodeLookupProxy.new('WC1B5HA', [], true)
-      pc.send(:production_lookup)
+      pc.send(:live_lookup)
     end
   end
 
