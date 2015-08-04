@@ -50,7 +50,6 @@ describe PostcodeLookupProxyController, :type => :controller do
 
     context 'a scottish postcode which is allowed' do
       it 'should call proxy with and emtpy array and return a valid set of addresses' do
-        #expect(PostcodeLookupProxy).to receive(:new).with('EH10 5LB', ['All'], false).and_call_original
         get :show, format: :json, pc: "EH10 5LB", vc: 'all'
         expect(response.status).to eq(200)
         expect(JSON.parse(response.body)).to eq JSON.parse(scottish_response)
@@ -59,7 +58,6 @@ describe PostcodeLookupProxyController, :type => :controller do
 
     context 'a scottish postcode which is not allowed' do
       it 'should return 200 with 4041 result code and scotland as message' do
-        #expect(PostcodeLookupProxy).to receive(:new).with('EH10 5LB', ['England', 'Wales'], false).and_call_original
         get :show, format: :json, pc: "EH10 5LB", vc: 'england wales'
         expect(response.status).to eq(200)
         expect(JSON.parse(response.body)).to eq({'code' => 4041, 'message' => 'Scotland' })
@@ -155,13 +153,6 @@ end
 def set_referer_url_without_use_live_postcode_lookup_param
   allow(request).to receive(:referer).and_return('https://civilclaims.service.gov.uk/accelerated-possession-eviction?journey=4')
 end
-
-# def expect_postcode_lookup_to_be_called_with(postcode, *flags)
-#   pclp = double(PostcodeLookupProxy).as_null_object
-#   expect(PostcodeLookupProxy).to receive(:new).with(postcode, *flags).and_return(pclp)
-#   allow(pclp).to receive(:result_set).and_return('xxx')
-#   allow(pclp).to receive(:http_status).and_return(200)
-# end
 
 def scottish_response
   {

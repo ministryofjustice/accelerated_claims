@@ -129,32 +129,18 @@ class Address < BaseClass
     end
 
     if postcode.present?
-      # plp = PostcodeLookupProxy.new(postcode, ['England', 'Wales'], @use_live_postcode_lookup)
-      # plp.lookup
-      # @postcode = plp.norm
-
-      # case plp.result_set['code']
-      # when 2000, 4040, 4220, 5030
-      #   return true
-      # when 4041
-      #   add_to_errors 'postcode', "Postcode is in #{plp.result_set['message']}. You can only use this service to regain possession of properties in England and Wales."
-      #   return false
-      # else
-      #   raise "Unexpected return from postcode lookup: #{plp.result_set.inspect}"
-      # end
-
-      plf = PostcodeLookupFacade.new(['England', 'Wales'], @use_live_postcode_lookup)
+      plf = PostcodeLookup::Facade.new(['England', 'Wales'], @use_live_postcode_lookup)
       @postcode = plf.norm(postcode)
       plf.lookup(postcode)
       
-      case plf.status_code
+      case plf.status.code
       when 2000, 4040, 4220, 5030
         return true
       when 4041
-        add_to_errors 'postcode', "Postcode is in #{plf.status_message}. You can only use this service to regain possession of properties in England and Wales."
+        add_to_errors 'postcode', "Postcode is in #{plf.status.message}. You can only use this service to regain possession of properties in England and Wales."
         return false
       else
-        raise "Unexpected return from postcode lookup: #{plf.result_set.inspect}"
+        raise "Unexpected return from postcode lookup: #{plf.status.result.inspect}"
       end
     end
   end
