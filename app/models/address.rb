@@ -15,9 +15,9 @@ class Address < BaseClass
 
   def postcode
     if @postcode.present?
-      pc = UKPostcode.new(@postcode)
+      pc = UKPostcode.parse(@postcode)
       if pc.valid?
-        return pc.norm
+        return pc.to_s
       end
     end
     @postcode
@@ -129,18 +129,18 @@ class Address < BaseClass
     end
 
     if postcode.present?
-      plp = PostcodeLookupProxy.new(postcode, ['England', 'Wales'], @use_live_postcode_lookup)
-      plp.lookup
-      @postcode = plp.norm
-
-      case plp.result_set['code']
+      plf = PostcodeLookup::Facade.new(['England', 'Wales'], @use_live_postcode_lookup)
+      @postcode = plf.norm(postcode)
+      plf.lookup(postcode)
+      
+      case plf.status.code
       when 2000, 4040, 4220, 5030
         return true
       when 4041
-        add_to_errors 'postcode', "Postcode is in #{plp.result_set['message']}. You can only use this service to regain possession of properties in England and Wales."
+        add_to_errors 'postcode', "Postcode is in #{plf.status.message}. You can only use this service to regain possession of properties in England and Wales."
         return false
       else
-        raise "Unexpected return from postcode lookup: #{plp.result_set.inspect}"
+        raise "Unexpected return from postcode lookup: #{plf.status.result.inspect}"
       end
     end
   end
@@ -152,7 +152,7 @@ class Address < BaseClass
   end
 
   def postcode_blank_or_invalid?
-    postcode.blank? || UKPostcode.new(postcode).valid? == false
+    postcode.blank? || UKPostcode.parse(postcode).valid? == false
   end
 
   def transfer_error_messages_to_parent

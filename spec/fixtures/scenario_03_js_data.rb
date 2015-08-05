@@ -8,7 +8,7 @@
   claim: {
     property: {
       street: "280 Uncoventry Rd\nMidtown ",
-      postcode: "AA10 0XA",
+      postcode: "AA10 6XA",
       house: "Yes"
     },
     claim: {

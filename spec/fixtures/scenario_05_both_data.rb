@@ -8,7 +8,7 @@
   claim: {
     property: {
       street: "10a Thurloe St\nYammerton",
-      postcode: "AV3 0BJ",
+      postcode: "AV3 2BJ",
       house: "Yes"
     },
     claim: {

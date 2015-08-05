@@ -153,7 +153,7 @@ describe ClaimantContact, :type => :model do
           "fax" => "020 000 000",
           "phone" => "020 000 000",
           "postcode1" => "SW1W",
-          "postcode2" => "0LU"
+          "postcode2" => "7LU"
         }
       end
 
@@ -171,7 +171,7 @@ describe ClaimantContact, :type => :model do
           "fax" => "020 000 000",
           "phone" => "020 000 000",
           "postcode1" => "SW1W",
-          "postcode2" => "0LU"
+          "postcode2" => "7LU"
         }
       end
 

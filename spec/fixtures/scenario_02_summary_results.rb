@@ -10,7 +10,7 @@
   ],
   claim_property_postcode: [
     "Postcode",
-    "FX1X 9ZZ"
+    "FX1X 4ZZ"
   ],
   claim_claimant_type: [
     "Type of claimant",

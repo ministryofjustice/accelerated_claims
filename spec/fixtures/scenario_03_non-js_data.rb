@@ -8,7 +8,7 @@
   claim: {
     property: {
       street: "280 Uncoventry Rd\nMidtown ",
-      postcode: "AA10 0XA",
+      postcode: "AA10 6XA",
       house: "Yes"
     },
     claim: {
@@ -75,14 +75,14 @@
       full_name: "Augusta Wind",
       inhabits_property: "Yes",
       street: "280 Uncoventry Rd\nMidtown ",
-      postcode: "AA10 0XA"
+      postcode: "AA10 6XA"
     },
     defendant_2: {
       title: "Mr",
       full_name: "John Dorey",
       inhabits_property: "Yes",
       street: "280 Uncoventry Rd\nMidtown ",
-      postcode: "AA10 0XA"
+      postcode: "AA10 6XA"
     },
     tenancy: {
       tenancy_type: "assured",

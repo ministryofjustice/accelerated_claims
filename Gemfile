@@ -86,7 +86,9 @@ group :test do
 end
 
 gem 'pdf-forms', '0.5.5'
-gem 'uk_postcode'
+gem 'uk_postcode', '~>2.1.0'
+
+gem 'postcodeinfo-client-ruby', '>= 0.2.1'
 
 # validate that submitted dates are actually dates
 gem 'validates_timeliness', '~> 3.0'

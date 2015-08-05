@@ -64,7 +64,7 @@ describe DefendantCollection do
 
   describe '#[]=' do
 
-    let(:defendant)   { Defendant.new( { "title" => "Mrs", "full_name" => "Maggie Thatcher", "street" => "10 Downing Street St\nLondon", "postcode" => "SW1W 0LU"} ) }
+    let(:defendant)   { Defendant.new( { "title" => "Mrs", "full_name" => "Maggie Thatcher", "street" => "10 Downing Street St\nLondon", "postcode" => "SW1W 7LU"} ) }
     it 'should raise error if index is zero' do
       expect {
         dc[0] = defendant
@@ -192,7 +192,7 @@ def claim_params
         "full_name" => "Ann Chovey",
         "inhabits_property" => 'No',
         "street" => "3 High Stree\nAnytown",
-        "postcode" => "FX1W 0LU"
+        "postcode" => "FX1W 7LU"
       },
       "defendant_2" =>
       {
@@ -228,7 +228,7 @@ def claim_params_for_six_defendants
         "full_name" => "Ann Chovey",
         "inhabits_property" => 'No',
         "street" => "3 High Stree\nAnytown",
-        "postcode" => "FX1W 0LU"
+        "postcode" => "FX1W 7LU"
       },
       "defendant_2" =>
       {
