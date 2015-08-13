@@ -16,7 +16,7 @@ ENV \
     RAILS_RELATIVE_URL_ROOT='' \
     PDFTK="/usr/bin/pdftk" \
     REDIS_STORE="redis://localhost:6379/1" \
-    RAILS_ENV="development" \
+ #  RAILS_ENV="development" \
     ENV_NAME="development" \
     GA_ID=""
 
@@ -40,6 +40,11 @@ RUN cd /srv/strike2 && pwd && ls -l && /usr/local/bin/lein deps && /usr/local/bi
 
 COPY ./docker/runit/strike2-service /etc/service/strike2/run
 COPY ./docker/runit/runit-service /etc/service/accelerated_claims/run
+
+#SECRET_TOKEN set here because otherwise devise blows up during the precompile.
+RUN bundle exec rake assets:precompile RAILS_ENV=production SECRET_TOKEN=blah
+RUN bundle exec rake static_pages:generate RAILS_ENV=production SECRET_TOKEN=blah
+
 RUN chmod +x /etc/service/strike2/run /etc/service/accelerated_claims/run
 
 
