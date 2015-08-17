@@ -39,6 +39,9 @@ RUN git -C /srv clone -b v${STRIKE2_VERSION} https://github.com/ministryofjustic
 RUN cd /srv/strike2 && pwd && ls -l && /usr/local/bin/lein deps && /usr/local/bin/lein ring uberjar
 
 COPY ./docker/runit/strike2-service /etc/service/strike2/run
+RUN chmod 777 ./log
+RUN cd ./log
+RUN chmod 777 ./*
 COPY ./docker/runit/runit-service /etc/service/accelerated_claims/run
 
 #SECRET_TOKEN set here because otherwise devise blows up during the precompile.
