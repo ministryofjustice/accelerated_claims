@@ -48,7 +48,10 @@ COPY ./docker/runit/runit-service /etc/service/accelerated_claims/run
 RUN bundle exec rake assets:precompile RAILS_ENV=production SECRET_TOKEN=blah
 
 RUN chmod +x /etc/service/strike2/run /etc/service/accelerated_claims/run
-
+RUN apt-get install -y redis-server
+RUN service redis-server start
+RUN cd /usr/src/app/log
+RUN chmod 777 *
 
 EXPOSE $UNICORN_PORT
 
