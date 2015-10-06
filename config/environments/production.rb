@@ -96,5 +96,5 @@ AcceleratedClaims::Application.configure do
      # (Snip)
      # Add this
       # config.cache_store = :redis_store, ('redis: //ENV["REDIS_URL"]':6379/0')
-  config.cache_store = :redis_store,  'redis:/ace1t1yeqodh0onr.eq1onc.ng.0001.euw1.cache.amazonaws.com:6379/1'
+  config.cache_store = :redis_store,  (ENV['REDIS_URL'])
 end
