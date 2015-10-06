@@ -92,12 +92,9 @@ AcceleratedClaims::Application.configure do
 
   # use redis for cache store - non production
   # config.cache_store = :redis_store, (ENV['REDIS_STORE'] || 'redis://localhost:6379/1')
-
-  # Session store for production environment - using elasticache
-    Rails. Application. Configure do
+    # Session store for production environment - using elasticache
      # (Snip)
      # Add this
-     # config.cache_store:. redis_store, servers: 'redis: //'(ENV['REDIS_URL']': 6379/0', expire_in:. 1 day
-     config.cache_store:. redis_store, servers: 'redis://ENV["REDIS_URL"]:6379/0', expire_in:. 1 dayi
-    end
+      # config.cache_store = :redis_store, ('redis: //ENV["REDIS_URL"]':6379/0')
+  config.cache_store = :redis_store,  'redis:/ace1t1yeqodh0onr.eq1onc.ng.0001.euw1.cache.amazonaws.com:6379/1'
 end
