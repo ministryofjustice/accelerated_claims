@@ -96,5 +96,5 @@ AcceleratedClaims::Application.configure do
      # (Snip)
      # Add this
       # config.cache_store = :redis_store, ('redis: //ENV["REDIS_URL"]':6379/0')
-  config.cache_store = :redis_store,  (ENV['REDIS_URL'])
+  config.cache_store = :redis_store, (ENV['REDIS_URL']+'/1') 
 end
