@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.2'
+gem 'rails', '4.2.5'
 
 # Enable HAML (required for MOJ toolkit)
 gem 'haml-rails'
@@ -40,6 +40,8 @@ gem 'redis-rails'
 
 gem 'excon'
 gem 'logstuff'
+
+gem 'nokogiri', '~> 1.6.7.rc4'
 
 group :production, :development do
 #  gem 'newrelic_rpm'
