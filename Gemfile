@@ -49,7 +49,7 @@ end
 
 group :development, :test do
   gem 'simplecov', require: false
-  gem 'rspec-rails'
+  gem 'rspec-rails', '3.4.0'
   gem 'rspec-legacy_formatters'
   gem 'jasmine-core', '~> 2.0.0'
   gem 'jasmine', '~> 2.0.2'
