@@ -24,4 +24,4 @@ Capybara.app_host = remote_host
 puts "Running tests remotely against " + Capybara.app_host
 Capybara.default_driver = Capybara.javascript_driver
 WebMock.disable! if defined? WebMock
-Capybara.default_wait_time = 30
+Capybara.default_max_wait_time = 30
