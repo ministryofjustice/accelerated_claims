@@ -91,5 +91,5 @@ AcceleratedClaims::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   # Session store (cache_store) - using elasticache endpoints url
-  config.cache_store = :redis_store, (ENV['REDIS_URL']) 
+  config.cache_store = :redis_store, (ENV['REDIS_URL'])
 end
