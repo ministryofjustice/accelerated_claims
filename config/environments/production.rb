@@ -90,11 +90,6 @@ AcceleratedClaims::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  # use redis for cache store - non production
-  # config.cache_store = :redis_store, (ENV['REDIS_STORE'] || 'redis://localhost:6379/1')
-    # Session store for production environment - using elasticache
-     # (Snip)
-     # Add this
-      # config.cache_store = :redis_store, ('redis: //ENV["REDIS_URL"]':6379/0')
+  # Session store (cache_store) - using elasticache endpoints url
   config.cache_store = :redis_store, (ENV['REDIS_URL']) 
 end
