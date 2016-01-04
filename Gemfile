@@ -41,7 +41,7 @@ gem 'redis-rails'
 gem 'excon'
 gem 'logstuff'
 
-gem 'nokogiri', '~> 1.6.7.rc4'
+gem 'nokogiri', '~> 1.6.7.1'
 
 group :production, :development do
 #  gem 'newrelic_rpm'
