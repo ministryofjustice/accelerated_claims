@@ -4,7 +4,7 @@ if Rails.env.production?
   AcceleratedClaims::Application.config.session_store :redis_store,
       key: '_accelerated_claims_session',
       servers: {
-        host:      (ENV['REDIS_HOST']),
+        host:      (ENV['DOCKER_ENV'].present? ? ENV['REDIS_HOST'] : 'localhost'),
         port:      6379,
         db:        1
       },
