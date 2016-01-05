@@ -1,5 +1,6 @@
 FROM ministryofjustice/ruby:2.2.4-webapp-onbuild
 
+EXPOSE 3000
 
 ENV UNICORN_PORT 3000
 
@@ -15,9 +16,9 @@ ENV \
     ANONYMOUS_PLACEHOLDER_EMAIL="" \
     RAILS_RELATIVE_URL_ROOT='' \
     PDFTK="/usr/bin/pdftk" \
-    REDIS_STORE="redis://localhost:6379/1" \
+ #  REDIS_STORE="redis://localhost:6379/1" \
  #  RAILS_ENV="development" \
-    ENV_NAME="development" \
+ #  ENV_NAME="development" \
     GA_ID=""
 
 # runit needs inittab
@@ -39,14 +40,21 @@ RUN git -C /srv clone -b v${STRIKE2_VERSION} https://github.com/ministryofjustic
 RUN cd /srv/strike2 && pwd && ls -l && /usr/local/bin/lein deps && /usr/local/bin/lein ring uberjar
 
 COPY ./docker/runit/strike2-service /etc/service/strike2/run
+RUN chmod 777 ./log
+RUN cd ./log
+RUN chmod 777 ./*
 COPY ./docker/runit/runit-service /etc/service/accelerated_claims/run
 
 #SECRET_TOKEN set here because otherwise devise blows up during the precompile.
 RUN bundle exec rake assets:precompile RAILS_ENV=production SECRET_TOKEN=blah
 
 RUN chmod +x /etc/service/strike2/run /etc/service/accelerated_claims/run
-
+#RUN apt-get install -y redis-serve
+RUN apt-get install -y vim
+# RUN service redis-server start
+RUN cd /usr/src/app/log
+RUN chmod 777 *
 
 EXPOSE $UNICORN_PORT
-
+CMD ["bundle", "exec", "unicorn", "-p", "3000"]
 CMD ["/usr/bin/runsvdir", "-P", "/etc/service"]
