@@ -3,10 +3,10 @@
 if Rails.env.production?
   AcceleratedClaims::Application.config.session_store :redis_store,
       key: '_accelerated_claims_session',
-      servers: {
-        host:      (ENV['REDIS_HOST']),
-        port:      6379,
-        db:        1
+      :servers =>{
+        :host      => 'localhost',
+        :port      => 6379,
+        :db        => 1
       },
       expires_in: 60.minutes
 else
