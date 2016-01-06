@@ -16,7 +16,7 @@ ENV \
     ANONYMOUS_PLACEHOLDER_EMAIL="" \
     RAILS_RELATIVE_URL_ROOT='' \
     PDFTK="/usr/bin/pdftk" \
- #  REDIS_STORE="redis://localhost:6379/1" \
+    REDIS_STORE="redis://localhost:6379/1" \
  #  RAILS_ENV="development" \
  #  ENV_NAME="development" \
     GA_ID=""
