@@ -18,7 +18,7 @@ ENV \
     PDFTK="/usr/bin/pdftk" \
     REDIS_STORE="redis://localhost:6379/1" \
  #  RAILS_ENV="development" \
- #  ENV_NAME="development" \
+    ENV_NAME="" \
     GA_ID="" \
     DOCKER_ENV=""
 
