@@ -18,7 +18,8 @@ ENV \
     REDIS_STORE="redis://localhost:6379/1" \
  #  RAILS_ENV="development" \
     ENV_NAME="development" \
-    GA_ID=""
+    GA_ID="" \
+    DOCKER_ENV=""
 
 # runit needs inittab
 RUN touch /etc/inittab
