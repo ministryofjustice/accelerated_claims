@@ -18,7 +18,7 @@ ENV \
     PDFTK="/usr/bin/pdftk" \
     REDIS_STORE="redis://localhost:6379/1" \
  #  RAILS_ENV="development" \
-    ENV_NAME="development" \
+ #  ENV_NAME="development" \
     GA_ID="" \
     DOCKER_ENV=""
 
@@ -53,7 +53,6 @@ RUN chmod +x /etc/service/strike2/run /etc/service/accelerated_claims/run
 RUN apt-get install -y vim
 RUN cd /usr/src/app/log
 RUN chmod 777 *
-
 
 EXPOSE $UNICORN_PORT
 CMD ["bundle", "exec", "unicorn", "-p", "3000"]

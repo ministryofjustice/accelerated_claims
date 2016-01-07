@@ -96,10 +96,9 @@ AcceleratedClaims::Application.configure do
 
   if ENV['DOCKER_ENV'].present?
     # Session store (cache_store) - using elasticache endpoints url
-    config.cache_store = :redis_store, (ENV['REDIS_URL'] || 'redis://localhost:6379/1')
+    config.cache_store = :redis_store, (ENV['REDIS_URL'])
   else
     # use redis for cache store
     config.cache_store = :redis_store, (ENV['REDIS_STORE'] || 'redis://localhost:6379/1')
   end
-
 end
