@@ -195,7 +195,7 @@ GEM
       rails (>= 3.1)
     multi_json (1.11.2)
     multipart-post (2.0.0)
-    nokogiri (1.6.7.1)
+    nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     parallel (1.0.0)
     pdf-forms (0.5.5)
@@ -435,3 +435,6 @@ DEPENDENCIES
   w3c_validators
   webmock
   zendesk_api
+
+BUNDLED WITH
+   1.11.2
