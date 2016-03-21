@@ -14,7 +14,7 @@ describe "ShowHideModule", ->
           <div class='row'>
             <label class='visuallyhidden' for='claim_fee_court_fee'>Court fee - There is a fixed fee of two hundred and eighty pounds and no pence.  Enclose a check with the completed claim form.  This is not an editable text field.</label>
             Court fee <span class='hint block' aria-hidden="true">Enclose a cheque with the completed claim form</span>
-            <input class="fee pound" id="claim_fee_court_fee" name="claim[fee][court_fee]" readonly="readonly" type="text" value="280.00" />
+            <input class="fee pound" id="claim_fee_court_fee" name="claim[fee][court_fee]" readonly="readonly" type="text" value="355.00" />
           </div>
           <div class='sub-panel'>
             <div class='row'><label for="claim_legal_cost_legal_costs"><span class="visuallyhidden">Fixed legal fees. Enter in pounds</span> <span aria-hidden="true">Fixed legal fees</span> <span class='hint block'>If the form is being completed by a legal representative</span></label>
