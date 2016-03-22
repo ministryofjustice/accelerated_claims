@@ -10,7 +10,7 @@ class Fee < BaseClass
 
 
   def court_fee
-    "280"
+    '355'
   end
 
   def account
