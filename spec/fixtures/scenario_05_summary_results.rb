@@ -118,7 +118,7 @@
   ],
   claim_fee_court_fee: [
     "Court fee",
-    "£280"
+    "£355"
   ],
   claim_legal_cost_legal_costs: [
     "Fixed legal fees",
