@@ -51,11 +51,11 @@ group :development, :test do
   gem 'simplecov', require: false
   gem 'rspec-rails', '3.4.0'
   gem 'rspec-legacy_formatters'
-  gem 'jasmine-core', '~> 2.0.0'
-  gem 'jasmine', '~> 2.0.2'
-  gem 'jasmine-rails', '~> 0.10.0'
-  gem 'jasmine-jquery-rails', '~> 2.0.2'
-  gem 'guard-jasmine', git: 'https://github.com/guard/guard-jasmine', branch: 'jasmine-2'
+  gem 'jasmine-core', '~> 2.2'
+  gem 'jasmine'
+  gem 'jasmine-rails', '~> 0.12.6'
+  gem 'jasmine-jquery-rails', '~> 2.0.3'
+  gem 'guard-jasmine'
   gem 'quiet_assets'
   gem 'byebug'
   gem 'dotenv-rails'  # set environment variables via the filesystem
