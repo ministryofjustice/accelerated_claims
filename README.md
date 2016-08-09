@@ -1,4 +1,4 @@
-# Accelerated Claim app (aka 'Civil-Claims' and 'Accelerated Possession')
+# Accelerated Claim app (aka 'Civil-Claims' and 'Accelerated Possessions')
 
 [![Build Status](http://jenkins.dsd.io/view/Civil%20Claims%20Dashboard/job/civilclaims-accelerated-test/badge/icon)](http://ec2-54-194-212-120.eu-west-1.compute.amazonaws.com/view/Civil%20Claims%20Dashboard/job/civilclaims-accelerated-test/)
 
