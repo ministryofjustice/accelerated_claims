@@ -67,6 +67,7 @@ group :development, :test do
   gem 'pry-stack_explorer'
   gem 'foreman'
   gem 'fuubar' # Rspec formatter with fast fail.
+  gem 'safe_yaml', '~>1.0.4'
 end
 
 group :test do
