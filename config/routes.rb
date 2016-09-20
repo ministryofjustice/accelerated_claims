@@ -39,5 +39,8 @@ AcceleratedClaims::Application.routes.draw do
     resource :feedback,     only: [:new, :create], controller: 'feedback'
     get '/ask-for-technical-help', controller: :user_callback, action: :new, as: :technical_help
     post '/user_callback_request', controller: :user_callback, action: :create
+
+    # Healthchecks
+    get '/ping', controller: :health_check, action: :ping
   end
 end
