@@ -7,4 +7,10 @@ class HealthCheckController < ApplicationController
       build_tag: ENV['APP_BUILD_TAG'] || 'unknown'
     }
   end
+
+  def healthcheck
+    render json: {
+      web_server: 'ok',
+      strike_server: ''}
+  end
 end

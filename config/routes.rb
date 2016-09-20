@@ -42,5 +42,6 @@ AcceleratedClaims::Application.routes.draw do
 
     # Healthchecks
     get '/ping', controller: :health_check, action: :ping
+    get '/healthcheck', controller: :health_check, action: :healthcheck
   end
 end

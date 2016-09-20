@@ -21,4 +21,13 @@ describe HealthCheckController, type: :controller do
       end
     end
   end
+
+  describe '#healthcheck' do
+    before { get :healthcheck }
+
+    subject { response }
+
+    it { is_expected.to have_http_status(:success) }
+
+  end
 end
