@@ -26,7 +26,6 @@ AcceleratedClaims::Application.routes.draw do
     get  '/terms',          controller: :static, action: :terms, as: :terms
     get  '/expired',        controller: :static, action: :expired, as: :expired
 
-    get  '/heartbeat',      controller: :application, action: :heartbeat
     post '/expire_session', controller: :application, action: :expire_session
     post '/invalid_access_token', controller: :application, action: :invalid_access_token, as: :invalid_access_token
 
