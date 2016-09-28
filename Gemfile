@@ -7,8 +7,9 @@ gem 'rails', '~>4.2.7'
 gem 'haml-rails'
 
 # Use SCSS for stylesheets
-gem 'sprockets', '~> 2.11.0'
-gem 'sass-rails', '~> 4.0.3'
+gem 'sprockets', '~> 3.7.0'
+gem 'sprockets-rails', '~> 3.2.0'
+gem 'sass-rails', '~> 5.0'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -41,15 +42,15 @@ gem 'redis-rails'
 gem 'excon'
 gem 'logstuff'
 
-gem 'nokogiri', '~> 1.6.7.1'
-
+gem 'nokogiri', '~> 1.6.8'
+gem 'pkg-config'
 group :production, :development do
 #  gem 'newrelic_rpm'
 end
 
 group :development, :test do
   gem 'simplecov', require: false
-  gem 'rspec-rails', '3.4.0'
+  gem 'rspec-rails', '~>3.5'
   gem 'rspec-legacy_formatters'
   gem 'jasmine-core', '~> 2.2'
   gem 'jasmine'
