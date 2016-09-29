@@ -258,7 +258,7 @@ def claim_formatted_data
     'tenancy_applicable_statements_4' => 'No',
     'tenancy_applicable_statements_5' => 'No',
     'tenancy_applicable_statements_6' => 'No',
-    "total_cost" => "403.34"
+    "total_cost" => "478.34"
   }
 end
 

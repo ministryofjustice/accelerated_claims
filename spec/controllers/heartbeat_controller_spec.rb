@@ -4,19 +4,19 @@ describe HeartbeatController, :type => :controller do
 
   describe '#ping' do
     before do
-      ENV['VERSION_NUMBER'] = version_number
-      ENV['BUILD_DATE'] = build_date
-      ENV['COMMIT_ID'] = commit_id
-      ENV['BUILD_TAG'] = build_tag
+      ENV['APP_VERSION'] = version_number
+      ENV['APP_BUILD_DATE'] = build_date
+      ENV['APP_GIT_COMMIT'] = commit_id
+      ENV['APP_BUILD_TAG'] = build_tag
 
       get :ping
     end
 
     after do
-      ENV['VERSION_NUMBER'] = nil
-      ENV['BUILD_DATE'] = nil
-      ENV['COMMIT_ID'] = nil
-      ENV['BUILD_TAG'] = nil
+      ENV['APP_VERSION'] = nil
+      ENV['APP_BUILD_DATE'] = nil
+      ENV['APP_GIT_COMMIT'] = nil
+      ENV['APP_BUILD_TAG'] = nil
     end
 
     context 'when environment variables are not set' do
