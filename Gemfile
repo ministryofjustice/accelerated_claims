@@ -79,6 +79,7 @@ group :test do
   gem 'brakeman'
   gem 'ci_reporter'
   gem 'poltergeist'
+  gem 'phantomjs'
   gem 'selenium-webdriver'
   gem 'curb'
   gem 'show_me_the_cookies'

@@ -400,6 +400,7 @@ DEPENDENCIES
   nokogiri (~> 1.6.8)
   parallel
   pdf-forms (= 0.5.5)
+  phantomjs
   pkg-config
   poltergeist
   pry
