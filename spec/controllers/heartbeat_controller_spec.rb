@@ -56,16 +56,21 @@ describe HeartbeatController, :type => :controller do
   end
 
   describe '#healthcheck' do
-    before { get :healthcheck }
-
-    it { is_expected.to have_http_status(:success) }
+    before do
+      stub_request(:get, 'http://localhost:4000').to_return(status: status)
+      get :healthcheck
+    end
 
     context 'when everything is ok' do
+      let(:status) { 200 }
+
       let(:expected_response) do
         {
           checks: { server: true, strike: true }
         }.to_json
       end
+
+      it { is_expected.to have_http_status(:success) }
 
       it 'returns the expected response report' do
         expect(subject.body).to eq(expected_response)
@@ -73,13 +78,16 @@ describe HeartbeatController, :type => :controller do
     end
 
     context 'when strike is down' do
-      before { stub_request(:get, 'http://localhost:4000').to_return(status: 500) }
+
+      let(:status) { 500 }
 
       let(:expected_response) do
         {
           checks: { server: true, strike: false }
         }.to_json
       end
+
+      it { is_expected.to have_http_status(:error) }
 
       it 'returns the expected response report' do
         expect(subject.body).to eq(expected_response)

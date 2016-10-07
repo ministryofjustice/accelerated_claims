@@ -14,7 +14,7 @@ class HeartbeatController < ApplicationController
         server: true,
         strike: strike_status
       }
-    }
+    }, status: strike_status ? 200 : 500
   end
 
   def strike_status
