@@ -12,6 +12,13 @@ describe HeartbeatController, :type => :controller do
       get :ping
     end
 
+    after do
+      ENV['VERSION_NUMBER'] = nil
+      ENV['BUILD_DATE'] = nil
+      ENV['COMMIT_ID'] = nil
+      ENV['BUILD_TAG'] = nil
+    end
+
     context 'when environment variables not set' do
       let(:version_number) { nil }
       let(:build_date) { nil }
