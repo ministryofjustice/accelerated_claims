@@ -15,10 +15,6 @@ class ApplicationController < ActionController::Base
     redirect_to (session[:return_to] || root_path), options.merge( protocol: protocol )
   end
 
-  def heartbeat
-    render text: ''
-  end
-
   def expire_session
     if session
       reset_session
