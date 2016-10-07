@@ -19,7 +19,7 @@ describe HeartbeatController, :type => :controller do
       ENV['BUILD_TAG'] = nil
     end
 
-    context 'when environment variables not set' do
+    context 'when environment variables are not set' do
       let(:version_number) { nil }
       let(:build_date) { nil }
       let(:commit_id) { nil }
