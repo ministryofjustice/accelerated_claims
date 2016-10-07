@@ -12,8 +12,13 @@ class HeartbeatController < ApplicationController
     render json: {
       checks: {
         server: true,
-        strike: ''
+        strike: strike_status
       }
     }
+  end
+
+  def strike_status
+    connection = Faraday.new(url: 'http://localhost:4000')
+    connection.get.status == 200
   end
 end
