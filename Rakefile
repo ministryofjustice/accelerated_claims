@@ -3,9 +3,5 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-if Rails.env.test?
-  require 'ci/reporter/rake/rspec'
-end
-
 AcceleratedClaims::Application.load_tasks
 
