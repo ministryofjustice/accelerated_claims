@@ -16,3 +16,4 @@ before_install:
   - "phantomjs --version"
 script:
 - bundle exec rake spec:docker
+- bundle exec rake spec:features
