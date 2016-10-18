@@ -26,6 +26,7 @@ class ClaimController < ApplicationController
     return redirect_to_with_protocol(:new) if @claim.nil?
 
     claim_object = Claim.new(@claim)
+    puts "controller.confirmation returns claimant_1_first_name as `#{@claim['claimant_1']['full_name']}`"
 
     if claim_object.valid?
       update_defendant_inhabits(claim_object)
@@ -43,6 +44,7 @@ class ClaimController < ApplicationController
     return redirect_to expired_path if session[:claim].nil?
 
     @claim = Claim.new(session[:claim])
+    puts "controller.download setting claimant_1_first_name as `#{@claim.claimants[1].full_name}`"
 
     return redirect_to_with_protocol :new if !@claim.valid?
 
@@ -50,7 +52,7 @@ class ClaimController < ApplicationController
 
     flatten = in_test_or_flatten
     pdf = PDFDocument.new(@claim.as_json, flatten).fill
-
+    puts "controller.download saving pdf as `#{pdf.path}`"
     send_pdf(pdf)
   end
 
