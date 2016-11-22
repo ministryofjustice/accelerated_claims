@@ -45,6 +45,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       image: "#{DOCKER_IMAGE_TAG}",
       args: "-v /vagrant:/usr/src/app -p #{UNICORN_PORT}:3000"
   end
+  config.vm.provision "shell", inline: 'docker exec accelerated-claims bundle install --with development test'
+
   # print out help
   config.vm.provision "shell", inline: <<-EOF
     echo "#---------------------------------------"
@@ -53,6 +55,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     echo "#---------------------------------------"
     echo "# To use docker locally, set:"
     echo "export DOCKER_HOST=tcp://localhost:#{DOCKER_PORT}"
+    echo "#---------------------------------------"
+    echo "# To run tests on docker directly, run:"
+    echo "DOCKER_HOST=tcp://localhost:#{DOCKER_PORT} docker exec -ti accelerated-claims rake spec:docker"
   EOF
 
 end
