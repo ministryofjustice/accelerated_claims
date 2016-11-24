@@ -10,6 +10,7 @@ feature 'new submit claim', js: true do
     WebMock.disable_net_connect!(:allow => ["127.0.0.1", /codeclimate.com/])
     allow_any_instance_of(Courtfinder::Client::HousingPossession).to \
     receive(:get).and_return(court_address)
+    Selenium::WebDriver::Firefox::Binary.path='/usr/local/bin/firefox/firefox-bin'
     Capybara.current_driver = :poltergeist
   end
 

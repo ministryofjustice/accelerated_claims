@@ -19,6 +19,15 @@ docker rm accelerated-claims >/dev/null 2>&1 || true
 docker rmi -f accelerated-claims >/dev/null 2>&1 || true
 CONF
 
+$testing_setup=<<GECKO
+docker exec accelerated-claims wget -O /usr/local/bin/geckodriver-v0.11.1-linux64.tar.gz https://github.com/mozilla/geckodriver/releases/download/v0.11.1/geckodriver-v0.11.1-linux64.tar.gz
+docker exec accelerated-claims tar -xf /usr/local/bin/geckodriver-v0.11.1-linux64.tar.gz -C /usr/local/bin/
+docker exec accelerated-claims rm -rf /usr/local/bin/geckodriver-v0.11.1-linux64.tar.gz
+docker exec accelerated-claims wget -O /usr/local/bin/firefox-50.0.tar.bz2 http://ftp.mozilla.org/pub/firefox/releases/50.0/linux-x86_64/en-GB/firefox-50.0.tar.bz2
+docker exec accelerated-claims tar xvjf /usr/local/bin/firefox-50.0.tar.bz2 -C /usr/local/bin/
+docker exec accelerated-claims rm -rf /usr/local/bin/firefox-50.0.tar.bz2
+GECKO
+
 unless Vagrant.has_plugin?("vagrant-cachier")
   puts "WARNING: vagrant-cachier plugin is not installed! It really speeds this up..."
   puts "         Install using 'vagrant plugin install vagrant-cachier'"
@@ -46,6 +55,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       args: "-v /vagrant:/usr/src/app -p #{UNICORN_PORT}:3000"
   end
   config.vm.provision "shell", inline: 'docker exec accelerated-claims bundle install --with development test'
+  config.vm.provision "shell", inline: $testing_setup
+  # config.vm.provision "shell", inline: 'docker exec accelerated-claims wget -O /usr/local/bin/geckodriver-v0.11.1-linux64.tar.gz https://github.com/mozilla/geckodriver/releases/download/v0.11.1/geckodriver-v0.11.1-linux64.tar.gz && tar -xf /usr/local/bin/geckodriver-v0.11.1-linux64.tar.gz && rm -rf /usr/local/bin/geckodriver-v0.11.1-linux64.tar.gz'
+  # config.vm.provision "shell", inline: 'docker exec accelerated-claims `cd /usr/local` && wget http://ftp.mozilla.org/pub/firefox/releases/50.0/linux-x86_64/en-GB/firefox-50.0.tar.bz2 && tar xvjf firefox-50.0.tar.bz2 && rm -rf firefox-48.0.2.tar.bz2'
 
   # print out help
   config.vm.provision "shell", inline: <<-EOF
