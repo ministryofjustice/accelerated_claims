@@ -1,6 +1,6 @@
 include ShowMeTheCookies
 
-feature 'new submit claim', js: true do
+feature 'new submit claim', js: true, slow: true do
 
   before do
     stub_request(:post, "http://localhost:4000/").to_return(:status => 200, :body => "", :headers => {})
@@ -13,7 +13,7 @@ feature 'new submit claim', js: true do
     Capybara.use_default_driver
   end
 
-  %w[02 03].each do |journey|
+  %w[01 02].each do |journey|
 
     data_file = "spec/fixtures/scenario_#{journey}_js_data.rb"
     data = load_fixture_data(data_file)
