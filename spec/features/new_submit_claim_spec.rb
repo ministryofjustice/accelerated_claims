@@ -46,6 +46,8 @@ feature 'new submit claim', js: true do
 
         visit('download?flatten=false')
         sleep(2)
+        expect(page.driver.response_headers['Content-Type']).to eql 'application/pdf'
+
         puts 'creating tmp file...'
         pdf_filename = "/tmp/pdf_#{journey}.pdf"
         fl = File.new(pdf_filename, 'w', encoding: 'utf-8')
