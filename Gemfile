@@ -44,6 +44,8 @@ gem 'logstuff'
 
 gem 'nokogiri', '~> 1.6.8'
 gem 'pkg-config'
+gem 'safe_yaml', '~>1.0.4'
+
 group :production, :development do
 #  gem 'newrelic_rpm'
 end
@@ -67,7 +69,6 @@ group :development, :test do
   gem 'pry-stack_explorer'
   gem 'foreman'
   gem 'fuubar' # Rspec formatter with fast fail.
-  gem 'safe_yaml', '~>1.0.4'
 end
 
 group :test do
