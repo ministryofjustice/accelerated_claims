@@ -45,6 +45,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       image: "#{DOCKER_IMAGE_TAG}",
       args: "-v /vagrant:/usr/src/app -p #{UNICORN_PORT}:3000"
   end
+  config.vm.provision "shell", inline: 'docker exec accelerated-claims apt-get install -y qt4-dev-tools libqt4-dev libqt4-core libqt4-gui xvfb'
   config.vm.provision "shell", inline: 'docker exec accelerated-claims bundle install --with development test'
 
   # print out help

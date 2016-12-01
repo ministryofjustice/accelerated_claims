@@ -57,6 +57,7 @@ elsif ENV['browser']
   require_relative 'selenium_setup'
   require_relative 'remote_test_setup' if remote_test?
 else
+  require_relative 'webkit_setup'
   require_relative 'poltergeist_setup'
   require_relative 'remote_test_setup' if remote_test?
 end

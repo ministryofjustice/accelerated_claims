@@ -3,6 +3,7 @@ class PdfModel
 
   def load(filename)
     @generated_values = values_from_pdf(filename)
+    puts "read claimant_1_address as `#{@generated_values['claimant_1_address']}` from `#{filename}`"
   end
 
   def assert_pdf_is_correct(expected_values)
@@ -29,6 +30,7 @@ class PdfModel
 
 private
   def values_from_pdf file
+    puts "pdftk getting data fields from #{file}"
     fields = `pdftk #{file} dump_data_fields`
     fields.strip.split('---').each_with_object({}) do |fieldset, hash|
       field = fieldset[/FieldName: ([^\s]+)/,1]

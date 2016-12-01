@@ -87,6 +87,7 @@ group :test do
   gem 'ruby-prof'
   gem 'w3c_validators'
   gem 'capybara-screenshot'
+  gem 'capybara-webkit', '1.11.1'
 end
 
 gem 'pdf-forms', '0.5.5'
