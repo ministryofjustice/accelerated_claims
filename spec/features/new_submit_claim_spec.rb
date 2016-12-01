@@ -13,7 +13,7 @@ feature 'new submit claim', js: true do
     Capybara.use_default_driver
   end
 
-  %w[01 02].each do |journey|
+  %w[02 03].each do |journey|
 
     data_file = "spec/fixtures/scenario_#{journey}_js_data.rb"
     data = load_fixture_data(data_file)
@@ -33,6 +33,7 @@ feature 'new submit claim', js: true do
         expected_name = data['claim']['claimant_1']['full_name']
         puts "I expect page to contain '#{expected_name}'"
         expect(page).to have_content expected_name
+        expect(page).to have_content 'You have not yet completed your claim'
 
 
         begin
@@ -44,11 +45,13 @@ feature 'new submit claim', js: true do
         end
 
         visit('download?flatten=false')
-        sleep 2
+        sleep(2)
+        puts 'creating tmp file...'
         pdf_filename = "/tmp/pdf_#{journey}.pdf"
         fl = File.new(pdf_filename, 'w', encoding: 'utf-8')
         fl << page.source.force_encoding("UTF-8")
         fl.close
+        puts "...as `#{pdf_filename}`"
 
         #file = Tempfile.new('pdf_download', encoding: 'utf-8')
         #file.write(page.body.encode("ASCII-8BIT").force_encoding("UTF-8"))
@@ -56,7 +59,6 @@ feature 'new submit claim', js: true do
         #file.write(http.body_str.encode("ASCII-8BIT").force_encoding("UTF-8"))
 
         pdf_filename = fl.path
-        puts "saving downloaded data to `#{pdf_filename}`"
         pdf.load pdf_filename
         puts "Downloaded pdf returns claimant_1 `#{pdf.generated_values['claimant_1_address']}`"
 
