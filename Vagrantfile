@@ -57,8 +57,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     echo "# To use docker locally, set:"
     echo "export DOCKER_HOST=tcp://localhost:#{DOCKER_PORT}"
     echo "#---------------------------------------"
-    echo "# To run tests on docker directly, run:"
+    echo "# To run the entire test suite on docker directly:"
     echo "DOCKER_HOST=tcp://localhost:#{DOCKER_PORT} docker exec -ti accelerated-claims rake spec:docker"
+    echo "# To run the tests without the slow running JS submissions:"
+    echo "DOCKER_HOST=tcp://localhost:#{DOCKER_PORT} docker exec -ti accelerated-claims rake spec:all_exclude_js_submit"
+    echo "# To run only the slow running JS submissions:"
+    echo "DOCKER_HOST=tcp://localhost:#{DOCKER_PORT} docker exec -ti accelerated-claims rake spec:features_only_js_submit"
   EOF
 
 end
