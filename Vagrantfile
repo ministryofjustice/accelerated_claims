@@ -45,6 +45,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       image: "#{DOCKER_IMAGE_TAG}",
       args: "-v /vagrant:/usr/src/app -p #{UNICORN_PORT}:3000"
   end
+  config.vm.provision "shell", inline: 'docker exec accelerated-claims apt-get install -y qt4-dev-tools libqt4-dev libqt4-core libqt4-gui xvfb'
   config.vm.provision "shell", inline: 'docker exec accelerated-claims bundle install --with development test'
 
   # print out help
@@ -56,8 +57,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     echo "# To use docker locally, set:"
     echo "export DOCKER_HOST=tcp://localhost:#{DOCKER_PORT}"
     echo "#---------------------------------------"
-    echo "# To run tests on docker directly, run:"
+    echo "# To run the entire test suite on docker directly:"
     echo "DOCKER_HOST=tcp://localhost:#{DOCKER_PORT} docker exec -ti accelerated-claims rake spec:docker"
+    echo "# To run the tests without the slow running JS submissions:"
+    echo "DOCKER_HOST=tcp://localhost:#{DOCKER_PORT} docker exec -ti accelerated-claims rake spec:all_exclude_js_submit"
+    echo "# To run only the slow running JS submissions:"
+    echo "DOCKER_HOST=tcp://localhost:#{DOCKER_PORT} docker exec -ti accelerated-claims rake spec:features_only_js_submit"
   EOF
 
 end

@@ -7,9 +7,10 @@ feature "submit claim" do
       receive(:get).and_return(court_address)
   end
 
+  after { Capybara.use_default_driver }
+
   def run_scenario data_file, options={}
     data = load_fixture_data(data_file)
-    expected_summary_data = load_expected_data(data_file)
     expected_data = load_expected_data(data_file)
 
     unless remote_test?
@@ -102,11 +103,15 @@ feature "submit claim" do
     end
 
     unless data['javascript'] == 'NON-JS'
-      eval(%Q|
-        scenario "#{title} with JS: #{description.first} (#{description.last})", js: true do
-          run_scenario '#{data_file}', js: true
-        end
-      |)
+      context 'with JS' do
+        before { Capybara.current_driver = :webkit }
+
+        eval(%Q|
+          scenario "#{title}: #{description.first} (#{description.last})", slow: true, js: true do
+            run_scenario '#{data_file}', js: true
+          end
+        |)
+      end
     end
   end
 end
