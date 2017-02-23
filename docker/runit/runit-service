@@ -3,6 +3,8 @@ sleep 1
 exec 2>&1
 export HOME=/usr/src/app
 cd $HOME
+# making sure that logs are owned by $WEBUSER
+chown -R $WEBUSER log/*
 # chown -R $WEBUSER:$WEBUSER $HOME
 if [ "$RAILS_ENV" = "development" ]; then
   exec chpst -u $WEBUSER bundle exec rails server -P /tmp/server.pid --binding=0.0.0.0
