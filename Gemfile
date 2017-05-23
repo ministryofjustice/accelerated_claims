@@ -42,7 +42,7 @@ gem 'redis-rails'
 gem 'excon'
 gem 'logstuff'
 
-gem 'nokogiri', '~> 1.6.8'
+gem 'nokogiri', '~> 1.7.2'
 gem 'pkg-config'
 gem 'safe_yaml', '~>1.0.4'
 
