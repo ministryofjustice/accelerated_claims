@@ -17,6 +17,7 @@ class CourtfinderController < ApplicationController
   private
 
   def process_court_data(court)
+    LogStuff.error(:court_finder) { "The complete response returned: #{court}" }
     unless court.instance_of? Array
       if court.key? 'error'
         LogStuff.error(:court_finder) { court['error'] }
