@@ -2,13 +2,15 @@
 module SummaryHelper
 
   def summary_section_header section
+
     capture_haml do
       haml_tag 'div.grid-row' do
         haml_tag 'div.summary-header' do
-          haml_tag 'div.column-two-thirds', :< do
-            section_header section
+          haml_tag 'div.column-two-thirds' do
+            section_header section, false
           end
-          haml_tag 'div.edit-link.column-one-third', :< do
+
+          haml_tag 'div.edit-link.column-one-third' do
             link_to_edit_section section
           end
         end
@@ -54,11 +56,7 @@ module SummaryHelper
     section_name = I18n.t "claim.#{section_key}.label"
 
     url_root = root_path unless root_path=='/'
-    capture_haml do
-      haml_tag "a", :<, href: "#{url_root}/##{section_key}-section" do
-        haml_concat "Change #{section_name.downcase}"
-      end
-    end
+    haml_tag(:a, "Change #{section_name.downcase}", href: "#{url_root}/##{section_key}-section")
   end
 
   def show_participant_address? participant, values

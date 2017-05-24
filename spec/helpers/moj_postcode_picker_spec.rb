@@ -75,7 +75,14 @@ describe 'MojPostcodePicker' do
       allow(form).to receive(:hidden_field).and_return(hidden_field_tag_html)
 
       mpp = MojPostcodePicker.new(form, prefix: 'claim_property', address_attr: 'street')
-      expect(squeeze(mpp.emit)).to eq expected_output
+      doc = Nokogiri::HTML(mpp.emit)
+      expect(doc).to have_xpath('.//div[@class="postcode-display hide"][contains(.,"Postcode:")]')
+      expect(doc).to have_xpath('.//a[@href="#claim_property_postcode_picker"][contains(.,"Find UK address")]')
+      expect(doc).to have_xpath('.//div[@class="postcode-picker-hourglass hide"][contains(.,"Finding address....")]')
+      expect(doc).to have_xpath('.//a[@href="#claim_property_postcode_picker_manual_link"][@id="claim_property_selectaddress"][contains(.,"Select address")]')
+      expect(doc).to have_xpath('.//a[@href="#claim_property_postcode_picker_manual_link"][@id="claim_property_postcode_picker_manual_link"][contains(.,"Enter address manually")]')
+      expect(doc).to have_xpath('.//span[@class="error"][contains(.,"The address can’t be longer than 4 lines.")]')
+      expect(doc).to have_xpath('.//label[@for="claim_property_postcode"][contains(.,"Postcode")]')
     end
   end
 
@@ -107,79 +114,4 @@ end
 
 def hidden_field_tag_html
   %q/<input class="manual_entry_flag" id="claim_property_manually_entered_address" name="claim[property][manually_entered_address]" type="hidden" value="1">/
-end
-
-def expected_output
-  str =<<EOF
-<div class='postcode postcode-picker-container' data-vc='all'>
-  <div class='postcode-lookup js-only'>
-    <div class='postcode-display hide' style='margin-bottom: 20px;'>
-      Postcode:
-      <span class='postcode-display-detail' style='font-weight: bold'>
-        &nbsp;
-      </span>
-      <span>
-        <a class='change-postcode-link2 js-only' href='#change_postcode' id='claim_property-manual_change-link-2' style='display: inline; margin-left: 10px;'>Change</a>
-      </span>
-    </div>
-    <div class='postcode-selection-els'>
-      <label class='postcode-picker-label' for='claim_property_postcode_edit_field'>Postcode</label>
-      <input class='narrow postcode-picker-edit-field' id='claim_property_postcode_edit_field' maxlength='8' name='[postcode]' size='8' type='text'>
-      <a class='button postcode-picker-button' data-country='all' href='#claim_property_postcode_picker'>
-        Find UK address
-      </a>
-    </div>
-    <div class='postcode-picker-hourglass hide'>
-      Finding address....
-    </div>
-    <div class='postcode-select-container sub-panel hide' style='margin-top: 0px;'>
-      <fieldset class='postcode-picker-address-list'>
-        <label class='hint' for='claim_property_address_select'>Please select an address</label>
-        <select class='address-picker-select' id='claim_property_address_select' name='sel-address' role='listbox' size='6'>
-          <option disabled='disabled' id='claim_property-listbox' role='option' value=''>Please select an address</option>
-        </select>
-        <a class='button postcode-picker-cta' href='#claim_property_postcode_picker_manual_link' id='claim_property_selectaddress' style='margin-bottom: 20px;'>
-          Select address
-        </a>
-      </fieldset>
-    </div>
-  </div>
-  <div class='js-only'>
-    <a class='caption postcode-picker-manual-link' href='#claim_property_postcode_picker_manual_link' id='claim_property_postcode_picker_manual_link' style='margin-top: 20px;'>
-      Enter address manually
-    </a>
-  </div>
-  <input class="manual_entry_flag" id="claim_property_manually_entered_address" name="claim[property][manually_entered_address]" type="hidden" value="1">
-  <div class='address extra no sub-panel hide' style='margin-top: 10px;'>
-    <div class='form-group street'>
-      <label for='claim_property_street'>
-        Full address
-
-      </label>
-      <textarea class='street' id='claim_property_street' maxlength='140' name='claim[property][street]'>50 Tregunter Road&#x000A;London</textarea>
-    </div>
-    <div class='js-only'>
-      <div class='hide' id='claim_property_street-error-message'>
-        <span class='error'>
-          The address can’t be longer than 4 lines.
-        </span>
-      </div>
-    </div>
-    <div class='form-group address-postcode'>
-      <label for='claim_property_postcode'>
-        Postcode
-      </label>
-      <div style='overflow: hidden; width: 100%'>
-        <input class='narrow postcode' id='claim_property_postcode' maxlength='8' name='claim[property][postcode]' size='8' style='float: left;  margin-right: 20px;' type='text' value='RG2 7PU'>
-        <a class='change-postcode-link js-only' href='#change_postcode' style='float: left;'>Change</a>
-      </div>
-    </div>
-  </div>
-</div>
-EOF
-  squeeze(str)
-end
-
-def squeeze(str)
-  str.gsub(/\n\s+/, '').gsub(/\n+/, "\n").gsub('><',">\n<")
 end

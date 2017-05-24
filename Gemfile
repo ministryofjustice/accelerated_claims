@@ -26,8 +26,8 @@ gem 'coffee-rails'
 gem 'unicorn'
 
 # Gov.uk styles
-gem 'govuk_frontend_toolkit', '>= 2.0.1'
-gem 'govuk_elements_rails', '>= 0.1.1'
+gem 'govuk_frontend_toolkit', '= 2.0.1'
+gem 'govuk_elements_rails', '= 0.1.1'
 
 # MOJ styles
 gem 'moj_template'
