@@ -1,13 +1,15 @@
 module ApplicationHelper
 
   # Returns h2 heading with label for section_key
-  def section_header section_key
+  def section_header section_key, with_capture = true
     section_id = "#{section_key}-section"
-
-    capture_haml do
-      haml_tag "h2##{section_id}.section-header", :< do
-        haml_concat I18n.t "claim.#{section_key}.label"
+    text = I18n.t "claim.#{section_key}.label"
+    if with_capture
+      capture_haml do
+        haml_tag "h2", text, id: section_id, class: 'section-header'
       end
+    else
+      haml_tag "h2", text, id: section_id, class: 'section-header'
     end
   end
 
