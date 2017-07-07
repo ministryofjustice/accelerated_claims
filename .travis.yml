@@ -9,6 +9,7 @@ addons:
     packages:
       - libqt5webkit5-dev
 before_install:
+  - gem install bundler
   - sudo apt-get -qq update
   - sudo apt-get install -y pdftk openjdk-7-jdk
   # Upgrade PhantomJS to v2.1.1.
