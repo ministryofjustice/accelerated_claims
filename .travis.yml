@@ -3,6 +3,10 @@ cache:
   bundler: true
   directories:
       - travis_phantomjs
+addons:
+  apt:
+    packages:
+      - libqt5webkit5-dev
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y pdftk openjdk-7-jdk
