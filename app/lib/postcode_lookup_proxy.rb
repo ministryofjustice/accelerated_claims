@@ -14,7 +14,7 @@ class PostcodeLookupProxy
   attr_reader :result_set, :result_code, :result_message, :http_status
 
   def initialize(postcode, valid_countries, use_live_data = false)
-    @postcode                 = UKPostcode.new(postcode)
+    @postcode                 = UKPostcode.parse(postcode)
     @valid                    = @postcode.valid?
     @result_set               = nil
     config                    = YAML.load_file("#{Rails.root}/config/ideal_postcodes.yml")
@@ -51,7 +51,7 @@ class PostcodeLookupProxy
   end
 
   def norm
-    @postcode.norm
+    @postcode.to_s
   end
 
   private

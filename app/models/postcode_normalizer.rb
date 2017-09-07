@@ -21,9 +21,9 @@ class PostcodeNormalizer
       submodel_names.each { |instance_submodel_name| normalize_submodel_postcode(instance_submodel_name) }
     else
       unless @claim_params[submodel_name]['postcode'].nil?
-        postcode = UKPostcode.new(@claim_params[submodel_name]['postcode'])
+        postcode = UKPostcode.parse(@claim_params[submodel_name]['postcode'])
         if postcode.valid?
-          @claim_params[submodel_name]['postcode'] = postcode.norm
+          @claim_params[submodel_name]['postcode'] = postcode.to_s
         end
       end
     end
