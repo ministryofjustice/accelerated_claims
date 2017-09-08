@@ -95,7 +95,7 @@ gem 'pdf-forms', '0.5.5'
 gem 'uk_postcode'
 
 # validate that submitted dates are actually dates
-gem 'validates_timeliness', '~> 3.0'
+gem 'validates_timeliness'
 
 # pretty logstashing
 gem 'logstasher'

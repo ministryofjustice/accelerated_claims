@@ -19,7 +19,7 @@ class BaseClass
     if postcode.nil?
       p1, p2 = '', ''
     else
-      pcode = UKPostcode.new(postcode)
+      pcode = UKPostcode.parse(postcode)
       p1 = pcode.outcode
       p2 = pcode.incode
     end

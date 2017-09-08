@@ -15,9 +15,9 @@ class Address < BaseClass
 
   def postcode
     if @postcode.present?
-      pc = UKPostcode.new(@postcode)
+      pc = UKPostcode.parse(@postcode)
       if pc.valid?
-        return pc.norm
+        return pc.to_s
       end
     end
     @postcode
@@ -152,7 +152,7 @@ class Address < BaseClass
   end
 
   def postcode_blank_or_invalid?
-    postcode.blank? || UKPostcode.new(postcode).valid? == false
+    postcode.blank? || UKPostcode.parse(postcode).valid? == false
   end
 
   def transfer_error_messages_to_parent
