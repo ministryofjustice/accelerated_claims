@@ -46,7 +46,7 @@ gem 'nokogiri', '~> 1.7.2'
 gem 'pkg-config'
 gem 'safe_yaml', '~>1.0.4'
 
-gem 'pdf-forms', '~> 1.1'
+gem 'pdf-forms', '0.6.0'
 gem 'uk_postcode'
 
 # validate that submitted dates are actually dates
