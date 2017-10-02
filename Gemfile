@@ -46,9 +46,19 @@ gem 'nokogiri', '~> 1.7.2'
 gem 'pkg-config'
 gem 'safe_yaml', '~>1.0.4'
 
-group :production, :development do
-#  gem 'newrelic_rpm'
-end
+gem 'pdf-forms', '0.6.0'
+gem 'uk_postcode'
+
+# validate that submitted dates are actually dates
+gem 'validates_timeliness'
+
+# pretty logstashing
+gem 'logstasher'
+
+# statsd client
+gem 'statsd-ruby'
+
+gem 'courtfinder-client', '0.0.6'
 
 group :development, :test do
   gem 'simplecov', require: false
@@ -88,19 +98,5 @@ group :test do
   gem 'ruby-prof'
   gem 'w3c_validators'
   gem 'capybara-screenshot'
-  gem 'capybara-webkit', '1.11.1'
+  gem 'capybara-webkit', '~> 1.14'
 end
-
-gem 'pdf-forms', '0.5.5'
-gem 'uk_postcode'
-
-# validate that submitted dates are actually dates
-gem 'validates_timeliness'
-
-# pretty logstashing
-gem 'logstasher'
-
-# statsd client
-gem 'statsd-ruby'
-
-gem 'courtfinder-client', '0.0.6'
