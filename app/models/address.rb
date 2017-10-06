@@ -140,7 +140,7 @@ class Address < BaseClass
         add_to_errors 'postcode', "Postcode is in #{plp.result_set['message']}. You can only use this service to regain possession of properties in England and Wales."
         return false
       else
-        raise "Unexpected return from postcode lookup: #{plp.result_set.inspect}"
+        add_to_errors 'postcode', "Unexpected return from postcode lookup."
       end
     end
   end
