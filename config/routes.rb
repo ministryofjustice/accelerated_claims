@@ -25,11 +25,13 @@ AcceleratedClaims::Application.routes.draw do
     get  '/accessibility',  controller: :static, action: :accessibility, as: :accessibility
     get  '/terms',          controller: :static, action: :terms, as: :terms
     get  '/expired',        controller: :static, action: :expired, as: :expired
+    get  '/expired/:query_path',  controller: :static, action: :expired, as: :expired_any
 
     get 'ping',             controller: :heartbeat, action: :ping, format: :json
     get 'healthcheck',      controller: :heartbeat, action: :healthcheck, format: :json
-    
+
     post '/expire_session', controller: :application, action: :expire_session
+    post '/expire_session/:query_path', controller: :application, action: :expire_session
     post '/invalid_access_token', controller: :application, action: :invalid_access_token, as: :invalid_access_token
 
     # postcode lookup proxy
