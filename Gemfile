@@ -60,6 +60,10 @@ gem 'statsd-ruby'
 
 gem 'courtfinder-client', '0.0.6'
 
+group :production do
+  gem 'sentry-raven'
+end
+
 group :development, :test do
   gem 'simplecov', require: false
   gem 'rspec-rails', '~>3.5'
