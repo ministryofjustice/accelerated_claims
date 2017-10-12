@@ -17,10 +17,9 @@ class PostcodeLookupProxy
     @postcode                 = UKPostcode.parse(postcode)
     @valid                    = @postcode.valid?
     @result_set               = nil
-    config                    = YAML.load_file("#{Rails.root}/config/ideal_postcodes.yml")
-    @url                      = config['url']
-    @api_key                  = config['api_key']
-    @timeout                  = config['timeout']
+    @url                      = ENV['POSTCODE_LOOKUP_API_URL']
+    @api_key                  = ENV['POSTCODE_LOOKUP_API_KEY']
+    @timeout                  = ENV['POSTCODE_LOOKUP_TIMEOUT'].to_f
     @api_result_set           = nil
     @use_live_data            = use_live_data
     @valid_countries          = valid_countries
