@@ -19,7 +19,7 @@ class PostcodeLookupProxy
     @result_set               = nil
     @url                      = ENV['POSTCODE_LOOKUP_API_URL']
     @api_key                  = ENV['POSTCODE_LOOKUP_API_KEY']
-    @timeout                  = ENV['POSTCODE_LOOKUP_TIMEOUT'].to_f
+    @timeout                  = 3.0
     @api_result_set           = nil
     @use_live_data            = use_live_data
     @valid_countries          = valid_countries
