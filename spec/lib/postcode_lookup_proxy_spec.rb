@@ -39,6 +39,13 @@ describe PostcodeLookupProxy do
       expect(pclp.http_status).to eq 503
     end
 
+    it 'should return 503 if credits run out' do
+      pclp = PostcodeLookupProxy.new('RG2 1PL', ['All'])
+      pclp.lookup
+      expect(pclp.result_set).to eq ( {"code"=>4020, "message"=>"Key balance depleted."} )
+      expect(pclp.http_status).to eq 503
+    end
+
     it 'should return valid data set if valid' do
       pclp = PostcodeLookupProxy.new('BH22 7HR', ['All'])
       pclp.lookup
@@ -79,7 +86,7 @@ describe PostcodeLookupProxy do
 
   end
 
-  context 'logging' do
+  context 'logging', disable_cache: true  do
     it 'should call Logstuff with timeout false if no error' do
       dummy_response = double "Dummy Ideal Postcodes response"
       allow(dummy_response).to receive(:body).and_return(ActiveSupport::JSON.encode("body"))
