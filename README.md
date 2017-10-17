@@ -80,6 +80,6 @@ or
 # Postcode lookup
 * We are using Ideal postcodes.
 * API key is set in ENV
-* Account info is here https://tools.hmcts.net/confluence/display/RST/AP+URLs+and+Analytics
+* Account info is in HMCTS Confluence under Ideal postcodes
 
 
