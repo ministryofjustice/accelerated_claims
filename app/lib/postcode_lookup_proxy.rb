@@ -17,10 +17,9 @@ class PostcodeLookupProxy
     @postcode                 = UKPostcode.parse(postcode)
     @valid                    = @postcode.valid?
     @result_set               = nil
-    config                    = YAML.load_file("#{Rails.root}/config/ideal_postcodes.yml")
-    @url                      = config['url']
-    @api_key                  = config['api_key']
-    @timeout                  = config['timeout']
+    @url                      = ENV['POSTCODE_LOOKUP_API_URL']
+    @api_key                  = ENV['POSTCODE_LOOKUP_API_KEY']
+    @timeout                  = 3.0
     @api_result_set           = nil
     @use_live_data            = use_live_data
     @valid_countries          = valid_countries
@@ -68,6 +67,12 @@ class PostcodeLookupProxy
   end
 
   def production_lookup
+    @api_response = Rails.cache.fetch("#{form_url}", expires_in: 1.hour) do
+      postcode_lookup_query
+    end
+  end
+
+  def postcode_lookup_query
     begin
       Timeout::timeout(@timeout) do
         @api_response = ActiveSupport::JSON.decode( Excon.get(form_url).body)
@@ -86,6 +91,7 @@ class PostcodeLookupProxy
 
   # returns dummy postcode result based on the first character of the second part of the postcode.
   # if 0 - returns an empty array, indicating no entries of the postcode, otherwise a dummy result set
+  # if 1 - returns false to simulate a credits running out
   # if 9 - returns false to simulate a timeout or other remote service error
   # otherwise returns a data set as documented at the top of dummy_postcode_results.yml
   #
@@ -93,6 +99,8 @@ class PostcodeLookupProxy
     case @postcode.incode.first.to_i
     when 0
       return no_such_postcode_response
+    when 1
+      return service_out_of_credits_response
     when 9
       return service_unavailable_response
     else
@@ -118,7 +126,7 @@ class PostcodeLookupProxy
       404
     when 4220
       422
-    when 5030
+    when 5030, 4020
       503
     else
       500
@@ -147,6 +155,10 @@ class PostcodeLookupProxy
 
   def service_unavailable_response
     {"code"=>5030, "message"=>"Service Unavailable"}
+  end
+
+  def service_out_of_credits_response
+    {"code"=>4020, "message"=>"Key balance depleted."}
   end
 
   def invalid_postcode_response
