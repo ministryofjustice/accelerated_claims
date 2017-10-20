@@ -1,0 +1,10 @@
+url: https://api.ideal-postcodes.co.uk/v1/postcodes/
+api_key: ak_i09ecaamj9h7zaGvj3Vu1pjpzgdvE
+timeout: 3.0
+
+
+# response codes
+# ++++++++++++++
+# 2000 success
+# 4040 postcode not found
+# 4010 invalid key

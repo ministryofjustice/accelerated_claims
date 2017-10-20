@@ -71,15 +71,12 @@ Feature tests should be run on localhost against the instance running in the con
 
 or
 	rake spec:features
-
+	
 
 ### Dependencies
 * Virtual Box  - install from https://www.virtualbox.org/wiki/Downloads
 * Vagrant - install from http://www.vagrantup.com/downloads.html
 
-# Postcode lookup
-* We are using Ideal postcodes.
-* API key is set in ENV
-* Account info is in HMCTS Confluence under Ideal postcodes
+
 
 
